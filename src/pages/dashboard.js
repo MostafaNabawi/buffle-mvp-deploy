@@ -6,11 +6,11 @@ import Sidebar from "../components/common/Sidebar";
 const Dashboard = () => {
   return (
     <div className="container-fluid">
-      <Row>
+      <Row className="h-sidebar">
         <Col lg="1">
           <Sidebar />
         </Col>
-        <Col lg="11">
+        <Col lg="11 secondary-color">
           <Row>header</Row>
           <Row>after header</Row>
           <Row>

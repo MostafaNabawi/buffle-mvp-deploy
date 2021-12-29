@@ -58,3 +58,6 @@ button:hover {
     #4922ff 100%
   );
 }
+.h-sidebar{
+  height: 100vh !important;
+}
