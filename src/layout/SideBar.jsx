@@ -2,9 +2,9 @@ import { React } from "react";
 import { Row, Col,Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-const Sidebar = () => {
+const SideBar = () => {
   return (
-    <div className="container-fluid h-sidebar">
+    <div className="container-fluid h-sidebar ">
       <Row className="">
         <Col className="mt-3">
            <Link to=""><Image src="/icone/countdown to break 3.png"/></Link>
@@ -50,4 +50,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default SideBar;

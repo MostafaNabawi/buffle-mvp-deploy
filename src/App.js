@@ -5,6 +5,7 @@ import Register from "./pages/register";
 import CompanyLogin from "./pages/companyLogin";
 import Moneypool from "./pages/moneypool";
 import Dashboard from "./pages/dashboard";
+import Layout from "./layout/Layout";
 
 function App() {
   return (
@@ -14,7 +15,9 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/companyLogin" element={<CompanyLogin />} />
         <Route path="/moneypool" element={<Moneypool />} />
-        <Route path="/" element={<Dashboard />} />
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Dashboard />} />
+        </Route>
       </Routes>
     </div>
   );
