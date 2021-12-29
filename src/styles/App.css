@@ -1,0 +1,60 @@
+/* Global styles heading */
+.heading1 {
+  font-size: 48px;
+  font-weight: bold;
+}
+.heading2 {
+  font-size: 32px;
+  font-weight: bold;
+}
+.heading3 {
+  font-size: 24px;
+  font-weight: bold;
+}
+.heading4 {
+  font-size: 20px;
+  font-weight: bold;
+}
+.body1 {
+  font-size: 16px;
+}
+.body2 {
+  font-size: 14px;
+}
+
+.primary-color {
+  background-color: #4922ff;
+}
+.primary-gradient {
+  background: radial-gradient(
+    100% 682.41% at 4.04% 0%,
+    #8286ff 0%,
+    #4922ff 100%
+  );
+}
+.low-vein-blue {
+  background-color: #8286ff;
+}
+.secondary-color {
+  background-color: #eff3fa;
+}
+.secondary-dark {
+  background-color: #1b2559;
+}
+.navy-blue {
+  background-color: #7882ba;
+}
+button {
+  background: radial-gradient(
+    100% 682.41% at 4.04% 0%,
+    #8286ff 0%,
+    #4922ff 100%
+  );
+}
+button:hover {
+  background: radial-gradient(
+    103.73% 715% at 100% 100%,
+    #8286ff 0%,
+    #4922ff 100%
+  );
+}
