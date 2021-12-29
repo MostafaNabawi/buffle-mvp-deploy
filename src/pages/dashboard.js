@@ -10,7 +10,7 @@ const Dashboard = () => {
         <Col lg="1">
           <Sidebar />
         </Col>
-        <Col lg="11">
+        <Col lg="11 secondary-color">
           <Row>header</Row>
           <Row>after header</Row>
           <Row>

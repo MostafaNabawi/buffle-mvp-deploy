@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Sidebar = () => {
   return (
     <div className="container-fluid h-sidebar">
-      <Row>
+      <Row className="">
         <Col className="mt-3">
            <Link to=""><Image src="/icone/countdown to break 3.png"/></Link>
         </Col>
