@@ -5,7 +5,7 @@ import Header from "./Header";
 import { Outlet } from "react-router-dom";
 function Layout(props) {
   return (
-    <div className="container-fluid px-0">
+    <div className="container-fluid">
       <Row>
         <Col lg="1">
           <SideBar />
