@@ -5,7 +5,7 @@ import Sidebar from "../components/common/Sidebar";
 const Dashboard = () => {
   return (
     <div className="container-fluid">
-      <Row>
+      <Row className="h-sidebar">
         <Col lg="1">
           <Sidebar/>
         </Col>
