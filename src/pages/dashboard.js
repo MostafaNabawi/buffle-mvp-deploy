@@ -1,5 +1,6 @@
 import { React } from "react";
 import { Row, Col } from "react-bootstrap";
+import TaskManagementCard from "../components/TaskManagementCard";
 
 const Dashboard = () => {
   return (
@@ -9,7 +10,9 @@ const Dashboard = () => {
         <Col lg="11">
           <Row>header</Row>
           <Row>after header</Row>
-          <Row>zia</Row>
+          <Row>
+            <TaskManagementCard />
+          </Row>
           <Row>abbase</Row>
         </Col>
       </Row>
