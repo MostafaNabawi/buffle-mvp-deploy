@@ -295,4 +295,29 @@ color: #A3AED0;
   padding: 5px !important;
   color: white;
 }
+.vacation-day{
+  width: 90px;
+  height: 24px;
+  font-family: DM Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 24px;
+  letter-spacing: -0.02em;
+  color: #1B2559;
+}
+.vacation-until{
+  width: 165px;
+  height: 21px;
+  left: 909px;
+  top: 192px;
+  font-family: DM Sans;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 10px;
+  display: flex;
+  align-items: center;
+  color: #A3AED0;
+}
 

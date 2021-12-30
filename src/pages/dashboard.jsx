@@ -52,19 +52,19 @@ const Dashboard = () => {
         <Col xl={3}>
           <Card>
             <CardHeader
-              icon={<Image src="/icone/brain 1.png" alt="vector image" />}
+              icon={<Image src="/icone/smiling-face-with-sunglasses 1.png" alt="vector image" />}
               title={
-                <h4 className="heading4 custom-title ">How you feel today</h4>
+                <h4 className="heading4 custom-title ">Vacation Time</h4>
               }
-              action=''
+              action={
+                <>
+                  <Icon icon="bi:plus" />
+                </>}
             />
-            <div className="pt-3 pb-0 mb-0">
-              <Image src="/icone/1.png" alt="vector image" />
-              <Image src="/icone/2.png" alt="vector image" />
-              <Image src="/icone/3.png" alt="vector image" />
-              <Image src="/icone/4.png" alt="vector image" />
-              <Image src="/icone/5.png" alt="vector image" />
-            </div>
+            <Row className="mt-3">
+              <Col xl="4"><div className="vacation-day">23 Days</div></Col>
+              <Col xl="8" className="vacation-until">left until MyKonos</Col>
+            </Row>
           </Card>
         </Col>
         <Col xl={3}>
