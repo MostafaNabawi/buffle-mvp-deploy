@@ -1,7 +1,12 @@
 import { React } from "react";
+import TaskManagement from "../components/taskMnagement/TaskManagement";
 
 const Dashboard = () => {
-  return <h3>dashboard</h3>;
+  return (
+    <div>
+      <TaskManagement />
+    </div>
+  );
 };
 
 export default Dashboard;
