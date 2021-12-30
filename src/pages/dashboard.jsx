@@ -3,7 +3,7 @@ import { Row, Col, Image } from "react-bootstrap";
 import { Icon } from '@iconify/react';
 import ProgressBar from '../components/common/ProgressBar'
 import CardHeader from "../components/card/CardHeader";
-import WaterPool from "../components/WaterPool";
+import WaterRepository from "./../components/WaterRepository";
 import Card from "./../components/card/Card";
 
 const Dashboard = () => {
@@ -103,7 +103,7 @@ const Dashboard = () => {
               }
             />
             <div className="pt-4">
-              <WaterPool />
+              <WaterRepository />
             </div>
           </Card>
         </Col>
