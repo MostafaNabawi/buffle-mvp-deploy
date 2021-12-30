@@ -8,7 +8,7 @@
   --navy-blue: #7882ba;
   --low-vein-blue: #8286ff;
   --bg-body-primary: #eff3fa;
-  --main-font-family: "DM Sans", sans-serif;
+  --main-font-family: "DM Sans", sans-serif, "Proxima Nova", sans-serif;
   --bs-radius: 1.25rem !important;
   --secondary-dark-gray: #1b2559;
 }
@@ -107,9 +107,8 @@ button:hover {
 
 .h-sidebar {
   height: 100vh !important;
-  max-width: 6.25rem;
-  min-width: 6.25rem;
-  border-top-right-radius: var(--bs-radius);
+  max-width: 5.25rem;
+  min-width: 5.25rem;
 }
 
 .wrapper {
@@ -150,8 +149,7 @@ button:hover {
   text-align: right;
 }
 
-.repository_wrapper > .repository {
-  position: relative;
+.water_repository .repository {
   width: 16.18rem;
   height: 16.18rem;
   border-radius: 50%;
