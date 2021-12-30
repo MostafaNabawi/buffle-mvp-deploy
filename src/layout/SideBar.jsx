@@ -1,10 +1,11 @@
 import { React } from "react";
-import { Row, Col, Image } from "react-bootstrap";
+import {Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const SideBar = () => {
    return (
-      <div className="pt-3">
+     <section className="h-sidebar">
+         <div className="pt-3">
          <ul className="m-0 sidebar-list">
             <li className="mt-3">
                <Link to=""><Image className="sidebar-icon" src="/icone/countdown to break 3.png" /></Link>
@@ -47,6 +48,7 @@ const SideBar = () => {
             </li>
          </ul>
       </div>
+      </section>
    );
 };
 
