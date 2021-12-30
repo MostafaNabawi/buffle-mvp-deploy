@@ -3,6 +3,7 @@ import { Row, Col, Image } from "react-bootstrap";
 import CardHeader from "../components/card/CardHeader";
 import WaterPool from "../components/WaterPool";
 import Card from "./../components/card/Card";
+
 const Dashboard = () => {
   return (
     <section>
@@ -12,7 +13,7 @@ const Dashboard = () => {
             <CardHeader
               icon={<Image src="/icone/Vector.png" alt="vector image" />}
               title={
-                <h4 className="heading4 secondar-color ">Hydration Reminder</h4>
+                <h4 className="heading4 secondary-color ">Hydration Reminder</h4>
               }
               action={
                 <>
