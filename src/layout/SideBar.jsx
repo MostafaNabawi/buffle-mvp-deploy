@@ -1,53 +1,53 @@
 import { React } from "react";
-import { Row, Col,Image } from "react-bootstrap";
+import { Row, Col, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const SideBar = () => {
-  return (
-    <div className="container-fluid h-sidebar ">
-      <Row className="">
-        <Col className="mt-3">
-           <Link to=""><Image src="/icone/countdown to break 3.png"/></Link>
-        </Col>
-        <Col  className="mt-3">
-           <Link to=""><Image src="/icone/countdown to break 1.png"/></Link>
-        </Col>
-        <Col className="mt-3">
-           <Link to=""><Image src="/icone/kittysplit 1.png"/></Link>
-        </Col>
-        <Col className="mt-3">
-           <Link to=""><Image src="/icone/task manager 1.png"/></Link>
-        </Col>
-        <Col className="mt-3">
-           <Link to=""><Image src="/icone/Vector.png"/></Link>
-        </Col>
-        <Col className="mt-3">
-           <Link to=""><Image src="/icone/eye 1.png"/></Link>
-        </Col>
-        <Col className="mt-3">
-           <Link to=""><Image src="/icone/task manager 1.png"/></Link>
-        </Col>
-        <Col className="mt-3">
-           <Link to=""><Image src="/icone/exclamation-mark 7.png"/></Link>
-        </Col>
-        <Col className="mt-3">
-           <Link to=""><Image src="/icone/exclamation-mark 3.png"/></Link>
-        </Col>
-        <Col className="mt-3">
-           <Link to=""><Image src="/icone/exclamation-mark 4.png"/></Link>
-        </Col>
-        <Col className="mt-3">
-           <Link to=""><Image src="/icone/exclamation-mark 5.png"/></Link>
-        </Col>
-        <Col className="mt-3">
-           <Link to=""><Image src="/icone/exclamation-mark 6.png"/></Link>
-        </Col>
-        <Col className="mt-3">
-           <Link to=""><Image src="/icone/blue-book 1.png"/></Link>
-        </Col>
-      </Row>
-    </div>
-  );
+   return (
+      <div className="pt-3">
+         <ul className="m-0 sidebar-list">
+            <li className="mt-3">
+               <Link to=""><Image className="sidebar-icon" src="/icone/countdown to break 3.png" /></Link>
+            </li>
+            <li className="mt-3">
+               <Link to=""><Image className="sidebar-icon" src="/icone/countdown to break 1.png" /></Link>
+            </li>
+            <li className="mt-3">
+               <Link to=""><Image className="sidebar-icon" src="/icone/kittysplit 1.png" /></Link>
+            </li>
+            <li className="mt-3">
+               <Link to=""><Image className="sidebar-icon" src="/icone/task manager 1.png" /></Link>
+            </li>
+            {/* <li className="mt-3">
+               <Link to=""><Image className="sidebar-icon" src="/icone/Vector.png" /></Link>
+            </li> */}
+            <li className="mt-3">
+               <Link to=""><Image className="sidebar-icon" src="/icone/eye 1.png" /></Link>
+            </li>
+            <li className="mt-3">
+               <Link to=""><Image className="sidebar-icon" src="/icone/task manager 1.png" /></Link>
+            </li>
+            <li className="mt-3">
+               <Link to=""><Image className="sidebar-icon" src="/icone/exclamation-mark 7.png" /></Link>
+            </li>
+            <li className="mt-3">
+               <Link to=""><Image className="sidebar-icon" src="/icone/exclamation-mark 3.png" /></Link>
+            </li>
+            <li className="mt-3">
+               <Link to=""><Image className="sidebar-icon" src="/icone/exclamation-mark 4.png" /></Link>
+            </li>
+            <li className="mt-3">
+               <Link to=""><Image className="sidebar-icon" src="/icone/exclamation-mark 5.png" /></Link>
+            </li>
+            <li className="mt-3">
+               <Link to=""><Image className="sidebar-icon" src="/icone/exclamation-mark 6.png" /></Link>
+            </li>
+            <li className="mt-3">
+               <Link to=""><Image className="sidebar-icon" src="/icone/blue-book 1.png" /></Link>
+            </li>
+         </ul>
+      </div>
+   );
 };
 
 export default SideBar;

@@ -1,16 +1,16 @@
 import React from "react";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col,Button } from "react-bootstrap";
 import SideBar from "./SideBar";
 import Header from "./Header";
 import { Outlet } from "react-router-dom";
 function Layout(props) {
   return (
-    <div className="container-fluid">
+    <div className="container-fluid min-layo">
       <Row>
-        <Col lg="1">
+        <Col className="col-1 sideBar-container p-0">
           <SideBar />
         </Col>
-        <Col lg="11">
+        <Col className="secondary-color">
           <div className="main_container container">
             <Row>
               <Header />
@@ -21,6 +21,7 @@ function Layout(props) {
           </div>
         </Col>
       </Row>
+      {/* <Button className="sidebar-btn-toggle">close</Button> */}
     </div>
   );
 }
