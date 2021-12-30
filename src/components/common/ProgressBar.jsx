@@ -19,7 +19,7 @@ const PreogressBar = ({ lable }) => {
                         {
                             play
                             ?<Icon icon="gg:play-pause" />
-                            : <Icon icon="clarity:play-line" />
+                            : <Icon icon="bi:play-fill" />
                         }
                        
                     </div>
