@@ -4,7 +4,7 @@ import Login from "./pages/login";
 import Register from "./pages/register";
 import CompanyLogin from "./pages/companyLogin";
 import Moneypool from "./pages/moneypool";
-import Dashboard from "./pages/dashboard";
+import Dashboard from "./pages/Dashboard";
 import Layout from "./layout/Layout";
 
 function App() {
