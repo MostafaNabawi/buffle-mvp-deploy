@@ -1,16 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("http://fonts.cdnfonts.com/css/proxima-nova-2");
 /* Global styles heading */
 
 :root {
   --primary-color: #4922ff;
   --secondary-color: #eff3fa;
   --secondary-dark: #e6e6e6;
+  --secondary-dark-gray: #1b2559;
   --navy-blue: #7882ba;
   --low-vein-blue: #8286ff;
-  --bg-body-primary: #eff3fa;
-  --main-font-family: "DM Sans", sans-serif, "Proxima Nova", sans-serif;
+  --font-dm-snas: "DM Sans", sans-serif;
+  --font-proxima-nova: "Proxima Nova", sans-serif;
   --bs-radius: 1.25rem !important;
-  --secondary-dark-gray: #1b2559;
 }
 
 * {
@@ -20,7 +21,7 @@
 }
 
 body {
-  font-family: var(--main-font-family) !important;
+  font-family: var(--font-dm-snas) !important;
 }
 h1,
 h2,
@@ -118,7 +119,7 @@ button:hover {
 /* main contianer */
 .main_container {
   flex-grow: 1;
-  background-color: var(--bg-body-primary);
+  background-color: var(--secondary-color);
 }
 
 .main_container > .container-fluid {
@@ -127,7 +128,6 @@ button:hover {
 
 /* card */
 .card {
-  background: var(--primary-color);
   border-radius: var(--bs-radius) !important;
   padding: 1.5rem;
   box-shadow: 0px 4px 7px 0px rgba(0, 0, 0, 0.25);
@@ -154,6 +154,6 @@ button:hover {
   height: 16.18rem;
   border-radius: 50%;
   text-align: center;
-  background-color: var(--bg-body-primary);
+  background-color: var(--secondary-color);
   box-shadow: 0px 4px 7px 0px rgba(0, 0, 0, 0.25);
 }
