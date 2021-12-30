@@ -8,7 +8,7 @@
   --navy-blue: #7882ba;
   --low-vein-blue: #8286ff;
   --bg-body-primary: #eff3fa;
-  --main-font-family: "DM Sans", sans-serif;
+  --main-font-family: "DM Sans", sans-serif,'Proxima Nova', sans-serif;
   --bs-radius: 1.25rem !important;
   --secondary-dark-gray: #1b2559;
 }
@@ -199,11 +199,44 @@ ul.sidebar-list{
 .header-thank{
   width: 452px;
   height: 32px;
-  font-family: Proxima Soft;
+  font-family:DM Sans;
   font-style: normal;
   font-weight: bold;
   font-size: 42px;
-  line-height: 32px;
+  line-height: 30px;
 /* identical to box height, or 76% */
+  letter-spacing: -0.01em;
+}
+.form-search{
+  height: 46px;
+  width: 234.6312255859375px;
+  left: 1029px;
+  top: 63px;
+  border-radius: 10px;
+
+}
+.serach-input{
+  background: #FFFFFF;
+  box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  border: none;
+  font-family: DM Sans;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 14px;
   letter-spacing: -0.02em;
+  text-align: left;
+}
+.header-icon{
+  margin-top: -10px !important;
+  width: 56px;
+  height: 56px;
+  /* Secondary/Grey/300 */
+  background: #F4F7FE;
+  box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.25);
+  border-radius: 50%;
+}
+.float-right{
+  float: right !important;
 }
