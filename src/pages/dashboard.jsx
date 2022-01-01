@@ -3,12 +3,13 @@ import { Row, Col, Image } from "react-bootstrap";
 import { Icon } from '@iconify/react';
 import ProgressBar from '../components/common/ProgressBar'
 import CardHeader from "../components/card/CardHeader";
-import WaterRepository from "./../components/WaterRepository";
-import Card from "./../components/card/Card";
+import WaterRepository from "../components/WaterRepository";
+import Card from "../components/card/Card";
 
 const Dashboard = () => {
   return (
     <section>
+      {/* section one */}
       <Row>
         <Col xl={3}>
           <Card>
