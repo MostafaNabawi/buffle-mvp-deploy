@@ -1,16 +1,20 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("http://fonts.cdnfonts.com/css/proxima-nova-2");
 /* Global styles heading */
-
+@font-face {
+  font-family: "Proxima Soft";
+  src: url("../fonts/ProximaSoft-Medium.ttf");
+}
 :root {
   --primary-color: #4922ff;
   --secondary-color: #eff3fa;
   --secondary-dark: #e6e6e6;
+  --secondary-dark-gray: #1b2559;
   --navy-blue: #7882ba;
   --low-vein-blue: #8286ff;
-  --bg-body-primary: #eff3fa;
-  --main-font-family: "DM Sans", sans-serif;
+  --font-dm-snas: "DM Sans", sans-serif;
+  --font-proxima-nova: "Proxima Nova", sans-serif;
   --bs-radius: 1.25rem !important;
-  --secondary-dark-gray: #1b2559;
 }
 
 * {
@@ -18,9 +22,16 @@
   padding: 0;
   box-sizing: border-box;
 }
+audio {
+  width: 300px;
+  height: 30px;
+  background-color: white !important;
+}
+
+
 
 body {
-  font-family: var(--main-font-family) !important;
+  font-family: var(--font-dm-snas) !important;
 }
 h1,
 h2,
@@ -118,7 +129,7 @@ button:hover {
 /* main contianer */
 .main_container {
   flex-grow: 1;
-  background-color: var(--bg-body-primary);
+  background-color: var(--secondary-color);
 }
 
 .main_container > .container-fluid {
@@ -127,7 +138,6 @@ button:hover {
 
 /* card */
 .card {
-  background: var(--primary-color);
   border-radius: var(--bs-radius) !important;
   padding: 1.5rem;
   box-shadow: 0px 4px 7px 0px rgba(0, 0, 0, 0.25);
@@ -149,61 +159,175 @@ button:hover {
   text-align: right;
 }
 
-.water_pool > div {
+.water_repository .repository {
   width: 16.18rem;
   height: 16.18rem;
   border-radius: 50%;
   text-align: center;
+  background-color: var(--secondary-color);
   box-shadow: 0px 4px 7px 0px rgba(0, 0, 0, 0.25);
 }
 /*  */
-.sideBar-container{
+.sideBar-container {
   width: 80px !important;
   height: 100vh !important;
 }
-ul.sidebar-list > li{
+ul.sidebar-list > li {
   list-style-type: none !important;
-  margin-left: 16px !important; 
+  margin-left: 16px !important;
 }
-.sidebar-icon{
+.sidebar-icon {
   width: 45px !important;
   height: 43px !important;
 }
-ul.sidebar-list{
+ul.sidebar-list {
   padding: 0px !important;
 }
-.sidebar-btn-toggle{
+.sidebar-btn-toggle {
   position: fixed;
-  top:10px;
-  left:13px;
+  top: 10px;
+  left: 13px;
   width: 50px;
   height: 50px;
-
 }
-.min-layout{
+.min-layout {
   position: relative !important;
 }
 /* header style */
-.header-name{
+.header-name {
   width: 289px;
-   height: 16px;
+  height: 16px;
   font-family: DM Sans;
   font-style: normal;
   font-weight: bold;
   font-size: 24px;
   line-height: 16px;
-/* identical to box height, or 67% */
+  /* identical to box height, or 67% */
   letter-spacing: -0.02em;
-  color: #707EAE;
+  color: #707eae;
 }
-.header-thank{
+.header-thank {
   width: 452px;
   height: 32px;
   font-family: Proxima Soft;
   font-style: normal;
   font-weight: bold;
   font-size: 42px;
-  line-height: 32px;
-/* identical to box height, or 76% */
-  letter-spacing: -0.02em;
+  line-height: 30px;
+  /* identical to box height, or 76% */
+  letter-spacing: -0.01em;
 }
+.form-search {
+  height: 46px;
+  width: 234.6312255859375px;
+  left: 1029px;
+  top: 63px;
+  border-radius: 10px;
+}
+.serach-input {
+  background: #ffffff;
+  box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  border: none;
+  font-family: DM Sans;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 14px;
+  letter-spacing: -0.02em;
+  text-align: left;
+}
+.header-icon {
+  margin-top: -10px !important;
+  width: 56px;
+  height: 56px;
+  /* Secondary/Grey/300 */
+  background: #f4f7fe;
+  box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.25);
+  border-radius: 50%;
+}
+.float-right {
+  float: right !important;
+}
+/*  */
+.custom-title {
+  width: 149.18px;
+  font-family: DM Sans;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 14px;
+  display: flex;
+  align-items: center;
+  letter-spacing: -0.02em;
+  color: #a3aed0;
+}
+.icon-plus {
+  width: 14px;
+  height: 14px;
+  color: #1b2559;
+}
+.progress {
+  display: flex;
+  height: 24px !important;
+  border-radius: 20px;
+  overflow: hidden;
+  font-size: 0.75rem;
+  background-color: #e9ecef;
+  border-radius: 20px !important;
+}
+.progress-bar {
+  padding: 5px !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  background: radial-gradient(
+    100% 682.41% at 4.04% 0%,
+    #8286ff 0%,
+    #4922ff 100%
+  );
+  transition: width 0.6s ease;
+}
+.icon-progress {
+  width: 28px;
+  height: 28px;
+  background: #eff3fa;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.icon-watch {
+  position: absolute;
+  font-size: x-large;
+  padding: 5px !important;
+  color: white;
+}
+.vacation-day{
+  width: 90px;
+  height: 24px;
+  font-family: DM Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 24px;
+  letter-spacing: -0.02em;
+  color: #1B2559;
+}
+.vacation-until{
+  width: 165px;
+  height: 21px;
+  left: 909px;
+  top: 192px;
+  font-family: DM Sans;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 10px;
+  display: flex;
+  align-items: center;
+  color: #A3AED0;
+}
+
