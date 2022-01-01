@@ -1,4 +1,5 @@
 import { React } from "react";
+import { Link } from "react-router-dom";
 import { Row, Col, Image, Form } from "react-bootstrap";
 import { Icon } from '@iconify/react';
 import ProgressBar from '../components/common/ProgressBar'
@@ -141,7 +142,7 @@ const Dashboard = () => {
                       </Form.Group>
                     </Col>
                     <Col xl="11" className="task-manager-text">
-                    Feedback for Raj
+                      Feedback for Raj
                     </Col>
                   </Row>
                 </Col>
@@ -165,7 +166,7 @@ const Dashboard = () => {
                       </Form.Group>
                     </Col>
                     <Col xl="11" className="task-manager-text">
-                    Tracking sales goals and reporting of last week
+                      Tracking sales goals and reporting of last week
                     </Col>
                   </Row>
                 </Col>
@@ -189,7 +190,7 @@ const Dashboard = () => {
                       </Form.Group>
                     </Col>
                     <Col xl="11" className="task-manager-text">
-                    Preparing KPIs for Timo
+                      Preparing KPIs for Timo
                     </Col>
                   </Row>
                 </Col>
@@ -216,13 +217,63 @@ const Dashboard = () => {
               }
               action=''
             />
-            <Row className="mt-3">
-             <Col className="col-2">
-              <div className="breakplan-icon navy-blue text-center pt-2">
-                <Image className="breakplan-img" src="/icone/hcphotos-Headshots-1 2.png" />
-              </div>
-            </Col>
-            </Row>
+            <div className="mt-3">
+              <Row className="mt-3">
+                <Col className="col-2">
+                  <div className="breakplan-icon navy-blue text-center pt-2">
+                    <Image className="breakplan-img" src="/icone/WB_Headshots-102-web 1.png" />
+                  </div>
+                </Col>
+                <Col>
+                  <div className="break-user-name">Raj Kumar</div>
+                  <div>
+                    <span className="break-type">orders Lieferando</span>
+                    <span className="break-time">13:00</span>
+                  </div>
+                </Col>
+              </Row>
+              <Row className="mt-3">
+                <Col className="col-2">
+                  <div className="breakplan-icon navy-blue text-center pt-2">
+                    <Image className="breakplan-img" src="/icone/RJ_Headshots-84-web 1.png" />
+                  </div>
+                </Col>
+                <Col>
+                  <div className="break-user-name">Raj Kumar</div>
+                  <div>
+                    <span className="break-type">orders Lieferando</span>
+                    <span className="break-time">13:00</span>
+                  </div>
+                </Col>
+              </Row>
+              <Row className="mt-3">
+                <Col className="col-2">
+                  <div className="breakplan-icon navy-blue text-center pt-2">
+                    <Image className="breakplan-img" src="/icone/2018-11-27-Cornelius-W-111 1.png" />
+                  </div>
+                </Col>
+                <Col>
+                  <div className="break-user-name">Raj Kumar</div>
+                  <div>
+                    <span className="break-type">orders Lieferando</span>
+                    <span className="break-time">13:00</span>
+                  </div>
+                </Col>
+              </Row>
+              <Row className="mt-3">
+                <Col> 
+                <div className="creat-breack-time">
+                  <div className="what-is-breack">
+                     What’s your breakplan?
+                  </div>
+                  <ul className="pt-1 pl-2">
+                    <li><Link  className="break-plan" to="">Plan</Link></li>
+                  </ul>
+                </div>
+                </Col>
+              </Row>
+
+            </div>
           </Card>
         </Col>
       </Row>
