@@ -71,66 +71,65 @@ const Dashboard = () => {
         <Col xl={3}>
           <Card>
             <CardHeader
-              icon={<Image src="/icone/brain 1.png" alt="vector image" />}
+              icon={<Image src="/icone/musical-note 1.png" alt="vector image" />}
               title={
-                <h4 className="heading4 custom-title ">How you feel today</h4>
+                <h4 className="heading4 custom-title ">Worktunes</h4>
               }
               action=''
             />
-            <div className="pt-3 pb-0 mb-0">
-              <Image src="/icone/1.png" alt="vector image" />
-              <Image src="/icone/2.png" alt="vector image" />
-              <Image src="/icone/3.png" alt="vector image" />
-              <Image src="/icone/4.png" alt="vector image" />
-              <Image src="/icone/5.png" alt="vector image" />
-            </div>
-          </Card>
-        </Col>
-      </Row>
-      {/* end */}
-      <Row>
-        <Col xl={4}>
-          <Card>
-            <CardHeader
-              icon={<Image src="/icone/Vector.png" alt="vector image" />}
-              title={
-                <h4 className="heading4 secondary-color ">Hydration Reminder</h4>
-              }
-              action={
-                <>
-                  <i className="fa fa-plus" aria-hidden="true"></i>
-                  <span>i</span>
-                </>
-              }
-            />
-            <div className="pt-4">
-              <WaterRepository />
-            </div>
-          </Card>
-        </Col>
-        <Col xl={4}>
-          <Card>
-            <CardHeader>
-              <h1>hello</h1>
-            </CardHeader>
-          </Card>
-          <Card>
-            <CardHeader>
-              <h1>hello</h1>
-            </CardHeader>
-          </Card>
-        </Col>
-        <Col xl={4}>
-          <Card>
-            <CardHeader>
-              <h1>hello</h1>
-            </CardHeader>
-          </Card>
-        </Col>
-      </Row>
-    </section>
-  );
+            {/* muted */}
+            <audio controls className="mt-3">
+              <source  src="/music/1.mp3" type="audio/ogg"/>
+                <source src="/music/2.mp3" type="audio/mpeg"/>
+                  Your browser does not support the audio element.
+                </audio>
+              </Card>
+            </Col>
+          </Row>
+          {/* end */}
+          <Row>
+            <Col xl={4}>
+              <Card>
+                <CardHeader
+                  icon={<Image src="/icone/Vector.png" alt="vector image" />}
+                  title={
+                    <h4 className="heading4 secondary-color ">Hydration Reminder</h4>
+                  }
+                  action={
+                    <>
+                      <i className="fa fa-plus" aria-hidden="true"></i>
+                      <span>i</span>
+                    </>
+                  }
+                />
+                <div className="pt-4">
+                  <WaterRepository />
+                </div>
+              </Card>
+            </Col>
+            <Col xl={4}>
+              <Card>
+                <CardHeader>
+                  <h1>hello</h1>
+                </CardHeader>
+              </Card>
+              <Card>
+                <CardHeader>
+                  <h1>hello</h1>
+                </CardHeader>
+              </Card>
+            </Col>
+            <Col xl={4}>
+              <Card>
+                <CardHeader>
+                  <h1>hello</h1>
+                </CardHeader>
+              </Card>
+            </Col>
+          </Row>
+        </section>
+        );
 };
 
-export default Dashboard;
+        export default Dashboard;
 

@@ -22,6 +22,13 @@
   padding: 0;
   box-sizing: border-box;
 }
+audio {
+  width: 300px;
+  height: 30px;
+  background-color: white !important;
+}
+
+
 
 body {
   font-family: var(--font-dm-snas) !important;
