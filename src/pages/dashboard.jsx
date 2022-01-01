@@ -1,5 +1,5 @@
 import { React } from "react";
-import { Row, Col, Image } from "react-bootstrap";
+import { Row, Col, Image, Form } from "react-bootstrap";
 import { Icon } from '@iconify/react';
 import ProgressBar from '../components/common/ProgressBar'
 import CardHeader from "../components/card/CardHeader";
@@ -12,7 +12,7 @@ const Dashboard = () => {
       {/* section one */}
       <Row>
         <Col xl={3}>
-          <Card>
+          <Card className="custom-h-card">
             <CardHeader
               icon={<Image src="/icone/brain 1.png" alt="vector image" />}
               title={
@@ -30,7 +30,7 @@ const Dashboard = () => {
           </Card>
         </Col>
         <Col xl={3}>
-          <Card>
+          <Card className="custom-h-card">
             <CardHeader
               icon={<Image src="/icone/countdown to break 2.png" alt="vector image" />}
               title={
@@ -41,17 +41,19 @@ const Dashboard = () => {
                   <Icon icon="bi:plus" />
                 </>}
             />
-            <ProgressBar
-              lable={`
+            <div className="mt-3 pb-0 mb-0 mr-3">
+              <ProgressBar
+                lable={`
                     ${new Date().getHours()}
                     :${new Date().getMinutes()}
                     :${new Date().getSeconds()}
                     `}
-            />
+              />
+            </div>
           </Card>
         </Col>
         <Col xl={3}>
-          <Card>
+          <Card className="custom-h-card">
             <CardHeader
               icon={<Image src="/icone/smiling-face-with-sunglasses 1.png" alt="vector image" />}
               title={
@@ -69,7 +71,7 @@ const Dashboard = () => {
           </Card>
         </Col>
         <Col xl={3}>
-          <Card>
+          <Card className="custom-h-card">
             <CardHeader
               icon={<Image src="/icone/musical-note 1.png" alt="vector image" />}
               title={
@@ -79,57 +81,195 @@ const Dashboard = () => {
             />
             {/* muted */}
             <audio controls className="mt-3">
-              <source  src="/music/1.mp3" type="audio/ogg"/>
-                <source src="/music/2.mp3" type="audio/mpeg"/>
-                  Your browser does not support the audio element.
-                </audio>
-              </Card>
+              <source src="/music/1.mp3" type="audio/ogg" />
+              <source src="/music/2.mp3" type="audio/mpeg" />
+              Your browser does not support the audio element.
+            </audio>
+          </Card>
+        </Col>
+      </Row>
+      {/* end */}
+      {/* section tow */}
+      <Row>
+        <Col xl={8}>
+          <Card >
+            <CardHeader
+              icon={<Image className="tesk-manager-icon" src="/icone/task manager 1.png" alt="vector image" />}
+              title={
+                <>
+                  <h4 className="task-manager">Task Manager</h4>
+                  <h4 className="heading4 custom-title ">4 opan ,1 started</h4></>
+              }
+              action={
+                <>
+                  <Icon className="action-icon" icon="bi:plus" />
+                  <Icon className="action-icon" icon="codicon:kebab-vertical" />
+                </>
+              }
+            />
+            <Row>
+              <Row className="task-manager-body">
+                <Col xl="9">
+                  <Row className="pl-5">
+                    <Col xl="1">
+                      <Form.Group controlId="formBasicCheckbox">
+                        <Form.Check className="check-box " type="checkbox" />
+                      </Form.Group>
+                    </Col>
+                    <Col xl="11" className="task-manager-text">
+                      Setting individual sales targets with the sales team
+                    </Col>
+                  </Row>
+                </Col>
+                <Col xl="3">
+                  <ProgressBar
+                    lable={`
+                    ${new Date().getHours()}
+                    :${new Date().getMinutes()}
+                    :${new Date().getSeconds()}
+                    `}
+                  />
+                </Col>
+              </Row >
+              <div className="devidre"></div>
+              <Row className="task-manager-body">
+                <Col xl="9">
+                  <Row className="pl-5">
+                    <Col xl="1">
+                      <Form.Group controlId="formBasicCheckbox">
+                        <Form.Check className="check-box " type="checkbox" />
+                      </Form.Group>
+                    </Col>
+                    <Col xl="11" className="task-manager-text">
+                    Feedback for Raj
+                    </Col>
+                  </Row>
+                </Col>
+                <Col xl="3">
+                  <ProgressBar
+                    lable={`
+                    ${new Date().getHours()}
+                    :${new Date().getMinutes()}
+                    :${new Date().getSeconds()}
+                    `}
+                  />
+                </Col>
+              </Row>
+              <div className="devidre"></div>
+              <Row className="task-manager-body">
+                <Col xl="9">
+                  <Row className="pl-5">
+                    <Col xl="1">
+                      <Form.Group controlId="formBasicCheckbox">
+                        <Form.Check className="check-box " type="checkbox" />
+                      </Form.Group>
+                    </Col>
+                    <Col xl="11" className="task-manager-text">
+                    Tracking sales goals and reporting of last week
+                    </Col>
+                  </Row>
+                </Col>
+                <Col xl="3">
+                  <ProgressBar
+                    lable={`
+                    ${new Date().getHours()}
+                    :${new Date().getMinutes()}
+                    :${new Date().getSeconds()}
+                    `}
+                  />
+                </Col>
+              </Row>
+              <div className="devidre"></div>
+              <Row className="task-manager-body">
+                <Col xl="9">
+                  <Row className="pl-5">
+                    <Col xl="1">
+                      <Form.Group controlId="formBasicCheckbox">
+                        <Form.Check className="check-box " type="checkbox" />
+                      </Form.Group>
+                    </Col>
+                    <Col xl="11" className="task-manager-text">
+                    Preparing KPIs for Timo
+                    </Col>
+                  </Row>
+                </Col>
+                <Col xl="3">
+                  <ProgressBar
+                    lable={`
+                    ${new Date().getHours()}
+                    :${new Date().getMinutes()}
+                    :${new Date().getSeconds()}
+                    `}
+                  />
+                </Col>
+              </Row>
+              <div className="devidre"></div>
+            </Row>
+          </Card>
+        </Col>
+        <Col xl={4}>
+          <Card>
+            <CardHeader
+              icon={<Image src="/icone/direct-hit 1.png" alt="vector image" />}
+              title={
+                <h4 className="heading4 breakplan-title ">Breakplan </h4>
+              }
+              action=''
+            />
+            <Row className="mt-3">
+             <Col className="col-2">
+              <div className="breakplan-icon navy-blue text-center pt-2">
+                <Image className="breakplan-img" src="/icone/hcphotos-Headshots-1 2.png" />
+              </div>
             </Col>
-          </Row>
-          {/* end */}
-          <Row>
-            <Col xl={4}>
-              <Card>
-                <CardHeader
-                  icon={<Image src="/icone/Vector.png" alt="vector image" />}
-                  title={
-                    <h4 className="heading4 secondary-color ">Hydration Reminder</h4>
-                  }
-                  action={
-                    <>
-                      <i className="fa fa-plus" aria-hidden="true"></i>
-                      <span>i</span>
-                    </>
-                  }
-                />
-                <div className="pt-4">
-                  <WaterRepository />
-                </div>
-              </Card>
-            </Col>
-            <Col xl={4}>
-              <Card>
-                <CardHeader>
-                  <h1>hello</h1>
-                </CardHeader>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <h1>hello</h1>
-                </CardHeader>
-              </Card>
-            </Col>
-            <Col xl={4}>
-              <Card>
-                <CardHeader>
-                  <h1>hello</h1>
-                </CardHeader>
-              </Card>
-            </Col>
-          </Row>
-        </section>
-        );
+            </Row>
+          </Card>
+        </Col>
+      </Row>
+      {/* end */}
+      <Row>
+        <Col xl={4}>
+          <Card>
+            <CardHeader
+              icon={<Image src="/icone/Vector.png" alt="vector image" />}
+              title={
+                <h4 className="heading4 secondary-color ">Hydration Reminder</h4>
+              }
+              action={
+                <>
+                  <i className="fa fa-plus" aria-hidden="true"></i>
+                  <span>i</span>
+                </>
+              }
+            />
+            <div className="pt-4">
+              <WaterRepository />
+            </div>
+          </Card>
+        </Col>
+        <Col xl={4}>
+          <Card>
+            <CardHeader>
+              <h1>hello</h1>
+            </CardHeader>
+          </Card>
+          <Card>
+            <CardHeader>
+              <h1>hello</h1>
+            </CardHeader>
+          </Card>
+        </Col>
+        <Col xl={4}>
+          <Card>
+            <CardHeader>
+              <h1>hello</h1>
+            </CardHeader>
+          </Card>
+        </Col>
+      </Row>
+    </section>
+  );
 };
 
-        export default Dashboard;
+export default Dashboard;
 
