@@ -13,7 +13,7 @@ const Dashboard = () => {
             <CardHeader
               icon={<Image src="/icone/Vector.png" alt="vector image" />}
               title={
-                <h4 className="heading4 secondary-color ">Hydration Reminder</h4>
+                <h4 className="heading4 secondar-color ">Hydration Reminder</h4>
               }
               action={
                 <>
