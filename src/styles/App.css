@@ -23,6 +23,7 @@
   box-sizing: border-box;
 }
 audio {
+  width: 100% !important;
   height: 30px;
 }
 body {
@@ -189,6 +190,10 @@ ul.sidebar-list {
   position: relative !important;
 }
 /* header style */
+.feel-icon{
+  width: 35px;
+  height: 35px;
+}
 .search-icon{
   background: transparent !important;
   padding: 7px;
@@ -317,7 +322,6 @@ ul.sidebar-list {
   color: white;
 }
 .vacation-day {
-  width: 90px;
   height: 24px;
   font-family: DM Sans;
   font-style: normal;
@@ -328,17 +332,11 @@ ul.sidebar-list {
   color: #1b2559;
 }
 .vacation-until {
-  width: 165px;
-  height: 21px;
-  left: 909px;
-  top: 192px;
   font-family: DM Sans;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
   line-height: 10px;
-  display: flex;
-  align-items: center;
   color: #a3aed0;
 }
 .custom-h-card {
