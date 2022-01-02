@@ -46,11 +46,11 @@
   bottom: -96%;
   right: -54%;
   border-radius: 0% 50% 0 0;
-  background-color: #4318ff;
+  background-color: inherit;
   z-index: 2;
   transform: rotate(-82deg);
 }
-/* 
+
 .repository span:nth-child(2),
 .repository span:nth-child(3) {
   position: absolute;
@@ -61,14 +61,15 @@
     #8286ff 0%,
     #4922ff 100%
   );
+  opacity: 0.5;
 }
 
 .repository span:nth-child(2) {
-  bottom: -96%;
-  left: -54%;
+  top: 44%;
+  left: -69%;
   border-radius: 0% 50% 0 0;
   z-index: 2;
-  transform: rotate(-82deg);
+  transform: rotate(-16deg);
 }
 .repository span:nth-child(3) {
   bottom: -96%;
@@ -76,4 +77,4 @@
   border-radius: 0% 50% 0 0;
   z-index: 2;
   transform: rotate(-82deg);
-} */
+}
