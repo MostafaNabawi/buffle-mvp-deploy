@@ -1,46 +1,68 @@
 import { React } from "react";
-import { Link } from "react-router-dom";
 import { Row, Col, Image, Form } from "react-bootstrap";
-import { Icon } from '@iconify/react';
-import ProgressBar from '../components/common/ProgressBar'
+import { Link } from "react-router-dom";
+import { Icon } from "@iconify/react";
+import ProgressBar from "../components/common/ProgressBar";
 import CardHeader from "../components/card/CardHeader";
-import WaterRepository from "../components/WaterRepository";
 import Card from "../components/card/Card";
-
+import HydrationReminderCard from "./../components/hydrationReminder/HydrationReminderCard";
+import ScreenFreeReminderCard from "./../components/screenFreeReminder/ScreenFreeReminderCard";
+import EventCalender from "./../components/eventCalender/EventCalender";
+import ImpotentToDayCard from "./../components/impotentToDay/ImpotentToDayCard";
 const Dashboard = () => {
   return (
     <section>
-      {/* section one */}
       <Row>
         <Col xl={3}>
           <Card className="custom-h-card">
             <CardHeader
               icon={<Image src="/icone/brain 1.png" alt="vector image" />}
-              title={
-                <h4 className="heading4 custom-title ">How you feel today</h4>
-              }
-              action=''
+              title="How you feel today"
             />
             <div className="pt-3 pb-0 mb-0">
-              <Image className="feel-icon" src="/icone/1.png" alt="vector image" />
-              <Image className="feel-icon" src="/icone/2.png" alt="vector image" />
-              <Image className="feel-icon" src="/icone/3.png" alt="vector image" />
-              <Image className="feel-icon" src="/icone/4.png" alt="vector image" />
-              <Image className="feel-icon" src="/icone/5.png" alt="vector image" />
+              <Image
+                className="feel-icon"
+                src="/icone/1.png"
+                alt="vector image"
+              />
+              <Image
+                className="feel-icon"
+                src="/icone/2.png"
+                alt="vector image"
+              />
+              <Image
+                className="feel-icon"
+                src="/icone/3.png"
+                alt="vector image"
+              />
+              <Image
+                className="feel-icon"
+                src="/icone/4.png"
+                alt="vector image"
+              />
+              <Image
+                className="feel-icon"
+                src="/icone/5.png"
+                alt="vector image"
+              />
             </div>
           </Card>
         </Col>
         <Col xl={3}>
           <Card className="custom-h-card">
             <CardHeader
-              icon={<Image src="/icone/countdown to break 2.png" alt="vector image" />}
-              title={
-                <h4 className="heading4 custom-title ">Next break</h4>
+              icon={
+                <Image
+                  src="/icone/countdown to break 2.png"
+                  alt="vector image"
+                />
               }
+              title="Next break"
               action={
                 <>
                   <Icon icon="bi:plus" />
-                </>}
+                </>
+              }
             />
             <div className="mt-3 pb-0 mb-0 mr-3">
               <ProgressBar
@@ -56,14 +78,18 @@ const Dashboard = () => {
         <Col xl={3}>
           <Card className="custom-h-card">
             <CardHeader
-              icon={<Image src="/icone/smiling-face-with-sunglasses 1.png" alt="vector image" />}
-              title={
-                <h4 className="heading4 custom-title ">Vacation Time</h4>
+              icon={
+                <Image
+                  src="/icone/smiling-face-with-sunglasses 1.png"
+                  alt="vector image"
+                />
               }
+              title="Vacation Time"
               action={
                 <>
                   <Icon icon="bi:plus" />
-                </>}
+                </>
+              }
             />
             <div className="mt-3">
               <span className="vacation-day">23 Days </span>
@@ -74,11 +100,10 @@ const Dashboard = () => {
         <Col xl={3}>
           <Card className="custom-h-card">
             <CardHeader
-              icon={<Image src="/icone/musical-note 1.png" alt="vector image" />}
-              title={
-                <h4 className="heading4 custom-title ">Worktunes</h4>
+              icon={
+                <Image src="/icone/musical-note 1.png" alt="vector image" />
               }
-              action=''
+              title="Worktunes"
             />
             {/* muted */}
             <audio controls className="mt-3">
@@ -93,14 +118,17 @@ const Dashboard = () => {
       {/* section tow */}
       <Row>
         <Col xl={8}>
-          <Card >
+          <Card>
             <CardHeader
-              icon={<Image className="tesk-manager-icon" src="/icone/task manager 1.png" alt="vector image" />}
-              title={
-                <>
-                  <h4 className="task-manager">Task Manager</h4>
-                  <h4 className="heading4 custom-title ">4 opan ,1 started</h4></>
+              icon={
+                <Image
+                  className="tesk-manager-icon"
+                  src="/icone/task manager 1.png"
+                  alt="vector image"
+                />
               }
+              title="ask Manager"
+              subtitle="4 opan ,1 started"
               action={
                 <>
                   <Icon className="action-icon" icon="bi:plus" />
@@ -131,7 +159,7 @@ const Dashboard = () => {
                     `}
                   />
                 </Col>
-              </Row >
+              </Row>
               <div className="devidre"></div>
               <Row className="task-manager-body">
                 <Col xl="9">
@@ -209,19 +237,20 @@ const Dashboard = () => {
           </Card>
         </Col>
         <Col xl={4}>
-          <Card>
+          <Card className="breakplan-card">
             <CardHeader
               icon={<Image src="/icone/direct-hit 1.png" alt="vector image" />}
-              title={
-                <h4 className="heading4 breakplan-title ">Breakplan </h4>
-              }
-              action=''
+              title="Breakplan"
+              action=""
             />
             <div className="mt-3">
               <Row className="mt-3">
                 <Col className="col-2">
                   <div className="breakplan-icon navy-blue text-center pt-2">
-                    <Image className="breakplan-img" src="/icone/WB_Headshots-102-web 1.png" />
+                    <Image
+                      className="breakplan-img"
+                      src="/icone/WB_Headshots-102-web 1.png"
+                    />
                   </div>
                 </Col>
                 <Col>
@@ -235,7 +264,10 @@ const Dashboard = () => {
               <Row className="mt-3">
                 <Col className="col-2">
                   <div className="breakplan-icon navy-blue text-center pt-2">
-                    <Image className="breakplan-img" src="/icone/RJ_Headshots-84-web 1.png" />
+                    <Image
+                      className="breakplan-img"
+                      src="/icone/RJ_Headshots-84-web 1.png"
+                    />
                   </div>
                 </Col>
                 <Col>
@@ -249,7 +281,10 @@ const Dashboard = () => {
               <Row className="mt-3">
                 <Col className="col-2">
                   <div className="breakplan-icon navy-blue text-center pt-2">
-                    <Image className="breakplan-img" src="/icone/2018-11-27-Cornelius-W-111 1.png" />
+                    <Image
+                      className="breakplan-img"
+                      src="/icone/2018-11-27-Cornelius-W-111 1.png"
+                    />
                   </div>
                 </Col>
                 <Col>
@@ -261,61 +296,34 @@ const Dashboard = () => {
                 </Col>
               </Row>
               <Row className="mt-3">
-                <Col> 
-                <div className="creat-breack-time">
-                  <div className="what-is-breack">
-                     What’s your breakplan?
+                <Col>
+                  <div className="creat-breack-time">
+                    <div className="what-is-breack">What’s your breakplan?</div>
+                    <ul className="pt-1 pl-2">
+                      <li>
+                        <Link className="break-plan" to="">
+                          Plan
+                        </Link>
+                      </li>
+                    </ul>
                   </div>
-                  <ul className="pt-1 pl-2">
-                    <li><Link  className="break-plan" to="">Plan</Link></li>
-                  </ul>
-                </div>
                 </Col>
               </Row>
-
             </div>
           </Card>
         </Col>
       </Row>
       {/* end */}
-      <Row>
+      <Row className="section_3">
         <Col xl={4}>
-          <Card>
-            <CardHeader
-              icon={<Image src="/icone/Vector.png" alt="vector image" />}
-              title={
-                <h4 className="heading4 secondary-color ">Hydration Reminder</h4>
-              }
-              action={
-                <>
-                  <i className="fa fa-plus" aria-hidden="true"></i>
-                  <span>i</span>
-                </>
-              }
-            />
-            <div className="pt-4">
-              <WaterRepository />
-            </div>
-          </Card>
+          <HydrationReminderCard />
         </Col>
         <Col xl={4}>
-          <Card>
-            <CardHeader>
-              <h1>hello</h1>
-            </CardHeader>
-          </Card>
-          <Card>
-            <CardHeader>
-              <h1>hello</h1>
-            </CardHeader>
-          </Card>
+          <ScreenFreeReminderCard />
+          <EventCalender />
         </Col>
         <Col xl={4}>
-          <Card>
-            <CardHeader>
-              <h1>hello</h1>
-            </CardHeader>
-          </Card>
+          <ImpotentToDayCard />
         </Col>
       </Row>
     </section>
@@ -323,4 +331,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
