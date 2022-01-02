@@ -1,5 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-@import url("http://fonts.cdnfonts.com/css/proxima-nova-2");
 /* Global styles heading */
 @font-face {
   font-family: "Proxima Soft";
@@ -13,8 +12,8 @@
   --navy-blue: #7882ba;
   --low-vein-blue: #8286ff;
   --font-dm-snas: "DM Sans", sans-serif;
-  --font-proxima-nova: "Proxima Nova", sans-serif;
-  --bs-radius: 1.25rem !important;
+  --bs-radius: 1.25rem;
+  --heading4: 20px;
 }
 
 * {
@@ -26,6 +25,7 @@
 body {
   font-family: var(--font-dm-snas) !important;
 }
+p,
 h1,
 h2,
 h3,
@@ -86,7 +86,7 @@ h6 {
   background-color: var(--secondary-dark);
 }
 
-.secondar-color {
+.secondary-dark-gray {
   color: var(--secondary-dark-gray);
 }
 .navy-blue {
@@ -134,12 +134,21 @@ button:hover {
   border-radius: var(--bs-radius) !important;
   padding: 1.5rem;
   box-shadow: 0px 4px 7px 0px rgba(0, 0, 0, 0.25);
-  margin-bottom: 1.3rem;
+  margin-bottom: 1.2rem;
+  color: var(--secondary-dark-gray);
 }
 
 .card .card_header {
   display: flex;
   align-items: center;
+  color: var(--secondary-dark-gray);
+  padding-bottom: 1rem;
+  line-height: 20px;
+}
+
+.card .card_header h4 {
+  font-size: var(--heading4);
+  font-weight: 700;
 }
 
 .card_header img {
@@ -147,19 +156,22 @@ button:hover {
   height: 1.25rem;
 }
 
+.card_header .BullfeIcon {
+  margin-right: 0.71rem;
+}
+
 .card_header .actions_area {
   flex-grow: 1;
   text-align: right;
 }
-
-.water_repository .repository {
-  width: 16.18rem;
-  height: 16.18rem;
-  border-radius: 50%;
-  text-align: center;
-  background-color: var(--secondary-color);
-  box-shadow: 0px 4px 7px 0px rgba(0, 0, 0, 0.25);
+.card_header .actions_area > * {
+  margin-left: 0.8rem;
+  cursor: pointer;
 }
+.card .card_body {
+  padding-top: 0.43rem;
+}
+
 /*  */
 .sideBar-container {
   width: 80px !important;

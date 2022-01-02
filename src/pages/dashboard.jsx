@@ -1,15 +1,17 @@
 import { React } from "react";
 import { Row, Col, Image } from "react-bootstrap";
-import { Icon } from '@iconify/react';
-import ProgressBar from '../components/common/ProgressBar'
+import { Icon } from "@iconify/react";
+import ProgressBar from "../components/common/ProgressBar";
 import CardHeader from "../components/card/CardHeader";
-import WaterRepository from "./../components/WaterRepository";
-import Card from "./../components/card/Card";
-
+import Card from "../components/card/Card";
+import HydrationReminderCard from "./../components/hydrationReminder/HydrationReminderCard";
+import ScreenFreeReminderCard from "./../components/screenFreeReminder/ScreenFreeReminderCard";
+import EventCalender from "./../components/eventCalender/EventCalender";
+import ImpotentToDayCard from "./../components/impotentToDay/ImpotentToDayCard";
 const Dashboard = () => {
   return (
     <section>
-      <Row>
+      {/* <Row>
         <Col xl={3}>
           <Card>
             <CardHeader
@@ -17,7 +19,7 @@ const Dashboard = () => {
               title={
                 <h4 className="heading4 custom-title ">How you feel today</h4>
               }
-              action=''
+              action=""
             />
             <div className="pt-3 pb-0 mb-0">
               <Image src="/icone/1.png" alt="vector image" />
@@ -31,14 +33,18 @@ const Dashboard = () => {
         <Col xl={3}>
           <Card>
             <CardHeader
-              icon={<Image src="/icone/countdown to break 2.png" alt="vector image" />}
-              title={
-                <h4 className="heading4 custom-title ">Next break</h4>
+              icon={
+                <Image
+                  src="/icone/countdown to break 2.png"
+                  alt="vector image"
+                />
               }
+              title={<h4 className="heading4 custom-title ">Next break</h4>}
               action={
                 <>
                   <Icon icon="bi:plus" />
-                </>}
+                </>
+              }
             />
             <ProgressBar
               lable={`
@@ -56,7 +62,7 @@ const Dashboard = () => {
               title={
                 <h4 className="heading4 custom-title ">How you feel today</h4>
               }
-              action=''
+              action=""
             />
             <div className="pt-3 pb-0 mb-0">
               <Image src="/icone/1.png" alt="vector image" />
@@ -74,7 +80,7 @@ const Dashboard = () => {
               title={
                 <h4 className="heading4 custom-title ">How you feel today</h4>
               }
-              action=''
+              action=""
             />
             <div className="pt-3 pb-0 mb-0">
               <Image src="/icone/1.png" alt="vector image" />
@@ -85,46 +91,18 @@ const Dashboard = () => {
             </div>
           </Card>
         </Col>
-      </Row>
+      </Row> */}
       {/* end */}
       <Row>
         <Col xl={4}>
-          <Card>
-            <CardHeader
-              icon={<Image src="/icone/Vector.png" alt="vector image" />}
-              title={
-                <h4 className="heading4 secondary-color ">Hydration Reminder</h4>
-              }
-              action={
-                <>
-                  <i className="fa fa-plus" aria-hidden="true"></i>
-                  <span>i</span>
-                </>
-              }
-            />
-            <div className="pt-4">
-              <WaterRepository />
-            </div>
-          </Card>
+          <HydrationReminderCard />
         </Col>
         <Col xl={4}>
-          <Card>
-            <CardHeader>
-              <h1>hello</h1>
-            </CardHeader>
-          </Card>
-          <Card>
-            <CardHeader>
-              <h1>hello</h1>
-            </CardHeader>
-          </Card>
+          <ScreenFreeReminderCard />
+          <EventCalender />
         </Col>
         <Col xl={4}>
-          <Card>
-            <CardHeader>
-              <h1>hello</h1>
-            </CardHeader>
-          </Card>
+          <ImpotentToDayCard />
         </Col>
       </Row>
     </section>
@@ -132,4 +110,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-

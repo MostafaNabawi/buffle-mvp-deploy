@@ -1,9 +1,9 @@
 import "./styles/App.css";
 import { Route, Routes } from "react-router-dom";
-import Login from "./pages/login";
-import Register from "./pages/register";
-import CompanyLogin from "./pages/companyLogin";
-import Moneypool from "./pages/moneypool";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import CompanyLogin from "./pages/CompanyLogin";
+import Moneypool from "./pages/Moneypool";
 import Dashboard from "./pages/Dashboard";
 import Layout from "./layout/Layout";
 
