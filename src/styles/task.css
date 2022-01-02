@@ -118,10 +118,10 @@ select {
 
 .col-wrapper {
   display: flex;
+  width: 23% !important;
   flex-direction: column;
-  margin: 20px;
+  margin: 13px;
   padding: 20px;
-  background-color: var(--background-color);
   border-radius: 5px;
 }
 
@@ -191,4 +191,7 @@ select {
 }
 .taskManage {
   height: 100% !important;
+}
+.taskManage > .row {
+  justify-content: start !important;
 }

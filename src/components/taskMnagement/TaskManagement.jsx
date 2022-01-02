@@ -30,7 +30,7 @@ const TaskManagement = () => {
       {
         statuses.map((s => {
           return (
-            <Col lg="2" key={s.status} className={"col-wrapper"}>
+            <Col lg="3" key={s.status} className={"col-wrapper secondary-dark"}>
               <h2 className={"col-header"}>{s.status.toUpperCase()}</h2>
               <DropWrapper onDrop={onDrop} status={s.status}>
                 <Col >
