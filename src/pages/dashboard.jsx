@@ -17,10 +17,7 @@ const Dashboard = () => {
           <Card className="custom-h-card">
             <CardHeader
               icon={<Image src="/icone/brain 1.png" alt="vector image" />}
-              title={
-                <h4 className="heading4 custom-title ">How you feel today</h4>
-              }
-              action=""
+              title="How you feel today"
             />
             <div className="pt-3 pb-0 mb-0">
               <Image
@@ -60,7 +57,7 @@ const Dashboard = () => {
                   alt="vector image"
                 />
               }
-              title={<h4 className="heading4 custom-title ">Next break</h4>}
+              title="Next break"
               action={
                 <>
                   <Icon icon="bi:plus" />
@@ -87,21 +84,13 @@ const Dashboard = () => {
                   alt="vector image"
                 />
               }
-              title={<h4 className="heading4 custom-title ">Vacation Time</h4>}
+              title="Vacation Time"
               action={
                 <>
                   <Icon icon="bi:plus" />
                 </>
               }
             />
-            <Row className="mt-3">
-              <Col xl="4">
-                <div className="vacation-day">23 Days</div>
-              </Col>
-              <Col xl="8" className="vacation-until">
-                left until MyKonos
-              </Col>
-            </Row>
             <div className="mt-3">
               <span className="vacation-day">23 Days </span>
               <span className=" vacation-until">left until MyKonos</span>
@@ -114,8 +103,7 @@ const Dashboard = () => {
               icon={
                 <Image src="/icone/musical-note 1.png" alt="vector image" />
               }
-              title={<h4 className="heading4 custom-title ">Worktunes</h4>}
-              action=""
+              title="Worktunes"
             />
             {/* muted */}
             <audio controls className="mt-3">
@@ -139,12 +127,8 @@ const Dashboard = () => {
                   alt="vector image"
                 />
               }
-              title={
-                <>
-                  <h4 className="task-manager">Task Manager</h4>
-                  <h4 className="heading4 custom-title ">4 opan ,1 started</h4>
-                </>
-              }
+              title="ask Manager"
+              subtitle="4 opan ,1 started"
               action={
                 <>
                   <Icon className="action-icon" icon="bi:plus" />
@@ -253,10 +237,10 @@ const Dashboard = () => {
           </Card>
         </Col>
         <Col xl={4}>
-          <Card>
+          <Card className="breakplan-card">
             <CardHeader
               icon={<Image src="/icone/direct-hit 1.png" alt="vector image" />}
-              title={<h4 className="heading4 breakplan-title ">Breakplan </h4>}
+              title="Breakplan"
               action=""
             />
             <div className="mt-3">
@@ -330,7 +314,7 @@ const Dashboard = () => {
         </Col>
       </Row>
       {/* end */}
-      <Row>
+      <Row className="section_3">
         <Col xl={4}>
           <HydrationReminderCard />
         </Col>

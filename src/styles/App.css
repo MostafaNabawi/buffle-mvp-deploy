@@ -148,18 +148,9 @@ button:hover {
   line-height: 20px;
 }
 
-.card .card_header h4 {
-  font-size: var(--heading4);
-  font-weight: 700;
-}
-
 .card_header img {
   padding-right: 0.71rem;
   height: 1.25rem;
-}
-
-.card_header .BullfeIcon {
-  margin-right: 0.71rem;
 }
 
 .card_header .actions_area {
@@ -172,6 +163,11 @@ button:hover {
 }
 .card .card_body {
   padding-top: 0.43rem;
+}
+
+.section_3 .card .card_header h4 {
+  font-size: 20px;
+  font-weight: 700;
 }
 
 /*  */
@@ -273,7 +269,7 @@ ul.sidebar-list {
   float: right !important;
 }
 /*  */
-.custom-title {
+.custom-h-card h4 {
   width: 149.18px;
   font-family: DM Sans;
   font-style: normal;
@@ -407,9 +403,10 @@ div.check-box > input {
   margin-left: 15px;
   margin-right: 15px;
 }
-.breakplan-title {
+.breakplan-card .card_title {
   color: var(--secondary-dark-gray);
 }
+
 .breakplan-icon {
   margin-top: -10px !important;
   width: 40px;

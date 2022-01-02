@@ -6,6 +6,7 @@ import CardBody from "./../card/CardBody";
 import CardHeader from "./../card/CardHeader";
 import WaterRepository from "./WaterRepository";
 import { Image } from "react-bootstrap";
+
 function HydrationReminderCard() {
   return (
     <Card>
