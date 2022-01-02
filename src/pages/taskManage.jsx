@@ -6,7 +6,7 @@ import '../styles/task.css'
 import { Card } from 'react-bootstrap';
 const TaskManage = () => {
     return (
-        <Card className="secondary-color taskManage " style={{ overflowX: "auto" }}>
+        <Card className="secondary-color taskManage ">
             <DndProvider backend={HTML5Backend}>
                 <TaskManagement />
             </DndProvider>

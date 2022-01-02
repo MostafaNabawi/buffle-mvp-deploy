@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
+import { Form } from 'react-bootstrap';
 import ITEM_TYPE from './data/types'
 import Window from './Window';
 
@@ -53,11 +54,12 @@ const Item = ({ item, index, moveItem, status }) => {
                 ref={ref}
                 style={{ opacity: isDragging ? 0 : 1 }}
                 className={"item"}
-                onClick={onOpen}
+
             >
-                <div className={'color-bar'} style={{ backgroundColor: status.color }}></div>
-                <p className={"item-title"}>{item.content}</p>
-                <p className={"item-status"}>{item.icon}</p>
+                <Form.Group controlId="formBasicCheckbox">
+                    <Form.Check className="task-check-box" type="checkbox" />
+                </Form.Group>
+                <span className={"item-title"} onClick={onOpen}>{item.content}</span>
             </div>
             <Window
                 item={item}

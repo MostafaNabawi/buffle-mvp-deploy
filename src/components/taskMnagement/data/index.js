@@ -16,16 +16,9 @@ const data = [
   {
     id: 3,
     icon: "⭕️",
-    status: "Sunday",
+    status: "Monday",
     title: "Invest in investments",
     content: "Call the bank to talk about investments",
-  },
-  {
-    id: 4,
-    icon: "⭕️",
-    status: "Sunday",
-    title: "Daily reading",
-    content: "Finish reading Intro to UI/UX",
   },
   {
     id: 4,
