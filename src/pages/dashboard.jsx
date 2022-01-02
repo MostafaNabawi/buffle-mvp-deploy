@@ -23,11 +23,31 @@ const Dashboard = () => {
               action=""
             />
             <div className="pt-3 pb-0 mb-0">
-              <Image className="feel-icon" src="/icone/1.png" alt="vector image" />
-              <Image className="feel-icon" src="/icone/2.png" alt="vector image" />
-              <Image className="feel-icon" src="/icone/3.png" alt="vector image" />
-              <Image className="feel-icon" src="/icone/4.png" alt="vector image" />
-              <Image className="feel-icon" src="/icone/5.png" alt="vector image" />
+              <Image
+                className="feel-icon"
+                src="/icone/1.png"
+                alt="vector image"
+              />
+              <Image
+                className="feel-icon"
+                src="/icone/2.png"
+                alt="vector image"
+              />
+              <Image
+                className="feel-icon"
+                src="/icone/3.png"
+                alt="vector image"
+              />
+              <Image
+                className="feel-icon"
+                src="/icone/4.png"
+                alt="vector image"
+              />
+              <Image
+                className="feel-icon"
+                src="/icone/5.png"
+                alt="vector image"
+              />
             </div>
           </Card>
         </Col>
@@ -74,7 +94,6 @@ const Dashboard = () => {
                 </>
               }
             />
-<<<<<<< HEAD
             <Row className="mt-3">
               <Col xl="4">
                 <div className="vacation-day">23 Days</div>
@@ -83,12 +102,10 @@ const Dashboard = () => {
                 left until MyKonos
               </Col>
             </Row>
-=======
             <div className="mt-3">
               <span className="vacation-day">23 Days </span>
               <span className=" vacation-until">left until MyKonos</span>
             </div>
->>>>>>> 5e3457d12971482b9116b418ab3a74a8bd20385d
           </Card>
         </Col>
         <Col xl={3}>
