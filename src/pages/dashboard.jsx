@@ -52,7 +52,7 @@ const Dashboard = () => {
         <Col xl={3}>
           <Card className="custom-h-card">
             <CardHeader
-            className="p-0"
+              className="p-0"
               icon={
                 <Image
                   src="/icone/countdown to break 2.png"
@@ -80,7 +80,7 @@ const Dashboard = () => {
         <Col xl={3}>
           <Card className="custom-h-card">
             <CardHeader
-            className="p-0"
+              className="p-0"
               icon={
                 <Image
                   src="/icone/smiling-face-with-sunglasses 1.png"
@@ -103,7 +103,7 @@ const Dashboard = () => {
         <Col xl={3}>
           <Card className="custom-h-card">
             <CardHeader
-            className="p-0"
+              className="p-0"
               icon={
                 <Image src="/icone/musical-note 1.png" alt="vector image" />
               }
@@ -247,71 +247,71 @@ const Dashboard = () => {
               title="Breakplan"
               action=""
             />
-              <Row className="mt-3">
-                <Col className="col-2">
-                  <div className="breakplan-icon navy-blue text-center pt-2">
-                    <Image
-                      className="breakplan-img"
-                      src="/icone/WB_Headshots-102-web 1.png"
-                    />
-                  </div>
-                </Col>
-                <Col>
-                  <div className="break-user-name">Raj Kumar</div>
-                  <div>
-                    <span className="break-type">orders Lieferando</span>
-                    <span className="break-time">13:00</span>
-                  </div>
-                </Col>
-              </Row>
-              <Row className="mt-4">
-                <Col className="col-2">
-                  <div className="breakplan-icon navy-blue text-center pt-2">
-                    <Image
-                      className="breakplan-img"
-                      src="/icone/RJ_Headshots-84-web 1.png"
-                    />
-                  </div>
-                </Col>
-                <Col>
-                  <div className="break-user-name">Raj Kumar</div>
-                  <div>
-                    <span className="break-type">orders Lieferando</span>
-                    <span className="break-time">13:00</span>
-                  </div>
-                </Col>
-              </Row>
-              <Row className="mt-4">
-                <Col className="col-2">
-                  <div className="breakplan-icon navy-blue text-center pt-2">
-                    <Image
-                      className="breakplan-img"
-                      src="/icone/2018-11-27-Cornelius-W-111 1.png"
-                    />
-                  </div>
-                </Col>
-                <Col>
-                  <div className="break-user-name">Raj Kumar</div>
-                  <div>
-                    <span className="break-type">orders Lieferando</span>
-                    <span className="break-time">13:00</span>
-                  </div>
-                </Col>
-              </Row>
-              <Row className="mt-4">
-                <Col>
-                  <div className="creat-breack-time">
-                    <div className="what-is-breack">What’s your breakplan?</div>
-                    <ul className="pt-1 pl-2">
-                      <li>
-                        <Link className="break-plan" to="">
-                          Plan
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                </Col>
-              </Row>
+            <Row className="mt-3">
+              <Col className="col-2">
+                <div className="breakplan-icon navy-blue text-center pt-2">
+                  <Image
+                    className="breakplan-img"
+                    src="/icone/WB_Headshots-102-web 1.png"
+                  />
+                </div>
+              </Col>
+              <Col>
+                <div className="break-user-name">Raj Kumar</div>
+                <div>
+                  <span className="break-type">orders Lieferando</span>
+                  <span className="break-time">13:00</span>
+                </div>
+              </Col>
+            </Row>
+            <Row className="mt-4">
+              <Col className="col-2">
+                <div className="breakplan-icon navy-blue text-center pt-2">
+                  <Image
+                    className="breakplan-img"
+                    src="/icone/RJ_Headshots-84-web 1.png"
+                  />
+                </div>
+              </Col>
+              <Col>
+                <div className="break-user-name">Raj Kumar</div>
+                <div>
+                  <span className="break-type">orders Lieferando</span>
+                  <span className="break-time">13:00</span>
+                </div>
+              </Col>
+            </Row>
+            <Row className="mt-4">
+              <Col className="col-2">
+                <div className="breakplan-icon navy-blue text-center pt-2">
+                  <Image
+                    className="breakplan-img"
+                    src="/icone/2018-11-27-Cornelius-W-111 1.png"
+                  />
+                </div>
+              </Col>
+              <Col>
+                <div className="break-user-name">Raj Kumar</div>
+                <div>
+                  <span className="break-type">orders Lieferando</span>
+                  <span className="break-time">13:00</span>
+                </div>
+              </Col>
+            </Row>
+            <Row className="mt-4">
+              <Col>
+                <div className="creat-breack-time">
+                  <div className="what-is-breack">What’s your breakplan?</div>
+                  <ul className="pt-1 pl-2">
+                    <li>
+                      <Link className="break-plan" to="">
+                        Plan
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+              </Col>
+            </Row>
           </Card>
         </Col>
       </Row>

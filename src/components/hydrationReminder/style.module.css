@@ -56,25 +56,20 @@
   position: absolute;
   width: 150%;
   height: 150%;
-  background: radial-gradient(
-    100% 682.41% at 4.04% 0%,
-    #8286ff 0%,
-    #4922ff 100%
-  );
-  opacity: 0.5;
+  background: #8286ffa2;
+  z-index: 3;
 }
 
 .repository span:nth-child(2) {
   top: 44%;
   left: -69%;
   border-radius: 0% 50% 0 0;
-  z-index: 2;
+
   transform: rotate(-16deg);
 }
 .repository span:nth-child(3) {
   bottom: -96%;
   left: -54%;
   border-radius: 0% 50% 0 0;
-  z-index: 2;
   transform: rotate(-82deg);
 }
