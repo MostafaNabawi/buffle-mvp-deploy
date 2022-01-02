@@ -141,8 +141,8 @@ const Dashboard = () => {
               }
             />
             <Row>
-              <Row className="task-manager-body">
-                <Col xl="9">
+              <Row className="task-manager-body pt-0">
+                <Col xl="8">
                   <Row className="pl-5">
                     <Col xl="1">
                       <Form.Group controlId="formBasicCheckbox">
@@ -154,7 +154,7 @@ const Dashboard = () => {
                     </Col>
                   </Row>
                 </Col>
-                <Col xl="3">
+                <Col xl="4">
                   <ProgressBar
                     lable={`
                     ${new Date().getHours()}
@@ -166,7 +166,7 @@ const Dashboard = () => {
               </Row>
               <div className="devidre"></div>
               <Row className="task-manager-body">
-                <Col xl="9">
+                <Col xl="8">
                   <Row className="pl-5">
                     <Col xl="1">
                       <Form.Group controlId="formBasicCheckbox">
@@ -178,7 +178,7 @@ const Dashboard = () => {
                     </Col>
                   </Row>
                 </Col>
-                <Col xl="3">
+                <Col xl="4">
                   <ProgressBar
                     lable={`
                     ${new Date().getHours()}
@@ -190,7 +190,7 @@ const Dashboard = () => {
               </Row>
               <div className="devidre"></div>
               <Row className="task-manager-body">
-                <Col xl="9">
+                <Col xl="8">
                   <Row className="pl-5">
                     <Col xl="1">
                       <Form.Group controlId="formBasicCheckbox">
@@ -202,7 +202,7 @@ const Dashboard = () => {
                     </Col>
                   </Row>
                 </Col>
-                <Col xl="3">
+                <Col xl="4">
                   <ProgressBar
                     lable={`
                     ${new Date().getHours()}
@@ -214,7 +214,7 @@ const Dashboard = () => {
               </Row>
               <div className="devidre"></div>
               <Row className="task-manager-body">
-                <Col xl="9">
+                <Col xl="8">
                   <Row className="pl-5">
                     <Col xl="1">
                       <Form.Group controlId="formBasicCheckbox">
@@ -226,7 +226,7 @@ const Dashboard = () => {
                     </Col>
                   </Row>
                 </Col>
-                <Col xl="3">
+                <Col xl="4">
                   <ProgressBar
                     lable={`
                     ${new Date().getHours()}
@@ -264,7 +264,7 @@ const Dashboard = () => {
                   </div>
                 </Col>
               </Row>
-              <Row className="mt-4">
+              <Row className="mt-3">
                 <Col className="col-2">
                   <div className="breakplan-icon navy-blue text-center pt-2">
                     <Image
@@ -281,7 +281,7 @@ const Dashboard = () => {
                   </div>
                 </Col>
               </Row>
-              <Row className="mt-4">
+              <Row className="mt-3">
                 <Col className="col-2">
                   <div className="breakplan-icon navy-blue text-center pt-2">
                     <Image
@@ -298,7 +298,7 @@ const Dashboard = () => {
                   </div>
                 </Col>
               </Row>
-              <Row className="mt-4">
+              <Row className="mt-3">
                 <Col>
                   <div className="creat-breack-time">
                     <div className="what-is-breack">What’s your breakplan?</div>
