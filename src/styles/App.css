@@ -132,6 +132,9 @@ button:hover {
 }
 
 /* card */
+.title_area >h4 ,.title_area >h6{
+ display: inline-flex;
+}
 .card {
   border-radius: var(--bs-radius) !important;
   padding: 1.5rem;
@@ -269,8 +272,7 @@ ul.sidebar-list {
   float: right !important;
 }
 /*  */
-.custom-h-card h4 {
-  width: 149.18px;
+.custom-h-card h4,.card_subtitle {
   font-family: DM Sans;
   font-style: normal;
   font-weight: 500;
@@ -280,6 +282,9 @@ ul.sidebar-list {
   align-items: center;
   letter-spacing: -0.02em;
   color: #a3aed0;
+}
+.card_subtitle{
+  padding-left: 10px !important;
 }
 .icon-plus {
   width: 14px;
@@ -325,7 +330,6 @@ ul.sidebar-list {
   color: white;
 }
 .vacation-day {
-  width: 90px;
   height: 24px;
   font-family: DM Sans;
   font-style: normal;
@@ -336,17 +340,11 @@ ul.sidebar-list {
   color: #1b2559;
 }
 .vacation-until {
-  width: 165px;
-  height: 21px;
-  left: 909px;
-  top: 192px;
   font-family: DM Sans;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
   line-height: 10px;
-  display: flex;
-  align-items: center;
   color: #a3aed0;
 }
 .custom-h-card {
