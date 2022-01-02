@@ -16,9 +16,9 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/companyLogin" element={<CompanyLogin />} />
         <Route path="/moneypool" element={<Moneypool />} />
-        <Route path="/taskmanagement" element={<TaskManage />} />
         <Route path="/" element={<Layout />}>
           <Route index element={<Dashboard />} />
+          <Route path="/taskmanagement" element={<TaskManage />} />
         </Route>
       </Routes>
     </div>

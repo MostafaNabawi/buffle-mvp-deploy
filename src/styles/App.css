@@ -301,7 +301,7 @@ ul.sidebar-list {
   padding: 5px !important;
   color: white;
 }
-.vacation-day{
+.vacation-day {
   width: 90px;
   height: 24px;
   font-family: DM Sans;
@@ -310,9 +310,9 @@ ul.sidebar-list {
   font-size: 24px;
   line-height: 24px;
   letter-spacing: -0.02em;
-  color: #1B2559;
+  color: #1b2559;
 }
-.vacation-until{
+.vacation-until {
   width: 165px;
   height: 21px;
   left: 909px;
@@ -324,17 +324,17 @@ ul.sidebar-list {
   line-height: 10px;
   display: flex;
   align-items: center;
-  color: #A3AED0;
+  color: #a3aed0;
 }
-.custom-h-card{
+.custom-h-card {
   height: 120px !important;
 }
-.tesk-manager-icon{
+.tesk-manager-icon {
   width: 60px !important;
   height: 46px !important;
   cursor: pointer;
 }
-.task-manager{
+.task-manager {
   width: 235.1px;
   height: 28px;
   font-family: DM Sans;
@@ -345,25 +345,25 @@ ul.sidebar-list {
   display: flex;
   align-items: center;
   letter-spacing: -0.02em;
-  color: #1B2559;
+  color: #1b2559;
 }
-.action-icon{
+.action-icon {
   width: 28px;
   height: 35px;
-  color: #1B2559;
+  color: #1b2559;
 }
-.task-manager-body{
- padding-top:12px !important ;
- padding-bottom:12px !important ;
+.task-manager-body {
+  padding-top: 12px !important ;
+  padding-bottom: 12px !important ;
 }
-div.check-box > input{
+div.check-box > input {
   width: 20px;
   height: 20px;
-  background: #EFF3FA;
+  background: #eff3fa;
   box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.25);
   margin-left: 10px !important;
 }
-.task-manager-text{
+.task-manager-text {
   font-family: DM Sans;
   font-style: normal;
   font-weight: normal;
@@ -371,17 +371,17 @@ div.check-box > input{
   line-height: 16px;
   display: flex;
   align-items: center;
-  color: #1B2559;
+  color: #1b2559;
 }
-.devidre{
-  width:97% !important;
-  height: 0px; 
- border: 1px solid #EFF3FA;
- margin-left: 15px;
- margin-right: 15px;
+.devidre {
+  width: 97% !important;
+  height: 0px;
+  border: 1px solid #eff3fa;
+  margin-left: 15px;
+  margin-right: 15px;
 }
-.breakplan-title{
-  color:var(--secondary-dark-gray);
+.breakplan-title {
+  color: var(--secondary-dark-gray);
 }
 .breakplan-icon {
   margin-top: -10px !important;
@@ -392,11 +392,11 @@ div.check-box > input{
   box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.25);
   border-radius: 50%;
 }
-.breakplan-img{
+.breakplan-img {
   width: 30px !important;
- height: 30px !important;
+  height: 30px !important;
 }
-.break-user-name{
+.break-user-name {
   margin-top: -10px;
   height: 16px;
   font-family: DM Sans;
@@ -406,7 +406,7 @@ div.check-box > input{
   line-height: 16px;
   color: var(--secondary-dark-gray);
 }
-.break-type{
+.break-type {
   height: 10px;
   font-family: DM Sans;
   font-style: normal;
@@ -417,7 +417,7 @@ div.check-box > input{
   color: var(--navy-blue);
   margin-top: 5px;
 }
-.break-time{
+.break-time {
   float: right;
   height: 16px;
   font-family: DM Sans;
@@ -427,15 +427,15 @@ div.check-box > input{
   line-height: 16px;
   color: var(--secondary-dark-gray);
 }
-.creat-breack-time{
+.creat-breack-time {
   height: 64px;
-  background:var(--secondary-color);
+  background: var(--secondary-color);
   box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
-  padding:10px 20px;
+  padding: 10px 20px;
   padding-bottom: 0px;
 }
-.what-is-breack{
+.what-is-breack {
   height: 16px;
   font-family: DM Sans;
   font-style: normal;
@@ -445,7 +445,7 @@ div.check-box > input{
   letter-spacing: -0.02em;
   color: var(--secondary-dark-gray);
 }
-.break-plan{
+.break-plan {
   height: 14px;
   font-family: DM Sans;
   font-style: normal;
@@ -457,4 +457,3 @@ div.check-box > input{
   text-decoration-line: underline;
   color: var(--primary-color);
 }
-
