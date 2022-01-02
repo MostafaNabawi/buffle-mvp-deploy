@@ -1,36 +1,50 @@
-import { React } from "react";
-import { DragDropContext, Droppable } from "react-beautiful-dnd";
-
+import { React, useState } from "react";
+import Item from './item';
+import DropWrapper from './DropWrapper';
+import { data, statuses } from './data';
+import { Col } from 'react-bootstrap';
 const TaskManagement = () => {
-  const onBeforeCapture = () => {
-    /*...*/
+  const [items, setItems] = useState(data)
+
+  const onDrop = (item, monitor, status) => {
+    const mapping = statuses.find(si => si.status === status);
+
+    setItems(prevState => {
+      const newItems = prevState.filter(i => i.id !== item.id).concat({ ...item, status, icon: mapping.icon })
+      return [...newItems]
+    });
+
+  };
+  const moveItem = (dragIndex, hoverIndex) => {
+    const item = items[dragIndex];
+    setItems(prevState => {
+      const newItems = prevState.filter((i, idx) => idx !== dragIndex);
+      newItems.splice(hoverIndex, 0, item);
+      return [...newItems];
+
+    });
   };
 
-  const onBeforeDragStart = () => {
-    /*...*/
-  };
-
-  const onDragStart = () => {
-    /*...*/
-  };
-  const onDragUpdate = () => {
-    /*...*/
-  };
-  const onDragEnd = () => {
-    // the only one that is required
-  };
   return (
-    <section className="dnd">
-      <DragDropContext
-        onBeforeCapture={onBeforeCapture}
-        onBeforeDragStart={onBeforeDragStart}
-        onDragStart={onDragStart}
-        onDragUpdate={onDragUpdate}
-        onDragEnd={onDragEnd}
-      >
-        <div>Hello world</div>
-      </DragDropContext>
-    </section>
-  );
+    <div className={"row"}>
+      {
+        statuses.map((s => {
+          return (
+            <Col lg="2" key={s.status} className={"col-wrapper"}>
+              <h2 className={"col-header"}>{s.status.toUpperCase()}</h2>
+              <DropWrapper onDrop={onDrop} status={s.status}>
+                <Col >
+                  {
+                    items.filter(i => i.status === s.status)
+                      .map((i, idx) => <Item key={i.id} item={i} index={idx} moveItem={moveItem} status={s}></Item>)
+                  }
+                </Col>
+              </DropWrapper>
+            </Col>
+          );
+        }))
+      }
+    </div>
+  )
 };
 export default TaskManagement;
