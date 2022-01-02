@@ -220,7 +220,7 @@ div.task-check-box > input {
   background: none;
   width: 100%;
   opacity: 0;
-  transition: all 0.3s;
+  transition: all 0.5s;
 }
 .drop-wrapper:hover .new_task_input {
   opacity: 1;
