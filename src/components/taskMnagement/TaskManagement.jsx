@@ -3,6 +3,7 @@ import Item from './item';
 import DropWrapper from './DropWrapper';
 import { data, statuses } from './data';
 import { Col } from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
 const TaskManagement = () => {
   const [items, setItems] = useState(data)
 
@@ -26,15 +27,14 @@ const TaskManagement = () => {
   };
 
   return (
-    <div className={"row"}>
+    <Row>
       {
         statuses.map((s => {
           return (
             <Col lg="2" key={s.status} className={"col-wrapper secondary-dark"}>
               <div className={"col-header"}>
-                <span>Monday</span>
+                <span>{s.status.toUpperCase()}</span>
                 <span className={"col-header-time"}>2.14</span></div>
-              {/* <h2 className={"col-header"}>{s.status.toUpperCase()}</h2> */}
               <DropWrapper onDrop={onDrop} status={s.status}>
                 <Col >
                   {
@@ -47,7 +47,7 @@ const TaskManagement = () => {
           );
         }))
       }
-    </div>
+    </Row>
   )
 };
 export default TaskManagement;
