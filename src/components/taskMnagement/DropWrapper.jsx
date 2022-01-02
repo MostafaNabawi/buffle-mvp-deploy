@@ -10,7 +10,7 @@ const DropWrapper = ({ onDrop, children, status }) => {
             const itemIndex = statuses.findIndex(si => si.status === item.status);
             const statusIndex = statuses.findIndex(si => si.status === status);
             console.log('status', statusIndex, 'item', itemIndex)
-            return [itemIndex + 1, itemIndex - 1, itemIndex].includes(statusIndex);
+            return [statusIndex, statusIndex, itemIndex].includes(statusIndex);
         },
         drop: (item, monitor) => {
             onDrop(item, monitor, status);

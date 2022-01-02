@@ -119,9 +119,8 @@ select {
 
 .col-wrapper {
   display: flex;
-  width: 23% !important;
   flex-direction: column;
-  margin: 13px;
+  margin: 5px;
   border-radius: 5px;
   padding: 0 !important;
   background-color: #f1f1f1;
