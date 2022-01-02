@@ -458,14 +458,17 @@ div.check-box > input {
   color: var(--primary-color);
 }
 /* Login page */
-.login-page{
+.login-page,.register-page{
   padding-top:7% ;
   height: 100vh;
   background: var(--secondary-color); 
   }
+  .register-page{
+    padding-top:3% ;
+  }
   .login-card{
     max-width: 500px;
-    height: 510px;
+    /* height: 510px; */
     background:#ffffff ;
     box-shadow: 5px 5px 22px rgba(0, 0, 0, 0.03);
     border-radius: 20px;
