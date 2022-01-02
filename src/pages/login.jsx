@@ -43,10 +43,10 @@ const Login = () => {
             </button>
           </Form>
         </div>
-        <div className="login-footer">
-        Don’t have account yet? <Link className="register-link" to="">Register now</Link >
-        </div>
       </div>
+      <div className="login-footer">
+        Don’t have account yet? <Link className="register-link" to="/register">Register now</Link >
+        </div>
     </div>
   );
 };
