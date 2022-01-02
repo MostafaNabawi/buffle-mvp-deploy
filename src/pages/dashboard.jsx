@@ -16,6 +16,7 @@ const Dashboard = () => {
         <Col xl={3}>
           <Card className="custom-h-card">
             <CardHeader
+              className="p-0"
               icon={<Image src="/icone/brain 1.png" alt="vector image" />}
               title="How you feel today"
             />
@@ -51,6 +52,7 @@ const Dashboard = () => {
         <Col xl={3}>
           <Card className="custom-h-card">
             <CardHeader
+            className="p-0"
               icon={
                 <Image
                   src="/icone/countdown to break 2.png"
@@ -78,6 +80,7 @@ const Dashboard = () => {
         <Col xl={3}>
           <Card className="custom-h-card">
             <CardHeader
+            className="p-0"
               icon={
                 <Image
                   src="/icone/smiling-face-with-sunglasses 1.png"
@@ -93,13 +96,14 @@ const Dashboard = () => {
             />
             <div className="mt-3">
               <span className="vacation-day">23 Days </span>
-              <span className=" vacation-until">left until MyKonos</span>
+              <span className="vacation-until">left until MyKonos</span>
             </div>
           </Card>
         </Col>
         <Col xl={3}>
           <Card className="custom-h-card">
             <CardHeader
+            className="p-0"
               icon={
                 <Image src="/icone/musical-note 1.png" alt="vector image" />
               }
@@ -127,7 +131,7 @@ const Dashboard = () => {
                   alt="vector image"
                 />
               }
-              title="ask Manager"
+              title="Task Manager"
               subtitle="4 opan ,1 started"
               action={
                 <>
@@ -243,7 +247,6 @@ const Dashboard = () => {
               title="Breakplan"
               action=""
             />
-            <div className="mt-3">
               <Row className="mt-3">
                 <Col className="col-2">
                   <div className="breakplan-icon navy-blue text-center pt-2">
@@ -261,7 +264,7 @@ const Dashboard = () => {
                   </div>
                 </Col>
               </Row>
-              <Row className="mt-3">
+              <Row className="mt-4">
                 <Col className="col-2">
                   <div className="breakplan-icon navy-blue text-center pt-2">
                     <Image
@@ -278,7 +281,7 @@ const Dashboard = () => {
                   </div>
                 </Col>
               </Row>
-              <Row className="mt-3">
+              <Row className="mt-4">
                 <Col className="col-2">
                   <div className="breakplan-icon navy-blue text-center pt-2">
                     <Image
@@ -295,7 +298,7 @@ const Dashboard = () => {
                   </div>
                 </Col>
               </Row>
-              <Row className="mt-3">
+              <Row className="mt-4">
                 <Col>
                   <div className="creat-breack-time">
                     <div className="what-is-breack">What’s your breakplan?</div>
@@ -309,7 +312,6 @@ const Dashboard = () => {
                   </div>
                 </Col>
               </Row>
-            </div>
           </Card>
         </Col>
       </Row>
