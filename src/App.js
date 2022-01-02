@@ -1,11 +1,12 @@
 import "./styles/App.css";
 import { Route, Routes } from "react-router-dom";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import Login from "./pages/login";
+import Register from "./pages/register";
 import CompanyLogin from "./pages/CompanyLogin";
 import Moneypool from "./pages/Moneypool";
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "./pages/dashboard";
 import Layout from "./layout/Layout";
+import TaskManage from "./pages/taskManage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/moneypool" element={<Moneypool />} />
         <Route path="/" element={<Layout />}>
           <Route index element={<Dashboard />} />
+          <Route path="/taskmanagement" element={<TaskManage />} />
         </Route>
       </Routes>
     </div>

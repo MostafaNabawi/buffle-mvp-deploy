@@ -3,10 +3,10 @@ import { Row, Col, ProgressBar } from "react-bootstrap";
 import { Icon } from '@iconify/react';
 
 const PreogressBar = ({ lable }) => {
-    const [play,setPlay]=useState(true)
+    const [play,setPlay]=useState(false)
     return (
         <>
-            <Row className="pt-3 pb-0 mb-0 mr-3">
+            <Row>
                 <Col xl="10">
                     <Icon className="icon-watch" icon="icon-park-outline:stopwatch-start" />
                     <ProgressBar
@@ -19,7 +19,7 @@ const PreogressBar = ({ lable }) => {
                         {
                             play
                             ?<Icon icon="gg:play-pause" />
-                            : <Icon icon="clarity:play-line" />
+                            : <Icon icon="bi:play-fill" />
                         }
                        
                     </div>
