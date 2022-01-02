@@ -67,7 +67,7 @@ const Dashboard = () => {
             />
             <div className="mt-3">
               <span className="vacation-day">23 Days </span>
-              <span className=" vacation-until">left until MyKonos</span>
+              <span className="vacation-until">left until MyKonos</span>
             </div>
           </Card>
         </Col>
