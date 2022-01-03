@@ -1,3 +1,7 @@
+@font-face {
+  font-family: "Proxima Soft";
+  src: url("../fonts/ProximaSoft-Medium.ttf");
+}
 :root {
   --primary-color: rgb(62, 100, 255);
   --complete-color: #27aa80;
@@ -18,7 +22,7 @@
 
 body {
   color: var(--text-color);
-  font-family: sans-serif;
+  font-family: DM Sans !important;
   margin: 0;
 }
 
@@ -26,11 +30,13 @@ a {
   color: unset;
   text-decoration: unset;
   cursor: pointer;
+  font-family: DM Sans !important;
 }
 
 p {
   margin: 10px 0;
   overflow-wrap: break-word;
+  font-family: DM Sans !important;
   text-align: left;
 }
 
@@ -53,7 +59,9 @@ button {
   transition: all ease 0.8s;
   cursor: pointer;
 }
-
+span {
+  font-family: DM Sans !important;
+}
 button.active {
   color: var(--primary-color);
 }
