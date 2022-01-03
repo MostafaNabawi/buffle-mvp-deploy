@@ -68,6 +68,7 @@ const Dashboard = () => {
             />
             <div className="mt-3 pb-0 mb-0 mr-3">
               <ProgressBar
+               percent={40}
                 lable={`
                     ${new Date().getHours()}
                     :${new Date().getMinutes()}
@@ -156,6 +157,7 @@ const Dashboard = () => {
                 </Col>
                 <Col xl="4">
                   <ProgressBar
+                  percent={50}
                     lable={`
                     ${new Date().getHours()}
                     :${new Date().getMinutes()}
@@ -180,6 +182,7 @@ const Dashboard = () => {
                 </Col>
                 <Col xl="4">
                   <ProgressBar
+                  percent={60}
                     lable={`
                     ${new Date().getHours()}
                     :${new Date().getMinutes()}
@@ -204,6 +207,7 @@ const Dashboard = () => {
                 </Col>
                 <Col xl="4">
                   <ProgressBar
+                  percent={70}
                     lable={`
                     ${new Date().getHours()}
                     :${new Date().getMinutes()}
@@ -228,6 +232,7 @@ const Dashboard = () => {
                 </Col>
                 <Col xl="4">
                   <ProgressBar
+                  percent={40}
                     lable={`
                     ${new Date().getHours()}
                     :${new Date().getMinutes()}

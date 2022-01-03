@@ -104,7 +104,6 @@ button {
   );
 }
 .progress-bar {
-  padding: 5px !important;
   display: flex;
   flex-direction: column;
   justify-content: center;
