@@ -27,13 +27,13 @@ const TaskManagement = () => {
   };
 
   return (
-    <Row>
+    <Row >
       {
         statuses.map((s => {
           return (
-            <Col lg="2" key={s.status} className={"col-wrapper secondary-dark"}>
+            <Col key={s.status} className={"col-wrapper secondary-dark"}>
               <div className={"col-header"}>
-                <span>{s.status.toUpperCase()}</span>
+                <span>{s.status}</span>
                 <span className={"col-header-time"}>2.14</span></div>
               <DropWrapper onDrop={onDrop} status={s.status}>
                 <Col >
@@ -41,13 +41,17 @@ const TaskManagement = () => {
                     items.filter(i => i.status === s.status)
                       .map((i, idx) => <Item key={i.id} item={i} index={idx} moveItem={moveItem} status={s}></Item>)
                   }
+                  <div className="new-task-div">
+                    <input className="new_task_input" placeholder="New Task" aria-label="New Task" />
+                  </div>
                 </Col>
               </DropWrapper>
-            </Col>
+
+            </Col >
           );
         }))
       }
-    </Row>
+    </Row >
   )
 };
 export default TaskManagement;
