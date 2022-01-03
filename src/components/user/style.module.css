@@ -1,3 +1,14 @@
+.headerTitle
+.lableForm
+.formInput
+.forgetPassLink
+.btnGoogle
+.footer,
+.registerLink {
+  font-family: DM Sans !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+}
 .loginPage,
 .registerPage {
   padding-top: 7%;
@@ -17,9 +28,6 @@
 }
 .headerTitle {
   height: 14px;
-  font-family: DM Sans;
-  font-style: normal;
-  font-weight: normal;
   font-size: 14px;
   line-height: 14px;
   align-items: center;
@@ -31,8 +39,6 @@
 }
 .lableForm {
   height: 12px;
-  font-family: DM Sans;
-  font-style: normal;
   font-weight: 500;
   font-size: 14px;
   line-height: 18px;
@@ -41,8 +47,6 @@
 .formInput {
   height: 44px !important;
   font-family: DM Sans !important;
-  font-style: normal !important;
-  font-weight: normal !important;
   font-size: 16px !important;
   line-height: 16px !important;
   color: var(--secondary-dark-gray) !important;
@@ -65,9 +69,6 @@
   margin-top: -25px;
   float: right !important;
   height: 14px;
-  font-family: DM Sans;
-  font-style: normal;
-  font-weight: normal;
   font-size: 14px;
   line-height: 14px;
   text-decoration-line: underline;
@@ -85,8 +86,6 @@
 }
 .btnGoogle,
 .btnGoogle:hover {
-  font-family: DM Sans;
-  font-style: normal;
   font-weight: bold;
   font-size: 16px;
   line-height: 16px;
@@ -111,9 +110,6 @@
   padding-top: 30px;
   text-align: center;
   height: 18px;
-  font-family: DM Sans;
-  font-style: normal;
-  font-weight: normal;
   font-size: 14px;
   line-height: 18px;
   color: var(--low-vein-blue);

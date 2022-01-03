@@ -2,7 +2,7 @@ import { React } from "react";
 import { Row, Col, Image, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
-import ProgressBar from "../components/common/ProgressBar";
+import ProgressBar from "../components/common/progressBar/ProgressBar";
 import CardHeader from "../components/card/CardHeader";
 import Card from "../components/card/Card";
 import HydrationReminderCard from "./../components/hydrationReminder/HydrationReminderCard";
