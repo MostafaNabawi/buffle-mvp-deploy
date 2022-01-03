@@ -229,3 +229,9 @@ div.task-check-box > input {
   background-color: white;
   border-radius: 6px;
 }
+.week-task-header {
+  margin-bottom: 1rem;
+}
+.dropdown-toggle::after {
+  content: none;
+}
