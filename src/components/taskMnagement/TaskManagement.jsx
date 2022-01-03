@@ -4,6 +4,7 @@ import DropWrapper from './DropWrapper';
 import { data, statuses } from './data';
 import { Col } from 'react-bootstrap';
 import { Row } from 'react-bootstrap';
+
 const TaskManagement = () => {
   const [items, setItems] = useState(data)
 
@@ -28,6 +29,8 @@ const TaskManagement = () => {
 
   return (
     <Row >
+
+      <hr />
       {
         statuses.map((s => {
           return (
