@@ -4,7 +4,7 @@ function WaterWave() {
   return (
     <div className={style.wave}>
       <span></span>
-      {/* <span></span> */}
+
     </div>
   );
 }
