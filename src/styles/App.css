@@ -22,6 +22,7 @@
   box-sizing: border-box;
 }
 audio {
+  width: 100% !important;
   height: 30px;
 }
 body {
@@ -212,7 +213,6 @@ ul.sidebar-list {
   cursor: pointer;
 }
 .header-name {
-  width: 289px;
   height: 16px;
   font-family: DM Sans;
   font-style: normal;
@@ -224,7 +224,6 @@ ul.sidebar-list {
   color: #707eae;
 }
 .header-thank {
-  width: 452px;
   height: 32px;
   font-family: Proxima Soft;
   font-style: normal;
@@ -273,6 +272,10 @@ ul.sidebar-list {
   float: right !important;
 }
 /*  */
+.feel-icon {
+  width: 35px !important;
+  height: 35px !important;
+}
 .custom-h-card h4,
 .card_subtitle {
   font-family: DM Sans;

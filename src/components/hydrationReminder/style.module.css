@@ -9,67 +9,81 @@
   height: 16.7rem;
   border-radius: 50%;
   text-align: center;
-  background-color: #4318ff;
+  background: #eff3fa;
+
   box-shadow: 0px 4px 7px 0px rgba(0, 0, 0, 0.25);
   position: relative;
   overflow: hidden;
 }
-.repository span {
+
+.wave::after,
+.wave::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+}
+
+.wave::before {
+  background-color: #4318ff;
+  bottom: -50%;
+}
+
+.wave::after {
+  background: radial-gradient(
+    100% 682.41% at 4.04% 0%,
+    #8286ff 0%,
+    #4922ff 100%
+  );
+  opacity: 60%;
+  bottom: -60%;
+}
+
+.wave span:nth-child(1)::after,
+.wave span:nth-child(1)::before {
+  content: "";
+  position: absolute;
+}
+
+.wave span:nth-child(1)::before {
+  top: 30%;
+  left: 4%;
+  width: 50%;
+  height: 35%;
+  border-radius: 100% 10%;
+  background-color: #eff3fa;
+  transform: rotate(30deg);
+}
+
+.wave span:nth-child(1)::after {
+  top: 39%;
+  right: -15%;
+  width: 60%;
+  height: 40%;
+  border-radius: 100% 0%;
+  background-color: #4318ff;
+  transform: rotate(36deg);
+}
+/* 
+.wave span:nth-child(2)::before,
+.wave span:nth-child(2)::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+.wave span:nth-child(2)::before {
+  bottom: -46%;
+  left: -28%;
+  border-radius: 50% 50% 0 0;
+}
+
+.repository span:nth-child(2)::after {
   position: absolute;
   width: 100%;
   height: 50%;
   background: #eff3fa;
-}
-.repository span {
-  top: 0;
-  left: 0;
-}
-
-.repository::after,
-.repository::before {
-  content: "";
-  position: absolute;
-  width: 150%;
-  height: 150%;
-}
-
-.repository::before {
-  top: -102%;
-  left: -51%;
-  border-radius: 90% 45% 0 0;
-  background-color: #eff3fa;
-  z-index: 1;
-  transform: rotate(129deg);
-}
-
-.repository::after {
-  bottom: -96%;
-  right: -54%;
-  border-radius: 0% 50% 0 0;
-  background-color: inherit;
-  z-index: 2;
-  transform: rotate(-82deg);
-}
-
-.repository span:nth-child(2),
-.repository span:nth-child(3) {
-  position: absolute;
-  width: 150%;
-  height: 150%;
-  background: #8286ffa2;
-  z-index: 3;
-}
-
-.repository span:nth-child(2) {
-  top: 44%;
-  left: -69%;
-  border-radius: 0% 50% 0 0;
-
-  transform: rotate(-16deg);
-}
-.repository span:nth-child(3) {
-  bottom: -96%;
-  left: -54%;
-  border-radius: 0% 50% 0 0;
-  transform: rotate(-82deg);
-}
+} */
