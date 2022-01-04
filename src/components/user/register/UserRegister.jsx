@@ -168,7 +168,7 @@ const UserRegister = () => {
                  continue registering from here.
                  </h2>
                  <h4 className="text-center mt-2">
-                  Cleck open <a href="/https://mail.google.com/"> Email</a>
+                  Cleck open <a href="http://gmail.com/"> Email</a>
                  </h4>
               </Col>
           </Row>
