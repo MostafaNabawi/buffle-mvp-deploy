@@ -5,7 +5,10 @@ import { Link } from "react-router-dom";
 import style from '../style.module.css'
 const UserRegister = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [sendEmail, setSendEmail] = useState(true)
+  const [sendEmail, setSendEmail] = useState(false)
+  const handleRegister=()=>{
+        setSendEmail(true)
+  }
   return (
     <div className={style.registerPage}>
       {
@@ -97,6 +100,7 @@ const UserRegister = () => {
                         placeholder="Web Site"
                       />
                     </Form.Group>
+
                     <Form.Group className="mb-2" controlId="formBasicEmail">
                       <Form.Label className={style.lableForm}>Head Office</Form.Label>
                       <Form.Control
@@ -128,7 +132,11 @@ const UserRegister = () => {
                   </div>
                 </Form.Group> */}
 
-                    <Button className={style.submitBtn} type="submit">
+                    <Button 
+                    className={style.submitBtn} 
+                    type="button"
+                    onClick={(e)=>{handleRegister(e)}}
+                    >
                       REGISTER
                     </Button>
                     {/* <button className={`${style.btnGoogle} mt-4`} type="submit">
@@ -146,12 +154,21 @@ const UserRegister = () => {
               </div>
             </Col>
           </Row>
-          : <Row Row className="p-0 m-0 row justify-content-center">
+          : <Row className="p-0 m-0 row justify-content-center">
               <Col>
                  <div className={style.iconCheck}>
                  <Icon icon="emojione:white-heavy-check-mark" />
                  </div>
-                 <h1>email send</h1>
+                 <h2 className="text-center mt-2">
+                 Message sent successfully to your email
+                 </h2>
+                 <h2 className="text-center mt-2">
+                 Please check your email and
+                 continue registering from here.
+                 </h2>
+                 <h4 className="text-center mt-2">
+                  Cleck open your  <a href="http://gmail.com/"> Email</a>
+                 </h4>
               </Col>
           </Row>
       }
