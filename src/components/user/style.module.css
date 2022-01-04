@@ -31,6 +31,7 @@
   box-shadow: 5px 5px 22px rgba(0, 0, 0, 0.03);
   border-radius: 20px;
   margin: auto;
+  padding-bottom: 15px !important;
 }
 .registerImg > img{
   width: 100%;
@@ -61,7 +62,7 @@
   color: var(--secondary-dark-gray);
 }
 .formInput {
-  height: 44px !important;
+  height: 38px !important;
   font-family: DM Sans !important;
   font-size: 16px !important;
   line-height: 16px !important;
@@ -119,7 +120,7 @@
 }
 .googleIcon {
   margin-right: 10px !important;
-  font-size: 24px;
+  font-size: 30px;
 }
 .footer,
 .registerLink {

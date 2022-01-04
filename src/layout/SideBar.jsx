@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 
 const SideBar = () => {
    return (
-     <section className="h-sidebar">
+     <section className="h-sidebar sidebar-container ">
          <div className="pt-3">
          <ul className="m-0 sidebar-list">
             <li className="mt-3">
-               <Link to=""><Image className="sidebar-icon" src="/icone/countdown to break 3.png" /></Link>
+               <Link to="/"><Image className="sidebar-icon" src="/icone/countdown to break 3.png" /></Link>
             </li>
             <li className="mt-3">
                <Link to=""><Image className="sidebar-icon" src="/icone/countdown to break 1.png" /></Link>
@@ -17,7 +17,7 @@ const SideBar = () => {
                <Link to=""><Image className="sidebar-icon" src="/icone/kittysplit 1.png" /></Link>
             </li>
             <li className="mt-3">
-               <Link to=""><Image className="sidebar-icon" src="/icone/task manager 1.png" /></Link>
+               <Link to="/taskmanagement"><Image className="sidebar-icon" src="/icone/task manager 1.png" /></Link>
             </li>
             {/* <li className="mt-3">
                <Link to=""><Image className="sidebar-icon" src="/icone/Vector.png" /></Link>
@@ -25,9 +25,9 @@ const SideBar = () => {
             <li className="mt-3">
                <Link to=""><Image className="sidebar-icon" src="/icone/eye 1.png" /></Link>
             </li>
-            <li className="mt-3">
+            {/* <li className="mt-3">
                <Link to=""><Image className="sidebar-icon" src="/icone/task manager 1.png" /></Link>
-            </li>
+            </li> */}
             <li className="mt-3">
                <Link to=""><Image className="sidebar-icon" src="/icone/exclamation-mark 7.png" /></Link>
             </li>
