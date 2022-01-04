@@ -12,16 +12,16 @@ import ImpotentToDayCard from "./../components/impotentToDay/ImpotentToDayCard";
 import Modal from "../components/modal/modal";
 const Dashboard = () => {
   return (
-    <section className="mt-4">
+    <section>
       <Row>
         <Col xl={3}>
-          <Card className="custom-h-card">
+          <Card className="custom-h-card  pt-3">
             <CardHeader
               className="p-0"
               icon={<Image src="/icone/brain 1.png" alt="vector image" />}
               title="How you feel today"
             />
-            <div className="pt-3 pb-0 mb-0">
+            <div className="pt-3 pb-0 mb-0 card-feel-icon ">
               <Image
                 className="feel-icon"
                 src="/icone/1.png"
@@ -51,7 +51,7 @@ const Dashboard = () => {
           </Card>
         </Col>
         <Col xl={3}>
-          <Card className="custom-h-card">
+          <Card className="custom-h-card pr-5 pt-3">
             <CardHeader
               className="p-0"
               icon={
@@ -67,8 +67,8 @@ const Dashboard = () => {
                 </i>
               }
             />
-            <div className="mt-3 pb-0 mb-0 mr-3">
-              <ProgressBar
+            <Col className="progress-custom mt-3">
+            <ProgressBar
                 percent={40}
                 lable={`
                     ${new Date().getHours()}
@@ -76,11 +76,11 @@ const Dashboard = () => {
                     :${new Date().getSeconds()}
                     `}
               />
-            </div>
+            </Col> 
           </Card>
         </Col>
         <Col xl={3}>
-          <Card className="custom-h-card">
+          <Card className="custom-h-card  pt-3">
             <CardHeader
               className="p-0"
               icon={
@@ -103,9 +103,10 @@ const Dashboard = () => {
           </Card>
         </Col>
         <Col xl={3}>
-          <Card className="custom-h-card">
+          <Card className="custom-h-card pb-3 primary-gradient pt-3">
             <CardHeader
               className="p-0"
+              titleClass ="musicTitle"
               icon={
                 <Image src="/icone/musical-note 1.png" alt="vector image" />
               }
@@ -143,7 +144,7 @@ const Dashboard = () => {
               }
             />
             <Row>
-              <Row className="task-manager-body pt-0">
+              <Row className="task-manager-body pt-0 mt-1 mb-1">
                 <Col xl="8">
                   <Row className="pl-5">
                     <Col xl="1">
@@ -168,7 +169,7 @@ const Dashboard = () => {
                 </Col>
               </Row>
               <div className="devidre"></div>
-              <Row className="task-manager-body">
+              <Row className="task-manager-body mt-1 mb-1">
                 <Col xl="8">
                   <Row className="pl-5">
                     <Col xl="1">
@@ -193,7 +194,7 @@ const Dashboard = () => {
                 </Col>
               </Row>
               <div className="devidre"></div>
-              <Row className="task-manager-body">
+              <Row className="task-manager-body mt-1 mb-1">
                 <Col xl="8">
                   <Row className="pl-5">
                     <Col xl="1">
@@ -218,7 +219,7 @@ const Dashboard = () => {
                 </Col>
               </Row>
               <div className="devidre"></div>
-              <Row className="task-manager-body">
+              <Row className="task-manager-body mt-1 mb-1">
                 <Col xl="8">
                   <Row className="pl-5">
                     <Col xl="1">
@@ -242,7 +243,7 @@ const Dashboard = () => {
                   />
                 </Col>
               </Row>
-              <div className="devidre"></div>
+              <div className="devidre "></div>
             </Row>
           </Card>
         </Col>

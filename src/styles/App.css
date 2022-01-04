@@ -5,6 +5,7 @@
   src: url("../fonts/ProximaSoft-Medium.ttf");
 }
 :root {
+  --primary-gradient:gradient(100% 682.41% at 4.04% 0%, #8286FF 0%, #4922FF 100%);
   --primary-color: #4922ff;
   --secondary-color: #eff3fa;
   --secondary-dark: #e6e6e6;
@@ -23,7 +24,7 @@
 }
 audio {
   width: 100% !important;
-  height: 30px;
+  height: 40px !important;
 }
 body {
   font-family: var(--font-dm-snas) !important;
@@ -64,7 +65,10 @@ h6 {
 .body2 {
   font-size: 14px;
 }
-
+.primary-gradient{
+ background: var(--primary-gradient);
+ color: white;
+}
 .primary-color {
   background-color: var(--primary-color);
 }
@@ -95,7 +99,9 @@ h6 {
 .navy-blue {
   background-color: var(--navy-blue);
 }
-
+.musicTitle{
+  color: white !important;
+}
 button {
   background: radial-gradient(
     100% 682.41% at 4.04% 0%,
@@ -103,7 +109,17 @@ button {
     var(--primary-color) 100%
   );
 }
+.sidebar-container{
+  position: fixed !important;
+  z-index: 99999 !important;
+  background: white !important;
+}
+.progress-custom{
+  margin-left: -10px;
+  padding-right: 10px !important;
+}
 .progress-bar {
+  border-radius: 10px !important;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -139,6 +155,7 @@ button:hover {
 
 /* main contianer */
 .main_container {
+  margin-left: 5%;
   flex-grow: 1;
   background-color: var(--secondary-color);
 }
@@ -198,6 +215,14 @@ button:hover {
 ul.sidebar-list > li {
   list-style-type: none !important;
   margin-left: 16px !important;
+  margin-right: 16px !important;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;  
+  background: #F4F7FE;
+  box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.25);
+  text-align: center !important;
+  padding-top:5px ;
 }
 .sidebar-icon {
   width: 45px !important;
@@ -248,16 +273,18 @@ ul.sidebar-list {
   /* identical to box height, or 76% */
   letter-spacing: -0.01em;
 }
-.form-search {
-  height: 46px;
-  left: 1029px;
-  top: 63px;
-  border-radius: 10px;
+.header-col-left > div{
+  display: inline-block;
+  float: right;
+  margin-left: 10px;
+}
+.form-search{
+  width:265px !important ;
 }
 .serach-input {
   background: #ffffff;
   box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.25);
-  border-radius: 10px;
+  border-radius: 7px;
   border: none;
   font-family: DM Sans;
   font-size: 14px;
@@ -291,6 +318,10 @@ ul.sidebar-list {
   width: 35px !important;
   height: 35px !important;
 }
+.card-feel-icon{
+  display: inline-flex;
+  justify-content: space-between;
+}
 .custom-h-card h4,
 .card_subtitle {
   font-family: DM Sans;
@@ -304,7 +335,7 @@ ul.sidebar-list {
   color: #a3aed0;
 }
 .card_subtitle {
-  padding-left: 10px !important;
+  padding-left: 40px !important;
 }
 .icon-plus {
   width: 14px;
@@ -331,7 +362,7 @@ ul.sidebar-list {
   color: #a3aed0;
 }
 .custom-h-card {
-  height: 110px !important;
+  height: 100px !important;
 }
 .tesk-manager-icon {
   width: 60px !important;
@@ -402,7 +433,7 @@ div.check-box > input {
   height: 30px !important;
 }
 .break-user-name {
-  margin-top: -10px;
+ 
   height: 16px;
   font-family: DM Sans;
   font-style: normal;
