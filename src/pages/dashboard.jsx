@@ -9,6 +9,7 @@ import HydrationReminderCard from "./../components/hydrationReminder/HydrationRe
 import ScreenFreeReminderCard from "./../components/screenFreeReminder/ScreenFreeReminderCard";
 import EventCalender from "./../components/eventCalender/EventCalender";
 import ImpotentToDayCard from "./../components/impotentToDay/ImpotentToDayCard";
+import Modal from "../components/modal/modal";
 const Dashboard = () => {
   return (
     <section>
@@ -61,14 +62,14 @@ const Dashboard = () => {
               }
               title="Next break"
               action={
-                <>
+                <i>
                   <Icon icon="bi:plus" />
-                </>
+                </i>
               }
             />
             <div className="mt-3 pb-0 mb-0 mr-3">
               <ProgressBar
-               percent={40}
+                percent={40}
                 lable={`
                     ${new Date().getHours()}
                     :${new Date().getMinutes()}
@@ -157,7 +158,7 @@ const Dashboard = () => {
                 </Col>
                 <Col xl="4">
                   <ProgressBar
-                  percent={50}
+                    percent={50}
                     lable={`
                     ${new Date().getHours()}
                     :${new Date().getMinutes()}
@@ -182,7 +183,7 @@ const Dashboard = () => {
                 </Col>
                 <Col xl="4">
                   <ProgressBar
-                  percent={60}
+                    percent={60}
                     lable={`
                     ${new Date().getHours()}
                     :${new Date().getMinutes()}
@@ -207,7 +208,7 @@ const Dashboard = () => {
                 </Col>
                 <Col xl="4">
                   <ProgressBar
-                  percent={70}
+                    percent={70}
                     lable={`
                     ${new Date().getHours()}
                     :${new Date().getMinutes()}
@@ -232,7 +233,7 @@ const Dashboard = () => {
                 </Col>
                 <Col xl="4">
                   <ProgressBar
-                  percent={40}
+                    percent={40}
                     lable={`
                     ${new Date().getHours()}
                     :${new Date().getMinutes()}
@@ -306,7 +307,7 @@ const Dashboard = () => {
             <Row className="mt-3">
               <Col>
                 <div className="creat-breack-time">
-                  <div className="what-is-breack">What's your breakplan?</div>
+                  <div className="what-is-breack">What’s your breakplan?</div>
                   <ul className="pt-1 pl-2">
                     <li>
                       <Link className="break-plan" to="">
