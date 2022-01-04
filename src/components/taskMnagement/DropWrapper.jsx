@@ -7,6 +7,7 @@ const DropWrapper = ({ onDrop, children, status }) => {
     const [{ isOver }, drop] = useDrop({
         accept: ITEM_TYPE,
         canDrop: (item, monitor) => {
+            console.log(item);
             const itemIndex = statuses.findIndex(si => si.status === item.status);
             const statusIndex = statuses.findIndex(si => si.status === status);
             console.log('status', statusIndex, 'item', itemIndex)
