@@ -12,7 +12,7 @@ import ImpotentToDayCard from "./../components/impotentToDay/ImpotentToDayCard";
 import Modal from "../components/modal/modal";
 const Dashboard = () => {
   return (
-    <section>
+    <section className="mt-4">
       <Row>
         <Col xl={3}>
           <Card className="custom-h-card">
@@ -63,7 +63,7 @@ const Dashboard = () => {
               title="Next break"
               action={
                 <i>
-                  <Icon icon="bi:plus" />
+                  <Icon icon="vaadin:plus" />
                 </i>
               }
             />
@@ -92,7 +92,7 @@ const Dashboard = () => {
               title="Vacation Time"
               action={
                 <>
-                  <Icon icon="bi:plus" />
+                   <Icon icon="vaadin:plus" />
                 </>
               }
             />
@@ -137,8 +137,8 @@ const Dashboard = () => {
               subtitle="4 opan ,1 started"
               action={
                 <>
-                  <Icon className="action-icon" icon="bi:plus" />
-                  <Icon className="action-icon" icon="codicon:kebab-vertical" />
+                   <Icon icon="vaadin:plus" />
+                   <Icon icon="vaadin:ellipsis-dots-v" />
                 </>
               }
             />
