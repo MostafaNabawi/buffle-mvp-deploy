@@ -148,8 +148,9 @@ button:hover {
 }
 
 /* card */
-.title_area >h4 ,.title_area >h6{
- display: inline-flex;
+.title_area > h4,
+.title_area > h6 {
+  display: inline-flex;
 }
 .card {
   border-radius: var(--bs-radius) !important;
@@ -286,11 +287,12 @@ ul.sidebar-list {
   float: right !important;
 }
 /*  */
-.feel-icon{
+.feel-icon {
   width: 35px !important;
   height: 35px !important;
 }
-.custom-h-card h4,.card_subtitle {
+.custom-h-card h4,
+.card_subtitle {
   font-family: DM Sans;
   font-style: normal;
   font-weight: 500;
@@ -301,7 +303,7 @@ ul.sidebar-list {
   letter-spacing: -0.02em;
   color: #a3aed0;
 }
-.card_subtitle{
+.card_subtitle {
   padding-left: 10px !important;
 }
 .icon-plus {

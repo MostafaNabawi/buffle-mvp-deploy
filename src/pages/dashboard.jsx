@@ -62,8 +62,7 @@ const Dashboard = () => {
               }
               title="Next break"
               action={
-                <i
-                >
+                <i>
                   <Icon icon="bi:plus" />
                 </i>
               }
