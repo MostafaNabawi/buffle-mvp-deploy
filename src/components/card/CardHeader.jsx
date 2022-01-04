@@ -1,9 +1,8 @@
 import React from "react";
 
-function CardHeader(props) {
-  const { icon, title, subtitle, action } = props;
+function CardHeader({ icon, title, subtitle, action,className }) {
   return (
-    <div className={`card_header ${props.className || ""}`}>
+    <div className={`card_header ${className || ""}`}>
       {icon}
       <div className="title_area">
         <h4 className="card_title">{title}</h4>

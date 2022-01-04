@@ -15,16 +15,32 @@
   height: 100vh;
   background: var(--secondary-color);
 }
+.floatLeft{
+  padding:10px ;
+  padding-left:15px;
+  float: left !important;
+}
 .registerPage {
   padding-top: 3%;
 }
-.card {
+
+.card,.registerCard,.registerImg {
   max-width: 500px;
   /* height: 510px; */
   background: #ffffff;
   box-shadow: 5px 5px 22px rgba(0, 0, 0, 0.03);
   border-radius: 20px;
   margin: auto;
+}
+.registerImg > img{
+  width: 100%;
+  height: 650px;
+}
+.iconCheck{
+  text-align:center;
+}
+.iconCheck >svg{
+  font-size: 70px !important;
 }
 .headerTitle {
   height: 14px;
