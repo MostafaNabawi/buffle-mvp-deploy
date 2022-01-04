@@ -331,7 +331,7 @@ ul.sidebar-list {
   color: #a3aed0;
 }
 .custom-h-card {
-  height: 120px !important;
+  height: 110px !important;
 }
 .tesk-manager-icon {
   width: 60px !important;
@@ -365,7 +365,6 @@ div.check-box > input {
   height: 20px;
   background: #eff3fa;
   box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.25);
-  margin-left: 10px !important;
 }
 .task-manager-text {
   font-family: DM Sans;
