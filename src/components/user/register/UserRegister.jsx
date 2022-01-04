@@ -22,6 +22,7 @@ const UserRegister = () => {
             <Col xl='4'>
               <div className={style.registerCard}>
                 <div className={`${style.header}  text-center pt-4`}>
+                  <div className={style.floatLeft}>1/2</div>
                   <Image src="/favicon.ico" />
                   <div className={`${style.headerTitle} mt-3`}>
                     Enter your info
@@ -167,7 +168,7 @@ const UserRegister = () => {
                  continue registering from here.
                  </h2>
                  <h4 className="text-center mt-2">
-                  Cleck open your  <a href="http://gmail.com/"> Email</a>
+                  Cleck open <a href="/register"> Email</a>
                  </h4>
               </Col>
           </Row>

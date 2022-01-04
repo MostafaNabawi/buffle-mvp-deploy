@@ -15,6 +15,11 @@
   height: 100vh;
   background: var(--secondary-color);
 }
+.floatLeft{
+  padding:10px ;
+  padding-left:15px;
+  float: left !important;
+}
 .registerPage {
   padding-top: 3%;
 }
