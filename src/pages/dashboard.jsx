@@ -69,7 +69,7 @@ const Dashboard = () => {
             />
             <Col className="progress-custom mt-3">
             <ProgressBar
-                percent={40}
+                percent={60}
                 lable={`
                     ${new Date().getHours()}
                     :${new Date().getMinutes()}
@@ -159,7 +159,7 @@ const Dashboard = () => {
                 </Col>
                 <Col xl="4">
                   <ProgressBar
-                    percent={50}
+                    percent={70}
                     lable={`
                     ${new Date().getHours()}
                     :${new Date().getMinutes()}
@@ -234,7 +234,7 @@ const Dashboard = () => {
                 </Col>
                 <Col xl="4">
                   <ProgressBar
-                    percent={40}
+                    percent={80}
                     lable={`
                     ${new Date().getHours()}
                     :${new Date().getMinutes()}

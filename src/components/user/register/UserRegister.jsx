@@ -1,7 +1,7 @@
 import { React, useState } from "react";
 import { Row, Col, Image, Form, Button } from "react-bootstrap";
 import { Icon } from "@iconify/react";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
 import style from '../style.module.css'
 const UserRegister = () => {
   const [showPassword, setShowPassword] = useState(false);
