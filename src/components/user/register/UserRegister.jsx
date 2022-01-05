@@ -1,7 +1,7 @@
 import { React, useState } from "react";
 import { Row, Col, Image, Form, Button } from "react-bootstrap";
 import { Icon } from "@iconify/react";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
 import style from '../style.module.css'
 const UserRegister = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -32,7 +32,7 @@ const UserRegister = () => {
                   <Form>
                     <Row>
                       <Col xl='6'>
-                        <Form.Group className="mb-2" controlId="formBasicEmail">
+                        <Form.Group className="mb-3" controlId="formBasicEmail">
                           <Form.Label className={style.lableForm}>First Name</Form.Label>
                           <Form.Control
                             className={style.formInput}
@@ -42,7 +42,7 @@ const UserRegister = () => {
                         </Form.Group>
                       </Col>
                       <Col xl='6'>
-                        <Form.Group className="mb-2" controlId="formBasicEmail">
+                        <Form.Group className="mb-3" controlId="formBasicEmail">
                           <Form.Label className={style.lableForm}>last Name</Form.Label>
                           <Form.Control
                             className={style.formInput}
@@ -53,7 +53,7 @@ const UserRegister = () => {
                       </Col>
                     </Row>
 
-                    <Form.Group className="mb-2" controlId="formBasicEmail">
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
                       <Form.Label className={style.lableForm}>E-mail</Form.Label>
                       <Form.Control
                         className={style.formInput}
@@ -62,7 +62,7 @@ const UserRegister = () => {
                       />
                     </Form.Group>
 
-                    <Form.Group className="mb-2" controlId="formBasicEmail">
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
                       <Form.Label className={style.lableForm}>Company Name</Form.Label>
                       <Form.Control
                         className={style.formInput}
@@ -73,7 +73,7 @@ const UserRegister = () => {
 
                     <Row>
                       <Col xl='6'>
-                        <Form.Group className="mb-2">
+                        <Form.Group className="mb-3">
                           <Form.Label className={style.lableForm}>Company Size</Form.Label>
                           <Form.Control
                             className={style.formInput}
@@ -83,7 +83,7 @@ const UserRegister = () => {
                         </Form.Group>
                       </Col>
                       <Col xl='6'>
-                        <Form.Group className="mb-2">
+                        <Form.Group className="mb-3">
                           <Form.Label className={style.lableForm}>Text ID</Form.Label>
                           <Form.Control
                             className={style.formInput}
@@ -93,7 +93,7 @@ const UserRegister = () => {
                         </Form.Group>
                       </Col>
                     </Row>
-                    <Form.Group className="mb-2" controlId="formBasicEmail">
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
                       <Form.Label className={style.lableForm}>Web Site</Form.Label>
                       <Form.Control
                         className={style.formInput}
@@ -102,7 +102,7 @@ const UserRegister = () => {
                       />
                     </Form.Group>
 
-                    <Form.Group className="mb-2" controlId="formBasicEmail">
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
                       <Form.Label className={style.lableForm}>Head Office</Form.Label>
                       <Form.Control
                         className={style.formInput}
@@ -111,9 +111,9 @@ const UserRegister = () => {
                       />
                     </Form.Group>
 
-                    {/* <Form.Group className="mb-2" controlId="formBasicPassword">
+                    {/* <Form.Group className="mb-3" controlId="formBasicPassword">
                   <Form.Label className={style.lableForm}>Password</Form.Label>
-                  <div className="mb-2 input-group">
+                  <div className="mb-3 input-group">
                     <Form.Control
                       className={style.formInput}
                       type={`${showPassword ? "text" : "password"}`}
@@ -168,7 +168,7 @@ const UserRegister = () => {
                  continue registering from here.
                  </h2>
                  <h4 className="text-center mt-2">
-                  Cleck open <a href="/register"> Email</a>
+                  Cleck open <a href="http://gmail.com/"> Email</a>
                  </h4>
               </Col>
           </Row>

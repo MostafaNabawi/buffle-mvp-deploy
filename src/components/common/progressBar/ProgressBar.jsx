@@ -8,7 +8,7 @@ const PreogressBar = ({ lable, percent }) => {
     return (
         <>
             <Row>
-                <Col xl="10">
+                <Col xl="11" className="pl-0">
                     <Icon
                         color={play && percent > 0 ? '' : `#4922ff`}
                         className={style.iconWatch} icon="bi:clock-fill"
@@ -19,7 +19,7 @@ const PreogressBar = ({ lable, percent }) => {
                         className={style.progress}
                     />
                 </Col>
-                <Col className="m-0" xl="2">
+                <Col className={style.iconPlay} xl="1">
                     <div onClick={() => setPlay(!play)} className={`${style.iconProgress}  text-center`}>
                         {
                             play

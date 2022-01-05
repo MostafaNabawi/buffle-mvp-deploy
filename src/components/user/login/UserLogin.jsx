@@ -26,7 +26,7 @@ const UserLogin = () => {
               />
             </Form.Group>
 
-            <Form.Group className="mb-4" controlId="formBasicPassword">
+            <Form.Group className="mb-5" controlId="formBasicPassword">
               <Form.Label className={style.lableForm}>Password</Form.Label>
               <div className="mb-4 input-group">
                 <Form.Control
@@ -63,7 +63,7 @@ const UserLogin = () => {
               LOGIN
             </Button>
             <button className={`${style.btnGoogle } mt-4`} type="submit">
-              <Icon className="google-icon" icon="flat-color-icons:google" />
+              <Icon className={style.googleIcon} icon="flat-color-icons:google" />
               Login with Google
             </button>
           </Form>
