@@ -47,6 +47,7 @@ const Column = ({ data, components, handleDrop, path }) => {
                     <span className="weekDays">{data.id}</span>
                     <span className="taskTime">10.12</span>
                 </div>
+                <hr className="weekDaysTime-hr" />
                 <div className="taskLists">
                     {data.children.map((component, index) => {
                         const currentPath = `${path}-${index}`;

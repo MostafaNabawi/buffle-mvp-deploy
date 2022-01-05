@@ -19,7 +19,7 @@ const Component = ({ data, components, path }) => {
     drag(ref);
 
     const component = components[data.id];
-
+    console.log(components)
     return (
         <div
             ref={ref}
@@ -29,6 +29,7 @@ const Component = ({ data, components, path }) => {
             <Form.Group controlId="formBasicCheckbox">
                 <Form.Check className="task-check-box" type="checkbox" />
             </Form.Group>
+            {/* <span>{data.title}</span> */}
             <span>{component.content}</span>
         </div>
     );

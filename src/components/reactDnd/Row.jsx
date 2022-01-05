@@ -1,7 +1,6 @@
 import React, { useRef } from "react";
 import { useDrag } from "react-dnd";
 import { ROW } from "./constants";
-import DropZone from "./DropZone";
 import Column from "./Column";
 
 const style = {};
@@ -24,11 +23,12 @@ const Row = ({ data, components, handleDrop, path }) => {
     const opacity = isDragging ? 0 : 1;
     drag(ref);
 
-    const renderColumn = (column, currentPath) => {
+    const renderColumn = (column, currentPath, type) => {
         return (
             <Column
                 key={column.id}
                 data={column}
+                type={type}
                 components={components}
                 handleDrop={handleDrop}
                 path={currentPath}
@@ -44,27 +44,12 @@ const Row = ({ data, components, handleDrop, path }) => {
 
                     return (
                         <React.Fragment key={column.id}>
-                            <DropZone
-                                data={{
-                                    path: currentPath,
-                                    childrenCount: data.children.length,
-                                }}
-                                onDrop={handleDrop}
-                                className="horizontalDrag"
-                            />
-                            {renderColumn(column, currentPath)}
+
+                            {renderColumn(column, currentPath, data.type)}
                         </React.Fragment>
                     );
                 })}
-                <DropZone
-                    data={{
-                        path: `${path}-${data.children.length}`,
-                        childrenCount: data.children.length
-                    }}
-                    onDrop={handleDrop}
-                    className="horizontalDrag"
-                    isLast
-                />
+
             </div>
         </div>
     );
