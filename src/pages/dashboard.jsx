@@ -1,4 +1,4 @@
-import { React } from "react";
+import { React,useState } from "react";
 import { Row, Col, Image, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
@@ -11,6 +11,7 @@ import EventCalender from "./../components/eventCalender/EventCalender";
 import ImpotentToDayCard from "./../components/impotentToDay/ImpotentToDayCard";
 import Modal from "../components/modal/modal";
 const Dashboard = () => {
+  const [modalShow, setModalShow] =useState(false);
   return (
     <section>
       <Row>
@@ -62,7 +63,9 @@ const Dashboard = () => {
               }
               title="Next break"
               action={
-                <i>
+                <i onClick={()=>{
+
+                }}>
                   <Icon icon="vaadin:plus" />
                 </i>
               }
