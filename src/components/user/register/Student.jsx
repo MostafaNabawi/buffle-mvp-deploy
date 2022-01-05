@@ -14,6 +14,8 @@ const StudentRegister = () => {
     const getState = (code) => {
         if (code != '') {
             setState(getStateOfCountry(code))
+        }else{
+            setState('')
         }
     }
     const handleRegister = () => {

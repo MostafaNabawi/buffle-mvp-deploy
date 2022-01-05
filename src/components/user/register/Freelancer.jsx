@@ -13,6 +13,8 @@ const FreelancerRegister = () => {
     const getState = (code) => {
         if (code != '') {
             setState(getStateOfCountry(code))
+        }else{
+            setState('')
         }
     }
     const handleRegister = () => {
@@ -72,7 +74,7 @@ const FreelancerRegister = () => {
                                                 <Form.Control
                                                     className={style.formInput}
                                                     type="text"
-                                                    placeholder="Profession *"
+                                                    placeholder="Profession"
                                                 />
                                             </Form.Group>
                                         </Col>

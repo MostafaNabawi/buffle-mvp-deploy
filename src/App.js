@@ -2,6 +2,7 @@ import "./styles/App.css";
 import { Route, Routes } from "react-router-dom";
 import Login from "./pages/login";
 import Register from "./pages/register";
+import IndexRegister from "./components/user/register/index";
 import CompanyRegister from './components/user/register/Company'
 import StudentRegister from './components/user/register/Student'
 import FreelancerRegister from './components/user/register/Freelancer'
@@ -18,7 +19,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} >
-          <Route index element={<CompanyRegister/>}/>
+          <Route index element={<IndexRegister/>}/>
+          <Route path='company' element={<CompanyRegister/>}/>
           <Route path='student' element={<StudentRegister/>}/>
           <Route path='freelancer' element={<FreelancerRegister/>}/>
           <Route path='step-tow/:type/:id' element={<StepTwoRegister/>}/>
