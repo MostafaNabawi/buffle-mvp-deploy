@@ -9,7 +9,7 @@ import {
     handleMoveSidebarComponentIntoParent,
 } from "./helpers";
 
-import { SIDEBAR_ITEMS, SIDEBAR_ITEM, COMPONENT, COLUMN } from "./constants";
+import { SIDEBAR_ITEM, COMPONENT, COLUMN } from "./constants";
 import shortid from "shortid";
 
 const Container = () => {
@@ -17,6 +17,7 @@ const Container = () => {
     const initialComponents = initialData.components;
     const [layout, setLayout] = useState(initialLayout);
     const [components, setComponents] = useState(initialComponents);
+
 
 
     const handleDrop = useCallback(
@@ -142,8 +143,6 @@ const Container = () => {
                         isLast
                     />
                 </div>
-
-
             </div>
         </div>
     );

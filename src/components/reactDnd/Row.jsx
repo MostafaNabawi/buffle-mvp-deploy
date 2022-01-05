@@ -10,6 +10,7 @@ const Row = ({ data, components, handleDrop, path }) => {
     const [{ isDragging }, drag] = useDrag({
         type: ROW,
         item: {
+
             id: data.id,
             children: data.children,
             path
@@ -22,11 +23,12 @@ const Row = ({ data, components, handleDrop, path }) => {
     const opacity = isDragging ? 0 : 1;
     drag(ref);
 
-    const renderColumn = (column, currentPath) => {
+    const renderColumn = (column, currentPath, type) => {
         return (
             <Column
                 key={column.id}
                 data={column}
+                type={type}
                 components={components}
                 handleDrop={handleDrop}
                 path={currentPath}
@@ -43,7 +45,7 @@ const Row = ({ data, components, handleDrop, path }) => {
                     return (
                         <React.Fragment key={column.id}>
 
-                            {renderColumn(column, currentPath)}
+                            {renderColumn(column, currentPath, data.type)}
                         </React.Fragment>
                     );
                 })}

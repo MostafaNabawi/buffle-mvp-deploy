@@ -8,6 +8,9 @@ body {
   display: flex;
   flex-direction: row;
 }
+.weekDaysTime-hr {
+  margin: 0 !important;
+}
 .base.column {
   display: flex;
   flex-direction: column;
@@ -89,9 +92,7 @@ body {
   float: right;
   color: rgb(83, 83, 83);
 }
-.weekDaysHr {
-  margin-bottom: 2px;
-}
+
 .pageContainer {
   display: flex;
   flex: 1;
