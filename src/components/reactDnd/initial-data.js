@@ -102,14 +102,17 @@ const initialData = {
             {
               type: COMPONENT,
               id: "component3",
+              title: "this is title",
             },
             {
               type: COMPONENT,
               id: "component0",
+              title: "this is title",
             },
             {
               type: COMPONENT,
               id: "component2",
+              title: "this is title",
             },
           ],
         },
