@@ -1,0 +1,101 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.body {
+  display: flex;
+  flex-direction: row;
+}
+.base.column {
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+  border-radius: 10px;
+  padding: 0 !important;
+  background-color: #f1f1f1;
+}
+.dropZone {
+  height: 0px !important;
+}
+.base.column .dropZone {
+  flex: 0 0 auto;
+  height: 20px !important;
+  transition: 200ms all;
+}
+
+.dropZone:nth-of-type(2n) {
+  display: none;
+}
+
+.dropZone:not(.horizontalDrag).isLast {
+  flex: 1 1 auto;
+}
+
+.dropZone.active,
+.trashDropZone.active {
+  background: #00a2ff;
+  transition: 100ms all;
+}
+.task-check-box {
+  margin-right: 10px;
+}
+.component {
+  background: #aaa;
+}
+.component.draggable {
+  display: inline-flex;
+  font-size: 15px;
+  padding: 10px;
+  border-radius: 5px;
+  z-index: 1;
+  background-color: white;
+  width: 100%;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.06);
+}
+.columns {
+  display: flex;
+  padding: 0 !important;
+  margin-bottom: 80px;
+}
+
+.columnContainer {
+  display: flex;
+}
+
+.base {
+  padding: 0;
+  background-color: white;
+}
+.base.column {
+  padding: 10px !important;
+  margin-left: 5px;
+  margin-right: 5px;
+  width: 14%;
+}
+
+.pageContainer {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin-bottom: 100px;
+}
+.new_task_input {
+  height: 40px;
+  line-height: 1;
+  font-size: 16px;
+  border: none;
+  outline: none;
+  background: none;
+  width: 100%;
+  opacity: 0;
+  transition: all 0.5s;
+}
+.base.column:hover .new_task_input {
+  opacity: 1;
+}
+.new_task_input:focus {
+  background-color: white;
+  border-radius: 6px;
+}
