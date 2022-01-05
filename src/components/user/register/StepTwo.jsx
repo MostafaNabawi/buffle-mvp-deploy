@@ -7,8 +7,8 @@ const StepTwoRegister = () => {
     const [showPassword, setShowPassword] = useState(false);
     return (
         <div className={style.StepTowPage}>
-            <Row className="p-0 m-0 row justify-content-center">
-                <Col xl='5'>
+            <Row className="p-0 m-0 row">
+                <Col xl='8'>
                     <div className={style.registerCard}>
                         <div className={`${style.header}  text-center pt-4`}>
                             <div className={style.floatLeft}>2/2</div>
