@@ -1,7 +1,7 @@
 import { React, useState } from "react";
 import { Row, Col, Image, Form, Button } from "react-bootstrap";
 import { Icon } from "@iconify/react";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
 import style from '../style.module.css'
 const UserRegister = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -168,7 +168,7 @@ const UserRegister = () => {
                  continue registering from here.
                  </h2>
                  <h4 className="text-center mt-2">
-                  Cleck open <a href="/register"> Email</a>
+                  Cleck open <a href="http://gmail.com/"> Email</a>
                  </h4>
               </Col>
           </Row>
