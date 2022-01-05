@@ -43,9 +43,11 @@ const Column = ({ data, components, handleDrop, path }) => {
                 style={{ ...style, opacity }}
                 className="base draggable column"
             >
-                <div>
-
-                    {data.id}
+                <div className="weekDaysTime">
+                    <span className="weekDays">{data.id}</span>
+                    <span className="taskTime">10.12</span>
+                </div>
+                <div className="taskLists">
                     {data.children.map((component, index) => {
                         const currentPath = `${path}-${index}`;
 
