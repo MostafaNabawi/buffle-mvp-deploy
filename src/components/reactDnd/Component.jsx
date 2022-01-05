@@ -6,7 +6,6 @@ import { Form } from 'react-bootstrap';
 
 const Component = ({ data, components, path }) => {
     const ref = useRef(null);
-
     const [{ isDragging }, drag] = useDrag({
         type: COMPONENT,
         item: { id: data.id, path },
@@ -19,7 +18,6 @@ const Component = ({ data, components, path }) => {
     drag(ref);
 
     const component = components[data.id];
-    console.log(components)
     return (
         <div
             ref={ref}
@@ -29,8 +27,8 @@ const Component = ({ data, components, path }) => {
             <Form.Group controlId="formBasicCheckbox">
                 <Form.Check className="task-check-box" type="checkbox" />
             </Form.Group>
-            {/* <span>{data.title}</span> */}
-            <span>{component.content}</span>
+            <span>{data.id}</span>
+            {/* <span>{component.content}</span> */}
         </div>
     );
 };

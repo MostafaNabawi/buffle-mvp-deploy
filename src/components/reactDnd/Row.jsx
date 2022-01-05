@@ -5,6 +5,7 @@ import Column from "./Column";
 
 const style = {};
 const Row = ({ data, components, handleDrop, path }) => {
+
     const ref = useRef(null);
 
     const [{ isDragging }, drag] = useDrag({
@@ -24,6 +25,7 @@ const Row = ({ data, components, handleDrop, path }) => {
     drag(ref);
 
     const renderColumn = (column, currentPath, type) => {
+
         return (
             <Column
                 key={column.id}

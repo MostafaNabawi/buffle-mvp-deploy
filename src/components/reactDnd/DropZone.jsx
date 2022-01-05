@@ -1,9 +1,9 @@
 import React from "react";
 import classNames from "classnames";
 import { useDrop } from "react-dnd";
-import { COMPONENT, SIDEBAR_ITEM, ROW, COLUMN } from "./constants";
+import { COMPONENT, ROW, COLUMN } from "./constants";
 
-const ACCEPTS = [SIDEBAR_ITEM, COMPONENT, ROW, COLUMN];
+const ACCEPTS = [COMPONENT, ROW, COLUMN];
 
 const DropZone = ({ data, onDrop, isLast, className }) => {
     const [{ isOver, canDrop }, drop] = useDrop({

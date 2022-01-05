@@ -6,57 +6,31 @@ import initialData from "./initial-data";
 import {
     handleMoveWithinParent,
     handleMoveToDifferentParent,
-    handleMoveSidebarComponentIntoParent,
 } from "./helpers";
 
-import { SIDEBAR_ITEM, COMPONENT, COLUMN } from "./constants";
-import shortid from "shortid";
+import { COLUMN } from "./constants";
 
 const Container = () => {
     const initialLayout = initialData.layout;
     const initialComponents = initialData.components;
     const [layout, setLayout] = useState(initialLayout);
     const [components, setComponents] = useState(initialComponents);
-
-
+    console.log(layout);
 
     const handleDrop = useCallback(
         (dropZone, item) => {
-            console.log('dropZone', dropZone)
-            console.log('item', item)
+            // console.log('dropZone', dropZone)
+            // console.log('item', item)
 
             const splitDropZonePath = dropZone.path.split("-");
             const pathToDropZone = splitDropZonePath.slice(0, -1).join("-");
-
+            // console.log(item);
             const newItem = { id: item.id, type: item.type };
             if (item.type === COLUMN) {
                 newItem.children = item.children;
             }
 
-            // sidebar into
-            if (item.type === SIDEBAR_ITEM) {
-                // 1. Move sidebar item into page
-                const newComponent = {
-                    id: shortid.generate(),
-                    ...item.component
-                };
-                const newItem = {
-                    id: newComponent.id,
-                    type: COMPONENT
-                };
-                setComponents({
-                    ...components,
-                    [newComponent.id]: newComponent
-                });
-                setLayout(
-                    handleMoveSidebarComponentIntoParent(
-                        layout,
-                        splitDropZonePath,
-                        newItem
-                    )
-                );
-                return;
-            }
+
 
             // move down here since sidebar items dont have path
             const splitItemPath = item.path.split("-");
@@ -97,9 +71,10 @@ const Container = () => {
         },
         [layout, components]
     );
-
     const renderRow = (row, currentPath) => {
+
         return (
+
             <Row
                 key={row.id}
                 data={row}
@@ -107,6 +82,8 @@ const Container = () => {
                 components={components}
                 path={currentPath}
             />
+
+
         );
     };
 
@@ -117,6 +94,7 @@ const Container = () => {
 
             <div className="pageContainer">
                 <div className="page">
+
                     {layout.map((row, index) => {
                         const currentPath = `${index}`;
 
@@ -131,7 +109,9 @@ const Container = () => {
                                     path={currentPath}
                                 />
                                 {renderRow(row, currentPath)}
+
                             </React.Fragment>
+
                         );
                     })}
                     <DropZone
@@ -143,6 +123,7 @@ const Container = () => {
                         isLast
                     />
                 </div>
+
             </div>
         </div>
     );
