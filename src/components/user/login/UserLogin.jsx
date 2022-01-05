@@ -1,11 +1,12 @@
 import { React, useState } from "react";
 import {Row,Col, Image, Form, Button } from "react-bootstrap";
 import { Icon } from "@iconify/react";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
 import style from '../style.module.css'
 
 const UserLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
+  
   return (
     <div className={style.loginPage}>
        <Row className="m-0 justify-content-center">
@@ -61,10 +62,10 @@ const UserLogin = () => {
               </Link>
             </Form.Group>
 
-            <Button className={style.submitBtn} type="submit">
-              LOGIN
+            <Button  className={style.submitBtn} type="button">
+            <Link className="white-color" to="/dashboard">LOGIN</Link>
             </Button>
-            <button className={`${style.btnGoogle } mt-4`} type="submit">
+            <button  className={`${style.btnGoogle } mt-4`} type="button">
               <Icon className={style.googleIcon} icon="flat-color-icons:google" />
               Login with Google
             </button>
