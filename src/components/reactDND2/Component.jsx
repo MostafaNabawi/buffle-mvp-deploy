@@ -4,7 +4,7 @@ import { COMPONENT } from "./constants";
 import { Form } from 'react-bootstrap';
 
 
-const Component = ({ data, components, path }) => {
+const Component = ({ data, path }) => {
     const ref = useRef(null);
 
     const [{ isDragging }, drag] = useDrag({
@@ -18,7 +18,6 @@ const Component = ({ data, components, path }) => {
     const opacity = isDragging ? 0 : 1;
     drag(ref);
 
-    const component = components[data.id];
 
     return (
         <div
@@ -29,7 +28,7 @@ const Component = ({ data, components, path }) => {
             <Form.Group controlId="formBasicCheckbox">
                 <Form.Check className="task-check-box" type="checkbox" />
             </Form.Group>
-            <span>{component.content}</span>
+            <span>{data.id}</span>
         </div>
     );
 };

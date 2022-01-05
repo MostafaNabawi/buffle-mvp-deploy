@@ -1,7 +1,6 @@
 import React, { useRef } from "react";
 import { useDrag } from "react-dnd";
 import { ROW } from "./constants";
-import DropZone from "./DropZone";
 import Column from "./Column";
 
 const style = {};
@@ -11,7 +10,6 @@ const Row = ({ data, components, handleDrop, path }) => {
     const [{ isDragging }, drag] = useDrag({
         type: ROW,
         item: {
-
             id: data.id,
             children: data.children,
             path
@@ -44,27 +42,12 @@ const Row = ({ data, components, handleDrop, path }) => {
 
                     return (
                         <React.Fragment key={column.id}>
-                            <DropZone
-                                data={{
-                                    path: currentPath,
-                                    childrenCount: data.children.length,
-                                }}
-                                onDrop={handleDrop}
-                                className="horizontalDrag"
-                            />
+
                             {renderColumn(column, currentPath)}
                         </React.Fragment>
                     );
                 })}
-                <DropZone
-                    data={{
-                        path: `${path}-${data.children.length}`,
-                        childrenCount: data.children.length
-                    }}
-                    onDrop={handleDrop}
-                    className="horizontalDrag"
-                    isLast
-                />
+
             </div>
         </div>
     );
