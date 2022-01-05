@@ -3,9 +3,19 @@ import { Row, Col, Image, Form, Button } from "react-bootstrap";
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
 import style from '../style.module.css'
+import { getCountry, getStateOfCountry } from '../helper/Countey'
+
 const StudentRegister = () => {
 
+    const allCountry = getCountry()
+    const [state, setState] = useState('')
     const [sendEmail, setSendEmail] = useState(false)
+
+    const getState = (code) => {
+        if (code != '') {
+            setState(getStateOfCountry(code))
+        }
+    }
     const handleRegister = () => {
         setSendEmail(true)
     }
@@ -83,11 +93,19 @@ const StudentRegister = () => {
                                             <Col xl='6'>
                                                 <Form.Group className="mb-3">
                                                     <Form.Label className={style.lableForm}>Country *</Form.Label>
-                                                    <Form.Select className={style.formInput} aria-label="Default select example">
-                                                        <option>Open this select menu</option>
-                                                        <option value="1">One</option>
-                                                        <option value="2">Two</option>
-                                                        <option value="3">Three</option>
+                                                    <Form.Select
+                                                        onInput={(e) => {
+                                                            getState(e.target.value)
+                                                        }}
+                                                        className={style.formInput}
+                                                        aria-label="Default select example"
+                                                    >
+                                                        <option value=''>Select</option>
+                                                        {allCountry && (
+                                                            allCountry.map(country => (
+                                                                <option key={country.name} value={country.code}>{country.name}</option>
+                                                            ))
+                                                        )}
                                                     </Form.Select>
                                                 </Form.Group>
                                             </Col>
@@ -95,10 +113,12 @@ const StudentRegister = () => {
                                                 <Form.Group className="mb-3">
                                                     <Form.Label className={style.lableForm}>City *</Form.Label>
                                                     <Form.Select className={style.formInput} aria-label="Default select example">
-                                                        <option>Open this select menu</option>
-                                                        <option value="1">One</option>
-                                                        <option value="2">Two</option>
-                                                        <option value="3">Three</option>
+                                                        <option></option>
+                                                        {state && (
+                                                            state.map(s => (
+                                                                <option key={s} value={s}>{s}</option>
+                                                            ))
+                                                        )}
                                                     </Form.Select>
                                                 </Form.Group>
                                             </Col>
