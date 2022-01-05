@@ -8,7 +8,7 @@ const UserLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
   return (
     <div className={style.loginPage}>
-       <Row className="m-0">
+       <Row className="m-0 justify-content-center">
          <Col className="col-lg-4 col-sm-6 col-xs-12">
          <div className={style.card}>
         <div className={`${style.header}  text-center pt-4`}>
