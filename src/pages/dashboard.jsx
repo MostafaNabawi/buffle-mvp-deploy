@@ -95,7 +95,7 @@ const Dashboard = () => {
               title="Vacation Time"
               action={
                 <>
-                   <Icon icon="vaadin:plus" />
+                  <Icon icon="vaadin:plus" />
                 </>
               }
             />
@@ -141,8 +141,8 @@ const Dashboard = () => {
               subtitle="4 opan ,1 started"
               action={
                 <>
-                   <Icon icon="vaadin:plus" />
-                   <Icon icon="vaadin:ellipsis-dots-v" />
+                  <Icon icon="vaadin:plus" />
+                  <Icon icon="vaadin:ellipsis-dots-v" />
                 </>
               }
             />
