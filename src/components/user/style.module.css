@@ -9,9 +9,7 @@
   font-style: normal !important;
   font-weight: normal !important;
 }
-.loginPage,
-.registerPage,
-.StepTowPage {
+.loginPage{
   padding-top: 5%;
   height: 100vh;
   background: var(--secondary-color);
@@ -21,9 +19,9 @@
   padding-left:15px;
   float: left !important;
 }
-.registerPage {
-  padding-top: 3%;
-}
+/* .registerPage {
+  height: 100%;
+} */
 
 .card,.registerCard,.loginCard{
   background: #ffffff;
@@ -87,6 +85,13 @@
   right: 0px;
   cursor: pointer !important;
 }
+.arrowSelect{
+  position: relative;
+  float: right;
+  margin-top: -31px;
+  margin-right:10px ;
+  font-size: small !important;
+}
 .forgetPassLink {
   margin-top: -25px;
   float: right !important;
@@ -138,4 +143,11 @@
 }
 .registerLink {
   color: var(--secondary-dark-gray);
+}
+.registerBtnLink{
+  padding-left:20px !important ;
+  text-decoration: none !important;
+}
+.simpleDiscription{
+font-size:17px
 }

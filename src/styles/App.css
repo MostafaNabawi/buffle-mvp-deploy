@@ -111,6 +111,12 @@ button {
     var(--primary-color) 100%
   );
 }
+.register-container{
+  margin: auto !important;
+  height: 100vh !important;
+  margin: auto;
+  padding-top: 5% !important;
+}
 .sidebar-container{
   position: fixed !important;
   z-index: 99999 !important;

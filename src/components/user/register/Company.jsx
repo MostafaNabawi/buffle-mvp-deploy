@@ -12,9 +12,9 @@ const CompanyRegister = () => {
   const getState = (code) => {
     if (code != '') {
       setState(getStateOfCountry(code))
-  }else{
+    } else {
       setState('')
-  }
+    }
   }
   const handleRegister = () => {
     setSendEmail(true)
@@ -43,7 +43,7 @@ const CompanyRegister = () => {
                           <Form.Control
                             className={style.formInput}
                             type="text"
-                           placeholder="First Name"
+                            placeholder="First Name"
                           />
                         </Form.Group>
                       </Col>
@@ -53,7 +53,7 @@ const CompanyRegister = () => {
                           <Form.Control
                             className={style.formInput}
                             type="text"
-                          placeholder="Last name"
+                            placeholder="Last name"
                           />
                         </Form.Group>
                       </Col>
@@ -63,7 +63,7 @@ const CompanyRegister = () => {
                           <Form.Control
                             className={style.formInput}
                             type="email"
-                           placeholder="Enter email"
+                            placeholder="Enter email"
                           />
                         </Form.Group>
                       </Col>
@@ -73,28 +73,31 @@ const CompanyRegister = () => {
                           <Form.Control
                             className={style.formInput}
                             type="text"
-                           placeholder="Company Name"
+                            placeholder="Company Name"
                           />
                         </Form.Group>
                       </Col>
                       <Col xl='3'>
                         <Form.Group className="mb-3">
                           <Form.Label className={style.lableForm}>Company Size*</Form.Label>
-                          <Form.Select className={style.formInput} aria-label="Default select example">
-                            <option></option>
+                          <Form.Select
+                            className={style.formInput}
+                            aria-label="Default select example">
+                            <option value=''>Size</option>
                             <option value="1">One</option>
                             <option value="2">Two</option>
                             <option value="3">Three</option>
                           </Form.Select>
+                          <Icon className={style.arrowSelect} icon="ep:arrow-down-bold" />
                         </Form.Group>
                       </Col>
                       <Col xl='3'>
                         <Form.Group className="mb-3">
-                          <Form.Label className={style.lableForm}>Tex ID *</Form.Label>
+                          <Form.Label className={style.lableForm}>Tax ID *</Form.Label>
                           <Form.Control
                             className={style.formInput}
                             type="number"
-                          placeholder="Tex ID"
+                            placeholder="Tax ID"
                           />
                         </Form.Group>
                       </Col>
@@ -104,7 +107,7 @@ const CompanyRegister = () => {
                           <Form.Control
                             className={style.formInput}
                             type="text"
-                          placeholder="Web Site"
+                            placeholder="Web Site"
                           />
                         </Form.Group>
                       </Col>
@@ -114,7 +117,7 @@ const CompanyRegister = () => {
                           <Form.Control
                             className={style.formInput}
                             type="text"
-                           placeholder="Head Office"
+                            placeholder="Head Office"
                           />
                         </Form.Group>
                       </Col>
@@ -128,37 +131,42 @@ const CompanyRegister = () => {
                             className={style.formInput}
                             aria-label="Default select example"
                           >
-                            <option value=''></option>
+                            <option value=''>Country</option>
                             {allCountry && (
                               allCountry.map(country => (
                                 <option key={country.name} value={country.code}>{country.name}</option>
                               ))
                             )}
                           </Form.Select>
+                          <Icon className={style.arrowSelect} icon="ep:arrow-down-bold" />
                         </Form.Group>
                       </Col>
                       <Col xl='3'>
                         <Form.Group className="mb-3">
                           <Form.Label className={style.lableForm}>City *</Form.Label>
                           <Form.Select className={style.formInput} aria-label="Default select example">
-                            <option></option>
+                            <option>City</option>
                             {state && (
                               state.map(s => (
                                 <option key={s} value={s}>{s}</option>
-                            ))
+                              ))
                             )}
                           </Form.Select>
+                          <Icon className={style.arrowSelect} icon="ep:arrow-down-bold" />
                         </Form.Group>
                       </Col>
                       <Col xl='3'>
                         <Form.Group className="mb-3">
                           <Form.Label className={style.lableForm}>State *</Form.Label>
                           <Form.Select className={style.formInput} aria-label="Default select example">
-                            <option></option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                           <option>State</option>
+                            {state && (
+                              state.map(s => (
+                                <option key={s} value={s}>{s}</option>
+                              ))
+                            )}
                           </Form.Select>
+                          <Icon className={style.arrowSelect} icon="ep:arrow-down-bold" />
                         </Form.Group>
                       </Col>
                       <Col xl='6'>
@@ -167,7 +175,7 @@ const CompanyRegister = () => {
                           <Form.Control
                             className={style.formInput}
                             type="text"
-                           placeholder="Street ,Number"
+                            placeholder="Street ,Number"
                           />
                         </Form.Group>
                       </Col>
@@ -177,7 +185,7 @@ const CompanyRegister = () => {
                           <Form.Control
                             className={style.formInput}
                             type="number"
-                           placeholder="Postal code"
+                            placeholder="Postal code"
                           />
                         </Form.Group>
                       </Col>
