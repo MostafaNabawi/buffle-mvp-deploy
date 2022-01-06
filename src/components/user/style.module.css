@@ -1,0 +1,153 @@
+.headerTitle
+.lableForm
+.formInput
+.forgetPassLink
+.btnGoogle
+.footer,
+.registerLink {
+  font-family: DM Sans !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+}
+.loginPage{
+  padding-top: 5%;
+  height: 100vh;
+  background: var(--secondary-color);
+}
+.floatLeft{
+  padding:10px ;
+  padding-left:15px;
+  float: left !important;
+}
+/* .registerPage {
+  height: 100%;
+} */
+
+.card,.registerCard,.loginCard{
+  background: #ffffff;
+  box-shadow: 5px 5px 22px rgba(0, 0, 0, 0.03);
+  border-radius: 20px;
+  margin: auto;
+  padding-bottom: 15px !important;
+}
+.iconCheck{
+  text-align:center;
+}
+.iconCheck >svg{
+  font-size: 70px !important;
+}
+.headerTitle {
+  height: 14px;
+  font-size: 14px;
+  line-height: 14px;
+  align-items: center;
+  text-align: center;
+  color: var(--secondary-dark-gray);
+}
+.body {
+  padding: 15px 25px;
+}
+.lableForm {
+  height: 12px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--secondary-dark-gray);
+}
+.formInput {
+  height: 38px !important;
+  font-family: DM Sans !important;
+  font-size: 16px !important;
+  line-height: 16px !important;
+  color: var(--secondary-dark-gray) !important;
+  background: #eff3fa !important;
+  border: 0px !important;
+  box-sizing: border-box !important;
+  border-radius: 8px !important;
+}
+.formTextarea{
+  font-family: DM Sans !important;
+  font-size: 16px !important;
+  line-height: 16px !important;
+  color: var(--secondary-dark-gray) !important;
+  background: #eff3fa !important;
+  border: 0px !important;
+  box-sizing: border-box !important;
+  border-radius: 8px !important;
+}
+.formInput:focus ,.formTextarea:focus {
+  background: #ffffff !important;
+  border: 1px solid var(--low-vein-blue) !important;
+  box-shadow: none !important;
+}
+.passwordIcon {
+  position: absolute;
+  right: 0px;
+  cursor: pointer !important;
+}
+.arrowSelect{
+  position: relative;
+  float: right;
+  margin-top: -31px;
+  margin-right:10px ;
+  font-size: small !important;
+}
+.forgetPassLink {
+  margin-top: -25px;
+  float: right !important;
+  height: 14px;
+  font-size: 14px;
+  line-height: 14px;
+  text-decoration-line: underline;
+  color: var(--secondary-dark-gray);
+}
+.submitBtn {
+  width: 100% !important;
+  height: 45px;
+  background: radial-gradient(
+    100% 682.41% at 4.04% 0%,
+    #8286ff 0%,
+    #4922ff 100%
+  );
+  border-radius: 8px;
+}
+.btnGoogle,
+.btnGoogle:hover {
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 16px;
+  letter-spacing: 0.2px;
+  color: #000000;
+  width: 100% !important;
+  height: 45px;
+  background: #ffffff;
+  border: 1px solid var(--low-vein-blue);
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+.btnGoogle:hover {
+  color: var(--primary-color);
+}
+.googleIcon {
+  margin-right: 10px !important;
+  font-size: 30px;
+}
+.footer,
+.registerLink {
+  padding-top: 15px;
+  text-align: center;
+  height: 18px;
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--low-vein-blue);
+}
+.registerLink {
+  color: var(--secondary-dark-gray);
+}
+.registerBtnLink{
+  padding-left:20px !important ;
+  text-decoration: none !important;
+}
+.simpleDiscription{
+font-size:17px
+}

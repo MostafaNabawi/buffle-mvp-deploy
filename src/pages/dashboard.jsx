@@ -1,8 +1,8 @@
-import { React } from "react";
+import { React,useState } from "react";
 import { Row, Col, Image, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
-import ProgressBar from "../components/common/ProgressBar";
+import ProgressBar from "../components/common/progressBar/ProgressBar";
 import CardHeader from "../components/card/CardHeader";
 import Card from "../components/card/Card";
 import HydrationReminderCard from "./../components/hydrationReminder/HydrationReminderCard";
@@ -10,17 +10,18 @@ import ScreenFreeReminderCard from "./../components/screenFreeReminder/ScreenFre
 import EventCalender from "./../components/eventCalender/EventCalender";
 import ImpotentToDayCard from "./../components/impotentToDay/ImpotentToDayCard";
 const Dashboard = () => {
+  const [modalShow, setModalShow] =useState(false);
   return (
     <section>
       <Row>
         <Col xl={3}>
-          <Card className="custom-h-card">
+          <Card className="custom-h-card  pt-3">
             <CardHeader
               className="p-0"
               icon={<Image src="/icone/brain 1.png" alt="vector image" />}
               title="How you feel today"
             />
-            <div className="pt-3 pb-0 mb-0">
+            <div className="pt-3 pb-0 mb-0 card-feel-icon ">
               <Image
                 className="feel-icon"
                 src="/icone/1.png"
@@ -50,9 +51,9 @@ const Dashboard = () => {
           </Card>
         </Col>
         <Col xl={3}>
-          <Card className="custom-h-card">
+          <Card className="custom-h-card pr-5 pt-3">
             <CardHeader
-            className="p-0"
+              className="p-0"
               icon={
                 <Image
                   src="/icone/countdown to break 2.png"
@@ -61,26 +62,29 @@ const Dashboard = () => {
               }
               title="Next break"
               action={
-                <>
-                  <Icon icon="bi:plus" />
-                </>
+                <i onClick={()=>{
+
+                }}>
+                  <Icon icon="vaadin:plus" />
+                </i>
               }
             />
-            <div className="mt-3 pb-0 mb-0 mr-3">
+            <Col className="progress-custom mt-3">
               <ProgressBar
+                percent={60}
                 lable={`
                     ${new Date().getHours()}
                     :${new Date().getMinutes()}
                     :${new Date().getSeconds()}
                     `}
               />
-            </div>
+            </Col>
           </Card>
         </Col>
         <Col xl={3}>
-          <Card className="custom-h-card">
+          <Card className="custom-h-card  pt-3">
             <CardHeader
-            className="p-0"
+              className="p-0"
               icon={
                 <Image
                   src="/icone/smiling-face-with-sunglasses 1.png"
@@ -90,7 +94,7 @@ const Dashboard = () => {
               title="Vacation Time"
               action={
                 <>
-                  <Icon icon="bi:plus" />
+                  <Icon icon="vaadin:plus" />
                 </>
               }
             />
@@ -101,9 +105,10 @@ const Dashboard = () => {
           </Card>
         </Col>
         <Col xl={3}>
-          <Card className="custom-h-card">
+          <Card className="custom-h-card pb-3 primary-gradient pt-3">
             <CardHeader
-            className="p-0"
+              className="p-0"
+              titleClass="musicTitle"
               icon={
                 <Image src="/icone/musical-note 1.png" alt="vector image" />
               }
@@ -135,13 +140,13 @@ const Dashboard = () => {
               subtitle="4 opan ,1 started"
               action={
                 <>
-                  <Icon className="action-icon" icon="bi:plus" />
-                  <Icon className="action-icon" icon="codicon:kebab-vertical" />
+                  <Icon icon="vaadin:plus" />
+                  <Icon icon="vaadin:ellipsis-dots-v" />
                 </>
               }
             />
             <Row>
-              <Row className="task-manager-body pt-0">
+              <Row className="task-manager-body pt-0 mt-1 mb-1">
                 <Col xl="8">
                   <Row className="pl-5">
                     <Col xl="1">
@@ -156,6 +161,7 @@ const Dashboard = () => {
                 </Col>
                 <Col xl="4">
                   <ProgressBar
+                    percent={70}
                     lable={`
                     ${new Date().getHours()}
                     :${new Date().getMinutes()}
@@ -165,7 +171,7 @@ const Dashboard = () => {
                 </Col>
               </Row>
               <div className="devidre"></div>
-              <Row className="task-manager-body">
+              <Row className="task-manager-body mt-1 mb-1">
                 <Col xl="8">
                   <Row className="pl-5">
                     <Col xl="1">
@@ -180,6 +186,7 @@ const Dashboard = () => {
                 </Col>
                 <Col xl="4">
                   <ProgressBar
+                    percent={60}
                     lable={`
                     ${new Date().getHours()}
                     :${new Date().getMinutes()}
@@ -189,7 +196,7 @@ const Dashboard = () => {
                 </Col>
               </Row>
               <div className="devidre"></div>
-              <Row className="task-manager-body">
+              <Row className="task-manager-body mt-1 mb-1">
                 <Col xl="8">
                   <Row className="pl-5">
                     <Col xl="1">
@@ -204,6 +211,7 @@ const Dashboard = () => {
                 </Col>
                 <Col xl="4">
                   <ProgressBar
+                    percent={70}
                     lable={`
                     ${new Date().getHours()}
                     :${new Date().getMinutes()}
@@ -213,7 +221,7 @@ const Dashboard = () => {
                 </Col>
               </Row>
               <div className="devidre"></div>
-              <Row className="task-manager-body">
+              <Row className="task-manager-body mt-1 mb-1">
                 <Col xl="8">
                   <Row className="pl-5">
                     <Col xl="1">
@@ -228,6 +236,7 @@ const Dashboard = () => {
                 </Col>
                 <Col xl="4">
                   <ProgressBar
+                    percent={80}
                     lable={`
                     ${new Date().getHours()}
                     :${new Date().getMinutes()}
@@ -236,7 +245,7 @@ const Dashboard = () => {
                   />
                 </Col>
               </Row>
-              <div className="devidre"></div>
+              <div className="devidre "></div>
             </Row>
           </Card>
         </Col>
@@ -247,71 +256,71 @@ const Dashboard = () => {
               title="Breakplan"
               action=""
             />
-              <Row className="mt-3">
-                <Col className="col-2">
-                  <div className="breakplan-icon navy-blue text-center pt-2">
-                    <Image
-                      className="breakplan-img"
-                      src="/icone/WB_Headshots-102-web 1.png"
-                    />
-                  </div>
-                </Col>
-                <Col>
-                  <div className="break-user-name">Raj Kumar</div>
-                  <div>
-                    <span className="break-type">orders Lieferando</span>
-                    <span className="break-time">13:00</span>
-                  </div>
-                </Col>
-              </Row>
-              <Row className="mt-3">
-                <Col className="col-2">
-                  <div className="breakplan-icon navy-blue text-center pt-2">
-                    <Image
-                      className="breakplan-img"
-                      src="/icone/RJ_Headshots-84-web 1.png"
-                    />
-                  </div>
-                </Col>
-                <Col>
-                  <div className="break-user-name">Raj Kumar</div>
-                  <div>
-                    <span className="break-type">orders Lieferando</span>
-                    <span className="break-time">13:00</span>
-                  </div>
-                </Col>
-              </Row>
-              <Row className="mt-3">
-                <Col className="col-2">
-                  <div className="breakplan-icon navy-blue text-center pt-2">
-                    <Image
-                      className="breakplan-img"
-                      src="/icone/2018-11-27-Cornelius-W-111 1.png"
-                    />
-                  </div>
-                </Col>
-                <Col>
-                  <div className="break-user-name">Raj Kumar</div>
-                  <div>
-                    <span className="break-type">orders Lieferando</span>
-                    <span className="break-time">13:00</span>
-                  </div>
-                </Col>
-              </Row>
-              <Row className="mt-3">
-                <Col>
-                  <div className="creat-breack-time">
-                    <div className="what-is-breack">What’s your breakplan?</div>
-                    <ul className="pt-1 pl-2">
-                      <li>
-                        <Link className="break-plan" to="">
-                          Plan
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                </Col>
-              </Row>
+            <Row className="mt-3">
+              <Col className="col-2">
+                <div className="breakplan-icon navy-blue text-center pt-2">
+                  <Image
+                    className="breakplan-img"
+                    src="/icone/WB_Headshots-102-web 1.png"
+                  />
+                </div>
+              </Col>
+              <Col>
+                <div className="break-user-name">Raj Kumar</div>
+                <div>
+                  <span className="break-type">orders Lieferando</span>
+                  <span className="break-time">13:00</span>
+                </div>
+              </Col>
+            </Row>
+            <Row className="mt-3">
+              <Col className="col-2">
+                <div className="breakplan-icon navy-blue text-center pt-2">
+                  <Image
+                    className="breakplan-img"
+                    src="/icone/RJ_Headshots-84-web 1.png"
+                  />
+                </div>
+              </Col>
+              <Col>
+                <div className="break-user-name">Raj Kumar</div>
+                <div>
+                  <span className="break-type">orders Lieferando</span>
+                  <span className="break-time">13:00</span>
+                </div>
+              </Col>
+            </Row>
+            <Row className="mt-3">
+              <Col className="col-2">
+                <div className="breakplan-icon navy-blue text-center pt-2">
+                  <Image
+                    className="breakplan-img"
+                    src="/icone/2018-11-27-Cornelius-W-111 1.png"
+                  />
+                </div>
+              </Col>
+              <Col>
+                <div className="break-user-name">Raj Kumar</div>
+                <div>
+                  <span className="break-type">orders Lieferando</span>
+                  <span className="break-time">13:00</span>
+                </div>
+              </Col>
+            </Row>
+            <Row className="mt-3">
+              <Col>
+                <div className="creat-breack-time">
+                  <div className="what-is-breack">What’s your breakplan?</div>
+                  <ul className="pt-1 pl-2">
+                    <li>
+                      <Link className="break-plan" to="">
+                        Plan
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+              </Col>
+            </Row>
           </Card>
         </Col>
       </Row>
