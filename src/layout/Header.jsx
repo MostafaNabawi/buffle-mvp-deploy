@@ -13,7 +13,7 @@ const Header = () => {
             <Link to=""><Image className="sidebar-icon" src="/icone/hcphotos-Headshots-1 2.png" /></Link>
           </div>
           <div className="header-icon navy-blue text-center pt-2">
-            <Link to=""><Image className="sidebar-icon" src="/icone/hcphotos-Headshots-1 1.png" /></Link>
+            <Link to="/"><Image className="sidebar-icon" src="/icone/hcphotos-Headshots-1 1.png" /></Link>
           </div>
           <div className="form-search">
             <Form>

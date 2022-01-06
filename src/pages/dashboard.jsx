@@ -1,4 +1,4 @@
-import { React } from "react";
+import { React,useState } from "react";
 import { Row, Col, Image, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
@@ -9,8 +9,8 @@ import HydrationReminderCard from "./../components/hydrationReminder/HydrationRe
 import ScreenFreeReminderCard from "./../components/screenFreeReminder/ScreenFreeReminderCard";
 import EventCalender from "./../components/eventCalender/EventCalender";
 import ImpotentToDayCard from "./../components/impotentToDay/ImpotentToDayCard";
-import Modal from "../components/modal/modal";
 const Dashboard = () => {
+  const [modalShow, setModalShow] =useState(false);
   return (
     <section>
       <Row>
@@ -62,13 +62,15 @@ const Dashboard = () => {
               }
               title="Next break"
               action={
-                <i>
+                <i onClick={()=>{
+
+                }}>
                   <Icon icon="vaadin:plus" />
                 </i>
               }
             />
             <Col className="progress-custom mt-3">
-            <ProgressBar
+              <ProgressBar
                 percent={60}
                 lable={`
                     ${new Date().getHours()}
@@ -76,7 +78,7 @@ const Dashboard = () => {
                     :${new Date().getSeconds()}
                     `}
               />
-            </Col> 
+            </Col>
           </Card>
         </Col>
         <Col xl={3}>
@@ -92,7 +94,7 @@ const Dashboard = () => {
               title="Vacation Time"
               action={
                 <>
-                   <Icon icon="vaadin:plus" />
+                  <Icon icon="vaadin:plus" />
                 </>
               }
             />
@@ -106,7 +108,7 @@ const Dashboard = () => {
           <Card className="custom-h-card pb-3 primary-gradient pt-3">
             <CardHeader
               className="p-0"
-              titleClass ="musicTitle"
+              titleClass="musicTitle"
               icon={
                 <Image src="/icone/musical-note 1.png" alt="vector image" />
               }
@@ -138,8 +140,8 @@ const Dashboard = () => {
               subtitle="4 opan ,1 started"
               action={
                 <>
-                   <Icon icon="vaadin:plus" />
-                   <Icon icon="vaadin:ellipsis-dots-v" />
+                  <Icon icon="vaadin:plus" />
+                  <Icon icon="vaadin:ellipsis-dots-v" />
                 </>
               }
             />
