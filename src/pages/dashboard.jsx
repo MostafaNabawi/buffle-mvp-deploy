@@ -9,7 +9,6 @@ import HydrationReminderCard from "./../components/hydrationReminder/HydrationRe
 import ScreenFreeReminderCard from "./../components/screenFreeReminder/ScreenFreeReminderCard";
 import EventCalender from "./../components/eventCalender/EventCalender";
 import ImpotentToDayCard from "./../components/impotentToDay/ImpotentToDayCard";
-import Modal from "../components/modal/modal";
 const Dashboard = () => {
   return (
     <section>
@@ -68,7 +67,7 @@ const Dashboard = () => {
               }
             />
             <Col className="progress-custom mt-3">
-            <ProgressBar
+              <ProgressBar
                 percent={60}
                 lable={`
                     ${new Date().getHours()}
@@ -76,7 +75,7 @@ const Dashboard = () => {
                     :${new Date().getSeconds()}
                     `}
               />
-            </Col> 
+            </Col>
           </Card>
         </Col>
         <Col xl={3}>
@@ -106,7 +105,7 @@ const Dashboard = () => {
           <Card className="custom-h-card pb-3 primary-gradient pt-3">
             <CardHeader
               className="p-0"
-              titleClass ="musicTitle"
+              titleClass="musicTitle"
               icon={
                 <Image src="/icone/musical-note 1.png" alt="vector image" />
               }

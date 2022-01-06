@@ -7,9 +7,9 @@ import UserRegister from "../components/user/register/UserRegister";
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   return (
-   <>
-      <UserRegister/>
-   </>
+    <>
+      <UserRegister />
+    </>
   );
 };
 

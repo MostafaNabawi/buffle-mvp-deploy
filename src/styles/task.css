@@ -1,4 +1,4 @@
-@font-face {
+/* @font-face {
   font-family: "Proxima Soft";
   src: url("../fonts/ProximaSoft-Medium.ttf");
 }
@@ -10,7 +10,7 @@
   --background-color: #f5eaea;
 }
 
-/* html {
+html {
   background: rgb(0, 73, 191);
   background: linear-gradient(
     90deg,
@@ -18,7 +18,7 @@
     rgba(190, 190, 255, 1) 46%,
     rgba(0, 212, 255, 1) 100%
   );
-} */
+}
 
 body {
   color: var(--text-color);
@@ -183,7 +183,7 @@ div.task-check-box > input {
   width: 800px;
   outline: none;
   padding: 20px;
-}
+} 
 
 .overlay {
   display: flex;
@@ -242,4 +242,4 @@ div.task-check-box > input {
 }
 .dropdown-toggle::after {
   content: none;
-}
+} */
