@@ -20,7 +20,9 @@ function CustomModal(props) {
           </Modal.Header>
           <Modal.Body>{body}</Modal.Body>
           <Modal.Footer>
-            <Button onClick={handleClose}>Close</Button>
+            <Button onClick={handleClose} variant="secondary">
+              Close
+            </Button>
             <Button variant="primary" type="submit">
               Submit
             </Button>

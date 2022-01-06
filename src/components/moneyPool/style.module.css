@@ -1,0 +1,37 @@
+.select_col,
+.participant_section {
+  border-bottom: 1px solid #dee2e6;
+}
+.select_input {
+  margin-bottom: 2rem;
+}
+.participant_section {
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.participant_section h4 {
+  padding: 0.8rem 0;
+  font-size: 1.2rem;
+}
+.participant_section button {
+  display: flex;
+  align-items: center;
+}
+.participant_section button svg {
+  margin-right: 0.4rem;
+}
+
+button[type="submit"] {
+  font-weight: 500;
+}
+
+.description h4 {
+  padding: 1.2rem 0;
+}
+
+.description p {
+  border-left: 5px solid #dee2e6;
+  padding-left: 1rem;
+}

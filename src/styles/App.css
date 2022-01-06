@@ -73,7 +73,7 @@ h6 {
   background: var(--primary-gradient);
   color: white;
 }
-.white-color{
+.white-color {
   color: white !important;
 }
 .primary-color {
@@ -168,9 +168,10 @@ button.btn-primary:hover {
 
 /* main contianer */
 .main_container {
-  margin-left: 5%;
+  margin-left: 5.25rem;
   flex-grow: 1;
   background-color: var(--secondary-color);
+  min-height: 100vh;
 }
 
 .main_container > .container-fluid {
@@ -264,7 +265,8 @@ button.btn-primary:hover {
   margin-bottom: 0.3rem !important;
 }
 
-.form-control:focus {
+.form-control:focus,
+.form-select:focus {
   border-color: var(--primary-color) !important;
   box-shadow: none !important;
 }
