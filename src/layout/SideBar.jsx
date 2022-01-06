@@ -8,7 +8,7 @@ const SideBar = () => {
          <div className="pt-3">
          <ul className="m-0 sidebar-list">
             <li className="mt-3">
-               <Link to="/"><Image className="sidebar-icon" src="/icone/countdown to break 3.png" /></Link>
+               <Link to="/dashboard"><Image className="sidebar-icon" src="/icone/countdown to break 3.png" /></Link>
             </li>
             <li className="mt-3">
                <Link to=""><Image className="sidebar-icon" src="/icone/countdown to break 1.png" /></Link>
@@ -17,7 +17,7 @@ const SideBar = () => {
                <Link to=""><Image className="sidebar-icon" src="/icone/kittysplit 1.png" /></Link>
             </li>
             <li className="mt-3">
-               <Link to="/taskmanagement"><Image className="sidebar-icon" src="/icone/task manager 1.png" /></Link>
+               <Link to="/dashboard/taskmanagement"><Image className="sidebar-icon" src="/icone/task manager 1.png" /></Link>
             </li>
             {/* <li className="mt-3">
                <Link to=""><Image className="sidebar-icon" src="/icone/Vector.png" /></Link>
