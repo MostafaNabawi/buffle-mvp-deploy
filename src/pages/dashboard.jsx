@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import { Row, Col, Image, Form } from "react-bootstrap";
+import { Row, Col, Image, Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import ProgressBar from "../components/common/progressBar/ProgressBar";
@@ -9,13 +9,22 @@ import HydrationReminderCard from "./../components/hydrationReminder/HydrationRe
 import ScreenFreeReminderCard from "./../components/screenFreeReminder/ScreenFreeReminderCard";
 import EventCalender from "./../components/eventCalender/EventCalender";
 import ImpotentToDayCard from "./../components/impotentToDay/ImpotentToDayCard";
-import BreackplanFrom from "../components/breakplan/BreakplanForm";
+import BreakplanFrom from "../components/breakplan/BreakplanForm";
+import Modal from '../components/modal/modal'
 
 const Dashboard = () => {
-  const [modalShow, setModalShow] = useState(false);
+  // breck
   const [BreakPlanForm, setBreakPlanFrom] = useState(false)
-  const [breackJoinOrSagest, setBreackJoinOrSagest] = useState(false)
-  const [breackNewTime, setBreackNewTime] = useState(false)
+  const [breakJoinOrSagest, setBreakJoinOrSagest] = useState(false)
+  const [breakNewTime, setBreakNewTime] = useState(false)
+  // Modal
+  const [titleModal, setTitleModa] = useState('')
+  const [sizeModal,setSizeModal]=useState('')
+  const [modalShow, setModalShow] = useState(false);
+  const handleClose = () => setModalShow(false);
+  const handleShow = () => setModalShow(true);
+  const [vacationTime, setVacationTime] = useState(false);
+  const [nextBreak, setNextBreak] = useState(false)
 
   return (
     <section>
@@ -68,8 +77,12 @@ const Dashboard = () => {
               }
               title="Next break"
               action={
-                <i onClick={() => {
-
+                <i title="When is your next break?" onClick={() => {
+                  setModalShow(true)
+                  setVacationTime(false)
+                  setNextBreak(true)
+                  setSizeModal('md')
+                  setTitleModa('When is your next break?')
                 }}>
                   <Icon icon="vaadin:plus" />
                 </i>
@@ -99,9 +112,15 @@ const Dashboard = () => {
               }
               title="Vacation Time"
               action={
-                <>
+                <i title="Choose the date" onClick={() => {
+                  setModalShow(true)
+                  setNextBreak(false)
+                  setVacationTime(true)
+                  setSizeModal('md')
+                  setTitleModa('Choose the date')
+                }}>
                   <Icon icon="vaadin:plus" />
-                </>
+                </i>
               }
             />
             <div className="mt-3">
@@ -263,11 +282,11 @@ const Dashboard = () => {
               action=""
             />
             <div>
-              <BreackplanFrom
+              <BreakplanFrom
                 show={BreakPlanForm}
                 setShow={setBreakPlanFrom}
-                newTime={breackNewTime}
-                joinOrSagest={breackJoinOrSagest}
+                newTime={breakNewTime}
+                joinOrSagest={breakJoinOrSagest}
               />
               <Row className="mt-3">
                 <Col className="col-2">
@@ -282,15 +301,15 @@ const Dashboard = () => {
                   <div className="break-user-name">Raj Kumar</div>  <div>
                     <span onClick={() => {
                       setBreakPlanFrom(true)
-                      setBreackJoinOrSagest(true)
-                      setBreackNewTime(false)
+                      setBreakJoinOrSagest(true)
+                      setBreakNewTime(false)
                     }} className="break-type">orders Lieferando</span>
                     <span
                       className="break-time"
                       onClick={() => {
                         setBreakPlanFrom(true)
-                        setBreackJoinOrSagest(false)
-                        setBreackNewTime(true)
+                        setBreakJoinOrSagest(false)
+                        setBreakNewTime(true)
                       }}
                     >13:00</span>
                   </div>
@@ -342,8 +361,8 @@ const Dashboard = () => {
                           to=""
                           onClick={() => {
                             setBreakPlanFrom(true)
-                            setBreackJoinOrSagest(false)
-                            setBreackNewTime(false)
+                            setBreakJoinOrSagest(false)
+                            setBreakNewTime(false)
                           }}
                         >
                           Plan
@@ -370,6 +389,64 @@ const Dashboard = () => {
           <ImpotentToDayCard />
         </Col>
       </Row>
+      {/* Modale */}
+      <Modal
+        size={sizeModal}
+        show={modalShow}
+        handleClose={handleClose}
+        title={titleModal}
+        body={
+          <Row>
+            {/* Vacation time Modal */}
+            {vacationTime && (
+              <>
+                <Col md={6}>
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Date </Form.Label>
+                    <Form.Control type="date" />
+                  </Form.Group>
+                </Col>
+                <Col md={6}>
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Time </Form.Label>
+                    <Form.Control type="time" />
+                  </Form.Group>
+                </Col>
+              </>
+            )}
+            {/* Next Break Modal */}
+            {
+              nextBreak && (
+                <>
+                  <Col md={12}>
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                      <Form.Label>Time </Form.Label>
+                      <Form.Control type="time" />
+                    </Form.Group>
+                  </Col>
+                </>
+              )
+            }
+          </Row>
+        }
+        footer={
+          <>
+            <Button onClick={handleClose}>Close</Button>
+            {/* Vacation time btn */}
+            {vacationTime && (
+              <Button variant="primary" type="submit">
+                Set Vacation
+              </Button>
+            )}
+            {/* Next Break Btn */}
+            {nextBreak && (
+              <Button variant="primary" type="submit">
+                Set Break
+              </Button>
+            )}
+          </>
+        }
+      />
     </section>
   );
 };
