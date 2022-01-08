@@ -13,7 +13,7 @@ import BreakplanFrom from "../components/breakplan/BreakplanForm";
 import Modal from '../components/modal/modal'
 
 const Dashboard = () => {
-  // breck
+  // breck plan from
   const [BreakPlanForm, setBreakPlanFrom] = useState(false)
   const [breakJoinOrSagest, setBreakJoinOrSagest] = useState(false)
   const [breakNewTime, setBreakNewTime] = useState(false)
@@ -25,6 +25,7 @@ const Dashboard = () => {
   const handleShow = () => setModalShow(true);
   const [vacationTime, setVacationTime] = useState(false);
   const [nextBreak, setNextBreak] = useState(false)
+  // End Modal
 
   return (
     <section>
@@ -435,13 +436,13 @@ const Dashboard = () => {
             {/* Vacation time btn */}
             {vacationTime && (
               <Button variant="primary" type="submit">
-                Set Vacation
+                Create Vacation
               </Button>
             )}
             {/* Next Break Btn */}
             {nextBreak && (
               <Button variant="primary" type="submit">
-                Set Break
+                Create Next Break
               </Button>
             )}
           </>

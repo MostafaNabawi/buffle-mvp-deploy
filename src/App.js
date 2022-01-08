@@ -13,6 +13,8 @@ import Moneypool from "./pages/moneypool";
 import Dashboard from "./pages/dashboard";
 import Layout from "./layout/Layout";
 import TaskManage from "./pages/taskManage";
+import Profile from "./pages/profile";
+import Setting from "./pages/setting";
 
 function App() {
   return (
@@ -31,6 +33,8 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path="taskmanagement" element={<TaskManage />} />
           <Route path="moneypool" element={<Moneypool />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="setting" element={<Setting />} />    
         </Route>
       </Routes>
     </div>

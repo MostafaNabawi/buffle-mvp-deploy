@@ -1,0 +1,29 @@
+.profileContainer{
+    height: 77vh !important;
+}
+.title{
+    font-weight: bolder;
+    font-family: Proxima Soft;
+}
+.userPhoto{
+    width: 150px !important;
+    height: 150px !important;
+}
+.btnUpdate{
+    width: 160px !important;
+}
+.btnUpdate:hover{
+    background: none !important;
+    color: black !important;
+}
+.hide{
+    display: none !important;
+}
+.lablePhoto{
+    margin-left: -20px !important;
+font-size: xx-large !important;
+cursor: pointer;
+}
+.lablePhoto:hover{
+    color: blue !important;
+}
