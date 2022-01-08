@@ -1,8 +1,9 @@
 import React, { Fragment, useState, useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
-import { Form } from 'react-bootstrap';
+import { Form, Row, Col, Button } from 'react-bootstrap';
 import ITEM_TYPE from './data/types'
-import Window from './Window';
+import Modal from "../modal/modal";
+
 
 const Item = ({ item, index, moveItem, status }) => {
     const ref = useRef(null);
@@ -43,8 +44,8 @@ const Item = ({ item, index, moveItem, status }) => {
         })
     });
     const [show, setShow] = useState(false);
-    const onOpen = () => setShow(true);
-    const onClose = () => setShow(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     drag(drop(ref));
 
@@ -59,13 +60,33 @@ const Item = ({ item, index, moveItem, status }) => {
                 <Form.Group controlId="formBasicCheckbox">
                     <Form.Check className="task-check-box" type="checkbox" />
                 </Form.Group>
-                <span className={"item-title"} onClick={onOpen}>{item.content}</span>
+                <span className={"item-title"} onClick={handleShow}>{item.content}</span>
                 <div class="bt_dhhg2g" style={{ background: "blue" }}></div>
             </div>
-            <Window
-                item={item}
-                onClose={onClose}
+
+            <Modal
                 show={show}
+                handleClose={handleClose}
+                title="Create Project"
+                className="create-project-modal"
+                body={
+                    <Row>
+                        <Col md={12}>
+                            <Form.Group className="mb-3" controlId="formBasicEmail">
+                                <Form.Control type="text" placeholder='Name your project...' />
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                }
+                footer={
+                    <>
+                        <Button onClick={handleClose}>Close</Button>
+                        <Button variant="primary" type="submit">
+                            Save
+                        </Button>
+
+                    </>
+                }
             />
         </Fragment>
     )

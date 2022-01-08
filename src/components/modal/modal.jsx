@@ -2,7 +2,7 @@ import React from "react";
 import { Modal, Button, Form, Container } from "react-bootstrap";
 
 function CustomModal(props) {
-  const { title, body,footer, handleClose,size } = props;
+  const { title, body, footer, handleClose, size, className } = props;
   return (
     <Modal
       {...props}
@@ -20,7 +20,7 @@ function CustomModal(props) {
           </Modal.Header>
           <Modal.Body>{body}</Modal.Body>
           <Modal.Footer>
-           {footer}
+            {footer}
           </Modal.Footer>
         </Form>
       </Container>
