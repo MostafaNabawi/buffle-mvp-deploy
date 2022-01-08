@@ -136,16 +136,18 @@ div.task-check-box > input {
 .col-header {
   font-size: 17px;
   font-weight: 600;
-  margin-bottom: 20px;
   margin-top: 0;
   padding: 10px 15px;
-  border-bottom: 1px solid #d8d8d8;
 }
-.col-header-time {
+.col-header-time,
+.project-setting-icon {
   float: right !important;
-  color: rgb(102, 102, 102);
+  color: rgb(158, 155, 155);
+  transition: 0.5s;
 }
-
+.project-setting-icon:hover {
+  color: #000;
+}
 .task-col {
   min-height: 300px;
   max-width: 300px;
@@ -202,4 +204,13 @@ div.task-check-box > input {
 }
 .projectManagement {
   margin-top: 50px !important;
+}
+.project-setting {
+  padding-right: 4px !important;
+}
+.project-setting > svg {
+  float: right !important;
+}
+.task-manage-hr {
+  margin: 0 !important;
 }
