@@ -78,7 +78,6 @@ const ProjectManagement = () => {
                 footer={
                     <>
                         <Button onClick={handleClose}>Close</Button>
-                        {/* Vacation time btn */}
                         <Button variant="primary" type="submit">
                             Save
                         </Button>

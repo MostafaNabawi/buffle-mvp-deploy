@@ -10,7 +10,7 @@ const CreateProject = () => {
     const handleShow = () => setShow(true);
     return (
         <Row className="creat-project-row">
-            <Col lg="6">project collapse</Col>
+            <Col lg="6">projects</Col>
             <Col lg="6" className="creat-project-col">
                 <div className="creat-project-div">
                     <span className="creat-project-plus"><Icon icon="bi:plus-lg" /></span>
@@ -34,7 +34,6 @@ const CreateProject = () => {
                 footer={
                     <>
                         <Button onClick={handleClose}>Close</Button>
-                        {/* Vacation time btn */}
                         <Button variant="primary" type="submit">
                             Save
                         </Button>
