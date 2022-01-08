@@ -516,6 +516,7 @@ div.check-box > input {
   color: var(--secondary-dark-gray);
 }
 .break-type {
+  cursor: pointer;
   height: 10px;
   font-family: DM Sans;
   font-style: normal;
@@ -526,7 +527,12 @@ div.check-box > input {
   color: var(--navy-blue);
   margin-top: 5px;
 }
+.break-type:hover,
+.break-time:hover{
+  color: #4922ff;
+}
 .break-time {
+  cursor: pointer;
   float: right;
   height: 16px;
   font-family: DM Sans;
