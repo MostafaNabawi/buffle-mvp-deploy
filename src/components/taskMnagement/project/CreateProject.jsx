@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Row, Col } from "react-bootstrap";
+import { Form, Row, Col, Button } from "react-bootstrap";
 import { Icon } from "@iconify/react";
 import Modal from "../../modal/modal";
 
@@ -30,6 +30,16 @@ const CreateProject = () => {
                             </Form.Group>
                         </Col>
                     </Row>
+                }
+                footer={
+                    <>
+                        <Button onClick={handleClose}>Close</Button>
+                        {/* Vacation time btn */}
+                        <Button variant="primary" type="submit">
+                            Save
+                        </Button>
+
+                    </>
                 }
             />
         </Row>

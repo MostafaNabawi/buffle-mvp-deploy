@@ -2,7 +2,7 @@ import { React, useState } from "react";
 import Item from '../item';
 import DropWrapper from '../DropWrapper';
 import { data, statuses } from '../data';
-import { Col, Form } from 'react-bootstrap';
+import { Button, Col, Form } from 'react-bootstrap';
 import { Row } from 'react-bootstrap';
 import { Icon } from "@iconify/react";
 import Modal from "../../modal/modal";
@@ -74,6 +74,16 @@ const ProjectManagement = () => {
                             </Form.Group>
                         </Col>
                     </Row>
+                }
+                footer={
+                    <>
+                        <Button onClick={handleClose}>Close</Button>
+                        {/* Vacation time btn */}
+                        <Button variant="primary" type="submit">
+                            Save
+                        </Button>
+
+                    </>
                 }
             />
         </Row >
