@@ -60,6 +60,7 @@ const Item = ({ item, index, moveItem, status }) => {
                     <Form.Check className="task-check-box" type="checkbox" />
                 </Form.Group>
                 <span className={"item-title"} onClick={onOpen}>{item.content}</span>
+                <div class="bt_dhhg2g" style={{ background: "blue" }}></div>
             </div>
             <Window
                 item={item}

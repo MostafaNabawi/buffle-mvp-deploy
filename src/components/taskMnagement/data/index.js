@@ -32,37 +32,37 @@ const data = [
 const statuses = [
   {
     status: "Sunday",
-    icon: "⭕️",
+    title: "Daily reading",
     color: "#EB5A46",
   },
   {
     status: "Monday",
-    icon: "🔆️",
+    title: "Invest in investments",
     color: "#00C2E0",
   },
   {
     status: "Tuesday",
-    icon: "📝",
+    title: "Purchase present",
     color: "#C377E0",
   },
   {
     status: "Wednesday",
-    icon: "✅",
+    title: "Human Interest Form",
     color: "#3981DE",
   },
   {
     status: "Thursday",
-    icon: "✅",
+    title: "Buffle project",
     color: "#3981DE",
   },
   {
     status: "Friday",
-    icon: "✅",
+    title: "School project",
     color: "#3981DE",
   },
   {
     status: "Saturday",
-    icon: "✅",
+    title: "Restaurant system",
     color: "#3981DE",
   },
 ];
