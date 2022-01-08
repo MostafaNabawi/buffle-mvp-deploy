@@ -39,7 +39,8 @@ const TaskManagement = () => {
                 <Col >
                   {
                     items.filter(i => i.status === s.status)
-                      .map((i, idx) => <Item key={i.id} item={i} index={idx} moveItem={moveItem} status={s}></Item>)
+
+                      .map((i, idx) => <Item key={i.id} item={i} index={idx} moveItem={moveItem} status={s}>{console.log(i)}</Item>)
                   }
                   <div className="new-task-div">
                     <input className="new_task_input" placeholder="New Task" aria-label="New Task" />
