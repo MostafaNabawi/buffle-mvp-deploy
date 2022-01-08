@@ -44,7 +44,7 @@ const SideBar = () => {
                <Link to=""><Image className="sidebar-icon" src="/icone/exclamation-mark 6.png" /></Link>
             </li>
             <li className="mt-3">
-               <Link to=""><Image className="sidebar-icon" src="/icone/blue-book 1.png" /></Link>
+               <Link to="/dashboard/setting"><Image className="sidebar-icon" src="/icone/blue-book 1.png" /></Link>
             </li>
          </ul>
       </div>
