@@ -1,4 +1,4 @@
-/* @font-face {
+@font-face {
   font-family: "Proxima Soft";
   src: url("../fonts/ProximaSoft-Medium.ttf");
 }
@@ -175,43 +175,6 @@ div.task-check-box > input {
   text-align: center;
 }
 
-.modal {
-  background-color: #f4f5f7;
-  border-radius: 2px;
-  margin: 48px 0 80px;
-  min-height: 450px;
-  width: 800px;
-  outline: none;
-  padding: 20px;
-} 
-
-.overlay {
-  display: flex;
-  justify-content: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-.close-btn-ctn {
-  display: flex;
-}
-
-.close-btn {
-  height: 40px;
-  width: 35px;
-  font-size: 20px;
-  color: #031d2c;
-  border: none;
-  border-radius: 25px;
-}
-
-.close-btn:hover {
-  background-color: #dcdcdc;
-}
 .taskManage {
   height: 100% !important;
 }
@@ -242,4 +205,4 @@ div.task-check-box > input {
 }
 .dropdown-toggle::after {
   content: none;
-} */
+}
