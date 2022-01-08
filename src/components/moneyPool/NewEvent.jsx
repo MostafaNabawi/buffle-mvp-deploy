@@ -3,6 +3,8 @@ import { Row, Form, Col, Button } from "react-bootstrap";
 import Card from "../card/Card";
 import { Icon } from "@iconify/react";
 import style from "./style.module.css";
+import Person from "./Person";
+import { useNavigate } from "react-router-dom";
 const currencyData = [
   {
     AbbreviationName: "USD",
@@ -18,27 +20,22 @@ const currencyData = [
   },
 ];
 function NewEvent() {
-  const [state, setState] = useState("");
+  const navigate = useNavigate();
+  const [personNum, setPersonNum] = useState([2]);
 
-  const filter = (input) => {
-    const result = currencyData.filter(
-      (item) => item.AbbreviationName === input || item.FullName === input
-    );
-    setState(result);
+  const addPerson = () => {
+    setPersonNum([...personNum, personNum.length + 2]);
   };
 
-  const getState = (code) => {
-    if (code != "") {
-      setState(code);
-    } else {
-      setState("");
-    }
+  const handleSubmit = () => {
+    navigate("event");
   };
+
   return (
     <Card className={style.new_event_card}>
       <Row>
         <Col lg={6}>
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <Col md={12}>
               <Form.Group className="mb-3" controlId="eventName">
                 <Form.Label>Event name </Form.Label>
@@ -51,12 +48,7 @@ function NewEvent() {
                 controlId="homeCurrency"
               >
                 <Form.Label>Home Currency</Form.Label>
-                <Form.Select
-                  onInput={(e) => {
-                    getState(e.target.value);
-                  }}
-                  aria-label="Default select example"
-                >
+                <Form.Select aria-label="Default select example">
                   {currencyData &&
                     currencyData.map((currency) => (
                       <option
@@ -72,18 +64,15 @@ function NewEvent() {
             <div className={style.participant_section}>
               <h4>Participants</h4>
               <Col md={12}>
-                <Form.Group className="mb-3" controlId="you">
+                <Form.Group className="mb-3" controlId="person-1">
                   <Form.Label>You </Form.Label>
                   <Form.Control type="text" placeholder="Your name" />
                 </Form.Group>
               </Col>
-              <Col md={12}>
-                <Form.Group className="mb-3" controlId={`preson`}>
-                  <Form.Label>Person 2 </Form.Label>
-                  <Form.Control type="text" placeholder="Name" />
-                </Form.Group>
-              </Col>
-              <Button variant="secondary">
+              {personNum.map((person) => (
+                <Person key={person} num={person} />
+              ))}
+              <Button variant="secondary" onClick={addPerson}>
                 <Icon icon="vaadin:plus" />
                 Add New Person
               </Button>

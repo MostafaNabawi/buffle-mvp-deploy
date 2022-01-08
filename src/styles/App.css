@@ -271,6 +271,10 @@ button.btn-primary:hover {
   box-shadow: none !important;
 }
 
+.form-select:hover {
+  cursor: pointer;
+}
+
 .section_3 .card .card_header h4 {
   font-size: 20px;
   font-weight: 700;
