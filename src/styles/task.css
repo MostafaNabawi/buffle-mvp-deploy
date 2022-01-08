@@ -171,8 +171,13 @@ div.task-check-box > input {
 .taskManage {
   height: 100% !important;
 }
-.taskManage > .row {
+.taskManage.card {
+  padding: 0 !important;
+}
+.taskManage.card > .row {
   justify-content: start !important;
+  padding: 20px !important;
+  margin: 0 !important;
 }
 
 .new_task_input {
@@ -202,9 +207,7 @@ div.task-check-box > input {
 .dropdown-toggle::after {
   content: none;
 }
-.projectManagement {
-  margin-top: 50px !important;
-}
+
 .project-setting {
   padding-right: 4px !important;
 }
@@ -213,4 +216,32 @@ div.task-check-box > input {
 }
 .task-manage-hr {
   margin: 0 !important;
+}
+.creat-project-row {
+  border-top: 1px solid gainsboro;
+  border-bottom: 1px solid gainsboro;
+}
+.creat-project-div {
+  float: right;
+}
+.creat-project-plus {
+  margin-right: 8px;
+}
+.creat-project-div {
+  cursor: pointer;
+}
+.create-project-modal > .modal-dialog {
+  width: 30%;
+}
+.create-project-modal .modal-footer {
+  border-top: none !important;
+}
+.create-project-modal input {
+  margin-top: 15px !important;
+}
+.create-project-modal .btn-close {
+  font-size: 13px !important;
+}
+.create-project-modal .modal-title {
+  font-size: 19px !important;
 }

@@ -2,7 +2,7 @@ import React from "react";
 import { Modal, Button, Form, Container } from "react-bootstrap";
 
 function CustomModal(props) {
-  const { title, body, handleClose } = props;
+  const { title, body, handleClose, className } = props;
   return (
     <Modal
       {...props}
