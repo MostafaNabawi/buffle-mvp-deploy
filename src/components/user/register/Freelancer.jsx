@@ -89,26 +89,28 @@ const FreelancerRegister = () => {
                                                         className={style.formInput}
                                                         aria-label="Default select example"
                                                     >
-                                                        <option value=''>Select</option>
+                                                        <option value=''>Country</option>
                                                         {allCountry && (
                                                             allCountry.map(country => (
                                                                 <option key={country.name} value={country.code}>{country.name}</option>
                                                             ))
                                                         )}
                                                     </Form.Select>
+                                                    <Icon className={style.arrowSelect} icon="ep:arrow-down-bold" />
                                                 </Form.Group>
                                             </Col>
                                             <Col xl='6'>
                                                 <Form.Group className="mb-3">
                                                     <Form.Label className={style.lableForm}>City *</Form.Label>
                                                     <Form.Select className={style.formInput} aria-label="Default select example">
-                                                        <option></option>
+                                                        <option value={''}>City</option>
                                                         {state && (
                                                             state.map(s => (
                                                                 <option key={s} value={s}>{s}</option>
                                                             ))
                                                         )}
                                                     </Form.Select>
+                                                    <Icon className={style.arrowSelect} icon="ep:arrow-down-bold" />
                                                 </Form.Group>
                                             </Col>
                                         </Row>

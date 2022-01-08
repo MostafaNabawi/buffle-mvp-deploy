@@ -16,7 +16,6 @@ const CompanyRegister = () => {
       setState("");
     }
   };
-
   const handleRegister = () => {
     setSendEmail(true);
   };
@@ -33,213 +32,219 @@ const CompanyRegister = () => {
                 <div className={`${style.headerTitle} mt-3`}>
                   Enter your info
                 </div>
-              </div>
-              <div className={style.body}>
-                <Form>
-                  <Row>
-                    <Col xl="3">
-                      <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label className={style.lableForm}>
-                          First Name *
-                        </Form.Label>
-                        <Form.Control
-                          className={style.formInput}
-                          type="text"
-                          placeholder="First Name"
-                        />
-                      </Form.Group>
-                    </Col>
-                    <Col xl="3">
-                      <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label className={style.lableForm}>
-                          last Name *
-                        </Form.Label>
-                        <Form.Control
-                          className={style.formInput}
-                          type="text"
-                          placeholder="Last name"
-                        />
-                      </Form.Group>
-                    </Col>
-                    <Col xl="6">
-                      <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label className={style.lableForm}>
-                          E-mail *
-                        </Form.Label>
-                        <Form.Control
-                          className={style.formInput}
-                          type="email"
-                          placeholder="Enter email"
-                        />
-                      </Form.Group>
-                    </Col>
-                    <Col xl="6">
-                      <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label className={style.lableForm}>
-                          Company Name *
-                        </Form.Label>
-                        <Form.Control
-                          className={style.formInput}
-                          type="text"
-                          placeholder="Company Name"
-                        />
-                      </Form.Group>
-                    </Col>
-                    <Col xl="3">
-                      <Form.Group className="mb-3">
-                        <Form.Label className={style.lableForm}>
-                          Company Size*
-                        </Form.Label>
-                        <Form.Select
-                          className={style.formInput}
-                          aria-label="Default select example"
-                        >
-                          <option></option>
-                          <option value="1">One</option>
-                          <option value="2">Two</option>
-                          <option value="3">Three</option>
-                        </Form.Select>
-                      </Form.Group>
-                    </Col>
-                    <Col xl="3">
-                      <Form.Group className="mb-3">
-                        <Form.Label className={style.lableForm}>
-                          Tex ID *
-                        </Form.Label>
-                        <Form.Control
-                          className={style.formInput}
-                          type="number"
-                          placeholder="Tex ID"
-                        />
-                      </Form.Group>
-                    </Col>
-                    <Col xl="6">
-                      <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label className={style.lableForm}>
-                          Web Site *
-                        </Form.Label>
-                        <Form.Control
-                          className={style.formInput}
-                          type="text"
-                          placeholder="Web Site"
-                        />
-                      </Form.Group>
-                    </Col>
-                    <Col xl="6">
-                      <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label className={style.lableForm}>
-                          Head Office
-                        </Form.Label>
-                        <Form.Control
-                          className={style.formInput}
-                          type="text"
-                          placeholder="Head Office"
-                        />
-                      </Form.Group>
-                    </Col>
-                    <Col xl="6">
-                      <Form.Group className="mb-3">
-                        <Form.Label className={style.lableForm}>
-                          Country *
-                        </Form.Label>
-                        <Form.Select
-                          onInput={(e) => {
-                            getState(e.target.value);
-                          }}
-                          className={style.formInput}
-                          aria-label="Default select example"
-                        >
-                          <option value=""></option>
-                          {allCountry &&
-                            allCountry.map((country) => (
-                              <option key={country.name} value={country.code}>
-                                {country.name}
-                              </option>
-                            ))}
-                        </Form.Select>
-                      </Form.Group>
-                    </Col>
-                    <Col xl="3">
-                      <Form.Group className="mb-3">
-                        <Form.Label className={style.lableForm}>
-                          City *
-                        </Form.Label>
-                        <Form.Select
-                          className={style.formInput}
-                          aria-label="Default select example"
-                        >
-                          <option></option>
-                          {state &&
-                            state.map((s) => (
-                              <option key={s} value={s}>
-                                {s}
-                              </option>
-                            ))}
-                        </Form.Select>
-                      </Form.Group>
-                    </Col>
-                    <Col xl="3">
-                      <Form.Group className="mb-3">
-                        <Form.Label className={style.lableForm}>
-                          State *
-                        </Form.Label>
-                        <Form.Select
-                          className={style.formInput}
-                          aria-label="Default select example"
-                        >
-                          <option></option>
-                          <option value="1">One</option>
-                          <option value="2">Two</option>
-                          <option value="3">Three</option>
-                        </Form.Select>
-                      </Form.Group>
-                    </Col>
-                    <Col xl="6">
-                      <Form.Group className="mb-3">
-                        <Form.Label className={style.lableForm}>
-                          Street *
-                        </Form.Label>
-                        <Form.Control
-                          className={style.formInput}
-                          type="text"
-                          placeholder="Street ,Number"
-                        />
-                      </Form.Group>
-                    </Col>
-                    <Col xl="6">
-                      <Form.Group className="mb-3">
-                        <Form.Label className={style.lableForm}>
-                          Postal code *
-                        </Form.Label>
-                        <Form.Control
-                          className={style.formInput}
-                          type="number"
-                          placeholder="Postal code"
-                        />
-                      </Form.Group>
-                    </Col>
-                    <Row className="justify-content-center">
+                <div className={style.body}>
+                  <Form>
+                    <Row>
+                      <Col xl="3">
+                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                          <Form.Label className={style.lableForm}>
+                            First Name *
+                          </Form.Label>
+                          <Form.Control
+                            className={style.formInput}
+                            type="text"
+                            placeholder="First Name"
+                          />
+                        </Form.Group>
+                      </Col>
+                      <Col xl="3">
+                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                          <Form.Label className={style.lableForm}>
+                            last Name *
+                          </Form.Label>
+                          <Form.Control
+                            className={style.formInput}
+                            type="text"
+                            placeholder="Last name"
+                          />
+                        </Form.Group>
+                      </Col>
                       <Col xl="6">
-                        <Button
-                          className={style.submitBtn}
-                          type="button"
-                          onClick={(e) => {
-                            handleRegister(e);
-                          }}
-                        >
-                          REGISTER
-                        </Button>
+                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                          <Form.Label className={style.lableForm}>
+                            E-mail *
+                          </Form.Label>
+                          <Form.Control
+                            className={style.formInput}
+                            type="email"
+                            placeholder="Enter email"
+                          />
+                        </Form.Group>
+                      </Col>
+                      <Col xl="6">
+                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                          <Form.Label className={style.lableForm}>
+                            Company Name *
+                          </Form.Label>
+                          <Form.Control
+                            className={style.formInput}
+                            type="text"
+                            placeholder="Company Name"
+                          />
+                        </Form.Group>
+                      </Col>
+                      <Col xl="3">
+                        <Form.Group className="mb-3">
+                          <Form.Label className={style.lableForm}>
+                            Company Size*
+                          </Form.Label>
+                          <Form.Select
+                            className={style.formInput}
+                            aria-label="Default select example"
+                          >
+                            <option value="">Size</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                          </Form.Select>
+                          <Icon
+                            className={style.arrowSelect}
+                            icon="ep:arrow-down-bold"
+                          />
+                        </Form.Group>
+                      </Col>
+                      <Col xl="3">
+                        <Form.Group className="mb-3">
+                          <Form.Label className={style.lableForm}>
+                            Tax ID *
+                          </Form.Label>
+                          <Form.Control
+                            className={style.formInput}
+                            type="number"
+                            placeholder="Tax ID"
+                          />
+                        </Form.Group>
+                      </Col>
+                      <Col xl="6">
+                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                          <Form.Label className={style.lableForm}>
+                            Web Site *
+                          </Form.Label>
+                          <Form.Control
+                            className={style.formInput}
+                            type="text"
+                            placeholder="Web Site"
+                          />
+                        </Form.Group>
+                      </Col>
+                      <Col xl="6">
+                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                          <Form.Label className={style.lableForm}>
+                            Head Office
+                          </Form.Label>
+                          <Form.Control
+                            className={style.formInput}
+                            type="text"
+                            placeholder="Head Office"
+                          />
+                        </Form.Group>
+                      </Col>
+                      <Col xl="6">
+                        <Form.Group className="mb-3">
+                          <Form.Label className={style.lableForm}>
+                            Country *
+                          </Form.Label>
+                          <Form.Select
+                            onInput={(e) => {
+                              getState(e.target.value);
+                            }}
+                            className={style.formInput}
+                            aria-label="Default select example"
+                          >
+                            <option value="">Country</option>
+                            {allCountry &&
+                              allCountry.map((country) => (
+                                <option key={country.name} value={country.code}>
+                                  {country.name}
+                                </option>
+                              ))}
+                          </Form.Select>
+                          <Icon
+                            className={style.arrowSelect}
+                            icon="ep:arrow-down-bold"
+                          />
+                        </Form.Group>
+                      </Col>
+                      <Col xl="3">
+                        <Form.Group className="mb-3">
+                          <Form.Label className={style.lableForm}>
+                            City *
+                          </Form.Label>
+                          <Form.Select
+                            className={style.formInput}
+                            aria-label="Default select example"
+                          >
+                            <option>City</option>
+                            {state &&
+                              state.map((s) => (
+                                <option key={s} value={s}>
+                                  {s}
+                                </option>
+                              ))}
+                          </Form.Select>
+                          <Icon
+                            className={style.arrowSelect}
+                            icon="ep:arrow-down-bold"
+                          />
+                        </Form.Group>
+                      </Col>
+                      <Col xl="3">
+                        <Form.Group className="mb-3">
+                          <Form.Label className={style.lableForm}>
+                            State *
+                          </Form.Label>
+                          <Form.Select
+                            className={style.formInput}
+                            aria-label="Default select example"
+                          >
+                            <option>State</option>
+                            {state &&
+                              state.map((s) => (
+                                <option key={s} value={s}>
+                                  {s}
+                                </option>
+                              ))}
+                          </Form.Select>
+                          <Icon
+                            className={style.arrowSelect}
+                            icon="ep:arrow-down-bold"
+                          />
+                        </Form.Group>
+                      </Col>
+                      <Col xl="6">
+                        <Form.Group className="mb-3">
+                          <Form.Label className={style.lableForm}>
+                            Street *
+                          </Form.Label>
+                          <Form.Control
+                            className={style.formInput}
+                            type="text"
+                            placeholder="Street ,Number"
+                          />
+                        </Form.Group>
+                      </Col>
+                      <Col xl="6">
+                        <Form.Group className="mb-3">
+                          <Form.Label className={style.lableForm}>
+                            Postal code *
+                          </Form.Label>
+                          <Form.Control
+                            className={style.formInput}
+                            type="number"
+                            placeholder="Postal code"
+                          />
+                        </Form.Group>
                       </Col>
                     </Row>
-                  </Row>
-                </Form>
+                  </Form>
+                </div>
               </div>
-            </div>
-            <div className={style.footer}>
-              Do have account yet?{" "}
-              <Link className={style.registerLink} to="/">
-                Login now
-              </Link>
+              <div className={style.footer}>
+                Do have account yet?{" "}
+                <Link className={style.registerLink} to="/">
+                  Login now
+                </Link>
+              </div>
             </div>
           </Col>
         </Row>

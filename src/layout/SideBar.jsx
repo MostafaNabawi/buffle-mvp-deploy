@@ -89,6 +89,52 @@ const SideBar = () => {
               <Image className="sidebar-icon" src="/icone/blue-book 1.png" />
             </Link>
           </li>
+
+          <li className="mt-3">
+            <Link to="">
+              <Image
+                className="sidebar-icon"
+                src="/icone/exclamation-mark 7.png"
+              />
+            </Link>
+          </li>
+          <li className="mt-3">
+            <Link to="">
+              <Image
+                className="sidebar-icon"
+                src="/icone/exclamation-mark 3.png"
+              />
+            </Link>
+          </li>
+          <li className="mt-3">
+            <Link to="">
+              <Image
+                className="sidebar-icon"
+                src="/icone/exclamation-mark 4.png"
+              />
+            </Link>
+          </li>
+          <li className="mt-3">
+            <Link to="">
+              <Image
+                className="sidebar-icon"
+                src="/icone/exclamation-mark 5.png"
+              />
+            </Link>
+          </li>
+          <li className="mt-3">
+            <Link to="">
+              <Image
+                className="sidebar-icon"
+                src="/icone/exclamation-mark 6.png"
+              />
+            </Link>
+          </li>
+          <li className="mt-3">
+            <Link to="/dashboard/setting">
+              <Image className="sidebar-icon" src="/icone/blue-book 1.png" />
+            </Link>
+          </li>
         </ul>
       </div>
     </section>
