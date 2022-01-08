@@ -1,17 +1,13 @@
 import { React } from "react";
 import { Container, Row, Col, Image } from "react-bootstrap";
+import Setting from '../components/setting/Setting'
 
-const Setting = () => {
+const SettingPage = () => {
   return (
     <>
-      {/* <Outlet /> */}
-      <Container className="secondary-color register-container" fluid>
-        <Row className="justify-content-center">
-          <Col>Setting</Col>
-        </Row>
-      </Container>
+     <Setting/>
     </>
   );
 };
 
-export default Setting;
+export default SettingPage;
