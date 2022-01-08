@@ -8,5 +8,6 @@
 .btn:hover{
 background: none !important;
 color: black !important;
+box-shadow: none !important;
 
 }
