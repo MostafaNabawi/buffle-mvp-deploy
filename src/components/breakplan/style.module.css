@@ -30,6 +30,9 @@
     /* border: none !important; */
     margin-right: 10px !important;
 }
+.tilte{
+    margin-top: -20px !important;
+}
 .withBtn{
     width: 100% !important;
 }
