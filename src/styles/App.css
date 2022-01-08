@@ -179,10 +179,10 @@ button.btn-primary:hover {
 }
 
 /* card */
-.title_area > h4,
+/* .title_area > h4,
 .title_area > h6 {
   display: inline-flex;
-}
+} */
 
 .card {
   border-radius: var(--bs-radius) !important;

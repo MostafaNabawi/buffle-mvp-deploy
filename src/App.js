@@ -14,6 +14,7 @@ import Layout from "./layout/Layout";
 import TaskManage from "./pages/taskManage";
 import NewEvent from "./components/moneyPool/NewEvent";
 import Event from "./components/moneyPool/Event";
+import Expenses from "./components/moneyPool/Expenses";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path="money-pool" element={<Moneypool />}>
             <Route index element={<NewEvent />} />
             <Route path="event" element={<Event />} />
+            <Route path="event/expenses" element={<Expenses />} />
           </Route>
         </Route>
       </Routes>
