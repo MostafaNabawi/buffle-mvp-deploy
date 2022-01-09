@@ -1,5 +1,5 @@
-import { React,useState } from "react";
-import { Row, Col, Image, Form } from "react-bootstrap";
+import { React, useState } from "react";
+import { Row, Col, Image, Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import ProgressBar from "../components/common/progressBar/ProgressBar";
@@ -9,8 +9,24 @@ import HydrationReminderCard from "./../components/hydrationReminder/HydrationRe
 import ScreenFreeReminderCard from "./../components/screenFreeReminder/ScreenFreeReminderCard";
 import EventCalender from "./../components/eventCalender/EventCalender";
 import ImpotentToDayCard from "./../components/impotentToDay/ImpotentToDayCard";
+import BreakplanFrom from "../components/breakplan/BreakplanForm";
+import Modal from '../components/modal/modal'
+
 const Dashboard = () => {
-  const [modalShow, setModalShow] =useState(false);
+  // breck plan from
+  const [BreakPlanForm, setBreakPlanFrom] = useState(false)
+  const [breakJoinOrSagest, setBreakJoinOrSagest] = useState(false)
+  const [breakNewTime, setBreakNewTime] = useState(false)
+  // Modal
+  const [titleModal, setTitleModa] = useState('')
+  const [sizeModal,setSizeModal]=useState('')
+  const [modalShow, setModalShow] = useState(false);
+  const handleClose = () => setModalShow(false);
+  const handleShow = () => setModalShow(true);
+  const [vacationTime, setVacationTime] = useState(false);
+  const [nextBreak, setNextBreak] = useState(false)
+  // End Modal
+
   return (
     <section>
       <Row>
@@ -62,8 +78,12 @@ const Dashboard = () => {
               }
               title="Next break"
               action={
-                <i onClick={()=>{
-
+                <i title="When is your next break?" onClick={() => {
+                  setModalShow(true)
+                  setVacationTime(false)
+                  setNextBreak(true)
+                  setSizeModal('md')
+                  setTitleModa('When is your next break?')
                 }}>
                   <Icon icon="vaadin:plus" />
                 </i>
@@ -93,9 +113,15 @@ const Dashboard = () => {
               }
               title="Vacation Time"
               action={
-                <>
+                <i title="Choose the date" onClick={() => {
+                  setModalShow(true)
+                  setNextBreak(false)
+                  setVacationTime(true)
+                  setSizeModal('md')
+                  setTitleModa('Choose the date')
+                }}>
                   <Icon icon="vaadin:plus" />
-                </>
+                </i>
               }
             />
             <div className="mt-3">
@@ -256,71 +282,98 @@ const Dashboard = () => {
               title="Breakplan"
               action=""
             />
-            <Row className="mt-3">
-              <Col className="col-2">
-                <div className="breakplan-icon navy-blue text-center pt-2">
-                  <Image
-                    className="breakplan-img"
-                    src="/icone/WB_Headshots-102-web 1.png"
-                  />
-                </div>
-              </Col>
-              <Col>
-                <div className="break-user-name">Raj Kumar</div>
-                <div>
-                  <span className="break-type">orders Lieferando</span>
-                  <span className="break-time">13:00</span>
-                </div>
-              </Col>
-            </Row>
-            <Row className="mt-3">
-              <Col className="col-2">
-                <div className="breakplan-icon navy-blue text-center pt-2">
-                  <Image
-                    className="breakplan-img"
-                    src="/icone/RJ_Headshots-84-web 1.png"
-                  />
-                </div>
-              </Col>
-              <Col>
-                <div className="break-user-name">Raj Kumar</div>
-                <div>
-                  <span className="break-type">orders Lieferando</span>
-                  <span className="break-time">13:00</span>
-                </div>
-              </Col>
-            </Row>
-            <Row className="mt-3">
-              <Col className="col-2">
-                <div className="breakplan-icon navy-blue text-center pt-2">
-                  <Image
-                    className="breakplan-img"
-                    src="/icone/2018-11-27-Cornelius-W-111 1.png"
-                  />
-                </div>
-              </Col>
-              <Col>
-                <div className="break-user-name">Raj Kumar</div>
-                <div>
-                  <span className="break-type">orders Lieferando</span>
-                  <span className="break-time">13:00</span>
-                </div>
-              </Col>
-            </Row>
-            <Row className="mt-3">
-              <Col>
-                <div className="creat-breack-time">
-                  <div className="what-is-breack">What’s your breakplan?</div>
-                  <ul className="pt-1 pl-2">
-                    <li>
-                      <Link className="break-plan" to="">
-                        Plan
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-              </Col>
-            </Row>
+            <div>
+              <BreakplanFrom
+                show={BreakPlanForm}
+                setShow={setBreakPlanFrom}
+                newTime={breakNewTime}
+                joinOrSagest={breakJoinOrSagest}
+              />
+              <Row className="mt-3">
+                <Col className="col-2">
+                  <div className="breakplan-icon navy-blue text-center pt-2">
+                    <Image
+                      className="breakplan-img"
+                      src="/icone/WB_Headshots-102-web 1.png"
+                    />
+                  </div>
+                </Col>
+                <Col>
+                  <div className="break-user-name">Raj Kumar</div>  <div>
+                    <span onClick={() => {
+                      setBreakPlanFrom(true)
+                      setBreakJoinOrSagest(true)
+                      setBreakNewTime(false)
+                    }} className="break-type">orders Lieferando</span>
+                    <span
+                      className="break-time"
+                      onClick={() => {
+                        setBreakPlanFrom(true)
+                        setBreakJoinOrSagest(false)
+                        setBreakNewTime(true)
+                      }}
+                    >13:00</span>
+                  </div>
+                </Col>
+              </Row>
+              <Row className="mt-3">
+                <Col className="col-2">
+                  <div className="breakplan-icon navy-blue text-center pt-2">
+                    <Image
+                      className="breakplan-img"
+                      src="/icone/RJ_Headshots-84-web 1.png"
+                    />
+                  </div>
+                </Col>
+                <Col>
+                  <div className="break-user-name">Raj Kumar</div>
+                  <div>
+                    <span className="break-type">orders Lieferando</span>
+                    <span className="break-time">13:00</span>
+                  </div>
+                </Col>
+              </Row>
+              <Row className="mt-3">
+                <Col className="col-2">
+                  <div className="breakplan-icon navy-blue text-center pt-2">
+                    <Image
+                      className="breakplan-img"
+                      src="/icone/2018-11-27-Cornelius-W-111 1.png"
+                    />
+                  </div>
+                </Col>
+                <Col>
+                  <div className="break-user-name">Raj Kumar</div>
+                  <div>
+                    <span className="break-type">orders Lieferando</span>
+                    <span className="break-time">13:00</span>
+                  </div>
+                </Col>
+              </Row>
+              {/* Create New Plan */}
+              <Row className="mt-3">
+                <Col>
+                  <div className="creat-breack-time">
+                    <div className="what-is-breack">What’s your breakplan?</div>
+                    <ul className="pt-1 pl-2">
+                      <li>
+                        <Link
+                          className="break-plan"
+                          to=""
+                          onClick={() => {
+                            setBreakPlanFrom(true)
+                            setBreakJoinOrSagest(false)
+                            setBreakNewTime(false)
+                          }}
+                        >
+                          Plan
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
+                </Col>
+              </Row>
+            </div>
           </Card>
         </Col>
       </Row>
@@ -337,6 +390,64 @@ const Dashboard = () => {
           <ImpotentToDayCard />
         </Col>
       </Row>
+      {/* Modale */}
+      <Modal
+        size={sizeModal}
+        show={modalShow}
+        handleClose={handleClose}
+        title={titleModal}
+        body={
+          <Row>
+            {/* Vacation time Modal */}
+            {vacationTime && (
+              <>
+                <Col md={6}>
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Date </Form.Label>
+                    <Form.Control type="date" />
+                  </Form.Group>
+                </Col>
+                <Col md={6}>
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Time </Form.Label>
+                    <Form.Control type="time" />
+                  </Form.Group>
+                </Col>
+              </>
+            )}
+            {/* Next Break Modal */}
+            {
+              nextBreak && (
+                <>
+                  <Col md={12}>
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                      <Form.Label>Time </Form.Label>
+                      <Form.Control type="time" />
+                    </Form.Group>
+                  </Col>
+                </>
+              )
+            }
+          </Row>
+        }
+        footer={
+          <>
+            <Button onClick={handleClose}>Close</Button>
+            {/* Vacation time btn */}
+            {vacationTime && (
+              <Button variant="primary" type="submit">
+                Create Vacation
+              </Button>
+            )}
+            {/* Next Break Btn */}
+            {nextBreak && (
+              <Button variant="primary" type="submit">
+                Create Next Break
+              </Button>
+            )}
+          </>
+        }
+      />
     </section>
   );
 };

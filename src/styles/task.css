@@ -1,4 +1,4 @@
-/* @font-face {
+@font-face {
   font-family: "Proxima Soft";
   src: url("../fonts/ProximaSoft-Medium.ttf");
 }
@@ -8,16 +8,6 @@
   --text-color: #172b4d;
   --disabled-color: #fad6d6;
   --background-color: #f5eaea;
-}
-
-html {
-  background: rgb(0, 73, 191);
-  background: linear-gradient(
-    90deg,
-    rgba(0, 73, 191, 1) 0%,
-    rgba(190, 190, 255, 1) 46%,
-    rgba(0, 212, 255, 1) 100%
-  );
 }
 
 body {
@@ -94,7 +84,7 @@ select {
   display: flex;
   font-size: 15px;
   margin-bottom: 10px;
-  padding: 10px;
+  padding: 5px;
   border-radius: 5px;
   z-index: 1;
   background-color: white;
@@ -104,11 +94,12 @@ select {
   cursor: grab;
 }
 div.task-check-box > input {
-  width: 18px !important;
-  height: 18px !important;
+  width: 16px !important;
+  height: 16px !important;
   box-shadow: none !important;
   margin-left: 0 !important;
 }
+
 .item-title {
   font-weight: 600;
   font-size: 15px;
@@ -131,13 +122,35 @@ div.task-check-box > input {
   width: 100%;
   height: 100%;
   padding: 12px;
+  overflow-y: auto !important;
+}
+/* width */
+.drop-wrapper::-webkit-scrollbar {
+  width: 6px;
 }
 
+/* Track */
+.drop-wrapper::-webkit-scrollbar-track {
+  box-shadow: inherit;
+  border-radius: 10px;
+}
+
+/* Handle */
+.drop-wrapper::-webkit-scrollbar-thumb {
+  background: gainsboro;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+.drop-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #a8a5a5;
+}
 .col-wrapper {
   display: flex;
   flex-direction: column;
   margin: 5px;
   border-radius: 10px;
+  height: 350px !important;
   padding: 0 !important;
   background-color: #f1f1f1;
 }
@@ -145,16 +158,18 @@ div.task-check-box > input {
 .col-header {
   font-size: 17px;
   font-weight: 600;
-  margin-bottom: 20px;
   margin-top: 0;
   padding: 10px 15px;
-  border-bottom: 1px solid #d8d8d8;
 }
-.col-header-time {
+.col-header-time,
+.project-setting-icon {
   float: right !important;
-  color: rgb(102, 102, 102);
+  color: rgb(158, 155, 155);
+  transition: 0.5s;
 }
-
+.project-setting-icon:hover {
+  color: #000;
+}
 .task-col {
   min-height: 300px;
   max-width: 300px;
@@ -175,48 +190,16 @@ div.task-check-box > input {
   text-align: center;
 }
 
-.modal {
-  background-color: #f4f5f7;
-  border-radius: 2px;
-  margin: 48px 0 80px;
-  min-height: 450px;
-  width: 800px;
-  outline: none;
-  padding: 20px;
-} 
-
-.overlay {
-  display: flex;
-  justify-content: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-.close-btn-ctn {
-  display: flex;
-}
-
-.close-btn {
-  height: 40px;
-  width: 35px;
-  font-size: 20px;
-  color: #031d2c;
-  border: none;
-  border-radius: 25px;
-}
-
-.close-btn:hover {
-  background-color: #dcdcdc;
-}
 .taskManage {
   height: 100% !important;
 }
-.taskManage > .row {
+.taskManage.card {
+  padding: 0 !important;
+}
+.taskManage.card > .row {
   justify-content: start !important;
+  padding: 20px !important;
+  margin: 0 !important;
 }
 
 .new_task_input {
@@ -233,6 +216,9 @@ div.task-check-box > input {
 .drop-wrapper:hover .new_task_input {
   opacity: 1;
 }
+.new_task_input {
+  padding: 0 7px;
+}
 .new_task_input:focus {
   background-color: white;
   border-radius: 6px;
@@ -242,4 +228,49 @@ div.task-check-box > input {
 }
 .dropdown-toggle::after {
   content: none;
-} */
+}
+
+.project-setting {
+  padding-right: 4px !important;
+}
+.project-setting > svg {
+  float: right !important;
+}
+.task-manage-hr {
+  margin: 0 !important;
+}
+.creat-project-row {
+  border-top: 1px solid gainsboro;
+  border-bottom: 1px solid gainsboro;
+}
+.creat-project-div {
+  float: right;
+}
+.creat-project-plus {
+  margin-right: 8px;
+}
+.creat-project-div {
+  cursor: pointer;
+}
+.create-project-modal > .modal-dialog {
+  width: 30%;
+}
+.create-project-modal .modal-footer {
+  border-top: none !important;
+}
+.create-project-modal input {
+  margin-top: 15px !important;
+}
+.create-project-modal .btn-close {
+  font-size: 13px !important;
+}
+.create-project-modal .modal-title {
+  font-size: 19px !important;
+}
+.task-management-filter-row {
+  padding: 0 !important;
+  border-bottom: 1px solid gainsboro;
+}
+.task-management-filter {
+  margin-top: 5px;
+}

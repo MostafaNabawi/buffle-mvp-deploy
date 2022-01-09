@@ -1,11 +1,8 @@
 import { React } from "react";
+import { Outlet } from "react-router-dom";
 
 const Moneypool = () => {
-  return (
-    <div>
-      <h1>Money Pol page</h1>
-    </div>
-  );
+  return <Outlet />;
 };
 
 export default Moneypool;

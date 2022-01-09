@@ -1,0 +1,123 @@
+.select_col,
+.participant_section {
+  border-bottom: 1px solid #dee2e6;
+}
+.select_input {
+  margin-bottom: 2rem;
+}
+
+.participant_section {
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.participant_section h4 {
+  padding: 0.8rem 0;
+  font-size: 1.2rem;
+}
+.participant_section button {
+  display: flex;
+  align-items: center;
+}
+.participant_section button svg {
+  margin-right: 0.4rem;
+}
+
+button[type="submit"] {
+  font-weight: 500;
+}
+
+.description h4 {
+  padding: 1.2rem 0;
+}
+
+.description p {
+  border-left: 5px solid #dee2e6;
+  padding-left: 1rem;
+}
+
+/* event card */
+.card_header {
+  border-bottom: 1px solid #dee2e6;
+}
+
+.card_header div {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.card_body > div {
+  padding-bottom: 1.5rem;
+  margin-top: 1rem;
+}
+
+.card_body > div:first-child {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.person_selector span {
+  margin-right: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.overview {
+  padding: 1rem 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.header h4 {
+  font-weight: normal;
+}
+
+.event_person_list div {
+  display: flex;
+  align-items: center;
+}
+
+.event_person_list div span {
+  margin-right: 0.5rem;
+}
+
+.event_person_list > div {
+  background-color: var(--secondary-color);
+  padding: 0.6rem 1rem;
+  border-radius: 0.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.comment .form_area {
+  padding: 1rem 0;
+}
+
+.form_area form {
+  display: flex;
+}
+.form_area div {
+  flex-grow: 1;
+}
+
+.form_area textarea {
+  border: none;
+  border-bottom: 1px solid #dee2e6;
+}
+
+textarea::placeholder {
+  font-weight: normal;
+  color: #ddd;
+}
+
+.form_area button {
+  margin-left: 1rem;
+}
+
+/* .comment #exampleForm.ControlTextarea1:facus {
+  border: 1px solid #fff;
+} */

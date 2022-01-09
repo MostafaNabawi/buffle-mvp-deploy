@@ -2,11 +2,11 @@ import React from "react";
 import { Modal, Button, Form, Container } from "react-bootstrap";
 
 function CustomModal(props) {
-  const { title, body, handleClose } = props;
+  const { title, body, footer, handleClose, size, className } = props;
   return (
     <Modal
       {...props}
-      size="lg"
+      size={size}
       aria-labelledby="contained-modal-title-vcenter"
       centered
       onHide={handleClose}
@@ -19,12 +19,7 @@ function CustomModal(props) {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>{body}</Modal.Body>
-          <Modal.Footer>
-            <Button onClick={handleClose}>Close</Button>
-            <Button variant="primary" type="submit">
-              Submit
-            </Button>
-          </Modal.Footer>
+          <Modal.Footer>{footer}</Modal.Footer>
         </Form>
       </Container>
     </Modal>

@@ -1,0 +1,38 @@
+.manCard{
+    position: absolute !important;
+    top:0px !important;
+    bottom:0px !important;
+    left: 0px;
+    right: 0px;
+    /* background-color: black; */
+    background-color:rgba(0,0,0, 0.7) !important;
+    padding: 20px !important;
+}
+.customCard{
+ position:absolute !important ;
+ top: 10% !important;
+ left: 10% !important;
+ width: 80% ;
+}
+.hide{
+    display: none !important;
+}
+.show{
+    display: inline-block !important;
+}
+.closeIcon{
+    float: right !important;
+    margin-top: -10px;
+    cursor: pointer;
+    width: 18px !important;
+}
+.customBtn{
+    /* border: none !important; */
+    margin-right: 10px !important;
+}
+.tilte{
+    margin-top: -40px !important;
+}
+.withBtn{
+    width: 100% !important;
+}
