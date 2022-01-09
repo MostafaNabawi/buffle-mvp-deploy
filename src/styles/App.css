@@ -125,7 +125,7 @@ button.btn-primary {
   margin-top: -10px !important ;
   margin-left: -10px !important;
 }
-.dropdown-toggle::after {
+.navDropdomnIcon > .dropdown-toggle::after {
   display: inline-block;
   margin-left: 0.255em;
   vertical-align: 0.255em;
