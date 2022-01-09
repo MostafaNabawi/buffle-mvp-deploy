@@ -149,6 +149,18 @@ button.btn-primary {
     var(--low-vein-blue) 100%
   );
 }
+.reminderNav{
+  color: black !important;
+  padding: 0px !important;
+  margin: 0px !important;
+  margin-right:-5px !important ;
+  display: inline-flex;
+
+}
+.reminderNav >div.dropdown-menu{
+  min-width: 50px !important;
+  margin-left: -30px !important;
+}
 
 .sidebar-container {
   position: fixed !important;
