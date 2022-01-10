@@ -1,53 +1,43 @@
-import { React } from "react";
-import { Table, Card, Pagination } from "react-bootstrap";
+import { React, useState } from "react";
+import { Row, Col, Table, Card, Pagination, Form, Button } from "react-bootstrap";
 import { Icon } from '@iconify/react';
 import style from './style.module.css'
 
 const TableList = ({
-    tableHeader, tableBody, tableAction,
-    headClass, bodyClass, actionClass,
+    tableHeader, tableBody,
+    headClass, bodyClass,
     isPagination
 }) => {
+    const index = 0;
     return (
         <>
+            {/* Table */}
             <Card>
                 <Table responsive>
                     <thead className={headClass}>
                         <tr>
                             {tableHeader && (
                                 tableHeader.map(item => (
-                                    <th className={actionClass}>{item}</th>
+                                    <th key={item +1} className={headClass}>{item}</th>
                                 ))
-                            )}
-                            {tableAction && (
-                                <th>Action</th>
                             )}
                         </tr>
                     </thead>
                     <tbody className={bodyClass}>
-                        <tr>
-                            {tableBody && (
-                                tableBody.map(item => (
-                                    <td>{item}</td>
-                                ))
-                            )}
-                            {tableAction && (
-                                <td className={actionClass}>{tableAction}</td>
-                            )}
-                        </tr>
-                    </tbody>
-                </Table>
-                {
-                    isPagination && (
-                        <Pagination className={style.custompagination} >
-                            <Pagination.Prev />
-                            <Pagination.Item>{1}</Pagination.Item>
-                            <Pagination.Item>{2}</Pagination.Item>
-                            <Pagination.Next />
-                        </Pagination>
-                    )
-                }
-            </Card>
+                        {tableBody}
+                </tbody>
+            </Table>
+            {
+                isPagination && (
+                    <Pagination className={style.custompagination} >
+                        <Pagination.Prev />
+                        <Pagination.Item>{1}</Pagination.Item>
+                        <Pagination.Item>{2}</Pagination.Item>
+                        <Pagination.Next />
+                    </Pagination>
+                )
+            }
+        </Card>
         </>
     );
 };

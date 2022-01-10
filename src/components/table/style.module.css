@@ -1,3 +1,8 @@
+.titleHeader{
+    font-weight: bolder;
+    font-family: Proxima Soft;
+    margin-bottom: 10px !important;
+}
 .custompagination {
     margin-bottom: 0px !important;
     float: right !important;
@@ -10,4 +15,10 @@ ul.custompagination > li >a{
     border-radius: 50% !important;
     width: 40px !important;
     height: 40px !important;
+}
+.lableForm{
+margin-top: 7px !important;
+margin-right: 10px !important;
+font-weight: bold !important;
+font-size: large !important;
 }
