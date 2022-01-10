@@ -13,7 +13,7 @@ import BreakplanFrom from "../components/breakplan/BreakplanForm";
 import Modal from '../components/modal/modal'
 
 const Dashboard = () => {
-  // breck
+  // breck plan from
   const [BreakPlanForm, setBreakPlanFrom] = useState(false)
   const [breakJoinOrSagest, setBreakJoinOrSagest] = useState(false)
   const [breakNewTime, setBreakNewTime] = useState(false)
@@ -25,6 +25,7 @@ const Dashboard = () => {
   const handleShow = () => setModalShow(true);
   const [vacationTime, setVacationTime] = useState(false);
   const [nextBreak, setNextBreak] = useState(false)
+  // End Modal
 
   return (
     <section>
@@ -112,12 +113,12 @@ const Dashboard = () => {
               }
               title="Vacation Time"
               action={
-                <i title="Choose the date" onClick={() => {
+                <i title="Add New Vacation Time" onClick={() => {
                   setModalShow(true)
                   setNextBreak(false)
                   setVacationTime(true)
                   setSizeModal('md')
-                  setTitleModa('Choose the date')
+                  setTitleModa('Add New Vacation Time')
                 }}>
                   <Icon icon="vaadin:plus" />
                 </i>
@@ -431,17 +432,17 @@ const Dashboard = () => {
         }
         footer={
           <>
-            <Button onClick={handleClose}>Close</Button>
+            <Button variant="secondary" onClick={handleClose}>Close</Button>
             {/* Vacation time btn */}
             {vacationTime && (
               <Button variant="primary" type="submit">
-                Set Vacation
+                Create Vacation
               </Button>
             )}
             {/* Next Break Btn */}
             {nextBreak && (
               <Button variant="primary" type="submit">
-                Set Break
+                Create Next Break
               </Button>
             )}
           </>

@@ -13,6 +13,11 @@ import Moneypool from "./pages/moneypool";
 import Dashboard from "./pages/dashboard";
 import Layout from "./layout/Layout";
 import TaskManage from "./pages/taskManage";
+import NewEvent from "./components/moneyPool/NewEvent";
+import Event from "./components/moneyPool/Event";
+import Expenses from "./components/moneyPool/Expenses";
+import Profile from "./pages/profile";
+import Setting from "./pages/setting";
 
 function App() {
   return (
@@ -30,7 +35,13 @@ function App() {
         <Route path="/dashboard" element={<Layout />}>
           <Route index element={<Dashboard />} />
           <Route path="taskmanagement" element={<TaskManage />} />
-          <Route path="moneypool" element={<Moneypool />} />
+          <Route path="money-pool" element={<Moneypool />}>
+            <Route index element={<NewEvent />} />
+            <Route path="event" element={<Event />} />
+            <Route path="event/expenses" element={<Expenses />} />
+          </Route>
+          <Route path="profile" element={<Profile />} />
+          <Route path="setting" element={<Setting />} />
         </Route>
       </Routes>
     </div>

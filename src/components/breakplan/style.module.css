@@ -11,8 +11,8 @@
 .customCard{
  position:absolute !important ;
  top: 10% !important;
- left: 15% !important;
- width: 300px ;
+ left: 10% !important;
+ width: 80% ;
 }
 .hide{
     display: none !important;
@@ -31,7 +31,7 @@
     margin-right: 10px !important;
 }
 .tilte{
-    margin-top: -20px !important;
+    margin-top: -40px !important;
 }
 .withBtn{
     width: 100% !important;

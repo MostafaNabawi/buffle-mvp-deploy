@@ -1,0 +1,13 @@
+.settingContaner{
+    height: 77vh !important;
+}
+.btn{
+    margin-top: 10px !important;
+    margin-right: 20px !important;
+}
+.btn:hover{
+background: none !important;
+color: black !important;
+box-shadow: none !important;
+
+}
