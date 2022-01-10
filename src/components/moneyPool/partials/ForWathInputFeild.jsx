@@ -3,7 +3,7 @@ import { Form } from "react-bootstrap";
 
 function ForWathInputFeild() {
   return (
-    <div className="mb-4">
+    <div className="mb-3">
       <Form.Group controlId="wathfor">
         <Form.Label> Wath for? </Form.Label>
         <Form.Control type="text" placeholder="Event pass" />
