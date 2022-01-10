@@ -67,7 +67,16 @@ const Item = ({ item, index, moveItem, status }) => {
             <Modal
                 show={show}
                 handleClose={handleClose}
-                title="Create Project"
+                title={
+                    <div className="task-item-modal-header">
+                        <span>
+                            <Button>date</Button>
+                        </span>
+                        <span className='filter-project'>
+                            <Button >filter</Button>
+                        </span>
+                    </div>
+                }
                 className="create-project-modal"
                 body={
                     <Row>
@@ -78,15 +87,7 @@ const Item = ({ item, index, moveItem, status }) => {
                         </Col>
                     </Row>
                 }
-                footer={
-                    <>
-                        <Button onClick={handleClose}>Close</Button>
-                        <Button variant="primary" type="submit">
-                            Save
-                        </Button>
 
-                    </>
-                }
             />
         </Fragment>
     )
