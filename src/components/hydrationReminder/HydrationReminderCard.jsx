@@ -38,7 +38,8 @@ function HydrationReminderCard() {
       <Modal
         show={show}
         handleClose={handleClose}
-        title="Water Reminder"
+        title="Hydration Reminder
+        "
         body={
           <Row>
             <Col md={12}>
@@ -53,7 +54,8 @@ function HydrationReminderCard() {
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label> How long do you work </Form.Label>
                 <Form.Control
-                  type="time"
+                  type="text"
+                  placeholder="00:00:00"
                 />
               </Form.Group>
             </Col>
@@ -61,7 +63,8 @@ function HydrationReminderCard() {
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Set reminder  </Form.Label>
                 <Form.Control
-                  type="time"
+                   type="text"
+                   placeholder="00:00:00"
                 />
               </Form.Group>
             </Col>
@@ -69,7 +72,7 @@ function HydrationReminderCard() {
         }
         footer={
           <>
-            <Button onClick={handleClose}>Close</Button>
+            <Button variant="secondary" onClick={handleClose}>Close</Button>
             {/* Vacation time btn */}
             <Button variant="primary" type="submit"> Save</Button>
           </>
