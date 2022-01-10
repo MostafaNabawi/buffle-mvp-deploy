@@ -3,7 +3,7 @@ import { Form, FormControl, InputGroup } from "react-bootstrap";
 
 function HowMuchInputFeild() {
   return (
-    <div className="mb-4">
+    <div className="mb-3">
       <Form.Label>How Much? </Form.Label>
       <InputGroup className="mb-1">
         <InputGroup.Text id="basic-addon1">$</InputGroup.Text>

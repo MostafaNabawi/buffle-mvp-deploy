@@ -274,3 +274,10 @@ div.task-check-box > input {
 .task-management-filter {
   margin-top: 5px;
 }
+.task-item-modal-header {
+  display: flex;
+}
+.task-item-modal-header .filter-project {
+  float: right;
+  margin-left: 244px !important;
+}
