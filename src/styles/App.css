@@ -322,6 +322,12 @@ button.btn-primary {
   font-weight: 700;
 }
 
+.dropdown-menu {
+  min-width: fit-content !important;
+  min-width: -moz-fit-content;
+  min-width: -webkit-fill-available;
+}
+
 /*  */
 .sideBar-container {
   width: 80px !important;
