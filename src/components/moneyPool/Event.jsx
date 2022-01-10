@@ -9,6 +9,7 @@ import NoExpensesYet from "./partials/NoExpensesYet";
 import EventPerson from "./partials/EventPerson";
 import { Icon } from "@iconify/react";
 import { useNavigate } from "react-router-dom";
+import OverView from "./partials/OverView";
 
 const eventData = [
   { name: "Hassan", icon: <Icon icon="akar-icons:check" color={`#20ca7d`} /> },
@@ -37,7 +38,8 @@ function Event() {
             <Button onClick={AddExpenses}>Add expense</Button>
           </div>
           <div className={style.overview_body}>
-            <NoExpensesYet />
+            {/* <NoExpensesYet /> */}
+            <OverView />
           </div>
         </div>
         <div className={style.seen}>
@@ -47,7 +49,11 @@ function Event() {
           </div>
           <div className={style.event_person_list}>
             {person.map((item) => (
-              <EventPerson icon={item.icon} person={item.name} />
+              <EventPerson
+                key={item.name}
+                icon={item.icon}
+                person={item.name}
+              />
             ))}
           </div>
         </div>
