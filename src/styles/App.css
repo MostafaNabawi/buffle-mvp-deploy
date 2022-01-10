@@ -121,7 +121,8 @@ button.btn-primary {
   );
   border: 1px solid #8286ff;
 }
-.navDropdomnIcon{
+
+.navDropdomnIcon {
   margin-top: -10px !important ;
   margin-left: -10px !important;
 }
@@ -134,11 +135,11 @@ button.btn-primary {
   vertical-align: 0.255em;
   content: "";
   border-top: 0px !important;
-  border-right:0px !important;
+  border-right: 0px !important;
   border-bottom: 0;
   border-left: 0px !important;
 }
-.register-container{
+.register-container {
   margin: auto !important;
   height: 100vh !important;
   margin: auto;
@@ -152,25 +153,24 @@ button.btn-primary {
     var(--low-vein-blue) 100%
   );
 }
-.reminderNav{
+.reminderNav {
   color: black !important;
   padding: 0px !important;
   margin: 0px !important;
-  margin-right:-5px !important ;
+  margin-right: -5px !important ;
   display: inline-flex;
-
 }
-.reminderNav  > .dropdown-toggle::after {
+.reminderNav > .dropdown-toggle::after {
   display: inline-block;
   margin-left: 0.255em;
   vertical-align: 0.255em;
   content: "";
   border-top: 0px !important;
-  border-right:0px !important;
+  border-right: 0px !important;
   border-bottom: 0;
   border-left: 0px !important;
 }
-.reminderNav >div.dropdown-menu{
+.reminderNav > div.dropdown-menu {
   min-width: 50px !important;
   margin-left: -30px !important;
 }
@@ -573,7 +573,7 @@ div.check-box > input {
   margin-top: 5px;
 }
 .break-type:hover,
-.break-time:hover{
+.break-time:hover {
   color: #4922ff;
 }
 .break-time {

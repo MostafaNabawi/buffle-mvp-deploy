@@ -3,10 +3,10 @@ import Card from "../card/Card";
 import CardHeader from "./../card/CardHeader";
 import style from "./style.module.css";
 import CardBody from "./../card/CardBody";
-import PersonSelectorDropDown from "./common/PersonSelectorDropDown";
+import PersonSelectorDropDown from "./partials/PersonSelectorDropDown";
 import { Button, Form } from "react-bootstrap";
-import NoExpensesYet from "./common/NoExpensesYet";
-import EventPerson from "./common/EventPerson";
+import NoExpensesYet from "./partials/NoExpensesYet";
+import EventPerson from "./partials/EventPerson";
 import { Icon } from "@iconify/react";
 import { useNavigate } from "react-router-dom";
 
