@@ -61,7 +61,8 @@ const UserProfile = () => {
                     <Form.Control type="text" placeholder="Departure" />
                   </Form.Group>
                 </Col>
-                <Col xl={6} className="pt-4">
+                <Col xl={6}>
+                <Form.Label>Tags</Form.Label>
                   <Select
                     // value={selectedOption}
                     // onChange={this.handleChange}
