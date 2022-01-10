@@ -1,0 +1,13 @@
+.custompagination {
+    margin-bottom: 0px !important;
+    float: right !important;
+}
+ul.custompagination > li{
+    margin-right: 10px !important;
+}
+ul.custompagination > li >a{
+    text-align: center;
+    border-radius: 50% !important;
+    width: 40px !important;
+    height: 40px !important;
+}
