@@ -54,7 +54,8 @@ function HydrationReminderCard() {
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label> How long do you work </Form.Label>
                 <Form.Control
-                  type="hore"
+                  type="text"
+                  placeholder="00:00:00"
                 />
               </Form.Group>
             </Col>
@@ -62,7 +63,8 @@ function HydrationReminderCard() {
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Set reminder  </Form.Label>
                 <Form.Control
-                  type="time"
+                   type="text"
+                   placeholder="00:00:00"
                 />
               </Form.Group>
             </Col>
