@@ -113,12 +113,12 @@ const Dashboard = () => {
               }
               title="Vacation Time"
               action={
-                <i title="Choose the date" onClick={() => {
+                <i title="Add New Vacation Time" onClick={() => {
                   setModalShow(true)
                   setNextBreak(false)
                   setVacationTime(true)
                   setSizeModal('md')
-                  setTitleModa('Choose the date')
+                  setTitleModa('Add New Vacation Time')
                 }}>
                   <Icon icon="vaadin:plus" />
                 </i>
@@ -432,7 +432,7 @@ const Dashboard = () => {
         }
         footer={
           <>
-            <Button onClick={handleClose}>Close</Button>
+            <Button variant="secondary" onClick={handleClose}>Close</Button>
             {/* Vacation time btn */}
             {vacationTime && (
               <Button variant="primary" type="submit">

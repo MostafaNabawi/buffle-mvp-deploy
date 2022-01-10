@@ -38,7 +38,8 @@ function HydrationReminderCard() {
       <Modal
         show={show}
         handleClose={handleClose}
-        title="Water Reminder"
+        title="Hydration Reminder
+        "
         body={
           <Row>
             <Col md={12}>
@@ -69,7 +70,7 @@ function HydrationReminderCard() {
         }
         footer={
           <>
-            <Button onClick={handleClose}>Close</Button>
+            <Button variant="secondary" onClick={handleClose}>Close</Button>
             {/* Vacation time btn */}
             <Button variant="primary" type="submit"> Save</Button>
           </>
