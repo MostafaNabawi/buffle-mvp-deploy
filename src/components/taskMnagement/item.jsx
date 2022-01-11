@@ -48,6 +48,7 @@ const Item = ({ item, index, moveItem, status }) => {
 
   drag(drop(ref));
 
+<<<<<<< HEAD
   return (
     <Fragment>
       <div ref={ref} style={{ opacity: isDragging ? 0 : 1 }} className={"item"}>
@@ -86,5 +87,35 @@ const Item = ({ item, index, moveItem, status }) => {
     </Fragment>
   );
 };
+=======
+            <Modal
+                show={show}
+                handleClose={handleClose}
+                title={
+                    <div className="task-item-modal-header">
+                        <span>
+                            <Button>date</Button>
+                        </span>
+                        <span className='filter-project'>
+                            <Button >filter</Button>
+                        </span>
+                    </div>
+                }
+                className="create-project-modal"
+                body={
+                    <Row>
+                        <Col md={12}>
+                            <Form.Group className="mb-3" controlId="formBasicEmail">
+                                <Form.Control type="text" placeholder='Name your project...' />
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                }
+
+            />
+        </Fragment>
+    )
+}
+>>>>>>> 1b31689de0f2adae424d7f7417356fe54d379662
 
 export default Item;

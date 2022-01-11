@@ -22,6 +22,7 @@ const Header = () => {
               className="navDropdomnIcon"
               >
               <NavDropdown.Item  href="/dashboard/profile">Profile</NavDropdown.Item>
+              <NavDropdown.Item  href="/dashboard/user-management">User management</NavDropdown.Item>
               <NavDropdown.Item  href="/dashboard/setting">Setting</NavDropdown.Item>
               <NavDropdown.Item  href="/">Logout</NavDropdown.Item>
             </NavDropdown>
