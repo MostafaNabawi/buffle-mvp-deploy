@@ -5,6 +5,7 @@ import { Icon } from "@iconify/react";
 import style from "./style.module.css";
 import PersonNameField from "./partials/PersonNameField";
 import { useNavigate } from "react-router-dom";
+import CardBody from "./../card/CardBody";
 const currencyData = [
   {
     AbbreviationName: "USD",
@@ -32,7 +33,7 @@ function NewEvent() {
   };
 
   return (
-    <Card className={style.new_event_card}>
+    <CardBody>
       <Row>
         <Col lg={6}>
           <Form onSubmit={handleSubmit}>
@@ -93,7 +94,7 @@ function NewEvent() {
           </p>
         </Col>
       </Row>
-    </Card>
+    </CardBody>
   );
 }
 

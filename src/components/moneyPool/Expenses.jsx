@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import Card from "./../card/Card";
 import style from "./style.module.css";
-import CardHeader from "./../card/CardHeader";
 import CardBody from "./../card/CardBody";
 import { Button, Tab, Tabs, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -23,47 +21,44 @@ function Expenses() {
   };
 
   return (
-    <Card>
-      <CardHeader title="BD" className={style.card_header} />
-      <CardBody className={style.card_body}>
-        <div>
-          <Button onClick={handleBack}>
-            <Icon icon="ic:baseline-arrow-back-ios" />
-            Back
-          </Button>
-        </div>
-        <div className={style.tab_container}>
-          <Form>
-            <Tabs
-              defaultActiveKey="profile"
-              id="uncontrolled-tab-example"
-              activeKey={key}
-              onSelect={(k) => setKey(k)}
-              className="mb-3"
-              className={style.tab}
-            >
-              <Tab eventKey="expense" title="Expense">
-                <Expense data={data} />
-              </Tab>
-              <Tab eventKey="moneygiven" title="Money Given">
-                <MoneyGiven data={data} />
-              </Tab>
-              <Tab eventKey="income" title="Income">
-                <InCome data={data} />
-              </Tab>
-            </Tabs>
-            <div>
-              <Button className="me-2" onClick={handleBack}>
-                Add
-              </Button>
-              <Button variant="secondary" onClick={handleBack}>
-                Cancel
-              </Button>
-            </div>
-          </Form>
-        </div>
-      </CardBody>
-    </Card>
+    <CardBody className={style.card_body}>
+      <div>
+        <Button onClick={handleBack}>
+          <Icon icon="ic:baseline-arrow-back-ios" />
+          Back
+        </Button>
+      </div>
+      <div className={style.tab_container}>
+        <Form>
+          <Tabs
+            defaultActiveKey="profile"
+            id="uncontrolled-tab-example"
+            activeKey={key}
+            onSelect={(k) => setKey(k)}
+            className="mb-3"
+            className={style.tab}
+          >
+            <Tab eventKey="expense" title="Expense">
+              <Expense data={data} />
+            </Tab>
+            <Tab eventKey="moneygiven" title="Money Given">
+              <MoneyGiven data={data} />
+            </Tab>
+            <Tab eventKey="income" title="Income">
+              <InCome data={data} />
+            </Tab>
+          </Tabs>
+          <div>
+            <Button className="me-2" onClick={handleBack}>
+              Add
+            </Button>
+            <Button variant="secondary" onClick={handleBack}>
+              Cancel
+            </Button>
+          </div>
+        </Form>
+      </div>
+    </CardBody>
   );
 }
 

@@ -331,6 +331,15 @@ button.btn-primary {
   min-width: -webkit-fill-available;
 }
 
+/* Event style*/
+.event_card .card_header {
+  border-bottom: 1px solid #dee2e6;
+}
+
+.event_card .card_header div {
+  flex-grow: 1;
+  text-align: center;
+}
 /*  */
 .sideBar-container {
   width: 80px !important;
