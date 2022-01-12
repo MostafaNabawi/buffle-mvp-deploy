@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Modal, Form, Container, Button } from "react-bootstrap";
-import DatePicker from "./DatePicker";
+import MyDTPicker from "./DatePicker";
 import Project from "./Project";
 import RepeatTask from "./RepeatTask";
 import style from "./style.module.css";
@@ -20,7 +20,7 @@ function TaskModal(props) {
       <Container>
         <Form>
           <Modal.Header className={style.modal_header}>
-            <DatePicker />
+            <MyDTPicker />
             <Project />
             {repeat && <RepeatTask />}
             <button type="button">
