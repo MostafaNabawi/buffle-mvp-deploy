@@ -11,11 +11,7 @@ function RepeatTask() {
 
   return (
     <div className={style.dropDown_wrapper}>
-      <button
-        type="button"
-        onMouseEnter={handleToggle}
-        onMouseLeave={handleToggle}
-      >
+      <button type="button" onClick={handleToggle} className="btn_repeat">
         <Icon icon="akar-icons:arrow-repeat" />
       </button>
       <div className={`${style.dropDown} ${show}`}>

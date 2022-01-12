@@ -58,7 +58,7 @@ const Item = (props) => {
         <span className={"item-title"} onClick={handleShow}>
           {item.content}
         </span>
-        <div className="bt_dhhg2g" style={{ background: "blue" }}></div>
+        <div className={`color-bar color-bar-${status.status}`} />
       </div>
 
       <TaskModal

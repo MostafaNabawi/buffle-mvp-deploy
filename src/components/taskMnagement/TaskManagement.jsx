@@ -48,7 +48,7 @@ const TaskManagement = () => {
                       index={idx}
                       moveItem={moveItem}
                       status={s}
-                      repeat
+                      className="task_item"
                     ></Item>
                   ))}
                 <div className="new-task-div">
