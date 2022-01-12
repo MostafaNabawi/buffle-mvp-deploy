@@ -28,7 +28,6 @@ const UserLogin = () => {
     let mount = true;
     async function getStatus() {
       const req = await userStatus();
-      console.log("rr", req);
       if (req.status === 200) {
         navigate("/dashboard");
       } else {
@@ -36,7 +35,10 @@ const UserLogin = () => {
       }
     }
     if (mount) {
-      getStatus();
+      const user_storage = JSON.parse(localStorage.getItem("user"));
+      if (user_storage) {
+        getStatus();
+      }
     }
     return () => {
       mount = false;
