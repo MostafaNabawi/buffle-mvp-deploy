@@ -2,7 +2,7 @@ import React, { Fragment, useState, useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import ITEM_TYPE from "./data/types";
-import Modal from "../modal/modal";
+import TaskModal from "./modal/TaskModal";
 
 const Item = ({ item, index, moveItem, status }) => {
   const ref = useRef(null);
@@ -48,7 +48,6 @@ const Item = ({ item, index, moveItem, status }) => {
 
   drag(drop(ref));
 
-<<<<<<< HEAD
   return (
     <Fragment>
       <div ref={ref} style={{ opacity: isDragging ? 0 : 1 }} className={"item"}>
@@ -58,64 +57,17 @@ const Item = ({ item, index, moveItem, status }) => {
         <span className={"item-title"} onClick={handleShow}>
           {item.content}
         </span>
-        <div class="bt_dhhg2g" style={{ background: "blue" }}></div>
+        <div className="bt_dhhg2g" style={{ background: "blue" }}></div>
       </div>
 
-      <Modal
+      <TaskModal
         show={show}
         handleClose={handleClose}
-        title="Create Project"
         className="create-project-modal"
-        body={
-          <Row>
-            <Col md={12}>
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Control type="text" placeholder="Name your project..." />
-              </Form.Group>
-            </Col>
-          </Row>
-        }
-        footer={
-          <>
-            <Button onClick={handleClose}>Close</Button>
-            <Button variant="primary" type="submit">
-              Save
-            </Button>
-          </>
-        }
+        title="Title"
       />
     </Fragment>
   );
 };
-=======
-            <Modal
-                show={show}
-                handleClose={handleClose}
-                title={
-                    <div className="task-item-modal-header">
-                        <span>
-                            <Button>date</Button>
-                        </span>
-                        <span className='filter-project'>
-                            <Button >filter</Button>
-                        </span>
-                    </div>
-                }
-                className="create-project-modal"
-                body={
-                    <Row>
-                        <Col md={12}>
-                            <Form.Group className="mb-3" controlId="formBasicEmail">
-                                <Form.Control type="text" placeholder='Name your project...' />
-                            </Form.Group>
-                        </Col>
-                    </Row>
-                }
-
-            />
-        </Fragment>
-    )
-}
->>>>>>> 1b31689de0f2adae424d7f7417356fe54d379662
 
 export default Item;
