@@ -12,11 +12,7 @@ function Project() {
 
   return (
     <div className={style.dropDown_wrapper}>
-      <Button
-        label={title || "NO roject"}
-        onMouseEnter={handleToggle}
-        onMouseLeave={handleToggle}
-      />
+      <Button label={title || "NO roject"} onClick={handleToggle} />
       <div className={`${style.dropDown} ${show}`}>
         <ul>
           <li>

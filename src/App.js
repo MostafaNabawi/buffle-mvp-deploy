@@ -30,7 +30,7 @@ function App() {
           <Route path="company" element={<CompanyRegister />} />
           <Route path="student" element={<StudentRegister />} />
           <Route path="freelancer" element={<FreelancerRegister />} />
-          <Route path="step-tow/:type/:id" element={<StepTwoRegister />} />
+          <Route path="step-two/:token" element={<StepTwoRegister />} />
         </Route>
         <Route path="/companyLogin" element={<CompanyLogin />} />
         <Route path="/dashboard" element={<Layout />}>
