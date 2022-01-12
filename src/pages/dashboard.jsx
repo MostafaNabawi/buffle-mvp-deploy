@@ -462,7 +462,7 @@ const Dashboard = () => {
                           ...nextBreakTime,
                           [e.target.name]: res.second,
                         });
-                        nextBreakTime.dateTime = res.date;
+                        console.log("r", res.date);
                         // setNextBreakTime({
                         //   ...nextBreakTime,
                         //   ["dateTime"]: res.date,
@@ -477,7 +477,9 @@ const Dashboard = () => {
         }
         footer={
           <>
-            <Button variant="outline-dark" onClick={handleClose}>Close</Button>
+            <Button variant="outline-dark" onClick={handleClose}>
+              Close
+            </Button>
             {/* Vacation time btn */}
             {vacationTime && (
               <Button variant="primary" type="submit">
