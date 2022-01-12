@@ -72,7 +72,7 @@ function HydrationReminderCard() {
         }
         footer={
           <>
-            <Button variant="secondary" onClick={handleClose}>Close</Button>
+            <Button variant="outline-dark" onClick={handleClose}>Close</Button>
             {/* Vacation time btn */}
             <Button variant="primary" type="submit"> Save</Button>
           </>
