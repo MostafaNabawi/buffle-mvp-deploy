@@ -1,10 +1,9 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { Row, Col, Image, Form, Button } from "react-bootstrap";
 import { Icon } from "@iconify/react";
 import { Link, useNavigate } from "react-router-dom";
 import style from "../style.module.css";
-import { API_URL } from "../../../config";
-
+import { signin, userStatus } from "../../../api";
 const UserLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [inputs, setInputs] = useState({
@@ -15,25 +14,34 @@ const UserLogin = () => {
   const handleLogin = async (event) => {
     event.preventDefault();
     // check inputs
-    const req = await fetch(`${API_URL}/auth/signin`, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Credentials": true,
-      },
-      body: JSON.stringify(inputs),
-    });
-    const res = await req.json();
+    const req = await signin(inputs);
     if (req.status === 400) {
-      console.log(res);
+      console.log(req.data);
       return;
     }
     if (req.status === 200) {
-      localStorage.setItem("user", JSON.stringify(res.payload));
+      localStorage.setItem("user", JSON.stringify(req.data));
       navigate("/dashboard");
     }
   };
+  useEffect(() => {
+    let mount = true;
+    async function getStatus() {
+      const req = await userStatus();
+      console.log("rr", req);
+      if (req.status === 200) {
+        navigate("/dashboard");
+      } else {
+        localStorage.removeItem("user");
+      }
+    }
+    if (mount) {
+      getStatus();
+    }
+    return () => {
+      mount = false;
+    };
+  }, []);
   return (
     <div className={style.loginPage}>
       <Row className="m-0 justify-content-center">
