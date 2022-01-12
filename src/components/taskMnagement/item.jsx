@@ -58,12 +58,13 @@ const Item = (props) => {
         <span className={"item-title"} onClick={handleShow}>
           {item.content}
         </span>
-        <div className={"color-bar"} style={{ backgroundColor: status.color }} />
+        <div className={`color-bar color-bar-${status.status}`} />
       </div>
 
       <TaskModal
         show={show}
         handleClose={handleClose}
+        className="create-project-modal"
         title="Title"
         {...props}
       />

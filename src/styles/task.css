@@ -289,3 +289,24 @@ div.task-check-box > input {
 .project_item_modal .btn_repeat + div {
   display: none;
 }
+.color-bar-Sunday {
+  background: rgb(247, 143, 179);
+}
+.color-bar-Monday {
+  background: rgb(45, 152, 218);
+}
+.color-bar-Tuesday {
+  background: rgb(136, 84, 208);
+}
+.color-bar-Wednesday {
+  background: rgb(250, 130, 49);
+}
+.color-bar-Thursday {
+  background: rgb(32, 191, 107);
+}
+.color-bar-Friday {
+  background: rgb(235, 59, 90);
+}
+.color-bar-Saturday {
+  background: rgb(247, 183, 49);
+}
