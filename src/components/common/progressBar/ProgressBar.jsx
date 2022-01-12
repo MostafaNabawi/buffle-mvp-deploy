@@ -3,7 +3,6 @@ import { Row, Col, ProgressBar } from "react-bootstrap";
 import { Icon } from "@iconify/react";
 import style from "./style.module.css";
 import Countdown from "react-countdown";
-const percent = require("percent-value");
 
 const PreogressBar = ({ range }) => {
   const [total, setTotal] = useState(range.data / 1000);
@@ -35,7 +34,7 @@ const PreogressBar = ({ range }) => {
       <Row>
         <Col xl="11" className="pl-0">
           <Icon
-            color={play && percent > 0 ? "" : `#4922ff`}
+            color={play && percentUI > 0 ? "" : `#4922ff`}
             className={style.iconWatch}
             icon="bi:clock-fill"
           />
