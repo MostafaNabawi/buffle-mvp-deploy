@@ -4,7 +4,8 @@ import { Form, Row, Col, Button } from "react-bootstrap";
 import ITEM_TYPE from "./data/types";
 import TaskModal from "./modal/TaskModal";
 
-const Item = ({ item, index, moveItem, status }) => {
+const Item = (props) => {
+  const { item, index, moveItem, status } = props;
   const ref = useRef(null);
 
   const [, drop] = useDrop({
@@ -65,6 +66,7 @@ const Item = ({ item, index, moveItem, status }) => {
         handleClose={handleClose}
         className="create-project-modal"
         title="Title"
+        {...props}
       />
     </Fragment>
   );
