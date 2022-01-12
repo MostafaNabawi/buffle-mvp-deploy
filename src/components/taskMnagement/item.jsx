@@ -64,7 +64,6 @@ const Item = (props) => {
       <TaskModal
         show={show}
         handleClose={handleClose}
-        className="create-project-modal"
         title="Title"
         {...props}
       />

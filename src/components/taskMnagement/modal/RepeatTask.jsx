@@ -15,6 +15,7 @@ function RepeatTask() {
         type="button"
         onMouseEnter={handleToggle}
         onMouseLeave={handleToggle}
+        className="btn_repeat"
       >
         <Icon icon="akar-icons:arrow-repeat" />
       </button>
