@@ -1,8 +1,7 @@
 import { React, useState, useEffect } from "react";
 import { Row, Col, Form, Image, NavDropdown } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
-import { API_URL } from "../config";
 import { logout } from "../api";
 
 const Header = () => {
@@ -47,14 +46,11 @@ const Header = () => {
                 />
               }
               className="navDropdomnIcon"
-            >
-              <NavDropdown.Item href="/dashboard/profile">
-                Profile
-              </NavDropdown.Item>
-              <NavDropdown.Item href="/dashboard/setting">
-                Setting
-              </NavDropdown.Item>
-              <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
+              >
+              <NavDropdown.Item  href="/dashboard/profile">Profile</NavDropdown.Item>
+              <NavDropdown.Item  href="/dashboard/user-management">User management</NavDropdown.Item>
+              <NavDropdown.Item  href="/dashboard/setting">Setting</NavDropdown.Item>
+              <NavDropdown.Item  onClick={handleLogout}>Logout</NavDropdown.Item>
             </NavDropdown>
           </div>
           <div className="form-search">

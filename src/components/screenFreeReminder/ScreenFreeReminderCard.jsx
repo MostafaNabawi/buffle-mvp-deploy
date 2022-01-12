@@ -76,7 +76,7 @@ function ScreenFreeReminderCard() {
         }
         footer={
           <>
-            <Button variant="secondary" onClick={handleClose}>Close</Button>
+            <Button variant="outline-dark" onClick={handleClose}>Close</Button>
             <Button variant="primary" type="submit">
               Save
             </Button>

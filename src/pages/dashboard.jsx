@@ -477,9 +477,7 @@ const Dashboard = () => {
         }
         footer={
           <>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
+            <Button variant="outline-dark" onClick={handleClose}>Close</Button>
             {/* Vacation time btn */}
             {vacationTime && (
               <Button variant="primary" type="submit">

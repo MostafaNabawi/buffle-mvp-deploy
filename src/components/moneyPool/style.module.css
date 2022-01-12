@@ -38,14 +38,6 @@ button[type="submit"] {
 }
 
 /* event card */
-.card_header {
-  border-bottom: 1px solid #dee2e6;
-}
-
-.card_header div {
-  flex-grow: 1;
-  text-align: center;
-}
 
 .card_body > div {
   padding-bottom: 1.5rem;

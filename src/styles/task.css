@@ -259,7 +259,7 @@ div.task-check-box > input {
   border-top: none !important;
 }
 .create-project-modal input {
-  margin-top: 15px !important;
+  margin-top: 15px;
 }
 .create-project-modal .btn-close {
   font-size: 13px !important;
@@ -279,5 +279,4 @@ div.task-check-box > input {
 }
 .task-item-modal-header .filter-project {
   float: right;
-  margin-left: 244px !important;
 }
