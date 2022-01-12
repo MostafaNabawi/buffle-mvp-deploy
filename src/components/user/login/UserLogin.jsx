@@ -24,24 +24,24 @@ const UserLogin = () => {
       navigate("/dashboard");
     }
   };
-  useEffect(() => {
-    let mount = true;
-    async function getStatus() {
-      const req = await userStatus();
-      console.log("rr", req);
-      if (req.status === 200) {
-        navigate("/dashboard");
-      } else {
-        localStorage.removeItem("user");
-      }
-    }
-    if (mount) {
-      getStatus();
-    }
-    return () => {
-      mount = false;
-    };
-  }, []);
+  // useEffect(() => {
+  //   let mount = true;
+  //   async function getStatus() {
+  //     const req = await userStatus();
+  //     console.log("rr", req);
+  //     if (req.status === 200) {
+  //       navigate("/dashboard");
+  //     } else {
+  //       localStorage.removeItem("user");
+  //     }
+  //   }
+  //   if (mount) {
+  //     getStatus();
+  //   }
+  //   return () => {
+  //     mount = false;
+  //   };
+  // }, []);
   return (
     <div className={style.loginPage}>
       <Row className="m-0 justify-content-center">
