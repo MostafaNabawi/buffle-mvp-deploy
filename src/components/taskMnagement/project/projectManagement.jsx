@@ -30,7 +30,6 @@ const ProjectManagement = () => {
       return [...newItems];
     });
   };
-  console.log(statuses);
   return (
     <Row className="projectManagement">
       {statuses.map((s) => {
@@ -59,6 +58,7 @@ const ProjectManagement = () => {
                       index={idx}
                       moveItem={moveItem}
                       status={s}
+                      className="project_item"
                     ></Item>
                   ))}
                 <div className="new-task-div">

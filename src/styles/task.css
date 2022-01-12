@@ -280,3 +280,8 @@ div.task-check-box > input {
 .task-item-modal-header .filter-project {
   float: right;
 }
+
+.project_item_modal .btn_repeat,
+.project_item_modal .btn_repeat + div {
+  display: none;
+}
