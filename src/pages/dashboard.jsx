@@ -10,23 +10,46 @@ import ScreenFreeReminderCard from "./../components/screenFreeReminder/ScreenFre
 import EventCalender from "./../components/eventCalender/EventCalender";
 import ImpotentToDayCard from "./../components/impotentToDay/ImpotentToDayCard";
 import BreakplanFrom from "../components/breakplan/BreakplanForm";
-import Modal from '../components/modal/modal'
+import Modal from "../components/modal/modal";
+import { timeDifference } from "../config/utils";
+import { addNextBreak, setUserFeel } from "../api";
 
 const Dashboard = () => {
   // breck plan from
-  const [BreakPlanForm, setBreakPlanFrom] = useState(false)
-  const [breakJoinOrSagest, setBreakJoinOrSagest] = useState(false)
-  const [breakNewTime, setBreakNewTime] = useState(false)
+  const [BreakPlanForm, setBreakPlanFrom] = useState(false);
+  const [breakJoinOrSagest, setBreakJoinOrSagest] = useState(false);
+  const [breakNewTime, setBreakNewTime] = useState(false);
   // Modal
-  const [titleModal, setTitleModa] = useState('')
-  const [sizeModal,setSizeModal]=useState('')
+  const [titleModal, setTitleModa] = useState("");
+  const [sizeModal, setSizeModal] = useState("");
   const [modalShow, setModalShow] = useState(false);
   const handleClose = () => setModalShow(false);
   const handleShow = () => setModalShow(true);
   const [vacationTime, setVacationTime] = useState(false);
-  const [nextBreak, setNextBreak] = useState(false)
+  const [nextBreak, setNextBreak] = useState(false);
   // End Modal
-
+  const [nextBreakTime, setNextBreakTime] = useState({
+    data: 0,
+    start: false,
+    dateTime: "",
+  });
+  // actions
+  const setFeel = async (type) => {
+    // 1-check type
+    // 2-send request
+    const req = await setUserFeel(type);
+    alert(req.status);
+  };
+  // next break action
+  const handleNextBreakOperation = () => {
+    console.log("data", nextBreakTime);
+    if (nextBreakTime.data === 0) {
+      alert("Please select a time");
+      return;
+    }
+    console.log("Hi => ", nextBreakTime);
+    // const req = addNextBreak(nextBreakTime.data);
+  };
   return (
     <section>
       <Row>
@@ -42,11 +65,13 @@ const Dashboard = () => {
                 className="feel-icon"
                 src="/icone/1.png"
                 alt="vector image"
+                onClick={() => setFeel("happy")}
               />
               <Image
                 className="feel-icon"
                 src="/icone/2.png"
                 alt="vector image"
+                onClick={() => setFeel("pretty")}
               />
               <Image
                 className="feel-icon"
@@ -78,26 +103,22 @@ const Dashboard = () => {
               }
               title="Next break"
               action={
-                <i title="When is your next break?" onClick={() => {
-                  setModalShow(true)
-                  setVacationTime(false)
-                  setNextBreak(true)
-                  setSizeModal('md')
-                  setTitleModa('When is your next break?')
-                }}>
+                <i
+                  title="When is your next break?"
+                  onClick={() => {
+                    setModalShow(true);
+                    setVacationTime(false);
+                    setNextBreak(true);
+                    setSizeModal("md");
+                    setTitleModa("When is your next break?");
+                  }}
+                >
                   <Icon icon="vaadin:plus" />
                 </i>
               }
             />
             <Col className="progress-custom mt-3">
-              <ProgressBar
-                percent={60}
-                lable={`
-                    ${new Date().getHours()}
-                    :${new Date().getMinutes()}
-                    :${new Date().getSeconds()}
-                    `}
-              />
+              <ProgressBar range={nextBreakTime} />
             </Col>
           </Card>
         </Col>
@@ -113,13 +134,16 @@ const Dashboard = () => {
               }
               title="Vacation Time"
               action={
-                <i title="Add New Vacation Time" onClick={() => {
-                  setModalShow(true)
-                  setNextBreak(false)
-                  setVacationTime(true)
-                  setSizeModal('md')
-                  setTitleModa('Add New Vacation Time')
-                }}>
+                <i
+                  title="Add New Vacation Time"
+                  onClick={() => {
+                    setModalShow(true);
+                    setNextBreak(false);
+                    setVacationTime(true);
+                    setSizeModal("md");
+                    setTitleModa("Add New Vacation Time");
+                  }}
+                >
                   <Icon icon="vaadin:plus" />
                 </i>
               }
@@ -186,14 +210,14 @@ const Dashboard = () => {
                   </Row>
                 </Col>
                 <Col xl="4">
-                  <ProgressBar
+                  {/* <ProgressBar
                     percent={70}
                     lable={`
                     ${new Date().getHours()}
                     :${new Date().getMinutes()}
                     :${new Date().getSeconds()}
                     `}
-                  />
+                  /> */}
                 </Col>
               </Row>
               <div className="devidre"></div>
@@ -211,14 +235,14 @@ const Dashboard = () => {
                   </Row>
                 </Col>
                 <Col xl="4">
-                  <ProgressBar
+                  {/* <ProgressBar
                     percent={60}
                     lable={`
                     ${new Date().getHours()}
                     :${new Date().getMinutes()}
                     :${new Date().getSeconds()}
                     `}
-                  />
+                  /> */}
                 </Col>
               </Row>
               <div className="devidre"></div>
@@ -236,14 +260,14 @@ const Dashboard = () => {
                   </Row>
                 </Col>
                 <Col xl="4">
-                  <ProgressBar
+                  {/* <ProgressBar
                     percent={70}
                     lable={`
                     ${new Date().getHours()}
                     :${new Date().getMinutes()}
                     :${new Date().getSeconds()}
                     `}
-                  />
+                  /> */}
                 </Col>
               </Row>
               <div className="devidre"></div>
@@ -261,14 +285,14 @@ const Dashboard = () => {
                   </Row>
                 </Col>
                 <Col xl="4">
-                  <ProgressBar
+                  {/* <ProgressBar
                     percent={80}
                     lable={`
                     ${new Date().getHours()}
                     :${new Date().getMinutes()}
                     :${new Date().getSeconds()}
                     `}
-                  />
+                  /> */}
                 </Col>
               </Row>
               <div className="devidre "></div>
@@ -299,20 +323,28 @@ const Dashboard = () => {
                   </div>
                 </Col>
                 <Col>
-                  <div className="break-user-name">Raj Kumar</div>  <div>
-                    <span onClick={() => {
-                      setBreakPlanFrom(true)
-                      setBreakJoinOrSagest(true)
-                      setBreakNewTime(false)
-                    }} className="break-type">orders Lieferando</span>
+                  <div className="break-user-name">Raj Kumar</div>{" "}
+                  <div>
+                    <span
+                      onClick={() => {
+                        setBreakPlanFrom(true);
+                        setBreakJoinOrSagest(true);
+                        setBreakNewTime(false);
+                      }}
+                      className="break-type"
+                    >
+                      orders Lieferando
+                    </span>
                     <span
                       className="break-time"
                       onClick={() => {
-                        setBreakPlanFrom(true)
-                        setBreakJoinOrSagest(false)
-                        setBreakNewTime(true)
+                        setBreakPlanFrom(true);
+                        setBreakJoinOrSagest(false);
+                        setBreakNewTime(true);
                       }}
-                    >13:00</span>
+                    >
+                      13:00
+                    </span>
                   </div>
                 </Col>
               </Row>
@@ -361,9 +393,9 @@ const Dashboard = () => {
                           className="break-plan"
                           to=""
                           onClick={() => {
-                            setBreakPlanFrom(true)
-                            setBreakJoinOrSagest(false)
-                            setBreakNewTime(false)
+                            setBreakPlanFrom(true);
+                            setBreakJoinOrSagest(false);
+                            setBreakNewTime(false);
                           }}
                         >
                           Plan
@@ -416,23 +448,38 @@ const Dashboard = () => {
               </>
             )}
             {/* Next Break Modal */}
-            {
-              nextBreak && (
-                <>
-                  <Col md={12}>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                      <Form.Label>Time </Form.Label>
-                      <Form.Control type="time" />
-                    </Form.Group>
-                  </Col>
-                </>
-              )
-            }
+            {nextBreak && (
+              <>
+                <Col md={12}>
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Time </Form.Label>
+                    <Form.Control
+                      type="time"
+                      name="data"
+                      onChange={(e) => {
+                        const res = timeDifference(e.target.value);
+                        setNextBreakTime({
+                          ...nextBreakTime,
+                          [e.target.name]: res.second,
+                        });
+                        console.log("r", res.date);
+                        // setNextBreakTime({
+                        //   ...nextBreakTime,
+                        //   ["dateTime"]: res.date,
+                        // });
+                      }}
+                    />
+                  </Form.Group>
+                </Col>
+              </>
+            )}
           </Row>
         }
         footer={
           <>
-            <Button variant="outline-dark" onClick={handleClose}>Close</Button>
+            <Button variant="outline-dark" onClick={handleClose}>
+              Close
+            </Button>
             {/* Vacation time btn */}
             {vacationTime && (
               <Button variant="primary" type="submit">
@@ -441,7 +488,11 @@ const Dashboard = () => {
             )}
             {/* Next Break Btn */}
             {nextBreak && (
-              <Button variant="primary" type="submit">
+              <Button
+                variant="primary"
+                type="button"
+                onClick={handleNextBreakOperation}
+              >
                 Create Next Break
               </Button>
             )}
