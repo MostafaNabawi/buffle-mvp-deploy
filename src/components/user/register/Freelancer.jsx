@@ -45,7 +45,7 @@ const FreelancerRegister = () => {
     type: 2,
   });
   return (
-    <div className={style.registerPage}>
+    <div className="pt-5">
       {!sendEmail ? (
         <Row className="p-0 m-0">
           <Col xl="8">

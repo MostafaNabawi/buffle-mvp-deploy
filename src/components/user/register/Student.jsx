@@ -19,6 +19,7 @@ const StudentRegister = () => {
     country: "",
     city: "",
     heard: "",
+    studies:"",
     semester: 0,
     type: 3,
   });
@@ -46,7 +47,7 @@ const StudentRegister = () => {
     }
   };
   return (
-    <div className={style.registerPage}>
+    <div className="pt-4">
       {!sendEmail ? (
         <Row className="p-0 m-0">
           <Col xl="8">
@@ -159,6 +160,25 @@ const StudentRegister = () => {
                       </Form.Group>
                     </Col>
                   </Row>
+                  <Col xl="12">
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                      <Form.Label className={style.lableForm}>
+                      Studies *
+                      </Form.Label>
+                      <Form.Control
+                        className={style.formInput}
+                        type="text"
+                        placeholder="studies"
+                        name="studies"
+                        onChange={(e) =>
+                          setInputs({
+                            ...inputs,
+                            [e.target.name]: e.target.value,
+                          })
+                        }
+                      />
+                    </Form.Group>
+                  </Col>
                   <Row>
                     <Col xl="6">
                       <Form.Group className="mb-3">
