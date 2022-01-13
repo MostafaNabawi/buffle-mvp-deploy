@@ -16,6 +16,7 @@ function BreackplanFrom({
     const [newSaggestion, setNewSaggestion] = useState(false)
     // Create Plane
     const [newSuggestInput ,setNewSuggestInput]=useState('')
+    const [newSuggestTime,setNewSuggestTime]=useState('')
     const [newBreak, setNewBreak] = useState({title: "",createIime: ""})
     useEffect(() => {
         if (show) {
@@ -44,6 +45,11 @@ function BreackplanFrom({
     const handleNewSuggest =async (e)=>{
         e.preventDefault();
         console.log("new Suggest",newSuggestInput) 
+    }
+    // Saggest new time
+    const handleSuggestNowTime =(e)=>{
+        e.preventDefault();
+        console.log("new time:",newSuggestTime)
     }
     return (
         <div className={`${style.manCard} ${close ? style.hide : style.show}`}>
@@ -74,7 +80,7 @@ function BreackplanFrom({
                                                     <Form.Control
                                                         autoFocus
                                                         required
-                                                        
+                                                        value={newSuggestInput}
                                                         as="textarea"
                                                         type="email"
                                                         placeholder="New Saggestion"
@@ -98,16 +104,20 @@ function BreackplanFrom({
                                         Suggest new time
                                     </Card.Title>
                                     <Card.Text className="text-center">
-                                        <Form className="mt-3">
+                                        <Form className="mt-3" onSubmit={handleSuggestNowTime}>
                                             <Form.Group className="mb-3" controlId="formBasicEmail">
                                                 <Form.Control
                                                     autoFocus
+                                                    value={newSuggestTime}
                                                     type="time"
                                                     placeholder="Saggest new time"
+                                                    onChange={(e)=>setNewSuggestTime(e.target.value)}
                                                 />
                                             </Form.Group>
-                                            <Button className={style.withBtn} variant="primary" type="submit">
-                                                Send
+                                            <Button disabled={loading} className={style.withBtn} variant="primary" type="submit">
+                                            {
+                                                loading ? <Loader color="#fff" size={15} /> : "Send"
+                                            }
                                             </Button>
                                         </Form>
                                     </Card.Text>
