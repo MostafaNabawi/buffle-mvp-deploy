@@ -40,7 +40,7 @@ async function logout() {
   return { status: req.status };
 }
 // --------------------------------- NEXT BREAK-------------------
-async function addNextBreak(startSeconds, endSeconds) {
+async function addNextBreak(startDate, endDate) {
   try {
     const req = await fetch(`${API_URL}/next-break/add`, {
       method: "POST",
@@ -50,13 +50,46 @@ async function addNextBreak(startSeconds, endSeconds) {
         "Access-Control-Allow-Credentials": true,
       },
       body: JSON.stringify({
-        start: startSeconds,
-        end: endSeconds,
+        start: startDate,
+        end: endDate,
+        status: "stop",
       }),
+    });
+    const res = await req.json();
+    return { status: req.status, data: res.payload };
+  } catch {
+    console.error("Error inside client next break!");
+  }
+}
+async function getNextBreak() {
+  try {
+    const req = await fetch(`${API_URL}/next-break/get`, {
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Credentials": true,
+      },
+    });
+    const res = await req.json();
+    return res;
+  } catch {
+    console.error("Error inside client next break!");
+  }
+}
+async function deleteNextBreak() {
+  try {
+    const req = await fetch(`${API_URL}/next-break/delete`, {
+      method: "DELETE",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Credentials": true,
+      },
     });
     return req.status;
   } catch {
-    console.error("Error inside client next break!");
+    console.error("Error inside client next break! DELETE");
+    return 400;
   }
 }
 // ------------------------------Feel-------------------
@@ -74,4 +107,12 @@ async function setUserFeel(payload) {
   });
   return { status: req.status };
 }
-export { signin, logout, userStatus, addNextBreak, setUserFeel };
+export {
+  signin,
+  logout,
+  userStatus,
+  addNextBreak,
+  getNextBreak,
+  deleteNextBreak,
+  setUserFeel,
+};

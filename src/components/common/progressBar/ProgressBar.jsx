@@ -4,29 +4,36 @@ import { Icon } from "@iconify/react";
 import style from "./style.module.css";
 import Countdown from "react-countdown";
 
-const PreogressBar = ({ range }) => {
-  const [total, setTotal] = useState(range.data / 1000);
-  const [play, setPlay] = useState(false);
+const PreogressBar = ({ range, go }) => {
+  const [total, setTotal] = useState(range / 1000);
+  const [play, setPlay] = useState(go);
   const [data, setData] = useState(0);
   const [percentUI, setPercentUI] = useState(0);
   // actions
   const handlePlay = () => {
-    if (data > 0) {
+    if (data > 0 && play) {
+      console.log("set status to stop");
+      setPlay(!play);
+    }
+    if (data > 0 && !play) {
+      console.log("set status to start");
       setPlay(!play);
     }
   };
   useEffect(() => {
-    if (range.start) {
-      setTotal(range.data / 1000);
-      setData(range.data);
+    if (range > 0 || go) {
+      setTotal(range / 1000);
+      setData(range);
       setPlay(true);
-      setPercentUI(100 / (range.data / 1000));
+      setPercentUI(100 / (range / 1000));
     }
-  }, [range]);
+  }, [range, go]);
   useEffect(() => {
     if (data > 0) {
       const per = 100 / total;
-      setPercentUI(percentUI + per);
+      if (play) {
+        setPercentUI(percentUI + per);
+      }
     }
   }, [data]);
   return (
