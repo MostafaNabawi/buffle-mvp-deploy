@@ -4,11 +4,11 @@ import { Icon } from "@iconify/react";
 import style from "./style.module.css";
 import Countdown from "react-countdown";
 
-const PreogressBar = ({ range, go }) => {
+const PreogressBar = ({ range, go, type = 1 }) => {
   const [total, setTotal] = useState(range / 1000);
   const [play, setPlay] = useState(go);
   const [data, setData] = useState(0);
-  const [percentUI, setPercentUI] = useState(0);
+  const [percentUI, setPercentUI] = useState(type === 2 ? 80 : 0);
   // actions
   const handlePlay = () => {
     if (data > 0 && play) {
@@ -21,13 +21,14 @@ const PreogressBar = ({ range, go }) => {
     }
   };
   useEffect(() => {
-    if (range > 0 || go) {
+    console.log("Go is", go);
+    if (go) {
       setTotal(range / 1000);
       setData(range);
       setPlay(true);
       setPercentUI(100 / (range / 1000));
     }
-  }, [range, go]);
+  }, [go]);
   useEffect(() => {
     if (data > 0) {
       const per = 100 / total;
@@ -47,15 +48,21 @@ const PreogressBar = ({ range, go }) => {
           />
           <ProgressBar
             label={
-              play && (
-                <Countdown
-                  date={Date.now() + data}
-                  onTick={(time) => {
-                    setData(time.total);
-                  }}
-                  // className={style.redText}
-                />
-              )
+              type === 2
+                ? `
+                    ${new Date().getHours()}
+                    :${new Date().getMinutes()}
+                    :${new Date().getSeconds()}
+                    `
+                : play && (
+                    <Countdown
+                      date={Date.now() + data}
+                      onTick={(time) => {
+                        setData(time.total);
+                      }}
+                      // className={style.redText}
+                    />
+                  )
             }
             now={percentUI}
             className={style.progress}

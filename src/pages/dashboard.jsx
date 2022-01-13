@@ -53,6 +53,7 @@ const Dashboard = () => {
     const req = await addNextBreak(new Date(), nextBreakDate);
     if (req.status === 200) {
       setNextBreakStart(true);
+      setModalShow(false);
     }
   };
   // effects
@@ -238,14 +239,7 @@ const Dashboard = () => {
                   </Row>
                 </Col>
                 <Col xl="4">
-                  {/* <ProgressBar
-                    percent={70}
-                    lable={`
-                    ${new Date().getHours()}
-                    :${new Date().getMinutes()}
-                    :${new Date().getSeconds()}
-                    `}
-                  /> */}
+                  <ProgressBar type={2} />
                 </Col>
               </Row>
               <div className="devidre"></div>
@@ -263,14 +257,7 @@ const Dashboard = () => {
                   </Row>
                 </Col>
                 <Col xl="4">
-                  {/* <ProgressBar
-                    percent={60}
-                    lable={`
-                    ${new Date().getHours()}
-                    :${new Date().getMinutes()}
-                    :${new Date().getSeconds()}
-                    `}
-                  /> */}
+                  <ProgressBar type={2} />
                 </Col>
               </Row>
               <div className="devidre"></div>
@@ -288,14 +275,7 @@ const Dashboard = () => {
                   </Row>
                 </Col>
                 <Col xl="4">
-                  {/* <ProgressBar
-                    percent={70}
-                    lable={`
-                    ${new Date().getHours()}
-                    :${new Date().getMinutes()}
-                    :${new Date().getSeconds()}
-                    `}
-                  /> */}
+                  <ProgressBar type={2} />
                 </Col>
               </Row>
               <div className="devidre"></div>
@@ -313,14 +293,7 @@ const Dashboard = () => {
                   </Row>
                 </Col>
                 <Col xl="4">
-                  {/* <ProgressBar
-                    percent={80}
-                    lable={`
-                    ${new Date().getHours()}
-                    :${new Date().getMinutes()}
-                    :${new Date().getSeconds()}
-                    `}
-                  /> */}
+                  <ProgressBar type={2} />
                 </Col>
               </Row>
               <div className="devidre "></div>
