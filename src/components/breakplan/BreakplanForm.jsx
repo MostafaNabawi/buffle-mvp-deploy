@@ -8,11 +8,20 @@ function BreackplanFrom({
 }) {
     const [close, setClose] = useState(true)
     const [newSaggestion, setNewSaggestion] = useState(false)
+    // Create Plane
+    const [newBreack ,setNewBreack]=useState({
+        title:"",
+        createIime:""
+    })
     useEffect(() => {
         if (show) {
             setClose(false)
         }
     }, [show])
+    const handleCreatePlan =(e)=>{
+        e.preventDefault();
+        console.log("Create paln",newBreack)
+    }
     return (
         <div className={`${style.manCard} ${close ? style.hide : style.show}`}>
             <Card className={`${style.customCard} pb-1`}>
@@ -78,18 +87,21 @@ function BreackplanFrom({
                                 <Card.Title className={style.tilte}>
                                New breack pland
                                    </Card.Title> 
-                                <Form className="mt-3">
+                                <Form onSubmit={handleCreatePlan} className="mt-3">
                                     <Form.Group className="mb-3" controlId="formBasicEmail">
                                         <Form.Control
                                             autoFocus
                                             type="text"
+                                            name="title"
                                             placeholder="Plan Title"
+                                            
                                         />
                                     </Form.Group>
                                     <Form.Group className="mb-3" controlId="formBasicEmail">
                                         <Form.Control
                                             type="time"
                                             placeholder="Time"
+                                            name="createIime"
                                         />
                                     </Form.Group>
                                     <Button className={style.withBtn} variant="primary" type="submit">
