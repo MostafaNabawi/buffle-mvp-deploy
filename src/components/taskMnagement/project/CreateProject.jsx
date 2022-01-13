@@ -10,15 +10,26 @@ const CreateProject = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [projectName, setProjectName] = useState('');
+  const [error, setError] = useState('');
   const [loading, setloading] = useState(false)
 
   const handleSubmit = async () => {
-    setloading(true);
-    const createP = await createProject(projectName);
-    console.log(createP.status);
-    if (createP.status === 200) {
-      setloading(false);
-      setShow(false);
+    if (!projectName) {
+      setError('Project name is required!');
+      return false;
+    }
+    else {
+      setError('');
+      setloading(true);
+      const createP = await createProject(projectName);
+      console.log(createP.status);
+      if (createP.status === 200) {
+        setloading(false);
+        setShow(false);
+      }
+      setProjectName('');
+      return true;
+
     }
   }
   return (
@@ -43,12 +54,16 @@ const CreateProject = () => {
           <Row>
             <Col md={12}>
               <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Control type="text" placeholder="Name your project..." onChange={(e) => (
+                <Form.Control type="text" className={`${error.length > 0 ? 'red-border-input' : 'no-border-input'}`} placeholder="Name your project..." onChange={(e) => (
                   setProjectName(e.target.value)
 
                 )
                 } />
-
+                {error ? (
+                  <div className="invalid-feedback d-block">
+                    {error}
+                  </div>
+                ) : null}
               </Form.Group>
             </Col>
           </Row>
@@ -56,9 +71,9 @@ const CreateProject = () => {
         footer={
           <>
             <Button onClick={handleClose}>Close</Button>
-            {loading ? <Button variant="primary"  >
+            {loading && projectName.length > 0 ? <Button variant="primary"  >
               <BeatLoader />
-            </Button> : <Button variant="primary" onClick={handleSubmit} disabled={!projectName} >
+            </Button> : <Button variant="primary" onClick={handleSubmit}  >
               Save
             </Button>}
 

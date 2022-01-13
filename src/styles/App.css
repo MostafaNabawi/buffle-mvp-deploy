@@ -632,4 +632,7 @@ div.check-box > input {
   text-decoration-line: underline;
   color: var(--primary-color);
 }
+.red-border-input {
+  border-color: red !important;
+}
 /* Login page */
