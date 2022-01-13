@@ -105,6 +105,7 @@ div.task-check-box > input {
   font-weight: 600;
   font-size: 15px;
   margin-left: 10px;
+  margin-right: 5px !important;
 }
 
 .item-status {

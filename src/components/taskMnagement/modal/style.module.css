@@ -43,19 +43,25 @@
   font-weight: 600;
 }
 
-.checkbox_area label {
+.label_area label {
   display: flex;
   align-items: center;
 }
 
-.checkbox_area input {
+.label_area input {
+  border: #fff;
+}
+
+.label_area input[type="checkbox"] {
   background-color: #efefef;
   margin-right: 0.6rem;
-  border: #fff;
   padding: 0.6rem;
   margin-top: 0;
 }
 
+.label_area input[type="checkbox"]:checked {
+  background-color: #0d6efd;
+}
 .modal textarea {
   border: none;
 }
@@ -75,7 +81,7 @@
   transform: translate(-22%, 38px);
   background-color: #fff;
   padding: 0.8rem;
-  margin-top: 0.5rem;
+  margin-top: 0.8rem;
   transition: all 0.5s ease;
   display: none;
 }
@@ -115,6 +121,6 @@
 }
 
 .show {
-  display: block;
   margin-top: 0;
+  display: block;
 }

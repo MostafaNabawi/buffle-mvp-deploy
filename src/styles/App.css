@@ -143,7 +143,6 @@ button.btn-primary {
   margin: auto !important;
   height: 100vh !important;
   margin: auto;
-  padding-top: 5% !important;
 }
 
 .button.btn-primary:hover {
@@ -631,5 +630,8 @@ div.check-box > input {
   align-items: center;
   text-decoration-line: underline;
   color: var(--primary-color);
+}
+.red-border-input {
+  border-color: red !important;
 }
 /* Login page */

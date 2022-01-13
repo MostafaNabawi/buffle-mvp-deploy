@@ -8,7 +8,7 @@ const Register = () => {
       {/* <Outlet /> */}
       <Container className="secondary-color register-container" fluid>
         <Row className="justify-content-center">
-          <Col xl='5' className="pt-3 text-center">
+          <Col xl='5' className="pt-4 text-center">
             <Image src='/img/register.png' />
           </Col>
           <Col xl="7">
