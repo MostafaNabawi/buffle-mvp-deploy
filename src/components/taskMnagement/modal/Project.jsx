@@ -1,19 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import Button from "./Button";
 import style from "./style.module.css";
-function Project() {
-  const [show, setShow] = useState(false);
+function Project(props) {
+  const { handleToggle, show } = props;
+  const showClass = show === "project_modal" ? style.show : "";
   const title = "Project";
-
-  const handleToggle = () => {
-    const showClass = !show ? style.show : "";
-    setShow(showClass);
-  };
 
   return (
     <div className={style.dropDown_wrapper}>
-      <Button label={title || "NO roject"} onClick={handleToggle} />
-      <div className={`${style.dropDown} ${show}`}>
+      <Button
+        label={title || "NO roject"}
+        onClick={() => handleToggle("project_modal")}
+      />
+      <div className={`${style.dropDown}`}>
         <ul>
           <li>
             <span></span>

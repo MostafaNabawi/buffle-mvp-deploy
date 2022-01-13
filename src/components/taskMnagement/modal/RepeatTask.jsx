@@ -1,20 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import { Icon } from "@iconify/react";
 import style from "./style.module.css";
-function RepeatTask() {
-  const [show, setShow] = useState(false);
-
-  const handleToggle = () => {
-    const showClass = !show ? style.show : "";
-    setShow(showClass);
-  };
-
+function RepeatTask(props) {
+  const { handleToggle, show } = props;
+  const showClass = show === "repeat_modal" ? style.show : "";
   return (
     <div className={style.dropDown_wrapper}>
-      <button type="button" onClick={handleToggle} className="btn_repeat">
+      <button
+        type="button"
+        className="btn_repeat"
+        onClick={() => handleToggle("repeat_modal")}
+      >
         <Icon icon="akar-icons:arrow-repeat" />
       </button>
-      <div className={`${style.dropDown} ${show}`}>
+      <div className={`${style.dropDown}`}>
         <h6>Reapet Daily</h6>
         <ul>
           <li>
