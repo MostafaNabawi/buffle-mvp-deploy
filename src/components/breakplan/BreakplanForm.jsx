@@ -15,10 +15,8 @@ function BreackplanFrom({
     const [close, setClose] = useState(true)
     const [newSaggestion, setNewSaggestion] = useState(false)
     // Create Plane
-    const [newBreak, setNewBreak] = useState({
-        title: "",
-        createIime: ""
-    })
+    const [newSuggestInput ,setNewSuggestInput]=useState('')
+    const [newBreak, setNewBreak] = useState({title: "",createIime: ""})
     useEffect(() => {
         if (show) {
             setClose(false)
@@ -42,11 +40,17 @@ function BreackplanFrom({
             }
         }
     }
+    // New saggest
+    const handleNewSuggest =async (e)=>{
+        e.preventDefault();
+        console.log("new Suggest",newSuggestInput) 
+    }
     return (
         <div className={`${style.manCard} ${close ? style.hide : style.show}`}>
             <Card className={`${style.customCard} pb-1`}>
                 <div>
                     <i className={style.closeIcon} onClick={() => {
+                        setNewBreak({ ...newBreak, ["title"]: "", ["createIime"]: "" })
                         setShow(false)
                         setClose(true)
                     }} ><Icon icon="ci:close-big" /></i>
@@ -65,17 +69,22 @@ function BreackplanFrom({
                                     {
                                         newSaggestion
                                             ?
-                                            <Form className="mt-3">
+                                            <Form className="mt-3" onSubmit={handleNewSuggest}>
                                                 <Form.Group className="mb-3" controlId="formBasicEmail">
                                                     <Form.Control
                                                         autoFocus
+                                                        required
+                                                        
                                                         as="textarea"
                                                         type="email"
                                                         placeholder="New Saggestion"
+                                                        onChange={(e)=>setNewSuggestInput(e.target.value)}
                                                     />
                                                 </Form.Group>
-                                                <Button className={style.withBtn} variant="primary" type="submit">
-                                                    Send
+                                                <Button disabled={loading} className={style.withBtn} variant="primary" type="submit">
+                                                {
+                                                loading ? <Loader color="#fff" size={15} /> : "Send"
+                                            }
                                                 </Button>
                                             </Form>
                                             : ""
@@ -86,7 +95,7 @@ function BreackplanFrom({
                             newTime ?
                                 <>
                                     <Card.Title className={style.tilte}>
-                                        Saggest new time
+                                        Suggest new time
                                     </Card.Title>
                                     <Card.Text className="text-center">
                                         <Form className="mt-3">
@@ -111,6 +120,7 @@ function BreackplanFrom({
                                         <Form.Group className="mb-3" controlId="formBasicEmail">
                                             <Form.Control
                                                 autoFocus
+                                                required
                                                 type="text"
                                                 name="title"
                                                 placeholder="Plan Title"
@@ -123,6 +133,7 @@ function BreackplanFrom({
                                         </Form.Group>
                                         <Form.Group className="mb-3" controlId="formBasicEmail">
                                             <Form.Control
+                                                required
                                                 type="time"
                                                 placeholder="Time"
                                                 name="createIime"
