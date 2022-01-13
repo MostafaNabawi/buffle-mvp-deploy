@@ -18,6 +18,7 @@ import Event from "./components/moneyPool/Event";
 import Expenses from "./components/moneyPool/Expenses";
 import Profile from "./pages/profile";
 import Setting from "./pages/setting";
+import UserList from "./components/user/userList/UserList";
 
 function App() {
   return (
@@ -29,7 +30,7 @@ function App() {
           <Route path="company" element={<CompanyRegister />} />
           <Route path="student" element={<StudentRegister />} />
           <Route path="freelancer" element={<FreelancerRegister />} />
-          <Route path="step-tow/:type/:id" element={<StepTwoRegister />} />
+          <Route path="step-two/:token" element={<StepTwoRegister />} />
         </Route>
         <Route path="/companyLogin" element={<CompanyLogin />} />
         <Route path="/dashboard" element={<Layout />}>
@@ -42,6 +43,7 @@ function App() {
           </Route>
           <Route path="profile" element={<Profile />} />
           <Route path="setting" element={<Setting />} />
+          <Route path="user-management" element={<UserList />} />
         </Route>
       </Routes>
     </div>

@@ -121,21 +121,25 @@ button.btn-primary {
   );
   border: 1px solid #8286ff;
 }
-.navDropdomnIcon{
+
+.navDropdomnIcon {
   margin-top: -10px !important ;
   margin-left: -10px !important;
 }
-.dropdown-toggle::after {
+.navDropdomnIcon > a {
+  color: black !important;
+}
+.navDropdomnIcon > .dropdown-toggle::after {
   display: inline-block;
   margin-left: 0.255em;
   vertical-align: 0.255em;
   content: "";
   border-top: 0px !important;
-  border-right:0px !important;
+  border-right: 0px !important;
   border-bottom: 0;
   border-left: 0px !important;
 }
-.register-container{
+.register-container {
   margin: auto !important;
   height: 100vh !important;
   margin: auto;
@@ -148,6 +152,27 @@ button.btn-primary {
     var(--primary-color) 0%,
     var(--low-vein-blue) 100%
   );
+}
+.reminderNav {
+  color: black !important;
+  padding: 0px !important;
+  margin: 0px !important;
+  margin-right: -5px !important ;
+  display: inline-flex;
+}
+.reminderNav > .dropdown-toggle::after {
+  display: inline-block;
+  margin-left: 0.255em;
+  vertical-align: 0.255em;
+  content: "";
+  border-top: 0px !important;
+  border-right: 0px !important;
+  border-bottom: 0;
+  border-left: 0px !important;
+}
+.reminderNav > div.dropdown-menu {
+  min-width: 50px !important;
+  margin-left: -30px !important;
 }
 
 .sidebar-container {
@@ -300,6 +325,21 @@ button.btn-primary {
   font-weight: 700;
 }
 
+.dropdown-menu {
+  min-width: fit-content !important;
+  min-width: -moz-fit-content;
+  min-width: -webkit-fill-available;
+}
+
+/* Event style*/
+.event_card .card_header {
+  border-bottom: 1px solid #dee2e6;
+}
+
+.event_card .card_header div {
+  flex-grow: 1;
+  text-align: center;
+}
 /*  */
 .sideBar-container {
   width: 80px !important;
@@ -408,6 +448,7 @@ ul.sidebar-list {
 }
 /*  */
 .feel-icon {
+  cursor: pointer !important;
   width: 35px !important;
   height: 35px !important;
 }
@@ -547,7 +588,7 @@ div.check-box > input {
   margin-top: 5px;
 }
 .break-type:hover,
-.break-time:hover{
+.break-time:hover {
   color: #4922ff;
 }
 .break-time {

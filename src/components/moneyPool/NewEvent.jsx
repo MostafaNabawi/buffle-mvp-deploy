@@ -3,8 +3,9 @@ import { Row, Form, Col, Button } from "react-bootstrap";
 import Card from "../card/Card";
 import { Icon } from "@iconify/react";
 import style from "./style.module.css";
-import Person from "./Person";
+import PersonNameField from "./partials/PersonNameField";
 import { useNavigate } from "react-router-dom";
+import CardBody from "./../card/CardBody";
 const currencyData = [
   {
     AbbreviationName: "USD",
@@ -32,7 +33,7 @@ function NewEvent() {
   };
 
   return (
-    <Card className={style.new_event_card}>
+    <CardBody>
       <Row>
         <Col lg={6}>
           <Form onSubmit={handleSubmit}>
@@ -70,7 +71,7 @@ function NewEvent() {
                 </Form.Group>
               </Col>
               {personNum.map((person) => (
-                <Person key={person} num={person} />
+                <PersonNameField key={person} num={person} />
               ))}
               <Button variant="secondary" onClick={addPerson}>
                 <Icon icon="vaadin:plus" />
@@ -93,7 +94,7 @@ function NewEvent() {
           </p>
         </Col>
       </Row>
-    </Card>
+    </CardBody>
   );
 }
 

@@ -58,13 +58,15 @@ function ScreenFreeReminderCard() {
             <Col md={12}>
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>duration time </Form.Label>
-                <Form.Control type="time" />
+                <Form.Control type="text"
+                   placeholder="00:00:00"/>
               </Form.Group>
             </Col>
             <Col md={12}>
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Display Time </Form.Label>
-                <Form.Control type="time" />
+                <Form.Control  type="text"
+                   placeholder="00:00:00" />
               </Form.Group>
             </Col>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
@@ -74,7 +76,7 @@ function ScreenFreeReminderCard() {
         }
         footer={
           <>
-            <Button onClick={handleClose}>Close</Button>
+            <Button variant="outline-dark" onClick={handleClose}>Close</Button>
             <Button variant="primary" type="submit">
               Save
             </Button>

@@ -1,7 +1,7 @@
 import React from "react";
 import { Col, Form } from "react-bootstrap";
 
-function Person(props) {
+function PersonNameField(props) {
   const { num } = props;
   return (
     <Col md={12}>
@@ -13,4 +13,4 @@ function Person(props) {
   );
 }
 
-export default Person;
+export default PersonNameField;

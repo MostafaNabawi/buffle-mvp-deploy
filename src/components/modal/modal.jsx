@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Button, Form, Container } from "react-bootstrap";
+import { Modal, Form, Container } from "react-bootstrap";
 
 function CustomModal(props) {
   const { title, body, footer, handleClose, size, className } = props;
@@ -10,6 +10,7 @@ function CustomModal(props) {
       aria-labelledby="contained-modal-title-vcenter"
       centered
       onHide={handleClose}
+      className={className}
     >
       <Container>
         <Form>

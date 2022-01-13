@@ -1,15 +1,21 @@
-import { React } from "react";
-import Select from 'react-select';
+import { React, useEffect, useState } from "react";
+import Select from "react-select";
 import { Container, Row, Col, Image, Form, Button } from "react-bootstrap";
-import { Icon } from '@iconify/react';
-import style from './style.module.css'
+import { Icon } from "@iconify/react";
+import style from "./style.module.css";
 
 const UserProfile = () => {
   const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
+    { value: "chocolate", label: "Chocolate" },
+    { value: "strawberry", label: "Strawberry" },
+    { value: "vanilla", label: "Vanilla" },
   ];
+  const [userData, setUserData] = useState({});
+
+  useEffect(() => {
+    const user_storage = JSON.parse(localStorage.getItem("user"));
+    setUserData(user_storage);
+  }, []);
   return (
     <>
       <Container className={`${style.profileContainer} secondary-color`} fluid>
@@ -23,20 +29,32 @@ const UserProfile = () => {
                   <Form.Label className={style.lablePhoto} for="photoUser">
                     <Icon icon="uil:image-upload" />
                   </Form.Label>
-                  <Form.Control className={style.hide} id="photoUser" type="file" />
+                  <Form.Control
+                    className={style.hide}
+                    id="photoUser"
+                    type="file"
+                  />
                 </Form.Group>
               </Row>
               <Row>
                 <Col xl={6}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>First  name</Form.Label>
-                    <Form.Control type="email" placeholder="First  name" />
+                    <Form.Label>First name</Form.Label>
+                    <Form.Control
+                      type="email"
+                      placeholder="First  name"
+                      value={userData?.first_name}
+                    />
                   </Form.Group>
                 </Col>
                 <Col xl={6}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Last Name</Form.Label>
-                    <Form.Control type="text" placeholder="Last Name" />
+                    <Form.Control
+                      type="text"
+                      placeholder="Last Name"
+                      value={userData?.last_name}
+                    />
                   </Form.Group>
                 </Col>
               </Row>
@@ -44,7 +62,11 @@ const UserProfile = () => {
                 <Col xl={6}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" />
+                    <Form.Control
+                      type="email"
+                      placeholder="Enter email"
+                      value={userData?.email}
+                    />
                   </Form.Group>
                 </Col>
                 <Col xl={6}>
@@ -61,7 +83,8 @@ const UserProfile = () => {
                     <Form.Control type="text" placeholder="Departure" />
                   </Form.Group>
                 </Col>
-                <Col xl={6} className="pt-4">
+                <Col xl={6}>
+                  <Form.Label>Tags</Form.Label>
                   <Select
                     // value={selectedOption}
                     // onChange={this.handleChange}

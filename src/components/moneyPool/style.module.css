@@ -38,14 +38,6 @@ button[type="submit"] {
 }
 
 /* event card */
-.card_header {
-  border-bottom: 1px solid #dee2e6;
-}
-
-.card_header div {
-  flex-grow: 1;
-  text-align: center;
-}
 
 .card_body > div {
   padding-bottom: 1.5rem;
@@ -118,6 +110,35 @@ textarea::placeholder {
   margin-left: 1rem;
 }
 
-/* .comment #exampleForm.ControlTextarea1:facus {
-  border: 1px solid #fff;
-} */
+.tab_container form > div {
+  padding-top: 1.2rem;
+}
+
+.tab_container .person_seletor {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.person_seletor > div {
+  margin-right: 0.5rem;
+}
+
+.tab button {
+  border: none;
+}
+
+.tab button.active {
+  color: #212529;
+}
+
+.tab button:hover {
+  border-color: #fff;
+}
+.nav-tabs .nav-link:hover {
+  border-color: none;
+}
+
+.tab button::after {
+  border: none;
+}

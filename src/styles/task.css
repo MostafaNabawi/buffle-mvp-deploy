@@ -88,6 +88,7 @@ select {
   border-radius: 5px;
   z-index: 1;
   background-color: white;
+  position: relative;
 }
 
 .item:hover {
@@ -104,6 +105,7 @@ div.task-check-box > input {
   font-weight: 600;
   font-size: 15px;
   margin-left: 10px;
+  margin-right: 5px !important;
 }
 
 .item-status {
@@ -111,10 +113,13 @@ div.task-check-box > input {
 }
 
 .color-bar {
-  width: 40px;
-  height: 10px;
-  border-radius: 5px;
-  margin-bottom: 8px;
+  width: 6px;
+  height: 100%;
+  position: absolute;
+  right: 0px;
+  border-top-right-radius: 7px;
+  border-bottom-right-radius: 7px;
+  margin-top: -5px;
 }
 
 .drop-wrapper {
@@ -259,7 +264,7 @@ div.task-check-box > input {
   border-top: none !important;
 }
 .create-project-modal input {
-  margin-top: 15px !important;
+  margin-top: 15px;
 }
 .create-project-modal .btn-close {
   font-size: 13px !important;
@@ -273,4 +278,36 @@ div.task-check-box > input {
 }
 .task-management-filter {
   margin-top: 5px;
+}
+.task-item-modal-header {
+  display: flex;
+}
+.task-item-modal-header .filter-project {
+  float: right;
+}
+
+.project_item_modal .btn_repeat,
+.project_item_modal .btn_repeat + div {
+  display: none;
+}
+.color-bar-Sunday {
+  background: rgb(247, 143, 179);
+}
+.color-bar-Monday {
+  background: rgb(45, 152, 218);
+}
+.color-bar-Tuesday {
+  background: rgb(136, 84, 208);
+}
+.color-bar-Wednesday {
+  background: rgb(250, 130, 49);
+}
+.color-bar-Thursday {
+  background: rgb(32, 191, 107);
+}
+.color-bar-Friday {
+  background: rgb(235, 59, 90);
+}
+.color-bar-Saturday {
+  background: rgb(247, 183, 49);
 }

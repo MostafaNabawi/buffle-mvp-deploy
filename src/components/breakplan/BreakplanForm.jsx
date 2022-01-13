@@ -93,7 +93,7 @@ function BreackplanFrom({
                                         />
                                     </Form.Group>
                                     <Button className={style.withBtn} variant="primary" type="submit">
-                                        Set
+                                    Create New Plan
                                     </Button>
                                 </Form>
                                 </>
