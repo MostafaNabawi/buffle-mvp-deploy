@@ -74,4 +74,51 @@ async function setUserFeel(payload) {
   });
   return { status: req.status };
 }
-export { signin, logout, userStatus, addNextBreak, setUserFeel };
+// ------------------------get projects-----------
+async function getProject() {
+  const req = await fetch(`${API_URL}/project/get`, {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+  });
+  return { status: req.status, data: req };
+}
+
+async function createProject(project_name) {
+  const req = await fetch(`${API_URL}/project/new`, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+    body: JSON.stringify({
+      name: project_name,
+    }),
+  });
+  return { status: req.status };
+}
+async function updateProject() {
+  const req = await fetch(`${API_URL}/project/get`, {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+  });
+  return { status: req.status, data: req };
+}
+export {
+  signin,
+  logout,
+  userStatus,
+  addNextBreak,
+  setUserFeel,
+  getProject,
+  createProject,
+  updateProject,
+};

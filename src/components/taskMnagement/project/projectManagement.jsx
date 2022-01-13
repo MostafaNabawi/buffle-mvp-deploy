@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import Item from "../item";
 import DropWrapper from "../DropWrapper";
 import { data, statuses } from "../data";
@@ -6,12 +6,37 @@ import { Button, Col, Form } from "react-bootstrap";
 import { Row } from "react-bootstrap";
 import { Icon } from "@iconify/react";
 import Modal from "../../modal/modal";
+import { getProject } from "../../../api";
 
 const ProjectManagement = () => {
   const [items, setItems] = useState(data);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [error, setError] = useState('');
+  const [projectName, setProjectName] = useState('');
+
+
+  useEffect(() => {
+    async function project() {
+      const req = await getProject();
+      console.log('req', req);
+    }
+    project();
+  }, [])
+
+  const validateProject = (value) => {
+    if (!value) {
+      setError('Project name is required!');
+      return false;
+    }
+    setError('');
+    return true;
+  }
+
+  const handleSubmit = () => {
+    console.log('asdf');
+  }
   const onDrop = (item, monitor, status) => {
     const mapping = statuses.find((si) => si.status === status);
 
@@ -82,7 +107,16 @@ const ProjectManagement = () => {
           <Row>
             <Col md={12}>
               <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Control type="text" placeholder="Name your project..." />
+                <Form.Control type="text" placeholder="Name your project..." onChange={(e) => (
+                  setProjectName(e.target.value),
+                  validateProject(e.target.value)
+                )
+                } />
+                {error ? (
+                  <div className="invalid-feedback d-block">
+                    {error}
+                  </div>
+                ) : null}
               </Form.Group>
             </Col>
           </Row>
@@ -90,7 +124,7 @@ const ProjectManagement = () => {
         footer={
           <>
             <Button onClick={handleClose}>Close</Button>
-            <Button variant="primary" type="submit">
+            <Button variant="primary" disabled={!projectName} onClick={handleSubmit}>
               Save
             </Button>
           </>
