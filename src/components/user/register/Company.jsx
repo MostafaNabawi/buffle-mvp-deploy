@@ -66,7 +66,7 @@ const CompanyRegister = () => {
     }
   };
   return (
-    <div className={style.registerPage}>
+    <div className="pt-5">
       {!sendEmail ? (
         <Row className="p-0 m-0 row">
           <Col xl="9">
@@ -75,14 +75,14 @@ const CompanyRegister = () => {
                 <div className={style.floatLeft}>1/2</div>
                 <Image src="/favicon.ico" />
                 <div className={`${style.headerTitle} mt-3`}>
-                  Enter your info
+                Enter your personal and campany info
                 </div>
               </div>
               <div className={style.body}>
                 <Form>
                   <Row>
                     <Col xl="3">
-                      <Form.Group className="mb-3" controlId="formBasicEmail">
+                      <Form.Group className="mb-4" controlId="formBasicEmail">
                         <Form.Label className={style.lableForm}>
                           First Name *
                         </Form.Label>
@@ -101,7 +101,7 @@ const CompanyRegister = () => {
                       </Form.Group>
                     </Col>
                     <Col xl="3">
-                      <Form.Group className="mb-3" controlId="formBasicEmail">
+                      <Form.Group className="mb-4" controlId="formBasicEmail">
                         <Form.Label className={style.lableForm}>
                           last Name *
                         </Form.Label>
@@ -120,7 +120,7 @@ const CompanyRegister = () => {
                       </Form.Group>
                     </Col>
                     <Col xl="6">
-                      <Form.Group className="mb-3" controlId="formBasicEmail">
+                      <Form.Group className="mb-4" controlId="formBasicEmail">
                         <Form.Label className={style.lableForm}>
                           E-mail *
                         </Form.Label>
@@ -140,7 +140,7 @@ const CompanyRegister = () => {
                       </Form.Group>
                     </Col>
                     <Col xl="6">
-                      <Form.Group className="mb-3" controlId="formBasicEmail">
+                      <Form.Group className="mb-4" controlId="formBasicEmail">
                         <Form.Label className={style.lableForm}>
                           Company Name *
                         </Form.Label>
@@ -159,7 +159,7 @@ const CompanyRegister = () => {
                       </Form.Group>
                     </Col>
                     <Col xl="3">
-                      <Form.Group className="mb-3">
+                      <Form.Group className="mb-4">
                         <Form.Label className={style.lableForm}>
                           Company Size*
                         </Form.Label>
@@ -186,7 +186,7 @@ const CompanyRegister = () => {
                       </Form.Group>
                     </Col>
                     <Col xl="3">
-                      <Form.Group className="mb-3">
+                      <Form.Group className="mb-4">
                         <Form.Label className={style.lableForm}>
                           Tax ID *
                         </Form.Label>
@@ -205,7 +205,7 @@ const CompanyRegister = () => {
                       </Form.Group>
                     </Col>
                     <Col xl="6">
-                      <Form.Group className="mb-3" controlId="formBasicEmail">
+                      <Form.Group className="mb-4" controlId="formBasicEmail">
                         <Form.Label className={style.lableForm}>
                           Web Site *
                         </Form.Label>
@@ -224,7 +224,7 @@ const CompanyRegister = () => {
                       </Form.Group>
                     </Col>
                     <Col xl="6">
-                      <Form.Group className="mb-3" controlId="formBasicEmail">
+                      <Form.Group className="mb-4" controlId="formBasicEmail">
                         <Form.Label className={style.lableForm}>
                           Head Office
                         </Form.Label>
@@ -243,7 +243,7 @@ const CompanyRegister = () => {
                       </Form.Group>
                     </Col>
                     <Col xl="6">
-                      <Form.Group className="mb-3">
+                      <Form.Group className="mb-4">
                         <Form.Label className={style.lableForm}>
                           Country *
                         </Form.Label>
@@ -274,7 +274,7 @@ const CompanyRegister = () => {
                       </Form.Group>
                     </Col>
                     <Col xl="3">
-                      <Form.Group className="mb-3">
+                      <Form.Group className="mb-4">
                         <Form.Label className={style.lableForm}>
                           City *
                         </Form.Label>
@@ -304,7 +304,7 @@ const CompanyRegister = () => {
                       </Form.Group>
                     </Col>
                     <Col xl="3">
-                      <Form.Group className="mb-3">
+                      <Form.Group className="mb-4">
                         <Form.Label className={style.lableForm}>
                           State *
                         </Form.Label>
@@ -334,7 +334,7 @@ const CompanyRegister = () => {
                       </Form.Group>
                     </Col>
                     <Col xl="6">
-                      <Form.Group className="mb-3">
+                      <Form.Group className="mb-4">
                         <Form.Label className={style.lableForm}>
                           Street *
                         </Form.Label>
@@ -353,7 +353,7 @@ const CompanyRegister = () => {
                       </Form.Group>
                     </Col>
                     <Col xl="6">
-                      <Form.Group className="mb-3">
+                      <Form.Group className="mb-4">
                         <Form.Label className={style.lableForm}>
                           Postal code *
                         </Form.Label>

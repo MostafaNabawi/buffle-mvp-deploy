@@ -4,29 +4,37 @@ import { Icon } from "@iconify/react";
 import style from "./style.module.css";
 import Countdown from "react-countdown";
 
-const PreogressBar = ({ range }) => {
-  const [total, setTotal] = useState(range.data / 1000);
-  const [play, setPlay] = useState(false);
+const PreogressBar = ({ range, go, type = 1 }) => {
+  const [total, setTotal] = useState(range / 1000);
+  const [play, setPlay] = useState(go);
   const [data, setData] = useState(0);
-  const [percentUI, setPercentUI] = useState(0);
+  const [percentUI, setPercentUI] = useState(type === 2 ? 80 : 0);
   // actions
   const handlePlay = () => {
-    if (data > 0) {
+    if (data > 0 && play) {
+      console.log("set status to stop");
+      setPlay(!play);
+    }
+    if (data > 0 && !play) {
+      console.log("set status to start");
       setPlay(!play);
     }
   };
   useEffect(() => {
-    if (range.start) {
-      setTotal(range.data / 1000);
-      setData(range.data);
+    console.log("Go is", go);
+    if (go) {
+      setTotal(range / 1000);
+      setData(range);
       setPlay(true);
-      setPercentUI(100 / (range.data / 1000));
+      setPercentUI(100 / (range / 1000));
     }
-  }, [range]);
+  }, [go]);
   useEffect(() => {
     if (data > 0) {
       const per = 100 / total;
-      setPercentUI(percentUI + per);
+      if (play) {
+        setPercentUI(percentUI + per);
+      }
     }
   }, [data]);
   return (
@@ -40,15 +48,21 @@ const PreogressBar = ({ range }) => {
           />
           <ProgressBar
             label={
-              play && (
-                <Countdown
-                  date={Date.now() + data}
-                  onTick={(time) => {
-                    setData(time.total);
-                  }}
-                  // className={style.redText}
-                />
-              )
+              type === 2
+                ? `
+                    ${new Date().getHours()}
+                    :${new Date().getMinutes()}
+                    :${new Date().getSeconds()}
+                    `
+                : play && (
+                    <Countdown
+                      date={Date.now() + data}
+                      onTick={(time) => {
+                        setData(time.total);
+                      }}
+                      // className={style.redText}
+                    />
+                  )
             }
             now={percentUI}
             className={style.progress}
