@@ -52,7 +52,6 @@ async function addNextBreak(startDate, endDate) {
       body: JSON.stringify({
         start: startDate,
         end: endDate,
-        status: "stop",
       }),
     });
     const res = await req.json();

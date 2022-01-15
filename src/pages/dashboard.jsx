@@ -1,8 +1,10 @@
 import { React, useEffect, useState } from "react";
-import { Row, Col, Image, Form, Button } from "react-bootstrap";
+import { Row, Col, Image, Form, Button, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
+import TimePicker from "react-time-picker";
 import ProgressBar from "../components/common/progressBar/ProgressBar";
+import TaskManagerPreogressBar from "../components/common/progressBar/TaskManagerProgress";
 import CardHeader from "../components/card/CardHeader";
 import Card from "../components/card/Card";
 import HydrationReminderCard from "./../components/hydrationReminder/HydrationReminderCard";
@@ -18,9 +20,12 @@ import {
   getNextBreak,
   setUserFeel,
 } from "../api";
-
+import { getaAllBreackPlan } from "../api/breackPlan";
+import { PulseLoader } from "react-spinners";
+import { useToasts } from "react-toast-notifications";
 const Dashboard = () => {
-  // breck plan from
+  const [timeFormat, setTimeFormat] = useState(false);
+  // is show modal for...
   const [BreakPlanForm, setBreakPlanFrom] = useState(false);
   const [breakJoinOrSagest, setBreakJoinOrSagest] = useState(false);
   const [breakNewTime, setBreakNewTime] = useState(false);
@@ -28,36 +33,70 @@ const Dashboard = () => {
   const [titleModal, setTitleModa] = useState("");
   const [sizeModal, setSizeModal] = useState("");
   const [modalShow, setModalShow] = useState(false);
-  const handleClose = () => setModalShow(false);
+  const handleClose = () => {
+    setModalShow(false);
+    setNextBreakDateInput("");
+  };
   const handleShow = () => setModalShow(true);
   const [vacationTime, setVacationTime] = useState(false);
   const [nextBreak, setNextBreak] = useState(false);
+  const [taskManager, setTaskManager] = useState(false);
   // Next Break states
-  const [nextBreakTime, setNextBreakTime] = useState(0);
-  const [nextBreakDate, setNextBreakDate] = useState("");
-  const [nextBreakStart, setNextBreakStart] = useState(false);
+  const [nextBreakTime, setNextBreakTime] = useState({
+    startDate: "",
+    endDate: "",
+    type: 0,
+  });
+  const [nextBreakDateInput, setNextBreakDateInput] = useState("");
+  const [nextBreakLoading, setNextBreakLoading] = useState(false);
+  // Break Plan states
+  const [breacPlanData, setbreakPlanData] = useState("");
+  const { addToast } = useToasts();
   // actions
   const setFeel = async (type) => {
     // 1-check type
     // 2-send request
     const req = await setUserFeel(type);
-    alert(req.status);
+    addToast("Feel Choosed", {
+      appearance: "success",
+    });
   };
   // next break action
   const handleNextBreakOperation = async () => {
     console.log("data", nextBreakTime);
-    if (nextBreakDate.length === 0) {
-      alert("Please select a time");
+    if (nextBreakDateInput.length === 0) {
+      addToast("Time is not selected", {
+        appearance: "warning",
+      });
       return;
     }
-    const req = await addNextBreak(new Date(), nextBreakDate);
+    setNextBreakLoading(true);
+    const start = new Date();
+    const req = await addNextBreak(start, nextBreakDateInput);
     if (req.status === 200) {
-      setNextBreakStart(true);
+      setNextBreakTime({
+        startDate: start.toISOString(),
+        endDate: new Date(nextBreakDateInput).toISOString(),
+        type: 2,
+      });
+      setNextBreakDateInput("");
       setModalShow(false);
+      setNextBreakLoading(false);
+    } else {
+      addToast("Error while adding Next Break!", {
+        appearance: "error",
+        autoDismiss: 5000,
+      });
+      setNextBreakDateInput("");
+      setNextBreakLoading(false);
     }
   };
   // effects
   useEffect(() => {
+    async function getBreakPlan() {
+      const req = await getaAllBreackPlan();
+      console.log("getaAllBreackPlan :", req);
+    }
     async function innerNextBreak() {
       const result = await getNextBreak();
       // check if it has not passed
@@ -69,14 +108,22 @@ const Dashboard = () => {
         result?.payload?.end
       );
       if (checkup.type === 0) {
-        alert(checkup?.msg);
+        addToast(checkup?.msg, {
+          appearance: "warning",
+          autoDismiss: 4000,
+        });
         // delete the next break
-        const res = await deleteNextBreak();
+        await deleteNextBreak();
       }
       if (checkup.type === 1) {
-        setNextBreakTime(checkup.total);
+        setNextBreakTime({
+          startDate: result?.payload?.start,
+          endDate: result?.payload?.end,
+          type: 1,
+        });
       }
     }
+    getBreakPlan();
     innerNextBreak();
   }, []);
   return (
@@ -147,7 +194,7 @@ const Dashboard = () => {
               }
             />
             <Col className="progress-custom mt-3">
-              <ProgressBar range={nextBreakTime} go={nextBreakStart} />
+              <ProgressBar range={nextBreakTime} />
             </Col>
           </Card>
         </Col>
@@ -219,8 +266,36 @@ const Dashboard = () => {
               subtitle="4 opan ,1 started"
               action={
                 <>
-                  <Icon icon="vaadin:plus" />
-                  <Icon icon="vaadin:ellipsis-dots-v" />
+                  <i
+                    title="Add New Task"
+                    onClick={() => {
+                      setModalShow(true);
+                      setNextBreak(false);
+                      setVacationTime(false);
+                      setTaskManager(true);
+                      setSizeModal("md");
+                      setTitleModa("Add New Task");
+                    }}
+                  >
+                    <Icon icon="vaadin:plus" />
+                  </i>
+                  <NavDropdown
+                    className="reminderNav"
+                    title={<Icon color="black" icon="vaadin:ellipsis-dots-v" />}
+                    id="basic-nav-dropdown"
+                  >
+                    <NavDropdown.Item className="reminderNavItem taskManagerNavItem">
+                      <i
+                        className="delete"
+                        onClick={() => console.log("delete")}
+                      >
+                        <Icon icon="fluent:delete-24-filled" />
+                      </i>
+                      <i className="edit" onClick={() => console.log("edit")}>
+                        <Icon icon="ant-design:edit-filled" />
+                      </i>
+                    </NavDropdown.Item>
+                  </NavDropdown>
                 </>
               }
             />
@@ -239,7 +314,7 @@ const Dashboard = () => {
                   </Row>
                 </Col>
                 <Col xl="4">
-                  <ProgressBar type={2} />
+                  <TaskManagerPreogressBar />
                 </Col>
               </Row>
               <div className="devidre"></div>
@@ -257,7 +332,7 @@ const Dashboard = () => {
                   </Row>
                 </Col>
                 <Col xl="4">
-                  <ProgressBar type={2} />
+                  <TaskManagerPreogressBar type={2} />
                 </Col>
               </Row>
               <div className="devidre"></div>
@@ -275,7 +350,7 @@ const Dashboard = () => {
                   </Row>
                 </Col>
                 <Col xl="4">
-                  <ProgressBar type={2} />
+                  <TaskManagerPreogressBar type={2} />
                 </Col>
               </Row>
               <div className="devidre"></div>
@@ -293,7 +368,7 @@ const Dashboard = () => {
                   </Row>
                 </Col>
                 <Col xl="4">
-                  <ProgressBar type={2} />
+                  <TaskManagerPreogressBar type={2} />
                 </Col>
               </Row>
               <div className="devidre "></div>
@@ -459,10 +534,50 @@ const Dashboard = () => {
                       name="data"
                       onChange={(e) => {
                         const res = timeDifference(e.target.value);
-                        setNextBreakTime(res.second);
-                        setNextBreakDate(res.date);
+                        setNextBreakDateInput(res.date);
                       }}
                     />
+                  </Form.Group>
+                </Col>
+              </>
+            )}
+            {/* Task */}
+            {taskManager && (
+              <>
+                <Col md={12}>
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Task name </Form.Label>
+                    <Form.Control type="text" name="name" />
+                  </Form.Group>
+                </Col>
+                <Col md={12}>
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Row>
+                      <Col xl="4">
+                        <Form.Label>Time Format </Form.Label>
+                        <Form.Select
+                          onChange={() => setTimeFormat(!timeFormat)}
+                          className="selectTime"
+                          aria-label="Default select example"
+                        >
+                          <option>Hour</option>
+                          <option>Minute</option>
+                        </Form.Select>
+                      </Col>
+                      <Col xl="8">
+                        <Form.Label>Time</Form.Label>
+                        <TimePicker
+                          className="form-control taskManagerTime"
+                          clearIcon
+                          closeClock
+                          format={timeFormat ? "mm:ss" : "hh:mm:ss"}
+                          onChange={(value) => {
+                            console.log("time...", value);
+                          }}
+                          // value={value}
+                        />
+                      </Col>
+                    </Row>
                   </Form.Group>
                 </Col>
               </>
@@ -482,12 +597,28 @@ const Dashboard = () => {
             )}
             {/* Next Break Btn */}
             {nextBreak && (
+              <>
+                {nextBreakLoading ? (
+                  <PulseLoader size={12} color="#32cd32" />
+                ) : (
+                  <Button
+                    disabled={nextBreakDateInput.length === 0 ? true : false}
+                    variant="primary"
+                    type="button"
+                    onClick={handleNextBreakOperation}
+                  >
+                    Create Next Break
+                  </Button>
+                )}
+              </>
+            )}
+            {taskManager && (
               <Button
                 variant="primary"
                 type="button"
-                onClick={handleNextBreakOperation}
+                // onClick={handleNextBreakOperation}
               >
-                Create Next Break
+                Create New Task
               </Button>
             )}
           </>

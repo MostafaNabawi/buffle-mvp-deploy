@@ -139,12 +139,49 @@ button.btn-primary {
   border-bottom: 0;
   border-left: 0px !important;
 }
+.showTime {
+  position: absolute !important;
+  z-index: 9999 !important;
+  color: black !important;
+  margin-left: 6% !important;
+}
+.showTimeReverse {
+  color: white;
+}
+/* .selectTime ,.taskManagerTime {
+  display: inline  !important;
+}
+.selectTime{
+  width: 10% !important;
+}
+.taskManagerTime {
+width: 80% !important;
+} */
 .register-container {
   margin: auto !important;
   height: 100vh !important;
   margin: auto;
 }
-
+.taskManagerTime > div {
+  border: none !important;
+}
+.taskManagerTime > span > div {
+  display: none !important;
+}
+.taskManagerNavItem:hover {
+  background-color: white !important;
+}
+.taskManagerNavItem > i.delete {
+  padding-right: 5px !important;
+  color: red !important;
+}
+.taskManagerNavItem > i.edit {
+  padding-right: 5px !important;
+  color: green !important;
+}
+.taskManagerNavItem > i:hover {
+  color: #4922ff !important;
+}
 .button.btn-primary:hover {
   background: radial-gradient(
     103.73% 715% at 100% 100%,
