@@ -1,7 +1,8 @@
 import { React, useEffect, useState } from "react";
-import { Row, Col, Image, Form, Button,NavDropdown } from "react-bootstrap";
+import { Row, Col, Image, Form, Button, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
+import TimePicker from 'react-time-picker';
 import ProgressBar from "../components/common/progressBar/ProgressBar";
 import CardHeader from "../components/card/CardHeader";
 import Card from "../components/card/Card";
@@ -220,40 +221,40 @@ const Dashboard = () => {
               subtitle="4 opan ,1 started"
               action={
                 <>
-                   <i
-                  title="Add New Task"
-                  onClick={() => {
-                    setModalShow(true);
-                    setNextBreak(false);
-                    setVacationTime(false);
-                    setTaskManager(true)
-                    setSizeModal("md");
-                    setTitleModa("Add New Task");
-                  }}
-                >
-                  <Icon icon="vaadin:plus" />
-                </i>
-                <NavDropdown
-                className="reminderNav"
-                title={<Icon color="black" icon="vaadin:ellipsis-dots-v" />}
-                id="basic-nav-dropdown"
-              >
-                <NavDropdown.Item className="reminderNavItem taskManagerNavItem">
-                  <i 
-                  className="delete"
-                  onClick={()=>console.log("delete")}
+                  <i
+                    title="Add New Task"
+                    onClick={() => {
+                      setModalShow(true);
+                      setNextBreak(false);
+                      setVacationTime(false);
+                      setTaskManager(true)
+                      setSizeModal("md");
+                      setTitleModa("Add New Task");
+                    }}
                   >
-                  <Icon icon="fluent:delete-24-filled" />
+                    <Icon icon="vaadin:plus" />
                   </i>
-                  <i 
-                  className="edit"
-                  onClick={()=>console.log("edit")}
+                  <NavDropdown
+                    className="reminderNav"
+                    title={<Icon color="black" icon="vaadin:ellipsis-dots-v" />}
+                    id="basic-nav-dropdown"
                   >
-                  <Icon icon="ant-design:edit-filled" />
-                  </i>
-                
-                </NavDropdown.Item>
-              </NavDropdown>
+                    <NavDropdown.Item className="reminderNavItem taskManagerNavItem">
+                      <i
+                        className="delete"
+                        onClick={() => console.log("delete")}
+                      >
+                        <Icon icon="fluent:delete-24-filled" />
+                      </i>
+                      <i
+                        className="edit"
+                        onClick={() => console.log("edit")}
+                      >
+                        <Icon icon="ant-design:edit-filled" />
+                      </i>
+
+                    </NavDropdown.Item>
+                  </NavDropdown>
                 </>
               }
             />
@@ -501,35 +502,33 @@ const Dashboard = () => {
               </>
             )}
             {taskManager && (
-             <>
-              <Col md={12}>
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Task name </Form.Label>
-                <Form.Control
-                  type="text"
-                  name="name"
-                  onChange={(e) => {
-                    const res = timeDifference(e.target.value);
-                    setNextBreakTime(res.second);
-                    setNextBreakDate(res.date);
-                  }}
-                />
-              </Form.Group>
-            </Col>
-              <Col md={12}>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Time </Form.Label>
-                  <Form.Control
-                    type="time"
-                    name="data"
-                  // onChange={(e) => {
-                  //   const res = timeDifference(e.target.value);
-                  //   setNextBreakTime(res.second);
-                  //   setNextBreakDate(res.date);
-                  // }}
+              <>
+                <Col md={12}>
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Task name </Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="name"
+                      onChange={(e) => {
+                        const res = timeDifference(e.target.value);
+                        setNextBreakTime(res.second);
+                        setNextBreakDate(res.date);
+                      }}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col md={12}>
+                  <TimePicker
+                  amPmAriaLabel={false}
+                  clearIcon
+                  clockAriaLabel={false}
+                  clockIcon
+                  closeClock
+                  format="h:m:s"
+                    // onChange={onChange}
+                    // value={value}
                   />
-                </Form.Group>
-              </Col>
+                </Col>
               </>
             )}
           </Row>
@@ -555,14 +554,14 @@ const Dashboard = () => {
                 Create Next Break
               </Button>
             )}
-            {taskManager &&(
+            {taskManager && (
               <Button
-              variant="primary"
-              type="button"
+                variant="primary"
+                type="button"
               // onClick={handleNextBreakOperation}
-            >
-              Create New Task
-            </Button>
+              >
+                Create New Task
+              </Button>
             )}
           </>
         }
