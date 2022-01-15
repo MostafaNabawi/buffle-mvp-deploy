@@ -45,7 +45,6 @@ const Dashboard = () => {
     endDate: "",
     type: 0,
   });
-  const [nextBreakTimeInput, setNextBreakTimeInput] = useState("");
   const [nextBreakDateInput, setNextBreakDateInput] = useState("");
   const [nextBreakLoading, setNextBreakLoading] = useState(false);
   const { addToast } = useToasts();
@@ -72,7 +71,6 @@ const Dashboard = () => {
         type: 2,
       });
       setNextBreakDateInput("");
-      setNextBreakTimeInput("");
       setModalShow(false);
       setNextBreakLoading(false);
     } else {
@@ -519,7 +517,6 @@ const Dashboard = () => {
                       name="data"
                       onChange={(e) => {
                         const res = timeDifference(e.target.value);
-                        setNextBreakTimeInput(res.second);
                         setNextBreakDateInput(res.date);
                       }}
                     />
