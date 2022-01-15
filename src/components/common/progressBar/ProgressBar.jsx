@@ -71,7 +71,11 @@ const PreogressBar = ({ range }) => {
                     setData(time.total);
                   }}
                   renderer={(props) => (
-                    <span className="showTime">
+                    <span
+                      className={
+                        percentUI >= 28 ? "showTimeReverse" : "showTime"
+                      }
+                    >
                       {props.formatted.hours}:{props.formatted.minutes}:
                       {props.formatted.seconds}
                     </span>

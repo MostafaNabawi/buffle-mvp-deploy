@@ -40,7 +40,7 @@ function nextBreakTimeValidation(start, end, status) {
     return {
       type: 0,
       msg: `You had a next break on ${moment(end).format(
-        "DD-MM-YYYY HH:mm A"
+        "DD-MM-YYYY [at] hh:mm a"
       )}`,
     };
   }
