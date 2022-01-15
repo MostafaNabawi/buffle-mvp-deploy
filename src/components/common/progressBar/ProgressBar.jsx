@@ -3,10 +3,11 @@ import { Row, Col, ProgressBar } from "react-bootstrap";
 import { Icon } from "@iconify/react";
 import style from "./style.module.css";
 import Countdown from "react-countdown";
-
-const PreogressBar = ({ range, go, type = 1 }) => {
+import { getTotalSeconds } from "../../../config/utils";
+import { deleteNextBreak } from "../../../api";
+const PreogressBar = ({ range, type = 1 }) => {
   const [total, setTotal] = useState(range / 1000);
-  const [play, setPlay] = useState(go);
+  const [play, setPlay] = useState(false);
   const [data, setData] = useState(0);
   const [percentUI, setPercentUI] = useState(type === 2 ? 80 : 0);
   // actions
@@ -16,25 +17,37 @@ const PreogressBar = ({ range, go, type = 1 }) => {
       setPlay(!play);
     }
     if (data > 0 && !play) {
-      console.log("set status to start");
+      const newMeta = getTotalSeconds(range?.startDate, range?.endDate);
+      setTotal(newMeta.total);
+      setData(newMeta.passed * 1000);
+      setPercentUI((100 / newMeta.total) * newMeta?.passed);
       setPlay(!play);
     }
   };
+
   useEffect(() => {
-    console.log("Go is", go);
-    if (go) {
-      setTotal(range / 1000);
-      setData(range);
-      setPlay(true);
-      setPercentUI(100 / (range / 1000));
+    if (range?.startDate) {
+      // check type
+      if (range?.type === 1) {
+        const meta = getTotalSeconds(range?.startDate, range?.endDate);
+        setTotal(meta.total);
+        setData(meta.passed * 1000);
+        setPlay(true);
+        setPercentUI((100 / meta.total) * meta?.passed);
+      }
+      if (range?.type === 2) {
+        const meta = getTotalSeconds(range?.startDate, range?.endDate);
+        setTotal(meta.total);
+        setData(meta.passed * 1000);
+        setPlay(true);
+        setPercentUI((100 / meta.total) * meta?.passed + 1);
+      }
     }
-  }, [go]);
+  }, [range]);
   useEffect(() => {
     if (data > 0) {
       const per = 100 / total;
-      if (play) {
-        setPercentUI(percentUI + per);
-      }
+      setPercentUI(percentUI + per);
     }
   }, [data]);
   return (
@@ -56,11 +69,14 @@ const PreogressBar = ({ range, go, type = 1 }) => {
                     `
                 : play && (
                     <Countdown
-                      date={Date.now() + data}
+                      date={new Date(range?.endDate)}
                       onTick={(time) => {
                         setData(time.total);
                       }}
-                      // className={style.redText}
+                      onComplete={async () => {
+                        alert("Next Break Finished");
+                        await deleteNextBreak();
+                      }}
                     />
                   )
             }
