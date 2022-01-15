@@ -1,3 +1,4 @@
+/* new even style */
 .select_col,
 .participant_section {
   border-bottom: 1px solid #dee2e6;
@@ -28,13 +29,38 @@ button[type="submit"] {
   font-weight: 500;
 }
 
-.description h4 {
+.right_site {
+  display: flex;
+  flex-flow: column;
+}
+
+.right_site div {
+  height: 50%;
+}
+
+.right_site h4 {
   padding: 1.2rem 0;
 }
 
-.description p {
+.right_site p {
   border-left: 5px solid #dee2e6;
   padding-left: 1rem;
+}
+
+.invite_form_area {
+  margin-top: 0.85rem;
+}
+
+.invite_form_area form {
+  display: flex;
+}
+
+.invite_form_area form div {
+  flex-grow: 1;
+}
+
+.invite_form_area form button {
+  margin-left: 1rem;
 }
 
 /* event card */

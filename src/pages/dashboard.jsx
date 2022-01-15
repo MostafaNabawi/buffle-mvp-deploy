@@ -57,13 +57,17 @@ const Dashboard = () => {
     // 1-check type
     // 2-send request
     const req = await setUserFeel(type);
-    alert(req.status);
+    addToast("Feel Choosed", {
+      appearance: "success",
+    });
   };
   // next break action
   const handleNextBreakOperation = async () => {
     console.log("data", nextBreakTime);
     if (nextBreakDateInput.length === 0) {
-      alert("Please select a time");
+      addToast("Time is not selected", {
+        appearance: "warning",
+      });
       return;
     }
     const start = new Date();
@@ -103,7 +107,10 @@ const Dashboard = () => {
         result?.payload?.end
       );
       if (checkup.type === 0) {
-        alert(checkup?.msg);
+        addToast(checkup?.msg, {
+          appearance: "warning",
+          autoDismiss: 4000,
+        });
         // delete the next break
         await deleteNextBreak();
       }
@@ -306,7 +313,7 @@ const Dashboard = () => {
                   </Row>
                 </Col>
                 <Col xl="4">
-                  <TaskManagerPreogressBar  type={2} />
+                  <TaskManagerPreogressBar/>
                 </Col>
               </Row>
               <div className="devidre"></div>
@@ -324,7 +331,7 @@ const Dashboard = () => {
                   </Row>
                 </Col>
                 <Col xl="4">
-                  <ProgressBar type={2} />
+                  <TaskManagerPreogressBar type={2} />
                 </Col>
               </Row>
               <div className="devidre"></div>
@@ -342,7 +349,7 @@ const Dashboard = () => {
                   </Row>
                 </Col>
                 <Col xl="4">
-                  <ProgressBar type={2} />
+                  <TaskManagerPreogressBar type={2} />
                 </Col>
               </Row>
               <div className="devidre"></div>
@@ -360,7 +367,7 @@ const Dashboard = () => {
                   </Row>
                 </Col>
                 <Col xl="4">
-                  <ProgressBar type={2} />
+                  <TaskManagerPreogressBar type={2} />
                 </Col>
               </Row>
               <div className="devidre "></div>
@@ -539,34 +546,35 @@ const Dashboard = () => {
                 <Col md={12}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Task name </Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="name"
-                    />
+                    <Form.Control type="text" name="name" />
                   </Form.Group>
                 </Col>
                 <Col md={12}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Row >
-                     <Col xl="4">
-                     <Form.Label>Time Format </Form.Label>
-                     <Form.Select onChange={()=>setTimeFormat(!timeFormat)} className="selectTime" aria-label="Default select example">
-                        <option>Hour</option>
-                        <option>Minute</option>
-                      </Form.Select>
-                     </Col>
+                    <Row>
+                      <Col xl="4">
+                        <Form.Label>Time Format </Form.Label>
+                        <Form.Select
+                          onChange={() => setTimeFormat(!timeFormat)}
+                          className="selectTime"
+                          aria-label="Default select example"
+                        >
+                          <option>Hour</option>
+                          <option>Minute</option>
+                        </Form.Select>
+                      </Col>
                       <Col xl="8">
-                      <Form.Label>Time</Form.Label>
-                      <TimePicker
-                        className="form-control taskManagerTime"
-                        clearIcon
-                        closeClock
-                        format={timeFormat?"mm:ss" :"hh:mm:ss"}
-                        onChange={(value) => {
-                          console.log("time...", value)
-                        }}
-                      // value={value}
-                      />
+                        <Form.Label>Time</Form.Label>
+                        <TimePicker
+                          className="form-control taskManagerTime"
+                          clearIcon
+                          closeClock
+                          format={timeFormat ? "mm:ss" : "hh:mm:ss"}
+                          onChange={(value) => {
+                            console.log("time...", value);
+                          }}
+                          // value={value}
+                        />
                       </Col>
                     </Row>
                   </Form.Group>

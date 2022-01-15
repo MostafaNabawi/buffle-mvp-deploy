@@ -58,20 +58,20 @@ function HydrationReminderCard() {
           <Row>
             <Col md={12}>
               <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>new daily goal </Form.Label>
-                <Form.Control type="text" />
+                <Form.Label>new daily goal(2L) </Form.Label>
+                <Form.Control type="number" placeholder="2L" />
               </Form.Group>
             </Col>
             <Col md={12}>
               <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label> How long do you work </Form.Label>
-                <Form.Control type="text" placeholder="00:00:00" />
+                <Form.Label> How long do you work(8hr) </Form.Label>
+                <Form.Control type="number" placeholder="8hr" />
               </Form.Group>
             </Col>
             <Col md={12}>
               <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Set reminder </Form.Label>
-                <Form.Control type="text" placeholder="00:00:00" />
+                <Form.Label>Set reminder(2hr) </Form.Label>
+                <Form.Control type="number" placeholder="2h" />
               </Form.Group>
             </Col>
           </Row>

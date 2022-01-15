@@ -139,6 +139,12 @@ button.btn-primary {
   border-bottom: 0;
   border-left: 0px !important;
 }
+.showTime{
+  position: absolute !important;
+  z-index: 9999 !important;
+  color: black !important;
+  margin-left: 20% !important;
+}
 /* .selectTime ,.taskManagerTime {
   display: inline  !important;
 }
