@@ -1,7 +1,8 @@
 import { React, useEffect, useState } from "react";
-import { Row, Col, Image, Form, Button } from "react-bootstrap";
+import { Row, Col, Image, Form, Button, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
+import TimePicker from "react-time-picker";
 import ProgressBar from "../components/common/progressBar/ProgressBar";
 import CardHeader from "../components/card/CardHeader";
 import Card from "../components/card/Card";
@@ -11,8 +12,6 @@ import EventCalender from "./../components/eventCalender/EventCalender";
 import ImpotentToDayCard from "./../components/impotentToDay/ImpotentToDayCard";
 import BreakplanFrom from "../components/breakplan/BreakplanForm";
 import Modal from "../components/modal/modal";
-import MoonLoader from "react-spinners/MoonLoader";
-import { useToasts } from "react-toast-notifications";
 import { nextBreakTimeValidation, timeDifference } from "../config/utils";
 import {
   addNextBreak,
@@ -20,9 +19,10 @@ import {
   getNextBreak,
   setUserFeel,
 } from "../api";
-
+import { MoonLoader } from "react-spinners";
+import { useToasts } from "react-toast-notifications";
 const Dashboard = () => {
-  const { addToast } = useToasts();
+  const [timeFormat, setTimeFormat] = useState(false);
   // breck plan from
   const [BreakPlanForm, setBreakPlanFrom] = useState(false);
   const [breakJoinOrSagest, setBreakJoinOrSagest] = useState(false);
@@ -31,49 +31,48 @@ const Dashboard = () => {
   const [titleModal, setTitleModa] = useState("");
   const [sizeModal, setSizeModal] = useState("");
   const [modalShow, setModalShow] = useState(false);
-  const [vacationTime, setVacationTime] = useState(false);
-  const [nextBreak, setNextBreak] = useState(false);
-  // Next Break states
-  const [nextBreakTime, setNextBreakTime] = useState({
-    startDate: 0,
-    endDate: 0,
-    type: 0,
-  });
-  const [nextBreakDateInput, setNextBreakDateInput] = useState("");
-  const [nextBreakTimeInput, setNextBreakTimeInputs] = useState("");
-  const [nextBreakLoading, setNextBreakLoading] = useState(false);
-  // modal actions
   const handleClose = () => {
     setModalShow(false);
     setNextBreakDateInput("");
   };
   const handleShow = () => setModalShow(true);
-
+  const [vacationTime, setVacationTime] = useState(false);
+  const [nextBreak, setNextBreak] = useState(false);
+  const [taskManager, setTaskManager] = useState(false);
+  // Next Break states
+  const [nextBreakTime, setNextBreakTime] = useState({
+    startDate: "",
+    endDate: "",
+    type: 0,
+  });
+  const [nextBreakTimeInput, setNextBreakTimeInput] = useState("");
+  const [nextBreakDateInput, setNextBreakDateInput] = useState("");
+  const [nextBreakLoading, setNextBreakLoading] = useState(false);
+  const { addToast } = useToasts();
   // actions
   const setFeel = async (type) => {
     // 1-check type
+    // 2-send request
     const req = await setUserFeel(type);
     alert(req.status);
   };
   // next break action
-  const handleNextBreakOperation = async (e) => {
-    if (nextBreakDateInput.length === 0 || nextBreakTimeInput.length === 0) {
-      addToast("Please Select a Time for Next Break!", {
-        appearance: "warning",
-        autoDismiss: 6000,
-        id: "toast-1",
-      });
+  const handleNextBreakOperation = async () => {
+    console.log("data", nextBreakTime);
+    if (nextBreakDateInput.length === 0) {
+      alert("Please select a time");
       return;
     }
-    setNextBreakLoading(true);
-    const startDate = new Date();
-    const req = await addNextBreak(startDate, nextBreakDateInput);
+    const start = new Date();
+    const req = await addNextBreak(start, nextBreakDateInput);
     if (req.status === 200) {
       setNextBreakTime({
-        startDate: new Date(startDate).toISOString(),
+        startDate: start.toISOString(),
         endDate: new Date(nextBreakDateInput).toISOString(),
         type: 2,
       });
+      setNextBreakDateInput("");
+      setNextBreakTimeInput("");
       setModalShow(false);
       setNextBreakLoading(false);
     } else {
@@ -87,7 +86,6 @@ const Dashboard = () => {
   };
   // effects
   useEffect(() => {
-    let mount = true;
     async function innerNextBreak() {
       const result = await getNextBreak();
       // check if it has not passed
@@ -111,12 +109,7 @@ const Dashboard = () => {
         });
       }
     }
-    if (mount) {
-      innerNextBreak();
-    }
-    return () => {
-      mount = false;
-    };
+    innerNextBreak();
   }, []);
   return (
     <section>
@@ -181,8 +174,7 @@ const Dashboard = () => {
                     setTitleModa("When is your next break?");
                   }}
                 >
-                  {/* {nextBreakDateInput} */}
-                  {nextBreakTime?.type === 0 && <Icon icon="vaadin:plus" />}
+                  <Icon icon="vaadin:plus" />
                 </i>
               }
             />
@@ -259,8 +251,36 @@ const Dashboard = () => {
               subtitle="4 opan ,1 started"
               action={
                 <>
-                  <Icon icon="vaadin:plus" />
-                  <Icon icon="vaadin:ellipsis-dots-v" />
+                  <i
+                    title="Add New Task"
+                    onClick={() => {
+                      setModalShow(true);
+                      setNextBreak(false);
+                      setVacationTime(false);
+                      setTaskManager(true);
+                      setSizeModal("md");
+                      setTitleModa("Add New Task");
+                    }}
+                  >
+                    <Icon icon="vaadin:plus" />
+                  </i>
+                  <NavDropdown
+                    className="reminderNav"
+                    title={<Icon color="black" icon="vaadin:ellipsis-dots-v" />}
+                    id="basic-nav-dropdown"
+                  >
+                    <NavDropdown.Item className="reminderNavItem taskManagerNavItem">
+                      <i
+                        className="delete"
+                        onClick={() => console.log("delete")}
+                      >
+                        <Icon icon="fluent:delete-24-filled" />
+                      </i>
+                      <i className="edit" onClick={() => console.log("edit")}>
+                        <Icon icon="ant-design:edit-filled" />
+                      </i>
+                    </NavDropdown.Item>
+                  </NavDropdown>
                 </>
               }
             />
@@ -499,7 +519,7 @@ const Dashboard = () => {
                       name="data"
                       onChange={(e) => {
                         const res = timeDifference(e.target.value);
-                        setNextBreakTimeInputs(res.second);
+                        setNextBreakTimeInput(res.second);
                         setNextBreakDateInput(res.date);
                       }}
                     />
@@ -532,10 +552,19 @@ const Dashboard = () => {
                     type="button"
                     onClick={handleNextBreakOperation}
                   >
-                    {/* Create Next Break */}
+                    Create Next Break
                   </Button>
                 )}
               </>
+            )}
+            {taskManager && (
+              <Button
+                variant="primary"
+                type="button"
+                // onClick={handleNextBreakOperation}
+              >
+                Create New Task
+              </Button>
             )}
           </>
         }
