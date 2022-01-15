@@ -47,12 +47,20 @@ button[type="submit"] {
   padding-left: 1rem;
 }
 
+.invite_form_area {
+  margin-top: 0.85rem;
+}
+
 .invite_form_area form {
   display: flex;
 }
 
-.invite_form_area form input {
+.invite_form_area form div {
   flex-grow: 1;
+}
+
+.invite_form_area form button {
+  margin-left: 1rem;
 }
 
 /* event card */
