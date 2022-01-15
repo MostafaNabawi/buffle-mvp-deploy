@@ -1,49 +1,58 @@
 import { React, useState, useEffect } from "react";
 import Item from "../item";
 import DropWrapper from "../DropWrapper";
-import { data, statuses } from "../data";
+import { statuses } from "../data";
 import { Button, Col, Form } from "react-bootstrap";
 import { Row } from "react-bootstrap";
 import { Icon } from "@iconify/react";
 import Modal from "../../modal/modal";
-import { getProject } from "../../../api";
+import { createTask, getProject, getTask } from "../../../api";
+import { useToasts } from 'react-toast-notifications';
 
 const ProjectManagement = () => {
-  const [items, setItems] = useState(data);
+  const { addToast } = useToasts();
+  const [items, setItems] = useState([]);
+  const [tasks, setTasks] = useState([]);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const [error, setError] = useState('');
-  const [projectName, setProjectName] = useState('');
+  const [inputTask, setInputTask] = useState({ name: '', p_id: '' });
 
 
   useEffect(() => {
     async function project() {
       const req = await getProject();
-      console.log('req', req);
+      const task = await getTask();
+      setItems(req.data);
+      setTasks(task.data);
     }
     project();
-  }, [])
+  }, [tasks])
 
-  const validateProject = (value) => {
-    if (!value) {
-      setError('Project name is required!');
-      return false;
+
+  console.log(items);
+  const handleKeyDown = async (event) => {
+    if (event.key === 'Enter') {
+      const createT = await createTask(inputTask);
+      if (createT.status === 200) {
+        addToast("Created Susseccfully", { autoDismiss: true, appearance: 'success' });
+        setTasks(arr => [
+          ...arr, {}
+        ]);
+        setInputTask('');
+      }
+      else {
+        addToast("Error Please Try Again!", { autoDismiss: false, appearance: 'error' });
+      }
     }
-    setError('');
-    return true;
-  }
-
-  const handleSubmit = () => {
-    console.log('asdf');
   }
   const onDrop = (item, monitor, status) => {
-    const mapping = statuses.find((si) => si.status === status);
+    const mapping = items.find((si) => si._id === status);
 
     setItems((prevState) => {
       const newItems = prevState
-        .filter((i) => i.id !== item.id)
-        .concat({ ...item, status, icon: mapping.icon });
+        .filter((i) => i._id !== item._id)
+        .concat({ ...item, status });
       return [...newItems];
     });
   };
@@ -55,13 +64,14 @@ const ProjectManagement = () => {
       return [...newItems];
     });
   };
+
   return (
     <Row className="projectManagement">
-      {statuses.map((s) => {
+      {items.map((s) => {
         return (
-          <Col key={s.status} className={"col-wrapper secondary-dark"}>
+          <Col key={s.id} className={"col-wrapper secondary-dark"}>
             <Row className={"col-header"}>
-              <Col lg="10">{s.title}</Col>
+              <Col lg="10">{s.name}</Col>
               <Col lg="2" className="project-setting">
                 <Icon
                   icon="icon-park-outline:setting"
@@ -73,12 +83,12 @@ const ProjectManagement = () => {
             <hr className="task-manage-hr" />
             <DropWrapper onDrop={onDrop} status={s.status}>
               <Col>
-                {items
-                  .filter((i) => i.status === s.status)
+                {tasks
+                  .filter((i) => i.projectId === s._id)
 
                   .map((i, idx) => (
                     <Item
-                      key={i.id}
+                      key={i._id}
                       item={i}
                       index={idx}
                       moveItem={moveItem}
@@ -87,11 +97,18 @@ const ProjectManagement = () => {
                     ></Item>
                   ))}
                 <div className="new-task-div">
-                  <input
-                    className="new_task_input"
-                    placeholder="New Task"
-                    aria-label="New Task"
-                  />
+
+                  <Form.Group className="mb-3" controlId="form-new-task">
+                    <input type="text" className="new_task_input"
+                      placeholder="New Task"
+                      aria-label="New Task" onChange={(e) => (
+                        setInputTask({ name: e.target.value, p_id: s._id })
+
+                      )
+                      }
+                      onKeyDown={handleKeyDown} />
+                    <input value={s._id} type="hidden" />
+                  </Form.Group>
                 </div>
               </Col>
             </DropWrapper>
@@ -107,16 +124,18 @@ const ProjectManagement = () => {
           <Row>
             <Col md={12}>
               <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Control type="text" placeholder="Name your project..." onChange={(e) => (
-                  setProjectName(e.target.value),
-                  validateProject(e.target.value)
-                )
-                } />
-                {error ? (
+                <Form.Control type="text" placeholder="Name your project..."
+                // onChange={(e) => (
+                // setProjectName(e.target.value),
+                // validateProject(e.target.value)
+                // )
+                // }
+                />
+                {/* {error ? (
                   <div className="invalid-feedback d-block">
                     {error}
                   </div>
-                ) : null}
+                ) : null} */}
               </Form.Group>
             </Col>
           </Row>
@@ -124,7 +143,7 @@ const ProjectManagement = () => {
         footer={
           <>
             <Button onClick={handleClose}>Close</Button>
-            <Button variant="primary" disabled={!projectName} onClick={handleSubmit}>
+            <Button variant="primary"  >
               Save
             </Button>
           </>

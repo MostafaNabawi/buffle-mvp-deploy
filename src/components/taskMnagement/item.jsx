@@ -58,7 +58,7 @@ const Item = (props) => {
         <span className={"item-title"} onClick={handleShow}>
           {item.content}
         </span>
-        <div className={`color-bar color-bar-${status.status.charAt(0).toUpperCase() + status.status.slice(1)}`} />
+        {/* <div className={`color-bar color-bar-${status.status.charAt(0).toUpperCase() + status.status.slice(1)}`} /> */}
       </div>
 
       <TaskModal
