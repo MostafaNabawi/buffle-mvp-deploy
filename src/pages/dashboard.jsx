@@ -524,6 +524,46 @@ const Dashboard = () => {
                 </Col>
               </>
             )}
+            {/* Task */}
+            {taskManager && (
+              <>
+                <Col md={12}>
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Task name </Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="name"
+                    />
+                  </Form.Group>
+                </Col>
+                <Col md={12}>
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Row >
+                     <Col xl="4">
+                     <Form.Label>Time Format </Form.Label>
+                     <Form.Select onChange={()=>setTimeFormat(!timeFormat)} className="selectTime" aria-label="Default select example">
+                        <option>Hour</option>
+                        <option>Minute</option>
+                      </Form.Select>
+                     </Col>
+                      <Col xl="8">
+                      <Form.Label>Time</Form.Label>
+                      <TimePicker
+                        className="form-control taskManagerTime"
+                        clearIcon
+                        closeClock
+                        format={timeFormat?"mm:ss" :"hh:mm:ss"}
+                        onChange={(value) => {
+                          console.log("time...", value)
+                        }}
+                      // value={value}
+                      />
+                      </Col>
+                    </Row>
+                  </Form.Group>
+                </Col>
+              </>
+            )}
           </Row>
         }
         footer={
