@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { Row, Col, Image, Form, Button } from "react-bootstrap";
+import { Row, Col, Image, Form, Button,NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import ProgressBar from "../components/common/progressBar/ProgressBar";
@@ -32,6 +32,7 @@ const Dashboard = () => {
   const handleShow = () => setModalShow(true);
   const [vacationTime, setVacationTime] = useState(false);
   const [nextBreak, setNextBreak] = useState(false);
+  const [taskManager, setTaskManager] = useState(false)
   // Next Break states
   const [nextBreakTime, setNextBreakTime] = useState(0);
   const [nextBreakDate, setNextBreakDate] = useState("");
@@ -219,8 +220,40 @@ const Dashboard = () => {
               subtitle="4 opan ,1 started"
               action={
                 <>
+                   <i
+                  title="Add New Task"
+                  onClick={() => {
+                    setModalShow(true);
+                    setNextBreak(false);
+                    setVacationTime(false);
+                    setTaskManager(true)
+                    setSizeModal("md");
+                    setTitleModa("Add New Task");
+                  }}
+                >
                   <Icon icon="vaadin:plus" />
-                  <Icon icon="vaadin:ellipsis-dots-v" />
+                </i>
+                <NavDropdown
+                className="reminderNav"
+                title={<Icon color="black" icon="vaadin:ellipsis-dots-v" />}
+                id="basic-nav-dropdown"
+              >
+                <NavDropdown.Item className="reminderNavItem taskManagerNavItem">
+                  <i 
+                  className="delete"
+                  onClick={()=>console.log("delete")}
+                  >
+                  <Icon icon="fluent:delete-24-filled" />
+                  </i>
+                  <i 
+                  className="edit"
+                  onClick={()=>console.log("edit")}
+                  >
+                  <Icon icon="ant-design:edit-filled" />
+                  </i>
+                
+                </NavDropdown.Item>
+              </NavDropdown>
                 </>
               }
             />
@@ -467,6 +500,38 @@ const Dashboard = () => {
                 </Col>
               </>
             )}
+            {taskManager && (
+             <>
+              <Col md={12}>
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Task name </Form.Label>
+                <Form.Control
+                  type="text"
+                  name="name"
+                  onChange={(e) => {
+                    const res = timeDifference(e.target.value);
+                    setNextBreakTime(res.second);
+                    setNextBreakDate(res.date);
+                  }}
+                />
+              </Form.Group>
+            </Col>
+              <Col md={12}>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Label>Time </Form.Label>
+                  <Form.Control
+                    type="time"
+                    name="data"
+                  // onChange={(e) => {
+                  //   const res = timeDifference(e.target.value);
+                  //   setNextBreakTime(res.second);
+                  //   setNextBreakDate(res.date);
+                  // }}
+                  />
+                </Form.Group>
+              </Col>
+              </>
+            )}
           </Row>
         }
         footer={
@@ -489,6 +554,15 @@ const Dashboard = () => {
               >
                 Create Next Break
               </Button>
+            )}
+            {taskManager &&(
+              <Button
+              variant="primary"
+              type="button"
+              // onClick={handleNextBreakOperation}
+            >
+              Create New Task
+            </Button>
             )}
           </>
         }
