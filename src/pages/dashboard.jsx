@@ -2,7 +2,7 @@ import { React, useEffect, useState } from "react";
 import { Row, Col, Image, Form, Button, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
-import TimePicker from 'react-time-picker';
+import TimePicker from "react-time-picker";
 import ProgressBar from "../components/common/progressBar/ProgressBar";
 import CardHeader from "../components/card/CardHeader";
 import Card from "../components/card/Card";
@@ -19,8 +19,10 @@ import {
   getNextBreak,
   setUserFeel,
 } from "../api";
-
+import { MoonLoader } from "react-spinners";
+import { useToasts } from "react-toast-notifications";
 const Dashboard = () => {
+  const [timeFormat, setTimeFormat] = useState(false);
   // breck plan from
   const [BreakPlanForm, setBreakPlanFrom] = useState(false);
   const [breakJoinOrSagest, setBreakJoinOrSagest] = useState(false);
@@ -29,15 +31,23 @@ const Dashboard = () => {
   const [titleModal, setTitleModa] = useState("");
   const [sizeModal, setSizeModal] = useState("");
   const [modalShow, setModalShow] = useState(false);
-  const handleClose = () => setModalShow(false);
+  const handleClose = () => {
+    setModalShow(false);
+    setNextBreakDateInput("");
+  };
   const handleShow = () => setModalShow(true);
   const [vacationTime, setVacationTime] = useState(false);
   const [nextBreak, setNextBreak] = useState(false);
-  const [taskManager, setTaskManager] = useState(false)
+  const [taskManager, setTaskManager] = useState(false);
   // Next Break states
-  const [nextBreakTime, setNextBreakTime] = useState(0);
-  const [nextBreakDate, setNextBreakDate] = useState("");
-  const [nextBreakStart, setNextBreakStart] = useState(false);
+  const [nextBreakTime, setNextBreakTime] = useState({
+    startDate: "",
+    endDate: "",
+    type: 0,
+  });
+  const [nextBreakDateInput, setNextBreakDateInput] = useState("");
+  const [nextBreakLoading, setNextBreakLoading] = useState(false);
+  const { addToast } = useToasts();
   // actions
   const setFeel = async (type) => {
     // 1-check type
@@ -48,14 +58,28 @@ const Dashboard = () => {
   // next break action
   const handleNextBreakOperation = async () => {
     console.log("data", nextBreakTime);
-    if (nextBreakDate.length === 0) {
+    if (nextBreakDateInput.length === 0) {
       alert("Please select a time");
       return;
     }
-    const req = await addNextBreak(new Date(), nextBreakDate);
+    const start = new Date();
+    const req = await addNextBreak(start, nextBreakDateInput);
     if (req.status === 200) {
-      setNextBreakStart(true);
+      setNextBreakTime({
+        startDate: start.toISOString(),
+        endDate: new Date(nextBreakDateInput).toISOString(),
+        type: 2,
+      });
+      setNextBreakDateInput("");
       setModalShow(false);
+      setNextBreakLoading(false);
+    } else {
+      addToast("Error while adding Next Break!", {
+        appearance: "error",
+        autoDismiss: 5000,
+      });
+      setNextBreakDateInput("");
+      setNextBreakLoading(false);
     }
   };
   // effects
@@ -73,10 +97,14 @@ const Dashboard = () => {
       if (checkup.type === 0) {
         alert(checkup?.msg);
         // delete the next break
-        const res = await deleteNextBreak();
+        await deleteNextBreak();
       }
       if (checkup.type === 1) {
-        setNextBreakTime(checkup.total);
+        setNextBreakTime({
+          startDate: result?.payload?.start,
+          endDate: result?.payload?.end,
+          type: 1,
+        });
       }
     }
     innerNextBreak();
@@ -149,7 +177,7 @@ const Dashboard = () => {
               }
             />
             <Col className="progress-custom mt-3">
-              <ProgressBar range={nextBreakTime} go={nextBreakStart} />
+              <ProgressBar range={nextBreakTime} />
             </Col>
           </Card>
         </Col>
@@ -227,7 +255,7 @@ const Dashboard = () => {
                       setModalShow(true);
                       setNextBreak(false);
                       setVacationTime(false);
-                      setTaskManager(true)
+                      setTaskManager(true);
                       setSizeModal("md");
                       setTitleModa("Add New Task");
                     }}
@@ -246,13 +274,9 @@ const Dashboard = () => {
                       >
                         <Icon icon="fluent:delete-24-filled" />
                       </i>
-                      <i
-                        className="edit"
-                        onClick={() => console.log("edit")}
-                      >
+                      <i className="edit" onClick={() => console.log("edit")}>
                         <Icon icon="ant-design:edit-filled" />
                       </i>
-
                     </NavDropdown.Item>
                   </NavDropdown>
                 </>
@@ -493,14 +517,14 @@ const Dashboard = () => {
                       name="data"
                       onChange={(e) => {
                         const res = timeDifference(e.target.value);
-                        setNextBreakTime(res.second);
-                        setNextBreakDate(res.date);
+                        setNextBreakDateInput(res.date);
                       }}
                     />
                   </Form.Group>
                 </Col>
               </>
             )}
+            {/* Task */}
             {taskManager && (
               <>
                 <Col md={12}>
@@ -509,25 +533,34 @@ const Dashboard = () => {
                     <Form.Control
                       type="text"
                       name="name"
-                      onChange={(e) => {
-                        const res = timeDifference(e.target.value);
-                        setNextBreakTime(res.second);
-                        setNextBreakDate(res.date);
-                      }}
                     />
                   </Form.Group>
                 </Col>
                 <Col md={12}>
-                  <TimePicker
-                  amPmAriaLabel={false}
-                  clearIcon
-                  clockAriaLabel={false}
-                  clockIcon
-                  closeClock
-                  format="h:m:s"
-                    // onChange={onChange}
-                    // value={value}
-                  />
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Row >
+                     <Col xl="4">
+                     <Form.Label>Time Format </Form.Label>
+                     <Form.Select onChange={()=>setTimeFormat(!timeFormat)} className="selectTime" aria-label="Default select example">
+                        <option>Hour</option>
+                        <option>Minute</option>
+                      </Form.Select>
+                     </Col>
+                      <Col xl="8">
+                      <Form.Label>Time</Form.Label>
+                      <TimePicker
+                        className="form-control taskManagerTime"
+                        clearIcon
+                        closeClock
+                        format={timeFormat?"mm:ss" :"hh:mm:ss"}
+                        onChange={(value) => {
+                          console.log("time...", value)
+                        }}
+                      // value={value}
+                      />
+                      </Col>
+                    </Row>
+                  </Form.Group>
                 </Col>
               </>
             )}
@@ -546,19 +579,26 @@ const Dashboard = () => {
             )}
             {/* Next Break Btn */}
             {nextBreak && (
-              <Button
-                variant="primary"
-                type="button"
-                onClick={handleNextBreakOperation}
-              >
-                Create Next Break
-              </Button>
+              <>
+                {nextBreakLoading ? (
+                  <MoonLoader size={30} color="#32cd32" />
+                ) : (
+                  <Button
+                    disabled={nextBreakDateInput.length === 0 ? true : false}
+                    variant="primary"
+                    type="button"
+                    onClick={handleNextBreakOperation}
+                  >
+                    Create Next Break
+                  </Button>
+                )}
+              </>
             )}
             {taskManager && (
               <Button
                 variant="primary"
                 type="button"
-              // onClick={handleNextBreakOperation}
+                // onClick={handleNextBreakOperation}
               >
                 Create New Task
               </Button>
