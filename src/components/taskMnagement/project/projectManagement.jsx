@@ -1,13 +1,13 @@
 import { React, useState, useEffect } from "react";
 import Item from "../item";
 import DropWrapper from "../DropWrapper";
-import { statuses } from "../data";
 import { Button, Col, Form } from "react-bootstrap";
 import { Row } from "react-bootstrap";
 import { Icon } from "@iconify/react";
 import Modal from "../../modal/modal";
 import { createTask, getProject, getTask } from "../../../api";
 import { useToasts } from 'react-toast-notifications';
+import moment from 'moment';
 
 const ProjectManagement = () => {
   const { addToast } = useToasts();
@@ -27,10 +27,9 @@ const ProjectManagement = () => {
       setTasks(task.data);
     }
     project();
-  }, [tasks])
+  }, [])
 
 
-  console.log(items);
   const handleKeyDown = async (event) => {
     if (event.key === 'Enter') {
       const createT = await createTask(inputTask);
@@ -47,7 +46,6 @@ const ProjectManagement = () => {
     }
   }
   const onDrop = (item, monitor, status) => {
-    const mapping = items.find((si) => si._id === status);
 
     setItems((prevState) => {
       const newItems = prevState
@@ -69,7 +67,7 @@ const ProjectManagement = () => {
     <Row className="projectManagement">
       {items.map((s) => {
         return (
-          <Col key={s.id} className={"col-wrapper secondary-dark"}>
+          <Col key={s._id} className={"col-wrapper secondary-dark"}>
             <Row className={"col-header"}>
               <Col lg="10">{s.name}</Col>
               <Col lg="2" className="project-setting">
@@ -81,11 +79,10 @@ const ProjectManagement = () => {
               </Col>
             </Row>
             <hr className="task-manage-hr" />
-            <DropWrapper onDrop={onDrop} status={s.status}>
+            <DropWrapper onDrop={onDrop} status={moment(s.date, "YYYY-MM-DD HH:mm:ss").format('dddd')}>
               <Col>
                 {tasks
                   .filter((i) => i.projectId === s._id)
-
                   .map((i, idx) => (
                     <Item
                       key={i._id}

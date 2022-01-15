@@ -7,7 +7,6 @@ import TaskModal from "./modal/TaskModal";
 const Item = (props) => {
   const { item, index, moveItem, status } = props;
   const ref = useRef(null);
-
   const [, drop] = useDrop({
     accept: ITEM_TYPE,
     hover(item, monitor) {
@@ -56,7 +55,7 @@ const Item = (props) => {
           <Form.Check className="task-check-box" type="checkbox" />
         </Form.Group>
         <span className={"item-title"} onClick={handleShow}>
-          {item.content}
+          {item.name}
         </span>
         {/* <div className={`color-bar color-bar-${status.status.charAt(0).toUpperCase() + status.status.slice(1)}`} /> */}
       </div>
