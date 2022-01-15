@@ -139,10 +139,25 @@ button.btn-primary {
   border-bottom: 0;
   border-left: 0px !important;
 }
+/* .selectTime ,.taskManagerTime {
+  display: inline  !important;
+}
+.selectTime{
+  width: 10% !important;
+}
+.taskManagerTime {
+width: 80% !important;
+} */
 .register-container {
   margin: auto !important;
   height: 100vh !important;
   margin: auto;
+}
+.taskManagerTime >div{
+  border: none !important;
+}
+.taskManagerTime >span >div{
+ display: none  !important;
 }
 .taskManagerNavItem:hover{
   background-color: white !important;

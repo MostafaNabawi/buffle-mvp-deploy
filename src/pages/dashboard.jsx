@@ -21,6 +21,7 @@ import {
 } from "../api";
 
 const Dashboard = () => {
+  const [timeFormat,setTimeFormat]=useState(false)
   // breck plan from
   const [BreakPlanForm, setBreakPlanFrom] = useState(false);
   const [breakJoinOrSagest, setBreakJoinOrSagest] = useState(false);
@@ -518,16 +519,30 @@ const Dashboard = () => {
                   </Form.Group>
                 </Col>
                 <Col md={12}>
-                  <TimePicker
-                  amPmAriaLabel={false}
-                  clearIcon
-                  clockAriaLabel={false}
-                  clockIcon
-                  closeClock
-                  format="h:m:s"
-                    // onChange={onChange}
-                    // value={value}
-                  />
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Time </Form.Label>
+                    <Row >
+                     <Col xl="4">
+                     <Form.Select onChange={()=>setTimeFormat(!timeFormat)} className="selectTime" aria-label="Default select example">
+                        <option disabled={true} >Time format</option>
+                        <option onSelect={()=>console.log("hour")} >Hour</option>
+                        <option value="1">Minute</option>
+                      </Form.Select>
+                     </Col>
+                      <Col xl="8">
+                      <TimePicker
+                        className="form-control taskManagerTime"
+                        clearIcon
+                        closeClock
+                        format={timeFormat ?"mm:ss":"hh:mm:ss"}
+                        onChange={(value) => {
+                          console.log("time...", value)
+                        }}
+                      // value={value}
+                      />
+                      </Col>
+                    </Row>
+                  </Form.Group>
                 </Col>
               </>
             )}
