@@ -56,6 +56,11 @@ const UserLogin = () => {
       }),
     });
     const res = await req.json();
+    if (req.status === 200) {
+      console.log(res);
+      localStorage.setItem("user", JSON.stringify(res.payload));
+      navigate("/dashboard");
+    }
   };
   const responseGoogleFailur = (response) => {
     console.log("failed", response);
