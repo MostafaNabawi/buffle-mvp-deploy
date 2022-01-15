@@ -11,6 +11,8 @@ import EventCalender from "./../components/eventCalender/EventCalender";
 import ImpotentToDayCard from "./../components/impotentToDay/ImpotentToDayCard";
 import BreakplanFrom from "../components/breakplan/BreakplanForm";
 import Modal from "../components/modal/modal";
+import MoonLoader from "react-spinners/MoonLoader";
+import { useToasts } from "react-toast-notifications";
 import { nextBreakTimeValidation, timeDifference } from "../config/utils";
 import {
   addNextBreak,
@@ -20,6 +22,7 @@ import {
 } from "../api";
 
 const Dashboard = () => {
+  const { addToast } = useToasts();
   // breck plan from
   const [BreakPlanForm, setBreakPlanFrom] = useState(false);
   const [breakJoinOrSagest, setBreakJoinOrSagest] = useState(false);
@@ -28,36 +31,64 @@ const Dashboard = () => {
   const [titleModal, setTitleModa] = useState("");
   const [sizeModal, setSizeModal] = useState("");
   const [modalShow, setModalShow] = useState(false);
-  const handleClose = () => setModalShow(false);
-  const handleShow = () => setModalShow(true);
   const [vacationTime, setVacationTime] = useState(false);
   const [nextBreak, setNextBreak] = useState(false);
   // Next Break states
-  const [nextBreakTime, setNextBreakTime] = useState(0);
-  const [nextBreakDate, setNextBreakDate] = useState("");
-  const [nextBreakStart, setNextBreakStart] = useState(false);
+  const [nextBreakTime, setNextBreakTime] = useState({
+    startDate: 0,
+    endDate: 0,
+    type: 0,
+  });
+  const [nextBreakDateInput, setNextBreakDateInput] = useState("");
+  const [nextBreakTimeInput, setNextBreakTimeInputs] = useState("");
+  const [nextBreakLoading, setNextBreakLoading] = useState(false);
+  // modal actions
+  const handleClose = () => {
+    setModalShow(false);
+    setNextBreakDateInput("");
+  };
+  const handleShow = () => setModalShow(true);
+
   // actions
   const setFeel = async (type) => {
     // 1-check type
-    // 2-send request
     const req = await setUserFeel(type);
     alert(req.status);
   };
   // next break action
-  const handleNextBreakOperation = async () => {
-    console.log("data", nextBreakTime);
-    if (nextBreakDate.length === 0) {
-      alert("Please select a time");
+  const handleNextBreakOperation = async (e) => {
+    if (nextBreakDateInput.length === 0 || nextBreakTimeInput.length === 0) {
+      addToast("Please Select a Time for Next Break!", {
+        appearance: "warning",
+        autoDismiss: 6000,
+        id: "toast-1",
+      });
       return;
     }
-    const req = await addNextBreak(new Date(), nextBreakDate);
+    setNextBreakLoading(true);
+    const startDate = new Date();
+    const req = await addNextBreak(startDate, nextBreakDateInput);
     if (req.status === 200) {
-      setNextBreakStart(true);
+      setNextBreakTime({
+        startDate: new Date(startDate).toISOString(),
+        endDate: new Date(nextBreakDateInput).toISOString(),
+        type: 2,
+      });
       setModalShow(false);
+      setNextBreakLoading(false);
+    } else {
+      addToast("Error while adding Next Break!", {
+        appearance: "error",
+        autoDismiss: 5000,
+      });
+      setNextBreakDateInput("");
+      setNextBreakTimeInputs("");
+      setNextBreakLoading(false);
     }
   };
   // effects
   useEffect(() => {
+    let mount = true;
     async function innerNextBreak() {
       const result = await getNextBreak();
       // check if it has not passed
@@ -71,13 +102,22 @@ const Dashboard = () => {
       if (checkup.type === 0) {
         alert(checkup?.msg);
         // delete the next break
-        const res = await deleteNextBreak();
+        await deleteNextBreak();
       }
       if (checkup.type === 1) {
-        setNextBreakTime(checkup.total);
+        setNextBreakTime({
+          startDate: result?.payload?.start,
+          endDate: result?.payload?.end,
+          type: 1,
+        });
       }
     }
-    innerNextBreak();
+    if (mount) {
+      innerNextBreak();
+    }
+    return () => {
+      mount = false;
+    };
   }, []);
   return (
     <section>
@@ -142,12 +182,13 @@ const Dashboard = () => {
                     setTitleModa("When is your next break?");
                   }}
                 >
-                  <Icon icon="vaadin:plus" />
+                  {/* {nextBreakDateInput} */}
+                  {nextBreakTime?.type === 0 && <Icon icon="vaadin:plus" />}
                 </i>
               }
             />
             <Col className="progress-custom mt-3">
-              <ProgressBar range={nextBreakTime} go={nextBreakStart} />
+              <ProgressBar range={nextBreakTime} />
             </Col>
           </Card>
         </Col>
@@ -459,8 +500,8 @@ const Dashboard = () => {
                       name="data"
                       onChange={(e) => {
                         const res = timeDifference(e.target.value);
-                        setNextBreakTime(res.second);
-                        setNextBreakDate(res.date);
+                        setNextBreakTimeInputs(res.second);
+                        setNextBreakDateInput(res.date);
                       }}
                     />
                   </Form.Group>
@@ -482,13 +523,20 @@ const Dashboard = () => {
             )}
             {/* Next Break Btn */}
             {nextBreak && (
-              <Button
-                variant="primary"
-                type="button"
-                onClick={handleNextBreakOperation}
-              >
-                Create Next Break
-              </Button>
+              <>
+                {nextBreakLoading ? (
+                  <MoonLoader size={30} color="#32cd32" />
+                ) : (
+                  <Button
+                    disabled={nextBreakDateInput.length === 0 ? true : false}
+                    variant="primary"
+                    type="button"
+                    onClick={handleNextBreakOperation}
+                  >
+                    Create Next Break
+                  </Button>
+                )}
+              </>
             )}
           </>
         }

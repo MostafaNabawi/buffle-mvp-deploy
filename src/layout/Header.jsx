@@ -2,7 +2,7 @@ import { React, useState, useEffect } from "react";
 import { Row, Col, Form, Image, NavDropdown } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
-import { logout } from "../api";
+import { logout, userStatus } from "../api";
 
 const Header = () => {
   const [userData, setUserData] = useState({});
@@ -15,9 +15,19 @@ const Header = () => {
     }
   };
   useEffect(() => {
+    async function getStatus() {
+      const req = await userStatus();
+      if (req.status !== 200) {
+        localStorage.removeItem("user");
+        navigate("/");
+      }
+    }
     const user_storage = JSON.parse(localStorage.getItem("user"));
     setUserData(user_storage);
-    if (!user_storage) {
+    if (user_storage) {
+      // check status
+      getStatus();
+    } else {
       navigate("/");
     }
   }, []);
@@ -46,11 +56,17 @@ const Header = () => {
                 />
               }
               className="navDropdomnIcon"
-              >
-              <NavDropdown.Item  href="/dashboard/profile">Profile</NavDropdown.Item>
-              <NavDropdown.Item  href="/dashboard/user-management">User management</NavDropdown.Item>
-              <NavDropdown.Item  href="/dashboard/setting">Setting</NavDropdown.Item>
-              <NavDropdown.Item  onClick={handleLogout}>Logout</NavDropdown.Item>
+            >
+              <NavDropdown.Item href="/dashboard/profile">
+                Profile
+              </NavDropdown.Item>
+              <NavDropdown.Item href="/dashboard/user-management">
+                User management
+              </NavDropdown.Item>
+              <NavDropdown.Item href="/dashboard/setting">
+                Setting
+              </NavDropdown.Item>
+              <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
             </NavDropdown>
           </div>
           <div className="form-search">

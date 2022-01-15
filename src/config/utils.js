@@ -10,7 +10,20 @@ function timeDifference(time) {
 
   return { second: delta?.total, date: today };
 }
-function nextBreakTimeValidation(start, end) {
+// others
+function getTotalSeconds(startDate, endDate) {
+  let admission = moment(startDate, "DD-MM-YYYY HH:mm:ss");
+  // end time
+  var discharge = moment(endDate, "DD-MM-YYYY HH:mm:ss");
+  // now time
+  var now = moment(new Date().toISOString(), "DD-MM-YYYY HH:mm:ss");
+  // total seconds wich user seted
+  const totalSeconds = discharge.diff(admission, "seconds");
+  // total seconds which passed
+  const passedSeconds = now.diff(admission, "seconds");
+  return { total: totalSeconds, passed: passedSeconds };
+}
+function nextBreakTimeValidation(start, end, status) {
   // start time
   let admission = moment(start, "DD-MM-YYYY HH:mm:ss");
   // end time
@@ -31,6 +44,12 @@ function nextBreakTimeValidation(start, end) {
       )}`,
     };
   }
+  // if break time valid and mode is run
+  return {
+    type: 1,
+    msg: "",
+    total: totalSeconds * 1000,
+  };
   // if break time still valid
   return {
     type: 1,
@@ -39,4 +58,4 @@ function nextBreakTimeValidation(start, end) {
   };
 }
 // ---------------------------- Other Utils ------------------------------------
-export { timeDifference, nextBreakTimeValidation };
+export { timeDifference, nextBreakTimeValidation, getTotalSeconds };
