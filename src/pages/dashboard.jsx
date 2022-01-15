@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import TimePicker from "react-time-picker";
 import ProgressBar from "../components/common/progressBar/ProgressBar";
+import TaskManagerPreogressBar from "../components/common/progressBar/TaskManagerProgress";
 import CardHeader from "../components/card/CardHeader";
 import Card from "../components/card/Card";
 import HydrationReminderCard from "./../components/hydrationReminder/HydrationReminderCard";
@@ -19,11 +20,12 @@ import {
   getNextBreak,
   setUserFeel,
 } from "../api";
+import {getaAllBreackPlan } from '../api/breackPlan'
 import { MoonLoader } from "react-spinners";
 import { useToasts } from "react-toast-notifications";
 const Dashboard = () => {
   const [timeFormat, setTimeFormat] = useState(false);
-  // breck plan from
+  // is show modal for...
   const [BreakPlanForm, setBreakPlanFrom] = useState(false);
   const [breakJoinOrSagest, setBreakJoinOrSagest] = useState(false);
   const [breakNewTime, setBreakNewTime] = useState(false);
@@ -47,6 +49,8 @@ const Dashboard = () => {
   });
   const [nextBreakDateInput, setNextBreakDateInput] = useState("");
   const [nextBreakLoading, setNextBreakLoading] = useState(false);
+  // Break Plan states
+  const [breacPlanData,setbreakPlanData]=useState('')
   const { addToast } = useToasts();
   // actions
   const setFeel = async (type) => {
@@ -84,6 +88,10 @@ const Dashboard = () => {
   };
   // effects
   useEffect(() => {
+    async function getBreakPlan(){
+      const req =await getaAllBreackPlan ()
+      console.log("getaAllBreackPlan :",req)
+    }
     async function innerNextBreak() {
       const result = await getNextBreak();
       // check if it has not passed
@@ -107,6 +115,7 @@ const Dashboard = () => {
         });
       }
     }
+    getBreakPlan()
     innerNextBreak();
   }, []);
   return (
@@ -297,7 +306,7 @@ const Dashboard = () => {
                   </Row>
                 </Col>
                 <Col xl="4">
-                  <ProgressBar type={2} />
+                  <TaskManagerPreogressBar  type={2} />
                 </Col>
               </Row>
               <div className="devidre"></div>
