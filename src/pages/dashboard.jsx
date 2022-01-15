@@ -1,7 +1,8 @@
 import { React, useEffect, useState } from "react";
-import { Row, Col, Image, Form, Button } from "react-bootstrap";
+import { Row, Col, Image, Form, Button, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
+import TimePicker from "react-time-picker";
 import ProgressBar from "../components/common/progressBar/ProgressBar";
 import CardHeader from "../components/card/CardHeader";
 import Card from "../components/card/Card";
@@ -23,6 +24,7 @@ import {
 
 const Dashboard = () => {
   const { addToast } = useToasts();
+  const [timeFormat, setTimeFormat] = useState(false);
   // breck plan from
   const [BreakPlanForm, setBreakPlanFrom] = useState(false);
   const [breakJoinOrSagest, setBreakJoinOrSagest] = useState(false);
@@ -33,6 +35,7 @@ const Dashboard = () => {
   const [modalShow, setModalShow] = useState(false);
   const [vacationTime, setVacationTime] = useState(false);
   const [nextBreak, setNextBreak] = useState(false);
+  const [taskManager, setTaskManager] = useState(false);
   // Next Break states
   const [nextBreakTime, setNextBreakTime] = useState({
     startDate: 0,
@@ -260,8 +263,36 @@ const Dashboard = () => {
               subtitle="4 opan ,1 started"
               action={
                 <>
-                  <Icon icon="vaadin:plus" />
-                  <Icon icon="vaadin:ellipsis-dots-v" />
+                  <i
+                    title="Add New Task"
+                    onClick={() => {
+                      setModalShow(true);
+                      setNextBreak(false);
+                      setVacationTime(false);
+                      setTaskManager(true);
+                      setSizeModal("md");
+                      setTitleModa("Add New Task");
+                    }}
+                  >
+                    <Icon icon="vaadin:plus" />
+                  </i>
+                  <NavDropdown
+                    className="reminderNav"
+                    title={<Icon color="black" icon="vaadin:ellipsis-dots-v" />}
+                    id="basic-nav-dropdown"
+                  >
+                    <NavDropdown.Item className="reminderNavItem taskManagerNavItem">
+                      <i
+                        className="delete"
+                        onClick={() => console.log("delete")}
+                      >
+                        <Icon icon="fluent:delete-24-filled" />
+                      </i>
+                      <i className="edit" onClick={() => console.log("edit")}>
+                        <Icon icon="ant-design:edit-filled" />
+                      </i>
+                    </NavDropdown.Item>
+                  </NavDropdown>
                 </>
               }
             />
@@ -508,6 +539,56 @@ const Dashboard = () => {
                 </Col>
               </>
             )}
+            {taskManager && (
+              <>
+                <Col md={12}>
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Task name </Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="name"
+                      onChange={(e) => {
+                        const res = timeDifference(e.target.value);
+                        setNextBreakTime(res.second);
+                        setNextBreakDate(res.date);
+                      }}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col md={12}>
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Time </Form.Label>
+                    <Row>
+                      <Col xl="4">
+                        <Form.Select
+                          onChange={() => setTimeFormat(!timeFormat)}
+                          className="selectTime"
+                          aria-label="Default select example"
+                        >
+                          <option disabled={true}>Time format</option>
+                          <option onSelect={() => console.log("hour")}>
+                            Hour
+                          </option>
+                          <option value="1">Minute</option>
+                        </Form.Select>
+                      </Col>
+                      <Col xl="8">
+                        <TimePicker
+                          className="form-control taskManagerTime"
+                          clearIcon
+                          closeClock
+                          format={timeFormat ? "mm:ss" : "hh:mm:ss"}
+                          onChange={(value) => {
+                            console.log("time...", value);
+                          }}
+                          // value={value}
+                        />
+                      </Col>
+                    </Row>
+                  </Form.Group>
+                </Col>
+              </>
+            )}
           </Row>
         }
         footer={
@@ -537,6 +618,15 @@ const Dashboard = () => {
                   </Button>
                 )}
               </>
+            )}
+            {taskManager && (
+              <Button
+                variant="primary"
+                type="button"
+                // onClick={handleNextBreakOperation}
+              >
+                Create New Task
+              </Button>
             )}
           </>
         }
