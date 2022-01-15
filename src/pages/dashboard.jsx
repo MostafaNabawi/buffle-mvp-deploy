@@ -20,8 +20,8 @@ import {
   getNextBreak,
   setUserFeel,
 } from "../api";
-import {getaAllBreackPlan } from '../api/breackPlan'
-import { MoonLoader } from "react-spinners";
+import { getaAllBreackPlan } from "../api/breackPlan";
+import { PulseLoader } from "react-spinners";
 import { useToasts } from "react-toast-notifications";
 const Dashboard = () => {
   const [timeFormat, setTimeFormat] = useState(false);
@@ -50,7 +50,7 @@ const Dashboard = () => {
   const [nextBreakDateInput, setNextBreakDateInput] = useState("");
   const [nextBreakLoading, setNextBreakLoading] = useState(false);
   // Break Plan states
-  const [breacPlanData,setbreakPlanData]=useState('')
+  const [breacPlanData, setbreakPlanData] = useState("");
   const { addToast } = useToasts();
   // actions
   const setFeel = async (type) => {
@@ -70,6 +70,7 @@ const Dashboard = () => {
       });
       return;
     }
+    setNextBreakLoading(true);
     const start = new Date();
     const req = await addNextBreak(start, nextBreakDateInput);
     if (req.status === 200) {
@@ -92,9 +93,9 @@ const Dashboard = () => {
   };
   // effects
   useEffect(() => {
-    async function getBreakPlan(){
-      const req =await getaAllBreackPlan ()
-      console.log("getaAllBreackPlan :",req)
+    async function getBreakPlan() {
+      const req = await getaAllBreackPlan();
+      console.log("getaAllBreackPlan :", req);
     }
     async function innerNextBreak() {
       const result = await getNextBreak();
@@ -122,7 +123,7 @@ const Dashboard = () => {
         });
       }
     }
-    getBreakPlan()
+    getBreakPlan();
     innerNextBreak();
   }, []);
   return (
@@ -313,7 +314,7 @@ const Dashboard = () => {
                   </Row>
                 </Col>
                 <Col xl="4">
-                  <TaskManagerPreogressBar/>
+                  <TaskManagerPreogressBar />
                 </Col>
               </Row>
               <div className="devidre"></div>
@@ -598,7 +599,7 @@ const Dashboard = () => {
             {nextBreak && (
               <>
                 {nextBreakLoading ? (
-                  <MoonLoader size={30} color="#32cd32" />
+                  <PulseLoader size={12} color="#32cd32" />
                 ) : (
                   <Button
                     disabled={nextBreakDateInput.length === 0 ? true : false}
