@@ -106,6 +106,7 @@ div.task-check-box > input {
   font-size: 15px;
   margin-left: 10px;
   margin-right: 5px !important;
+  width: 100%;
 }
 
 .item-status {
@@ -175,11 +176,11 @@ div.task-check-box > input {
 .project-setting-icon:hover {
   color: #000;
 }
-.task-col {
+/* .task-col {
   min-height: 300px;
   max-width: 300px;
   width: 300px;
-}
+} */
 
 .highlight-region {
   background-color: yellow;

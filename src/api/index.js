@@ -106,7 +106,7 @@ async function setUserFeel(payload) {
   });
   return { status: req.status };
 }
-// ------------------------get projects-----------
+// ------------------------ projects-----------
 async function getProject() {
   const req = await fetch(`${API_URL}/project/get`, {
     method: "GET",
@@ -117,7 +117,7 @@ async function getProject() {
     },
   });
   const res = await req.json();
-  return { status: req.status, data: res };
+  return { status: req.status, data: res.payload };
 }
 
 async function createProject(project_name) {
@@ -145,6 +145,34 @@ async function updateProject() {
   });
   return { status: req.status, data: req };
 }
+// ----------------------tasks--------------
+async function createTask(task) {
+  const req = await fetch(`${API_URL}/task/new`, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+    body: JSON.stringify({
+      name: task.name,
+      projectId: task.p_id,
+    }),
+  });
+  return { status: req.status };
+}
+async function getTask() {
+  const req = await fetch(`${API_URL}/task/get`, {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+  });
+  const res = await req.json();
+  return { status: req.status, data: res.payload };
+}
 export {
   signin,
   logout,
@@ -156,4 +184,6 @@ export {
   getProject,
   createProject,
   updateProject,
+  createTask,
+  getTask,
 };

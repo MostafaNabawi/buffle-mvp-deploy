@@ -168,3 +168,21 @@ textarea::placeholder {
 .tab button::after {
   border: none;
 }
+
+.live_search {
+  position: relative;
+}
+
+.search_result {
+  position: absolute;
+  z-index: 1;
+  background-color: #ddd;
+  width: 100%;
+  top: 66px;
+}
+
+.spinner_wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem 0;
+}
