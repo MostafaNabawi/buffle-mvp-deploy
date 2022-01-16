@@ -34,7 +34,6 @@ const UserLogin = () => {
         appearance: "error",
         autoDismiss: 4000,
       });
-      console.log(req.data);
       return;
     }
     if (req.status === 200) {
