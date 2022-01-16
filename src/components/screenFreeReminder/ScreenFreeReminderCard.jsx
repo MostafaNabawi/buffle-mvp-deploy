@@ -25,6 +25,11 @@ function ScreenFreeReminderCard() {
   const [modalShow, setModalShow] = useState(false);
   const handleClose = () => setModalShow(false);
   const handleShow = () => setModalShow(true);
+  // state for time input 
+  const [hours, setHours] = useState("");
+  const [minutes, setMinutes] = useState("");
+  const [seconds, setSeconds] = useState("");
+  console.log("houre",hours,minutes,seconds)
   // submit form 
   const handleSubmit = () => {
     if (timeReminder.durationTime != "" && timeReminder.disPlayTime != "") {
@@ -86,7 +91,15 @@ function ScreenFreeReminderCard() {
         body={
           <Row>
             <Col md={12}>
-            <TimePicker/>
+            <TimePicker 
+            label={"duration time"}
+            hours={hours}
+            setHours={setHours}
+            minutes={minutes}
+            setMinutes={setMinutes}
+            seconds={seconds}
+            setSeconds={setSeconds}
+            />
             </Col>
             <Col md={12}>
             <TimePicker/>
