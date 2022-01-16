@@ -1,30 +1,56 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Col, Form, Row } from "react-bootstrap";
 
-function TimePicker({ 
+function TimePicker({
   label,
-  // hours,setHours,
-  // minutes,setMinutes,
-  // seconds,setSeconds,
-  value,setValue
- }) {
+  value, setValue
+}) {
+  const [houreValue, setHoursValue] = useState('')
+  const [minuteValue, setMinuteValue] = useState('')
+  const [secondValue, setSecondeValue] = useState('')
+
+  useEffect(() => {
+    if (value) {
+      setHoursValue(value.hours)
+      setMinuteValue(value.minutes)
+      setSecondeValue(value.seconds)
+    }
+  }, [value])
   const validatHours = (e) => {
     const value = e.target.value;
     const hours = value <= 12 ? value : 12;
-    // setHours(hours);
-    setValue({...value,['hours']:hours,['minutes']:value?.minutes,['seconds']:value.seconds})
+    setValue(
+      {
+        hours: hours,
+        minutes: minuteValue,
+        seconds: secondValue
+      }
+    )
   };
 
-  const validatMintteAndSeconds = (value,type) => {
-    const val= value <= 60 ? value : 60;
-    if(type==="sec"){
-      setValue({...value,['hours']:value?.hours,['minutes']:value?.minutes,['seconds']:val})
+  const validatMintteAndSeconds = (value, type) => {
+    const val = value <= 60 ? value : 60;
+    if (type === "sec") {
+
+      setValue(
+        {
+          hours: houreValue,
+          minutes: minuteValue,
+          seconds: val
+        }
+      )
       return ""
-    }else{
-      setValue({...value,['hours']:value?.hours,['minutes']:val,['seconds']:value?.seconds})
-      return  ""
+    } else {
+      setValue(
+        {
+          hours: houreValue,
+          minutes: val,
+          seconds: secondValue
+        }
+      )
+      return ""
     }
-    
+
   };
 
   return (
@@ -49,7 +75,7 @@ function TimePicker({
             min={0}
             max={60}
             value={value?.minutes}
-            onChange={(e)=>validatMintteAndSeconds(e.target.value,"min")}
+            onChange={(e) => validatMintteAndSeconds(e.target.value, "min")}
           />
         </Col>
         <Col>
@@ -59,7 +85,7 @@ function TimePicker({
             min={0}
             max={60}
             value={value?.seconds}
-            onChange={(e)=>validatMintteAndSeconds(e.target.value,"sec")}
+            onChange={(e) => validatMintteAndSeconds(e.target.value, "sec")}
           />
         </Col>
       </Row>

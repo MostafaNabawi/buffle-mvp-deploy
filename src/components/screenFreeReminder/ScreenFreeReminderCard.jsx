@@ -26,17 +26,16 @@ function ScreenFreeReminderCard() {
   const handleShow = () => setModalShow(true);
   // state for time input 
   const [durationTime,setDurationTime]=useState({
-    hours:"22",
+    hours:"",
     minutes:"",
     seconds:""
   })
-  console.log("time",durationTime.hours,durationTime.minutes,durationTime.seconds)
+  const [displayTime,setDisplayTime]=useState({
+    hours:"",
+    minutes:"",
+    seconds:""
+  })
   //
-  const [hours, setHours] = useState("");
-  const [minutes, setMinutes] = useState("");
-  const [seconds, setSeconds] = useState("");
-  console.log("houre",hours,minutes,seconds)
-  // submit form 
   const handleSubmit = () => {
     if (timeReminder.durationTime != "" && timeReminder.disPlayTime != "") {
       console.log("submit")
@@ -106,6 +105,8 @@ function ScreenFreeReminderCard() {
             <Col md={12}>
             <TimePicker2
             label={"Display Time"}
+            value={displayTime}
+            setValue={setDisplayTime}
             />
             </Col>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
