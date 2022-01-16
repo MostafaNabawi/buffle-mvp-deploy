@@ -64,13 +64,10 @@ function HydrationReminderCard() {
               </Form.Group>
             </Col>
             <Col md={12}>
-              <TimePicker />
+              <TimePicker label="How long do you work" />
             </Col>
             <Col md={12}>
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Set reminder(2hr) </Form.Label>
-                <Form.Control type="number" placeholder="2h" />
-              </Form.Group>
+              <TimePicker label="Set reminder" />
             </Col>
           </Row>
         }

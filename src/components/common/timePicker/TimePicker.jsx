@@ -1,7 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
 
-function TimePicker() {
+function TimePicker({ label }) {
   const [hours, setHours] = useState("");
   const [minutes, setMinutes] = useState("");
   const [seconds, setSeconds] = useState("");
@@ -28,7 +28,7 @@ function TimePicker() {
 
   return (
     <Form.Group className="mb-3">
-      <Form.Label> How long do you work</Form.Label>
+      <Form.Label>{label}</Form.Label>
       <Row>
         <Col>
           <Form.Control
