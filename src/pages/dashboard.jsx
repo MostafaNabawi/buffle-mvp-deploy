@@ -216,6 +216,7 @@ const Dashboard = () => {
                     setModalShow(true);
                     setNextBreak(false);
                     setVacationTime(true);
+                    setTaskManager(false)
                     setSizeModal("md");
                     setTitleModa("Add New Vacation Time");
                   }}
@@ -255,6 +256,7 @@ const Dashboard = () => {
         <Col xl={8}>
           <Card>
             <CardHeader
+            titleClass="taskmanagerHeader"
               icon={
                 <Image
                   className="tesk-manager-icon"
@@ -289,10 +291,12 @@ const Dashboard = () => {
                         className="delete"
                         onClick={() => console.log("delete")}
                       >
-                        <Icon icon="fluent:delete-24-filled" />
+                        <Icon icon="fluent:delete-24-filled" /> Delete
                       </i>
+                    </NavDropdown.Item>
+                    <NavDropdown.Item className="reminderNavItem taskManagerNavItem">
                       <i className="edit" onClick={() => console.log("edit")}>
-                        <Icon icon="ant-design:edit-filled" />
+                        <Icon icon="ant-design:edit-filled" /> Edit
                       </i>
                     </NavDropdown.Item>
                   </NavDropdown>
