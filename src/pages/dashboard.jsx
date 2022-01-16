@@ -125,7 +125,7 @@ const Dashboard = () => {
         });
       }
     }
-    getBreakPlan();
+    // getBreakPlan();
     innerNextBreak();
   }, []);
   return (

@@ -12,7 +12,7 @@ async function signin(payload) {
       body: JSON.stringify(payload),
     });
     const res = await req.json();
-    return { status: req.status, data: res.payload };
+    return { status: req.status, data: res };
   } catch {
     return { status: 400 };
   }
