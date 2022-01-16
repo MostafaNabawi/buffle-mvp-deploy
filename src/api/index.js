@@ -116,7 +116,8 @@ async function getProject() {
       "Access-Control-Allow-Credentials": true,
     },
   });
-  return { status: req.status, data: req };
+  const res = await req.json();
+  return { status: req.status, data: res };
 }
 
 async function createProject(project_name) {
