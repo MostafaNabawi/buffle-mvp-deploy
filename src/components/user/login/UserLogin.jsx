@@ -38,8 +38,8 @@ const UserLogin = () => {
       return;
     }
     if (req.status === 200) {
-      setLoading(false);
-      localStorage.setItem("user", JSON.stringify(req.data));
+      console.log(req.data.user);
+      localStorage.setItem("user", JSON.stringify(req.data.user));
       navigate("/dashboard");
     }
   };
