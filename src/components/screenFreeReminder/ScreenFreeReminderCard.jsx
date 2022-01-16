@@ -5,57 +5,73 @@ import TimePicker2 from "../common/timePicker/TimePicker2";
 import Card from "./../card/Card";
 import CardBody from "./../card/CardBody";
 import CardHeader from "./../card/CardHeader";
-import Modal from '../modal/modal'
+import Modal from "../modal/modal";
 
 import style from "./style.module.css";
 
 function ScreenFreeReminderCard() {
-
   const [timeReminder, setIimeReminder] = useState({
     durationTime: "",
-    disPlayTime: ""
-  })
+    disPlayTime: "",
+  });
   const [isError, setIsError] = useState({
     durationTime: false,
-    disPlayTime: false
-  })
+    disPlayTime: false,
+  });
   // Modal
-  const [sizeModal, setSizeModal] = useState('')
+  const [sizeModal, setSizeModal] = useState("");
   const [modalShow, setModalShow] = useState(false);
   const handleClose = () => setModalShow(false);
   const handleShow = () => setModalShow(true);
-  // state for time input 
-  const [durationTime,setDurationTime]=useState({
-    hours:"22",
-    minutes:"",
-    seconds:""
-  })
-  console.log("time",durationTime.hours,durationTime.minutes,durationTime.seconds)
+  // state for time input
+  const [durationTime, setDurationTime] = useState({
+    hours: "22",
+    minutes: "",
+    seconds: "",
+  });
+  console.log(
+    "time",
+    durationTime.hours,
+    durationTime.minutes,
+    durationTime.seconds
+  );
   //
   const [hours, setHours] = useState("");
   const [minutes, setMinutes] = useState("");
   const [seconds, setSeconds] = useState("");
-  console.log("houre",hours,minutes,seconds)
-  // submit form 
+  console.log("houre", hours, minutes, seconds);
+  // submit form
   const handleSubmit = () => {
     if (timeReminder.durationTime != "" && timeReminder.disPlayTime != "") {
-      console.log("submit")
+      console.log("submit");
     } else {
       // Error handling
       if (timeReminder.durationTime === "" && timeReminder.disPlayTime === "") {
-        setIsError({ ...isError, ['durationTime']: true, ['disPlayTime']: true })
+        setIsError({
+          ...isError,
+          ["durationTime"]: true,
+          ["disPlayTime"]: true,
+        });
         return false;
       }
       if (timeReminder.durationTime === "") {
-        setIsError({ ...isError, ['durationTime']: true, ['disPlayTime']: false })
+        setIsError({
+          ...isError,
+          ["durationTime"]: true,
+          ["disPlayTime"]: false,
+        });
         return false;
       }
       if (timeReminder.disPlayTime === "") {
-        setIsError({ ...isError, ['durationTime']: false, ['disPlayTime']: true })
+        setIsError({
+          ...isError,
+          ["durationTime"]: false,
+          ["disPlayTime"]: true,
+        });
         return false;
       }
     }
-  }
+  };
   return (
     <>
       <Card className={style.card}>
@@ -64,10 +80,12 @@ function ScreenFreeReminderCard() {
           title="ScreenFree Reminder"
           action={
             <>
-              <i title="Set your screen free Reminder" onClick={() => {
-                setModalShow(true)
-                setSizeModal('md')
-              }}
+              <i
+                title="Set your screen free Reminder"
+                onClick={() => {
+                  setModalShow(true);
+                  setSizeModal("md");
+                }}
               >
                 <Icon icon="vaadin:plus" />
               </i>
@@ -93,20 +111,18 @@ function ScreenFreeReminderCard() {
         size={sizeModal}
         show={modalShow}
         handleClose={handleClose}
-        title='Set your screen free Reminder'
+        title="Set your screen free Reminder"
         body={
           <Row>
             <Col md={12}>
-            <TimePicker2 
-            label={"duration time"}
-            value={durationTime}
-            setValue={setDurationTime}
-            />
+              <TimePicker2
+                label={"duration time"}
+                value={durationTime}
+                setValue={setDurationTime}
+              />
             </Col>
             <Col md={12}>
-            <TimePicker2
-            label={"Display Time"}
-            />
+              <TimePicker2 label={"Display Time"} />
             </Col>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
               <Form.Check type="checkbox" label="Start " />
@@ -115,8 +131,16 @@ function ScreenFreeReminderCard() {
         }
         footer={
           <>
-            <Button variant="outline-dark" onClick={handleClose}>Close</Button>
-            <Button onClick={() => { handleSubmit() }} variant="primary" type="button">
+            <Button variant="outline-dark" onClick={handleClose}>
+              Close
+            </Button>
+            <Button
+              onClick={() => {
+                handleSubmit();
+              }}
+              variant="primary"
+              type="button"
+            >
               Save
             </Button>
           </>
