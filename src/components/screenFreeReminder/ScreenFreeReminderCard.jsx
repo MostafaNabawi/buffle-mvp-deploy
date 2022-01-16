@@ -6,19 +6,12 @@ import Card from "./../card/Card";
 import CardBody from "./../card/CardBody";
 import CardHeader from "./../card/CardHeader";
 import Modal from '../modal/modal'
+import { API_URL}from '../../config/index'
 
 import style from "./style.module.css";
 
 function ScreenFreeReminderCard() {
 
-  const [timeReminder, setIimeReminder] = useState({
-    durationTime: "",
-    disPlayTime: ""
-  })
-  const [isError, setIsError] = useState({
-    durationTime: false,
-    disPlayTime: false
-  })
   // Modal
   const [sizeModal, setSizeModal] = useState('')
   const [modalShow, setModalShow] = useState(false);
@@ -36,23 +29,16 @@ function ScreenFreeReminderCard() {
     seconds:""
   })
   //
-  const handleSubmit = () => {
-    if (timeReminder.durationTime != "" && timeReminder.disPlayTime != "") {
-      console.log("submit")
-    } else {
-      // Error handling
-      if (timeReminder.durationTime === "" && timeReminder.disPlayTime === "") {
-        setIsError({ ...isError, ['durationTime']: true, ['disPlayTime']: true })
-        return false;
-      }
-      if (timeReminder.durationTime === "") {
-        setIsError({ ...isError, ['durationTime']: true, ['disPlayTime']: false })
-        return false;
-      }
-      if (timeReminder.disPlayTime === "") {
-        setIsError({ ...isError, ['durationTime']: false, ['disPlayTime']: true })
-        return false;
-      }
+  const handleSubmit =async () => {
+    if(
+      durationTime.hours ==="" && durationTime.minutes ==="" && durationTime.seconds ==="" ||
+      displayTime.hours ==="" && displayTime.minutes ==="" && displayTime.seconds ===""
+       ){
+      return false
+    }else{
+      // const req=await fetch(`${API_URL}//api/screen_reminder/new `,{
+
+      // })
     }
   }
   return (
@@ -109,9 +95,9 @@ function ScreenFreeReminderCard() {
             setValue={setDisplayTime}
             />
             </Col>
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
-              <Form.Check type="checkbox" label="Start " />
-            </Form.Group>
+            {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+              <Form.Check type="checkbox" label="Mute " />
+            </Form.Group> */}
           </Row>
         }
         footer={

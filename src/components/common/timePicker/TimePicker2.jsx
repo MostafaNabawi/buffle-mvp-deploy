@@ -18,12 +18,12 @@ function TimePicker({
   }, [value])
   const validatHours = (e) => {
     const value = e.target.value;
-    const hours = value <= 12 ? value : 12;
+    const hours = value < 12 ? value : 12;
     setValue(
       {
         hours: hours,
-        minutes: minuteValue,
-        seconds: secondValue
+        minutes: minuteValue === '' ? "00" : minuteValue,
+        seconds: secondValue === '' ? "00" : secondValue
       }
     )
   };
@@ -34,8 +34,8 @@ function TimePicker({
 
       setValue(
         {
-          hours: houreValue,
-          minutes: minuteValue,
+          hours: houreValue === '' ? "00" : houreValue,
+          minutes: minuteValue === '' ? "00" : minuteValue,
           seconds: val
         }
       )
@@ -43,9 +43,9 @@ function TimePicker({
     } else {
       setValue(
         {
-          hours: houreValue,
+          hours: houreValue === '' ? "00" : houreValue,
           minutes: val,
-          seconds: secondValue
+          seconds: secondValue === '' ? "00" : secondValue
         }
       )
       return ""
@@ -63,7 +63,7 @@ function TimePicker({
             placeholder="hr"
             min={0}
             max={12}
-            value={value?.hours}
+            value={value.hours}
             onChange={validatHours}
           />
         </Col>
