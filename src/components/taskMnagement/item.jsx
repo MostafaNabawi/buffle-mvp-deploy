@@ -3,7 +3,6 @@ import { useDrag, useDrop } from "react-dnd";
 import { Form } from "react-bootstrap";
 import ITEM_TYPE from "./data/types";
 import TaskModal from "./modal/TaskModal";
-import moment from 'moment';
 
 const Item = (props) => {
   const { item, index, moveItem, status } = props;
@@ -58,16 +57,16 @@ const Item = (props) => {
           <Form.Check className="task-check-box" type="checkbox" />
         </Form.Group>
         <span className={"item-title"} onClick={handleShow}>
-          {item.name}
+          {item.content}
         </span>
-        <div className={`color-bar color-bar-${moment(item.date, "YYYY-MM-DD HH:mm:ss").format('dddd').charAt(0).toUpperCase() + moment(item.date, "YYYY-MM-DD HH:mm:ss").format('dddd').slice(1)}`} />
+        <div className={`color-bar color-bar-${status?.status}`} />
       </div>
 
       <TaskModal
         show={show}
         handleClose={handleClose}
         className="create-project-modal"
-        title={item.name}
+        title={item.content}
         {...props}
       />
     </Fragment>

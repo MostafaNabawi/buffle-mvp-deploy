@@ -12,34 +12,48 @@ import moment from 'moment';
 const ProjectManagement = () => {
   const { addToast } = useToasts();
   const [items, setItems] = useState([]);
-  const [tasks, setTasks] = useState([]);
+  const [projects, setProjects] = useState([]);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [inputTask, setInputTask] = useState({ name: '', p_id: '' });
 
-
   useEffect(() => {
-    async function project() {
+    async function request() {
+      // get project and format
       const req = await getProject();
-      const task = await getTask();
-      console.log(req);
-      setItems(req.data);
-      setTasks(task.data);
+      const formatP = req.data.map((i, n) => {
+        return {
+          id: n,
+          status: moment(i.date, "YYYY-MM-DD HH:mm:ss").format("dddd"),
+          content: i.name,
+          p_id: i._id,
+        };
+      });
+      setProjects(formatP);
+
+      //get tasks and format
+      const data = await getTask();
+      const format = data.data.map((i, n) => {
+        return {
+          id: n,
+          status: moment(i.date, "YYYY-MM-DD HH:mm:ss").format("dddd"),
+          content: i.name,
+          projectId: i.projectId,
+        };
+      });
+      setItems(format);
     }
-    project();
+    request();
+  }, []);
 
-  }, [])
-
-
+  // insert task to database for project
   const handleKeyDown = async (event) => {
     if (event.key === 'Enter') {
       const createT = await createTask(inputTask);
       if (createT.status === 200) {
         addToast("Created Susseccfully", { autoDismiss: true, appearance: 'success' });
-        setTasks(arr => [
-          ...arr, {}
-        ]);
+
         setInputTask('');
       }
       else {
@@ -47,11 +61,12 @@ const ProjectManagement = () => {
       }
     }
   }
-  const onDrop = (item, monitor, status) => {
 
+
+  const onDrop = (item, monitor, status) => {
     setItems((prevState) => {
       const newItems = prevState
-        .filter((i) => i._id !== item._id)
+        .filter((i) => i.id !== item.id)
         .concat({ ...item, status });
       return [...newItems];
     });
@@ -67,11 +82,11 @@ const ProjectManagement = () => {
 
   return (
     <Row className="projectManagement">
-      {items.map((s) => {
+      {projects.map((s) => {
         return (
-          <Col key={s._id} className={"col-wrapper secondary-dark"}>
+          <Col key={s.id} className={"col-wrapper secondary-dark"}>
             <Row className={"col-header"}>
-              <Col lg="10">{s.name}</Col>
+              <Col lg="10">{s.content}</Col>
               <Col lg="2" className="project-setting">
                 <Icon
                   icon="icon-park-outline:setting"
@@ -83,11 +98,11 @@ const ProjectManagement = () => {
             <hr className="task-manage-hr" />
             <DropWrapper onDrop={onDrop} >
               <Col>
-                {tasks
-                  .filter((i) => i.projectId === s._id)
+                {items
+                  .filter((i) => i.projectId === s.p_id)
                   .map((i, idx) => (
                     <Item
-                      key={i._id}
+                      key={i.id}
                       item={i}
                       index={idx}
                       moveItem={moveItem}
@@ -101,7 +116,7 @@ const ProjectManagement = () => {
                     <input type="text" className="new_task_input"
                       placeholder="New Task"
                       aria-label="New Task" onChange={(e) => (
-                        setInputTask({ name: e.target.value, p_id: s._id })
+                        setInputTask({ name: e.target.value, p_id: s.p_id })
 
                       )
                       }

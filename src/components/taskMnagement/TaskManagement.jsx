@@ -10,17 +10,23 @@ import moment from 'moment';
 const TaskManagement = () => {
   const { addToast } = useToasts();
   const [items, setItems] = useState([]);
-
   const [inputTask, setInputTask] = useState({ name: '', p_id: '' });
 
 
   useEffect(() => {
-    async function getTaskF() {
-      const task = await getTask();
-      setItems(task.data);
+    async function request() {
+      const data = await getTask();
+      const format = data.data.map((i, n) => {
+        return {
+          id: n,
+          status: moment(i.date, "YYYY-MM-DD HH:mm:ss").format("dddd"),
+          content: i.name,
+        };
+      });
+      setItems(format);
     }
-    getTaskF();
-  }, [])
+    request();
+  }, []);
 
   const handleKeyDown = async (event) => {
     if (event.key === 'Enter') {
@@ -42,9 +48,8 @@ const TaskManagement = () => {
     setItems((prevState) => {
 
       const newItems = prevState
-        .filter((i) => i._id !== item._id)
+        .filter((i) => i.id !== item.id)
         .concat({ ...item, status });
-      console.log(newItems)
       return [...newItems];
     });
   };
@@ -73,10 +78,10 @@ const TaskManagement = () => {
             <DropWrapper onDrop={onDrop} status={s.status}>
               <Col>
                 {items
-                  .filter((i) => moment(i.date, "YYYY-MM-DD HH:mm:ss").format('dddd') === s.status)
+                  .filter((i) => i.status === s.status)
                   .map((i, idx) => (
                     <Item
-                      key={i._id}
+                      key={i.id}
                       item={i}
                       index={idx}
                       moveItem={moveItem}
