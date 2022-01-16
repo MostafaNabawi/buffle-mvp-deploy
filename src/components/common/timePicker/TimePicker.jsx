@@ -2,9 +2,9 @@ import React, { useRef, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
 
 function TimePicker() {
-  const [hours, setHours] = useState("00");
-  const [minutes, setMinutes] = useState("00");
-  const [seconds, setSeconds] = useState("00");
+  const [hours, setHours] = useState("");
+  const [minutes, setMinutes] = useState("");
+  const [seconds, setSeconds] = useState("");
 
   const handleHours = (e) => {
     const value = e.target.value;
