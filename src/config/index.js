@@ -1,4 +1,5 @@
-const API_URL = process.env.API_URL || "http://localhost:8000/api";
+const API_URL =
+  process.env.API_URL || "https://buffle-api-test.hrekuapp.com/api";
 
 const GOOGLE_CLIENT_ID =
   process.env.GOOGLE_CLIENT_ID ||
