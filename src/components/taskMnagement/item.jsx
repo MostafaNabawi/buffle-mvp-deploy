@@ -1,8 +1,9 @@
 import React, { Fragment, useState, useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
-import { Form, Row, Col, Button } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import ITEM_TYPE from "./data/types";
 import TaskModal from "./modal/TaskModal";
+import moment from 'moment';
 
 const Item = (props) => {
   const { item, index, moveItem, status } = props;
@@ -17,6 +18,7 @@ const Item = (props) => {
       const hoverIndex = index;
 
       if (dragIndex === hoverIndex) {
+
         return;
       }
 
@@ -33,14 +35,14 @@ const Item = (props) => {
       }
       moveItem(dragIndex, hoverIndex);
       item.index = hoverIndex;
-    },
+    }
   });
   const [{ isDragging }, drag] = useDrag({
     type: ITEM_TYPE,
     item: { ...item, index },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
+    collect: monitor => ({
+      isDragging: monitor.isDragging()
+    })
   });
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -57,14 +59,14 @@ const Item = (props) => {
         <span className={"item-title"} onClick={handleShow}>
           {item.name}
         </span>
-        {/* <div className={`color-bar color-bar-${status.status.charAt(0).toUpperCase() + status.status.slice(1)}`} /> */}
+        <div className={`color-bar color-bar-${moment(item.date, "YYYY-MM-DD HH:mm:ss").format('dddd').charAt(0).toUpperCase() + moment(item.date, "YYYY-MM-DD HH:mm:ss").format('dddd').slice(1)}`} />
       </div>
 
       <TaskModal
         show={show}
         handleClose={handleClose}
         className="create-project-modal"
-        title="Title"
+        title={item.name}
         {...props}
       />
     </Fragment>

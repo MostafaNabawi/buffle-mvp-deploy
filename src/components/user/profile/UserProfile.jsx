@@ -18,9 +18,8 @@ const UserProfile = () => {
   }, []);
   return (
     <>
-      <Container className={`${style.profileContainer} secondary-color`} fluid>
-        <Row className="justify-content-center">
-          <Col xl={8}>
+      
+          <Col className="card" xl={8}>
             <h1 className={`${style.title} text-center`}>Your Account</h1>
             <Form>
               <Row>
@@ -98,8 +97,6 @@ const UserProfile = () => {
               </Button>
             </Form>
           </Col>
-        </Row>
-      </Container>
     </>
   );
 };

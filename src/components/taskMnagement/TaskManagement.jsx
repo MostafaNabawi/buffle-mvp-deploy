@@ -10,9 +10,7 @@ import moment from 'moment';
 const TaskManagement = () => {
   const { addToast } = useToasts();
   const [items, setItems] = useState([]);
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+
   const [inputTask, setInputTask] = useState({ name: '', p_id: '' });
 
 
@@ -40,16 +38,21 @@ const TaskManagement = () => {
     }
   }
   const onDrop = (item, monitor, status) => {
+
     setItems((prevState) => {
+
       const newItems = prevState
         .filter((i) => i._id !== item._id)
         .concat({ ...item, status });
+      console.log(newItems)
       return [...newItems];
     });
   };
   const moveItem = (dragIndex, hoverIndex) => {
     const item = items[dragIndex];
+
     setItems((prevState) => {
+
       const newItems = prevState.filter((i, idx) => idx !== dragIndex);
       newItems.splice(hoverIndex, 0, item);
       return [...newItems];
@@ -91,7 +94,6 @@ const TaskManagement = () => {
                       )
                       }
                       onKeyDown={handleKeyDown} />
-                    <input value={s._id} type="hidden" />
                   </Form.Group>
                 </div>
               </Col>

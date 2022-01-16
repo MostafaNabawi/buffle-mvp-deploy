@@ -1,7 +1,8 @@
-import { React, useState } from "react";
-import { Row, Col, Image, Form, Button } from "react-bootstrap";
+import { React, useEffect, useState } from "react";
+import { Row, Col, Image, Form, Button, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
+import TimePicker from "react-time-picker";
 import ProgressBar from "../components/common/progressBar/ProgressBar";
 import CardHeader from "../components/card/CardHeader";
 import Card from "../components/card/Card";
@@ -11,11 +12,17 @@ import EventCalender from "./../components/eventCalender/EventCalender";
 import ImpotentToDayCard from "./../components/impotentToDay/ImpotentToDayCard";
 import BreakplanFrom from "../components/breakplan/BreakplanForm";
 import Modal from "../components/modal/modal";
-import { timeDifference } from "../config/utils";
-import { addNextBreak, setUserFeel } from "../api";
-import {getaAllBreackPlan} from "../api/breackPlan";
-
+import { nextBreakTimeValidation, timeDifference } from "../config/utils";
+import {
+  addNextBreak,
+  deleteNextBreak,
+  getNextBreak,
+  setUserFeel,
+} from "../api";
+import { MoonLoader } from "react-spinners";
+import { useToasts } from "react-toast-notifications";
 const Dashboard = () => {
+  const [timeFormat, setTimeFormat] = useState(false);
   // breck plan from
   const [BreakPlanForm, setBreakPlanFrom] = useState(false);
   const [breakJoinOrSagest, setBreakJoinOrSagest] = useState(false);
@@ -24,16 +31,23 @@ const Dashboard = () => {
   const [titleModal, setTitleModa] = useState("");
   const [sizeModal, setSizeModal] = useState("");
   const [modalShow, setModalShow] = useState(false);
-  const handleClose = () => setModalShow(false);
+  const handleClose = () => {
+    setModalShow(false);
+    setNextBreakDateInput("");
+  };
   const handleShow = () => setModalShow(true);
   const [vacationTime, setVacationTime] = useState(false);
   const [nextBreak, setNextBreak] = useState(false);
-  // End Modal
+  const [taskManager, setTaskManager] = useState(false);
+  // Next Break states
   const [nextBreakTime, setNextBreakTime] = useState({
-    data: 0,
-    start: false,
-    dateTime: "",
+    startDate: "",
+    endDate: "",
+    type: 0,
   });
+  const [nextBreakDateInput, setNextBreakDateInput] = useState("");
+  const [nextBreakLoading, setNextBreakLoading] = useState(false);
+  const { addToast } = useToasts();
   // actions
   const setFeel = async (type) => {
     // 1-check type
@@ -42,15 +56,59 @@ const Dashboard = () => {
     alert(req.status);
   };
   // next break action
-  const handleNextBreakOperation = () => {
+  const handleNextBreakOperation = async () => {
     console.log("data", nextBreakTime);
-    if (nextBreakTime.data === 0) {
+    if (nextBreakDateInput.length === 0) {
       alert("Please select a time");
       return;
     }
-    console.log("Hi => ", nextBreakTime);
-    // const req = addNextBreak(nextBreakTime.data);
+    const start = new Date();
+    const req = await addNextBreak(start, nextBreakDateInput);
+    if (req.status === 200) {
+      setNextBreakTime({
+        startDate: start.toISOString(),
+        endDate: new Date(nextBreakDateInput).toISOString(),
+        type: 2,
+      });
+      setNextBreakDateInput("");
+      setModalShow(false);
+      setNextBreakLoading(false);
+    } else {
+      addToast("Error while adding Next Break!", {
+        appearance: "error",
+        autoDismiss: 5000,
+      });
+      setNextBreakDateInput("");
+      setNextBreakLoading(false);
+    }
   };
+  // effects
+  useEffect(() => {
+    async function innerNextBreak() {
+      const result = await getNextBreak();
+      // check if it has not passed
+      if (result?.payload == null) {
+        return;
+      }
+      const checkup = nextBreakTimeValidation(
+        result?.payload?.start,
+        result?.payload?.end
+      );
+      if (checkup.type === 0) {
+        alert(checkup?.msg);
+        // delete the next break
+        await deleteNextBreak();
+      }
+      if (checkup.type === 1) {
+        setNextBreakTime({
+          startDate: result?.payload?.start,
+          endDate: result?.payload?.end,
+          type: 1,
+        });
+      }
+    }
+    innerNextBreak();
+  }, []);
   return (
     <section>
       <Row>
@@ -191,8 +249,36 @@ const Dashboard = () => {
               subtitle="4 opan ,1 started"
               action={
                 <>
-                  <Icon icon="vaadin:plus" />
-                  <Icon icon="vaadin:ellipsis-dots-v" />
+                  <i
+                    title="Add New Task"
+                    onClick={() => {
+                      setModalShow(true);
+                      setNextBreak(false);
+                      setVacationTime(false);
+                      setTaskManager(true);
+                      setSizeModal("md");
+                      setTitleModa("Add New Task");
+                    }}
+                  >
+                    <Icon icon="vaadin:plus" />
+                  </i>
+                  <NavDropdown
+                    className="reminderNav"
+                    title={<Icon color="black" icon="vaadin:ellipsis-dots-v" />}
+                    id="basic-nav-dropdown"
+                  >
+                    <NavDropdown.Item className="reminderNavItem taskManagerNavItem">
+                      <i
+                        className="delete"
+                        onClick={() => console.log("delete")}
+                      >
+                        <Icon icon="fluent:delete-24-filled" />
+                      </i>
+                      <i className="edit" onClick={() => console.log("edit")}>
+                        <Icon icon="ant-design:edit-filled" />
+                      </i>
+                    </NavDropdown.Item>
+                  </NavDropdown>
                 </>
               }
             />
@@ -211,14 +297,7 @@ const Dashboard = () => {
                   </Row>
                 </Col>
                 <Col xl="4">
-                  {/* <ProgressBar
-                    percent={70}
-                    lable={`
-                    ${new Date().getHours()}
-                    :${new Date().getMinutes()}
-                    :${new Date().getSeconds()}
-                    `}
-                  /> */}
+                  <ProgressBar type={2} />
                 </Col>
               </Row>
               <div className="devidre"></div>
@@ -236,14 +315,7 @@ const Dashboard = () => {
                   </Row>
                 </Col>
                 <Col xl="4">
-                  {/* <ProgressBar
-                    percent={60}
-                    lable={`
-                    ${new Date().getHours()}
-                    :${new Date().getMinutes()}
-                    :${new Date().getSeconds()}
-                    `}
-                  /> */}
+                  <ProgressBar type={2} />
                 </Col>
               </Row>
               <div className="devidre"></div>
@@ -261,14 +333,7 @@ const Dashboard = () => {
                   </Row>
                 </Col>
                 <Col xl="4">
-                  {/* <ProgressBar
-                    percent={70}
-                    lable={`
-                    ${new Date().getHours()}
-                    :${new Date().getMinutes()}
-                    :${new Date().getSeconds()}
-                    `}
-                  /> */}
+                  <ProgressBar type={2} />
                 </Col>
               </Row>
               <div className="devidre"></div>
@@ -286,14 +351,7 @@ const Dashboard = () => {
                   </Row>
                 </Col>
                 <Col xl="4">
-                  {/* <ProgressBar
-                    percent={80}
-                    lable={`
-                    ${new Date().getHours()}
-                    :${new Date().getMinutes()}
-                    :${new Date().getSeconds()}
-                    `}
-                  /> */}
+                  <ProgressBar type={2} />
                 </Col>
               </Row>
               <div className="devidre "></div>
@@ -459,17 +517,49 @@ const Dashboard = () => {
                       name="data"
                       onChange={(e) => {
                         const res = timeDifference(e.target.value);
-                        setNextBreakTime({
-                          ...nextBreakTime,
-                          [e.target.name]: res.second,
-                        });
-                        console.log("r", res.date);
-                        // setNextBreakTime({
-                        //   ...nextBreakTime,
-                        //   ["dateTime"]: res.date,
-                        // });
+                        setNextBreakDateInput(res.date);
                       }}
                     />
+                  </Form.Group>
+                </Col>
+              </>
+            )}
+            {/* Task */}
+            {taskManager && (
+              <>
+                <Col md={12}>
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Task name </Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="name"
+                    />
+                  </Form.Group>
+                </Col>
+                <Col md={12}>
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Row >
+                     <Col xl="4">
+                     <Form.Label>Time Format </Form.Label>
+                     <Form.Select onChange={()=>setTimeFormat(!timeFormat)} className="selectTime" aria-label="Default select example">
+                        <option>Hour</option>
+                        <option>Minute</option>
+                      </Form.Select>
+                     </Col>
+                      <Col xl="8">
+                      <Form.Label>Time</Form.Label>
+                      <TimePicker
+                        className="form-control taskManagerTime"
+                        clearIcon
+                        closeClock
+                        format={timeFormat?"mm:ss" :"hh:mm:ss"}
+                        onChange={(value) => {
+                          console.log("time...", value)
+                        }}
+                      // value={value}
+                      />
+                      </Col>
+                    </Row>
                   </Form.Group>
                 </Col>
               </>
@@ -489,12 +579,28 @@ const Dashboard = () => {
             )}
             {/* Next Break Btn */}
             {nextBreak && (
+              <>
+                {nextBreakLoading ? (
+                  <MoonLoader size={30} color="#32cd32" />
+                ) : (
+                  <Button
+                    disabled={nextBreakDateInput.length === 0 ? true : false}
+                    variant="primary"
+                    type="button"
+                    onClick={handleNextBreakOperation}
+                  >
+                    Create Next Break
+                  </Button>
+                )}
+              </>
+            )}
+            {taskManager && (
               <Button
                 variant="primary"
                 type="button"
-                onClick={handleNextBreakOperation}
+                // onClick={handleNextBreakOperation}
               >
-                Create Next Break
+                Create New Task
               </Button>
             )}
           </>

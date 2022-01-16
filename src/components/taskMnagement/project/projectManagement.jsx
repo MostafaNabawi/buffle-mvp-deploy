@@ -104,7 +104,6 @@ const ProjectManagement = () => {
                       )
                       }
                       onKeyDown={handleKeyDown} />
-                    <input value={s._id} type="hidden" />
                   </Form.Group>
                 </div>
               </Col>

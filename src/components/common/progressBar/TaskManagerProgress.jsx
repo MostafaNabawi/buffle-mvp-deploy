@@ -5,7 +5,7 @@ import style from "./style.module.css";
 import Countdown from "react-countdown";
 import { getTotalSeconds } from "../../../config/utils";
 import { deleteNextBreak } from "../../../api";
-const PreogressBar = ({ range, type = 1 }) => {
+const TaskManagerPreogressBar = ({ range, type = 1 }) => {
   const [total, setTotal] = useState(range / 1000);
   const [play, setPlay] = useState(false);
   const [data, setData] = useState(0);
@@ -100,4 +100,4 @@ const PreogressBar = ({ range, type = 1 }) => {
     </>
   );
 };
-export default PreogressBar;
+export default TaskManagerPreogressBar;
