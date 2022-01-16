@@ -25,10 +25,11 @@ import { PulseLoader } from "react-spinners";
 import { useToasts } from "react-toast-notifications";
 const Dashboard = () => {
   const [timeFormat, setTimeFormat] = useState(false);
-  // is show modal for...
+  // show form for breack plan
   const [BreakPlanForm, setBreakPlanFrom] = useState(false);
   const [breakJoinOrSagest, setBreakJoinOrSagest] = useState(false);
   const [breakNewTime, setBreakNewTime] = useState(false);
+  const [invateForm ,setInvateForm]=useState(false)
   // Modal
   const [titleModal, setTitleModa] = useState("");
   const [sizeModal, setSizeModal] = useState("");
@@ -37,6 +38,7 @@ const Dashboard = () => {
     setModalShow(false);
     setNextBreakDateInput("");
   };
+   // is show modal for...
   const handleShow = () => setModalShow(true);
   const [vacationTime, setVacationTime] = useState(false);
   const [nextBreak, setNextBreak] = useState(false);
@@ -256,7 +258,7 @@ const Dashboard = () => {
         <Col xl={8}>
           <Card>
             <CardHeader
-            titleClass="taskmanagerHeader"
+              titleClass="taskmanagerHeader"
               icon={
                 <Image
                   className="tesk-manager-icon"
@@ -384,7 +386,14 @@ const Dashboard = () => {
             <CardHeader
               icon={<Image src="/icone/direct-hit 1.png" alt="vector image" />}
               title="Breakplan"
-              action=""
+              action={<i
+                onClick={() => {
+                  setBreakPlanFrom(true);
+                  setBreakJoinOrSagest(false);
+                  setBreakNewTime(false);
+                  setInvateForm(true)
+                }}
+                className="invaleIcone"><Icon icon="flat-color-icons:invite" /> Invite</i>}
             />
             <div>
               <BreakplanFrom
@@ -392,6 +401,7 @@ const Dashboard = () => {
                 setShow={setBreakPlanFrom}
                 newTime={breakNewTime}
                 joinOrSagest={breakJoinOrSagest}
+                invateForm={invateForm}
               />
               <Row className="mt-3">
                 <Col className="col-2">
@@ -410,6 +420,7 @@ const Dashboard = () => {
                         setBreakPlanFrom(true);
                         setBreakJoinOrSagest(true);
                         setBreakNewTime(false);
+                        setInvateForm(false)
                       }}
                       className="break-type"
                     >
@@ -421,6 +432,7 @@ const Dashboard = () => {
                         setBreakPlanFrom(true);
                         setBreakJoinOrSagest(false);
                         setBreakNewTime(true);
+                        setInvateForm(false)
                       }}
                     >
                       13:00
@@ -476,6 +488,7 @@ const Dashboard = () => {
                             setBreakPlanFrom(true);
                             setBreakJoinOrSagest(false);
                             setBreakNewTime(false);
+                            setInvateForm(false)
                           }}
                         >
                           Plan
@@ -578,7 +591,7 @@ const Dashboard = () => {
                           onChange={(value) => {
                             console.log("time...", value);
                           }}
-                          // value={value}
+                        // value={value}
                         />
                       </Col>
                     </Row>
@@ -620,7 +633,7 @@ const Dashboard = () => {
               <Button
                 variant="primary"
                 type="button"
-                // onClick={handleNextBreakOperation}
+              // onClick={handleNextBreakOperation}
               >
                 Create New Task
               </Button>

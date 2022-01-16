@@ -1,34 +1,34 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
 
-function TimePicker() {
-  const [hours, setHours] = useState("");
-  const [minutes, setMinutes] = useState("");
-  const [seconds, setSeconds] = useState("");
+function TimePicker({ 
+  label,
+  hours,setHours,
+  minutes,setMinutes,
+  seconds,setSeconds
+ }) {
 
-  const handleHours = (e) => {
+  const validatHours = (e) => {
     const value = e.target.value;
     const hours = value <= 12 ? value : 12;
     setHours(hours);
   };
 
-  const validatputValue = (value) => {
-    return value <= 60 ? value : 60;
-  };
-
-  const handelMinutes = (e) => {
-    const minutes = validatputValue(e.target.value);
-    setMinutes(minutes);
-  };
-
-  const handleSeconds = (e) => {
-    const seconds = validatputValue(e.target.value);
-    setSeconds(seconds);
+  const validatMintteAndSeconds = (value,type) => {
+    const val= value <= 60 ? value : 60;
+    if(type==="sec"){
+      setSeconds(val)
+      return ""
+    }else{
+      setMinutes(val);
+      return  ""
+    }
+    
   };
 
   return (
     <Form.Group className="mb-3">
-      <Form.Label> How long do you work</Form.Label>
+      <Form.Label>{label}</Form.Label>
       <Row>
         <Col>
           <Form.Control
@@ -37,7 +37,7 @@ function TimePicker() {
             min={0}
             max={12}
             value={hours}
-            onChange={handleHours}
+            onChange={validatHours}
           />
         </Col>
 
@@ -48,7 +48,7 @@ function TimePicker() {
             min={0}
             max={60}
             value={minutes}
-            onChange={handelMinutes}
+            onChange={(e)=>validatMintteAndSeconds(e.target.value,"min")}
           />
         </Col>
         <Col>
@@ -58,7 +58,7 @@ function TimePicker() {
             min={0}
             max={60}
             value={seconds}
-            onChange={handleSeconds}
+            onChange={(e)=>validatMintteAndSeconds(e.target.value,"sec")}
           />
         </Col>
       </Row>
