@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react";
 import { Row, Col, Button, Form, Image } from "react-bootstrap";
 import React, { useState } from "react";
-import TimePicker from "../common/timePicker/TimePicker";
+import TimePicker2 from "../common/timePicker/TimePicker2";
 import Card from "./../card/Card";
 import CardBody from "./../card/CardBody";
 import CardHeader from "./../card/CardHeader";
@@ -10,8 +10,7 @@ import Modal from '../modal/modal'
 import style from "./style.module.css";
 
 function ScreenFreeReminderCard() {
-  const [timeFormatDuration, setTimeFormatDuration] = useState(false)
-  const [timeFormatdisPlay, setTimeFormatDisPlay] = useState(false)
+
   const [timeReminder, setIimeReminder] = useState({
     durationTime: "",
     disPlayTime: ""
@@ -26,6 +25,13 @@ function ScreenFreeReminderCard() {
   const handleClose = () => setModalShow(false);
   const handleShow = () => setModalShow(true);
   // state for time input 
+  const [durationTime,setDurationTime]=useState({
+    hours:"22",
+    minutes:"",
+    seconds:""
+  })
+  console.log("time",durationTime.hours,durationTime.minutes,durationTime.seconds)
+  //
   const [hours, setHours] = useState("");
   const [minutes, setMinutes] = useState("");
   const [seconds, setSeconds] = useState("");
@@ -91,18 +97,16 @@ function ScreenFreeReminderCard() {
         body={
           <Row>
             <Col md={12}>
-            <TimePicker 
+            <TimePicker2 
             label={"duration time"}
-            hours={hours}
-            setHours={setHours}
-            minutes={minutes}
-            setMinutes={setMinutes}
-            seconds={seconds}
-            setSeconds={setSeconds}
+            value={durationTime}
+            setValue={setDurationTime}
             />
             </Col>
             <Col md={12}>
-            <TimePicker/>
+            <TimePicker2
+            label={"Display Time"}
+            />
             </Col>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
               <Form.Check type="checkbox" label="Start " />
