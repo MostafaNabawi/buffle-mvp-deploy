@@ -1,8 +1,7 @@
 import { Icon } from "@iconify/react";
 import { Row, Col, Button, Form, Image } from "react-bootstrap";
 import React, { useState } from "react";
-import TimePicker from 'react-time-picker'
-
+import TimePicker2 from "../common/timePicker/TimePicker2";
 import Card from "./../card/Card";
 import CardBody from "./../card/CardBody";
 import CardHeader from "./../card/CardHeader";
@@ -11,8 +10,7 @@ import Modal from '../modal/modal'
 import style from "./style.module.css";
 
 function ScreenFreeReminderCard() {
-  const [timeFormatDuration, setTimeFormatDuration] = useState(false)
-  const [timeFormatdisPlay, setTimeFormatDisPlay] = useState(false)
+
   const [timeReminder, setIimeReminder] = useState({
     durationTime: "",
     disPlayTime: ""
@@ -26,7 +24,18 @@ function ScreenFreeReminderCard() {
   const [modalShow, setModalShow] = useState(false);
   const handleClose = () => setModalShow(false);
   const handleShow = () => setModalShow(true);
-  // submit form 
+  // state for time input 
+  const [durationTime,setDurationTime]=useState({
+    hours:"",
+    minutes:"",
+    seconds:""
+  })
+  const [displayTime,setDisplayTime]=useState({
+    hours:"",
+    minutes:"",
+    seconds:""
+  })
+  //
   const handleSubmit = () => {
     if (timeReminder.durationTime != "" && timeReminder.disPlayTime != "") {
       console.log("submit")
@@ -87,67 +96,18 @@ function ScreenFreeReminderCard() {
         body={
           <Row>
             <Col md={12}>
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Row>
-                  <Col xl="4">
-                    <Form.Label>Time Format </Form.Label>
-                    <Form.Select
-                      onChange={() =>setTimeFormatDuration(!timeFormatDuration) }
-                      className="selectTime"
-                      aria-label="Default select example"
-                    >
-                      <option>Hour</option>
-                      <option>Minute</option>
-                    </Form.Select>
-                  </Col>
-                  <Col xl="8">
-                    <Form.Label>duration time </Form.Label>
-                    <TimePicker
-                      className={`form-control taskManagerTime ${isError.durationTime ? "red-border-input " : ""}`}
-                      clearIcon={false}
-                      closeClock
-                      name="durationTime"
-                      format={timeFormatDuration? "mm:ss" : "hh:mm:ss"}
-                      onChange={(value) => {
-                        setIimeReminder({ ...timeReminder, ["durationTime"]: value })
-                        setIsError({ ...isError, ['durationTime']: false})
-                      }}
-                    // value={value}
-                    />
-                  </Col>
-                </Row>
-              </Form.Group>
+            <TimePicker2 
+            label={"duration time"}
+            value={durationTime}
+            setValue={setDurationTime}
+            />
             </Col>
             <Col md={12}>
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Row>
-                  <Col xl="4">
-                    <Form.Label>Time Format </Form.Label>
-                    <Form.Select
-                      onChange={() => setTimeFormatDisPlay(!timeFormatdisPlay)}
-                      className="selectTime"
-                      aria-label="Default select example"
-                    >
-                      <option>Hour</option>
-                      <option>Minute</option>
-                    </Form.Select>
-                  </Col>
-                  <Col xl="8">
-                    <Form.Label>DisPlay time </Form.Label>
-                    <TimePicker
-                      className={`form-control taskManagerTime ${isError.disPlayTime ? "red-border-input " : ""}`}
-                      clearIcon={false}
-                      closeClock
-                      format={timeFormatdisPlay? "mm:ss" : "hh:mm:ss"}
-                      onChange={(value) => {
-                        setIimeReminder({ ...timeReminder, ["disPlayTime"]: value })
-                        setIsError({ ...isError, ['disPlayTime']: false })
-                      }}
-                    // value={value}
-                    />
-                  </Col>
-                </Row>
-              </Form.Group>
+            <TimePicker2
+            label={"Display Time"}
+            value={displayTime}
+            setValue={setDisplayTime}
+            />
             </Col>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
               <Form.Check type="checkbox" label="Start " />

@@ -6,6 +6,7 @@ import style from "./style.module.css";
 import PersonNameField from "./partials/PersonNameField";
 import { useNavigate } from "react-router-dom";
 import CardBody from "./../card/CardBody";
+import AddNewMember from "./partials/AddNewMember";
 const currencyData = [
   {
     AbbreviationName: "USD",
@@ -65,10 +66,7 @@ function NewEvent() {
             <div className={style.participant_section}>
               <h4>Participants</h4>
               <Col md={12}>
-                <Form.Group className="mb-3" controlId="person-1">
-                  <Form.Label>You </Form.Label>
-                  <Form.Control type="text" placeholder="Your name" />
-                </Form.Group>
+                <AddNewMember />
               </Col>
               {personNum.map((person) => (
                 <PersonNameField key={person} num={person} />
