@@ -139,6 +139,15 @@ button.btn-primary {
   border-bottom: 0;
   border-left: 0px !important;
 }
+.showTime {
+  position: absolute !important;
+  z-index: 9999 !important;
+  color: black !important;
+  margin-left: 6% !important;
+}
+.showTimeReverse {
+  color: white;
+}
 /* .selectTime ,.taskManagerTime {
   display: inline  !important;
 }
@@ -153,25 +162,24 @@ width: 80% !important;
   height: 100vh !important;
   margin: auto;
 }
-.taskManagerTime >div{
+.taskManagerTime > div {
   border: none !important;
 }
-.taskManagerTime >span >div{
- display: none  !important;
+.taskManagerTime > span > div {
+  display: none !important;
 }
-.taskManagerNavItem:hover{
+.taskManagerNavItem:hover {
   background-color: white !important;
-
 }
-.taskManagerNavItem >i.delete{
+.taskManagerNavItem > i.delete {
   padding-right: 5px !important;
   color: red !important;
 }
-.taskManagerNavItem >i.edit{
+.taskManagerNavItem > i.edit {
   padding-right: 5px !important;
   color: green !important;
 }
-.taskManagerNavItem >i:hover{
+.taskManagerNavItem > i:hover {
   color: #4922ff !important;
 }
 .button.btn-primary:hover {
@@ -185,7 +193,7 @@ width: 80% !important;
   color: black !important;
   padding: 0px !important;
   margin: 0px !important;
-  margin-right: -5px !important ;
+  margin-right: -20px !important ;
   display: inline-flex;
 }
 .reminderNav > .dropdown-toggle::after {
@@ -484,6 +492,9 @@ ul.sidebar-list {
   display: inline-flex;
   justify-content: space-between;
 }
+.taskmanagerHeader{
+  display: inline-block !important;
+}
 .custom-h-card h4,
 .card_subtitle {
   font-family: DM Sans;
@@ -498,6 +509,7 @@ ul.sidebar-list {
 }
 .card_subtitle {
   padding-left: 40px !important;
+  display: inline !important;
 }
 .icon-plus {
   width: 14px;

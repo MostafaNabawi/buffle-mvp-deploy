@@ -3,8 +3,15 @@ import { API_URL } from "../config";
 // get all breack plan for user
 const getaAllBreackPlan = async () => {
     try {
-        const req = await fetch(`${API_URL}/breakPlan/get`)
-        return req;
+        const req = await fetch(`${API_URL}/breakPlan/get`,{
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Credentials": true,
+            },
+        })
+        const {payload}=await req.json();
+        return payload;
     } catch (error) {
         console.log("Error get Plan", error)
     }

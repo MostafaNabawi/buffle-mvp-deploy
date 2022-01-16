@@ -5,11 +5,13 @@ import style from "./style.module.css";
 import Countdown from "react-countdown";
 import { getTotalSeconds } from "../../../config/utils";
 import { deleteNextBreak } from "../../../api";
-const PreogressBar = ({ range, type = 1 }) => {
+import { useToasts } from "react-toast-notifications";
+const PreogressBar = ({ range }) => {
   const [total, setTotal] = useState(range / 1000);
   const [play, setPlay] = useState(false);
   const [data, setData] = useState(0);
-  const [percentUI, setPercentUI] = useState(type === 2 ? 80 : 0);
+  const [percentUI, setPercentUI] = useState(0);
+  const { addToast } = useToasts();
   // actions
   const handlePlay = () => {
     if (data > 0 && play) {
@@ -50,6 +52,7 @@ const PreogressBar = ({ range, type = 1 }) => {
       setPercentUI(percentUI + per);
     }
   }, [data]);
+
   return (
     <>
       <Row>
@@ -61,24 +64,30 @@ const PreogressBar = ({ range, type = 1 }) => {
           />
           <ProgressBar
             label={
-              type === 2
-                ? `
-                    ${new Date().getHours()}
-                    :${new Date().getMinutes()}
-                    :${new Date().getSeconds()}
-                    `
-                : play && (
-                    <Countdown
-                      date={new Date(range?.endDate)}
-                      onTick={(time) => {
-                        setData(time.total);
-                      }}
-                      onComplete={async () => {
-                        alert("Next Break Finished");
-                        await deleteNextBreak();
-                      }}
-                    />
-                  )
+              play && (
+                <Countdown
+                  date={new Date(range?.endDate)}
+                  onTick={(time) => {
+                    setData(time.total);
+                  }}
+                  renderer={(props) => (
+                    <span
+                      className={
+                        percentUI >= 28 ? "showTimeReverse" : "showTime"
+                      }
+                    >
+                      {props.formatted.hours}:{props.formatted.minutes}:
+                      {props.formatted.seconds}
+                    </span>
+                  )}
+                  onComplete={async () => {
+                    addToast("Next Break Finished!", {
+                      appearance: "success",
+                    });
+                    await deleteNextBreak();
+                  }}
+                />
+              )
             }
             now={percentUI}
             className={style.progress}
