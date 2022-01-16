@@ -7,6 +7,7 @@ import CardHeader from "./../card/CardHeader";
 import WaterRepository from "./WaterRepository";
 import { Image, Form, Row, Col, Button, NavDropdown } from "react-bootstrap";
 import Modal from "./../modal/modal";
+import TimePicker from "../common/timePicker/TimePicker";
 function HydrationReminderCard() {
   const [mute, setMute] = useState(false);
   const [show, setShow] = useState(false);
@@ -63,10 +64,7 @@ function HydrationReminderCard() {
               </Form.Group>
             </Col>
             <Col md={12}>
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label> How long do you work(8hr) </Form.Label>
-                <Form.Control type="number" placeholder="8hr" />
-              </Form.Group>
+              <TimePicker />
             </Col>
             <Col md={12}>
               <Form.Group className="mb-3" controlId="formBasicEmail">

@@ -175,11 +175,11 @@ div.task-check-box > input {
 .project-setting-icon:hover {
   color: #000;
 }
-.task-col {
+/* .task-col {
   min-height: 300px;
   max-width: 300px;
   width: 300px;
-}
+} */
 
 .highlight-region {
   background-color: yellow;
