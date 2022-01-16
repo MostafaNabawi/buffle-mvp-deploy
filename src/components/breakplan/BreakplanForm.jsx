@@ -7,7 +7,7 @@ import { useToasts } from 'react-toast-notifications';
 import Loader from "react-spinners/BeatLoader";
 
 function BreackplanFrom({
-    show, setShow, newTime, joinOrSagest
+    show, setShow, newTime, joinOrSagest,invateForm
 }) {
     const { addToast } = useToasts();
     const [loading, setloading] = useState(false)
@@ -66,10 +66,10 @@ function BreackplanFrom({
                         joinOrSagest
                             ?
                             <>
-                                {/* <Card.Title className={style.tilte}>
-                                    Join Or new Sagest
-                                </Card.Title> */}
-                                <Card.Text className="text-center">
+                                <Card.Title className={style.tilte}>
+                                    Join Or Set new Sagest
+                                </Card.Title>
+                                <Card.Text className="text-center pt-3">
                                     <Button variant="outline-primary" onClick={() => { setNewSaggestion(false) }} className={style.customBtn}>Join</Button>
                                     <Button variant="outline-primary" onClick={() => { setNewSaggestion(!newSaggestion) }} className={style.customBtn}>Suggestion</Button>
                                     {
@@ -121,6 +121,34 @@ function BreackplanFrom({
                                             </Button>
                                         </Form>
                                     </Card.Text>
+                                </>
+                                :invateForm ?
+                                <>
+                                <Card.Title className={style.tilte}>
+                                        Invite to your break plan
+                                    </Card.Title>
+                                    <Form onSubmit={handleCreatePlan} className="mt-3">
+                                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                                            <Form.Control
+                                                autoFocus
+                                                required
+                                                type="email"
+                                                name="email"
+                                                placeholder="Invaite Email"
+                                                value={newBreak.title}
+                                                onChange={(e) =>
+                                                    setNewBreak({ ...newBreak, [e.target.name]: e.target.value })
+                                                }
+
+                                            />
+                                        </Form.Group>
+                                        
+                                        <Button disabled={loading} className={style.withBtn} variant="primary" type="submit">
+                                            {
+                                                loading ? <Loader color="#fff" size={15} /> : "Invite"
+                                            }
+                                        </Button>
+                                    </Form>
                                 </>
                                 : <>
                                     <Card.Title className={style.tilte}>

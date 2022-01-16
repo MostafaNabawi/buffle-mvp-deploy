@@ -129,6 +129,9 @@ button.btn-primary {
 .navDropdomnIcon > a {
   color: black !important;
 }
+.invaleIcone:hover{
+ color: #4922ff !important;
+}
 .navDropdomnIcon > .dropdown-toggle::after {
   display: inline-block;
   margin-left: 0.255em;
