@@ -23,10 +23,12 @@ const ProjectManagement = () => {
     async function project() {
       const req = await getProject();
       const task = await getTask();
+      console.log(req);
       setItems(req.data);
       setTasks(task.data);
     }
     project();
+
   }, [])
 
 
@@ -79,7 +81,7 @@ const ProjectManagement = () => {
               </Col>
             </Row>
             <hr className="task-manage-hr" />
-            <DropWrapper onDrop={onDrop} status={moment(s.date, "YYYY-MM-DD HH:mm:ss").format('dddd')}>
+            <DropWrapper onDrop={onDrop} >
               <Col>
                 {tasks
                   .filter((i) => i.projectId === s._id)
@@ -145,7 +147,7 @@ const ProjectManagement = () => {
           </>
         }
       />
-    </Row>
+    </Row >
   );
 };
 export default ProjectManagement;
