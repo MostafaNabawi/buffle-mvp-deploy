@@ -50,12 +50,18 @@ function nextBreakTimeValidation(start, end, status) {
     msg: "",
     total: totalSeconds * 1000,
   };
-  // if break time still valid
-  return {
-    type: 1,
-    msg: "",
-    total: totalSeconds * 1000,
-  };
+}
+// check Email Is valid
+function checkEmail(value) {
+  if (
+    !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+      value
+    )
+  ) {
+    return false;
+  } else {
+    return true;
+  }
 }
 // ---------------------------- Other Utils ------------------------------------
-export { timeDifference, nextBreakTimeValidation, getTotalSeconds };
+export { timeDifference, nextBreakTimeValidation, getTotalSeconds, checkEmail };

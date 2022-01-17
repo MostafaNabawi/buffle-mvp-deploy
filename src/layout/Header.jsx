@@ -15,7 +15,6 @@ const Header = () => {
     }
   };
   useEffect(() => {
-    console.log(localStorage.getItem("user"));
     async function getStatus() {
       const req = await userStatus();
       if (req.status !== 200) {
