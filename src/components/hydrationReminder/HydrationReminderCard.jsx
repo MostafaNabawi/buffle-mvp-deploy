@@ -1,20 +1,23 @@
 import { Icon } from "@iconify/react";
-import React, { useState } from "react";
+import { Image, Form, Row, Col, Button, NavDropdown } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
 
+import { API_URL } from "../../config/index";
 import Card from "./../card/Card";
 import CardBody from "./../card/CardBody";
 import CardHeader from "./../card/CardHeader";
-import WaterRepository from "./WaterRepository";
-import { Image, Form, Row, Col, Button, NavDropdown } from "react-bootstrap";
 import Modal from "./../modal/modal";
 import TimePicker2 from "../common/timePicker/TimePicker2";
-import { API_URL } from "../../config/index";
+import WaterRepository from "./WaterRepository";
+import { getWaterHydration, createWaterHydration } from "../../api";
+import { useToasts } from "react-toast-notifications";
 
 function HydrationReminderCard() {
   const [mute, setMute] = useState(false);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const { addToast } = useToasts();
   const [dailyGoal, setDailyGoal] = useState("");
   const [workTime, setWorkTime] = useState("");
   const [reminderTime, setReminderTime] = useState("");
@@ -25,20 +28,32 @@ function HydrationReminderCard() {
     seconds: "",
   });
 
-  const [reminderTime, setreminderTime] = useState({
+  const [reminder, setreminder] = useState({
     hours: "",
     minutes: "",
     seconds: "",
   });
 
   const handleSubmit = async (e) => {
-    e.preventdefault();
-    const req = await fetch(`${API_URL}//api/water_hydration/new `, {
-      goal: dailyGoal,
-      work: workTime,
-      reminder: reminderTime,
+    const data = {
+      dailyGoal,
+      workTime,
+      reminderTime,
+    };
+    const req = await createWaterHydration(data);
+    console.log(req.status);
+    addToast("Created Susseccfully", {
+      autoDismiss: true,
+      appearance: "success",
     });
+    handleClose();
+    setReminderTime("");
   };
+
+  useEffect(async () => {
+    const data = await getWaterHydration();
+    console.log(data);
+  }, []);
 
   return (
     <>
@@ -84,11 +99,7 @@ function HydrationReminderCard() {
         body={
           <Row>
             <Col md={12}>
-              <Form.Group
-                className="mb-3"
-                controlId="formBasicEmail"
-                onSubmit={handleSubmit}
-              >
+              <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>new daily goal(2L) </Form.Label>
                 <Form.Control
                   type="number"
@@ -107,8 +118,8 @@ function HydrationReminderCard() {
             <Col md={12}>
               <TimePicker2
                 label="Set reminder"
-                value={reminderTime}
-                setValue={setreminderTime}
+                value={reminder}
+                setValue={setreminder}
               />
             </Col>
           </Row>
@@ -119,8 +130,7 @@ function HydrationReminderCard() {
               Close
             </Button>
             {/* Vacation time btn */}
-            <Button variant="primary" type="submit">
-              {" "}
+            <Button variant="primary" onClick={handleSubmit}>
               Save
             </Button>
           </>

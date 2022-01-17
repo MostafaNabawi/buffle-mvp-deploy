@@ -173,6 +173,38 @@ async function getTask() {
   const res = await req.json();
   return { status: req.status, data: res.payload };
 }
+
+// Hydration Reminder
+async function getWaterHydration() {
+  const req = await fetch(`${API_URL}/water_hydration/get`, {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+  });
+  const res = await req.json();
+  return { status: req.status, data: res.payload };
+}
+
+async function createWaterHydration(data) {
+  const req = await fetch(`${API_URL}/water_hydration/new`, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+    body: JSON.stringify({
+      goal: data.dailyGoal,
+      work: data.workTime,
+      reminder: data.reminderTime,
+    }),
+  });
+  return { status: req.status };
+}
+
 export {
   signin,
   logout,
@@ -186,4 +218,6 @@ export {
   updateProject,
   createTask,
   getTask,
+  getWaterHydration,
+  createWaterHydration,
 };
