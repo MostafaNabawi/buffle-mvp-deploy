@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { getProject } from "../../../api";
+import { getProject, setProjectToItem } from "../../../api";
 import Button from "./Button";
 import style from "./style.module.css";
 import Select from 'react-select';
-import moment from "moment";
 
 function Project(props) {
   const title = "Project";
   const [projects, setProjects] = useState([]);
+  const [value, setValue] = useState([]);
+  const [itemId, setItemId] = useState(props.item.tb_id);
   useEffect(() => {
     async function request() {
       // get project and format
@@ -22,10 +23,15 @@ function Project(props) {
     }
     request();
   }, []);
-
+  async function ProjectChange(val) {
+    const update = await setProjectToItem(itemId, val);
+    console.log(update)
+  }
+  console.log('sdsd', itemId)
   return (
     <Select
       options={projects}
+      onChange={ProjectChange}
     />
   );
 }

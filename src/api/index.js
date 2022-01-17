@@ -173,6 +173,23 @@ async function getTask() {
   const res = await req.json();
   return { status: req.status, data: res.payload };
 }
+
+async function setProjectToItem(data) {
+  console.log("ab", data);
+  const req = await fetch(`${API_URL}/task/update-task-project`, {
+    method: "PUT",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+    body: JSON.stringify({
+      taskId: data.tb_id,
+      projectId: data.p_id,
+    }),
+  });
+  return { status: req.status };
+}
 export {
   signin,
   logout,
@@ -186,4 +203,5 @@ export {
   updateProject,
   createTask,
   getTask,
+  setProjectToItem,
 };
