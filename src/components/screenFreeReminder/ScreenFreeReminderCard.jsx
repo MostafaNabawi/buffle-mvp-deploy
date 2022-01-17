@@ -28,7 +28,7 @@ function ScreenFreeReminderCard() {
     minutes: "",
     seconds: ""
   })
-  //
+  // 
   const timeFormat=(time)=>{
     console.log("time",time.hours.length)
     if(time.hours.length == 1){
