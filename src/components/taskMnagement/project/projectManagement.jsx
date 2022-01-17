@@ -96,7 +96,7 @@ const ProjectManagement = () => {
               </Col>
             </Row>
             <hr className="task-manage-hr" />
-            <DropWrapper onDrop={onDrop} >
+            <DropWrapper onDrop={onDrop} status={s.status}>
               <Col>
                 {items
                   .filter((i) => i.projectId === s.p_id)

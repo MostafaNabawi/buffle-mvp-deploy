@@ -11,11 +11,12 @@ const DropWrapper = ({ onDrop, children, status }) => {
         canDrop: (item, monitor) => {
             const itemIndex = statuses.findIndex(si => si.status === item.status);
             const statusIndex = statuses.findIndex(si => si.status === status);
-            // console.log('status', statusIndex, 'item', itemIndex)
+
             return [statusIndex, statusIndex, itemIndex].includes(statusIndex);
         },
         drop: (item, monitor) => {
             onDrop(item, monitor, status);
+            // console.log('edit here when droped', item)
         },
         collect: monitor => ({
             isOver: monitor.isOver()
