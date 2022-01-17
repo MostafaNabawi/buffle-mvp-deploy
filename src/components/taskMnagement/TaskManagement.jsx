@@ -21,6 +21,7 @@ const TaskManagement = () => {
           id: n,
           status: moment(i.date, "YYYY-MM-DD HH:mm:ss").format("dddd"),
           content: i.name,
+          tb_id: i._id,
         };
       });
       setItems(format);
@@ -28,7 +29,7 @@ const TaskManagement = () => {
     request();
   }, []);
 
-  const handleKeyDown = async (event) => {
+  const handleKeyDownWeekDaysItem = async (event) => {
     if (event.key === 'Enter') {
       const createT = await createTask(inputTask);
       if (createT.status === 200) {
@@ -46,7 +47,6 @@ const TaskManagement = () => {
   const onDrop = (item, monitor, status) => {
 
     setItems((prevState) => {
-
       const newItems = prevState
         .filter((i) => i.id !== item.id)
         .concat({ ...item, status });
@@ -93,12 +93,14 @@ const TaskManagement = () => {
                   <Form.Group className="mb-3" controlId="form-new-task">
                     <input type="text" className="new_task_input"
                       placeholder="New Task"
+
                       aria-label="New Task" onChange={(e) => (
-                        setInputTask({ name: e.target.value, p_id: s._id })
+                        setInputTask({ name: e.target.value })
 
                       )
                       }
-                      onKeyDown={handleKeyDown} />
+                      onKeyDown={handleKeyDownWeekDaysItem}
+                    />
                   </Form.Group>
                 </div>
               </Col>

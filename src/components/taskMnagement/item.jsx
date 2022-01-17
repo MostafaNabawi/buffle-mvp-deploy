@@ -6,7 +6,6 @@ import TaskModal from "./modal/TaskModal";
 
 const Item = (props) => {
   const { item, index, moveItem, status } = props;
-  console.log(item);
   const ref = useRef(null);
   const [, drop] = useDrop({
     accept: ITEM_TYPE,
