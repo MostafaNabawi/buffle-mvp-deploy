@@ -1,23 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Col, Form, Row } from "react-bootstrap";
 
-function TimePicker({
-  label,
-  // hours,setHours,
-  // minutes,setMinutes,
-  // seconds,setSeconds,
-  value,
-  setValue,
-}) {
+function TimePicker({ label, value, setValue }) {
+  const [houreValue, setHoursValue] = useState("");
+  const [minuteValue, setMinuteValue] = useState("");
+  const [secondValue, setSecondeValue] = useState("");
+
+  useEffect(() => {
+    if (value) {
+      setHoursValue(value.hours);
+      setMinuteValue(value.minutes);
+      setSecondeValue(value.seconds);
+    }
+  }, [value]);
+
   const validatHours = (e) => {
     const value = e.target.value;
     const hours = value <= 12 ? value : 12;
-    // setHours(hours);
     setValue({
-      ...value,
-      ["hours"]: hours,
-      ["minutes"]: value?.minutes,
-      ["seconds"]: value.seconds,
+      hours: hours,
+      minutes: minuteValue,
+      seconds: secondValue,
     });
   };
 
@@ -25,18 +28,16 @@ function TimePicker({
     const val = value <= 60 ? value : 60;
     if (type === "sec") {
       setValue({
-        ...value,
-        ["hours"]: value?.hours,
-        ["minutes"]: value?.minutes,
-        ["seconds"]: val,
+        hours: houreValue,
+        minutes: minuteValue,
+        seconds: val,
       });
       return "";
     } else {
       setValue({
-        ...value,
-        ["hours"]: value?.hours,
-        ["minutes"]: val,
-        ["seconds"]: value?.seconds,
+        hours: houreValue,
+        minutes: val,
+        seconds: secondValue,
       });
       return "";
     }

@@ -15,7 +15,7 @@
   overflow: hidden;
 }
 
-.water_drop {
+.water_drops span {
   background: rgba(107, 87, 255, 1);
   position: absolute;
   z-index: 2;
@@ -25,11 +25,21 @@
   height: 0.5rem;
 }
 
-.water_drop.item-1 {
+.water_drops span:first-child,
+.water_drops span:nth-child(2),
+.water_drops span:nth-child(3) {
   left: 25%;
 }
-.item-2 {
-  top: 70%;
+.water_drops span:nth-child(2) {
+  top: 68%;
+  left: 25%;
+}
+.water_drops span:nth-child(3) {
+  top: 80%;
+}
+.water_drops span:nth-child(4) {
+  left: 40%;
+  top: 60%;
 }
 
 .reminder {

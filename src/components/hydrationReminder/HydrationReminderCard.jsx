@@ -7,12 +7,23 @@ import CardHeader from "./../card/CardHeader";
 import WaterRepository from "./WaterRepository";
 import { Image, Form, Row, Col, Button, NavDropdown } from "react-bootstrap";
 import Modal from "./../modal/modal";
-import TimePicker from "../common/timePicker/TimePicker";
+import TimePicker2 from "../common/timePicker/TimePicker2";
 function HydrationReminderCard() {
   const [mute, setMute] = useState(false);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [howLongTime, setHowLongTime] = useState({
+    hours: "",
+    minutes: "",
+    seconds: "",
+  });
+
+  const [reminderTime, setreminderTime] = useState({
+    hours: "",
+    minutes: "",
+    seconds: "",
+  });
 
   return (
     <>
@@ -64,10 +75,18 @@ function HydrationReminderCard() {
               </Form.Group>
             </Col>
             <Col md={12}>
-              <TimePicker label="How long do you work" />
+              <TimePicker2
+                label="How long do you work"
+                value={howLongTime}
+                setValue={setHowLongTime}
+              />
             </Col>
             <Col md={12}>
-              <TimePicker label="Set reminder" />
+              <TimePicker2
+                label="Set reminder"
+                value={reminderTime}
+                setValue={setreminderTime}
+              />
             </Col>
           </Row>
         }
