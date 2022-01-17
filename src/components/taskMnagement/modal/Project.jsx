@@ -24,10 +24,12 @@ function Project(props) {
     request();
   }, []);
   async function ProjectChange(val) {
-    const update = await setProjectToItem(itemId, val);
+    console.log('sdsd', itemId)
+    console.log('val', val.value)
+
+    const update = await setProjectToItem(itemId, val.value);
     console.log(update)
   }
-  console.log('sdsd', itemId)
   return (
     <Select
       options={projects}

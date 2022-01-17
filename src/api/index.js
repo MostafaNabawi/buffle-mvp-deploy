@@ -174,8 +174,7 @@ async function getTask() {
   return { status: req.status, data: res.payload };
 }
 
-async function setProjectToItem(data) {
-  console.log("ab", data);
+async function setProjectToItem(id, p_id) {
   const req = await fetch(`${API_URL}/task/update-task-project`, {
     method: "PUT",
     credentials: "include",
@@ -184,8 +183,8 @@ async function setProjectToItem(data) {
       "Access-Control-Allow-Credentials": true,
     },
     body: JSON.stringify({
-      taskId: data.tb_id,
-      projectId: data.p_id,
+      taskId: id,
+      projectId: p_id,
     }),
   });
   return { status: req.status };
