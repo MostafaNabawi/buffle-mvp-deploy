@@ -6,6 +6,7 @@ import RepeatTask from "./RepeatTask";
 import style from "./style.module.css";
 import { Icon } from "@iconify/react";
 function TaskModal(props) {
+
   const { handleClose, title, className } = props;
   return (
     <Modal
@@ -20,7 +21,7 @@ function TaskModal(props) {
         <Form>
           <Modal.Header className={style.modal_header}>
             <DatePicker />
-            <Project />
+            <Project {...props} />
             <RepeatTask />
             <button type="button">
               <Icon icon="akar-icons:trash-can" />

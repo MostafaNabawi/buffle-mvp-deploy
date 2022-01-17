@@ -12,7 +12,6 @@ const TaskManagement = () => {
   const [items, setItems] = useState([]);
   const [inputTask, setInputTask] = useState({ name: '', p_id: '' });
 
-
   useEffect(() => {
     async function request() {
       const data = await getTask();
@@ -31,7 +30,7 @@ const TaskManagement = () => {
 
   const handleKeyDownWeekDaysItem = async (event) => {
     if (event.key === 'Enter') {
-      const createT = await createTask(inputTask);
+      const createT = await createTask(inputTask, 0);
       if (createT.status === 200) {
         addToast("Created Susseccfully", { autoDismiss: true, appearance: 'success' });
         setItems(arr => [
