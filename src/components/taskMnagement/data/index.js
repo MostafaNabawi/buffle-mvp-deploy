@@ -1,69 +1,54 @@
 const data = [
   {
     id: 1,
-    icon: "⭕️",
     status: "Sunday",
-    title: "Human Interest Form",
-    content: "Fill out human interest distribution form",
+    name: "Fill out human interest distribution form",
   },
   {
     id: 2,
-    icon: "⭕️",
     status: "Sunday",
-    title: "Purchase present",
-    content: "Get an anniversary gift",
+    name: "Get an anniversary gift",
   },
   {
     id: 3,
-    icon: "⭕️",
     status: "Monday",
-    title: "Invest in investments",
-    content: "Call the bank to talk about investments",
+    name: "Call the bank to talk about investments",
   },
   {
     id: 4,
-    icon: "⭕️",
     status: "Sunday",
-    title: "Daily reading",
-    content: "Finish reading Intro to UI/UX",
+    name: "Finish reading Intro to UI/UX",
   },
 ];
 
 const statuses = [
   {
     status: "Sunday",
-    title: "Daily reading",
-    color: "#EB5A46",
+    title: "Daily Reading",
   },
   {
     status: "Monday",
-    title: "Invest in investments",
-    color: "#00C2E0",
+    title: "New Project",
   },
   {
     status: "Tuesday",
-    title: "Purchase present",
-    color: "#C377E0",
+    title: "Buffle Project",
   },
   {
     status: "Wednesday",
-    title: "Human Interest Form",
-    color: "#3981DE",
+    title: "School Project",
   },
   {
     status: "Thursday",
-    title: "Buffle project",
-    color: "#3981DE",
+    title: "Course Project",
   },
   {
     status: "Friday",
-    title: "School project",
-    color: "#3981DE",
+    title: "Last Project",
   },
   {
     status: "Saturday",
-    title: "Restaurant system",
-    color: "#3981DE",
+    title: "Mis Project",
   },
 ];
 

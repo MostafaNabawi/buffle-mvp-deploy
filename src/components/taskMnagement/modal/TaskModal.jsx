@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Modal, Form, Container } from "react-bootstrap";
 import DatePicker from "./DatePicker";
 import Project from "./Project";
@@ -7,10 +7,6 @@ import style from "./style.module.css";
 import { Icon } from "@iconify/react";
 function TaskModal(props) {
   const { handleClose, title, className } = props;
-  const [show, setshow] = useState("");
-  const handleToggle = (e) => {
-    setshow(e);
-  };
   return (
     <Modal
       {...props}
@@ -23,9 +19,9 @@ function TaskModal(props) {
       <Container>
         <Form>
           <Modal.Header className={style.modal_header}>
-            <DatePicker handleToggle={handleToggle} show={show} />
-            <Project handleToggle={handleToggle} show={show} />
-            <RepeatTask handleToggle={handleToggle} show={show} />
+            <DatePicker />
+            <Project />
+            <RepeatTask />
             <button type="button">
               <Icon icon="akar-icons:trash-can" />
             </button>

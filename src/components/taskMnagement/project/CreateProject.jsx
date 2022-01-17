@@ -4,8 +4,10 @@ import { Icon } from "@iconify/react";
 import Modal from "../../modal/modal";
 import { createProject } from "../../../api";
 import BeatLoader from "react-spinners/BeatLoader";
+import { useToasts } from 'react-toast-notifications';
 
 const CreateProject = () => {
+  const { addToast } = useToasts();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -22,10 +24,16 @@ const CreateProject = () => {
       setError('');
       setloading(true);
       const createP = await createProject(projectName);
-      console.log(createP.status);
       if (createP.status === 200) {
+        addToast("Created Susseccfully", { autoDismiss: true, appearance: 'success' });
         setloading(false);
         setShow(false);
+      }
+      else {
+        addToast("Error Please Try Again!", { autoDismiss: false, appearance: 'error' });
+        setloading(false)
+        setProjectName('');
+        return true;
       }
       setProjectName('');
       return true;

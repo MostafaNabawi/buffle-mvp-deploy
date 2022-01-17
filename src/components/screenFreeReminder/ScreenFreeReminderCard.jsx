@@ -11,9 +11,8 @@ import { API_URL } from '../../config/index'
 import style from "./style.module.css";
 
 function ScreenFreeReminderCard() {
-
   // Modal
-  const [sizeModal, setSizeModal] = useState('')
+  const [sizeModal, setSizeModal] = useState("");
   const [modalShow, setModalShow] = useState(false);
   const handleClose = () => setModalShow(false);
   const handleShow = () => setModalShow(true);
@@ -44,10 +43,9 @@ function ScreenFreeReminderCard() {
     } else {
       timeFormat(durationTime)
       // const req=await fetch(`${API_URL}//api/screen_reminder/new `,{
-
       // })
     }
-  }
+  };
   return (
     <>
       <Card className={style.card}>
@@ -56,10 +54,12 @@ function ScreenFreeReminderCard() {
           title="ScreenFree Reminder"
           action={
             <>
-              <i title="Set your screen free Reminder" onClick={() => {
-                setModalShow(true)
-                setSizeModal('md')
-              }}
+              <i
+                title="Set your screen free Reminder"
+                onClick={() => {
+                  setModalShow(true);
+                  setSizeModal("md");
+                }}
               >
                 <Icon icon="vaadin:plus" />
               </i>
@@ -85,7 +85,7 @@ function ScreenFreeReminderCard() {
         size={sizeModal}
         show={modalShow}
         handleClose={handleClose}
-        title='Set your screen free Reminder'
+        title="Set your screen free Reminder"
         body={
           <Row>
             <Col md={12}>
@@ -109,8 +109,16 @@ function ScreenFreeReminderCard() {
         }
         footer={
           <>
-            <Button variant="outline-dark" onClick={handleClose}>Close</Button>
-            <Button onClick={() => { handleSubmit() }} variant="primary" type="button">
+            <Button variant="outline-dark" onClick={handleClose}>
+              Close
+            </Button>
+            <Button
+              onClick={() => {
+                handleSubmit();
+              }}
+              variant="primary"
+              type="button"
+            >
               Save
             </Button>
           </>

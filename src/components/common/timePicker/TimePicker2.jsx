@@ -1,56 +1,46 @@
 import React, { useState, useEffect } from "react";
 import { Col, Form, Row } from "react-bootstrap";
 
-function TimePicker({
-  label,
-  value, setValue
-}) {
-  const [houreValue, setHoursValue] = useState('')
-  const [minuteValue, setMinuteValue] = useState('')
-  const [secondValue, setSecondeValue] = useState('')
+function TimePicker({ label, value, setValue }) {
+  const [houreValue, setHoursValue] = useState("");
+  const [minuteValue, setMinuteValue] = useState("");
+  const [secondValue, setSecondeValue] = useState("");
 
   useEffect(() => {
     if (value) {
-      setHoursValue(value.hours)
-      setMinuteValue(value.minutes)
-      setSecondeValue(value.seconds)
+      setHoursValue(value.hours);
+      setMinuteValue(value.minutes);
+      setSecondeValue(value.seconds);
     }
-  }, [value])
+  }, [value]);
+
   const validatHours = (e) => {
     const value = e.target.value;
     const hours = value < 12 ? value : 12;
-    setValue(
-      {
-        hours: hours,
-        minutes: minuteValue === '' ? "00" : minuteValue,
-        seconds: secondValue === '' ? "00" : secondValue
-      }
-    )
+    setValue({
+      hours: hours,
+      minutes: minuteValue === "" ? "00" : minuteValue,
+      seconds: secondValue === "" ? "00" : secondValue,
+    });
   };
 
   const validatMintteAndSeconds = (value, type) => {
     const val = value <= 60 ? value : 60;
     if (type === "sec") {
-
-      setValue(
-        {
-          hours: houreValue === '' ? "00" : houreValue,
-          minutes: minuteValue === '' ? "00" : minuteValue,
-          seconds: val
-        }
-      )
-      return ""
+      setValue({
+        hours: houreValue === "" ? "00" : houreValue,
+        minutes: minuteValue === "" ? "00" : minuteValue,
+        seconds: val,
+      });
+      return "";
     } else {
-      setValue(
-        {
-          hours: houreValue === '' ? "00" : houreValue,
-          minutes: val,
-          seconds: secondValue === '' ? "00" : secondValue
-        }
-      )
-      return ""
+      setValue({
+        hours: houreValue === "" ? "00" : houreValue,
+        minutes: val,
+        seconds: secondValue === "" ? "00" : secondValue,
+      });
+      return "";
     }
-
   };
   const timeFormat=(time)=>{
     if(time.hours.length == 1)   setValue({...time,['hours']:"0"+time.hours})
