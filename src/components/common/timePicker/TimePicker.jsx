@@ -1,29 +1,30 @@
 import React, { useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
 
-function TimePicker({ 
+function TimePicker({
   label,
-  hours,setHours,
-  minutes,setMinutes,
-  seconds,setSeconds
- }) {
-
+  hours,
+  setHours,
+  minutes,
+  setMinutes,
+  seconds,
+  setSeconds,
+}) {
   const validatHours = (e) => {
     const value = e.target.value;
     const hours = value <= 12 ? value : 12;
     setHours(hours);
   };
 
-  const validatMintteAndSeconds = (value,type) => {
-    const val= value <= 60 ? value : 60;
-    if(type==="sec"){
-      setSeconds(val)
-      return ""
-    }else{
+  const validatMintteAndSeconds = (value, type) => {
+    const val = value <= 60 ? value : 60;
+    if (type === "sec") {
+      setSeconds(val);
+      return "";
+    } else {
       setMinutes(val);
-      return  ""
+      return "";
     }
-    
   };
 
   return (
@@ -48,7 +49,7 @@ function TimePicker({
             min={0}
             max={60}
             value={minutes}
-            onChange={(e)=>validatMintteAndSeconds(e.target.value,"min")}
+            onChange={(e) => validatMintteAndSeconds(e.target.value, "min")}
           />
         </Col>
         <Col>
@@ -58,7 +59,7 @@ function TimePicker({
             min={0}
             max={60}
             value={seconds}
-            onChange={(e)=>validatMintteAndSeconds(e.target.value,"sec")}
+            onChange={(e) => validatMintteAndSeconds(e.target.value, "sec")}
           />
         </Col>
       </Row>

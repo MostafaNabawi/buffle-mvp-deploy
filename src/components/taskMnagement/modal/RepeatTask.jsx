@@ -2,15 +2,9 @@ import React from "react";
 import { Icon } from "@iconify/react";
 import style from "./style.module.css";
 function RepeatTask(props) {
-  const { handleToggle, show } = props;
-  const showClass = show === "repeat_modal" ? style.show : "";
   return (
     <div className={style.dropDown_wrapper}>
-      <button
-        type="button"
-        className="btn_repeat"
-        onClick={() => handleToggle("repeat_modal")}
-      >
+      <button type="button" className="btn_repeat">
         <Icon icon="akar-icons:arrow-repeat" />
       </button>
       <div className={`${style.dropDown}`}>
