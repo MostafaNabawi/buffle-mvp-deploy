@@ -8,11 +8,17 @@ import WaterRepository from "./WaterRepository";
 import { Image, Form, Row, Col, Button, NavDropdown } from "react-bootstrap";
 import Modal from "./../modal/modal";
 import TimePicker2 from "../common/timePicker/TimePicker2";
+import { API_URL } from "../../config/index";
+
 function HydrationReminderCard() {
   const [mute, setMute] = useState(false);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [dailyGoal, setDailyGoal] = useState("");
+  const [workTime, setWorkTime] = useState("");
+  const [reminderTime, setReminderTime] = useState("");
+
   const [howLongTime, setHowLongTime] = useState({
     hours: "",
     minutes: "",
@@ -24,6 +30,15 @@ function HydrationReminderCard() {
     minutes: "",
     seconds: "",
   });
+
+  const handleSubmit = async (e) => {
+    e.preventdefault();
+    const req = await fetch(`${API_URL}//api/water_hydration/new `, {
+      goal: dailyGoal,
+      work: workTime,
+      reminder: reminderTime,
+    });
+  };
 
   return (
     <>
@@ -69,9 +84,17 @@ function HydrationReminderCard() {
         body={
           <Row>
             <Col md={12}>
-              <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Group
+                className="mb-3"
+                controlId="formBasicEmail"
+                onSubmit={handleSubmit}
+              >
                 <Form.Label>new daily goal(2L) </Form.Label>
-                <Form.Control type="number" placeholder="2L" />
+                <Form.Control
+                  type="number"
+                  placeholder="2L"
+                  onChange={(e) => setDailyGoal(e.target.value)}
+                />
               </Form.Group>
             </Col>
             <Col md={12}>

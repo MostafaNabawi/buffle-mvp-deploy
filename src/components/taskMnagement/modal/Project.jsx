@@ -1,15 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "./Button";
 import style from "./style.module.css";
 function Project(props) {
+  const [label, setLabel] = useState("");
   const title = "Project";
 
   return (
     <div className={style.dropDown_wrapper}>
-      <Button label={title || "NO roject"} />
+      <Button label={label || "NO roject"} />
       <div className={`${style.dropDown}`}>
         <ul>
-          <li>
+          <li onChange={(e) => setLabel(e.target.children)}>
             <span></span>
             Project-1
           </li>
