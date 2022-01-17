@@ -52,6 +52,19 @@ function TimePicker({
     }
 
   };
+  const timeFormat=(time)=>{
+    if(time.hours.length == 1)   setValue({...time,['hours']:"0"+time.hours})
+    if(time.hours.length == 0)   setValue({...time,['hours']:"00"}) 
+    if(time.hours.length >2)   setValue({...time,['hours']:"00"}) 
+
+    if(time.minutes.length == 1)  setValue({...time,['minutes']:"0"+time.minutes})
+    if(time.minutes.length == 0)  setValue({...time,['minutes']:"00"})
+    if(time.minutes.length > 2)  setValue({...time,['minutes']:"00"})
+
+    if(time.seconds.length == 1)   setValue({...time,['seconds']:"0"+time.seconds})
+    if(time.seconds.length == 0)   setValue({...time,['seconds']:"00"})
+    if(time.seconds.length >2)   setValue({...time,['seconds']:"00"})
+  }
 
   return (
     <Form.Group className="mb-3">
@@ -65,6 +78,7 @@ function TimePicker({
             max={12}
             value={value.hours}
             onChange={validatHours}
+            onBlur={()=>{timeFormat(value)}}
           />
         </Col>
 
@@ -76,6 +90,7 @@ function TimePicker({
             max={60}
             value={value?.minutes}
             onChange={(e) => validatMintteAndSeconds(e.target.value, "min")}
+            onBlur={()=>{timeFormat(value)}}
           />
         </Col>
         <Col>
@@ -86,6 +101,7 @@ function TimePicker({
             max={60}
             value={value?.seconds}
             onChange={(e) => validatMintteAndSeconds(e.target.value, "sec")}
+            onBlur={()=>{timeFormat(value)}}
           />
         </Col>
       </Row>
