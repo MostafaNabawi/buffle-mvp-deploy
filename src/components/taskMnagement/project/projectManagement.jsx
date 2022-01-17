@@ -50,7 +50,7 @@ const ProjectManagement = () => {
   // insert task to database for project
   const handleKeyDown = async (event) => {
     if (event.key === 'Enter') {
-      const createT = await createTask(inputTask);
+      const createT = await createTask(inputTask, 0);
       if (createT.status === 200) {
         addToast("Created Susseccfully", { autoDismiss: true, appearance: 'success' });
 
