@@ -1,30 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { getProject } from "../../../api";
 import Button from "./Button";
 import style from "./style.module.css";
+import Select from 'react-select';
+import moment from "moment";
+
 function Project(props) {
-  const { handleToggle, show } = props;
-  const showClass = show === "project_modal" ? style.show : "";
   const title = "Project";
+  const [projects, setProjects] = useState([]);
+  useEffect(() => {
+    async function request() {
+      // get project and format
+      const req = await getProject();
+      const formatP = req.data.map((i, n) => {
+        return {
+          label: i.name,
+          value: i._id,
+        };
+      });
+      setProjects(formatP);
+    }
+    request();
+  }, []);
 
   return (
-    <div className={style.dropDown_wrapper}>
-      <Button
-        label={title || "NO roject"}
-        onClick={() => handleToggle("project_modal")}
-      />
-      <div className={`${style.dropDown}`}>
-        <ul>
-          <li>
-            <span></span>
-            Project-1
-          </li>
-          <li>
-            <span></span>
-            Project-2
-          </li>
-        </ul>
-      </div>
-    </div>
+    <Select
+      options={projects}
+    />
   );
 }
 

@@ -6,55 +6,46 @@ import Card from "./../card/Card";
 import CardBody from "./../card/CardBody";
 import CardHeader from "./../card/CardHeader";
 import Modal from '../modal/modal'
+import { API_URL } from '../../config/index'
 
 import style from "./style.module.css";
 
 function ScreenFreeReminderCard() {
-
-  const [timeReminder, setIimeReminder] = useState({
-    durationTime: "",
-    disPlayTime: ""
-  })
-  const [isError, setIsError] = useState({
-    durationTime: false,
-    disPlayTime: false
-  })
   // Modal
-  const [sizeModal, setSizeModal] = useState('')
+  const [sizeModal, setSizeModal] = useState("");
   const [modalShow, setModalShow] = useState(false);
   const handleClose = () => setModalShow(false);
   const handleShow = () => setModalShow(true);
   // state for time input 
-  const [durationTime,setDurationTime]=useState({
-    hours:"",
-    minutes:"",
-    seconds:""
+  const [durationTime, setDurationTime] = useState({
+    hours: "",
+    minutes: "",
+    seconds: ""
   })
-  const [displayTime,setDisplayTime]=useState({
-    hours:"",
-    minutes:"",
-    seconds:""
+  const [displayTime, setDisplayTime] = useState({
+    hours: "",
+    minutes: "",
+    seconds: ""
   })
-  //
-  const handleSubmit = () => {
-    if (timeReminder.durationTime != "" && timeReminder.disPlayTime != "") {
-      console.log("submit")
-    } else {
-      // Error handling
-      if (timeReminder.durationTime === "" && timeReminder.disPlayTime === "") {
-        setIsError({ ...isError, ['durationTime']: true, ['disPlayTime']: true })
-        return false;
-      }
-      if (timeReminder.durationTime === "") {
-        setIsError({ ...isError, ['durationTime']: true, ['disPlayTime']: false })
-        return false;
-      }
-      if (timeReminder.disPlayTime === "") {
-        setIsError({ ...isError, ['durationTime']: false, ['disPlayTime']: true })
-        return false;
-      }
+  // 
+  const timeFormat=(time)=>{
+    console.log("time",time.hours.length)
+    if(time.hours.length == 1){
+      setDurationTime({...time,['hours']:"0"+time.hours})
     }
   }
+  const handleSubmit = async () => {
+    if (
+      durationTime.hours === "" && durationTime.minutes === "" && durationTime.seconds === "" ||
+      displayTime.hours === "" && displayTime.minutes === "" && displayTime.seconds === ""
+    ) {
+      return false
+    } else {
+      timeFormat(durationTime)
+      // const req=await fetch(`${API_URL}//api/screen_reminder/new `,{
+      // })
+    }
+  };
   return (
     <>
       <Card className={style.card}>
@@ -63,10 +54,12 @@ function ScreenFreeReminderCard() {
           title="ScreenFree Reminder"
           action={
             <>
-              <i title="Set your screen free Reminder" onClick={() => {
-                setModalShow(true)
-                setSizeModal('md')
-              }}
+              <i
+                title="Set your screen free Reminder"
+                onClick={() => {
+                  setModalShow(true);
+                  setSizeModal("md");
+                }}
               >
                 <Icon icon="vaadin:plus" />
               </i>
@@ -92,32 +85,40 @@ function ScreenFreeReminderCard() {
         size={sizeModal}
         show={modalShow}
         handleClose={handleClose}
-        title='Set your screen free Reminder'
+        title="Set your screen free Reminder"
         body={
           <Row>
             <Col md={12}>
-            <TimePicker2 
-            label={"duration time"}
-            value={durationTime}
-            setValue={setDurationTime}
-            />
+              <TimePicker2
+                label={"duration time"}
+                value={durationTime}
+                setValue={setDurationTime}
+              />
             </Col>
             <Col md={12}>
-            <TimePicker2
-            label={"Display Time"}
-            value={displayTime}
-            setValue={setDisplayTime}
-            />
+              <TimePicker2
+                label={"Display Time"}
+                value={displayTime}
+                setValue={setDisplayTime}
+              />
             </Col>
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
-              <Form.Check type="checkbox" label="Start " />
-            </Form.Group>
+            {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+              <Form.Check type="checkbox" label="Mute " />
+            </Form.Group> */}
           </Row>
         }
         footer={
           <>
-            <Button variant="outline-dark" onClick={handleClose}>Close</Button>
-            <Button onClick={() => { handleSubmit() }} variant="primary" type="button">
+            <Button variant="outline-dark" onClick={handleClose}>
+              Close
+            </Button>
+            <Button
+              onClick={() => {
+                handleSubmit();
+              }}
+              variant="primary"
+              type="button"
+            >
               Save
             </Button>
           </>

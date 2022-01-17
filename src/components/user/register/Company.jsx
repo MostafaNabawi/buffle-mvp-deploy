@@ -5,7 +5,9 @@ import { Link } from "react-router-dom";
 import { getCountry, getStateOfCountry } from "../helper/Countey";
 import style from "../style.module.css";
 import { API_URL } from "../../../config";
-
+import { useToasts } from "react-toast-notifications";
+import { checkEmail } from "../../../config/utils";
+import PulseLoader from "react-spinners/PulseLoader";
 const CompanyRegister = () => {
   const allCountry = getCountry();
   const [state, setState] = useState("");
@@ -26,26 +28,15 @@ const CompanyRegister = () => {
     postal: "",
     type: 1,
   });
+  const [loading, setLoading] = useState(false);
+  const [emailAlreadyExist, setEmailAlreadyExist] = useState(false);
+  const { addToast } = useToasts();
+
   const getState = (code) => {
     if (code != "") {
       setState(getStateOfCountry(code));
     } else {
       setState("");
-    }
-  };
-  const handleRegister = async (e) => {
-    e.preventDefault();
-    // validate
-    const tokenaized = await fetch(`${API_URL}/auth/decode`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Credentials": true,
-      },
-      body: JSON.stringify(inputs),
-    });
-    if (tokenaized.status === 200) {
-      setSendEmail(true);
     }
   };
   const emailExist = async (value) => {
@@ -62,9 +53,66 @@ const CompanyRegister = () => {
     });
     const res = await req.json();
     if (res.payload) {
-      alert("Email Already Taken!");
+      addToast("Email Already Taken!", {
+        appearance: "error",
+      });
+      setEmailAlreadyExist(true);
+    } else {
+      setEmailAlreadyExist(false);
     }
   };
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    // validate
+    let errors = 0;
+    for (const key in inputs) {
+      if (!inputs[key]) {
+        errors += 1;
+        break;
+      }
+    }
+    if (errors > 0) {
+      addToast("Please Fill all Form!", {
+        appearance: "warning",
+        autoDismiss: 4000,
+      });
+      return;
+    }
+    // emailExist Error
+    if (emailAlreadyExist) {
+      addToast("Email Already Taken!", {
+        appearance: "error",
+      });
+      return;
+    }
+    if (!checkEmail(inputs.email)) {
+      addToast("Invalid Email Address!", {
+        appearance: "warning",
+        autoDismiss: 4000,
+      });
+      return;
+    }
+    setLoading(true);
+
+    const tokenaized = await fetch(`${API_URL}/auth/decode`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Credentials": true,
+      },
+      body: JSON.stringify(inputs),
+    });
+    if (tokenaized.status === 200) {
+      setSendEmail(true);
+    } else {
+      setLoading(false);
+      addToast("Error While Registring!!", {
+        appearance: "error",
+        autoDismiss: 8000,
+      });
+    }
+  };
+
   return (
     <div className="pt-5">
       {!sendEmail ? (
@@ -75,7 +123,7 @@ const CompanyRegister = () => {
                 <div className={style.floatLeft}>1/2</div>
                 <Image src="/favicon.ico" />
                 <div className={`${style.headerTitle} mt-3`}>
-                Enter your personal and campany info
+                  Enter your personal and campany info
                 </div>
               </div>
               <div className={style.body}>
@@ -91,6 +139,7 @@ const CompanyRegister = () => {
                           type="text"
                           placeholder="First Name"
                           name="f_name"
+                          disabled={loading}
                           onChange={(e) =>
                             setInputs({
                               ...inputs,
@@ -110,6 +159,7 @@ const CompanyRegister = () => {
                           type="text"
                           placeholder="Last name"
                           name="l_name"
+                          disabled={loading}
                           onChange={(e) =>
                             setInputs({
                               ...inputs,
@@ -129,6 +179,7 @@ const CompanyRegister = () => {
                           type="email"
                           placeholder="Enter email"
                           name="email"
+                          disabled={loading}
                           onChange={(e) =>
                             setInputs({
                               ...inputs,
@@ -147,6 +198,7 @@ const CompanyRegister = () => {
                         <Form.Control
                           className={style.formInput}
                           type="text"
+                          disabled={loading}
                           placeholder="Company Name"
                           name="c_name"
                           onChange={(e) =>
@@ -167,6 +219,7 @@ const CompanyRegister = () => {
                           className={style.formInput}
                           aria-label="Default select example"
                           name="c_size"
+                          disabled={loading}
                           onChange={(e) =>
                             setInputs({
                               ...inputs,
@@ -195,6 +248,7 @@ const CompanyRegister = () => {
                           type="number"
                           placeholder="Tax ID"
                           name="tax_id"
+                          disabled={loading}
                           onChange={(e) =>
                             setInputs({
                               ...inputs,
@@ -214,6 +268,7 @@ const CompanyRegister = () => {
                           type="text"
                           placeholder="Web Site"
                           name="website"
+                          disabled={loading}
                           onChange={(e) =>
                             setInputs({
                               ...inputs,
@@ -233,6 +288,7 @@ const CompanyRegister = () => {
                           type="text"
                           placeholder="Head Office"
                           name="head_office"
+                          disabled={loading}
                           onChange={(e) =>
                             setInputs({
                               ...inputs,
@@ -249,6 +305,7 @@ const CompanyRegister = () => {
                         </Form.Label>
                         <Form.Select
                           name="country"
+                          disabled={loading}
                           onInput={(e) => {
                             getState(e.target.value);
                             setInputs({
@@ -282,6 +339,7 @@ const CompanyRegister = () => {
                           className={style.formInput}
                           aria-label="Default select example"
                           name="city"
+                          disabled={loading}
                           onChange={(e) =>
                             setInputs({
                               ...inputs,
@@ -312,6 +370,7 @@ const CompanyRegister = () => {
                           className={style.formInput}
                           aria-label="Default select example"
                           name="state"
+                          disabled={loading}
                           onChange={(e) =>
                             setInputs({
                               ...inputs,
@@ -343,6 +402,7 @@ const CompanyRegister = () => {
                           type="text"
                           placeholder="Street ,Number"
                           name="street"
+                          disabled={loading}
                           onChange={(e) =>
                             setInputs({
                               ...inputs,
@@ -362,6 +422,7 @@ const CompanyRegister = () => {
                           type="number"
                           placeholder="Postal code"
                           name="postal"
+                          disabled={loading}
                           onChange={(e) =>
                             setInputs({
                               ...inputs,
@@ -376,11 +437,12 @@ const CompanyRegister = () => {
                         <Button
                           className={style.submitBtn}
                           type="button"
+                          disabled={loading}
                           onClick={(e) => {
                             handleRegister(e);
                           }}
                         >
-                          REGISTER
+                          {loading ? <PulseLoader size={10} /> : "REGISTER"}
                         </Button>
                       </Col>
                     </Row>
@@ -408,6 +470,9 @@ const CompanyRegister = () => {
             <h2 className="text-center mt-2">
               Please check your email and continue registering from here.
             </h2>
+            <h6 className="text-center mt-2">
+              <b>Note:</b> You have 2 houres to complete your registration!
+            </h6>
             <h4 className="text-center mt-2">
               Cleck open <a href="http://gmail.com/"> Email</a>
             </h4>

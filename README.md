@@ -1,6 +1,8 @@
-# Getting Started with Create React App
+## Buffle MVP configuration:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Complete Guide on how to setup your project.
+Are you ready?
+
 
 ## Available Scripts
 
@@ -69,3 +71,6 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+=======
+## Envs and Keys
+

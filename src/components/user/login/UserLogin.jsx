@@ -8,6 +8,7 @@ import { signin, userStatus } from "../../../api";
 import PulseLoader from "react-spinners/PulseLoader";
 import GoogleLogin from "react-google-login";
 import { API_URL, GOOGLE_CLIENT_ID } from "../../../config";
+import { checkEmail } from "../../../config/utils";
 const UserLogin = () => {
   const { addToast } = useToasts();
   const [showPassword, setShowPassword] = useState(false);
@@ -26,6 +27,13 @@ const UserLogin = () => {
       });
       return;
     }
+    if (!checkEmail(inputs.email)) {
+      addToast("Invalid Email!", {
+        appearance: "warning",
+        autoDismiss: 4000,
+      });
+      return;
+    }
     setLoading(true);
     const req = await signin(inputs);
     if (req.status === 400) {
@@ -34,7 +42,6 @@ const UserLogin = () => {
         appearance: "error",
         autoDismiss: 4000,
       });
-      console.log(req.data);
       return;
     }
     if (req.status === 200) {
@@ -104,7 +111,7 @@ const UserLogin = () => {
                   </Form.Label>
                   <Form.Control
                     className={style.formInput}
-                    type="email"
+                    type="text"
                     placeholder="Enter email"
                     name="email"
                     disabled={loading}
