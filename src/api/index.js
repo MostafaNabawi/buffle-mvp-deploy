@@ -146,7 +146,7 @@ async function updateProject() {
   return { status: req.status, data: req };
 }
 // ----------------------tasks--------------
-async function createTask(task) {
+async function createTask(task, type) {
   const req = await fetch(`${API_URL}/task/new`, {
     method: "POST",
     credentials: "include",
@@ -157,6 +157,7 @@ async function createTask(task) {
     body: JSON.stringify({
       name: task.name,
       projectId: task.p_id,
+      type: type,
     }),
   });
   return { status: req.status };
@@ -173,6 +174,38 @@ async function getTask() {
   const res = await req.json();
   return { status: req.status, data: res.payload };
 }
+
+async function setProjectToItem(id, p_id) {
+  const req = await fetch(`${API_URL}/task/update-task-project`, {
+    method: "PUT",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+    body: JSON.stringify({
+      taskId: id,
+      projectId: p_id,
+    }),
+  });
+  return { status: req.status };
+}
+
+// async function updateTask() {
+//   const req = await fetch(`${API_URL}/task/update`, {
+//     method: "PUT",
+//     credentials: "include",
+//     headers: {
+//       "Content-Type": "application/json",
+//       "Access-Control-Allow-Credentials": true,
+//     },
+//     body: JSON.stringify({
+//       taskId: id,
+//       projectId: p_id,
+//     }),
+//   });
+//   return { status: req.status };
+// }
 export {
   signin,
   logout,
@@ -186,4 +219,5 @@ export {
   updateProject,
   createTask,
   getTask,
+  setProjectToItem,
 };
