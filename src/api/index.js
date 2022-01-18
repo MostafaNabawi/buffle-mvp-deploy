@@ -191,21 +191,25 @@ async function setProjectToItem(id, p_id) {
   return { status: req.status };
 }
 
-// async function updateTask() {
-//   const req = await fetch(`${API_URL}/task/update`, {
-//     method: "PUT",
-//     credentials: "include",
-//     headers: {
-//       "Content-Type": "application/json",
-//       "Access-Control-Allow-Credentials": true,
-//     },
-//     body: JSON.stringify({
-//       taskId: id,
-//       projectId: p_id,
-//     }),
-//   });
-//   return { status: req.status };
-// }
+async function updateTask() {
+  // const req = await fetch(`${API_URL}/task/update`, {
+  //   method: "PUT",
+  //   credentials: "include",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //     "Access-Control-Allow-Credentials": true,
+  //   },
+  //   body: JSON.stringify({
+  //     taskId: id,
+  //     name: p_id,
+  //     status: p_id,
+  //     moved: p_id,
+  //     spend: p_id,
+  //     type: p_id,
+  //   }),
+  // });
+  // return { status: req.status };
+}
 export {
   signin,
   logout,
@@ -220,4 +224,5 @@ export {
   createTask,
   getTask,
   setProjectToItem,
+  updateTask,
 };
