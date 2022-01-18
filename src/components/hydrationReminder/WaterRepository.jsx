@@ -3,12 +3,12 @@ import WaterWave from "./WaterWave";
 import style from "./style.module.css";
 
 function WaterRepository(props) {
-  const { data } = props;
+  const { precent } = props;
   return (
     <div className={style.wrapper}>
       <div className={style.repository}>
         <div className={style.reminder}>
-          <span className={style.reminder_percent}>{data}%</span>
+          <span className={style.reminder_percent}>{precent}%</span>
           <span className={style.reminder_detail}>0.5 of 2l</span>
         </div>
         <WaterWave verticale={0} />

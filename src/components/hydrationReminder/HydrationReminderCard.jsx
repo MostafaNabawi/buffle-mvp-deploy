@@ -14,14 +14,15 @@ import { useToasts } from "react-toast-notifications";
 
 function HydrationReminderCard() {
   const [delay, setDelay] = useState("");
+  const [precent, setPrecent] = useState(100);
   const [mute, setMute] = useState(false);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const changeTimeFormat = (val) => {
     const arr = val.split(":");
-    const hours = +arr[0];
-    const minutes = +arr[1];
-    const seconds = arr[2];
+    const hours = parseInt(arr[0]);
+    const minutes = parseInt(arr[1]);
+    const seconds = parseInt(arr[2]);
     return { hours, minutes, seconds };
   };
 
@@ -84,17 +85,9 @@ function HydrationReminderCard() {
   }, []);
 
   const reminderNotificationDelay = (val) => {
-    console.log(val);
     const arr = val.split(":");
     return arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000;
   };
-
-  // setTimeout(() => {
-  //   addToast("Info", {
-  //     autoDismiss: true,
-  //     appearance: "info",
-  //   });
-  // }, delay);
 
   return (
     <>
@@ -129,7 +122,7 @@ function HydrationReminderCard() {
           }
         />
         <CardBody>
-          <WaterRepository data={dailyGoal} />
+          <WaterRepository precent={precent} />
         </CardBody>
       </Card>
       <Modal

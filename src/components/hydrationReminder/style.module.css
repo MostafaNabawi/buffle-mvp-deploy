@@ -46,9 +46,11 @@
   display: flex;
   flex-flow: column;
   justify-content: center;
-  text-align: center;
   font-weight: 700;
   height: 50%;
+  position: absolute;
+  left: 26%;
+  z-index: 1;
 }
 .reminder_percent {
   font-size: 3rem;
