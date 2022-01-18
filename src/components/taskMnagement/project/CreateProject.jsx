@@ -12,6 +12,7 @@ const CreateProject = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [projectName, setProjectName] = useState('');
+  const [projectDesc, setProjectDesc] = useState('');
   const [error, setError] = useState('');
   const [loading, setloading] = useState(false)
 
@@ -23,7 +24,7 @@ const CreateProject = () => {
     else {
       setError('');
       setloading(true);
-      const createP = await createProject(projectName);
+      const createP = await createProject(projectName, projectDesc);
       if (createP.status === 200) {
         addToast("Created Susseccfully", { autoDismiss: true, appearance: 'success' });
         setloading(false);
@@ -35,6 +36,7 @@ const CreateProject = () => {
         setProjectName('');
         return true;
       }
+      setloading(false)
       setProjectName('');
       return true;
 
@@ -62,16 +64,23 @@ const CreateProject = () => {
           <Row>
             <Col md={12}>
               <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Control type="text" className={`${error.length > 0 ? 'red-border-input' : 'no-border-input'}`} placeholder="Name your project..." onChange={(e) => (
-                  setProjectName(e.target.value)
+                <Form.Control type="text" className={`${error.length > 0 ? 'red-border-input' : 'no-border-input'}`}
+                  placeholder="Name your project..." onChange={(e) => (
+                    setProjectName(e.target.value)
 
-                )
-                } />
+                  )
+                  } />
                 {error ? (
                   <div className="invalid-feedback d-block">
                     {error}
                   </div>
                 ) : null}
+              </Form.Group>
+              <Form.Group >
+                <Form.Control as="textarea" rows={5} onChange={(e) => (
+                  setProjectDesc(e.target.value)
+                )
+                } />
               </Form.Group>
             </Col>
           </Row>
