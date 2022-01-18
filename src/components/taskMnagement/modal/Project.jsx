@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { getProject, setProjectToItem } from "../../../api";
 import Button from "./Button";
 import style from "./style.module.css";
-import Select from 'react-select';
+import Select from "react-select";
 
 function Project(props) {
+  const [label, setLabel] = useState("");
   const title = "Project";
   const [projects, setProjects] = useState([]);
   const [value, setValue] = useState([]);
@@ -24,18 +25,13 @@ function Project(props) {
     request();
   }, []);
   async function ProjectChange(val) {
-    console.log('sdsd', itemId)
-    console.log('val', val.value)
+    console.log("sdsd", itemId);
+    console.log("val", val.value);
 
     const update = await setProjectToItem(itemId, val.value);
-    console.log(update)
+    console.log(update);
   }
-  return (
-    <Select
-      options={projects}
-      onChange={ProjectChange}
-    />
-  );
+  return <Select options={projects} onChange={ProjectChange} />;
 }
 
 export default Project;

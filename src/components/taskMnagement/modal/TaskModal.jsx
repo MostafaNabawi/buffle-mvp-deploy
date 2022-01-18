@@ -6,7 +6,6 @@ import RepeatTask from "./RepeatTask";
 import style from "./style.module.css";
 import { Icon } from "@iconify/react";
 function TaskModal(props) {
-
   const { handleClose, title, className } = props;
   return (
     <Modal

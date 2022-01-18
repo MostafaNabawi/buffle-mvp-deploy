@@ -3,15 +3,16 @@ import { Row, Col, Form, Image, NavDropdown } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import { logout, userStatus } from "../api";
-import { API_URL } from '../config/index'
+import { API_URL } from "../config/index";
 import Countdown from "react-countdown";
+import InviteNotify from "../components/notification/InviteNotify";
 
 const Header = () => {
   const [userData, setUserData] = useState({});
   const navigate = useNavigate();
-  const [du_time, setDu_time] = useState(0)
-  const [dis_time, setDis_time] = useState(0)
-  const [start, setStart] = useState(true)
+  const [du_time, setDu_time] = useState(0);
+  const [dis_time, setDis_time] = useState(0);
+  const [start, setStart] = useState(true);
 
   const handleLogout = async () => {
     const req = await logout();
@@ -21,15 +22,17 @@ const Header = () => {
     }
   };
   const handleDurationTime = (val) => {
-    const arr = val.split(":")
-    const time = arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000
-    setDu_time(time)
-  }
+    const arr = val.split(":");
+    const time =
+      arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000;
+    setDu_time(time);
+  };
   const handleDisplayTime = (val) => {
-    const arr = val.split(":")
-    const time = arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000
-    setDis_time(time)
-  }
+    const arr = val.split(":");
+    const time =
+      arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000;
+    setDis_time(time);
+  };
   useEffect(() => {
     async function getStatus() {
       const req = await userStatus();
@@ -45,16 +48,16 @@ const Header = () => {
           "Content-Type": "application/json",
           "Access-Control-Allow-Credentials": true,
         },
-      })
-      const { payload } = await req.json()
+      });
+      const { payload } = await req.json();
       if (payload) {
         if (payload.mute) {
-          handleDurationTime(payload.duration)
-          handleDisplayTime(payload.display)
+          handleDurationTime(payload.duration);
+          handleDisplayTime(payload.display);
         }
       }
     }
-    getScrrenRemainder()
+    getScrrenRemainder();
     const user_storage = JSON.parse(localStorage.getItem("user"));
     setUserData(user_storage);
     if (user_storage) {
@@ -74,27 +77,37 @@ const Header = () => {
         <Countdown
           date={Date.now() + du_time}
           onComplete={() => {
-            setStart(false)
-            const timeLock = new Date;
-            localStorage.setItem("loackTime", timeLock.getHours() + ":" + timeLock.getMinutes())
+            setStart(false);
+            const timeLock = new Date();
+            localStorage.setItem(
+              "loackTime",
+              timeLock.getHours() +
+                ":" +
+                timeLock.getMinutes() +
+                ":" +
+                timeLock.getSeconds()
+            );
           }}
           renderer={() => {
-            return ""
+            return "";
           }}
         />
       )}
 
-      <div id="lockScreenHide" className={`lockScreen text-center ${!start ? "" : "lockScreenHide"}`}>
+      <div
+        id="lockScreenHide"
+        className={`lockScreen text-center ${!start ? "" : "lockScreenHide"}`}
+      >
         <h1>Screen Lock For</h1>
         {du_time > 0 && !start && (
           <Countdown
             date={Date.now() + dis_time}
             onComplete={() => {
-              setStart(true)
+              setStart(true);
             }}
-          // renderer={() => {
-          //   return ""
-          // }}
+            // renderer={() => {
+            //   return ""
+            // }}
           />
         )}
       </div>
@@ -105,10 +118,6 @@ const Header = () => {
         </Col>
         <Col className="col-6 header-col-left">
           <div className="header-icon navy-blue text-center pt-2">
-            {/* <Image
-              className="sidebar-icon"
-              src="/icone/hcphotos-Headshots-1 2.png"
-            /> */}
             <NavDropdown
               title={
                 <Image
@@ -120,10 +129,7 @@ const Header = () => {
               className="navDropdomnIcon notiy "
             >
               <div className="card p-2">
-                <NavDropdown.Item>
-                <div className="break-user-name">Raj Kumar</div>
-                <p>Want to Join</p>
-                </NavDropdown.Item>
+                <InviteNotify/>
                 <NavDropdown.Item >
                   test
                 </NavDropdown.Item>
