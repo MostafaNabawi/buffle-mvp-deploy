@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import { logout, userStatus } from "../api";
 import { API_URL } from '../config/index'
-import moment from "moment";
 import Countdown from "react-countdown";
 
 const Header = () => {
@@ -13,6 +12,7 @@ const Header = () => {
   const [du_time, setDu_time] = useState(0)
   const [dis_time, setDis_time] = useState(0)
   const [start, setStart] = useState(true)
+
   const handleLogout = async () => {
     const req = await logout();
     if (req.status === 200) {
@@ -23,13 +23,11 @@ const Header = () => {
   const handleDurationTime = (val) => {
     const arr = val.split(":")
     const time = arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000
-    console.log("arr", time)
     setDu_time(time)
   }
   const handleDisplayTime = (val) => {
     const arr = val.split(":")
     const time = arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000
-    console.log("arr", time)
     setDis_time(time)
   }
   useEffect(() => {
@@ -50,7 +48,6 @@ const Header = () => {
       })
       const { payload } = await req.json()
       if (payload) {
-        console.log('Gooo', payload)
         if (payload.mute) {
           handleDurationTime(payload.duration)
           handleDisplayTime(payload.display)
@@ -79,16 +76,15 @@ const Header = () => {
           onComplete={() => {
             setStart(false)
             const timeLock = new Date;
-            console.log("time", timeLock.getHours())
-            localStorage.setItem("loackTime",timeLock.getHours()+":"+timeLock.getMinutes()+":"+timeLock.getSeconds())
+            localStorage.setItem("loackTime", timeLock.getHours() + ":" + timeLock.getMinutes() + ":" + timeLock.getSeconds())
           }}
-        renderer={() => {
-          return ""
-        }}
+          renderer={() => {
+            return ""
+          }}
         />
       )}
 
-      <div className={`lockScreen text-center ${!start ? "" : "lockScreenHide"}`}>
+      <div id="lockScreenHide" className={`lockScreen text-center ${!start ? "" : "lockScreenHide"}`}>
         <h1>Screen Lock For</h1>
         {du_time > 0 && !start && (
           <Countdown
