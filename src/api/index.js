@@ -199,8 +199,8 @@ async function createWaterHydration(data) {
     },
     body: JSON.stringify({
       goal: data.dailyGoal,
-      work: data.howLongTime,
-      reminder: data.reminderTime,
+      work: data.timer_1,
+      reminder: data.timer_2,
     }),
   });
   return { status: req.status };

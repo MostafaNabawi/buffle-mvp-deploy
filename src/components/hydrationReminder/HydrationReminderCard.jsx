@@ -16,44 +16,77 @@ function HydrationReminderCard() {
   const [mute, setMute] = useState(false);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const changeTimeFormat = (val) => {
+    const arr = val.split(":");
+    const hours = +arr[0];
+    const minutes = +arr[1];
+    const seconds = arr[2];
+    return { hours, minutes, seconds };
+  };
+
+  const handleShow = async () => {
+    const req = await getWaterHydration();
+    if (req.status == 200 && req.data !== null) {
+      setDailyGoal(req.data.daily_goal);
+      setHowLongTime(changeTimeFormat(req.data.work));
+      setReminderTime(changeTimeFormat(req.data.reminder));
+    }
+    setShow(true);
+  };
+
   const { addToast } = useToasts();
   const [dailyGoal, setDailyGoal] = useState("");
-
   const [howLongTime, setHowLongTime] = useState({
     hours: "",
     minutes: "",
     seconds: "",
   });
-
   const [reminderTime, setReminderTime] = useState({
     hours: "",
     minutes: "",
     seconds: "",
   });
+  const [startWorkingTime, setstarttWorkingTime] = useState("");
 
   const handleSubmit = async (e) => {
+    const timer_1 = ` ${howLongTime.hours}:${howLongTime.minutes}:${howLongTime.seconds}`;
+    const timer_2 = ` ${reminderTime.hours}:${reminderTime.minutes}:${reminderTime.seconds}`;
     const data = {
       dailyGoal,
-      howLongTime,
-      reminderTime,
+      timer_1,
+      timer_2,
     };
+
     const req = await createWaterHydration(data);
-    if(req.status == 200){
+    if (req.status == 200) {
       addToast("Created Susseccfully", {
         autoDismiss: true,
         appearance: "success",
       });
       handleClose();
+      setHowLongTime("");
+      setHowLongTime("");
+      setReminderTime("");
+    } else {
+      addToast("Error Please Try Again!", {
+        autoDismiss: false,
+        appearance: "error",
+      });
     }
-
-    console.log(data);
+    console.log(req);
   };
 
   useEffect(async () => {
     const data = await getWaterHydration();
-    console.log(data);
+    console.log(data, "useEffect");
   }, []);
+
+  // setTimeout(() => {
+  //   addToast("Created Susseccfully", {
+  //     autoDismiss: true,
+  //     appearance: "success",
+  //   });
+  // }, 2.0 * 1000);
 
   return (
     <>
@@ -88,7 +121,7 @@ function HydrationReminderCard() {
           }
         />
         <CardBody>
-          <WaterRepository />
+          <WaterRepository data={dailyGoal} />
         </CardBody>
       </Card>
       <Modal
@@ -104,6 +137,7 @@ function HydrationReminderCard() {
                 <Form.Control
                   type="number"
                   placeholder="2L"
+                  value={dailyGoal}
                   onChange={(e) => setDailyGoal(e.target.value)}
                 />
               </Form.Group>
