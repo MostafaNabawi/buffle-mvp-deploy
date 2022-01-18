@@ -5,14 +5,22 @@ import { Button, Col, Form } from "react-bootstrap";
 import { Row } from "react-bootstrap";
 import { Icon } from "@iconify/react";
 import Modal from "../../modal/modal";
-import { createTask, getProject, getTask } from "../../../api";
+import { createTask, getProject, getTask, getProjectById, updateProject } from "../../../api";
 import { useToasts } from 'react-toast-notifications';
 import moment from 'moment';
+import ClipLoader from "react-spinners/ClipLoader";
+import BeatLoader from "react-spinners/BeatLoader";
 
 const ProjectManagement = () => {
   const { addToast } = useToasts();
   const [items, setItems] = useState([]);
   const [projects, setProjects] = useState([]);
+  const [projectName, setProjectName] = useState('');
+  const [projectDesc, setProjectDesc] = useState('');
+  const [projectIdEdit, setProjectIdEdit] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setloading] = useState(false)
+
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -27,6 +35,7 @@ const ProjectManagement = () => {
           id: n,
           status: moment(i.date, "YYYY-MM-DD HH:mm:ss").format("dddd"),
           content: i.name,
+          description: i.description,
           p_id: i._id,
         };
       });
@@ -40,6 +49,9 @@ const ProjectManagement = () => {
           status: moment(i.date, "YYYY-MM-DD HH:mm:ss").format("dddd"),
           content: i.name,
           projectId: i.projectId,
+          tb_id: i._id,
+          description: i.description,
+          date: i.date,
         };
       });
       setItems(format);
@@ -61,8 +73,42 @@ const ProjectManagement = () => {
       }
     }
   }
+  const getData = async (id) => {
+    setProjectName('');
+    setProjectDesc('');
+    setProjectIdEdit('');
+    handleShow();
+    const data = await getProjectById(id);
+    setProjectName(data.data.name)
+    setProjectDesc(data.data.description)
+    setProjectIdEdit(id)
+  }
+  const handleSubmit = async () => {
+    if (!projectName) {
+      setError('Project name is required!');
+      return false;
+    }
+    else {
+      setError('');
+      setloading(true);
+      const updateP = await updateProject(projectIdEdit, projectName, projectDesc);
+      if (updateP.status === 200) {
+        addToast("Updated Susseccfully", { autoDismiss: true, appearance: 'success' });
+        setloading(false);
+        setShow(false);
+      }
+      else {
+        addToast("Error! Please Try Again!", { autoDismiss: false, appearance: 'error' });
+        setloading(false)
+        setProjectName('');
+        return true;
+      }
+      setloading(false)
+      setProjectName('');
+      return true;
 
-
+    }
+  }
   const onDrop = (item, monitor, status) => {
     setItems((prevState) => {
       const newItems = prevState
@@ -91,7 +137,7 @@ const ProjectManagement = () => {
                 <Icon
                   icon="icon-park-outline:setting"
                   className="project-setting-icon"
-                  onClick={handleShow}
+                  onClick={() => getData(s.p_id)}
                 />
               </Col>
             </Row>
@@ -117,7 +163,6 @@ const ProjectManagement = () => {
                       placeholder="New Task"
                       aria-label="New Task" onChange={(e) => (
                         setInputTask({ name: e.target.value, p_id: s.p_id })
-
                       )
                       }
                       onKeyDown={handleKeyDown} />
@@ -136,29 +181,39 @@ const ProjectManagement = () => {
         body={
           <Row>
             <Col md={12}>
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Control type="text" placeholder="Name your project..."
-                // onChange={(e) => (
-                // setProjectName(e.target.value),
-                // validateProject(e.target.value)
-                // )
-                // }
-                />
-                {/* {error ? (
-                  <div className="invalid-feedback d-block">
-                    {error}
-                  </div>
-                ) : null} */}
-              </Form.Group>
+              {projectName.length > 0 ?
+                <>
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Control type="text" placeholder="Name your project..." defaultValue={projectName}
+                      onChange={(e) => (
+                        setProjectName(e.target.value)
+                      )
+                      }
+                    />
+                    {error ? (
+                      <div className="invalid-feedback d-block">
+                        {error}
+                      </div>
+                    ) : null}
+                  </Form.Group>
+                  <Form.Group >
+                    <Form.Control as="textarea" rows={5} defaultValue={projectDesc} onChange={(e) => (
+                      setProjectDesc(e.target.value)
+                    )
+                    } />
+                  </Form.Group>
+                </> : <ClipLoader />}
             </Col>
           </Row>
         }
         footer={
           <>
             <Button onClick={handleClose}>Close</Button>
-            <Button variant="primary"  >
+            {loading && projectName.length > 0 ? <Button variant="primary"  >
+              <BeatLoader />
+            </Button> : <Button variant="primary" onClick={handleSubmit}  >
               Save
-            </Button>
+            </Button>}
           </>
         }
       />

@@ -21,6 +21,8 @@ const TaskManagement = () => {
           status: moment(i.date, "YYYY-MM-DD HH:mm:ss").format("dddd"),
           content: i.name,
           tb_id: i._id,
+          description: i.description,
+          date: i.date,
         };
       });
       setItems(format);
@@ -99,6 +101,7 @@ const TaskManagement = () => {
                       onKeyDown={handleKeyDownWeekDaysItem}
                     />
                   </Form.Group>
+
                 </div>
               </Col>
             </DropWrapper>
