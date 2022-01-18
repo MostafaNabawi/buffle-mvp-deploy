@@ -68,7 +68,7 @@ function TimePicker({ label, value, setValue }) {
             placeholder="hr"
             min={0}
             max={12}
-            value={value.hours.trim()}
+            value={value?.hours.trim()}
             onChange={validatHours}
             onBlur={() => {
               timeFormat(value);

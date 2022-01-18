@@ -1,11 +1,11 @@
 import { React, useState, useEffect } from "react";
-import { Row, Col, Form, Image, NavDropdown } from "react-bootstrap";
+import { Row, Col, Form, Image, NavDropdown,Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import { logout, userStatus } from "../api";
 import { API_URL } from "../config/index";
 import Countdown from "react-countdown";
-import InviteNotify from "../components/notification/InviteNotify";
+import Notify from "../components/notification/Notify";
 
 const Header = () => {
   const [userData, setUserData] = useState({});
@@ -82,10 +82,10 @@ const Header = () => {
             localStorage.setItem(
               "loackTime",
               timeLock.getHours() +
-                ":" +
-                timeLock.getMinutes() +
-                ":" +
-                timeLock.getSeconds()
+              ":" +
+              timeLock.getMinutes() +
+              ":" +
+              timeLock.getSeconds()
             );
           }}
           renderer={() => {
@@ -105,9 +105,9 @@ const Header = () => {
             onComplete={() => {
               setStart(true);
             }}
-            // renderer={() => {
-            //   return ""
-            // }}
+          // renderer={() => {
+          //   return ""
+          // }}
           />
         )}
       </div>
@@ -128,61 +128,71 @@ const Header = () => {
               }
               className="navDropdomnIcon notiy "
             >
-              <div className="card p-2">
-                <InviteNotify/>
-                <NavDropdown.Item >
-                  test
-                </NavDropdown.Item>
-                <NavDropdown.Item>
-                test
-                </NavDropdown.Item>
-                <NavDropdown.Item>
-                  Test
-                </NavDropdown.Item>
-                </div>
+              <div className="card p-2 card-notify">
+                <Notify
+                name="Raj Kumar"
+                message="want to see your break plan"
+                footer={
+                <>
+                <Button variant="outline-success"  className={`btn-notify`}>Accept</Button>
+                <Button variant="outline-secondary" className={`btn-notify`}>Reject</Button>
+                </>
+              }
+                />
+                <Notify
+                name="Raj Kumar"
+                message="want to join to your break plan"
+                footer={
+                <>
+                <Button variant="outline-success"  className={`btn-notify`}>Accept</Button>
+                <Button variant="outline-secondary" className={`btn-notify`}>Reject</Button>
+                </>
+              }
+                />
+              </div>
             </NavDropdown>
           </div>
-        <div className="header-icon navy-blue text-center pt-2">
-          <NavDropdown
-            title={
-              <Image
-                className="sidebar-icon"
-                src="/icone/hcphotos-Headshots-1 1.png"
-              />
-            }
-            className="navDropdomnIcon"
-          >
-            <NavDropdown.Item href="/dashboard/profile">
-              Profile
-            </NavDropdown.Item>
-            <NavDropdown.Item href="/dashboard/user-management">
-              User management
-            </NavDropdown.Item>
-            <NavDropdown.Item href="/dashboard/setting">
-              Setting
-            </NavDropdown.Item>
-            <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
-          </NavDropdown>
-        </div>
-        <div className="form-search">
-          <Form>
-            <Form.Group
-              className="mb-3 serach-input input-group"
-              controlId="formBasicEmail"
+          <div className="header-icon navy-blue text-center pt-2">
+            <NavDropdown
+              title={
+                <Image
+                  className="sidebar-icon"
+                  src="/icone/hcphotos-Headshots-1 1.png"
+                />
+              }
+              className="navDropdomnIcon"
             >
-              <i className="search-icon">
-                <Icon icon="ci:search-small" />
-              </i>
-              <Form.Control
-                className="search-input2"
-                type="search"
-                placeholder="search"
-              />
-            </Form.Group>
-          </Form>
-        </div>
-      </Col>
-    </Row>
+              <NavDropdown.Item href="/dashboard/profile">
+                Profile
+              </NavDropdown.Item>
+              <NavDropdown.Item href="/dashboard/user-management">
+                User management
+              </NavDropdown.Item>
+              <NavDropdown.Item href="/dashboard/setting">
+                Setting
+              </NavDropdown.Item>
+              <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
+            </NavDropdown>
+          </div>
+          <div className="form-search">
+            <Form>
+              <Form.Group
+                className="mb-3 serach-input input-group"
+                controlId="formBasicEmail"
+              >
+                <i className="search-icon">
+                  <Icon icon="ci:search-small" />
+                </i>
+                <Form.Control
+                  className="search-input2"
+                  type="search"
+                  placeholder="search"
+                />
+              </Form.Group>
+            </Form>
+          </div>
+        </Col>
+      </Row>
     </>
   );
 };
