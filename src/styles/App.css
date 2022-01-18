@@ -136,6 +136,37 @@ button.btn-primary {
 .lockScreenHide{
   display: none !important;
 }
+ /* notify */
+ .notiy >div.dropdown-menu {
+  position: absolute;
+  z-index: 1000;
+  min-width: 10rem;
+  padding:0px !important;
+  margin: 0;
+  font-size: 1rem;
+  color: #212529;
+  text-align: left;
+  list-style: none;
+  background:transparent !important;
+  background-clip: padding-box;
+  border:none !important;
+  border-radius: 0px !important;
+}
+.card >a.dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 0.25rem 1rem;
+  clear: both;
+  font-weight: 400;
+  color: #212529;
+  text-align: inherit;
+  text-decoration: none;
+  white-space: nowrap;
+  background-color: transparent;
+  border: 0;
+  cursor:unset  !important;
+}
+ /*  */
 .navDropdomnIcon {
   margin-top: -10px !important ;
   margin-left: -10px !important;

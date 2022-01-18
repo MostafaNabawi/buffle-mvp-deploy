@@ -76,7 +76,7 @@ const Header = () => {
           onComplete={() => {
             setStart(false)
             const timeLock = new Date;
-            localStorage.setItem("loackTime", timeLock.getHours() + ":" + timeLock.getMinutes() + ":" + timeLock.getSeconds())
+            localStorage.setItem("loackTime", timeLock.getHours() + ":" + timeLock.getMinutes())
           }}
           renderer={() => {
             return ""
@@ -105,52 +105,78 @@ const Header = () => {
         </Col>
         <Col className="col-6 header-col-left">
           <div className="header-icon navy-blue text-center pt-2">
-            <Image
+            {/* <Image
               className="sidebar-icon"
               src="/icone/hcphotos-Headshots-1 2.png"
-            />
-          </div>
-          <div className="header-icon navy-blue text-center pt-2">
+            /> */}
             <NavDropdown
               title={
                 <Image
+                  onClick={() => console.log("click")}
                   className="sidebar-icon"
-                  src="/icone/hcphotos-Headshots-1 1.png"
+                  src="/icone/hcphotos-Headshots-1 2.png"
                 />
               }
-              className="navDropdomnIcon"
+              className="navDropdomnIcon notiy "
             >
-              <NavDropdown.Item href="/dashboard/profile">
-                Profile
-              </NavDropdown.Item>
-              <NavDropdown.Item href="/dashboard/user-management">
-                User management
-              </NavDropdown.Item>
-              <NavDropdown.Item href="/dashboard/setting">
-                Setting
-              </NavDropdown.Item>
-              <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
+              <div className="card p-2">
+                <NavDropdown.Item>
+                <div className="break-user-name">Raj Kumar</div>
+                <p>Want to Join</p>
+                </NavDropdown.Item>
+                <NavDropdown.Item >
+                  test
+                </NavDropdown.Item>
+                <NavDropdown.Item>
+                test
+                </NavDropdown.Item>
+                <NavDropdown.Item>
+                  Test
+                </NavDropdown.Item>
+                </div>
             </NavDropdown>
           </div>
-          <div className="form-search">
-            <Form>
-              <Form.Group
-                className="mb-3 serach-input input-group"
-                controlId="formBasicEmail"
-              >
-                <i className="search-icon">
-                  <Icon icon="ci:search-small" />
-                </i>
-                <Form.Control
-                  className="search-input2"
-                  type="search"
-                  placeholder="search"
-                />
-              </Form.Group>
-            </Form>
-          </div>
-        </Col>
-      </Row>
+        <div className="header-icon navy-blue text-center pt-2">
+          <NavDropdown
+            title={
+              <Image
+                className="sidebar-icon"
+                src="/icone/hcphotos-Headshots-1 1.png"
+              />
+            }
+            className="navDropdomnIcon"
+          >
+            <NavDropdown.Item href="/dashboard/profile">
+              Profile
+            </NavDropdown.Item>
+            <NavDropdown.Item href="/dashboard/user-management">
+              User management
+            </NavDropdown.Item>
+            <NavDropdown.Item href="/dashboard/setting">
+              Setting
+            </NavDropdown.Item>
+            <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
+          </NavDropdown>
+        </div>
+        <div className="form-search">
+          <Form>
+            <Form.Group
+              className="mb-3 serach-input input-group"
+              controlId="formBasicEmail"
+            >
+              <i className="search-icon">
+                <Icon icon="ci:search-small" />
+              </i>
+              <Form.Control
+                className="search-input2"
+                type="search"
+                placeholder="search"
+              />
+            </Form.Group>
+          </Form>
+        </div>
+      </Col>
+    </Row>
     </>
   );
 };
