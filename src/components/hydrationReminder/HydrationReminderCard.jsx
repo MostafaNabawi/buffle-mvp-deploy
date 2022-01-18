@@ -89,12 +89,12 @@ function HydrationReminderCard() {
     return arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000;
   };
 
-  setTimeout(() => {
-    addToast("Info", {
-      autoDismiss: true,
-      appearance: "success",
-    });
-  }, delay);
+  // setTimeout(() => {
+  //   addToast("Info", {
+  //     autoDismiss: true,
+  //     appearance: "info",
+  //   });
+  // }, delay);
 
   return (
     <>
