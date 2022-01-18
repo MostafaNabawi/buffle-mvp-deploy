@@ -20,7 +20,7 @@ function TaskModal(props) {
         <Form>
           <Modal.Header className={style.modal_header}>
             <DatePicker />
-            <Project />
+            <Project {...props} />
             <RepeatTask />
             <button type="button">
               <Icon icon="akar-icons:trash-can" />

@@ -30,7 +30,7 @@ const TaskManagement = () => {
 
   const handleKeyDownWeekDaysItem = async (event) => {
     if (event.key === "Enter") {
-      const createT = await createTask(inputTask);
+      const createT = await createTask(inputTask, 0);
       if (createT.status === 200) {
         addToast("Created Susseccfully", {
           autoDismiss: true,

@@ -19,8 +19,6 @@ function HydrationReminderCard() {
   const handleShow = () => setShow(true);
   const { addToast } = useToasts();
   const [dailyGoal, setDailyGoal] = useState("");
-  const [workTime, setWorkTime] = useState("");
-  const [reminderTime, setReminderTime] = useState("");
 
   const [howLongTime, setHowLongTime] = useState({
     hours: "",
@@ -28,7 +26,7 @@ function HydrationReminderCard() {
     seconds: "",
   });
 
-  const [reminder, setreminder] = useState({
+  const [reminderTime, setReminderTime] = useState({
     hours: "",
     minutes: "",
     seconds: "",
@@ -37,17 +35,19 @@ function HydrationReminderCard() {
   const handleSubmit = async (e) => {
     const data = {
       dailyGoal,
-      workTime,
+      howLongTime,
       reminderTime,
     };
     const req = await createWaterHydration(data);
-    console.log(req.status);
-    addToast("Created Susseccfully", {
-      autoDismiss: true,
-      appearance: "success",
-    });
-    handleClose();
-    setReminderTime("");
+    if(req.status == 200){
+      addToast("Created Susseccfully", {
+        autoDismiss: true,
+        appearance: "success",
+      });
+      handleClose();
+    }
+
+    console.log(data);
   };
 
   useEffect(async () => {
@@ -118,8 +118,8 @@ function HydrationReminderCard() {
             <Col md={12}>
               <TimePicker2
                 label="Set reminder"
-                value={reminder}
-                setValue={setreminder}
+                value={reminderTime}
+                setValue={setReminderTime}
               />
             </Col>
           </Row>
