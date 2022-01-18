@@ -73,7 +73,7 @@ const TaskManagement = () => {
           <Col key={s.status} className={"col-wrapper secondary-dark"}>
             <div className={"col-header"}>
               <span>{s.status}</span>
-              <span className={"col-header-time"}>2.14</span>
+              {/* <span className={"col-header-time"}>2.14</span> */}
             </div>
             <hr />
             <DropWrapper onDrop={onDrop} status={s.status}>

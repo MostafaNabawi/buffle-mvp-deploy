@@ -26,10 +26,11 @@ function TaskModal(props) {
       const updateT = await updateTask(data);
       if (updateT.status === 200) {
         addToast("Updated Susseccfully", { autoDismiss: true, appearance: 'success' });
-
+        handleClose();
       }
       else {
         addToast("Error! Please Try Again!", { autoDismiss: false, appearance: 'error' });
+        handleClose();
       }
     }
   }
@@ -56,17 +57,20 @@ function TaskModal(props) {
               'Your file has been deleted.',
               'success',
             )
+            handleClose();
           } else {
             addToast('Error: Please Try Again!.', {
               appearance: 'error',
               autoDismiss: true,
             })
+            handleClose();
           }
         } catch (error) {
           addToast('Error: Please Try Again!.', {
             appearance: 'error',
             autoDismiss: true,
           })
+          handleClose();
         }
       }
     })
@@ -86,7 +90,7 @@ function TaskModal(props) {
           <Modal.Header className={style.modal_header}>
             <DatePicker />
             <Project {...props} />
-            <RepeatTask />
+            {/* <RepeatTask /> */}
             <button type="button" onClick={handleDelete}>
               <Icon icon="akar-icons:trash-can" />
             </button>
