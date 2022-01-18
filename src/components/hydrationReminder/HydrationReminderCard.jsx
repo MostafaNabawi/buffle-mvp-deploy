@@ -20,9 +20,9 @@ function HydrationReminderCard() {
   const handleClose = () => setShow(false);
   const changeTimeFormat = (val) => {
     const arr = val.split(":");
-    const hours = parseInt(arr[0]);
-    const minutes = parseInt(arr[1]);
-    const seconds = parseInt(arr[2]);
+    const hours = arr[0];
+    const minutes = arr[1];
+    const seconds = arr[2];
     return { hours, minutes, seconds };
   };
 

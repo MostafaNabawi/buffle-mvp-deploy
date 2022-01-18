@@ -5,6 +5,7 @@ import { Icon } from "@iconify/react";
 import { logout, userStatus } from "../api";
 import { API_URL } from "../config/index";
 import Countdown from "react-countdown";
+import InviteNotify from "../components/notification/InviteNotify";
 
 const Header = () => {
   const [userData, setUserData] = useState({});
@@ -117,10 +118,23 @@ const Header = () => {
         </Col>
         <Col className="col-6 header-col-left">
           <div className="header-icon navy-blue text-center pt-2">
-            <Image
-              className="sidebar-icon"
-              src="/icone/hcphotos-Headshots-1 2.png"
-            />
+            <NavDropdown
+              title={
+                <Image
+                  onClick={() => console.log("click")}
+                  className="sidebar-icon"
+                  src="/icone/hcphotos-Headshots-1 2.png"
+                />
+              }
+              className="navDropdomnIcon notiy "
+            >
+              <div className="card p-2">
+                <InviteNotify />
+                <NavDropdown.Item>test</NavDropdown.Item>
+                <NavDropdown.Item>test</NavDropdown.Item>
+                <NavDropdown.Item>Test</NavDropdown.Item>
+              </div>
+            </NavDropdown>
           </div>
           <div className="header-icon navy-blue text-center pt-2">
             <NavDropdown
