@@ -13,6 +13,7 @@ import { getWaterHydration, createWaterHydration } from "../../api";
 import { useToasts } from "react-toast-notifications";
 
 function HydrationReminderCard() {
+  const [delay, setDelay] = useState("");
   const [mute, setMute] = useState(false);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -56,10 +57,11 @@ function HydrationReminderCard() {
       timer_1,
       timer_2,
     };
-
+    setDelay(reminderNotificationDelay(timer_2));
+    console.log(reminderNotificationDelay(timer_2));
     const req = await createWaterHydration(data);
     if (req.status == 200) {
-      addToast("Created Susseccfully", {
+      addToast("Created Susseccfully+1", {
         autoDismiss: true,
         appearance: "success",
       });
@@ -81,12 +83,18 @@ function HydrationReminderCard() {
     console.log(data, "useEffect");
   }, []);
 
-  // setTimeout(() => {
-  //   addToast("Created Susseccfully", {
-  //     autoDismiss: true,
-  //     appearance: "success",
-  //   });
-  // }, 2.0 * 1000);
+  const reminderNotificationDelay = (val) => {
+    console.log(val);
+    const arr = val.split(":");
+    return arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000;
+  };
+
+  setTimeout(() => {
+    addToast("Info", {
+      autoDismiss: true,
+      appearance: "success",
+    });
+  }, delay);
 
   return (
     <>
