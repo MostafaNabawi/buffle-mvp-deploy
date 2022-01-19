@@ -108,6 +108,7 @@ function BreackplanFrom({
                 <div>
                     <i className={style.closeIcon} onClick={() => {
                         setNewBreak({ ...newBreak, ["title"]: "", ["createIime"]: "" })
+                        setEmail('')
                         setShow(false)
                         setClose(true)
                     }} ><Icon icon="ci:close-big" /></i>
