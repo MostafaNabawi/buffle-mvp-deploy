@@ -21,6 +21,8 @@ const TaskManagement = () => {
           status: moment(i.date, "YYYY-MM-DD HH:mm:ss").format("dddd"),
           content: i.name,
           tb_id: i._id,
+          description: i.description,
+          date: i.date,
         };
       });
       setItems(format);
@@ -71,7 +73,7 @@ const TaskManagement = () => {
           <Col key={s.status} className={"col-wrapper secondary-dark"}>
             <div className={"col-header"}>
               <span>{s.status}</span>
-              <span className={"col-header-time"}>2.14</span>
+              {/* <span className={"col-header-time"}>2.14</span> */}
             </div>
             <hr />
             <DropWrapper onDrop={onDrop} status={s.status}>
@@ -99,6 +101,7 @@ const TaskManagement = () => {
                       onKeyDown={handleKeyDownWeekDaysItem}
                     />
                   </Form.Group>
+
                 </div>
               </Col>
             </DropWrapper>

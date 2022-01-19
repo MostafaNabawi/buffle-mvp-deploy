@@ -137,10 +137,17 @@ button.btn-primary {
   display: none !important;
 }
  /* notify */
+ .btn-notify{
+  float: right !important;
+  margin: 5px !important;
+ }
+ .card-notify{
+   width: 400px !important;
+ }
  .notiy >div.dropdown-menu {
   position: absolute;
   z-index: 1000;
-  min-width: 10rem;
+  width: auto !important;
   padding:0px !important;
   margin: 0;
   font-size: 1rem;

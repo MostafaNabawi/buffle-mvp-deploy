@@ -5,6 +5,8 @@ import { CreateNewPlan } from '../../api/breackPlan'
 import style from './style.module.css'
 import { useToasts } from 'react-toast-notifications';
 import Loader from "react-spinners/BeatLoader";
+import { checkEmail} from '../../config/utils'
+import { API_URL } from "../../config";
 
 function BreackplanFrom({
     show, setShow, newTime, joinOrSagest,invateForm
@@ -18,6 +20,22 @@ function BreackplanFrom({
     const [newSuggestInput ,setNewSuggestInput]=useState('')
     const [newSuggestTime,setNewSuggestTime]=useState('')
     const [newBreak, setNewBreak] = useState({title: "",createIime: ""})
+    // invit
+    const [email,setEmail]=useState('')
+    const [emailError,setEmailError]=useState('')
+    function checkEmail(value) {
+        if (
+          !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+            value
+          )
+        ) {
+            setEmailError('error')
+          return false;
+        } else {
+            setEmailError('')
+          return true;
+        }
+      }
     useEffect(() => {
         if (show) {
             setClose(false)
@@ -50,6 +68,39 @@ function BreackplanFrom({
     const handleSuggestNowTime =(e)=>{
         e.preventDefault();
         console.log("new time:",newSuggestTime)
+    }
+    // Invit
+    const handleInvit =async (e)=>{
+        e.preventDefault();
+        if(checkEmail(email)){
+            setloading(true)
+           const data= JSON.parse(localStorage.getItem('user'))
+           console.log("data...",data)
+            await fetch(`${API_URL}/breakPlan/invite `,{
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Credentials": true,
+                },
+                body: JSON.stringify({
+                    fname: data.first_name,
+                    lname: data.last_name,
+                    email:email
+                })
+            }).then(res=>{
+                if(res.status==200){
+                    addToast("Sended", { autoDismiss: true, appearance: 'success' });
+                    setEmail('')
+                    setShow(false)
+                    setClose(true)
+                    setloading(false)
+                }else{
+                    addToast("User by this email not found !", { autoDismiss: true, appearance: 'error' });
+                    setloading(false)
+                }
+            })
+        }
     }
     return (
         <div className={`${style.manCard} ${close ? style.hide : style.show}`}>
@@ -127,17 +178,20 @@ function BreackplanFrom({
                                 <Card.Title className={style.tilte}>
                                         Invite to your break plan
                                     </Card.Title>
-                                    <Form onSubmit={handleCreatePlan} className="mt-3">
+                                    <Form onSubmit={handleInvit} className="mt-3">
                                         <Form.Group className="mb-3" controlId="formBasicEmail">
                                             <Form.Control
                                                 autoFocus
                                                 required
                                                 type="email"
                                                 name="email"
+                                                className={emailError ===""?"":"red-border-input"}
                                                 placeholder="Invaite Email"
-                                                value={newBreak.title}
-                                                onChange={(e) =>
-                                                    setNewBreak({ ...newBreak, [e.target.name]: e.target.value })
+                                                value={email}
+                                                onChange={(e) =>{
+                                                    setEmail(e.target.value)
+                                                    // checkEmail(e.target.value)
+                                                }
                                                 }
 
                                             />

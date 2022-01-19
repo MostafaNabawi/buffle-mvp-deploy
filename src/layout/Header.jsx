@@ -1,11 +1,11 @@
 import { React, useState, useEffect } from "react";
-import { Row, Col, Form, Image, NavDropdown } from "react-bootstrap";
+import { Row, Col, Form, Image, NavDropdown, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import { logout, userStatus } from "../api";
 import { API_URL } from "../config/index";
 import Countdown from "react-countdown";
-import InviteNotify from "../components/notification/InviteNotify";
+import Notify from "../components/notification/Notify";
 
 const Header = () => {
   const [userData, setUserData] = useState({});
@@ -128,11 +128,47 @@ const Header = () => {
               }
               className="navDropdomnIcon notiy "
             >
-              <div className="card p-2">
-                <InviteNotify />
-                <NavDropdown.Item>test</NavDropdown.Item>
-                <NavDropdown.Item>test</NavDropdown.Item>
-                <NavDropdown.Item>Test</NavDropdown.Item>
+              <div className="card p-2 card-notify">
+                <Notify
+                  name="Raj Kumar"
+                  message="want to see your break plan"
+                  footer={
+                    <>
+                      <Button
+                        variant="outline-success"
+                        className={`btn-notify`}
+                      >
+                        Accept
+                      </Button>
+                      <Button
+                        variant="outline-secondary"
+                        className={`btn-notify`}
+                      >
+                        Reject
+                      </Button>
+                    </>
+                  }
+                />
+                <Notify
+                  name="Raj Kumar"
+                  message="want to join to your break plan"
+                  footer={
+                    <>
+                      <Button
+                        variant="outline-success"
+                        className={`btn-notify`}
+                      >
+                        Accept
+                      </Button>
+                      <Button
+                        variant="outline-secondary"
+                        className={`btn-notify`}
+                      >
+                        Reject
+                      </Button>
+                    </>
+                  }
+                />
               </div>
             </NavDropdown>
           </div>

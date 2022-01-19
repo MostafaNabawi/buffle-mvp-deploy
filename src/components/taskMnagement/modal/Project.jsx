@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { getProject, setProjectToItem } from "../../../api";
 import Button from "./Button";
 import style from "./style.module.css";
-import Select from "react-select";
+import Select from 'react-select';
+import { useToasts } from 'react-toast-notifications';
 
 function Project(props) {
-  const [label, setLabel] = useState("");
+  const { addToast } = useToasts();
   const title = "Project";
   const [projects, setProjects] = useState([]);
-  const [value, setValue] = useState([]);
   const [itemId, setItemId] = useState(props.item.tb_id);
   useEffect(() => {
     async function request() {
@@ -25,11 +25,14 @@ function Project(props) {
     request();
   }, []);
   async function ProjectChange(val) {
-    console.log("sdsd", itemId);
-    console.log("val", val.value);
 
     const update = await setProjectToItem(itemId, val.value);
-    console.log(update);
+    if (update.status === 200) {
+      addToast("Project set successfully", { autoDismiss: true, appearance: 'success' });
+    }
+    else {
+      addToast("Error! Please Try Again!", { autoDismiss: false, appearance: 'error' });
+    }
   }
   return <Select options={projects} onChange={ProjectChange} />;
 }
