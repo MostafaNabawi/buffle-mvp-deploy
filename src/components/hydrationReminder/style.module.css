@@ -61,8 +61,8 @@
   line-height: 1rem;
   padding-top: 0.2rem;
 }
-.wave::after,
-.wave::before {
+.wave div:first-child,
+.wave div:last-child {
   content: "";
   position: absolute;
   width: 100%;
@@ -70,9 +70,8 @@
   left: 0;
 }
 
-.wave::before {
+.wave div:first-child {
   background-color: #4318ff;
-  bottom: -50%;
   left: 0%;
   transform: rotate(180deg);
   clip-path: polygon(
@@ -182,14 +181,14 @@
   );
 }
 
-.wave::after {
+.wave div:last-child {
   background: radial-gradient(
     100% 682.41% at 4.04% 0%,
     #8286ff 0%,
     #4922ff 100%
   );
   opacity: 60%;
-  bottom: -56%;
+
   transform: rotateX(180deg) rotateZ(360deg);
   clip-path: polygon(
     100% 0%,
