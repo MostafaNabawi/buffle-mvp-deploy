@@ -11,25 +11,34 @@ const TaskManagement = () => {
   const { addToast } = useToasts();
   const [items, setItems] = useState([]);
   const [inputTask, setInputTask] = useState({ name: "", p_id: "" });
+  const [newItems, setNewItems] = useState(false);
 
+  async function request() {
+    const data = await getTask();
+    const format = data?.data?.map((i, n) => {
+      return {
+        id: n,
+        status: moment(i.date, "YYYY-MM-DD HH:mm:ss").format("dddd"),
+        content: i.name,
+        tb_id: i._id,
+        description: i.description,
+        date: i.date,
+        p_id: i.projectId,
+      };
+    });
+    setItems(format);
+  }
   useEffect(() => {
-    async function request() {
-      const data = await getTask();
-      const format = data.data.map((i, n) => {
-        return {
-          id: n,
-          status: moment(i.date, "YYYY-MM-DD HH:mm:ss").format("dddd"),
-          content: i.name,
-          tb_id: i._id,
-          description: i.description,
-          date: i.date,
-        };
-      });
-      setItems(format);
-    }
+
     request();
   }, []);
 
+  useEffect(() => {
+    if (newItems) {
+      request();
+      setNewItems(false);
+    }
+  }, [newItems])
   const handleKeyDownWeekDaysItem = async (event) => {
     if (event.key === "Enter") {
       const createT = await createTask(inputTask, 0);
@@ -38,7 +47,7 @@ const TaskManagement = () => {
           autoDismiss: true,
           appearance: "success",
         });
-        setItems((arr) => [...arr, {}]);
+        setNewItems(true);
         setInputTask("");
       } else {
         addToast("Error Please Try Again!", {
