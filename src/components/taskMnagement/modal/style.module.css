@@ -21,14 +21,14 @@
   align-items: center;
 }
 
-.modal span {
+/* .modal span {
   display: block;
   margin-right: 0.4rem;
   width: 0.4rem;
   height: 0.4rem;
   background-color: #ddd;
   border-radius: 50%;
-}
+} */
 
 .modal_header div:first-child {
   flex-grow: 1;
@@ -65,7 +65,7 @@
 .modal textarea {
   border: none;
 }
-
+/* 
 .dropDown_wrapper {
   position: relative;
   z-index: 1;
@@ -123,4 +123,4 @@
 .dropDown_wrapper button:hover + div {
   margin-top: 0;
   display: block;
-}
+} */

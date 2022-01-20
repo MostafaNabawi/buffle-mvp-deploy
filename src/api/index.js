@@ -6,6 +6,7 @@ async function signin(payload) {
     const req = await fetch(`${API_URL}/auth/signin`, {
       method: "POST",
       credentials: "include",
+      mode: "cors",
       headers: {
         "Content-Type": "application/json",
       },
@@ -21,6 +22,11 @@ async function userStatus() {
   try {
     const req = await fetch(`${API_URL}/auth/status`, {
       credentials: "include",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Credentials": true,
+      },
     });
     return { status: req.status };
   } catch {
@@ -32,6 +38,7 @@ async function logout() {
   const req = await fetch(`${API_URL}/auth/logout`, {
     method: "GET",
     credentials: "include",
+    mode: "cors",
     headers: {
       "Content-Type": "application/json",
       "Access-Control-Allow-Credentials": true,
@@ -45,6 +52,7 @@ async function addNextBreak(startDate, endDate) {
     const req = await fetch(`${API_URL}/next-break/add`, {
       method: "POST",
       credentials: "include",
+      mode: "cors",
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Credentials": true,
@@ -64,6 +72,7 @@ async function getNextBreak() {
   try {
     const req = await fetch(`${API_URL}/next-break/get`, {
       credentials: "include",
+      mode: "cors",
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Credentials": true,
@@ -80,6 +89,7 @@ async function deleteNextBreak() {
     const req = await fetch(`${API_URL}/next-break/delete`, {
       method: "DELETE",
       credentials: "include",
+      mode: "cors",
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Credentials": true,
@@ -96,6 +106,7 @@ async function setUserFeel(payload) {
   const req = await fetch(`${API_URL}/user/feel`, {
     method: "POST",
     credentials: "include",
+    mode: "cors",
     headers: {
       "Content-Type": "application/json",
       "Access-Control-Allow-Credentials": true,
@@ -111,6 +122,8 @@ async function getProject() {
   const req = await fetch(`${API_URL}/project/get`, {
     method: "GET",
     credentials: "include",
+    mode: "cors",
+
     headers: {
       "Content-Type": "application/json",
       "Access-Control-Allow-Credentials": true,
@@ -120,36 +133,60 @@ async function getProject() {
   return { status: req.status, data: res.payload };
 }
 
-async function createProject(project_name) {
+async function createProject(project_name, desc) {
   const req = await fetch(`${API_URL}/project/new`, {
     method: "POST",
     credentials: "include",
+    mode: "cors",
     headers: {
       "Content-Type": "application/json",
       "Access-Control-Allow-Credentials": true,
     },
     body: JSON.stringify({
       name: project_name,
+      description: desc,
     }),
   });
   return { status: req.status };
 }
-async function updateProject() {
-  const req = await fetch(`${API_URL}/project/get`, {
+async function getProjectById(id) {
+  const req = await fetch(`${API_URL}/project/getById?id=${id}`, {
     method: "GET",
     credentials: "include",
+    mode: "cors",
     headers: {
       "Content-Type": "application/json",
       "Access-Control-Allow-Credentials": true,
     },
   });
+  const res = await req.json();
+  return { status: req.status, data: res.payload };
+}
+
+async function updateProject(id, name, desc) {
+  const req = await fetch(`${API_URL}/project/update`, {
+    method: "PUT",
+    credentials: "include",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+    body: JSON.stringify({
+      projectId: id,
+      name: name,
+      description: desc,
+    }),
+  });
   return { status: req.status, data: req };
 }
+
 // ----------------------tasks--------------
 async function createTask(task, type) {
   const req = await fetch(`${API_URL}/task/new`, {
     method: "POST",
     credentials: "include",
+    mode: "cors",
     headers: {
       "Content-Type": "application/json",
       "Access-Control-Allow-Credentials": true,
@@ -160,12 +197,14 @@ async function createTask(task, type) {
       type: type,
     }),
   });
-  return { status: req.status };
+  const resault = await req.json();
+  return { status: req.status, data: resault.payload };
 }
 async function getTask() {
   const req = await fetch(`${API_URL}/task/get`, {
     method: "GET",
     credentials: "include",
+    mode: "cors",
     headers: {
       "Content-Type": "application/json",
       "Access-Control-Allow-Credentials": true,
@@ -175,10 +214,44 @@ async function getTask() {
   return { status: req.status, data: res.payload };
 }
 
+// Hydration Reminder
+async function getWaterHydration() {
+  const req = await fetch(`${API_URL}/water_hydration/get`, {
+    method: "GET",
+    credentials: "include",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+  });
+  const res = await req.json();
+  return { status: req.status, data: res.payload };
+}
+
+async function createWaterHydration(data) {
+  const req = await fetch(`${API_URL}/water_hydration/new`, {
+    method: "POST",
+    credentials: "include",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+    body: JSON.stringify({
+      goal: data.dailyGoal,
+      work: data.timer_1,
+      reminder: data.timer_2,
+    }),
+  });
+  return { status: req.status };
+}
+
 async function setProjectToItem(id, p_id) {
   const req = await fetch(`${API_URL}/task/update-task-project`, {
     method: "PUT",
     credentials: "include",
+    mode: "cors",
     headers: {
       "Content-Type": "application/json",
       "Access-Control-Allow-Credentials": true,
@@ -191,21 +264,55 @@ async function setProjectToItem(id, p_id) {
   return { status: req.status };
 }
 
-// async function updateTask() {
-//   const req = await fetch(`${API_URL}/task/update`, {
-//     method: "PUT",
-//     credentials: "include",
-//     headers: {
-//       "Content-Type": "application/json",
-//       "Access-Control-Allow-Credentials": true,
-//     },
-//     body: JSON.stringify({
-//       taskId: id,
-//       projectId: p_id,
-//     }),
-//   });
-//   return { status: req.status };
-// }
+async function updateTask(data) {
+  const req = await fetch(`${API_URL}/task/update`, {
+    method: "PUT",
+    credentials: "include",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+    body: JSON.stringify({
+      taskId: data.id,
+      name: data.name,
+      date: data.date,
+      type: data.type,
+      description: data.description,
+    }),
+  });
+  return { status: req.status };
+}
+
+async function deleteTask(id) {
+  const req = await fetch(`${API_URL}/task/delete?taskId=${id}`, {
+    method: "DELETE",
+    credentials: "include",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+  });
+  return { status: req.status };
+}
+
+async function updateTaskDate(id, date) {
+  const req = await fetch(`${API_URL}/task/update-task-date`, {
+    method: "PUT",
+    credentials: "include",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+    body: JSON.stringify({
+      taskId: id,
+      date: date,
+    }),
+  });
+  return { status: req.status };
+}
 export {
   signin,
   logout,
@@ -216,8 +323,14 @@ export {
   setUserFeel,
   getProject,
   createProject,
+  getProjectById,
   updateProject,
   createTask,
   getTask,
+  getWaterHydration,
+  createWaterHydration,
   setProjectToItem,
+  updateTask,
+  deleteTask,
+  updateTaskDate,
 };

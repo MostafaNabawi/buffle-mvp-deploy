@@ -14,8 +14,10 @@ import style from "./style.module.css";
 
 function ScreenFreeReminderCard() {
   const { addToast } = useToasts();
-  const [loading, setLoading] = useState(false)
+  const [changeMute, setChangeMute] = useState(false)
   const [data, setData] = useState('')
+  const [isShow, setIsShow] = useState(false)
+  const [loading, setLoading] = useState(false)
   // Modal
   const [sizeModal, setSizeModal] = useState("");
   const [modalShow, setModalShow] = useState(false);
@@ -42,14 +44,12 @@ function ScreenFreeReminderCard() {
         },
       })
       const { payload } = await req.json()
-      if (payload){
-        const min=payload.display.split(':')
-        if(min[0]==="00" && min[2]==="00"){
-          setData({...payload,['display']:min[1]})
-        }else{
-           setData(payload)
+      if (payload) {
+        if (payload.mute) {
+          setIsShow(true)
         }
-      } 
+        setData(payload)
+      }
     }
     getData()
   }, [])
@@ -91,7 +91,30 @@ function ScreenFreeReminderCard() {
       }
     }
   };
-  console.log("data", data)
+  // Mute update Screeen reminder
+  const handleMute = async () => {
+    setChangeMute(true)
+    await fetch(`${API_URL}/screen_reminder/update-mute`, {
+      method: "PUT",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Credentials": true,
+      },
+      body: JSON.stringify({
+        mute: !isShow
+      })
+    }).then((res) => {
+      if (res.status != 200) {
+        setChangeMute(false)
+        addToast("Error Please Try Again!", { autoDismiss: true, appearance: 'error' });
+        return false
+      }
+      setChangeMute(false)
+      setIsShow(!isShow)
+    })
+  }
+  
   return (
     <>
       <Card className={style.card}>
@@ -116,18 +139,21 @@ function ScreenFreeReminderCard() {
         />
         <CardBody>
           {
-            data &&( <div className={style.wrapper}>
-                <div className={style.header}>
-                  <span>
-                    <Form.Check checked={data?.mute} type="checkbox" />
-                  </span>
-                  <h6>{data?.display} mine screen free time</h6>
-                </div>
-                <p>last intermission {
-                localStorage.getItem("loackTime")?localStorage.getItem("loackTime"):"00:00:00"
-                }</p>
+            data && (<div className={style.wrapper}>
+              <div className={style.header}>
+                <span>
+                  {changeMute
+                    ? <Icon fontSize={24} icon="eos-icons:loading" />
+                    : <Form.Check onClick={() => { handleMute() }} checked={isShow} type="checkbox" />
+                  }
+                </span>
+                <h6>{data?.display} screen free time</h6>
               </div>
-         )}
+              <p>last intermission {
+                localStorage.getItem("loackTime") ? localStorage.getItem("loackTime") : "00:00:00"
+              }</p>
+            </div>
+            )}
         </CardBody>
       </Card>
       {/* Modal */}
