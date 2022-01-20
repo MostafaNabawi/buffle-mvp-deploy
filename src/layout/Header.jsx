@@ -49,10 +49,11 @@ const Header = () => {
         },
       }).then(async (res) => {
         const { payload } = await res.json()
+        console.log("payload...",payload)
         if (payload.length > 0) {
           setNotificatiion(payload)
           setLoading(false)
-        }else{
+        } else {
           setLoading(false)
         }
       })
@@ -71,6 +72,48 @@ const Header = () => {
       setCount(payload)
     })
   }
+  // accept Joni 
+  const handleAccept = async (id, from) => {
+    const user= JSON.parse(localStorage.getItem('user'))
+    await fetch(`${API_URL}/breakPlan/accept`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Credentials": true,
+      },
+      body: JSON.stringify({
+        to: from,
+        notId: id,
+        fullName:user.first_name+" "+user.last_name
+      })
+    }).then(async (res) => {
+      console.log("Accept", res)
+      if (res.status) {
+        getNotification(true)
+      }
+    })
+  }
+  // Rejeact 
+  const handleReject = async (id) => {
+    await fetch(`${API_URL}/breakPlan/reject`, {
+      method: "DELETE",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Credentials": true,
+      },
+      body: JSON.stringify({
+        notId: id
+      })
+    }).then(async (res) => {
+      console.log("Accept", res)
+      if (res.status) {
+        getNotification(true)
+      }
+    })
+  }
+  /// /breakPlan/accept   to
   //
   useEffect(() => {
     async function getStatus() {
@@ -188,17 +231,24 @@ const Header = () => {
                       notification.map(notify => (
                         notify.type === "invite"
                           ? <Notify
-                            key={notify.id}
+                            key={notify._id}
                             name={notify.firstName + " " + notify.lastName}
                             message={notify.msg}
                             footer={
                               <>
-                                <Button variant="outline-success" className={`btn-notify`}>Accept</Button>
-                                <Button variant="outline-secondary" className={`btn-notify`}>Reject</Button>
+                                <Button onClick={() => { handleAccept(notify._id, notify.from) }} variant="outline-success" className={`btn-notify`}>Accept</Button>
+                                <Button onClick={()=>{handleReject(notify._id)}} variant="outline-secondary" className={`btn-notify`}>Reject</Button>
                               </>
                             }
                           />
-                          : ""
+                          : notify.type =="report"
+                          ?<Notify
+                          key={notify._id}
+                          name=""
+                          message={notify.msg}
+                          footer=""
+                        />
+                          :""
                       ))
                       : <div className="text-center pt-2 pb-2">
                         No Notification
