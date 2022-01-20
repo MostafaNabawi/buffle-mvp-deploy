@@ -48,8 +48,6 @@
   justify-content: center;
   font-weight: 700;
   height: 50%;
-  position: absolute;
-  left: 26%;
   z-index: 1;
 }
 .reminder_percent {
@@ -61,8 +59,8 @@
   line-height: 1rem;
   padding-top: 0.2rem;
 }
-.wave div:first-child,
-.wave div:last-child {
+.wave::after,
+.wave::before {
   content: "";
   position: absolute;
   width: 100%;
@@ -70,9 +68,10 @@
   left: 0;
 }
 
-.wave div:first-child {
+.wave::after {
   background-color: #4318ff;
   left: 0%;
+  bottom: -57%;
   transform: rotate(180deg);
   clip-path: polygon(
     100% 0%,
@@ -181,14 +180,15 @@
   );
 }
 
-.wave div:last-child {
+.wave::before {
   background: radial-gradient(
     100% 682.41% at 4.04% 0%,
     #8286ff 0%,
     #4922ff 100%
   );
   opacity: 60%;
-
+  bottom: -63%;
+  z-index: 1;
   transform: rotateX(180deg) rotateZ(360deg);
   clip-path: polygon(
     100% 0%,

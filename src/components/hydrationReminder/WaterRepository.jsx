@@ -1,5 +1,4 @@
 import React from "react";
-import WaterWave from "./WaterWave";
 import style from "./style.module.css";
 
 function WaterRepository(props) {
@@ -15,8 +14,7 @@ function WaterRepository(props) {
             >{`${reminder} of ${liter}`}</span>
           </div>
         )}
-
-        <WaterWave precent={precent} />
+        <div className={style.wave}></div>
       </div>
     </div>
   );
