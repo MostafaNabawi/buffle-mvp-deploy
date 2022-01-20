@@ -85,7 +85,7 @@ const TaskManagement = () => {
               {/* <span className={"col-header-time"}>2.14</span> */}
             </div>
             <hr />
-            <DropWrapper onDrop={onDrop} status={s.status}>
+            <DropWrapper onDrop={onDrop} status={s.status} idNumber={s.id}>
               <Col>
                 {items
                   .filter((i) => i.status === s.status)
