@@ -52,7 +52,7 @@ const Dashboard = () => {
   const [nextBreakDateInput, setNextBreakDateInput] = useState("");
   const [nextBreakLoading, setNextBreakLoading] = useState(false);
   // Break Plan states
-  const [breacPlanData, setbreakPlanData] = useState("");
+  const [breacPlanData, setBreakPlanData] = useState("");
   const { addToast } = useToasts();
   // actions
   const setFeel = async (type) => {
@@ -98,6 +98,11 @@ const Dashboard = () => {
     async function getBreakPlan() {
       const req = await getaAllBreackPlan();
       console.log("getaAllBreackPlan :", req);
+      if (req.length > 0) {
+        setBreakPlanData(req)
+      } else {
+        setBreakPlanData([])
+      }
     }
     async function innerNextBreak() {
       const result = await getNextBreak();
@@ -125,7 +130,7 @@ const Dashboard = () => {
         });
       }
     }
-    // getBreakPlan();
+    getBreakPlan();
     innerNextBreak();
   }, []);
   return (
@@ -408,7 +413,56 @@ const Dashboard = () => {
                 joinOrSagest={breakJoinOrSagest}
                 invateForm={invateForm}
               />
-              <Row className="mt-3">
+              {
+                breacPlanData === ''
+                  ? <div className="text-center"><Icon fontSize={24} icon="eos-icons:bubble-loading" /></div>
+                  : breacPlanData.length === 0
+                    ? "No Break Plan"
+                    :breacPlanData &&(
+                      breacPlanData.map(data=>(
+                        <Row className="mt-3">
+                        <Col className="col-2">
+                          <div className="breakplan-icon navy-blue text-center pt-2">
+                            <Image
+                              className="breakplan-img"
+                              src="/icone/WB_Headshots-102-web 1.png"
+                            />
+                          </div>
+                        </Col>
+                        <Col>
+                          <div className="break-user-name">
+                            {data.user[0].first_name}{" "}{data.user[0].last_name}
+                            </div>{" "}
+                          <div>
+                            <span
+                              onClick={() => {
+                                setBreakPlanFrom(true);
+                                setBreakJoinOrSagest(true);
+                                setBreakNewTime(false);
+                                setInvateForm(false);
+                              }}
+                              className="break-type"
+                            >
+                              {data.name}
+                            </span>
+                            <span
+                              className="break-time"
+                              onClick={() => {
+                                setBreakPlanFrom(true);
+                                setBreakJoinOrSagest(false);
+                                setBreakNewTime(true);
+                                setInvateForm(false);
+                              }}
+                            >
+                              {data.time}
+                            </span>
+                          </div>
+                        </Col>
+                      </Row>
+                      ))
+                    )
+              }
+              {/* <Row className="mt-3">
                 <Col className="col-2">
                   <div className="breakplan-icon navy-blue text-center pt-2">
                     <Image
@@ -444,8 +498,9 @@ const Dashboard = () => {
                     </span>
                   </div>
                 </Col>
-              </Row>
-              <Row className="mt-3">
+              </Row> */}
+              {/* end */}
+              {/* <Row className="mt-3">
                 <Col className="col-2">
                   <div className="breakplan-icon navy-blue text-center pt-2">
                     <Image
@@ -478,7 +533,7 @@ const Dashboard = () => {
                     <span className="break-time">13:00</span>
                   </div>
                 </Col>
-              </Row>
+              </Row> */}
               {/* Create New Plan */}
               <Row className="mt-3">
                 <Col>
@@ -596,7 +651,7 @@ const Dashboard = () => {
                           onChange={(value) => {
                             console.log("time...", value);
                           }}
-                          // value={value}
+                        // value={value}
                         />
                       </Col>
                     </Row>
@@ -638,7 +693,7 @@ const Dashboard = () => {
               <Button
                 variant="primary"
                 type="button"
-                // onClick={handleNextBreakOperation}
+              // onClick={handleNextBreakOperation}
               >
                 Create New Task
               </Button>

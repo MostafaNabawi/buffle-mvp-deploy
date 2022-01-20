@@ -18,7 +18,9 @@ function BreackplanFrom({
     const [newSaggestion, setNewSaggestion] = useState(false)
     // Create Plane
     const [newSuggestInput ,setNewSuggestInput]=useState('')
+    const[newSuggestInputError,setNewSuggestInputError]=useState('')
     const [newSuggestTime,setNewSuggestTime]=useState('')
+    const [SuggestTimeError,setSuggestTimeError]=useState(false)
     const [newBreak, setNewBreak] = useState({title: "",createIime: ""})
     // invit
     const [email,setEmail]=useState('')
@@ -62,12 +64,79 @@ function BreackplanFrom({
     // New saggest
     const handleNewSuggest =async (e)=>{
         e.preventDefault();
-        console.log("new Suggest",newSuggestInput) 
+        if(newSuggestInput){
+            setNewSuggestInputError(false)
+            setloading(true)
+            const data= JSON.parse(localStorage.getItem('user'))
+            console.log("data...",data)
+             await fetch(`${API_URL}/breakPlan/invite `,{
+                 method: "POST",
+                 credentials: "include",
+                 headers: {
+                     "Content-Type": "application/json",
+                     "Access-Control-Allow-Credentials": true,
+                 },
+                 body: JSON.stringify({
+                     fname: data.first_name,
+                     lname: data.last_name,
+                     message:newSuggestInput
+                 })
+             }).then(res=>{
+                 if(res.status==200){
+                     addToast("Sended", { autoDismiss: true, appearance: 'success' });
+                     setNewSuggestInput('')
+                     setShow(false)
+                     setClose(true)
+                     setloading(false)
+                 }else{
+                     addToast("Error Please Try Again!", { autoDismiss: true, appearance: 'error' });
+                     setloading(false)
+                 }
+             })
+
+        }else{
+            setNewSuggestInputError(true)
+        }
+    }
+    // Join
+    const handleJoin =async(e)=>{
+        console.log("join")
     }
     // Saggest new time
-    const handleSuggestNowTime =(e)=>{
+    const  handleSuggestNewTime =async (e)=>{
         e.preventDefault();
-        console.log("new time:",newSuggestTime)
+        if(newSuggestTime){
+            setSuggestTimeError(false)
+            setloading(true)
+            const data= JSON.parse(localStorage.getItem('user'))
+            console.log("data...",data)
+             await fetch(`${API_URL}/breakPlan/invite `,{
+                 method: "POST",
+                 credentials: "include",
+                 headers: {
+                     "Content-Type": "application/json",
+                     "Access-Control-Allow-Credentials": true,
+                 },
+                 body: JSON.stringify({
+                     fname: data.first_name,
+                     lname: data.last_name,
+                     time:newSuggestTime
+                 })
+             }).then(res=>{
+                 if(res.status==200){
+                     addToast("Sended", { autoDismiss: true, appearance: 'success' });
+                     setEmail('')
+                     setShow(false)
+                     setClose(true)
+                     setloading(false)
+                 }else{
+                     addToast("Errror Please Try Again!", { autoDismiss: true, appearance: 'error' });
+                     setloading(false)
+                 }
+             })
+        }else{
+            setSuggestTimeError(true)
+        }
     }
     // Invit
     const handleInvit =async (e)=>{
@@ -122,7 +191,10 @@ function BreackplanFrom({
                                     Join Or Set new Sagest
                                 </Card.Title>
                                 <Card.Text className="text-center pt-3">
-                                    <Button variant="outline-primary" onClick={() => { setNewSaggestion(false) }} className={style.customBtn}>Join</Button>
+                                    <Button variant="outline-primary" onClick={() => { 
+                                        setNewSaggestion(false) 
+                                        handleJoin()
+                                        }} className={style.customBtn}>Join</Button>
                                     <Button variant="outline-primary" onClick={() => { setNewSaggestion(!newSaggestion) }} className={style.customBtn}>Suggestion</Button>
                                     {
                                         newSaggestion
@@ -136,6 +208,7 @@ function BreackplanFrom({
                                                         as="textarea"
                                                         type="email"
                                                         placeholder="New Saggestion"
+                                                        className={newSuggestInputError?"red-border-input":""}
                                                         onChange={(e)=>setNewSuggestInput(e.target.value)}
                                                     />
                                                 </Form.Group>
@@ -156,17 +229,19 @@ function BreackplanFrom({
                                         Suggest new time
                                     </Card.Title>
                                     <Card.Text className="text-center">
-                                        <Form className="mt-3" onSubmit={handleSuggestNowTime}>
+                                        <Form className="mt-3" onSubmit={handleSuggestNewTime}>
                                             <Form.Group className="mb-3" controlId="formBasicEmail">
                                                 <Form.Control
                                                     autoFocus
                                                     value={newSuggestTime}
+                                                    className={SuggestTimeError?"red-border-input":""}
                                                     type="time"
                                                     placeholder="Saggest new time"
                                                     onChange={(e)=>setNewSuggestTime(e.target.value)}
                                                 />
                                             </Form.Group>
-                                            <Button disabled={loading} className={style.withBtn} variant="primary" type="submit">
+                                            <Button
+                                              disabled={loading} className={style.withBtn} variant="primary" type="submit">
                                             {
                                                 loading ? <Loader color="#fff" size={15} /> : "Send"
                                             }
