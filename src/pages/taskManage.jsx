@@ -18,7 +18,7 @@ const TaskManage = () => {
             </Row>
             <DndProvider backend={HTML5Backend}>
                 <TaskManagement />
-                <CreateProject />
+                {/* <CreateProject /> */}
                 <ProjectManagement />
             </DndProvider>
 

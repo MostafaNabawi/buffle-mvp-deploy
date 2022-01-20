@@ -5,38 +5,49 @@ import { statuses } from "./data";
 import { Col, Form, Row } from "react-bootstrap";
 import { useToasts } from "react-toast-notifications";
 import { createTask, getTask } from "../../api";
-import moment from "moment";
 import { ITEM_TYPE } from "./data/types";
+import moment from "moment";
 
 const TaskManagement = () => {
   const { addToast } = useToasts();
   const [items, setItems] = useState([]);
   const [inputTask, setInputTask] = useState({ name: "", p_id: "" });
+  const [newItems, setNewItems] = useState(false);
 
+  async function request() {
+    const data = await getTask();
+    const format = data?.data?.map((i, n) => {
+      return {
+        id: n,
+        status: moment(i.date, "YYYY-MM-DD HH:mm:ss").format("dddd"),
+        content: i.name,
+        tb_id: i._id,
+        description: i.description,
+        date: i.date,
+        p_id: i.projectId,
+      };
+    });
+    setItems(format);
+  }
   useEffect(() => {
-    async function request() {
-      const data = await getTask();
-      const format = data.data.map((i, n) => {
-        return {
-          id: n,
-          status: moment(i.date, "YYYY-MM-DD HH:mm:ss").format("dddd"),
-          content: i.name,
-        };
-      });
-      setItems(format);
-    }
     request();
   }, []);
 
-  const handleKeyDown = async (event) => {
+  useEffect(() => {
+    if (newItems) {
+      request();
+      setNewItems(false);
+    }
+  }, [newItems]);
+  const handleKeyDownWeekDaysItem = async (event) => {
     if (event.key === "Enter") {
-      const createT = await createTask(inputTask);
+      const createT = await createTask(inputTask, 0);
       if (createT.status === 200) {
         addToast("Created Susseccfully", {
           autoDismiss: true,
           appearance: "success",
         });
-        setItems((arr) => [...arr, {}]);
+        setNewItems(true);
         setInputTask("");
       } else {
         addToast("Error Please Try Again!", {
@@ -47,7 +58,6 @@ const TaskManagement = () => {
     }
   };
   const onDrop = (item, monitor, status) => {
-    console.warn("TASK item ||||", item.id, items[0].id, status);
     setItems((prevState) => {
       const newItems = prevState
         .filter((i) => i.id !== item.id)
@@ -74,7 +84,7 @@ const TaskManagement = () => {
           <Col key={s.status} className={"col-wrapper secondary-dark"}>
             <div className={"col-header"}>
               <span>{s.status}</span>
-              <span className={"col-header-time"}>2.14</span>
+              {/* <span className={"col-header-time"}>2.14</span> */}
             </div>
             <hr />
             <DropWrapper onDrop={onDrop} status={s.status}>
@@ -99,10 +109,8 @@ const TaskManagement = () => {
                       className="new_task_input"
                       placeholder="New Task"
                       aria-label="New Task"
-                      onChange={(e) =>
-                        setInputTask({ name: e.target.value, p_id: s._id })
-                      }
-                      onKeyDown={handleKeyDown}
+                      onChange={(e) => setInputTask({ name: e.target.value })}
+                      onKeyDown={handleKeyDownWeekDaysItem}
                     />
                   </Form.Group>
                 </div>

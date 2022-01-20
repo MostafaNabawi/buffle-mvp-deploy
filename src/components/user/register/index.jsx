@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import style from '../style.module.css'
 const IndexRegister = () => {
     return (
-        <div className={style.StepTowPage}>
-            <Row className="p-0 m-0 row">
+        <div >
+            <Row className="p-0 m-0 row mt-5 pt-5">
                 <Col xl='8' className={`text-center pb-3`}>
                     <Image src='/favicon.ico'/>
                 </Col>
