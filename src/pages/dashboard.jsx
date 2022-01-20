@@ -24,6 +24,7 @@ import { getaAllBreackPlan } from "../api/breackPlan";
 import { PulseLoader } from "react-spinners";
 import { useToasts } from "react-toast-notifications";
 const Dashboard = () => {
+  const currentUser=JSON.parse(localStorage.getItem('user'))
   const [timeFormat, setTimeFormat] = useState(false);
   // show form for breack plan
   const [BreakPlanForm, setBreakPlanFrom] = useState(false);
@@ -38,6 +39,8 @@ const Dashboard = () => {
     setModalShow(false);
     setNextBreakDateInput("");
   };
+  // Data for Breack plan form
+  const [timeData,setTimeData]=useState([])
   // is show modal for...
   const handleShow = () => setModalShow(true);
   const [vacationTime, setVacationTime] = useState(false);
@@ -52,7 +55,7 @@ const Dashboard = () => {
   const [nextBreakDateInput, setNextBreakDateInput] = useState("");
   const [nextBreakLoading, setNextBreakLoading] = useState(false);
   // Break Plan states
-  const [breacPlanData, setbreakPlanData] = useState("");
+  const [breacPlanData, setBreakPlanData] = useState("");
   const { addToast } = useToasts();
   // actions
   const setFeel = async (type) => {
@@ -98,6 +101,11 @@ const Dashboard = () => {
     async function getBreakPlan() {
       const req = await getaAllBreackPlan();
       console.log("getaAllBreackPlan :", req);
+      if (req.length > 0) {
+        setBreakPlanData(req)
+      } else {
+        setBreakPlanData([])
+      }
     }
     async function innerNextBreak() {
       const result = await getNextBreak();
@@ -125,7 +133,7 @@ const Dashboard = () => {
         });
       }
     }
-    // getBreakPlan();
+    getBreakPlan();
     innerNextBreak();
   }, []);
   return (
@@ -402,84 +410,73 @@ const Dashboard = () => {
             />
             <div>
               <BreakplanFrom
+                timeData={timeData}
                 show={BreakPlanForm}
                 setShow={setBreakPlanFrom}
                 newTime={breakNewTime}
                 joinOrSagest={breakJoinOrSagest}
                 invateForm={invateForm}
               />
-              <Row className="mt-3">
-                <Col className="col-2">
-                  <div className="breakplan-icon navy-blue text-center pt-2">
-                    <Image
-                      className="breakplan-img"
-                      src="/icone/WB_Headshots-102-web 1.png"
-                    />
-                  </div>
-                </Col>
-                <Col>
-                  <div className="break-user-name">Raj Kumar</div>{" "}
-                  <div>
-                    <span
-                      onClick={() => {
-                        setBreakPlanFrom(true);
-                        setBreakJoinOrSagest(true);
-                        setBreakNewTime(false);
-                        setInvateForm(false);
-                      }}
-                      className="break-type"
-                    >
-                      orders Lieferando
-                    </span>
-                    <span
-                      className="break-time"
-                      onClick={() => {
-                        setBreakPlanFrom(true);
-                        setBreakJoinOrSagest(false);
-                        setBreakNewTime(true);
-                        setInvateForm(false);
-                      }}
-                    >
-                      13:00
-                    </span>
-                  </div>
-                </Col>
-              </Row>
-              <Row className="mt-3">
-                <Col className="col-2">
-                  <div className="breakplan-icon navy-blue text-center pt-2">
-                    <Image
-                      className="breakplan-img"
-                      src="/icone/RJ_Headshots-84-web 1.png"
-                    />
-                  </div>
-                </Col>
-                <Col>
-                  <div className="break-user-name">Raj Kumar</div>
-                  <div>
-                    <span className="break-type">orders Lieferando</span>
-                    <span className="break-time">13:00</span>
-                  </div>
-                </Col>
-              </Row>
-              <Row className="mt-3">
-                <Col className="col-2">
-                  <div className="breakplan-icon navy-blue text-center pt-2">
-                    <Image
-                      className="breakplan-img"
-                      src="/icone/2018-11-27-Cornelius-W-111 1.png"
-                    />
-                  </div>
-                </Col>
-                <Col>
-                  <div className="break-user-name">Raj Kumar</div>
-                  <div>
-                    <span className="break-type">orders Lieferando</span>
-                    <span className="break-time">13:00</span>
-                  </div>
-                </Col>
-              </Row>
-              {/* Create New Plan */}
+              {/* show Breack plan */}
+              <div className="break-plan-card">
+                {
+                  breacPlanData === ''
+                    ? <div className="text-center"><Icon fontSize={24} icon="eos-icons:bubble-loading" /></div>
+                    : breacPlanData.length === 0
+                      ? "No Break Plan"
+                      : breacPlanData && (
+                        breacPlanData.map(data => (
+                          <Row key={data._id} className="mt-3">
+                            <Col className="col-2">
+                              <div className="breakplan-icon navy-blue text-center pt-2">
+                                <Image
+                                  className="breakplan-img"
+                                  src="/icone/WB_Headshots-102-web 1.png"
+                                />
+                              </div>
+                            </Col>
+                            <Col>
+                              <div className="break-user-name">
+                                {data.user[0].first_name}{" "}{data.user[0].last_name}
+                              </div>{" "}
+                              <div>
+                                <span
+                                  onClick={() => {
+                                    setBreakPlanFrom(true);
+                                    setBreakJoinOrSagest(true);
+                                    setBreakNewTime(false);
+                                    setInvateForm(false);
+                                  }}
+                                  className="break-type"
+                                >
+                                  {data.name}
+                                </span>
+                                <span
+                                  className="break-time"
+                                  onClick={() => {
+                                       // time ,recevier ,fullName,breakName,breakId breakPlan/suggest-new-time
+                                    setTimeData({
+                                      time:"",
+                                      recevier:data.user[0]._id,
+                                      fullName:currentUser.first_name +"" +currentUser.last_name,
+                                      breakName:data.name,
+                                      breakId:data._id 
+                                    })
+                                    setBreakPlanFrom(true);
+                                    setBreakJoinOrSagest(false);
+                                    setBreakNewTime(true);
+                                    setInvateForm(false);
+                                  }}
+                                >
+                                  {data.time}
+                                </span>
+                              </div>
+                            </Col>
+                          </Row>
+                        ))
+                      )
+                }
+              </div>
               <Row className="mt-3">
                 <Col>
                   <div className="creat-breack-time">
@@ -596,7 +593,7 @@ const Dashboard = () => {
                           onChange={(value) => {
                             console.log("time...", value);
                           }}
-                          // value={value}
+                        // value={value}
                         />
                       </Col>
                     </Row>
@@ -638,7 +635,7 @@ const Dashboard = () => {
               <Button
                 variant="primary"
                 type="button"
-                // onClick={handleNextBreakOperation}
+              // onClick={handleNextBreakOperation}
               >
                 Create New Task
               </Button>
