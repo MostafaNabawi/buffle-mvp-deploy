@@ -1,13 +1,14 @@
 import { React, useState, useEffect } from "react";
 import Item from "../item";
-import DropWrapper from "../DropWrapper";
+import DropWrapperProject from "./DropWrapperProject";
 import { Button, Col, Form } from "react-bootstrap";
 import { Row } from "react-bootstrap";
 import { Icon } from "@iconify/react";
 import Modal from "../../modal/modal";
 import { createTask, getProject, getTask } from "../../../api";
-import { useToasts } from 'react-toast-notifications';
-import moment from 'moment';
+import { useToasts } from "react-toast-notifications";
+import moment from "moment";
+import { PROJECT_ITEM } from "../data/types";
 
 const ProjectManagement = () => {
   const { addToast } = useToasts();
@@ -16,62 +17,72 @@ const ProjectManagement = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const [inputTask, setInputTask] = useState({ name: '', p_id: '' });
+  const [inputTask, setInputTask] = useState({ name: "", p_id: "" });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function request() {
       // get project and format
       const req = await getProject();
+      const pids = [];
       const formatP = req.data.map((i, n) => {
+        pids.push(i._id);
         return {
-          id: n,
+          id: i._id,
           status: moment(i.date, "YYYY-MM-DD HH:mm:ss").format("dddd"),
           content: i.name,
-          p_id: i._id,
         };
       });
       setProjects(formatP);
 
       //get tasks and format
       const data = await getTask();
-      const format = data.data.map((i, n) => {
+      const ff = data.data.filter((i) => pids.includes(i.projectId));
+      const format = ff.map((i, n) => {
         return {
-          id: n,
-          status: moment(i.date, "YYYY-MM-DD HH:mm:ss").format("dddd"),
+          id: i.projectId,
+          itemStatus: moment(i.date, "YYYY-MM-DD HH:mm:ss").format("dddd"),
           content: i.name,
-          projectId: i.projectId,
         };
       });
       setItems(format);
+      setLoading(false);
     }
     request();
   }, []);
-
   // insert task to database for project
   const handleKeyDown = async (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       const createT = await createTask(inputTask);
       if (createT.status === 200) {
-        addToast("Created Susseccfully", { autoDismiss: true, appearance: 'success' });
+        addToast("Created Susseccfully", {
+          autoDismiss: true,
+          appearance: "success",
+        });
 
-        setInputTask('');
-      }
-      else {
-        addToast("Error Please Try Again!", { autoDismiss: false, appearance: 'error' });
+        setInputTask("");
+      } else {
+        addToast("Error Please Try Again!", {
+          autoDismiss: false,
+          appearance: "error",
+        });
       }
     }
-  }
-
+  };
 
   const onDrop = (item, monitor, status) => {
+    console.warn("project item", item.id, items[0].id, status);
+    console.log("item state", items);
     setItems((prevState) => {
       const newItems = prevState
         .filter((i) => i.id !== item.id)
         .concat({ ...item, status });
+      console.log("New Items", newItems);
       return [...newItems];
     });
   };
   const moveItem = (dragIndex, hoverIndex) => {
+    console.log("d - h", dragIndex, hoverIndex);
     const item = items[dragIndex];
     setItems((prevState) => {
       const newItems = prevState.filter((i, idx) => idx !== dragIndex);
@@ -79,14 +90,16 @@ const ProjectManagement = () => {
       return [...newItems];
     });
   };
-
+  if (loading) {
+    return "Loading..";
+  }
   return (
     <Row className="projectManagement">
       {projects.map((s) => {
         return (
           <Col key={s.id} className={"col-wrapper secondary-dark"}>
             <Row className={"col-header"}>
-              <Col lg="10">{s.content}</Col>
+              <Col lg="10">{s.id}</Col>
               <Col lg="2" className="project-setting">
                 <Icon
                   icon="icon-park-outline:setting"
@@ -96,10 +109,14 @@ const ProjectManagement = () => {
               </Col>
             </Row>
             <hr className="task-manage-hr" />
-            <DropWrapper onDrop={onDrop} >
+            <DropWrapperProject
+              onDrop={onDrop}
+              statuses={projects}
+              status={s.id}
+            >
               <Col>
                 {items
-                  .filter((i) => i.projectId === s.p_id)
+                  .filter((i) => i.id === s.id)
                   .map((i, idx) => (
                     <Item
                       key={i.id}
@@ -107,24 +124,26 @@ const ProjectManagement = () => {
                       index={idx}
                       moveItem={moveItem}
                       status={s}
+                      PTYPE={PROJECT_ITEM}
                       className="project_item"
                     ></Item>
                   ))}
                 <div className="new-task-div">
-
                   <Form.Group className="mb-3" controlId="form-new-task">
-                    <input type="text" className="new_task_input"
+                    <input
+                      type="text"
+                      className="new_task_input"
                       placeholder="New Task"
-                      aria-label="New Task" onChange={(e) => (
+                      aria-label="New Task"
+                      onChange={(e) =>
                         setInputTask({ name: e.target.value, p_id: s.p_id })
-
-                      )
                       }
-                      onKeyDown={handleKeyDown} />
+                      onKeyDown={handleKeyDown}
+                    />
                   </Form.Group>
                 </div>
               </Col>
-            </DropWrapper>
+            </DropWrapperProject>
           </Col>
         );
       })}
@@ -137,12 +156,14 @@ const ProjectManagement = () => {
           <Row>
             <Col md={12}>
               <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Control type="text" placeholder="Name your project..."
-                // onChange={(e) => (
-                // setProjectName(e.target.value),
-                // validateProject(e.target.value)
-                // )
-                // }
+                <Form.Control
+                  type="text"
+                  placeholder="Name your project..."
+                  // onChange={(e) => (
+                  // setProjectName(e.target.value),
+                  // validateProject(e.target.value)
+                  // )
+                  // }
                 />
                 {/* {error ? (
                   <div className="invalid-feedback d-block">
@@ -156,13 +177,11 @@ const ProjectManagement = () => {
         footer={
           <>
             <Button onClick={handleClose}>Close</Button>
-            <Button variant="primary"  >
-              Save
-            </Button>
+            <Button variant="primary">Save</Button>
           </>
         }
       />
-    </Row >
+    </Row>
   );
 };
 export default ProjectManagement;

@@ -1,15 +1,13 @@
 import React, { Fragment, useState, useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { Form } from "react-bootstrap";
-import ITEM_TYPE from "./data/types";
 import TaskModal from "./modal/TaskModal";
 
 const Item = (props) => {
-  const { item, index, moveItem, status } = props;
-  console.log(item);
+  const { item, index, moveItem, status, PTYPE } = props;
   const ref = useRef(null);
   const [, drop] = useDrop({
-    accept: ITEM_TYPE,
+    accept: PTYPE,
     hover(item, monitor) {
       if (!ref.current) {
         return;
@@ -18,7 +16,6 @@ const Item = (props) => {
       const hoverIndex = index;
 
       if (dragIndex === hoverIndex) {
-
         return;
       }
 
@@ -35,14 +32,14 @@ const Item = (props) => {
       }
       moveItem(dragIndex, hoverIndex);
       item.index = hoverIndex;
-    }
+    },
   });
   const [{ isDragging }, drag] = useDrag({
-    type: ITEM_TYPE,
+    type: PTYPE,
     item: { ...item, index },
-    collect: monitor => ({
-      isDragging: monitor.isDragging()
-    })
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
   });
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);

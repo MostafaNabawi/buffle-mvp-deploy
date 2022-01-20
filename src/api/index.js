@@ -1,13 +1,31 @@
 import { API_URL } from "../config";
 // --------------------------USER MANGEMENT ----------------------------------
+//company admin
+async function getCompanySpaceData() {
+  try {
+    const req = await fetch(`${API_URL}/user/space-data`, {
+      credentials: "include",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const res = await req.json();
+    return { status: req.status, data: res };
+  } catch {
+    return { status: 400 };
+  }
+}
 // signin
 async function signin(payload) {
   try {
     const req = await fetch(`${API_URL}/auth/signin`, {
       method: "POST",
+      mode: "cors",
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
+        "Access-Control-Allow-Credentials": true,
       },
       body: JSON.stringify(payload),
     });
@@ -21,6 +39,7 @@ async function userStatus() {
   try {
     const req = await fetch(`${API_URL}/auth/status`, {
       credentials: "include",
+      mode: "cors",
     });
     return { status: req.status };
   } catch {
@@ -174,6 +193,7 @@ async function getTask() {
   return { status: req.status, data: res.payload };
 }
 export {
+  getCompanySpaceData,
   signin,
   logout,
   userStatus,
