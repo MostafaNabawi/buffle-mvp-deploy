@@ -732,3 +732,9 @@ div.check-box > input {
 }
 
 /* Login page */
+.notify-badge{
+  position: absolute !important;
+  margin-top: -10px !important;
+  /* margin-left: -15px !important; */
+  z-index: 4444 !important;
+}

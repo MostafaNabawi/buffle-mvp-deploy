@@ -4,7 +4,7 @@ import {Image,Row ,Col } from "react-bootstrap";
 function inviteNotify({name,message,footer}) {
     return (
         <>
-        <Row className="p-2">
+        <Row className="p-2 pb-0">
             <Col xl="2" className="pt-2">
             <div className="breakplan-icon navy-blue text-center pt-2">
                     <Image

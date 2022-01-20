@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from "react";
-import { Row, Col, Form, Image, NavDropdown,Button } from "react-bootstrap";
+import { Row, Col, Form, Image, NavDropdown, Button, Badge } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import { logout, userStatus } from "../api";
@@ -9,6 +9,10 @@ import Notify from "../components/notification/Notify";
 
 const Header = () => {
   const [userData, setUserData] = useState({});
+  const [notification, setNotificatiion] = useState('')
+  const [count, setCount] = useState(0)
+  const [loadData, setLoadData] = useState(false)
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate();
   const [du_time, setDu_time] = useState(0);
   const [dis_time, setDis_time] = useState(0);
@@ -33,6 +37,84 @@ const Header = () => {
       arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000;
     setDis_time(time);
   };
+  // Notification
+  const getNotification = async (load) => {
+    if (load) {
+      setLoading(true)
+      await fetch(`${API_URL}/user/notification`, {
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": true,
+        },
+      }).then(async (res) => {
+        const { payload } = await res.json()
+        console.log("payload...",payload)
+        if (payload.length > 0) {
+          setNotificatiion(payload)
+          setLoading(false)
+        } else {
+          setLoading(false)
+        }
+      })
+
+    }
+  }
+  const countNotification = async () => {
+    await fetch(`${API_URL}/user/count-notification`, {
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Credentials": true,
+      },
+    }).then(async (res) => {
+      const { payload } = await res.json()
+      setCount(payload)
+    })
+  }
+  // accept Joni 
+  const handleAccept = async (id, from) => {
+    const user= JSON.parse(localStorage.getItem('user'))
+    await fetch(`${API_URL}/breakPlan/accept`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Credentials": true,
+      },
+      body: JSON.stringify({
+        to: from,
+        notId: id,
+        fullName:user.first_name+" "+user.last_name
+      })
+    }).then(async (res) => {
+      console.log("Accept", res)
+      if (res.status) {
+        getNotification(true)
+      }
+    })
+  }
+  // Rejeact 
+  const handleReject = async (id) => {
+    await fetch(`${API_URL}/breakPlan/reject`, {
+      method: "DELETE",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Credentials": true,
+      },
+      body: JSON.stringify({
+        notId: id
+      })
+    }).then(async (res) => {
+      console.log("Accept", res)
+      if (res.status) {
+        getNotification(true)
+      }
+    })
+  }
+  /// /breakPlan/accept   to
+  //
   useEffect(() => {
     async function getStatus() {
       const req = await userStatus();
@@ -57,6 +139,7 @@ const Header = () => {
         }
       }
     }
+    countNotification()
     getScrrenRemainder();
     const user_storage = JSON.parse(localStorage.getItem("user"));
     setUserData(user_storage);
@@ -120,35 +203,57 @@ const Header = () => {
           <div className="header-icon navy-blue text-center pt-2">
             <NavDropdown
               title={
-                <Image
-                  onClick={() => console.log("click")}
-                  className="sidebar-icon"
-                  src="/icone/hcphotos-Headshots-1 2.png"
-                />
+                <>
+                  <Badge className="notify-badge" pill bg="danger">
+                    {count}
+                  </Badge>
+                  <Image
+                    onClick={() => {
+                      setLoadData(!loadData)
+                      getNotification(!loadData)
+                    }}
+                    className="sidebar-icon"
+                    src="/icone/hcphotos-Headshots-1 2.png"
+                  />
+
+                </>
               }
               className="navDropdomnIcon notiy "
             >
               <div className="card p-2 card-notify">
-                <Notify
-                name="Raj Kumar"
-                message="want to see your break plan"
-                footer={
-                <>
-                <Button variant="outline-success"  className={`btn-notify`}>Accept</Button>
-                <Button variant="outline-secondary" className={`btn-notify`}>Reject</Button>
-                </>
-              }
-                />
-                <Notify
-                name="Raj Kumar"
-                message="want to join to your break plan"
-                footer={
-                <>
-                <Button variant="outline-success"  className={`btn-notify`}>Accept</Button>
-                <Button variant="outline-secondary" className={`btn-notify`}>Reject</Button>
-                </>
-              }
-                />
+                {
+                  loading
+                    ? <div className="text-center pt-4 pb-4">
+                      <Icon fontSize={50} icon="eos-icons:bubble-loading" />
+                    </div>
+                    : notification.length > 0
+                      ?
+                      notification.map(notify => (
+                        notify.type === "invite"
+                          ? <Notify
+                            key={notify._id}
+                            name={notify.firstName + " " + notify.lastName}
+                            message={notify.msg}
+                            footer={
+                              <>
+                                <Button onClick={() => { handleAccept(notify._id, notify.from) }} variant="outline-success" className={`btn-notify`}>Accept</Button>
+                                <Button onClick={()=>{handleReject(notify._id)}} variant="outline-secondary" className={`btn-notify`}>Reject</Button>
+                              </>
+                            }
+                          />
+                          : notify.type =="report"
+                          ?<Notify
+                          key={notify._id}
+                          name=""
+                          message={notify.msg}
+                          footer=""
+                        />
+                          :""
+                      ))
+                      : <div className="text-center pt-2 pb-2">
+                        No Notification
+                      </div>
+                }
               </div>
             </NavDropdown>
           </div>
