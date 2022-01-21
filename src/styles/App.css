@@ -121,45 +121,45 @@ button.btn-primary {
   );
   border: 1px solid #8286ff;
 }
-.lockScreen{
+.lockScreen {
   padding-top: 20% !important;
   position: fixed !important;
-  top:0px !important;
+  top: 0px !important;
   left: -100px !important;
   right: 0px !important;
   bottom: 0px !important;
   z-index: 1030000 !important;
   color: black;
-  background-color:rgba(0, 0, 0, 0.25);
+  background-color: rgba(0, 0, 0, 0.25);
 }
 
-.lockScreenHide{
+.lockScreenHide {
   display: none !important;
 }
- /* notify */
- .btn-notify{
+/* notify */
+.btn-notify {
   float: right !important;
   margin: 5px !important;
- }
- .card-notify{
-   width: 400px !important;
- }
- .notiy >div.dropdown-menu {
+}
+.card-notify {
+  width: 400px !important;
+}
+.notiy > div.dropdown-menu {
   position: absolute;
   z-index: 1000;
   width: auto !important;
-  padding:0px !important;
+  padding: 0px !important;
   margin: 0;
   font-size: 1rem;
   color: #212529;
   text-align: left;
   list-style: none;
-  background:transparent !important;
+  background: transparent !important;
   background-clip: padding-box;
-  border:none !important;
+  border: none !important;
   border-radius: 0px !important;
 }
-.card >a.dropdown-item {
+.card > a.dropdown-item {
   display: block;
   width: 100%;
   padding: 0.25rem 1rem;
@@ -171,9 +171,9 @@ button.btn-primary {
   white-space: nowrap;
   background-color: transparent;
   border: 0;
-  cursor:unset  !important;
+  cursor: unset !important;
 }
- /*  */
+/*  */
 .navDropdomnIcon {
   margin-top: -10px !important ;
   margin-left: -10px !important;
@@ -181,8 +181,8 @@ button.btn-primary {
 .navDropdomnIcon > a {
   color: black !important;
 }
-.invaleIcone:hover{
- color: #4922ff !important;
+.invaleIcone:hover {
+  color: #4922ff !important;
 }
 .navDropdomnIcon > .dropdown-toggle::after {
   display: inline-block;
@@ -547,7 +547,7 @@ ul.sidebar-list {
   display: inline-flex;
   justify-content: space-between;
 }
-.taskmanagerHeader{
+.taskmanagerHeader {
   display: inline-block !important;
 }
 .custom-h-card h4,
@@ -730,4 +730,11 @@ div.check-box > input {
 .red-border-input {
   border-color: red !important;
 }
+
 /* Login page */
+.notify-badge{
+  position: absolute !important;
+  margin-top: -10px !important;
+  /* margin-left: -15px !important; */
+  z-index: 4444 !important;
+}

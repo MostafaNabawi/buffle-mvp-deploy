@@ -18,7 +18,7 @@ function HydrationReminderCard() {
   const [liter, setLiter] = useState();
   const [reminder, setReminder] = useState(0);
   const [mute, setMute] = useState(false);
-  const [delay, setDelay] = useState(0);
+  const [reminderNotifyDelay, setReminderNotifyDelay] = useState(0);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = async () => {
@@ -44,25 +44,26 @@ function HydrationReminderCard() {
   });
 
   const changeTimeFormat = (val) => {
-    const arr = val.split(":");
-    const hours = arr[0].trim();
-    const minutes = arr[1].trim();
-    const seconds = arr[2].trim();
-    return { hours, minutes, seconds };
+    if (val) {
+      const arr = val.split(":");
+      const hours = arr[0].trim();
+      const minutes = arr[1].trim();
+      const seconds = arr[2].trim();
+      return { hours, minutes, seconds };
+    }
   };
 
   const getData = async () => {
     const req = await getWaterHydration();
     if (req.data !== null) {
       const item = localStorage.getItem("precent");
-      if (item !== null) {
+      if (item >= 0) {
         setPrecent(item);
       }
-      console.log(req);
+      lo;
       setLiter(req.data.daily_goal);
-      setDelay(timeInMilliseconds(req.data.reminder));
-      calculteWaterReminder();
     }
+    console.log(req, "get data");
   };
 
   //submite function
@@ -97,38 +98,44 @@ function HydrationReminderCard() {
   };
 
   //Reminder notifiction
-  const ReminderNotifiction = () => {
-    setInterval(() => {
-      if (!mute) {
-        addToast("Info!", {
-          autoDismiss: true,
-          appearance: "info",
-        });
-      }
-      console.log(mute);
-    }, delay);
-  };
+  // const ReminderNotifiction = (val) => {
+  //   const delay = timeInMilliseconds(val);
+  //   console.log(delay, "delay");
+  //   setInterval(() => {
+  //     if (!mute) {
+  //       addToast("Info!", {
+  //         autoDismiss: true,
+  //         appearance: "info",
+  //       });
+  //     }
+  //     console.log(mute);
+  //   }, delay);
+  // };
 
-  const timeInMilliseconds = (time) => {
-    const arr = time.split(":");
-    const milliseconds =
-      arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000;
-    return milliseconds;
-  };
+  // const timeInMilliseconds = (time) => {
+  //   if (time.hours) {
+  //     const arr = time.split(":");
+  //     const milliseconds =
+  //       arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000;
+  //     return milliseconds;
+  //   }
+  // };
 
-  const calculteWaterReminder = () => {
-    var value = precent;
-    setInterval(() => {
-      if (value >= 1) {
-        setPrecent(--value);
-      }
-    }, 12000);
-  };
+  // const calculteWaterReminder = () => {
+  //   const delay = (timeInMilliseconds(howLongTime) * 60) / 100;
+  //   console.log(delay, "precent-delay");
+  //   var value = precent;
+  //   setInterval(() => {
+  //     if (value >= 1) {
+  //       setPrecent(--value);
+  //     }
+  //   }, delay);
+  // };
 
   //useEffect function
   useEffect(() => {
-    // ReminderNotifiction();
     getData();
+    console.log(reminderTime, precent, "useEffect");
     return () => {
       localStorage.setItem("precent", precent);
     };
