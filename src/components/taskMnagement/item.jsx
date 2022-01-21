@@ -56,7 +56,7 @@ const Item = (props) => {
         <span className={"item-title"} onClick={handleShow}>
           {item.content}
         </span>
-        <div className={`color-bar color-bar-${status?.status}`} />
+        <div className={`color-bar color-bar-${status?.status || "Sunday"}`} />
       </div>
 
       <TaskModal

@@ -21,12 +21,10 @@ async function signin(payload) {
   try {
     const req = await fetch(`${API_URL}/auth/signin`, {
       method: "POST",
-      mode: "cors",
       credentials: "include",
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Credentials": true,
       },
       body: JSON.stringify(payload),
     });
@@ -40,7 +38,6 @@ async function userStatus() {
   try {
     const req = await fetch(`${API_URL}/auth/status`, {
       credentials: "include",
-      mode: "cors",
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Credentials": true,

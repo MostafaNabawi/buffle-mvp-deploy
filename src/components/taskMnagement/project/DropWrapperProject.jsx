@@ -4,16 +4,12 @@ import { PROJECT_ITEM } from "../data/types";
 // import { statuses } from "../data";
 
 const DropWrapperProject = ({ onDrop, children, status, statuses }) => {
-  console.log("DWP => ", statuses);
+  console.log("DWP => ", status, statuses);
   const [{ isOver }, drop] = useDrop({
     accept: PROJECT_ITEM,
     canDrop: (item, monitor) => {
-      console.log("iiiiii", item.id, "}}}", status);
-      const itemIndex = statuses.findIndex((si) => si.id === item.id);
-      console.log("DWP => ITEM INDEX", itemIndex);
-      const statusIndex = statuses.findIndex((si) => si.id === status);
-      console.log("DWP => STATUS INDEX", statusIndex);
-      console.error("itemIndex |||| statusIndex", itemIndex, statusIndex);
+      const itemIndex = statuses.findIndex((si) => si.status === item.status);
+      const statusIndex = statuses.findIndex((si) => si.status === status);
       return [statusIndex, statusIndex, itemIndex].includes(statusIndex);
     },
     drop: (item, monitor) => {
