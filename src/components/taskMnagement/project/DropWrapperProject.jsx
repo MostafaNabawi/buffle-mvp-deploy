@@ -1,10 +1,9 @@
 import React from "react";
 import { useDrop } from "react-dnd";
 import { PROJECT_ITEM } from "../data/types";
-// import { statuses } from "../data";
 
 const DropWrapperProject = ({ onDrop, children, status, statuses }) => {
-  console.log("DWP => ", status, statuses);
+  // console.log("DWP => ", status, statuses);
   const [{ isOver }, drop] = useDrop({
     accept: PROJECT_ITEM,
     canDrop: (item, monitor) => {
