@@ -1,26 +1,30 @@
 import { Icon } from "@iconify/react";
 import { Image, Form, Row, Col, Button, NavDropdown } from "react-bootstrap";
-import { useToasts } from "react-toast-notifications";
 import React, { useState, useEffect } from "react";
 
 import { API_URL } from "../../config/index";
-import { getWaterHydration, createWaterHydration } from "../../api";
 import Card from "./../card/Card";
 import CardBody from "./../card/CardBody";
 import CardHeader from "./../card/CardHeader";
 import Modal from "./../modal/modal";
 import TimePicker2 from "../common/timePicker/TimePicker2";
 import WaterRepository from "./WaterRepository";
+import { getWaterHydration, createWaterHydration } from "../../api";
+import { useToasts } from "react-toast-notifications";
 
 function HydrationReminderCard() {
-  const { addToast } = useToasts();
-  const [precent, setPrecent] = useState(0);
-  const [liter, setLiter] = useState();
-  const [reminder, setReminder] = useState(0);
+  const [delay, setDelay] = useState("");
   const [mute, setMute] = useState(false);
-  const [reminderNotifyDelay, setReminderNotifyDelay] = useState(0);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
+  const changeTimeFormat = (val) => {
+    const arr = val.split(":");
+    const hours = arr[0];
+    const minutes = arr[1];
+    const seconds = arr[2];
+    return { hours, minutes, seconds };
+  };
+
   const handleShow = async () => {
     setShow(true);
     const req = await getWaterHydration();
@@ -31,6 +35,7 @@ function HydrationReminderCard() {
     }
   };
 
+  const { addToast } = useToasts();
   const [dailyGoal, setDailyGoal] = useState("");
   const [howLongTime, setHowLongTime] = useState({
     hours: "",
@@ -42,30 +47,8 @@ function HydrationReminderCard() {
     minutes: "",
     seconds: "",
   });
+  const [startWorkingTime, setstarttWorkingTime] = useState("");
 
-  const changeTimeFormat = (val) => {
-    if (val) {
-      const arr = val.split(":");
-      const hours = arr[0].trim();
-      const minutes = arr[1].trim();
-      const seconds = arr[2].trim();
-      return { hours, minutes, seconds };
-    }
-  };
-
-  const getData = async () => {
-    const req = await getWaterHydration();
-    if (req.data !== null) {
-      const item = localStorage.getItem("precent");
-      if (item >= 0) {
-        setPrecent(item);
-      }
-      setLiter(req.data.daily_goal);
-    }
-    console.log(req, "get data");
-  };
-
-  //submite function
   const handleSubmit = async (e) => {
     const timer_1 = ` ${howLongTime.hours}:${howLongTime.minutes}:${howLongTime.seconds}`;
     const timer_2 = ` ${reminderTime.hours}:${reminderTime.minutes}:${reminderTime.seconds}`;
@@ -74,71 +57,44 @@ function HydrationReminderCard() {
       timer_1,
       timer_2,
     };
-    if (dailyGoal && timer_1 && timer_2) {
-      const req = await createWaterHydration(data);
-      if (req.status == 200) {
-        addToast("Created Susseccfully", {
-          autoDismiss: true,
-          appearance: "success",
-        });
-        handleClose();
-      } else {
-        addToast("Error Please Try Again!", {
-          autoDismiss: false,
-          appearance: "error",
-        });
-      }
-    } else {
-      addToast("An error occurred ", {
+    setDelay(reminderNotificationDelay(timer_2));
+    console.log(reminderNotificationDelay(timer_2));
+    const req = await createWaterHydration(data);
+    if (req.status == 200) {
+      addToast("Created Susseccfully+1", {
         autoDismiss: true,
+        appearance: "success",
+      });
+      handleClose();
+      setHowLongTime("");
+      setHowLongTime("");
+      setReminderTime("");
+    } else {
+      addToast("Error Please Try Again!", {
+        autoDismiss: false,
         appearance: "error",
       });
     }
+    console.log(req);
   };
 
-  //Reminder notifiction
-  // const ReminderNotifiction = (val) => {
-  //   const delay = timeInMilliseconds(val);
-  //   console.log(delay, "delay");
-  //   setInterval(() => {
-  //     if (!mute) {
-  //       addToast("Info!", {
-  //         autoDismiss: true,
-  //         appearance: "info",
-  //       });
-  //     }
-  //     console.log(mute);
-  //   }, delay);
-  // };
+  useEffect(async () => {
+    const data = await getWaterHydration();
+    console.log(data, "useEffect");
+  }, []);
 
-  // const timeInMilliseconds = (time) => {
-  //   if (time.hours) {
-  //     const arr = time.split(":");
-  //     const milliseconds =
-  //       arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000;
-  //     return milliseconds;
-  //   }
-  // };
+  const reminderNotificationDelay = (val) => {
+    console.log(val);
+    const arr = val.split(":");
+    return arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000;
+  };
 
-  // const calculteWaterReminder = () => {
-  //   const delay = (timeInMilliseconds(howLongTime) * 60) / 100;
-  //   console.log(delay, "precent-delay");
-  //   var value = precent;
-  //   setInterval(() => {
-  //     if (value >= 1) {
-  //       setPrecent(--value);
-  //     }
-  //   }, delay);
-  // };
-
-  //useEffect function
-  useEffect(() => {
-    getData();
-    console.log(reminderTime, precent, "useEffect");
-    return () => {
-      localStorage.setItem("precent", precent);
-    };
-  }, [precent]);
+  // setTimeout(() => {
+  //   addToast("Info", {
+  //     autoDismiss: true,
+  //     appearance: "info",
+  //   });
+  // }, delay);
 
   return (
     <>
@@ -156,7 +112,7 @@ function HydrationReminderCard() {
                 id="basic-nav-dropdown"
               >
                 <NavDropdown.Item className="reminderNavItem">
-                  Mute
+                  Mute{" "}
                   <i
                     onClick={() => {
                       setMute(!mute);
@@ -173,11 +129,7 @@ function HydrationReminderCard() {
           }
         />
         <CardBody>
-          <WaterRepository
-            precent={precent}
-            liter={liter}
-            reminder={reminder}
-          />
+          <WaterRepository data={dailyGoal} />
         </CardBody>
       </Card>
       <Modal

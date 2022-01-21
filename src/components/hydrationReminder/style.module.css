@@ -46,9 +46,9 @@
   display: flex;
   flex-flow: column;
   justify-content: center;
+  text-align: center;
   font-weight: 700;
   height: 50%;
-  z-index: 1;
 }
 .reminder_percent {
   font-size: 3rem;
@@ -68,10 +68,10 @@
   left: 0;
 }
 
-.wave::after {
+.wave::before {
   background-color: #4318ff;
+  bottom: -50%;
   left: 0%;
-  bottom: -57%;
   transform: rotate(180deg);
   clip-path: polygon(
     100% 0%,
@@ -180,15 +180,14 @@
   );
 }
 
-.wave::before {
+.wave::after {
   background: radial-gradient(
     100% 682.41% at 4.04% 0%,
     #8286ff 0%,
     #4922ff 100%
   );
   opacity: 60%;
-  bottom: -63%;
-  z-index: 1;
+  bottom: -56%;
   transform: rotateX(180deg) rotateZ(360deg);
   clip-path: polygon(
     100% 0%,

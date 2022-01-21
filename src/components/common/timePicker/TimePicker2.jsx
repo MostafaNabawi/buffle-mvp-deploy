@@ -82,7 +82,7 @@ function TimePicker({ label, value, setValue }) {
             placeholder="min"
             min={0}
             max={60}
-            value={value?.minutes}
+            value={value?.minutes.trim()}
             onChange={(e) => validatMintteAndSeconds(e.target.value, "min")}
             onBlur={() => {
               timeFormat(value);
@@ -95,7 +95,7 @@ function TimePicker({ label, value, setValue }) {
             placeholder="sec"
             min={0}
             max={60}
-            value={value?.seconds}
+            value={value?.seconds.trim()}
             onChange={(e) => validatMintteAndSeconds(e.target.value, "sec")}
             onBlur={() => {
               timeFormat(value);
