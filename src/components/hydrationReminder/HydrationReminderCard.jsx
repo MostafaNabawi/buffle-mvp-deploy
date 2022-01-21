@@ -60,7 +60,6 @@ function HydrationReminderCard() {
       if (item >= 0) {
         setPrecent(item);
       }
-      lo;
       setLiter(req.data.daily_goal);
     }
     console.log(req, "get data");
