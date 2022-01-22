@@ -61,7 +61,8 @@ const ProjectManagement = () => {
         content: i.name,
         description: i.description,
         status: i.projectId,
-        tb_id: i._id
+        tb_id: i._id,
+        p_id: i.projectId,
       };
     });
     setItems(format);
