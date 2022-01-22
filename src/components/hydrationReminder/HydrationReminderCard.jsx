@@ -13,18 +13,16 @@ import { getWaterHydration, createWaterHydration } from "../../api";
 import { useToasts } from "react-toast-notifications";
 
 function HydrationReminderCard() {
-  const [delay, setDelay] = useState("");
+  const { addToast } = useToasts();
+  const [dailyGoal, setDailyGoal] = useState(0);
+  const [isSubmit, setIsSubmit] = useState(false);
+  const [precent, setPrecent] = useState(0);
+  const [liter, setLiter] = useState();
+  const [reminder, setReminder] = useState(0);
   const [mute, setMute] = useState(false);
+  const [delay, setDelay] = useState(0);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const changeTimeFormat = (val) => {
-    const arr = val.split(":");
-    const hours = arr[0];
-    const minutes = arr[1];
-    const seconds = arr[2];
-    return { hours, minutes, seconds };
-  };
-
   const handleShow = async () => {
     setShow(true);
     const req = await getWaterHydration();
@@ -34,9 +32,6 @@ function HydrationReminderCard() {
       setReminderTime(changeTimeFormat(req.data.reminder));
     }
   };
-
-  const { addToast } = useToasts();
-  const [dailyGoal, setDailyGoal] = useState("");
   const [howLongTime, setHowLongTime] = useState({
     hours: "",
     minutes: "",
@@ -47,7 +42,69 @@ function HydrationReminderCard() {
     minutes: "",
     seconds: "",
   });
-  const [startWorkingTime, setstarttWorkingTime] = useState("");
+
+  const fetch = async () => {
+    const req = await getWaterHydration();
+    if (req.data.daily_goal !== "") {
+      setPrecent(100);
+      setDailyGoal(req.data.daily_goal);
+      setHowLongTime(changeTimeFormat(req.data.work));
+      setReminderTime(changeTimeFormat(req.data.reminder));
+    }
+  };
+
+  //useEffect function
+  useEffect(() => {
+    fetch();
+    console.log("useEffect");
+  }, [isSubmit, mute]);
+
+  const changeTimeFormat = (val) => {
+    const arr = val.split(":");
+    const hours = arr[0].trim();
+    const minutes = arr[1].trim();
+    const seconds = arr[2].trim();
+    return { hours, minutes, seconds };
+  };
+
+  const timeInMilliseconds = (time) => {
+    if (time !== undefined) {
+      const arr = time.split(":");
+      const milliseconds =
+        arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000;
+      return milliseconds;
+    } else {
+      return null;
+    }
+  };
+
+  // Reminder notifiction
+  const ReminderNotifiction = (time) => {
+    const interval = timeInMilliseconds(time);
+    const flag = mute;
+    console.log(interval, "notific");
+    if (interval !== null) {
+      setInterval(() => {
+        if (!flag) {
+          addToast("INFO", {
+            autoDismiss: true,
+            appearance: "success",
+          });
+        }
+      }, interval);
+    }
+  };
+
+  const calculteWaterReminder = (time) => {
+    const interval = timeInMilliseconds(time) / 100;
+    console.log(interval, "reminder");
+    var val = precent;
+    setInterval(() => {
+      if (val >= 1) {
+        setPrecent(--val);
+      }
+    }, interval);
+  };
 
   const handleSubmit = async (e) => {
     const timer_1 = ` ${howLongTime.hours}:${howLongTime.minutes}:${howLongTime.seconds}`;
@@ -57,8 +114,6 @@ function HydrationReminderCard() {
       timer_1,
       timer_2,
     };
-    setDelay(reminderNotificationDelay(timer_2));
-    console.log(reminderNotificationDelay(timer_2));
     const req = await createWaterHydration(data);
     if (req.status == 200) {
       addToast("Created Susseccfully+1", {
@@ -66,35 +121,13 @@ function HydrationReminderCard() {
         appearance: "success",
       });
       handleClose();
-      setHowLongTime("");
-      setHowLongTime("");
-      setReminderTime("");
     } else {
       addToast("Error Please Try Again!", {
         autoDismiss: false,
         appearance: "error",
       });
     }
-    console.log(req);
   };
-
-  useEffect(async () => {
-    const data = await getWaterHydration();
-    console.log(data, "useEffect");
-  }, []);
-
-  const reminderNotificationDelay = (val) => {
-    console.log(val);
-    const arr = val.split(":");
-    return arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000;
-  };
-
-  // setTimeout(() => {
-  //   addToast("Info", {
-  //     autoDismiss: true,
-  //     appearance: "info",
-  //   });
-  // }, delay);
 
   return (
     <>
