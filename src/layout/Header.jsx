@@ -115,17 +115,38 @@ const Header = () => {
         notId: id,
       }),
     }).then(async (res) => {
-      console.log("Accept", res);
-      if (res.status) {
+      if (res.status===200) {
         getNotification(true);
       }
     });
   };
   //
-  const handleAcceptTime = (id, breakId) => {};
-  const handleRejectTime = (id) => {};
-  /// /breakPlan/accept   to
-  //
+  const handleAcceptTime = async (id, userId, newTime, breakId, breakName) => {
+    const el = document.getElementById(breakId)
+    console.log("brea el 2", el)
+    const user = JSON.parse(localStorage.getItem("user"));
+    await fetch(`${API_URL}/breakPlan/accept-time`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Credentials": true,
+      },
+      body: JSON.stringify({
+        fullName: user.first_name + " " + user.last_name,
+        to: userId,
+        notId: id,
+        time: newTime,
+        breakId: breakId,
+        breakName: breakName
+      }),
+    }).then(async (res) => {
+      if (res.status) {
+        el.innerHTML = newTime
+        getNotification(true);
+      }
+    });
+  };
   useEffect(() => {
     async function getStatus() {
       const req = await userStatus();
@@ -180,10 +201,10 @@ const Header = () => {
             localStorage.setItem(
               "loackTime",
               timeLock.getHours() +
-                ":" +
-                timeLock.getMinutes() +
-                ":" +
-                timeLock.getSeconds()
+              ":" +
+              timeLock.getMinutes() +
+              ":" +
+              timeLock.getSeconds()
             );
           }}
           renderer={() => {
@@ -203,9 +224,9 @@ const Header = () => {
             onComplete={() => {
               setStart(true);
             }}
-            // renderer={() => {
-            //   return ""
-            // }}
+          // renderer={() => {
+          //   return ""
+          // }}
           />
         )}
       </div>
@@ -250,6 +271,7 @@ const Header = () => {
                           <>
                             <Button
                               onClick={() => {
+                                // 
                                 handleAccept(notify._id, notify.from);
                               }}
                               variant="outline-success"
@@ -285,7 +307,7 @@ const Header = () => {
                           <>
                             <Button
                               onClick={() => {
-                                handleAcceptTime(notify._id.notify.breakId);
+                                handleAcceptTime(notify._id, notify.user_id, notify.newTime, notify.breakId, notify.breakName);
                               }}
                               variant="outline-success"
                               className={`btn-notify`}
@@ -294,7 +316,7 @@ const Header = () => {
                             </Button>
                             <Button
                               onClick={() => {
-                                handleRejectTime(notify._id);
+                                handleReject(notify._id);
                               }}
                               variant="outline-secondary"
                               className={`btn-notify`}
