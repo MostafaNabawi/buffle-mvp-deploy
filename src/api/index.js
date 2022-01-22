@@ -328,6 +328,22 @@ async function updateTaskDate(id, date) {
   });
   return { status: req.status };
 }
+async function updateTaskProject(id, p_id) {
+  const req = await fetch(`${API_URL}/task/update-task-project`, {
+    method: "PUT",
+    credentials: "include",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+    body: JSON.stringify({
+      taskId: id,
+      projectId: p_id,
+    }),
+  });
+  return { status: req.status };
+}
 export {
   getCompanySpaceData,
   signin,
@@ -349,4 +365,5 @@ export {
   updateTask,
   deleteTask,
   updateTaskDate,
+  updateTaskProject,
 };

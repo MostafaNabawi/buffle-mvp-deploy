@@ -61,6 +61,7 @@ const ProjectManagement = () => {
         content: i.name,
         description: i.description,
         status: i.projectId,
+        tb_id: i._id
       };
     });
     setItems(format);
@@ -212,9 +213,8 @@ const ProjectManagement = () => {
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Control
                     type="text"
-                    className={`${
-                      error.length > 0 ? "red-border-input" : "no-border-input"
-                    }`}
+                    className={`${error.length > 0 ? "red-border-input" : "no-border-input"
+                      }`}
                     placeholder="Name your project..."
                     onChange={(e) => setProjectName(e.target.value)}
                   />
