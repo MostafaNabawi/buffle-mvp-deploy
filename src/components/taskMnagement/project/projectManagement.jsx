@@ -48,8 +48,6 @@ const ProjectManagement = () => {
         content: i.name,
         description: i.description,
         status: i._id,
-        p_id: i._id,
-        day: moment(i.date, "YYYY-MM-DD HH:mm:ss").format("dddd"),
       };
     });
 
@@ -63,9 +61,6 @@ const ProjectManagement = () => {
         content: i.name,
         description: i.description,
         status: i.projectId,
-        day: moment(i.date, "YYYY-MM-DD HH:mm:ss").format("dddd"),
-        p_id: i.projectId,
-        tb_id: i._id
       };
     });
     setItems(format);
