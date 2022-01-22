@@ -22,14 +22,13 @@ const DropWrapper = ({ onDrop, children, status, idNumber }) => {
     } else {
       var dayDate = d.setDate(d.getDate());
     }
-    console.log("date", new Date(dayDate).toISOString());
     const update = await updateTaskDate(id, new Date(dayDate).toISOString());
-    // if (update.status === 200) {
-    //     addToast("Droped successfully", { autoDismiss: true, appearance: 'success' });
-    // }
-    // else {
-    //     addToast("Error! Please Try Again!", { autoDismiss: false, appearance: 'error' });
-    // }
+    if (update.status === 200) {
+      addToast("Droped successfully", { autoDismiss: true, appearance: 'success' });
+    }
+    else {
+      addToast("Error! Please Try Again!", { autoDismiss: false, appearance: 'error' });
+    }
   }
   const [{ isOver }, drop] = useDrop({
     accept: ITEM_TYPE,
@@ -43,7 +42,6 @@ const DropWrapper = ({ onDrop, children, status, idNumber }) => {
       onDrop(item, monitor, status);
       ProjectChange(item.tb_id, item.date);
 
-      console.log("edit here when droped", item, status, idNumber);
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),
