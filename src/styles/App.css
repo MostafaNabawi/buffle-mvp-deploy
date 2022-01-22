@@ -747,3 +747,6 @@ div.check-box > input {
   overflow-y: auto;
   padding: 10px !important;
 }
+.clear-all{
+  color: #8286ff  !important;
+}

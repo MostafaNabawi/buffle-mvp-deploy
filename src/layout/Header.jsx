@@ -14,8 +14,10 @@ import { logout, userStatus } from "../api";
 import { API_URL } from "../config/index";
 import Countdown from "react-countdown";
 import Notify from "../components/notification/Notify";
+import { useToasts } from "react-toast-notifications";
 
 const Header = () => {
+  const { addToast } = useToasts();
   const [userData, setUserData] = useState({});
   const [notification, setNotificatiion] = useState("");
   const [count, setCount] = useState(0);
@@ -147,6 +149,33 @@ const Header = () => {
       }
     });
   };
+  // Clear All Notification
+  const clearAll =async()=>{
+   if(notification.length >0 && !loading){
+    try{
+      setLoading(true)
+      await fetch(`${API_URL}/user/clear-all`, {
+        method: "DELETE",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": true,
+        },
+      }).then(res=>{
+        if(res.status==200){
+            addToast("Cleared", { autoDismiss: true, appearance: 'success' });
+            setNotificatiion([])
+            setLoading(false)
+        }else{
+            addToast("Error Please Try Again!", { autoDismiss: true, appearance: 'error' });
+            setLoading(false)
+        }
+    })
+    }catch{
+      addToast("server Error Please Try Again!", { autoDismiss: true, appearance: 'error' });
+    }
+   }
+  }
   useEffect(() => {
     async function getStatus() {
       const req = await userStatus();
@@ -255,7 +284,8 @@ const Header = () => {
               }
               className="navDropdomnIcon notiy "
             >
-              <div className="card p-2 card-notify">
+              <div className="card p-2 card-notify text-center">
+                <a onClick={()=>{clearAll()}} className="clear-all">Clear all</a>
                 {loading ? (
                   <div className="text-center pt-4 pb-4">
                     <Icon fontSize={50} icon="eos-icons:bubble-loading" />
