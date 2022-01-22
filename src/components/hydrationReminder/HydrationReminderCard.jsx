@@ -14,20 +14,21 @@ import { useToasts } from "react-toast-notifications";
 
 function HydrationReminderCard() {
   const { addToast } = useToasts();
-  const [dailyGoal, setDailyGoal] = useState(0);
+  const [id1, setId1] = useState({ id: "" });
+  const [id2, setId2] = useState({ id: "" });
   const [isSubmit, setIsSubmit] = useState(false);
+  const [dailyGoal, setDailyGoal] = useState(0);
   const [precent, setPrecent] = useState(0);
-  const [liter, setLiter] = useState();
+  const [liter, setLiter] = useState(0);
   const [reminder, setReminder] = useState(0);
   const [mute, setMute] = useState(false);
-  const [delay, setDelay] = useState(0);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = async () => {
     setShow(true);
     const req = await getWaterHydration();
-    if (req.status == 200 && req.data !== null) {
-      setDailyGoal(req.data.daily_goal);
+    if (req.data !== null) {
+      setLiter(req.data.daily_goal);
       setHowLongTime(changeTimeFormat(req.data.work));
       setReminderTime(changeTimeFormat(req.data.reminder));
     }
@@ -44,20 +45,25 @@ function HydrationReminderCard() {
   });
 
   const fetch = async () => {
+    console.log("fetch");
     const req = await getWaterHydration();
-    if (req.data.daily_goal !== "") {
+    if (req.data !== null) {
+      console.log("fetched");
       setPrecent(100);
       setDailyGoal(req.data.daily_goal);
-      setHowLongTime(changeTimeFormat(req.data.work));
-      setReminderTime(changeTimeFormat(req.data.reminder));
+      setLiter(req.data.daily_goal);
+      calculteWaterReminderPrecent(req.data.work);
+      ReminderNotifiction(req.data.reminder);
+    } else {
+      console.log("data-null");
     }
   };
 
   //useEffect function
   useEffect(() => {
-    fetch();
     console.log("useEffect");
-  }, [isSubmit, mute]);
+    fetch();
+  }, [isSubmit]);
 
   const changeTimeFormat = (val) => {
     const arr = val.split(":");
@@ -81,29 +87,38 @@ function HydrationReminderCard() {
   // Reminder notifiction
   const ReminderNotifiction = (time) => {
     const interval = timeInMilliseconds(time);
-    const flag = mute;
-    console.log(interval, "notific");
+    console.log(interval, "Info-interval");
+    if (id1.id !== "") {
+      clearInterval(id1.id);
+    }
     if (interval !== null) {
-      setInterval(() => {
-        if (!flag) {
+      const id = setInterval(() => {
+        if (!mute) {
           addToast("INFO", {
             autoDismiss: true,
-            appearance: "success",
+            appearance: "info",
           });
         }
       }, interval);
+      setId1({ id: id });
     }
   };
 
-  const calculteWaterReminder = (time) => {
+  const calculteWaterReminderPrecent = (time) => {
     const interval = timeInMilliseconds(time) / 100;
-    console.log(interval, "reminder");
-    var val = precent;
-    setInterval(() => {
-      if (val >= 1) {
+    const reminder = dailyGoal / 100;
+    console.log(interval, "reminder-interval");
+    console.log(reminder, "reminder");
+    if (id2.id !== "") {
+      clearInterval(id2.id);
+    }
+    var val = 100;
+    const id = setInterval(() => {
+      if (val > 0) {
         setPrecent(--val);
       }
     }, interval);
+    setId2({ id: id });
   };
 
   const handleSubmit = async (e) => {
@@ -114,18 +129,21 @@ function HydrationReminderCard() {
       timer_1,
       timer_2,
     };
-    const req = await createWaterHydration(data);
-    if (req.status == 200) {
-      addToast("Created Susseccfully+1", {
-        autoDismiss: true,
-        appearance: "success",
-      });
-      handleClose();
-    } else {
-      addToast("Error Please Try Again!", {
-        autoDismiss: false,
-        appearance: "error",
-      });
+    if (dailyGoal > 0 && timer_1 !== "" && timer_2 !== "") {
+      const req = await createWaterHydration(data);
+      if (req.status == 200) {
+        addToast("Created Susseccfully", {
+          autoDismiss: true,
+          appearance: "success",
+        });
+        handleClose();
+        setIsSubmit(!isSubmit);
+      } else {
+        addToast("Error Please Try Again!", {
+          autoDismiss: false,
+          appearance: "error",
+        });
+      }
     }
   };
 
@@ -162,7 +180,11 @@ function HydrationReminderCard() {
           }
         />
         <CardBody>
-          <WaterRepository data={dailyGoal} />
+          <WaterRepository
+            precent={precent}
+            liter={liter}
+            reminder={reminder}
+          />
         </CardBody>
       </Card>
       <Modal

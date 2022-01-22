@@ -5,6 +5,7 @@ import { statuses } from "./data";
 import { Col, Form, Row } from "react-bootstrap";
 import { useToasts } from "react-toast-notifications";
 import { createTask, getTask } from "../../api";
+import { ITEM_TYPE } from "./data/types";
 import moment from "moment";
 
 const TaskManagement = () => {
@@ -29,7 +30,6 @@ const TaskManagement = () => {
     setItems(format);
   }
   useEffect(() => {
-
     request();
   }, []);
 
@@ -38,7 +38,7 @@ const TaskManagement = () => {
       request();
       setNewItems(false);
     }
-  }, [newItems])
+  }, [newItems]);
   const handleKeyDownWeekDaysItem = async (event) => {
     if (event.key === "Enter") {
       const createT = await createTask(inputTask, 0);
@@ -62,6 +62,8 @@ const TaskManagement = () => {
       const newItems = prevState
         .filter((i) => i.id !== item.id)
         .concat({ ...item, status });
+      // console.log("Task => new items", ...newItems);
+
       return [...newItems];
     });
   };
@@ -96,6 +98,7 @@ const TaskManagement = () => {
                       index={idx}
                       moveItem={moveItem}
                       status={s}
+                      PTYPE={ITEM_TYPE}
                       className="task_item"
                     ></Item>
                   ))}
@@ -110,7 +113,6 @@ const TaskManagement = () => {
                       onKeyDown={handleKeyDownWeekDaysItem}
                     />
                   </Form.Group>
-
                 </div>
               </Col>
             </DropWrapper>
