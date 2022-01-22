@@ -1,6 +1,6 @@
 import React from "react";
 import { useDrop } from "react-dnd";
-import ITEM_TYPE from "./data/types";
+import { ITEM_TYPE } from "./data/types";
 import { statuses } from "./data";
 import { updateTaskDate } from "../../api";
 import { useToasts } from "react-toast-notifications";
