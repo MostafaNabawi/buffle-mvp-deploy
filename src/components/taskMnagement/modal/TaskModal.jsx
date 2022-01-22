@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Modal, Form, Container } from "react-bootstrap";
+import { Modal, Form, Container, Col, Row, Button } from "react-bootstrap";
 import DatePicker from "./DatePicker";
+import TimePicker from "react-time-picker";
 import Project from "./Project";
-import RepeatTask from "./RepeatTask";
 import style from "./style.module.css";
 import { Icon } from "@iconify/react";
 import { updateTask, deleteTask } from '../../../api'
@@ -12,26 +12,23 @@ import withReactContent from 'sweetalert2-react-content';
 
 function TaskModal(props) {
   const { handleClose, title, className, item } = props;
-
   const { addToast } = useToasts();
   const MySwal = withReactContent(Swal)
   const [taskTitle, setTaskTitle] = useState(item.content);
   const [taskDesc, setTaskDesc] = useState(item.description);
+  const [startTime, setStartTime] = useState(item.task_duration);
 
-  const handleKeyDownTask = async (event) => {
+  const handleKeyDownTask = async () => {
+    const data = { id: item.tb_id, name: taskTitle, type: 0, date: item.date, description: taskDesc, taskTime: startTime }
 
-    if (event.key === 'Enter') {
-      const data = { id: item.tb_id, name: taskTitle, type: 0, date: item.date, description: taskDesc }
-
-      const updateT = await updateTask(data);
-      if (updateT.status === 200) {
-        addToast("Updated Susseccfully", { autoDismiss: true, appearance: 'success' });
-        handleClose();
-      }
-      else {
-        addToast("Error! Please Try Again!", { autoDismiss: false, appearance: 'error' });
-        handleClose();
-      }
+    const updateT = await updateTask(data);
+    if (updateT.status === 200) {
+      addToast("Updated Susseccfully", { autoDismiss: true, appearance: 'success' });
+      handleClose();
+    }
+    else {
+      addToast("Error! Please Try Again!", { autoDismiss: false, appearance: 'error' });
+      handleClose();
     }
   }
 
@@ -106,17 +103,51 @@ function TaskModal(props) {
                   setTaskTitle(e.target.value)
                 )
                 }
-                  onKeyDown={handleKeyDownTask} />
+                />
               </label>
             </div>
-            <Form.Group controlId="exampleForm.ControlTextarea1">
-              <Form.Control as="textarea" rows={5} defaultValue={item.description} onChange={(e) => (
+            <Form.Group controlId="exampleForm.ControlTextarea1" className="important-modal-input-textarea">
+              <Form.Control as="textarea" rows={3} defaultValue={item.description} onChange={(e) => (
                 setTaskDesc(e.target.value)
               )
               }
-                onKeyDown={handleKeyDownTask} />
+              />
             </Form.Group>
+            <>
+
+              <Col md={12}>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Row>
+
+                    <Col xl="12">
+                      <Form.Label className="important-modal-input-label">Time</Form.Label>
+                      <TimePicker
+                        className="form-control taskManagerTime"
+                        clearIcon
+                        closeClock
+                        format={"hh:mm:ss"}
+                        value={item.start_time}
+                        onChange={(value) => {
+                          setStartTime(value);
+                        }}
+                      // value={value}
+                      />
+                    </Col>
+                  </Row>
+                </Form.Group>
+              </Col>
+            </>
+
           </Modal.Body>
+
+          <Modal.Footer className="important-today-modal-footer">
+            <Button variant="primary"
+              type="button" onClick={handleKeyDownTask}>
+              Save
+            </Button>
+
+          </Modal.Footer>
+
         </Form>
       </Container>
     </Modal>

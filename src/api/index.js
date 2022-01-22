@@ -294,6 +294,7 @@ async function updateTask(data) {
       date: data.date,
       type: data.type,
       description: data.description,
+      startTime: data.taskTime,
     }),
   });
   return { status: req.status };

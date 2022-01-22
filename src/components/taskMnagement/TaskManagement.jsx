@@ -25,6 +25,7 @@ const TaskManagement = () => {
         description: i.description,
         date: i.date,
         p_id: i.projectId,
+        start_time: i.start_time,
       };
     });
     setItems(format);

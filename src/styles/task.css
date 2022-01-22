@@ -316,3 +316,12 @@ div.task-check-box > input {
 .color-bar-Saturday {
   background: rgb(247, 183, 49);
 }
+.important-modal-input-label {
+  font-size: 15px !important;
+}
+.important-modal-input-textarea {
+  border: 1px solid gainsboro;
+}
+.important-today-modal-footer {
+  border-top: none !important;
+}
