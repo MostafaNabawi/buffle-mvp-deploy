@@ -10,7 +10,7 @@ import { API_URL } from "../../config";
 
 function BreackplanFrom({
     show, setShow, newTime, joinOrSagest,invateForm,
-    timeData
+    timeData,breackPlanName
 }) {
     const { addToast } = useToasts();
     const [loading, setloading] = useState(false)
@@ -100,13 +100,35 @@ function BreackplanFrom({
     }
     // Join
     const handleJoin =async(e)=>{
-        console.log("join")
+        const data= JSON.parse(localStorage.getItem('user'))
+        await fetch(`${API_URL}/join`,{
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Credentials": true,
+            },
+            body: JSON.stringify({
+                fname: data.first_name,
+                lname: data.last_name,
+                breckName:"test"
+            })
+        }).then(res=>{
+            if(res.status==200){
+                addToast("Sended", { autoDismiss: true, appearance: 'success' });
+                setShow(false)
+                setClose(true)
+                setloading(false)
+            }else{
+                addToast("Error Please Try Again!", { autoDismiss: true, appearance: 'error' });
+                setloading(false)
+            }
+        })
     }
     // Suggest new time
     const  handleSuggestNewTime =async (e)=>{
         e.preventDefault();
         const data={...timeData,['time']:newSuggestTime}
-        console.log("timeData.....",data)
         if(newSuggestTime){
             setSuggestTimeError(false)
             setloading(true)
