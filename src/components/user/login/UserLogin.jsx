@@ -45,9 +45,19 @@ const UserLogin = () => {
       return;
     }
     if (req.status === 200) {
-      console.log(req.data.user);
-      localStorage.setItem("user", JSON.stringify(req.data.user));
-      navigate("/dashboard");
+      if (req.data.type === 0) {
+        addToast(req.data.msg, {
+          appearance: "warning",
+          autoDismiss: 8000,
+        });
+        setLoading(false);
+      }
+      if (req.data.type === 1) {
+        console.log(req.data);
+        localStorage.setItem("user", JSON.stringify(req.data.user));
+        localStorage.setItem("space", JSON.stringify(req?.data?.stype));
+        navigate("/dashboard");
+      }
     }
   };
   const responseGoogleSuccess = async (response) => {

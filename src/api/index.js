@@ -11,7 +11,7 @@ async function getCompanySpaceData() {
       },
     });
     const res = await req.json();
-    return { status: req.status, data: res };
+    return { status: req.status, data: res?.payload };
   } catch {
     return { status: 400 };
   }

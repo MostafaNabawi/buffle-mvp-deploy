@@ -14,15 +14,11 @@ import ImpotentToDayCard from "./../components/impotentToDay/ImpotentToDayCard";
 import BreakplanFrom from "../components/breakplan/BreakplanForm";
 import Modal from "../components/modal/modal";
 import { nextBreakTimeValidation, timeDifference } from "../config/utils";
-import {
-  addNextBreak,
-  deleteNextBreak,
-  getNextBreak,
-  setUserFeel,
-} from "../api";
+import { addNextBreak, deleteNextBreak, getNextBreak } from "../api";
 import { getaAllBreackPlan } from "../api/breackPlan";
 import { PulseLoader } from "react-spinners";
 import { useToasts } from "react-toast-notifications";
+import Felling from "../components/feel/Felling";
 const Dashboard = () => {
   const [timeFormat, setTimeFormat] = useState(false);
   // show form for breack plan
@@ -55,14 +51,7 @@ const Dashboard = () => {
   const [breacPlanData, setBreakPlanData] = useState("");
   const { addToast } = useToasts();
   // actions
-  const setFeel = async (type) => {
-    // 1-check type
-    // 2-send request
-    const req = await setUserFeel(type);
-    addToast("Feel Choosed", {
-      appearance: "success",
-    });
-  };
+
   // next break action
   const handleNextBreakOperation = async () => {
     console.log("data", nextBreakTime);
@@ -99,9 +88,9 @@ const Dashboard = () => {
       const req = await getaAllBreackPlan();
       console.log("getaAllBreackPlan :", req);
       if (req.length > 0) {
-        setBreakPlanData(req)
+        setBreakPlanData(req);
       } else {
-        setBreakPlanData([])
+        setBreakPlanData([]);
       }
     }
     async function innerNextBreak() {
@@ -144,33 +133,7 @@ const Dashboard = () => {
               title="How you feel today"
             />
             <div className="pt-3 pb-0 mb-0 card-feel-icon ">
-              <Image
-                className="feel-icon"
-                src="/icone/1.png"
-                alt="vector image"
-                onClick={() => setFeel("happy")}
-              />
-              <Image
-                className="feel-icon"
-                src="/icone/2.png"
-                alt="vector image"
-                onClick={() => setFeel("pretty")}
-              />
-              <Image
-                className="feel-icon"
-                src="/icone/3.png"
-                alt="vector image"
-              />
-              <Image
-                className="feel-icon"
-                src="/icone/4.png"
-                alt="vector image"
-              />
-              <Image
-                className="feel-icon"
-                src="/icone/5.png"
-                alt="vector image"
-              />
+              <Felling />
             </div>
           </Card>
         </Col>
@@ -413,55 +376,56 @@ const Dashboard = () => {
                 joinOrSagest={breakJoinOrSagest}
                 invateForm={invateForm}
               />
-              {
-                breacPlanData === ''
-                  ? <div className="text-center"><Icon fontSize={24} icon="eos-icons:bubble-loading" /></div>
-                  : breacPlanData.length === 0
-                    ? "No Break Plan"
-                    :breacPlanData &&(
-                      breacPlanData.map(data=>(
-                        <Row className="mt-3">
-                        <Col className="col-2">
-                          <div className="breakplan-icon navy-blue text-center pt-2">
-                            <Image
-                              className="breakplan-img"
-                              src="/icone/WB_Headshots-102-web 1.png"
-                            />
-                          </div>
-                        </Col>
-                        <Col>
-                          <div className="break-user-name">
-                            {data.user[0].first_name}{" "}{data.user[0].last_name}
-                            </div>{" "}
-                          <div>
-                            <span
-                              onClick={() => {
-                                setBreakPlanFrom(true);
-                                setBreakJoinOrSagest(true);
-                                setBreakNewTime(false);
-                                setInvateForm(false);
-                              }}
-                              className="break-type"
-                            >
-                              {data.name}
-                            </span>
-                            <span
-                              className="break-time"
-                              onClick={() => {
-                                setBreakPlanFrom(true);
-                                setBreakJoinOrSagest(false);
-                                setBreakNewTime(true);
-                                setInvateForm(false);
-                              }}
-                            >
-                              {data.time}
-                            </span>
-                          </div>
-                        </Col>
-                      </Row>
-                      ))
-                    )
-              }
+              {breacPlanData === "" ? (
+                <div className="text-center">
+                  <Icon fontSize={24} icon="eos-icons:bubble-loading" />
+                </div>
+              ) : breacPlanData.length === 0 ? (
+                "No Break Plan"
+              ) : (
+                breacPlanData &&
+                breacPlanData.map((data) => (
+                  <Row className="mt-3" key={`${data?._id}-bplan`}>
+                    <Col className="col-2">
+                      <div className="breakplan-icon navy-blue text-center pt-2">
+                        <Image
+                          className="breakplan-img"
+                          src="/icone/WB_Headshots-102-web 1.png"
+                        />
+                      </div>
+                    </Col>
+                    <Col>
+                      <div className="break-user-name">
+                        {data.user[0].first_name} {data.user[0].last_name}
+                      </div>{" "}
+                      <div>
+                        <span
+                          onClick={() => {
+                            setBreakPlanFrom(true);
+                            setBreakJoinOrSagest(true);
+                            setBreakNewTime(false);
+                            setInvateForm(false);
+                          }}
+                          className="break-type"
+                        >
+                          {data.name}
+                        </span>
+                        <span
+                          className="break-time"
+                          onClick={() => {
+                            setBreakPlanFrom(true);
+                            setBreakJoinOrSagest(false);
+                            setBreakNewTime(true);
+                            setInvateForm(false);
+                          }}
+                        >
+                          {data.time}
+                        </span>
+                      </div>
+                    </Col>
+                  </Row>
+                ))
+              )}
               {/* <Row className="mt-3">
                 <Col className="col-2">
                   <div className="breakplan-icon navy-blue text-center pt-2">
@@ -651,7 +615,7 @@ const Dashboard = () => {
                           onChange={(value) => {
                             console.log("time...", value);
                           }}
-                        // value={value}
+                          // value={value}
                         />
                       </Col>
                     </Row>
@@ -693,7 +657,7 @@ const Dashboard = () => {
               <Button
                 variant="primary"
                 type="button"
-              // onClick={handleNextBreakOperation}
+                // onClick={handleNextBreakOperation}
               >
                 Create New Task
               </Button>

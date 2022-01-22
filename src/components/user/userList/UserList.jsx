@@ -6,16 +6,32 @@ import style from "../../table/style.module.css";
 import { PulseLoader } from "react-spinners";
 import { getCompanySpaceData } from "../../../api";
 
-const UserList = () => {
+const UserList = ({ type }) => {
+  console.log("user list", type);
   const [loading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
+  const [statusFilterData, setStatusFilterData] = useState([]);
+  const [statusFilter, setStatusFilter] = useState(1);
   useEffect(() => {
     async function pageData() {
       const payload = await getCompanySpaceData();
       console.log(payload);
+      if (payload?.status === 200) {
+        setData(payload?.data);
+        setLoading(false);
+      }
     }
     pageData();
   }, []);
-
+  useEffect(() => {
+    if (statusFilter === 2) {
+      const filterStatue = data.filter((i) => i.status !== "active");
+      setStatusFilterData(filterStatue);
+    }
+    if (statusFilter === 1) {
+      setStatusFilterData([]);
+    }
+  }, [statusFilter]);
   if (loading) {
     return (
       <>
@@ -37,18 +53,25 @@ const UserList = () => {
             <h3 className={style.titleHeader}>User management</h3>
           </Col>
           <Col xl={3}>
-            <Form.Group className="mb-3 input-group" controlId="formBasicEmail">
-              <Form.Select>
-                <option value="1">All</option>
-                <option value="1">Company</option>
-                <option value="2">Student</option>
-                <option value="3">Freelancer</option>
-              </Form.Select>
-            </Form.Group>
+            {type === "a" && (
+              <Form.Group
+                className="mb-3 input-group"
+                controlId="formBasicEmail"
+              >
+                <Form.Select>
+                  <option value="1">All</option>
+                  <option value="1">Company</option>
+                  <option value="2">Student</option>
+                  <option value="3">Freelancer</option>
+                </Form.Select>
+              </Form.Group>
+            )}
           </Col>
           <Col xl={3}>
             <Form.Group className="mb-3 input-group" controlId="formBasicEmail">
-              <Form.Select>
+              <Form.Select
+                onChange={(e) => setStatusFilter(Number(e.target.value))}
+              >
                 <option value="1">All</option>
                 <option value="2">Block</option>
                 <option value="3">Confirem</option>
@@ -78,19 +101,7 @@ const UserList = () => {
                 "Type",
                 "action",
               ]}
-              tableBody={
-                <tr>
-                  <td>1</td>
-                  <td>1</td>
-                  <td>1</td>
-                  <td>1</td>
-                  <td>1</td>
-                  <td>
-                    <Icon icon="grommet-icons:unlock" />
-                    <Icon icon="bi:info" />
-                  </td>
-                </tr>
-              }
+              tableBody={statusFilterData.length > 0 ? statusFilterData : data}
               isPagination={true}
             />
           </Col>
