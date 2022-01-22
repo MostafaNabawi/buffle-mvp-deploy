@@ -58,6 +58,11 @@ const UserLogin = () => {
         localStorage.setItem("space", JSON.stringify(req?.data?.stype));
         navigate("/dashboard");
       }
+      if (req.data.type === 2) {
+        localStorage.setItem("user", JSON.stringify(req.data.user));
+        localStorage.setItem("space", JSON.stringify(req?.data?.stype));
+        navigate("/dashboard");
+      }
     }
   };
   const responseGoogleSuccess = async (response) => {
