@@ -41,7 +41,6 @@ function Project(props) {
   }, []);
 
   useEffect(() => {
-    console.log(oldValue)
     request();
   }, [pId]);
 
