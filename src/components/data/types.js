@@ -1,3 +1,3 @@
 const ITEM_TYPE = "ITEM";
-
-export default ITEM_TYPE;
+const PROJECT_TYPE = "PROJECT";
+export { ITEM_TYPE, PROJECT_TYPE };
