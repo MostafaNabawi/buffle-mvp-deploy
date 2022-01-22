@@ -41,7 +41,7 @@ const Dashboard = () => {
   };
   // Data for Breack plan form
   const [timeData,setTimeData]=useState([])
-  const [breakPlanName,setBreakPlanName]=useState('')
+  const [breackPlanName,setBreackPlanName]=useState('')
   // is show modal for...
   const handleShow = () => setModalShow(true);
   const [vacationTime, setVacationTime] = useState(false);
@@ -412,7 +412,7 @@ const Dashboard = () => {
             <div>
               <BreakplanFrom
                 timeData={timeData}
-                breackPlanName={breakPlanName}
+                breackPlanName={brea}
                 show={BreakPlanForm}
                 setShow={setBreakPlanFrom}
                 newTime={breakNewTime}

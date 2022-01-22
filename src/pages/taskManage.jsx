@@ -5,7 +5,6 @@ import '../styles/task.css';
 import TaskManagement from "../components/taskMnagement/TaskManagement";
 import { Card, Row, Col } from "react-bootstrap";
 import ProjectManagement from "../components/taskMnagement/project/projectManagement";
-import CreateProject from "../components/taskMnagement/project/CreateProject";
 const TaskManage = () => {
     return (
         <Card className="secondary-color taskManage ">
@@ -18,7 +17,6 @@ const TaskManage = () => {
             </Row>
             <DndProvider backend={HTML5Backend}>
                 <TaskManagement />
-                {/* <CreateProject /> */}
                 <ProjectManagement />
             </DndProvider>
 

@@ -1,5 +1,21 @@
 import { API_URL } from "../config";
 // --------------------------USER MANGEMENT ----------------------------------
+//company admin
+async function getCompanySpaceData() {
+  try {
+    const req = await fetch(`${API_URL}/user/space-data`, {
+      credentials: "include",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const res = await req.json();
+    return { status: req.status, data: res?.payload };
+  } catch {
+    return { status: 400 };
+  }
+}
 // signin
 async function signin(payload) {
   try {
@@ -22,7 +38,6 @@ async function userStatus() {
   try {
     const req = await fetch(`${API_URL}/auth/status`, {
       credentials: "include",
-      mode: "cors",
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Credentials": true,
@@ -296,7 +311,25 @@ async function deleteTask(id) {
   });
   return { status: req.status };
 }
+
+async function updateTaskDate(id, date) {
+  const req = await fetch(`${API_URL}/task/update-task-date`, {
+    method: "PUT",
+    credentials: "include",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+    body: JSON.stringify({
+      taskId: id,
+      date: date,
+    }),
+  });
+  return { status: req.status };
+}
 export {
+  getCompanySpaceData,
   signin,
   logout,
   userStatus,
@@ -315,4 +348,5 @@ export {
   setProjectToItem,
   updateTask,
   deleteTask,
+  updateTaskDate,
 };
