@@ -1,5 +1,21 @@
 import { API_URL } from "../config";
 // --------------------------USER MANGEMENT ----------------------------------
+//company admin
+async function getCompanySpaceData() {
+  try {
+    const req = await fetch(`${API_URL}/user/space-data`, {
+      credentials: "include",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const res = await req.json();
+    return { status: req.status, data: res?.payload };
+  } catch {
+    return { status: 400 };
+  }
+}
 // signin
 async function signin(payload) {
   try {
@@ -22,7 +38,6 @@ async function userStatus() {
   try {
     const req = await fetch(`${API_URL}/auth/status`, {
       credentials: "include",
-      mode: "cors",
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Credentials": true,
@@ -279,6 +294,7 @@ async function updateTask(data) {
       date: data.date,
       type: data.type,
       description: data.description,
+      startTime: data.taskTime,
     }),
   });
   return { status: req.status };
@@ -313,7 +329,24 @@ async function updateTaskDate(id, date) {
   });
   return { status: req.status };
 }
+async function updateTaskProject(id, p_id) {
+  const req = await fetch(`${API_URL}/task/update-task-project`, {
+    method: "PUT",
+    credentials: "include",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+    body: JSON.stringify({
+      taskId: id,
+      projectId: p_id,
+    }),
+  });
+  return { status: req.status };
+}
 export {
+  getCompanySpaceData,
   signin,
   logout,
   userStatus,
@@ -333,4 +366,5 @@ export {
   updateTask,
   deleteTask,
   updateTaskDate,
+  updateTaskProject,
 };

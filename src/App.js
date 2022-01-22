@@ -19,8 +19,22 @@ import Expenses from "./components/moneyPool/Expenses";
 import Profile from "./pages/profile";
 import Setting from "./pages/setting";
 import UserList from "./components/user/userList/UserList";
+import { useEffect, useState } from "react";
 
 function App() {
+  const [addUserManagment, setAddUserManagment] = useState({
+    render: false,
+    type: "",
+  });
+  useEffect(() => {
+    const space = JSON.parse(localStorage.getItem("space"));
+    if (space === "c" || space === "a") {
+      setAddUserManagment({
+        render: true,
+        type: space,
+      });
+    }
+  }, []);
   return (
     <div className="App">
       <Routes>
@@ -43,7 +57,12 @@ function App() {
           </Route>
           <Route path="profile" element={<Profile />} />
           <Route path="setting" element={<Setting />} />
-          <Route path="user-management" element={<UserList />} />
+          {addUserManagment.render && (
+            <Route
+              path="user-management"
+              element={<UserList type={addUserManagment.type} />}
+            />
+          )}
         </Route>
       </Routes>
     </div>
