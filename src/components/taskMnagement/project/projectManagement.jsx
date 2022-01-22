@@ -62,7 +62,9 @@ const ProjectManagement = () => {
         description: i.description,
         status: i.projectId,
         tb_id: i._id,
+        date: i.date,
         p_id: i.projectId,
+        start_time: i.start_time,
       };
     });
     setItems(format);
@@ -291,7 +293,7 @@ const ProjectManagement = () => {
                         placeholder="New Task"
                         aria-label="New Task"
                         onChange={(e) =>
-                          setInputTask({ name: e.target.value, p_id: s.p_id })
+                          setInputTask({ name: e.target.value, p_id: s.status })
                         }
                         onKeyDown={handleKeyDown}
                       />

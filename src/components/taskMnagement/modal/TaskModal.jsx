@@ -16,21 +16,19 @@ function TaskModal(props) {
   const MySwal = withReactContent(Swal)
   const [taskTitle, setTaskTitle] = useState(item.content);
   const [taskDesc, setTaskDesc] = useState(item.description);
+  const [startTime, setStartTime] = useState(item.task_duration);
 
-  const handleKeyDownTask = async (event) => {
+  const handleKeyDownTask = async () => {
+    const data = { id: item.tb_id, name: taskTitle, type: 0, date: item.date, description: taskDesc, taskTime: startTime }
 
-    if (event.key === 'Enter') {
-      const data = { id: item.tb_id, name: taskTitle, type: 0, date: item.date, description: taskDesc }
-
-      const updateT = await updateTask(data);
-      if (updateT.status === 200) {
-        addToast("Updated Susseccfully", { autoDismiss: true, appearance: 'success' });
-        handleClose();
-      }
-      else {
-        addToast("Error! Please Try Again!", { autoDismiss: false, appearance: 'error' });
-        handleClose();
-      }
+    const updateT = await updateTask(data);
+    if (updateT.status === 200) {
+      addToast("Updated Susseccfully", { autoDismiss: true, appearance: 'success' });
+      handleClose();
+    }
+    else {
+      addToast("Error! Please Try Again!", { autoDismiss: false, appearance: 'error' });
+      handleClose();
     }
   }
 
@@ -105,7 +103,7 @@ function TaskModal(props) {
                   setTaskTitle(e.target.value)
                 )
                 }
-                  onKeyDown={handleKeyDownTask} />
+                />
               </label>
             </div>
             <Form.Group controlId="exampleForm.ControlTextarea1" className="important-modal-input-textarea">
@@ -113,7 +111,7 @@ function TaskModal(props) {
                 setTaskDesc(e.target.value)
               )
               }
-                onKeyDown={handleKeyDownTask} />
+              />
             </Form.Group>
             <>
 
@@ -128,8 +126,9 @@ function TaskModal(props) {
                         clearIcon
                         closeClock
                         format={"hh:mm:ss"}
+                        value={item.start_time}
                         onChange={(value) => {
-                          console.log("time...", value);
+                          setStartTime(value);
                         }}
                       // value={value}
                       />
@@ -143,7 +142,7 @@ function TaskModal(props) {
 
           <Modal.Footer className="important-today-modal-footer">
             <Button variant="primary"
-              type="button" onClick={handleClose}>
+              type="button" onClick={handleKeyDownTask}>
               Save
             </Button>
 
