@@ -25,7 +25,7 @@ const DropWrapperProject = ({ onDrop, children, status, statuses }) => {
     },
     drop: (item, monitor) => {
       onDrop(item, monitor, status);
-      ProjectChange(item.status, status)
+      ProjectChange(item.tb_id, status)
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),

@@ -329,7 +329,6 @@ async function updateTaskDate(id, date) {
   return { status: req.status };
 }
 async function updateTaskProject(id, p_id) {
-  console.log("up", id, p_id);
   const req = await fetch(`${API_URL}/task/update-task-project`, {
     method: "PUT",
     credentials: "include",
