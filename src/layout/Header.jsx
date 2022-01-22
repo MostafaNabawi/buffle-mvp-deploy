@@ -59,6 +59,7 @@ const Header = () => {
         const { payload } = await res.json();
         console.log("payload...", payload);
         if (payload.length > 0) {
+          console.log("notifacation", payload);
           setNotificatiion(payload);
           setLoading(false);
         } else {
@@ -120,6 +121,9 @@ const Header = () => {
       }
     });
   };
+  //
+  const handleAcceptTime = (id, breakId) => {};
+  const handleRejectTime = (id) => {};
   /// /breakPlan/accept   to
   //
   useEffect(() => {
@@ -271,6 +275,34 @@ const Header = () => {
                         name=""
                         message={notify.msg}
                         footer=""
+                      />
+                    ) : notify.type === "new-time" ? (
+                      <Notify
+                        key={notify._id}
+                        name=""
+                        message={notify.msg}
+                        footer={
+                          <>
+                            <Button
+                              onClick={() => {
+                                handleAcceptTime(notify._id.notify.breakId);
+                              }}
+                              variant="outline-success"
+                              className={`btn-notify`}
+                            >
+                              Accept
+                            </Button>
+                            <Button
+                              onClick={() => {
+                                handleRejectTime(notify._id);
+                              }}
+                              variant="outline-secondary"
+                              className={`btn-notify`}
+                            >
+                              Reject
+                            </Button>
+                          </>
+                        }
                       />
                     ) : (
                       ""

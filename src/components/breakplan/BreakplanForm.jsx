@@ -9,7 +9,8 @@ import { checkEmail} from '../../config/utils'
 import { API_URL } from "../../config";
 
 function BreackplanFrom({
-    show, setShow, newTime, joinOrSagest,invateForm
+    show, setShow, newTime, joinOrSagest,invateForm,
+    timeData
 }) {
     const { addToast } = useToasts();
     const [loading, setloading] = useState(false)
@@ -68,7 +69,6 @@ function BreackplanFrom({
             setNewSuggestInputError(false)
             setloading(true)
             const data= JSON.parse(localStorage.getItem('user'))
-            console.log("data...",data)
              await fetch(`${API_URL}/breakPlan/invite `,{
                  method: "POST",
                  credentials: "include",
@@ -102,26 +102,22 @@ function BreackplanFrom({
     const handleJoin =async(e)=>{
         console.log("join")
     }
-    // Saggest new time
+    // Suggest new time
     const  handleSuggestNewTime =async (e)=>{
         e.preventDefault();
+        const data={...timeData,['time']:newSuggestTime}
+        console.log("timeData.....",data)
         if(newSuggestTime){
             setSuggestTimeError(false)
             setloading(true)
-            const data= JSON.parse(localStorage.getItem('user'))
-            console.log("data...",data)
-             await fetch(`${API_URL}/breakPlan/invite `,{
+             await fetch(`${API_URL}/breakPlan/suggest-new-time `,{
                  method: "POST",
                  credentials: "include",
                  headers: {
                      "Content-Type": "application/json",
                      "Access-Control-Allow-Credentials": true,
                  },
-                 body: JSON.stringify({
-                     fname: data.first_name,
-                     lname: data.last_name,
-                     time:newSuggestTime
-                 })
+                 body: JSON.stringify(data)
              }).then(res=>{
                  if(res.status==200){
                      addToast("Sended", { autoDismiss: true, appearance: 'success' });
@@ -144,7 +140,6 @@ function BreackplanFrom({
         if(checkEmail(email)){
             setloading(true)
            const data= JSON.parse(localStorage.getItem('user'))
-           console.log("data...",data)
             await fetch(`${API_URL}/breakPlan/invite `,{
                 method: "POST",
                 credentials: "include",

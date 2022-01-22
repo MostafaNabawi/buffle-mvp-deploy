@@ -311,6 +311,23 @@ async function deleteTask(id) {
   });
   return { status: req.status };
 }
+
+async function updateTaskDate(id, date) {
+  const req = await fetch(`${API_URL}/task/update-task-date`, {
+    method: "PUT",
+    credentials: "include",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+    body: JSON.stringify({
+      taskId: id,
+      date: date,
+    }),
+  });
+  return { status: req.status };
+}
 export {
   getCompanySpaceData,
   signin,
@@ -331,4 +348,5 @@ export {
   setProjectToItem,
   updateTask,
   deleteTask,
+  updateTaskDate,
 };

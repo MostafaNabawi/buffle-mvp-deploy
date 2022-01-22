@@ -12,6 +12,7 @@ function Project(props) {
   const [itemId, setItemId] = useState(props.item.tb_id);
   const [pId, setPId] = useState(props.item.p_id);
   const [oldValue, setOldValue] = useState();
+  console.log('p', pId)
   useEffect(() => {
     async function request() {
       // get project and format
