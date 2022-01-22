@@ -41,6 +41,7 @@ const Dashboard = () => {
   };
   // Data for Breack plan form
   const [timeData,setTimeData]=useState([])
+  const [breakPlanName,setBreakPlanName]=useState('')
   // is show modal for...
   const handleShow = () => setModalShow(true);
   const [vacationTime, setVacationTime] = useState(false);
@@ -411,6 +412,7 @@ const Dashboard = () => {
             <div>
               <BreakplanFrom
                 timeData={timeData}
+                breackPlanName={breakPlanName}
                 show={BreakPlanForm}
                 setShow={setBreakPlanFrom}
                 newTime={breakNewTime}
@@ -442,6 +444,7 @@ const Dashboard = () => {
                               <div>
                                 <span
                                   onClick={() => {
+                                    setBreakPlanName=(data.name)
                                     setBreakPlanFrom(true);
                                     setBreakJoinOrSagest(true);
                                     setBreakNewTime(false);
