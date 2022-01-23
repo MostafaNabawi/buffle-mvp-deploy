@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react";
 import React from "react";
-
+import { Link } from "react-router-dom";
 import Card from "./../card/Card";
 import CardBody from "./../card/CardBody";
 import CardHeader from "./../card/CardHeader";
@@ -42,7 +42,7 @@ function ImpotentToDayCard() {
         title="Importent Today"
         action={
           <>
-            <Icon icon="vaadin:plus" />
+            <Link to="/dashboard/taskmanagement" className="secondary-dark-gray"><Icon icon="vaadin:plus" /></Link>
             <Icon icon="vaadin:ellipsis-dots-v" />
           </>
         }
