@@ -787,3 +787,6 @@ div.check-box > input {
 .paddingBottom {
   padding-bottom: 15px !important;
 }
+.screen-remainder{
+  height: 61px !important;
+}

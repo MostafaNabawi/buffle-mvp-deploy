@@ -19,6 +19,7 @@ import { getaAllBreackPlan } from "../api/breackPlan";
 import { PulseLoader } from "react-spinners";
 import { useToasts } from "react-toast-notifications";
 import Felling from "../components/feel/Felling";
+import { API_URL } from "../config";
 const Dashboard = () => {
   const currentUser = JSON.parse(localStorage.getItem("user"));
   const [timeFormat, setTimeFormat] = useState(false);
@@ -56,8 +57,10 @@ const Dashboard = () => {
   // Break Plan states
   const [breacPlanData, setBreakPlanData] = useState("");
   const { addToast } = useToasts();
-  // actions
-
+  // vacation Time statte
+  const [vacationTimeInput,setVacationTimeInput]=useState('')
+  const [vacationDataInput,setVacationDataInput]=useState('')
+  const [vacationLoader,setVacationLoader]=useState(false)
   // next break action
   const handleNextBreakOperation = async () => {
     console.log("data", nextBreakTime);
@@ -89,6 +92,35 @@ const Dashboard = () => {
     }
   };
   //
+  const handleVacationTime= async ()=>{
+    try{
+      setVacationLoader(true)
+      await fetch(`${API_URL}/vacation`,{
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": true,
+        },
+        body:JSON.stringify({
+          time:vacationTimeInput,
+          data:vacationDataInput
+        }).then((res)=>{
+          if(res.status === 200){
+            setVacationLoader(false)
+            setVacationTimeInput('')
+            setVacationDataInput('')
+            handleClose()
+            addToast("Saved", { autoDismiss: true, appearance: "success" });
+          }else{
+            setVacationLoader(false)
+            addToast("Error Please Try Again", { autoDismiss: true, appearance: "Error" });
+          }
+        })
+      })
+    }catch{
+      setVacationLoader(false)
+    }
+  }
   const editBreakPlan = async (data) => {
     setEditData(data)
     setBreakPlanFrom(true);
@@ -535,13 +567,21 @@ const Dashboard = () => {
                 <Col md={6}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Date </Form.Label>
-                    <Form.Control type="date" />
+                    <Form.Control 
+                    name="data" 
+                    type="date" 
+                    onChange={(e)=>{setVacationTimeInput(e.target.value) }} 
+                    />
                   </Form.Group>
                 </Col>
                 <Col md={6}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Time </Form.Label>
-                    <Form.Control type="time" />
+                    <Form.Control 
+                    time="time" 
+                    type="time" 
+                    onChange={(e)=>{setVacationDataInput(e.target.value) }}
+                    />
                   </Form.Group>
                 </Col>
               </>
@@ -614,8 +654,13 @@ const Dashboard = () => {
             </Button>
             {/* Vacation time btn */}
             {vacationTime && (
-              <Button variant="primary" type="submit">
-                Create Vacation
+              <Button 
+              disabled={vacationTimeInput==="" || vacationDataInput==="" || vacationLoader ?true:false} 
+              variant="primary" 
+              type="button"
+              onClick={()=>{handleVacationTime()}}
+              >
+                {vacationLoader?<Icon  fontSize={30} icon="eos-icons:three-dots-loading" />:"Create Vacation"}
               </Button>
             )}
             {/* Next Break Btn */}
