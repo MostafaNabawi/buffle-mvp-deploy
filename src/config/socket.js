@@ -10,4 +10,3 @@ export { ioInstance };
 //   secure: false,
 //   withCredentials: true,
 //   host: backend,
-// });
