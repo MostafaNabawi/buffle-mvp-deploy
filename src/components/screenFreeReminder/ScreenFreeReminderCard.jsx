@@ -9,15 +9,15 @@ import Modal from '../modal/modal'
 import { API_URL } from '../../config/index'
 import { useToasts } from 'react-toast-notifications';
 import Loader from "react-spinners/BeatLoader";
-
 import style from "./style.module.css";
 
 function ScreenFreeReminderCard() {
   const { addToast } = useToasts();
   const [changeMute, setChangeMute] = useState(false)
-  const [data, setData] = useState('')
+  const [data, setData] = useState([])
   const [isShow, setIsShow] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [getting, setGetting] = useState(false)
   // Modal
   const [sizeModal, setSizeModal] = useState("");
   const [modalShow, setModalShow] = useState(false);
@@ -34,8 +34,9 @@ function ScreenFreeReminderCard() {
     minutes: "",
     seconds: ""
   })
-  useEffect(() => {
-    const getData = async () => {
+  const getData = async () => {
+    try {
+      setGetting(true)
       const req = await fetch(`${API_URL}/screen_reminder/get`, {
         credentials: "include",
         headers: {
@@ -45,12 +46,24 @@ function ScreenFreeReminderCard() {
       })
       const { payload } = await req.json()
       if (payload) {
+        console.log("screent ", payload)
         if (payload.mute) {
           setIsShow(true)
         }
         setData(payload)
+        setGetting(false)
+      } else {
+        console.log("screent no", payload)
+        setData([])
+        setGetting(false)
       }
+    } catch {
+      setData([])
+      setGetting(false)
     }
+  }
+  //
+  useEffect(() => {
     getData()
   }, [])
   // set
@@ -83,6 +96,7 @@ function ScreenFreeReminderCard() {
         setDurationTime({ hours: "", minutes: "", seconds: "" })
         setDisplayTime({ hours: "", minutes: "", seconds: "" })
         setModalShow(false)
+        getData()
         addToast("Added Susseccfully", { autoDismiss: true, appearance: 'success' });
       } else {
         setLoading(false)
@@ -107,6 +121,7 @@ function ScreenFreeReminderCard() {
     }).then((res) => {
       if (res.status != 200) {
         setChangeMute(false)
+        getData()
         addToast("Error Please Try Again!", { autoDismiss: true, appearance: 'error' });
         return false
       }
@@ -114,7 +129,7 @@ function ScreenFreeReminderCard() {
       setIsShow(!isShow)
     })
   }
-  
+
   return (
     <>
       <Card className={style.card}>
@@ -137,23 +152,27 @@ function ScreenFreeReminderCard() {
           }
           className="border-bottom"
         />
-        <CardBody>
-          {
-            data && (<div className={style.wrapper}>
-              <div className={style.header}>
-                <span>
-                  {changeMute
-                    ? <Icon fontSize={24} icon="eos-icons:loading" />
-                    : <Form.Check onClick={() => { handleMute() }} checked={isShow} type="checkbox" />
-                  }
-                </span>
-                <h6>{data?.display} screen free time</h6>
+        <CardBody className="text-center screen-remainder">
+          {getting ? <Icon fontSize={30} icon="eos-icons:bubble-loading" />
+            : data.length === 0
+              ? "No S"
+              :
+              data && (<div className={style.wrapper}>
+                <div className={style.header}>
+                  <span>
+                    {changeMute
+                      ? <Icon fontSize={24} icon="eos-icons:loading" />
+                      : <Form.Check onClick={() => { handleMute() }} checked={isShow} type="checkbox" />
+                    }
+                  </span>
+                  <h6>{data?.display} screen free time</h6>
+                </div>
+                <p>last intermission {
+                  localStorage.getItem("loackTime") ? localStorage.getItem("loackTime") : "00:00:00"
+                }</p>
               </div>
-              <p>last intermission {
-                localStorage.getItem("loackTime") ? localStorage.getItem("loackTime") : "00:00:00"
-              }</p>
-            </div>
-            )}
+              )
+          }
         </CardBody>
       </Card>
       {/* Modal */}

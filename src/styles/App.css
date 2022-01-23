@@ -750,3 +750,6 @@ div.check-box > input {
 .clear-all{
   color: #8286ff  !important;
 }
+.screen-remainder{
+  height: 61px !important;
+}

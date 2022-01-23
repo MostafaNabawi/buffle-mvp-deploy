@@ -56,8 +56,10 @@ const Dashboard = () => {
   // Break Plan states
   const [breacPlanData, setBreakPlanData] = useState("");
   const { addToast } = useToasts();
-  // actions
-
+  // vacation Time statte
+  const [vacationTimeInput,setVacationTimeInput]=useState('')
+  const [vacationDataInput,setVacationDataInput]=useState('')
+  console.log("input",vacationTimeInput,vacationDataInput)
   // next break action
   const handleNextBreakOperation = async () => {
     console.log("data", nextBreakTime);
@@ -535,13 +537,21 @@ const Dashboard = () => {
                 <Col md={6}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Date </Form.Label>
-                    <Form.Control type="date" />
+                    <Form.Control 
+                    name="data" 
+                    type="date" 
+                    onChange={(e)=>{setVacationTimeInput(e.target.value) }} 
+                    />
                   </Form.Group>
                 </Col>
                 <Col md={6}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Time </Form.Label>
-                    <Form.Control type="time" />
+                    <Form.Control 
+                    time="time" 
+                    type="time" 
+                    onChange={(e)=>{setVacationDataInput(e.target.value) }}
+                    />
                   </Form.Group>
                 </Col>
               </>
@@ -614,7 +624,10 @@ const Dashboard = () => {
             </Button>
             {/* Vacation time btn */}
             {vacationTime && (
-              <Button variant="primary" type="submit">
+              <Button 
+              disabled={vacationTimeInput==="" || vacationDataInput===""?true:false} 
+              variant="primary" 
+              type="submit">
                 Create Vacation
               </Button>
             )}
