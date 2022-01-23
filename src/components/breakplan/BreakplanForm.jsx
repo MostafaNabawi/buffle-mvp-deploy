@@ -9,206 +9,240 @@ import { checkEmail } from "../../config/utils";
 import { API_URL } from "../../config";
 
 function BreackplanFrom({
-    show, setShow, newTime, joinOrSagest,invateForm,
-    timeData,breackPlanName,editData,setEditData,suggestData,joindata
+  show,
+  setShow,
+  newTime,
+  joinOrSagest,
+  invateForm,
+  timeData,
+  breackPlanName,
+  editData,
+  setEditData,
+  suggestData,
+  joindata,
 }) {
-    const currentUser = JSON.parse(localStorage.getItem("user"));
-    const { addToast } = useToasts();
-    const [loading, setloading] = useState(false)
-    //
-    const [close, setClose] = useState(true)
-    const [newSaggestion, setNewSaggestion] = useState(false)
-    // Create Plane
-    const [newSuggestInput ,setNewSuggestInput]=useState('')
-    const[newSuggestInputError,setNewSuggestInputError]=useState('')
-    const [newSuggestTime,setNewSuggestTime]=useState('')
-    const [SuggestTimeError,setSuggestTimeError]=useState(false)
-    const [newBreak, setNewBreak] = useState({title: "",createIime: ""})
-    // invit
-    const [email,setEmail]=useState('')
-    const [emailError,setEmailError]=useState('')
-    function checkEmail(value) {
-        if (
-          !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
-            value
-          )
-        ) {
-            setEmailError('error')
-          return false;
-        } else {
-            setEmailError('')
-          return true;
-        }
+  const currentUser = JSON.parse(localStorage.getItem("user"));
+  const { addToast } = useToasts();
+  const [loading, setloading] = useState(false);
+  //
+  const [close, setClose] = useState(true);
+  const [newSaggestion, setNewSaggestion] = useState(false);
+  // Create Plane
+  const [newSuggestInput, setNewSuggestInput] = useState("");
+  const [newSuggestInputError, setNewSuggestInputError] = useState("");
+  const [newSuggestTime, setNewSuggestTime] = useState("");
+  const [SuggestTimeError, setSuggestTimeError] = useState(false);
+  const [newBreak, setNewBreak] = useState({ title: "", createIime: "" });
+  // invit
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
+  function checkEmail(value) {
+    if (
+      !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+        value
+      )
+    ) {
+      setEmailError("error");
+      return false;
+    } else {
+      setEmailError("");
+      return true;
+    }
+  }
+  useEffect(() => {
+    if (show) {
+      setClose(false);
+    }
+    if (editData) {
+      console.log("edit", editData);
+      setNewBreak({ title: editData.name, createIime: editData.time });
+    }
+  }, [show]);
+  // create Breack plan
+  const handleCreatePlan = async (e) => {
+    e.preventDefault();
+    if (newBreak.title != "" && newBreak.createIime != "") {
+      setloading(true);
+      const { status } = await CreateNewPlan(newBreak);
+      if (status === 200) {
+        addToast("Created Susseccfully", {
+          autoDismiss: true,
+          appearance: "success",
+        });
+        setNewBreak({ ...newBreak, ["title"]: "", ["createIime"]: "" });
+        setShow(false);
+        setClose(true);
+        setloading(false);
+      } else {
+        addToast("Error Please Try Again!", {
+          autoDismiss: false,
+          appearance: "error",
+        });
+        setloading(false);
       }
-    useEffect(() => {
-        if (show) {
-            setClose(false)
-        }
-        if(editData){
-            console.log("edit",editData)
-            setNewBreak({title:editData.name,createIime:editData.time})
-        }
-    }, [show])
-    // create Breack plan
-    const handleCreatePlan = async (e) => {
-        e.preventDefault();
-        if (newBreak.title != "" && newBreak.createIime != "") {
-            setloading(true)
-            const { status } = await CreateNewPlan(newBreak)
-            if (status === 200) {
-                addToast("Created Susseccfully", { autoDismiss: true, appearance: 'success' });
-                setNewBreak({ ...newBreak, ["title"]: "", ["createIime"]: "" })
-                setShow(false)
-                setClose(true)
-                setloading(false)
-            } else {
-                addToast("Error Please Try Again!", { autoDismiss: false, appearance: 'error' });
-                setloading(false)
-            }
-        }
     }
-    // edit Breack Plan
-    const handleEditPlan =async (e)=>{
-        e.preventDefault();
-        const break_name_el =document.getElementById(currentUser._id+editData.name.trim())
-        const break_time_el =document.getElementById(editData.id)
-        if (newBreak.title != "" && newBreak.createIime != "") {
-            try{
-                setloading(true)
-                await fetch(`${API_URL}/breakPlan/update`, {
-                    method: "PUT",
-                    credentials: "include",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Access-Control-Allow-Credentials": true,
-                    },
-                    body: JSON.stringify({
-                        breakPlanId:editData.id,
-                        time: newBreak.createIime,
-                        name: newBreak.title
-                    })
-                }).then((res)=>{
-                    if (res.status === 200) {
-                        break_name_el.innerHTML=newBreak.title
-                        break_time_el.innerHTML= newBreak.createIime
-                        addToast("Edited Susseccfully", { autoDismiss: true, appearance: 'success' });
-                        setNewBreak({ ...newBreak, ["title"]: "", ["createIime"]: "" })
-                        setShow(false)
-                        setClose(true)
-                        setloading(false)
-                    } else {
-                        addToast("Error Please Try Again!", { autoDismiss: false, appearance: 'error' });
-                        setloading(false)
-                    }
-                })
-            }catch(err){
-                addToast("Server Error Please Try Again!", { autoDismiss: false, appearance: 'error' });
-                setloading(false)
-            }   
-        }
+  };
+  // edit Breack Plan
+  const handleEditPlan = async (e) => {
+    e.preventDefault();
+    const break_name_el = document.getElementById(
+      currentUser._id + editData.name.trim()
+    );
+    const break_time_el = document.getElementById(editData.id);
+    if (newBreak.title != "" && newBreak.createIime != "") {
+      try {
+        setloading(true);
+        await fetch(`${API_URL}/breakPlan/update`, {
+          method: "PUT",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Credentials": true,
+          },
+          body: JSON.stringify({
+            breakPlanId: editData.id,
+            time: newBreak.createIime,
+            name: newBreak.title,
+          }),
+        }).then((res) => {
+          if (res.status === 200) {
+            break_name_el.innerHTML = newBreak.title;
+            break_time_el.innerHTML = newBreak.createIime;
+            addToast("Edited Susseccfully", {
+              autoDismiss: true,
+              appearance: "success",
+            });
+            setNewBreak({ ...newBreak, ["title"]: "", ["createIime"]: "" });
+            setShow(false);
+            setClose(true);
+            setloading(false);
+          } else {
+            addToast("Error Please Try Again!", {
+              autoDismiss: false,
+              appearance: "error",
+            });
+            setloading(false);
+          }
+        });
+      } catch (err) {
+        addToast("Server Error Please Try Again!", {
+          autoDismiss: false,
+          appearance: "error",
+        });
+        setloading(false);
+      }
     }
-    // New saggest
-    const handleNewSuggest =async (e)=>{
-        e.preventDefault();
-        if(newSuggestInput){
-            try{
-                setNewSuggestInputError(false)
-                setloading(true)
-                 await fetch(`${API_URL}/breakPlan/suggest-new-event `,{
-                     method: "POST",
-                     credentials: "include",
-                     headers: {
-                         "Content-Type": "application/json",
-                         "Access-Control-Allow-Credentials": true,
-                     },
-                     body: JSON.stringify({
-                         fullName: currentUser.first_name+ "" +currentUser.last_name,
-                         msg:newSuggestInput,
-                         recevier:suggestData.id,
-                         breakName:suggestData.breackName
-                     })
-                 }).then(res=>{
-                     if(res.status==200){
-                         addToast("Sended", { autoDismiss: true, appearance: 'success' });
-                         setNewSuggestInput('')
-                         setShow(false)
-                         setClose(true)
-                         setloading(false)
-                     }else{
-                         addToast("Error Please Try Again!", { autoDismiss: true, appearance: 'error' });
-                         setloading(false)
-                     }
-                 })
-            }catch{
-                addToast("Server Error Please Try Again!", { autoDismiss: true, appearance: 'error' });
-                setloading(false)
-            }
-
-        }else{
-            setNewSuggestInputError(true)
-        }
-      });
+  };
+  // New saggest
+  const handleNewSuggest = async (e) => {
+    e.preventDefault();
+    if (newSuggestInput) {
+      try {
+        setNewSuggestInputError(false);
+        setloading(true);
+        await fetch(`${API_URL}/breakPlan/suggest-new-event `, {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Credentials": true,
+          },
+          body: JSON.stringify({
+            fullName: currentUser.first_name + "" + currentUser.last_name,
+            msg: newSuggestInput,
+            recevier: suggestData.id,
+            breakName: suggestData.breackName,
+          }),
+        }).then((res) => {
+          if (res.status == 200) {
+            addToast("Sended", { autoDismiss: true, appearance: "success" });
+            setNewSuggestInput("");
+            setShow(false);
+            setClose(true);
+            setloading(false);
+          } else {
+            addToast("Error Please Try Again!", {
+              autoDismiss: true,
+              appearance: "error",
+            });
+            setloading(false);
+          }
+        });
+      } catch {
+        addToast("Server Error Please Try Again!", {
+          autoDismiss: true,
+          appearance: "error",
+        });
+        setloading(false);
+      }
     } else {
       setNewSuggestInputError(true);
     }
-    // Join
-    const handleJoin =async(e)=>{
-        console.log(joindata)
-        try{
-            setloading(true)
-            await fetch(`${API_URL}/breakPlan/join`,{
-                method: "POST",
-                credentials: "include",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Credentials": true,
-                },
-                body: JSON.stringify(joindata)
-            }).then(res=>{
-                if(res.status==200){
-                    addToast("Sended", { autoDismiss: true, appearance: 'success' });
-                    setShow(false)
-                    setClose(true)
-                    setloading(false)
-                }else{
-                    addToast("Error Please Try Again!", { autoDismiss: true, appearance: 'error' });
-                    setloading(false)
-                }
-            })
-        }catch{
-            addToast("Server Error Please Try Again!", { autoDismiss: true, appearance: 'error' });
-            setloading(false)
+  };
+
+  // Join
+  const handleJoin = async (e) => {
+    console.log(joindata);
+    try {
+      setloading(true);
+      await fetch(`${API_URL}/breakPlan/join`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": true,
+        },
+        body: JSON.stringify(joindata),
+      }).then((res) => {
+        if (res.status == 200) {
+          addToast("Sended", { autoDismiss: true, appearance: "success" });
+          setShow(false);
+          setClose(true);
+          setloading(false);
+        } else {
+          addToast("Error Please Try Again!", {
+            autoDismiss: true,
+            appearance: "error",
+          });
+          setloading(false);
         }
+      });
+    } catch {
+      addToast("Server Error Please Try Again!", {
+        autoDismiss: true,
+        appearance: "error",
+      });
+      setloading(false);
     }
-    // Suggest new time
-    const  handleSuggestNewTime =async (e)=>{
-        e.preventDefault();
-        const data={...timeData,['time']:newSuggestTime}
-        if(newSuggestTime){
-            setSuggestTimeError(false)
-            setloading(true)
-             await fetch(`${API_URL}/breakPlan/suggest-new-time `,{
-                 method: "POST",
-                 credentials: "include",
-                 headers: {
-                     "Content-Type": "application/json",
-                     "Access-Control-Allow-Credentials": true,
-                 },
-                 body: JSON.stringify(data)
-             }).then(res=>{
-                 if(res.status==200){
-                     addToast("Sended", { autoDismiss: true, appearance: 'success' });
-                     setEmail('')
-                     setShow(false)
-                     setClose(true)
-                     setloading(false)
-                 }else{
-                     addToast("Errror Please Try Again!", { autoDismiss: true, appearance: 'error' });
-                     setloading(false)
-                 }
-             })
-        }else{
-            setSuggestTimeError(true)
+  };
+  // Suggest new time
+  const handleSuggestNewTime = async (e) => {
+    e.preventDefault();
+    const data = { ...timeData, ["time"]: newSuggestTime };
+    if (newSuggestTime) {
+      setSuggestTimeError(false);
+      setloading(true);
+      await fetch(`${API_URL}/breakPlan/suggest-new-time `, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": true,
+        },
+        body: JSON.stringify(data),
+      }).then((res) => {
+        if (res.status == 200) {
+          addToast("Sended", { autoDismiss: true, appearance: "success" });
+          setEmail("");
+          setShow(false);
+          setClose(true);
+          setloading(false);
+        } else {
+          addToast("Errror Please Try Again!", {
+            autoDismiss: true,
+            appearance: "error",
+          });
+          setloading(false);
         }
       });
     } else {
@@ -249,159 +283,161 @@ function BreackplanFrom({
         }
       });
     }
-    return (
-        <div className={`${style.manCard} ${close ? style.hide : style.show}`}>
-            <Card className={`${style.customCard} pb-1`}>
-                <div>
-                    <i className={style.closeIcon} onClick={() => {
-                        setEditData('')
-                        setNewBreak({ ...newBreak, ["title"]: "", ["createIime"]: "" })
-                        setEmail('')
-                        setShow(false)
-                        setClose(true)
-                        setNewSuggestInput('')
-                    }} ><Icon icon="ci:close-big" /></i>
-                </div>
-                <Card.Body>
-                    {
-                        joinOrSagest
-                            ?
-                            <>
-                                <Card.Title className={style.tilte}>
-                                    Join Or Set new Sagest
-                                </Card.Title>
-                                <Card.Text className="text-center pt-3">
-                                    <Button variant="outline-primary" onClick={() => { 
-                                        setNewSaggestion(false) 
-                                        handleJoin()
-                                        }} className={style.customBtn}>
-                                             {
-                                                loading ? <Loader color="#fff" size={15} /> : "Join"
-                                            }
-                                        </Button>
-                                    <Button variant="outline-primary" onClick={() => { setNewSaggestion(!newSaggestion) }} className={style.customBtn}>Suggestion</Button>
-                                    {
-                                        newSaggestion
-                                            ?
-                                            <Form className="mt-3" onSubmit={handleNewSuggest}>
-                                                <Form.Group className="mb-3" controlId="formBasicEmail">
-                                                    <Form.Control
-                                                        autoFocus
-                                                        required
-                                                        value={newSuggestInput}
-                                                        as="textarea"
-                                                        type="email"
-                                                        placeholder="New Saggestion"
-                                                        className={newSuggestInputError?"red-border-input":""}
-                                                        onChange={(e)=>setNewSuggestInput(e.target.value)}
-                                                    />
-                                                </Form.Group>
-                                                <Button disabled={loading} className={style.withBtn} variant="primary" type="submit">
-                                                {
-                                                loading ? <Loader color="#fff" size={15} /> : "Send"
-                                            }
-                                                </Button>
-                                            </Form>
-                                            : ""
-                                    }
-                                </Card.Text>
-                            </>
-                            :
-                            newTime ?
-                                <>
-                                    <Card.Title className={style.tilte}>
-                                        Suggest new time
-                                    </Card.Title>
-                                    <Card.Text className="text-center">
-                                        <Form className="mt-3" onSubmit={handleSuggestNewTime}>
-                                            <Form.Group className="mb-3" controlId="formBasicEmail">
-                                                <Form.Control
-                                                    autoFocus
-                                                    value={newSuggestTime}
-                                                    className={SuggestTimeError?"red-border-input":""}
-                                                    type="time"
-                                                    placeholder="Saggest new time"
-                                                    onChange={(e)=>setNewSuggestTime(e.target.value)}
-                                                />
-                                            </Form.Group>
-                                            <Button
-                                              disabled={loading} className={style.withBtn} variant="primary" type="submit">
-                                            {
-                                                loading ? <Loader color="#fff" size={15} /> : "Send"
-                                            }
-                                            </Button>
-                                        </Form>
-                                    </Card.Text>
-                                </>
-                                :invateForm ?
-                                <>
-                                <Card.Title className={style.tilte}>
-                                        Invite to your break plan
-                                    </Card.Title>
-                                    <Form onSubmit={handleInvit} className="mt-3">
-                                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                                            <Form.Control
-                                                autoFocus
-                                                required
-                                                type="email"
-                                                name="email"
-                                                className={emailError ===""?"":"red-border-input"}
-                                                placeholder="Invaite Email"
-                                                value={email}
-                                                onChange={(e) =>{
-                                                    setEmail(e.target.value)
-                                                    // checkEmail(e.target.value)
-                                                }
-                                                }
+  };
+  return (
+    <div className={`${style.manCard} ${close ? style.hide : style.show}`}>
+      <Card className={`${style.customCard} pb-1`}>
+        <div>
+          <i
+            className={style.closeIcon}
+            onClick={() => {
+              setEditData("");
+              setNewBreak({ ...newBreak, ["title"]: "", ["createIime"]: "" });
+              setEmail("");
+              setShow(false);
+              setClose(true);
+              setNewSuggestInput("");
+            }}
+          >
+            <Icon icon="ci:close-big" />
+          </i>
+        </div>
+        <Card.Body>
+          {joinOrSagest ? (
+            <>
+              <Card.Title className={style.tilte}>
+                Join Or Set new Sagest
+              </Card.Title>
+              <Card.Text className="text-center pt-3">
+                <Button
+                  variant="outline-primary"
+                  onClick={() => {
+                    setNewSaggestion(false);
+                    handleJoin();
+                  }}
+                  className={style.customBtn}
+                >
+                  {loading ? <Loader color="#fff" size={15} /> : "Join"}
+                </Button>
+                <Button
+                  variant="outline-primary"
+                  onClick={() => {
+                    setNewSaggestion(!newSaggestion);
+                  }}
+                  className={style.customBtn}
+                >
+                  Suggestion
+                </Button>
+                {newSaggestion ? (
+                  <Form className="mt-3" onSubmit={handleNewSuggest}>
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                      <Form.Control
+                        autoFocus
+                        required
+                        value={newSuggestInput}
+                        as="textarea"
+                        type="email"
+                        placeholder="New Saggestion"
+                        className={
+                          newSuggestInputError ? "red-border-input" : ""
+                        }
+                        onChange={(e) => setNewSuggestInput(e.target.value)}
+                      />
+                    </Form.Group>
+                    <Button
+                      disabled={loading}
+                      className={style.withBtn}
+                      variant="primary"
+                      type="submit"
+                    >
+                      {loading ? <Loader color="#fff" size={15} /> : "Send"}
+                    </Button>
+                  </Form>
+                ) : (
+                  ""
+                )}
+              </Card.Text>
+            </>
+          ) : newTime ? (
+            <>
+              <Card.Title className={style.tilte}>Suggest new time</Card.Title>
+              <Card.Text className="text-center">
+                <Form className="mt-3" onSubmit={handleSuggestNewTime}>
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Control
+                      autoFocus
+                      value={newSuggestTime}
+                      className={SuggestTimeError ? "red-border-input" : ""}
+                      type="time"
+                      placeholder="Saggest new time"
+                      onChange={(e) => setNewSuggestTime(e.target.value)}
+                    />
+                  </Form.Group>
+                  <Button
+                    disabled={loading}
+                    className={style.withBtn}
+                    variant="primary"
+                    type="submit"
+                  >
+                    {loading ? <Loader color="#fff" size={15} /> : "Send"}
+                  </Button>
+                </Form>
+              </Card.Text>
+            </>
+          ) : invateForm ? (
+            <>
+              <Card.Title className={style.tilte}>
+                Invite to your break plan
+              </Card.Title>
+              <Form onSubmit={handleInvit} className="mt-3">
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Control
+                    autoFocus
+                    required
+                    type="email"
+                    name="email"
+                    className={emailError === "" ? "" : "red-border-input"}
+                    placeholder="Invaite Email"
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      // checkEmail(e.target.value)
+                    }}
+                  />
+                </Form.Group>
 
-                                            />
-                                        </Form.Group>
-                                        
-                                        <Button disabled={loading} className={style.withBtn} variant="primary" type="submit">
-                                            {
-                                                loading ? <Loader color="#fff" size={15} /> : "Invite"
-                                            }
-                                        </Button>
-                                    </Form>
-                                </>
-                                : <>
-                                    <Card.Title className={style.tilte}>
-                                        {editData?"Edit breack pland":"New breack pland"}
-                                    </Card.Title>
-                                    <Form onSubmit={editData? handleEditPlan : handleCreatePlan} className="mt-3">
-                                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                                            <Form.Control
-                                                autoFocus
-                                                required
-                                                type="text"
-                                                name="title"
-                                                placeholder="Plan Title"
-                                                value={newBreak.title}
-                                                onChange={(e) =>
-                                                    setNewBreak({ ...newBreak, [e.target.name]: e.target.value })
-                                                }
-
-                                            />
-                                        </Form.Group>
-                                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                                            <Form.Control
-                                                required
-                                                type="time"
-                                                placeholder="Time"
-                                                name="createIime"
-                                                value={newBreak.createIime}
-                                                onChange={(e) =>
-                                                    setNewBreak({ ...newBreak, [e.target.name]: e.target.value })
-                                                }
-                                            />
-                                        </Form.Group>
-                                        <Button disabled={loading} className={style.withBtn} variant="primary" type="submit">
-                                            {
-                                                loading ? <Loader color="#fff" size={15} /> :editData?"Edit":"Create New Plan"
-                                            }
-                                        </Button>
-                                    </Form>
-                                </>
+                <Button
+                  disabled={loading}
+                  className={style.withBtn}
+                  variant="primary"
+                  type="submit"
+                >
+                  {loading ? <Loader color="#fff" size={15} /> : "Invite"}
+                </Button>
+              </Form>
+            </>
+          ) : (
+            <>
+              <Card.Title className={style.tilte}>
+                {editData ? "Edit breack pland" : "New breack pland"}
+              </Card.Title>
+              <Form
+                onSubmit={editData ? handleEditPlan : handleCreatePlan}
+                className="mt-3"
+              >
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Control
+                    autoFocus
+                    required
+                    type="text"
+                    name="title"
+                    placeholder="Plan Title"
+                    value={newBreak.title}
+                    onChange={(e) =>
+                      setNewBreak({
+                        ...newBreak,
+                        [e.target.name]: e.target.value,
+                      })
                     }
                   />
                 </Form.Group>
@@ -428,6 +464,8 @@ function BreackplanFrom({
                 >
                   {loading ? (
                     <Loader color="#fff" size={15} />
+                  ) : editData ? (
+                    "Edit"
                   ) : (
                     "Create New Plan"
                   )}
