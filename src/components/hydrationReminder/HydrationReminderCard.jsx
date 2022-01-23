@@ -190,8 +190,7 @@ function HydrationReminderCard() {
       <Modal
         show={show}
         handleClose={handleClose}
-        title="Hydration Reminder
-        "
+        title="Hydration Reminder"
         body={
           <Row>
             <Col md={12}>
