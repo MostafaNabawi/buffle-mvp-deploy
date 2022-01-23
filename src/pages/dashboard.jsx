@@ -19,7 +19,9 @@ import { getaAllBreackPlan } from "../api/breackPlan";
 import { PulseLoader } from "react-spinners";
 import { useToasts } from "react-toast-notifications";
 import Felling from "../components/feel/Felling";
+import BeatLoader from 'react-spinners/BeatLoader';
 import { API_URL } from "../config";
+
 const Dashboard = () => {
   const currentUser = JSON.parse(localStorage.getItem("user"));
   const [timeFormat, setTimeFormat] = useState(false);
@@ -752,12 +754,13 @@ const Dashboard = () => {
                 )}
               </>
             )}
-            {taskManager && (
-              <Button
-                variant="primary"
-                type="button"
-                onClick={handleCreateTask}
-              >
+
+            {taskManager && loading && duration.length > 0 ? (
+              <Button variant="primary">
+                <BeatLoader />
+              </Button>
+            ) : (
+              <Button variant="primary" onClick={handleCreateTask}>
                 Create New Task
               </Button>
             )}
