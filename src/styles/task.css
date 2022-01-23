@@ -132,24 +132,28 @@ div.task-check-box > input {
   overflow-y: auto !important;
 }
 /* width */
-.drop-wrapper-2 .drop-wrapper::-webkit-scrollbar {
+.drop-wrapper-2::-webkit-scrollbar,
+.drop-wrapper::-webkit-scrollbar {
   width: 6px;
 }
 
 /* Track */
-.drop-wrapper-2 .drop-wrapper-2 .drop-wrapper::-webkit-scrollbar-track {
+.drop-wrapper-2::-webkit-scrollbar,
+.drop-wrapper::-webkit-scrollbar-track {
   box-shadow: inherit;
   border-radius: 10px;
 }
 
 /* Handle */
-.drop-wrapper-2 .drop-wrapper::-webkit-scrollbar-thumb {
+.drop-wrapper-2::-webkit-scrollbar,
+.drop-wrapper::-webkit-scrollbar-thumb {
   background: gainsboro;
   border-radius: 10px;
 }
 
 /* Handle on hover */
-.drop-wrapper-2 .drop-wrapper::-webkit-scrollbar-thumb:hover {
+.drop-wrapper-2::-webkit-scrollbar,
+.drop-wrapper::-webkit-scrollbar-thumb:hover {
   background: #a8a5a5;
 }
 .col-wrapper {
@@ -324,4 +328,24 @@ div.task-check-box > input {
 }
 .important-today-modal-footer {
   border-top: none !important;
+}
+.react-date-picker__clear-button,
+.react-date-picker__button {
+  display: none;
+}
+.react-date-picker__wrapper {
+  border: none !important;
+}
+.important-today-date-picker {
+  margin-right: 25% !important;
+  border-color: hsl(0, 0%, 80%);
+}
+.important-today-date-picker:hover {
+  color: #4922ff;
+}
+.important-today-date-picker:hover .react-date-picker__inputGroup__year,
+.important-today-date-picker:hover .react-date-picker__inputGroup__day,
+.important-today-date-picker:hover .react-date-picker__inputGroup__month,
+.important-today-date-picker:hover .react-date-picker__inputGroup__divider {
+  color: white !important;
 }
