@@ -14,11 +14,14 @@ import ImpotentToDayCard from "./../components/impotentToDay/ImpotentToDayCard";
 import BreakplanFrom from "../components/breakplan/BreakplanForm";
 import Modal from "../components/modal/modal";
 import { nextBreakTimeValidation, timeDifference } from "../config/utils";
-import { addNextBreak, deleteNextBreak, getNextBreak } from "../api";
+import { addNextBreak, createTask, deleteNextBreak, getNextBreak } from "../api";
 import { getaAllBreackPlan } from "../api/breackPlan";
 import { PulseLoader } from "react-spinners";
 import { useToasts } from "react-toast-notifications";
 import Felling from "../components/feel/Felling";
+import BeatLoader from 'react-spinners/BeatLoader';
+import { API_URL } from "../config";
+
 const Dashboard = () => {
   const currentUser = JSON.parse(localStorage.getItem("user"));
   const [timeFormat, setTimeFormat] = useState(false);
@@ -34,12 +37,16 @@ const Dashboard = () => {
   const handleClose = () => {
     setModalShow(false);
     setNextBreakDateInput("");
+    setTaskName('');
+    setDuration('');
+    setError('');
+    setTaskError('')
   };
   // Data for Breack plan form
   const [timeData, setTimeData] = useState([]);
-  const [suggestData,setSuggestData]=useState([])
-  const [joindata,setJoinData]=useState([])
-  const [editData,setEditData]=useState('')
+  const [suggestData, setSuggestData] = useState([])
+  const [joindata, setJoinData] = useState([])
+  const [editData, setEditData] = useState('')
   // is show modal for...
   const handleShow = () => setModalShow(true);
   const [vacationTime, setVacationTime] = useState(false);
@@ -56,7 +63,18 @@ const Dashboard = () => {
   // Break Plan states
   const [breacPlanData, setBreakPlanData] = useState("");
   const { addToast } = useToasts();
-  // actions
+  // vacation Time statte
+  const [vacationTimeInput, setVacationTimeInput] = useState('')
+  const [vacationDataInput, setVacationDataInput] = useState('')
+  const [vacationLoader, setVacationLoader] = useState(false)
+  // create task
+  const [duration, setDuration] = useState('');
+  const [taskName, setTaskName] = useState({ name: "", });
+  const [showSkleton, setShowSkleton] = useState(false);
+  const [loading, setloading] = useState(false);
+  const [taskError, setTaskError] = useState("");
+  const [error, setError] = useState("");
+  const [data, setData] = useState([])
 
   // next break action
   const handleNextBreakOperation = async () => {
@@ -89,6 +107,35 @@ const Dashboard = () => {
     }
   };
   //
+  const handleVacationTime = async () => {
+    try {
+      setVacationLoader(true)
+      await fetch(`${API_URL}/vacation`, {
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": true,
+        },
+        body: JSON.stringify({
+          time: vacationTimeInput,
+          data: vacationDataInput
+        }).then((res) => {
+          if (res.status === 200) {
+            setVacationLoader(false)
+            setVacationTimeInput('')
+            setVacationDataInput('')
+            handleClose()
+            addToast("Saved", { autoDismiss: true, appearance: "success" });
+          } else {
+            setVacationLoader(false)
+            addToast("Error Please Try Again", { autoDismiss: true, appearance: "Error" });
+          }
+        })
+      })
+    } catch {
+      setVacationLoader(false)
+    }
+  }
   const editBreakPlan = async (data) => {
     setEditData(data)
     setBreakPlanFrom(true);
@@ -97,7 +144,7 @@ const Dashboard = () => {
     setInvateForm(false);
     return true
   }
-  const joinOrNewSuggestForm = async (data,join) => {
+  const joinOrNewSuggestForm = async (data, join) => {
     setSuggestData(data)
     setJoinData(join)
     setBreakPlanFrom(true);
@@ -113,6 +160,54 @@ const Dashboard = () => {
     setInvateForm(false);
     setTimeData(data);
   }
+  const validateTaskName = (value) => {
+    if (!value) {
+      setTaskError("Task name is required!");
+      return false;
+    }
+    else {
+      setTaskError("");
+      return true;
+    }
+  }
+  // create new task
+  const handleCreateTask = async () => {
+    validateTaskName(taskName.name)
+    if (!duration) {
+      setError("Duration time is required!");
+      return false;
+    }
+
+    else {
+      setError("");
+      setloading(true);
+      const createT = await createTask(taskName, 1, duration);
+      if (createT.status === 200) {
+        addToast("Created susseccfully", {
+          autoDismiss: true,
+          appearance: "success",
+        });
+        setloading(false);
+        setTimeFormat(false);
+        setModalShow(false);
+      } else {
+        addToast("Error Please Try Again!", {
+          autoDismiss: false,
+          appearance: "error",
+        });
+        setloading(false);
+        setTimeFormat(false)
+        setModalShow(false);
+        return true;
+      }
+      setloading(false);
+      setDuration("");
+      setTaskName('');
+      setTimeFormat(false)
+      setModalShow(false);
+      return true;
+    }
+  };
   // effects
   useEffect(() => {
     async function getBreakPlan() {
@@ -439,16 +534,16 @@ const Dashboard = () => {
                         </div>{" "}
                         <div>
                           <span
-                          id={currentUser._id+data.name.trim()}
+                            id={currentUser._id + data.name.trim()}
                             onClick={() => {
                               currentUser._id === data.user[0]._id
-                                ? editBreakPlan({id:data._id,name:data.name,time:data.time})
+                                ? editBreakPlan({ id: data._id, name: data.name, time: data.time })
                                 : joinOrNewSuggestForm({
-                                  id:data.user[0]._id,breackName:data.name
+                                  id: data.user[0]._id, breackName: data.name
                                 },
-                                {
-                                  fullName:currentUser.first_name +" "+ currentUser.last_name,breakName:data.name,breakOwnerId:data.user[0]._id
-                                })
+                                  {
+                                    fullName: currentUser.first_name + " " + currentUser.last_name, breakName: data.name, breakOwnerId: data.user[0]._id
+                                  })
                             }}
                             className="break-type"
                           >
@@ -459,17 +554,17 @@ const Dashboard = () => {
                             id={data._id}
                             onClick={() => {
                               currentUser._id === data.user[0]._id
-                                ? editBreakPlan({id:data._id,name:data.name,time:data.time})
-                                :timeFormBreakplan ({
-                                time: "",
-                                recevier: data.user[0]._id,
-                                fullName:
-                                  currentUser.first_name +
-                                  "" +
-                                  currentUser.last_name,
-                                breakName: data.name,
-                                breakId: data._id,
-                              });
+                                ? editBreakPlan({ id: data._id, name: data.name, time: data.time })
+                                : timeFormBreakplan({
+                                  time: "",
+                                  recevier: data.user[0]._id,
+                                  fullName:
+                                    currentUser.first_name +
+                                    "" +
+                                    currentUser.last_name,
+                                  breakName: data.name,
+                                  breakId: data._id,
+                                });
                             }}
                           >
                             {data.time}
@@ -535,13 +630,21 @@ const Dashboard = () => {
                 <Col md={6}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Date </Form.Label>
-                    <Form.Control type="date" />
+                    <Form.Control
+                      name="data"
+                      type="date"
+                      onChange={(e) => { setVacationTimeInput(e.target.value) }}
+                    />
                   </Form.Group>
                 </Col>
                 <Col md={6}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Time </Form.Label>
-                    <Form.Control type="time" />
+                    <Form.Control
+                      time="time"
+                      type="time"
+                      onChange={(e) => { setVacationDataInput(e.target.value) }}
+                    />
                   </Form.Group>
                 </Col>
               </>
@@ -570,8 +673,15 @@ const Dashboard = () => {
                 <Col md={12}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Task name </Form.Label>
-                    <Form.Control type="text" name="name" />
+                    <Form.Control type="text" className={taskError.length > 0 ? "red-border-input" : "no-border-input"}
+                      name="name" onChange={(e) => {
+                        setTaskName({ name: e.target.value })
+                      }} />
+                    {taskError ? (
+                      <div className="invalid-feedback d-block">{taskError}</div>
+                    ) : null}
                   </Form.Group>
+
                 </Col>
                 <Col md={12}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -590,15 +700,19 @@ const Dashboard = () => {
                       <Col xl="8">
                         <Form.Label>Time</Form.Label>
                         <TimePicker
-                          className="form-control taskManagerTime"
+                          className={`form-control taskManagerTime ${error.length > 0 ? "red-border-input" : "no-border-input"
+                            }`}
                           clearIcon
                           closeClock
                           format={timeFormat ? "mm:ss" : "hh:mm:ss"}
                           onChange={(value) => {
-                            console.log("time...", value);
+                            setDuration(value)
                           }}
                         // value={value}
                         />
+                        {error ? (
+                          <div className="invalid-feedback d-block">{error}</div>
+                        ) : null}
                       </Col>
                     </Row>
                   </Form.Group>
@@ -614,8 +728,13 @@ const Dashboard = () => {
             </Button>
             {/* Vacation time btn */}
             {vacationTime && (
-              <Button variant="primary" type="submit">
-                Create Vacation
+              <Button
+                disabled={vacationTimeInput === "" || vacationDataInput === "" || vacationLoader ? true : false}
+                variant="primary"
+                type="button"
+                onClick={() => { handleVacationTime() }}
+              >
+                {vacationLoader ? <Icon fontSize={30} icon="eos-icons:three-dots-loading" /> : "Create Vacation"}
               </Button>
             )}
             {/* Next Break Btn */}
@@ -635,12 +754,13 @@ const Dashboard = () => {
                 )}
               </>
             )}
-            {taskManager && (
-              <Button
-                variant="primary"
-                type="button"
-              // onClick={handleNextBreakOperation}
-              >
+
+            {taskManager && loading && duration.length > 0 ? (
+              <Button variant="primary">
+                <BeatLoader />
+              </Button>
+            ) : (
+              <Button variant="primary" onClick={handleCreateTask}>
                 Create New Task
               </Button>
             )}

@@ -105,7 +105,7 @@ function ImpotentToDayCard() {
             </>
           }
         />
-        <CardBody className={data.length === 0 ? 'paddingBottom' : ''}>
+        <CardBody className={`important-today-card-body ${data.length === 0 ? 'paddingBottom' : ''}`}>
           {showSkleton ? (<Skeleton count={4} />) :
             data.length > 0 ?
               data.map((item) => (

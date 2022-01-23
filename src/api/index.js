@@ -197,7 +197,7 @@ async function updateProject(id, name, desc) {
 }
 
 // ----------------------tasks--------------
-async function createTask(task, type) {
+async function createTask(task, type, duration) {
   const req = await fetch(`${API_URL}/task/new`, {
     method: "POST",
     credentials: "include",
@@ -210,6 +210,7 @@ async function createTask(task, type) {
       name: task.name,
       projectId: task.p_id,
       type: type,
+      duration: duration,
     }),
   });
   const resault = await req.json();
@@ -359,7 +360,6 @@ async function getImportantToday() {
   return { status: req.status, data: res.payload };
 }
 async function updateTaskImportant(id, duration) {
-  console.log(id, duration);
   const req = await fetch(`${API_URL}/task/update-important`, {
     method: "PUT",
     credentials: "include",
