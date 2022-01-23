@@ -217,21 +217,23 @@ const Header = () => {
     }
     setUserData(user_storage);
     if (user_storage) {
-      try {
-        ioInstance.on("notify", (data) => {
-          console.log("...", data);
-          setWebData(data);
-        });
-      } catch (err) {
-        console.error(err);
+      ioInstance.on("connect_error", (err) => {
+        console.error("socket error!", err);
         ioInstance.close();
-      }
+      });
+      ioInstance.on("notify", (data) => {
+        console.log("...", data);
+        setWebData(data);
+      });
 
       // check status
       getStatus();
     } else {
       navigate("/");
     }
+    return () => {
+      ioInstance.close();
+    };
   }, []);
   useEffect(() => {
     if (webData.length > 0) {
