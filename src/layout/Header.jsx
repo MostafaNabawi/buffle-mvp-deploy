@@ -15,6 +15,7 @@ import { API_URL } from "../config/index";
 import Countdown from "react-countdown";
 import Notify from "../components/notification/Notify";
 import { useToasts } from "react-toast-notifications";
+import { ioInstance } from "../config/socket";
 
 const Header = () => {
   const { addToast } = useToasts();
@@ -28,6 +29,7 @@ const Header = () => {
   const [dis_time, setDis_time] = useState(0);
   const [start, setStart] = useState(true);
   const [showUserRoute, setShowUserRoute] = useState(false);
+  const [webData, setWebData] = useState("");
   const handleLogout = async () => {
     const req = await logout();
     if (req.status === 200) {
@@ -117,15 +119,15 @@ const Header = () => {
         notId: id,
       }),
     }).then(async (res) => {
-      if (res.status===200) {
+      if (res.status === 200) {
         getNotification(true);
       }
     });
   };
   //
   const handleAcceptTime = async (id, userId, newTime, breakId, breakName) => {
-    const el = document.getElementById(breakId)
-    console.log("brea el 2", el)
+    const el = document.getElementById(breakId);
+    console.log("brea el 2", el);
     const user = JSON.parse(localStorage.getItem("user"));
     await fetch(`${API_URL}/breakPlan/accept-time`, {
       method: "POST",
@@ -140,42 +142,48 @@ const Header = () => {
         notId: id,
         time: newTime,
         breakId: breakId,
-        breakName: breakName
+        breakName: breakName,
       }),
     }).then(async (res) => {
       if (res.status) {
-        el.innerHTML = newTime
+        el.innerHTML = newTime;
         getNotification(true);
       }
     });
   };
   // Clear All Notification
-  const clearAll =async()=>{
-   if(notification.length >0 && !loading){
-    try{
-      setLoading(true)
-      await fetch(`${API_URL}/user/clear-all`, {
-        method: "DELETE",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Credentials": true,
-        },
-      }).then(res=>{
-        if(res.status==200){
-            addToast("Cleared", { autoDismiss: true, appearance: 'success' });
-            setNotificatiion([])
-            setLoading(false)
-        }else{
-            addToast("Error Please Try Again!", { autoDismiss: true, appearance: 'error' });
-            setLoading(false)
-        }
-    })
-    }catch{
-      addToast("server Error Please Try Again!", { autoDismiss: true, appearance: 'error' });
+  const clearAll = async () => {
+    if (notification.length > 0 && !loading) {
+      try {
+        setLoading(true);
+        await fetch(`${API_URL}/user/clear-all`, {
+          method: "DELETE",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Credentials": true,
+          },
+        }).then((res) => {
+          if (res.status == 200) {
+            addToast("Cleared", { autoDismiss: true, appearance: "success" });
+            setNotificatiion([]);
+            setLoading(false);
+          } else {
+            addToast("Error Please Try Again!", {
+              autoDismiss: true,
+              appearance: "error",
+            });
+            setLoading(false);
+          }
+        });
+      } catch {
+        addToast("server Error Please Try Again!", {
+          autoDismiss: true,
+          appearance: "error",
+        });
+      }
     }
-   }
-  }
+  };
   useEffect(() => {
     async function getStatus() {
       const req = await userStatus();
@@ -209,13 +217,32 @@ const Header = () => {
     }
     setUserData(user_storage);
     if (user_storage) {
+      try {
+        ioInstance.on("notify", (data) => {
+          console.log("...", data);
+          setWebData(data);
+        });
+      } catch (err) {
+        console.error(err);
+        ioInstance.close();
+      }
+
       // check status
       getStatus();
     } else {
       navigate("/");
     }
   }, []);
-
+  useEffect(() => {
+    if (webData.length > 0) {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (user?._id === webData) {
+        //notification related to this user
+        setCount(count + 1);
+        setWebData("");
+      }
+    }
+  }, [webData]);
   return (
     <>
       <Col className="col-12 header-name text-capitalize">
@@ -230,10 +257,10 @@ const Header = () => {
             localStorage.setItem(
               "loackTime",
               timeLock.getHours() +
-              ":" +
-              timeLock.getMinutes() +
-              ":" +
-              timeLock.getSeconds()
+                ":" +
+                timeLock.getMinutes() +
+                ":" +
+                timeLock.getSeconds()
             );
           }}
           renderer={() => {
@@ -253,9 +280,9 @@ const Header = () => {
             onComplete={() => {
               setStart(true);
             }}
-          // renderer={() => {
-          //   return ""
-          // }}
+            // renderer={() => {
+            //   return ""
+            // }}
           />
         )}
       </div>
@@ -285,7 +312,14 @@ const Header = () => {
               className="navDropdomnIcon notiy "
             >
               <div className="card p-2 card-notify text-center">
-                <a onClick={()=>{clearAll()}} className="clear-all">Clear all</a>
+                <a
+                  onClick={() => {
+                    clearAll();
+                  }}
+                  className="clear-all"
+                >
+                  Clear all
+                </a>
                 {loading ? (
                   <div className="text-center pt-4 pb-4">
                     <Icon fontSize={50} icon="eos-icons:bubble-loading" />
@@ -301,7 +335,7 @@ const Header = () => {
                           <>
                             <Button
                               onClick={() => {
-                                // 
+                                //
                                 handleAccept(notify._id, notify.from);
                               }}
                               variant="outline-success"
@@ -337,7 +371,13 @@ const Header = () => {
                           <>
                             <Button
                               onClick={() => {
-                                handleAcceptTime(notify._id, notify.user_id, notify.newTime, notify.breakId, notify.breakName);
+                                handleAcceptTime(
+                                  notify._id,
+                                  notify.user_id,
+                                  notify.newTime,
+                                  notify.breakId,
+                                  notify.breakName
+                                );
                               }}
                               variant="outline-success"
                               className={`btn-notify`}
