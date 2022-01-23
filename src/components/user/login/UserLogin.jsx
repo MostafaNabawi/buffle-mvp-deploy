@@ -10,7 +10,7 @@ import GoogleLogin from "react-google-login";
 import { API_URL, GOOGLE_CLIENT_ID } from "../../../config";
 import { checkEmail } from "../../../config/utils";
 import Swal from "sweetalert2";
-
+import { useSearchParams } from "react-router-dom";
 const UserLogin = () => {
   const { addToast } = useToasts();
   const [showPassword, setShowPassword] = useState(false);
@@ -19,7 +19,43 @@ const UserLogin = () => {
     password: "",
   });
   const [loading, setLoading] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
+  // const { ok } = useParams();
+  const mutulLogin = async (email, pass) => {
+    setLoading(true);
+    const req = await signin({ email: email, password: pass });
+    if (req.status === 400) {
+      setLoading(false);
+      addToast("Email or Password  is invalid!", {
+        appearance: "error",
+        autoDismiss: 4000,
+      });
+      return;
+    }
+    if (req.status === 200) {
+      if (req.data.type === 0) {
+        addToast(req.data.msg, {
+          appearance: "warning",
+          autoDismiss: 8000,
+        });
+        setLoading(false);
+      }
+      if (req.data.type === 1) {
+        console.log(req.data);
+        localStorage.setItem("user", JSON.stringify(req.data.user));
+        localStorage.setItem("space", JSON.stringify(req?.data?.stype));
+        localStorage.removeItem("pp");
+        navigate("/dashboard");
+      }
+      if (req.data.type === 2) {
+        localStorage.setItem("user", JSON.stringify(req.data.user));
+        localStorage.setItem("space", JSON.stringify(req?.data?.stype));
+        localStorage.removeItem("pp");
+        navigate("/dashboard");
+      }
+    }
+  };
   const handleLogin = async (event) => {
     event.preventDefault();
     if (inputs.email === "" || inputs.password === "") {
@@ -134,6 +170,11 @@ const UserLogin = () => {
       if (user_storage) {
         getStatus();
       }
+    }
+    if (searchParams.get("new") === "true") {
+      // http://localhost:3000/?new=true&email=paimanrasoli789@gmail.com&password=Asdf123
+      console.log("login", searchParams.get("email"));
+      mutulLogin(searchParams.get("email"), localStorage.getItem("pp"));
     }
     return () => {
       mount = false;
