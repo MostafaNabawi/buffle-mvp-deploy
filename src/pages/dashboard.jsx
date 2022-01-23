@@ -37,6 +37,8 @@ const Dashboard = () => {
     setNextBreakDateInput("");
     setTaskName('');
     setDuration('');
+    setError('');
+    setTaskError('')
   };
   // Data for Breack plan form
   const [timeData, setTimeData] = useState([]);
@@ -65,7 +67,7 @@ const Dashboard = () => {
   const [vacationLoader, setVacationLoader] = useState(false)
   // create task
   const [duration, setDuration] = useState('');
-  const [taskName, setTaskName] = useState('');
+  const [taskName, setTaskName] = useState({ name: "", });
   const [showSkleton, setShowSkleton] = useState(false);
   const [loading, setloading] = useState(false);
   const [taskError, setTaskError] = useState("");
@@ -168,7 +170,7 @@ const Dashboard = () => {
   }
   // create new task
   const handleCreateTask = async () => {
-    validateTaskName(taskName)
+    validateTaskName(taskName.name)
     if (!duration) {
       setError("Duration time is required!");
       return false;
@@ -177,14 +179,15 @@ const Dashboard = () => {
     else {
       setError("");
       setloading(true);
-      const updateImportant = await createTask();
-      if (updateImportant.status === 200) {
-        addToast("Moved to task susseccfully", {
+      const createT = await createTask(taskName, 1, duration);
+      if (createT.status === 200) {
+        addToast("Created susseccfully", {
           autoDismiss: true,
           appearance: "success",
         });
         setloading(false);
-        setTimeFormat(false)
+        setTimeFormat(false);
+        setModalShow(false);
       } else {
         addToast("Error Please Try Again!", {
           autoDismiss: false,
@@ -192,12 +195,14 @@ const Dashboard = () => {
         });
         setloading(false);
         setTimeFormat(false)
+        setModalShow(false);
         return true;
       }
       setloading(false);
       setDuration("");
+      setTaskName('');
       setTimeFormat(false)
-
+      setModalShow(false);
       return true;
     }
   };
@@ -667,8 +672,8 @@ const Dashboard = () => {
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Task name </Form.Label>
                     <Form.Control type="text" className={taskError.length > 0 ? "red-border-input" : "no-border-input"}
-                      name="name" onChange={(value) => {
-                        setTaskName(value)
+                      name="name" onChange={(e) => {
+                        setTaskName({ name: e.target.value })
                       }} />
                     {taskError ? (
                       <div className="invalid-feedback d-block">{taskError}</div>
