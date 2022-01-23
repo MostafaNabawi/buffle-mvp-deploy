@@ -80,12 +80,7 @@ const StepTwoRegister = () => {
       });
       const res = await req.json();
       if (req.status === 200) {
-        addToast(
-          "Your company registered when your company approved by Buffle we will send you email! ",
-          {
-            appearance: "success",
-          }
-        );
+        navigate("/?company=true");
       }
     }
     // #2- register for freelancer

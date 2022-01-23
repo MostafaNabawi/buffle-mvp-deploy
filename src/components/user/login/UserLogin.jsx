@@ -172,10 +172,18 @@ const UserLogin = () => {
       }
     }
     if (searchParams.get("new") === "true") {
-      // http://localhost:3000/?new=true&email=paimanrasoli789@gmail.com&password=Asdf123
       console.log("login", searchParams.get("email"));
       mutulLogin(searchParams.get("email"), localStorage.getItem("pp"));
     }
+    if (searchParams.get("company") === "true") {
+      addToast(
+        "Your company registered when your company approved by Buffle we will send you email!",
+        {
+          appearance: "success",
+        }
+      );
+    }
+
     return () => {
       mount = false;
     };
