@@ -1,6 +1,7 @@
 import io from "socket.io-client";
-const backend = "http://localhost:8000";
-const ioInstance = io(backend, {
+import { API_URL } from ".";
+
+const ioInstance = io(API_URL, {
   withCredentials: true,
 });
 export { ioInstance };

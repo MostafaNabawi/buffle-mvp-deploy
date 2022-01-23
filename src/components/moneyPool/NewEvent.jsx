@@ -68,13 +68,6 @@ function NewEvent() {
               <Col md={12}>
                 <AddNewMember />
               </Col>
-              {personNum.map((person) => (
-                <PersonNameField key={person} num={person} />
-              ))}
-              <Button variant="secondary" onClick={addPerson}>
-                <Icon icon="vaadin:plus" />
-                Add New Person
-              </Button>
             </div>
             <Button type="submit">Create Pool</Button>
           </Form>
