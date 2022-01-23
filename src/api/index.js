@@ -358,6 +358,25 @@ async function getImportantToday() {
   const res = await req.json();
   return { status: req.status, data: res.payload };
 }
+async function updateTaskImportant(id, duration) {
+  console.log(id, duration);
+  const req = await fetch(`${API_URL}/task/update-important`, {
+    method: "PUT",
+    credentials: "include",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+    body: JSON.stringify({
+      taskId: id,
+      moved: true,
+      duration: duration,
+      type: 1,
+    }),
+  });
+  return { status: req.status };
+}
 export {
   getCompanySpaceData,
   signin,
@@ -381,4 +400,5 @@ export {
   updateTaskDate,
   updateTaskProject,
   getImportantToday,
+  updateTaskImportant,
 };

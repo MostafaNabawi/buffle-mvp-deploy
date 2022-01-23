@@ -18,9 +18,9 @@ function AddNewMember() {
         <Form.Control type="email" placeholder="Email" />
       </Form.Group>
       <div className={style.search_result}>
-        <div className={style.spinner_wrapper}>
+        {/* <div className={style.spinner_wrapper}>
           <Spinner animation="border" />
-        </div>
+        </div> */}
       </div>
     </div>
   );

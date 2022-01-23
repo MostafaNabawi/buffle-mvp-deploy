@@ -37,6 +37,9 @@ const Dashboard = () => {
   };
   // Data for Breack plan form
   const [timeData, setTimeData] = useState([]);
+  const [suggestData,setSuggestData]=useState([])
+  const [joindata,setJoinData]=useState([])
+  const [editData,setEditData]=useState('')
   // is show modal for...
   const handleShow = () => setModalShow(true);
   const [vacationTime, setVacationTime] = useState(false);
@@ -85,6 +88,31 @@ const Dashboard = () => {
       setNextBreakLoading(false);
     }
   };
+  //
+  const editBreakPlan = async (data) => {
+    setEditData(data)
+    setBreakPlanFrom(true);
+    setBreakJoinOrSagest(false);
+    setBreakNewTime(false);
+    setInvateForm(false);
+    return true
+  }
+  const joinOrNewSuggestForm = async (data,join) => {
+    setSuggestData(data)
+    setJoinData(join)
+    setBreakPlanFrom(true);
+    setBreakJoinOrSagest(true);
+    setBreakNewTime(false);
+    setInvateForm(false);
+  }
+  const timeFormBreakplan = async (data) => {
+    setEditData('')
+    setBreakPlanFrom(true);
+    setBreakJoinOrSagest(false);
+    setBreakNewTime(true);
+    setInvateForm(false);
+    setTimeData(data);
+  }
   // effects
   useEffect(() => {
     async function getBreakPlan() {
@@ -360,6 +388,7 @@ const Dashboard = () => {
               action={
                 <i
                   onClick={() => {
+                    setEditData('')
                     setBreakPlanFrom(true);
                     setBreakJoinOrSagest(false);
                     setBreakNewTime(false);
@@ -373,6 +402,10 @@ const Dashboard = () => {
             />
             <div>
               <BreakplanFrom
+                editData={editData}
+                joindata={joindata}
+                setEditData={setEditData}
+                suggestData={suggestData}
                 timeData={timeData}
                 show={BreakPlanForm}
                 setShow={setBreakPlanFrom}
@@ -406,11 +439,16 @@ const Dashboard = () => {
                         </div>{" "}
                         <div>
                           <span
+                          id={currentUser._id+data.name.trim()}
                             onClick={() => {
-                              setBreakPlanFrom(true);
-                              setBreakJoinOrSagest(true);
-                              setBreakNewTime(false);
-                              setInvateForm(false);
+                              currentUser._id === data.user[0]._id
+                                ? editBreakPlan({id:data._id,name:data.name,time:data.time})
+                                : joinOrNewSuggestForm({
+                                  id:data.user[0]._id,breackName:data.name
+                                },
+                                {
+                                  fullName:currentUser.first_name +" "+ currentUser.last_name,breakName:data.name,breakOwnerId:data.user[0]._id
+                                })
                             }}
                             className="break-type"
                           >
@@ -420,8 +458,9 @@ const Dashboard = () => {
                             className="break-time"
                             id={data._id}
                             onClick={() => {
-                              // time ,recevier ,fullName,breakName,breakId breakPlan/suggest-new-time
-                              setTimeData({
+                              currentUser._id === data.user[0]._id
+                                ? editBreakPlan({id:data._id,name:data.name,time:data.time})
+                                :timeFormBreakplan ({
                                 time: "",
                                 recevier: data.user[0]._id,
                                 fullName:
@@ -431,10 +470,6 @@ const Dashboard = () => {
                                 breakName: data.name,
                                 breakId: data._id,
                               });
-                              setBreakPlanFrom(true);
-                              setBreakJoinOrSagest(false);
-                              setBreakNewTime(true);
-                              setInvateForm(false);
                             }}
                           >
                             {data.time}
@@ -455,6 +490,7 @@ const Dashboard = () => {
                           className="break-plan"
                           to=""
                           onClick={() => {
+                            setEditData('')
                             setBreakPlanFrom(true);
                             setBreakJoinOrSagest(false);
                             setBreakNewTime(false);

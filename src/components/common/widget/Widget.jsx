@@ -1,5 +1,7 @@
 import React from "react";
 import style from "./style.module.css";
+
+
 function Widget(props) {
   const { icon, title, content, handleShow, id, handleClick } = props;
   return (

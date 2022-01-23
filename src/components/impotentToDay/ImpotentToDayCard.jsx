@@ -2,67 +2,53 @@ import React, { useState, useEffect } from "react";
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
 import Card from "./../card/Card";
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 import CardBody from "./../card/CardBody";
 import CardHeader from "./../card/CardHeader";
 import Widget from "./../common/widget/Widget";
+import { useToasts } from "react-toast-notifications";
 import { Image, Row, Col, Button, Form } from "react-bootstrap";
 import TimePicker from "react-time-picker";
 import Modal from "../modal/modal";
-import { getImportantToday } from '../../api'
-const widgetData = [
-  {
-    icon: <Icon icon="bi:clock-fill" color={`#4922ff`} />,
-    title: "09:25",
-    content: "Meeting with timo about upcoming projects",
-  },
-  {
-    icon: <Icon icon="bi:clock-fill" color={`#4922ff`} />,
-    title: "11:25",
-    content: "Work on secret project",
-  },
-  {
-    icon: <Icon icon="bi:clock-fill" color={`#4922ff`} />,
-    title: "14:50",
-    content: "Scurm class with design team and maneger",
-  },
-  {
-    icon: <Icon icon="bi:clock-fill" color={`#4922ff`} />,
-    title: "15:30",
-    content: "Call with jon",
-  },
-];
+import { getImportantToday, updateTaskImportant } from '../../api'
+import BeatLoader from 'react-spinners/BeatLoader';
+
 function ImpotentToDayCard() {
   const [show, setShow] = useState(false);
-
+  const { addToast } = useToasts();
   const handleShow = () => setShow(true);
   const [timeFormat, setTimeFormat] = useState(false);
   const [duration, setDuration] = useState('');
+  const [showSkleton, setShowSkleton] = useState(false);
   const [loading, setloading] = useState(false);
   const [itemId, setItemId] = useState('');
   const [error, setError] = useState("");
   const [data, setData] = useState([])
   const handleClose = () => {
     setShow(false);
-    setError('')
+    setError('');
+    setTimeFormat(false)
   };
 
+  async function request() {
+    setShowSkleton(true);
+    const getData = await getImportantToday();
+
+    const format = getData?.data?.map((i, n) => {
+      return {
+        icon: <Icon icon="bi:clock-fill" color={`#4922ff`} />,
+        time: i.start_time,
+        content: i.name,
+        id: i._id,
+
+      };
+    });
+    setData(format)
+    setShowSkleton(false);
+  }
 
   useEffect(() => {
-    async function request() {
-      const getData = await getImportantToday();
-      console.log('itemid', getData)
-
-      const format = getData?.data?.map((i, n) => {
-        return {
-          icon: <Icon icon="bi:clock-fill" color={`#4922ff`} />,
-          time: i.start_time,
-          content: i.name,
-          id: i._id,
-
-        };
-      });
-      setData(format)
-    }
     request();
   }, [])
   const handleClick = (value) => {
@@ -75,26 +61,29 @@ function ImpotentToDayCard() {
     } else {
       setError("");
       setloading(true);
-      // const createP = await createProject(projectName, projectDesc);
-      // if (createP.status === 200) {
-      //   addToast("Created Susseccfully", {
-      //     autoDismiss: true,
-      //     appearance: "success",
-      //   });
-      //   setNewProject(true);
-      //   setloading(false);
-      //   setShowPModal(false);
-      // } else {
-      //   addToast("Error Please Try Again!", {
-      //     autoDismiss: false,
-      //     appearance: "error",
-      //   });
-      //   setloading(false);
-      //   setProjectName("");
-      //   return true;
-      // }
+      const updateImportant = await updateTaskImportant(itemId, duration);
+      if (updateImportant.status === 200) {
+        addToast("Moved to task susseccfully", {
+          autoDismiss: true,
+          appearance: "success",
+        });
+        request();
+        setloading(false);
+        setShow(false);
+        setTimeFormat(false)
+      } else {
+        addToast("Error Please Try Again!", {
+          autoDismiss: false,
+          appearance: "error",
+        });
+        setloading(false);
+        setTimeFormat(false)
+        return true;
+      }
       setloading(false);
       setDuration("");
+      setTimeFormat(false)
+
       return true;
     }
   };
@@ -116,18 +105,23 @@ function ImpotentToDayCard() {
             </>
           }
         />
-        <CardBody>
-          {data.map((item) => (
-            <Widget
-              key={item._id}
-              icon={item.icon}
-              title={item.time}
-              content={item.content}
-              handleShow={handleShow}
-              id={item.title}
-              handleClick={handleClick}
-            />
-          ))}
+        <CardBody className={data.length === 0 ? 'paddingBottom' : ''}>
+          {showSkleton ? (<Skeleton count={4} />) :
+            data.length > 0 ?
+              data.map((item) => (
+                <Widget
+                  key={item._id}
+                  icon={item.icon}
+                  title={item.time}
+                  content={item.content}
+                  handleShow={handleShow}
+                  id={item.id}
+                  handleClick={handleClick}
+                />
+              )) : <span >No important for today</span>
+
+
+          }
         </CardBody>
       </Card>
       <Modal
@@ -161,7 +155,7 @@ function ImpotentToDayCard() {
                       closeClock
                       format={timeFormat ? "mm:ss" : "hh:mm:ss"}
                       onChange={(value) => {
-                        console.log("time...", value);
+                        setDuration(value)
                       }}
                     // value={value}
                     />
@@ -180,14 +174,16 @@ function ImpotentToDayCard() {
             <Button variant="outline-dark" onClick={handleClose}>
               Cancel
             </Button>
+            {loading && duration.length > 0 ? (
+              <Button variant="primary">
+                <BeatLoader />
+              </Button>
+            ) : (
+              <Button variant="primary" onClick={handleSubmit}>
+                Move
+              </Button>
+            )}
 
-            <Button
-              variant="primary"
-              type="button"
-              onClick={handleSubmit}
-            >
-              Move
-            </Button>
           </>
         }
       />

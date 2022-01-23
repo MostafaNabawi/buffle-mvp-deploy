@@ -750,3 +750,9 @@ div.check-box > input {
 .modal-sub-title {
   font-size: 16px;
 }
+.clear-all {
+  color: #8286ff !important;
+}
+.paddingBottom {
+  padding-bottom: 15px !important;
+}
