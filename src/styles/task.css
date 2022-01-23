@@ -152,8 +152,8 @@ div.task-check-box > input {
 }
 
 /* Handle on hover */
-.drop-wrapper-2::-webkit-scrollbar,
-.drop-wrapper::-webkit-scrollbar-thumb:hover {
+.drop-wrapper-2::-webkit-scrollbar-thumb,
+.drop-wrapper::-webkit-scrollbar-thumb {
   background: #a8a5a5;
 }
 .col-wrapper {
