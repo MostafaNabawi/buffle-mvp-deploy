@@ -12,43 +12,43 @@ function Project(props) {
   const [itemId, setItemId] = useState(props.item.tb_id);
   const [pId, setPId] = useState(props.item.p_id);
   const [oldValue, setOldValue] = useState();
-  console.log('p', pId)
-  useEffect(() => {
-    async function request() {
-      // get project and format
-      const req = await getProject();
-      const formatP = req.data.map((i, n) => {
-        return {
-          label: i.name,
-          value: i._id,
-        };
 
-      });
-      setProjects(formatP);
-      const getP = await getProjectById(pId);
-      if (getP.data !== null) {
-        const selected = { value: getP.data._id, label: getP.data.name }
-        setOldValue(selected);
+  async function request() {
+    // get project and format
+    const req = await getProject();
+    const formatP = req.data.map((i, n) => {
+      return {
+        label: i.name,
+        value: i._id,
+      };
 
-      }
-      else {
-        const selected = { value: 0, label: 'No Project' }
-        setOldValue(selected);
-      }
+    });
+    setProjects(formatP);
+    const getP = await getProjectById(pId);
+    if (getP.data !== null) {
+      const selected = { value: getP.data._id, label: getP.data.name }
+      setOldValue(selected);
+
     }
+    else {
+      const selected = { value: 0, label: 'No Project' }
+      setOldValue(selected);
+    }
+  }
+
+  useEffect(() => {
     request();
   }, []);
-  // useEffect(() => {
-  //   if (update.length > 0) {
-  //     setPId(update);
-  //     setUpdate('')
-  //   }
-  // }, [update])
-  async function ProjectChange(val) {
 
+  useEffect(() => {
+    request();
+  }, [pId]);
+
+  async function ProjectChange(val) {
+    setOldValue({ value: val.value, label: val.label })
+    setPId(val.value);
     const update = await setProjectToItem(itemId, val.value);
     if (update.status === 200) {
-      setOldValue({ value: val.value, label: val.label })
       addToast("Project set successfully", { autoDismiss: true, appearance: 'success' });
     }
     else {

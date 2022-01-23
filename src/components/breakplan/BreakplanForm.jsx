@@ -10,8 +10,9 @@ import { API_URL } from "../../config";
 
 function BreackplanFrom({
     show, setShow, newTime, joinOrSagest,invateForm,
-    timeData
+    timeData,breackPlanName,editData,setEditData,suggestData,joindata
 }) {
+    const currentUser = JSON.parse(localStorage.getItem("user"));
     const { addToast } = useToasts();
     const [loading, setloading] = useState(false)
     //
@@ -43,6 +44,10 @@ function BreackplanFrom({
         if (show) {
             setClose(false)
         }
+        if(editData){
+            console.log("edit",editData)
+            setNewBreak({title:editData.name,createIime:editData.time})
+        }
     }, [show])
     // create Breack plan
     const handleCreatePlan = async (e) => {
@@ -62,51 +67,121 @@ function BreackplanFrom({
             }
         }
     }
+    // edit Breack Plan
+    const handleEditPlan =async (e)=>{
+        e.preventDefault();
+        const break_name_el =document.getElementById(currentUser._id+editData.name.trim())
+        const break_time_el =document.getElementById(editData.id)
+        if (newBreak.title != "" && newBreak.createIime != "") {
+            try{
+                setloading(true)
+                await fetch(`${API_URL}/breakPlan/update`, {
+                    method: "PUT",
+                    credentials: "include",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Access-Control-Allow-Credentials": true,
+                    },
+                    body: JSON.stringify({
+                        breakPlanId:editData.id,
+                        time: newBreak.createIime,
+                        name: newBreak.title
+                    })
+                }).then((res)=>{
+                    if (res.status === 200) {
+                        break_name_el.innerHTML=newBreak.title
+                        break_time_el.innerHTML= newBreak.createIime
+                        addToast("Edited Susseccfully", { autoDismiss: true, appearance: 'success' });
+                        setNewBreak({ ...newBreak, ["title"]: "", ["createIime"]: "" })
+                        setShow(false)
+                        setClose(true)
+                        setloading(false)
+                    } else {
+                        addToast("Error Please Try Again!", { autoDismiss: false, appearance: 'error' });
+                        setloading(false)
+                    }
+                })
+            }catch(err){
+                addToast("Server Error Please Try Again!", { autoDismiss: false, appearance: 'error' });
+                setloading(false)
+            }   
+        }
+    }
     // New saggest
     const handleNewSuggest =async (e)=>{
         e.preventDefault();
         if(newSuggestInput){
-            setNewSuggestInputError(false)
-            setloading(true)
-            const data= JSON.parse(localStorage.getItem('user'))
-             await fetch(`${API_URL}/breakPlan/invite `,{
-                 method: "POST",
-                 credentials: "include",
-                 headers: {
-                     "Content-Type": "application/json",
-                     "Access-Control-Allow-Credentials": true,
-                 },
-                 body: JSON.stringify({
-                     fname: data.first_name,
-                     lname: data.last_name,
-                     message:newSuggestInput
+            try{
+                setNewSuggestInputError(false)
+                setloading(true)
+                 await fetch(`${API_URL}/breakPlan/suggest-new-event `,{
+                     method: "POST",
+                     credentials: "include",
+                     headers: {
+                         "Content-Type": "application/json",
+                         "Access-Control-Allow-Credentials": true,
+                     },
+                     body: JSON.stringify({
+                         fullName: currentUser.first_name+ "" +currentUser.last_name,
+                         msg:newSuggestInput,
+                         recevier:suggestData.id,
+                         breakName:suggestData.breackName
+                     })
+                 }).then(res=>{
+                     if(res.status==200){
+                         addToast("Sended", { autoDismiss: true, appearance: 'success' });
+                         setNewSuggestInput('')
+                         setShow(false)
+                         setClose(true)
+                         setloading(false)
+                     }else{
+                         addToast("Error Please Try Again!", { autoDismiss: true, appearance: 'error' });
+                         setloading(false)
+                     }
                  })
-             }).then(res=>{
-                 if(res.status==200){
-                     addToast("Sended", { autoDismiss: true, appearance: 'success' });
-                     setNewSuggestInput('')
-                     setShow(false)
-                     setClose(true)
-                     setloading(false)
-                 }else{
-                     addToast("Error Please Try Again!", { autoDismiss: true, appearance: 'error' });
-                     setloading(false)
-                 }
-             })
+            }catch{
+                addToast("Server Error Please Try Again!", { autoDismiss: true, appearance: 'error' });
+                setloading(false)
+            }
 
         }else{
             setNewSuggestInputError(true)
         }
     }
-    // Join
+    
+    // Join   
     const handleJoin =async(e)=>{
-        console.log("join")
+        console.log(joindata)
+        try{
+            setloading(true)
+            await fetch(`${API_URL}/breakPlan/join`,{
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Credentials": true,
+                },
+                body: JSON.stringify(joindata)
+            }).then(res=>{
+                if(res.status==200){
+                    addToast("Sended", { autoDismiss: true, appearance: 'success' });
+                    setShow(false)
+                    setClose(true)
+                    setloading(false)
+                }else{
+                    addToast("Error Please Try Again!", { autoDismiss: true, appearance: 'error' });
+                    setloading(false)
+                }
+            })
+        }catch{
+            addToast("Server Error Please Try Again!", { autoDismiss: true, appearance: 'error' });
+            setloading(false)
+        }
     }
     // Suggest new time
     const  handleSuggestNewTime =async (e)=>{
         e.preventDefault();
         const data={...timeData,['time']:newSuggestTime}
-        console.log("timeData.....",data)
         if(newSuggestTime){
             setSuggestTimeError(false)
             setloading(true)
@@ -171,10 +246,12 @@ function BreackplanFrom({
             <Card className={`${style.customCard} pb-1`}>
                 <div>
                     <i className={style.closeIcon} onClick={() => {
+                        setEditData('')
                         setNewBreak({ ...newBreak, ["title"]: "", ["createIime"]: "" })
                         setEmail('')
                         setShow(false)
                         setClose(true)
+                        setNewSuggestInput('')
                     }} ><Icon icon="ci:close-big" /></i>
                 </div>
                 <Card.Body>
@@ -189,7 +266,11 @@ function BreackplanFrom({
                                     <Button variant="outline-primary" onClick={() => { 
                                         setNewSaggestion(false) 
                                         handleJoin()
-                                        }} className={style.customBtn}>Join</Button>
+                                        }} className={style.customBtn}>
+                                             {
+                                                loading ? <Loader color="#fff" size={15} /> : "Join"
+                                            }
+                                        </Button>
                                     <Button variant="outline-primary" onClick={() => { setNewSaggestion(!newSaggestion) }} className={style.customBtn}>Suggestion</Button>
                                     {
                                         newSaggestion
@@ -277,9 +358,9 @@ function BreackplanFrom({
                                 </>
                                 : <>
                                     <Card.Title className={style.tilte}>
-                                        New breack pland
+                                        {editData?"Edit breack pland":"New breack pland"}
                                     </Card.Title>
-                                    <Form onSubmit={handleCreatePlan} className="mt-3">
+                                    <Form onSubmit={editData? handleEditPlan : handleCreatePlan} className="mt-3">
                                         <Form.Group className="mb-3" controlId="formBasicEmail">
                                             <Form.Control
                                                 autoFocus
@@ -308,7 +389,7 @@ function BreackplanFrom({
                                         </Form.Group>
                                         <Button disabled={loading} className={style.withBtn} variant="primary" type="submit">
                                             {
-                                                loading ? <Loader color="#fff" size={15} /> : "Create New Plan"
+                                                loading ? <Loader color="#fff" size={15} /> :editData?"Edit":"Create New Plan"
                                             }
                                         </Button>
                                     </Form>
