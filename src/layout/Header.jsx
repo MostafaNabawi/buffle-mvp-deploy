@@ -326,7 +326,7 @@ const Header = () => {
                 </a>
                 {loading ? (
                   <div className="text-center pt-4 pb-4">
-                    <Skeleton className="mb-3" height="34px" count={4}/>
+                    <Skeleton className="mb-2" height="34px" count={4}/>
                   </div>
                 ) : notification.length > 0 ? (
                   notification.map((notify) =>

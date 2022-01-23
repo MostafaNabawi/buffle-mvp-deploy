@@ -14,11 +14,12 @@ import ImpotentToDayCard from "./../components/impotentToDay/ImpotentToDayCard";
 import BreakplanFrom from "../components/breakplan/BreakplanForm";
 import Modal from "../components/modal/modal";
 import { nextBreakTimeValidation, timeDifference } from "../config/utils";
-import { addNextBreak, deleteNextBreak, getNextBreak } from "../api";
+import { addNextBreak, createTask, deleteNextBreak, getNextBreak } from "../api";
 import { getaAllBreackPlan } from "../api/breackPlan";
 import { PulseLoader } from "react-spinners";
 import { useToasts } from "react-toast-notifications";
 import Felling from "../components/feel/Felling";
+import BeatLoader from 'react-spinners/BeatLoader';
 import { API_URL } from "../config";
 import Countdown from "react-countdown";
 import Skeleton from 'react-loading-skeleton'
@@ -39,6 +40,10 @@ const Dashboard = () => {
   const handleClose = () => {
     setModalShow(false);
     setNextBreakDateInput("");
+    setTaskName('');
+    setDuration('');
+    setError('');
+    setTaskError('')
   };
   // Data for Breack plan form
   const [timeData, setTimeData] = useState([]);
@@ -50,6 +55,7 @@ const Dashboard = () => {
   const [vacationTime, setVacationTime] = useState(false);
   const [nextBreak, setNextBreak] = useState(false);
   const [taskManager, setTaskManager] = useState(false);
+  console.log(vacationTime,nextBreak,taskManager )
   // Next Break states
   const [nextBreakTime, setNextBreakTime] = useState({
     startDate: "",
@@ -64,8 +70,17 @@ const Dashboard = () => {
   // vacation Time statte
   const [vacationNameInput, setVacationNameInput] = useState('')
   const [vacationDataInput, setVacationDataInput] = useState('')
-  const [vacationLoader, setVacationLoader] = useState(false)
   const [vacationData, setVacationData] = useState('')
+  const [vacationLoader, setVacationLoader] = useState(false)
+  // create task
+  const [duration, setDuration] = useState('');
+  const [taskName, setTaskName] = useState({ name: "", });
+  const [showSkleton, setShowSkleton] = useState(false);
+  const [loading, setloading] = useState(false);
+  const [taskError, setTaskError] = useState("");
+  const [error, setError] = useState("");
+  const [data, setData] = useState([])
+
   // next break action
   const handleNextBreakOperation = async () => {
     if (nextBreakDateInput.length === 0) {
@@ -169,6 +184,54 @@ const Dashboard = () => {
     setInvateForm(false);
     setTimeData(data);
   }
+  const validateTaskName = (value) => {
+    if (!value) {
+      setTaskError("Task name is required!");
+      return false;
+    }
+    else {
+      setTaskError("");
+      return true;
+    }
+  }
+  // create new task
+  const handleCreateTask = async () => {
+    validateTaskName(taskName.name)
+    if (!duration) {
+      setError("Duration time is required!");
+      return false;
+    }
+
+    else {
+      setError("");
+      setloading(true);
+      const createT = await createTask(taskName, 1, duration);
+      if (createT.status === 200) {
+        addToast("Created susseccfully", {
+          autoDismiss: true,
+          appearance: "success",
+        });
+        setloading(false);
+        setTimeFormat(false);
+        setModalShow(false);
+      } else {
+        addToast("Error Please Try Again!", {
+          autoDismiss: false,
+          appearance: "error",
+        });
+        setloading(false);
+        setTimeFormat(false)
+        setModalShow(false);
+        return true;
+      }
+      setloading(false);
+      setDuration("");
+      setTaskName('');
+      setTimeFormat(false)
+      setModalShow(false);
+      return true;
+    }
+  };
   // effects
   useEffect(() => {
     async function getBreakPlan() {
@@ -242,6 +305,7 @@ const Dashboard = () => {
                     setModalShow(true);
                     setVacationTime(false);
                     setNextBreak(true);
+                    setTaskManager(false)
                     setSizeModal("md");
                     setTitleModa("When is your next break?");
                   }}
@@ -654,8 +718,15 @@ const Dashboard = () => {
                 <Col md={12}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Task name </Form.Label>
-                    <Form.Control type="text" name="name" />
+                    <Form.Control type="text" className={taskError.length > 0 ? "red-border-input" : "no-border-input"}
+                      name="name" onChange={(e) => {
+                        setTaskName({ name: e.target.value })
+                      }} />
+                    {taskError ? (
+                      <div className="invalid-feedback d-block">{taskError}</div>
+                    ) : null}
                   </Form.Group>
+
                 </Col>
                 <Col md={12}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -674,15 +745,19 @@ const Dashboard = () => {
                       <Col xl="8">
                         <Form.Label>Time</Form.Label>
                         <TimePicker
-                          className="form-control taskManagerTime"
+                          className={`form-control taskManagerTime ${error.length > 0 ? "red-border-input" : "no-border-input"
+                            }`}
                           clearIcon
                           closeClock
                           format={timeFormat ? "mm:ss" : "hh:mm:ss"}
                           onChange={(value) => {
-                            console.log("time...", value);
+                            setDuration(value)
                           }}
                         // value={value}
                         />
+                        {error ? (
+                          <div className="invalid-feedback d-block">{error}</div>
+                        ) : null}
                       </Col>
                     </Row>
                   </Form.Group>
@@ -724,13 +799,10 @@ const Dashboard = () => {
                 )}
               </>
             )}
+
             {taskManager && (
-              <Button
-                variant="primary"
-                type="button"
-              // onClick={handleNextBreakOperation}
-              >
-                Create New Task
+              <Button variant="primary" onClick={handleCreateTask}>
+                {loading && duration.length > 0?<BeatLoader />:" Create New Task"}
               </Button>
             )}
           </>
