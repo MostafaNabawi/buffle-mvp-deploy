@@ -143,7 +143,7 @@ button.btn-primary {
 }
 .card-notify {
   width: 400px !important;
-  height:300px !important ;
+  height: 300px !important ;
   overflow-x: hidden !important;
   overflow-y: auto !important;
 }
@@ -735,15 +735,18 @@ div.check-box > input {
 }
 
 /* Login page */
-.notify-badge{
+.notify-badge {
   position: absolute !important;
   margin-top: -10px !important;
   /* margin-left: -15px !important; */
   z-index: 4444 !important;
 }
-.break-plan-card{
+.break-plan-card {
   height: 170px !important ;
   overflow-x: hidden !important;
   overflow-y: auto;
   padding: 10px !important;
+}
+.modal-sub-title {
+  font-size: 16px;
 }

@@ -228,40 +228,6 @@ async function getTask() {
   const res = await req.json();
   return { status: req.status, data: res.payload };
 }
-
-// Hydration Reminder
-async function getWaterHydration() {
-  const req = await fetch(`${API_URL}/water_hydration/get`, {
-    method: "GET",
-    credentials: "include",
-    mode: "cors",
-    headers: {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Credentials": true,
-    },
-  });
-  const res = await req.json();
-  return { status: req.status, data: res.payload };
-}
-
-async function createWaterHydration(data) {
-  const req = await fetch(`${API_URL}/water_hydration/new`, {
-    method: "POST",
-    credentials: "include",
-    mode: "cors",
-    headers: {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Credentials": true,
-    },
-    body: JSON.stringify({
-      goal: data.dailyGoal,
-      work: data.timer_1,
-      reminder: data.timer_2,
-    }),
-  });
-  return { status: req.status };
-}
-
 async function setProjectToItem(id, p_id) {
   const req = await fetch(`${API_URL}/task/update-task-project`, {
     method: "PUT",
@@ -345,6 +311,53 @@ async function updateTaskProject(id, p_id) {
   });
   return { status: req.status };
 }
+// Hydration Reminder
+async function getWaterHydration() {
+  const req = await fetch(`${API_URL}/water_hydration/get`, {
+    method: "GET",
+    credentials: "include",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+  });
+  const res = await req.json();
+  return { status: req.status, data: res.payload };
+}
+
+async function createWaterHydration(data) {
+  const req = await fetch(`${API_URL}/water_hydration/new`, {
+    method: "POST",
+    credentials: "include",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+    body: JSON.stringify({
+      goal: data.dailyGoal,
+      work: data.timer_1,
+      reminder: data.timer_2,
+    }),
+  });
+  return { status: req.status };
+}
+
+// ------------------- Important today----------
+async function getImportantToday() {
+  const req = await fetch(`${API_URL}/task/get-important`, {
+    method: "GET",
+    credentials: "include",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+  });
+  const res = await req.json();
+  return { status: req.status, data: res.payload };
+}
 export {
   getCompanySpaceData,
   signin,
@@ -367,4 +380,5 @@ export {
   deleteTask,
   updateTaskDate,
   updateTaskProject,
+  getImportantToday,
 };

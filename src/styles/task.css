@@ -325,3 +325,23 @@ div.task-check-box > input {
 .important-today-modal-footer {
   border-top: none !important;
 }
+.react-date-picker__clear-button,
+.react-date-picker__button {
+  display: none;
+}
+.react-date-picker__wrapper {
+  border: none !important;
+}
+.important-today-date-picker {
+  margin-right: 25% !important;
+  border-color: hsl(0, 0%, 80%);
+}
+.important-today-date-picker:hover {
+  color: #4922ff;
+}
+.important-today-date-picker:hover .react-date-picker__inputGroup__year,
+.important-today-date-picker:hover .react-date-picker__inputGroup__day,
+.important-today-date-picker:hover .react-date-picker__inputGroup__month,
+.important-today-date-picker:hover .react-date-picker__inputGroup__divider {
+  color: white !important;
+}
