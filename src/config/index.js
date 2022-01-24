@@ -1,5 +1,9 @@
-// const API_URL = process.env.API_URL || "http://localhost:8000/api";
+// const API_URL = process.env.API_URL ||
 const API_URL = process.env.API_URL || "http://localhost:8000/api";
+
+// "https://buffle-api-test.herokuapp.com/api";
+
+//  "http://localhost:8000/api";
 
 // "https://buffle-api-test.herokuapp.com/api";
 

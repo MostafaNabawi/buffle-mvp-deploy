@@ -59,7 +59,7 @@ const UserLogin = () => {
   const handleLogin = async (event) => {
     event.preventDefault();
     if (inputs.email === "" || inputs.password === "") {
-      addToast("Email and Password are required!", {
+      addToast("Email and Password are required!👀", {
         appearance: "warning",
         autoDismiss: 4000,
       });
