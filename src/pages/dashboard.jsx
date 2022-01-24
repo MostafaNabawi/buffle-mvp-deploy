@@ -55,7 +55,6 @@ const Dashboard = () => {
   const [vacationTime, setVacationTime] = useState(false);
   const [nextBreak, setNextBreak] = useState(false);
   const [taskManager, setTaskManager] = useState(false);
-  console.log(vacationTime, nextBreak, taskManager)
   // Next Break states
   const [nextBreakTime, setNextBreakTime] = useState({
     startDate: "",
