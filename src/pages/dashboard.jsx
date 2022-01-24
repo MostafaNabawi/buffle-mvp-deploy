@@ -14,7 +14,7 @@ import ImpotentToDayCard from "./../components/impotentToDay/ImpotentToDayCard";
 import BreakplanFrom from "../components/breakplan/BreakplanForm";
 import Modal from "../components/modal/modal";
 import { nextBreakTimeValidation, timeDifference } from "../config/utils";
-import { addNextBreak, createTask, deleteNextBreak, getNextBreak } from "../api";
+import { addNextBreak, createTask, deleteNextBreak, getNextBreak, getDashboardTask } from "../api";
 import { getaAllBreackPlan } from "../api/breackPlan";
 import { PulseLoader } from "react-spinners";
 import { useToasts } from "react-toast-notifications";
@@ -74,7 +74,7 @@ const Dashboard = () => {
   const [loading, setloading] = useState(false);
   const [taskError, setTaskError] = useState("");
   const [error, setError] = useState("");
-  const [data, setData] = useState([])
+  const [taskData, setTaskData] = useState([])
 
   // next break action
   const handleNextBreakOperation = async () => {
@@ -181,7 +181,7 @@ const Dashboard = () => {
     else {
       setError("");
       setloading(true);
-      const createT = await createTask(taskName, 1, duration);
+      const createT = await createTask(taskName, 1, duration, true);
       if (createT.status === 200) {
         addToast("Created susseccfully", {
           autoDismiss: true,
@@ -212,7 +212,6 @@ const Dashboard = () => {
   useEffect(() => {
     async function getBreakPlan() {
       const req = await getaAllBreackPlan();
-      console.log("getaAllBreackPlan :", req);
       if (req.length > 0) {
         setBreakPlanData(req);
       } else {
@@ -245,8 +244,19 @@ const Dashboard = () => {
         });
       }
     }
+
+    async function getTask() {
+      const req = await getDashboardTask();
+      console.log('dash', req.data)
+      if (req.data.length > 0) {
+        setTaskData(req.data);
+      } else {
+        setTaskData([]);
+      }
+    }
     getBreakPlan();
     innerNextBreak();
+    getTask();
   }, []);
   return (
     <section>
@@ -400,78 +410,28 @@ const Dashboard = () => {
               }
             />
             <Row>
-              <Row className="task-manager-body pt-0 mt-1 mb-1">
-                <Col xl="8">
-                  <Row className="pl-5">
-                    <Col xl="1">
-                      <Form.Group controlId="formBasicCheckbox">
-                        <Form.Check className="check-box " type="checkbox" />
-                      </Form.Group>
+              {taskData.map((t) => (
+                <>
+                  <Row className="task-manager-body pt-0 mt-1 mb-1" key={t._id}>
+                    <Col xl="8">
+                      <Row className="pl-5">
+                        <Col xl="1">
+                          <Form.Group controlId="formBasicCheckbox">
+                            <Form.Check className="check-box " type="checkbox" />
+                          </Form.Group>
+                        </Col>
+                        <Col xl="11" className="task-manager-text">
+                          {t.name}
+                        </Col>
+                      </Row>
                     </Col>
-                    <Col xl="11" className="task-manager-text">
-                      Setting individual sales targets with the sales team
-                    </Col>
-                  </Row>
-                </Col>
-                <Col xl="4">
-                  <TaskManagerPreogressBar />
-                </Col>
-              </Row>
-              <div className="devidre"></div>
-              <Row className="task-manager-body mt-1 mb-1">
-                <Col xl="8">
-                  <Row className="pl-5">
-                    <Col xl="1">
-                      <Form.Group controlId="formBasicCheckbox">
-                        <Form.Check className="check-box " type="checkbox" />
-                      </Form.Group>
-                    </Col>
-                    <Col xl="11" className="task-manager-text">
-                      Feedback for Raj
+                    <Col xl="4">
+                      <TaskManagerPreogressBar duration={t.task_duration} />
                     </Col>
                   </Row>
-                </Col>
-                <Col xl="4">
-                  <TaskManagerPreogressBar type={2} />
-                </Col>
-              </Row>
-              <div className="devidre"></div>
-              <Row className="task-manager-body mt-1 mb-1">
-                <Col xl="8">
-                  <Row className="pl-5">
-                    <Col xl="1">
-                      <Form.Group controlId="formBasicCheckbox">
-                        <Form.Check className="check-box " type="checkbox" />
-                      </Form.Group>
-                    </Col>
-                    <Col xl="11" className="task-manager-text">
-                      Tracking sales goals and reporting of last week
-                    </Col>
-                  </Row>
-                </Col>
-                <Col xl="4">
-                  <TaskManagerPreogressBar type={2} />
-                </Col>
-              </Row>
-              <div className="devidre"></div>
-              <Row className="task-manager-body mt-1 mb-1">
-                <Col xl="8">
-                  <Row className="pl-5">
-                    <Col xl="1">
-                      <Form.Group controlId="formBasicCheckbox">
-                        <Form.Check className="check-box " type="checkbox" />
-                      </Form.Group>
-                    </Col>
-                    <Col xl="11" className="task-manager-text">
-                      Preparing KPIs for Timo
-                    </Col>
-                  </Row>
-                </Col>
-                <Col xl="4">
-                  <TaskManagerPreogressBar type={2} />
-                </Col>
-              </Row>
-              <div className="devidre "></div>
+                  <div className="devidre"></div>
+                </>
+              ))}
             </Row>
           </Card>
         </Col>
