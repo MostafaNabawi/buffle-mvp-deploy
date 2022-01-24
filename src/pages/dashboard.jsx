@@ -14,7 +14,7 @@ import ImpotentToDayCard from "./../components/impotentToDay/ImpotentToDayCard";
 import BreakplanFrom from "../components/breakplan/BreakplanForm";
 import Modal from "../components/modal/modal";
 import { nextBreakTimeValidation, timeDifference } from "../config/utils";
-import { addNextBreak, createTask, deleteNextBreak, getNextBreak, getDashboardTask } from "../api";
+import { addNextBreak, createTask, deleteNextBreak, getNextBreak, getDashboardTask, getTask } from "../api";
 import { getaAllBreackPlan } from "../api/breackPlan";
 import { PulseLoader } from "react-spinners";
 import { useToasts } from "react-toast-notifications";
@@ -79,7 +79,8 @@ const Dashboard = () => {
   const [loading, setloading] = useState(false);
   const [taskError, setTaskError] = useState("");
   const [error, setError] = useState("");
-  const [taskData, setTaskData] = useState([])
+  const [taskData, setTaskData] = useState([]);
+  const [taskReload, setTaskReload] = useState(false);
 
   // next break action
   const handleNextBreakOperation = async () => {
@@ -205,16 +206,20 @@ const Dashboard = () => {
     else {
       setError("");
       setloading(true);
-      const createT = await createTask(taskName, 1, duration, true);
+
+      const createT = await createTask(taskName, 1, duration, true, "stop");
       if (createT.status === 200) {
+        setTaskReload(true)
         addToast("Created susseccfully", {
           autoDismiss: true,
           appearance: "success",
         });
+
         setloading(false);
         setTimeFormat(false);
         setModalShow(false);
       } else {
+
         addToast("Error Please Try Again!", {
           autoDismiss: false,
           appearance: "error",
@@ -222,6 +227,7 @@ const Dashboard = () => {
         setloading(false);
         setTimeFormat(false)
         setModalShow(false);
+        setTaskReload(false);
         return true;
       }
       setloading(false);
@@ -229,9 +235,19 @@ const Dashboard = () => {
       setTaskName('');
       setTimeFormat(false)
       setModalShow(false);
+      setTaskReload(false);
       return true;
     }
   };
+  // get tasks
+  async function getTask() {
+    const req = await getDashboardTask();
+    if (req.data.length > 0) {
+      setTaskData(req.data);
+    } else {
+      setTaskData([]);
+    }
+  }
   // effects
   useEffect(() => {
     async function getBreakPlan() {
@@ -269,20 +285,16 @@ const Dashboard = () => {
       }
     }
 
-    async function getTask() {
-      const req = await getDashboardTask();
-      console.log('dash', req.data)
-      if (req.data.length > 0) {
-        setTaskData(req.data);
-      } else {
-        setTaskData([]);
-      }
-    }
+
     getBreakPlan();
     innerNextBreak();
     getTask();
     getVacationTime();
   }, []);
+
+  useEffect(() => {
+    getTask()
+  }, [taskReload])
   return (
     <section>
       <Row>
@@ -456,7 +468,7 @@ const Dashboard = () => {
                 </>
               }
             />
-            <Row>
+            <Row className="dashboard-task-manager-row">
               {taskData.map((t) => (
                 <>
                   <Row className="task-manager-body pt-0 mt-1 mb-1" key={t._id}>

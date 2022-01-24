@@ -5,6 +5,21 @@ import style from "./style.module.css";
 import Countdown from "react-countdown";
 const TaskManagerPreogressBar = ({ duration }) => {
   const [play, setPlay] = useState(true);
+  const [data, setData] = useState(0);
+  const handlePlay = () => {
+    if (play) {
+      console.log("set status to stop");
+      setPlay(!play);
+    }
+    if (!play) {
+      console.log('set to play')
+      // const newMeta = getTotalSeconds(range?.startDate, range?.endDate);
+      // setTotal(newMeta.total);
+      // setData(newMeta.passed * 1000);
+      // setPercentUI((100 / newMeta.total) * newMeta?.passed);
+      setPlay(!play);
+    }
+  };
   return (
     <>
       <Row>
@@ -22,7 +37,7 @@ const TaskManagerPreogressBar = ({ duration }) => {
         </Col>
         <Col className={style.iconPlay} xl="1">
           <div
-            // onClick={handlePlay}
+            onClick={handlePlay}
             className={`${style.iconProgress}  text-center`}
           >
             {play ? (
