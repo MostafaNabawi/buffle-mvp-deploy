@@ -16,6 +16,8 @@ import Countdown from "react-countdown";
 import Notify from "../components/notification/Notify";
 import { useToasts } from "react-toast-notifications";
 import { ioInstance } from "../config/socket";
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 const Header = () => {
   const { addToast } = useToasts();
@@ -324,7 +326,7 @@ const Header = () => {
                 </a>
                 {loading ? (
                   <div className="text-center pt-4 pb-4">
-                    <Icon fontSize={50} icon="eos-icons:bubble-loading" />
+                    <Skeleton className="mb-2" height="34px" count={4}/>
                   </div>
                 ) : notification.length > 0 ? (
                   notification.map((notify) =>

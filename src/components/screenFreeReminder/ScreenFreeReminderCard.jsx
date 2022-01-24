@@ -10,6 +10,8 @@ import { API_URL } from "../../config/index";
 import { useToasts } from "react-toast-notifications";
 import Loader from "react-spinners/BeatLoader";
 import style from "./style.module.css";
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 function ScreenFreeReminderCard() {
   const { addToast } = useToasts();
@@ -200,7 +202,7 @@ function ScreenFreeReminderCard() {
           className="border-bottom"
         />
         <CardBody className="text-center screen-remainder">
-          {getting ? <Icon fontSize={30} icon="eos-icons:bubble-loading" />
+          {getting ? <Skeleton height="34px" count={1}/>
             : data.length === 0
               ? "Not set screen reminder"
               :

@@ -21,6 +21,9 @@ import { useToasts } from "react-toast-notifications";
 import Felling from "../components/feel/Felling";
 import BeatLoader from 'react-spinners/BeatLoader';
 import { API_URL } from "../config";
+import Countdown from "react-countdown";
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 const Dashboard = () => {
   const currentUser = JSON.parse(localStorage.getItem("user"));
@@ -52,6 +55,7 @@ const Dashboard = () => {
   const [vacationTime, setVacationTime] = useState(false);
   const [nextBreak, setNextBreak] = useState(false);
   const [taskManager, setTaskManager] = useState(false);
+  console.log(vacationTime,nextBreak,taskManager )
   // Next Break states
   const [nextBreakTime, setNextBreakTime] = useState({
     startDate: "",
@@ -64,8 +68,9 @@ const Dashboard = () => {
   const [breacPlanData, setBreakPlanData] = useState("");
   const { addToast } = useToasts();
   // vacation Time statte
-  const [vacationTimeInput, setVacationTimeInput] = useState('')
+  const [vacationNameInput, setVacationNameInput] = useState('')
   const [vacationDataInput, setVacationDataInput] = useState('')
+  const [vacationData, setVacationData] = useState('')
   const [vacationLoader, setVacationLoader] = useState(false)
   // create task
   const [duration, setDuration] = useState('');
@@ -78,7 +83,6 @@ const Dashboard = () => {
 
   // next break action
   const handleNextBreakOperation = async () => {
-    console.log("data", nextBreakTime);
     if (nextBreakDateInput.length === 0) {
       addToast("Time is not selected", {
         appearance: "warning",
@@ -107,33 +111,53 @@ const Dashboard = () => {
     }
   };
   //
-  const handleVacationTime = async () => {
+  const creatVacationTime = async () => {
     try {
       setVacationLoader(true)
       await fetch(`${API_URL}/vacation`, {
+        method: "POST",
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Allow-Credentials": true,
         },
         body: JSON.stringify({
-          time: vacationTimeInput,
-          data: vacationDataInput
-        }).then((res) => {
-          if (res.status === 200) {
-            setVacationLoader(false)
-            setVacationTimeInput('')
-            setVacationDataInput('')
-            handleClose()
-            addToast("Saved", { autoDismiss: true, appearance: "success" });
-          } else {
-            setVacationLoader(false)
-            addToast("Error Please Try Again", { autoDismiss: true, appearance: "Error" });
-          }
+          name: vacationNameInput,
+          date: vacationDataInput
         })
+      }).then((res) => {
+        if (res.status === 200) {
+          getVacationTime()
+          setVacationLoader(false)
+          setVacationNameInput('')
+          setVacationDataInput('')
+          handleClose()
+          addToast("Saved", { autoDismiss: true, appearance: "success" });
+        } else {
+          setVacationLoader(false)
+          addToast("Error Please Try Again", { autoDismiss: true, appearance: "Error" });
+        }
       })
-    } catch {
+    } catch (err) {
       setVacationLoader(false)
+    }
+  }
+  const getVacationTime = async () => {
+    try {
+      await fetch(`${API_URL}/vacation`, {
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": true,
+        }
+      }).then(async (res) => {
+        if (res.status === 200) {
+          const { payload } = await res.json()
+          setVacationData(payload)
+        }
+      })
+    } catch (err) {
+      console.log("Server Error")
     }
   }
   const editBreakPlan = async (data) => {
@@ -212,7 +236,6 @@ const Dashboard = () => {
   useEffect(() => {
     async function getBreakPlan() {
       const req = await getaAllBreackPlan();
-      console.log("getaAllBreackPlan :", req);
       if (req.length > 0) {
         setBreakPlanData(req);
       } else {
@@ -247,6 +270,7 @@ const Dashboard = () => {
     }
     getBreakPlan();
     innerNextBreak();
+    getVacationTime();
   }, []);
   return (
     <section>
@@ -281,6 +305,7 @@ const Dashboard = () => {
                     setModalShow(true);
                     setVacationTime(false);
                     setNextBreak(true);
+                    setTaskManager(false)
                     setSizeModal("md");
                     setTitleModa("When is your next break?");
                   }}
@@ -322,8 +347,29 @@ const Dashboard = () => {
               }
             />
             <div className="mt-3">
-              <span className="vacation-day">23 Days </span>
-              <span className="vacation-until">left until MyKonos</span>
+              <span className="vacation-day">
+                {
+                  vacationData ?
+                    <Countdown
+                      date={vacationData.date}
+                      renderer={(props) => (
+                        <>
+                          {props.days === 0
+                            ?  <span className="vacation-until">No Vacation time</span>
+                            : <> <span> {props.days} Days </span>
+                              <span className="vacation-until"> until {vacationData.name}</span></>
+                          }
+                        </>
+                      )}
+                      onComplete={() => {
+                        addToast("Today in your vacation Time", {
+                          appearance: "info",
+                        })
+                      }}
+                    />
+                    :<Skeleton count={1} />
+                }
+              </span>
             </div>
           </Card>
         </Col>
@@ -510,11 +556,8 @@ const Dashboard = () => {
               />
               {/* show Breack plan */}
               <div className="break-plan-card">
-                {breacPlanData === "" ? (
-                  <div className="text-center">
-                    <Icon fontSize={24} icon="eos-icons:bubble-loading" />
-                  </div>
-                ) : breacPlanData.length === 0 ? (
+                {breacPlanData === "" ?<Skeleton count={6}/>
+                 : breacPlanData.length === 0 ? (
                   "No Break Plan"
                 ) : (
                   breacPlanData &&
@@ -633,17 +676,19 @@ const Dashboard = () => {
                     <Form.Control
                       name="data"
                       type="date"
-                      onChange={(e) => { setVacationTimeInput(e.target.value) }}
+                      value={vacationDataInput}
+                      onChange={(e) => { setVacationDataInput(e.target.value) }}
                     />
                   </Form.Group>
                 </Col>
                 <Col md={6}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Time </Form.Label>
+                    <Form.Label>Name </Form.Label>
                     <Form.Control
-                      time="time"
-                      type="time"
-                      onChange={(e) => { setVacationDataInput(e.target.value) }}
+                      time="text"
+                      type="name"
+                      value={vacationNameInput}
+                      onChange={(e) => { setVacationNameInput(e.target.value) }}
                     />
                   </Form.Group>
                 </Col>
@@ -729,10 +774,10 @@ const Dashboard = () => {
             {/* Vacation time btn */}
             {vacationTime && (
               <Button
-                disabled={vacationTimeInput === "" || vacationDataInput === "" || vacationLoader ? true : false}
+                disabled={vacationNameInput === "" || vacationDataInput === "" || vacationLoader ? true : false}
                 variant="primary"
                 type="button"
-                onClick={() => { handleVacationTime() }}
+                onClick={() => { creatVacationTime() }}
               >
                 {vacationLoader ? <Icon fontSize={30} icon="eos-icons:three-dots-loading" /> : "Create Vacation"}
               </Button>
@@ -755,13 +800,9 @@ const Dashboard = () => {
               </>
             )}
 
-            {taskManager && loading && duration.length > 0 ? (
-              <Button variant="primary">
-                <BeatLoader />
-              </Button>
-            ) : (
+            {taskManager && (
               <Button variant="primary" onClick={handleCreateTask}>
-                Create New Task
+                {loading && duration.length > 0?<BeatLoader />:" Create New Task"}
               </Button>
             )}
           </>
