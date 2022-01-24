@@ -227,10 +227,13 @@ const CompanyRegister = () => {
                             })
                           }
                         >
-                          <option value="">Size</option>
-                          <option value="1">One</option>
-                          <option value="2">Two</option>
-                          <option value="3">Three</option>
+                          <option value="" disabled selected>
+                            size
+                          </option>
+                          <option value="10">1 - 10</option>
+                          <option value="20">10 - 20</option>
+                          <option value="50">20 - 50</option>
+                          <option value="100">50 - 100</option>
                         </Form.Select>
                         <Icon
                           className={style.arrowSelect}

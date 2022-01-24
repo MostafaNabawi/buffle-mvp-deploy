@@ -14,11 +14,17 @@ import ImpotentToDayCard from "./../components/impotentToDay/ImpotentToDayCard";
 import BreakplanFrom from "../components/breakplan/BreakplanForm";
 import Modal from "../components/modal/modal";
 import { nextBreakTimeValidation, timeDifference } from "../config/utils";
-import { addNextBreak, deleteNextBreak, getNextBreak } from "../api";
+import { addNextBreak, createTask, deleteNextBreak, getNextBreak, getDashboardTask, getTask } from "../api";
 import { getaAllBreackPlan } from "../api/breackPlan";
 import { PulseLoader } from "react-spinners";
 import { useToasts } from "react-toast-notifications";
 import Felling from "../components/feel/Felling";
+import BeatLoader from 'react-spinners/BeatLoader';
+import { API_URL } from "../config";
+import Countdown from "react-countdown";
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+
 const Dashboard = () => {
   const currentUser = JSON.parse(localStorage.getItem("user"));
   const [timeFormat, setTimeFormat] = useState(false);
@@ -34,12 +40,16 @@ const Dashboard = () => {
   const handleClose = () => {
     setModalShow(false);
     setNextBreakDateInput("");
+    setTaskName('');
+    setDuration('');
+    setError('');
+    setTaskError('')
   };
   // Data for Breack plan form
   const [timeData, setTimeData] = useState([]);
-  const [suggestData,setSuggestData]=useState([])
-  const [joindata,setJoinData]=useState([])
-  const [editData,setEditData]=useState('')
+  const [suggestData, setSuggestData] = useState([])
+  const [joindata, setJoinData] = useState([])
+  const [editData, setEditData] = useState('')
   // is show modal for...
   const handleShow = () => setModalShow(true);
   const [vacationTime, setVacationTime] = useState(false);
@@ -56,11 +66,23 @@ const Dashboard = () => {
   // Break Plan states
   const [breacPlanData, setBreakPlanData] = useState("");
   const { addToast } = useToasts();
-  // actions
+  // vacation Time statte
+  const [vacationNameInput, setVacationNameInput] = useState('')
+  const [vacationDataInput, setVacationDataInput] = useState('')
+  const [vacationData, setVacationData] = useState('')
+  const [vacationLoader, setVacationLoader] = useState(false)
+  // create task
+  const [duration, setDuration] = useState('');
+  const [taskName, setTaskName] = useState({ name: "", });
+  const [showSkleton, setShowSkleton] = useState(false);
+  const [loading, setloading] = useState(false);
+  const [taskError, setTaskError] = useState("");
+  const [error, setError] = useState("");
+  const [taskData, setTaskData] = useState([]);
+  const [taskReload, setTaskReload] = useState(false);
 
   // next break action
   const handleNextBreakOperation = async () => {
-    console.log("data", nextBreakTime);
     if (nextBreakDateInput.length === 0) {
       addToast("Time is not selected", {
         appearance: "warning",
@@ -89,6 +111,55 @@ const Dashboard = () => {
     }
   };
   //
+  const creatVacationTime = async () => {
+    try {
+      setVacationLoader(true)
+      await fetch(`${API_URL}/vacation`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": true,
+        },
+        body: JSON.stringify({
+          name: vacationNameInput,
+          date: vacationDataInput
+        })
+      }).then((res) => {
+        if (res.status === 200) {
+          getVacationTime()
+          setVacationLoader(false)
+          setVacationNameInput('')
+          setVacationDataInput('')
+          handleClose()
+          addToast("Saved", { autoDismiss: true, appearance: "success" });
+        } else {
+          setVacationLoader(false)
+          addToast("Error Please Try Again", { autoDismiss: true, appearance: "Error" });
+        }
+      })
+    } catch (err) {
+      setVacationLoader(false)
+    }
+  }
+  const getVacationTime = async () => {
+    try {
+      await fetch(`${API_URL}/vacation`, {
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": true,
+        }
+      }).then(async (res) => {
+        if (res.status === 200) {
+          const { payload } = await res.json()
+          setVacationData(payload)
+        }
+      })
+    } catch (err) {
+      console.log("Server Error")
+    }
+  }
   const editBreakPlan = async (data) => {
     setEditData(data)
     setBreakPlanFrom(true);
@@ -97,7 +168,7 @@ const Dashboard = () => {
     setInvateForm(false);
     return true
   }
-  const joinOrNewSuggestForm = async (data,join) => {
+  const joinOrNewSuggestForm = async (data, join) => {
     setSuggestData(data)
     setJoinData(join)
     setBreakPlanFrom(true);
@@ -113,11 +184,73 @@ const Dashboard = () => {
     setInvateForm(false);
     setTimeData(data);
   }
+  const validateTaskName = (value) => {
+    if (!value) {
+      setTaskError("Task name is required!");
+      return false;
+    }
+    else {
+      setTaskError("");
+      return true;
+    }
+  }
+  // create new task
+  const handleCreateTask = async () => {
+    validateTaskName(taskName.name)
+    if (!duration) {
+      setError("Duration time is required!");
+      return false;
+    }
+
+    else {
+      setError("");
+      setloading(true);
+
+      const createT = await createTask(taskName, 1, duration, true, "stop");
+      if (createT.status === 200) {
+        setTaskReload(true)
+        addToast("Created susseccfully", {
+          autoDismiss: true,
+          appearance: "success",
+        });
+
+        setloading(false);
+        setTimeFormat(false);
+        setModalShow(false);
+      } else {
+
+        addToast("Error Please Try Again!", {
+          autoDismiss: false,
+          appearance: "error",
+        });
+        setloading(false);
+        setTimeFormat(false)
+        setModalShow(false);
+        setTaskReload(false);
+        return true;
+      }
+      setloading(false);
+      setDuration("");
+      setTaskName('');
+      setTimeFormat(false)
+      setModalShow(false);
+      setTaskReload(false);
+      return true;
+    }
+  };
+  // get tasks
+  async function getTask() {
+    const req = await getDashboardTask();
+    if (req.data.length > 0) {
+      setTaskData(req.data);
+    } else {
+      setTaskData([]);
+    }
+  }
   // effects
   useEffect(() => {
     async function getBreakPlan() {
       const req = await getaAllBreackPlan();
-      console.log("getaAllBreackPlan :", req);
       if (req.length > 0) {
         setBreakPlanData(req);
       } else {
@@ -150,9 +283,17 @@ const Dashboard = () => {
         });
       }
     }
+
+
     getBreakPlan();
     innerNextBreak();
+    getTask();
+    getVacationTime();
   }, []);
+
+  useEffect(() => {
+    getTask()
+  }, [taskReload])
   return (
     <section>
       <Row>
@@ -186,6 +327,7 @@ const Dashboard = () => {
                     setModalShow(true);
                     setVacationTime(false);
                     setNextBreak(true);
+                    setTaskManager(false)
                     setSizeModal("md");
                     setTitleModa("When is your next break?");
                   }}
@@ -227,8 +369,29 @@ const Dashboard = () => {
               }
             />
             <div className="mt-3">
-              <span className="vacation-day">23 Days </span>
-              <span className="vacation-until">left until MyKonos</span>
+              <span className="vacation-day">
+                {
+                  vacationData ?
+                    <Countdown
+                      date={vacationData.date}
+                      renderer={(props) => (
+                        <>
+                          {props.days === 0
+                            ? <span className="vacation-until">No Vacation time</span>
+                            : <> <span> {props.days} Days </span>
+                              <span className="vacation-until"> until {vacationData.name}</span></>
+                          }
+                        </>
+                      )}
+                      onComplete={() => {
+                        addToast("Today in your vacation Time", {
+                          appearance: "info",
+                        })
+                      }}
+                    />
+                    : <Skeleton count={1} />
+                }
+              </span>
             </div>
           </Card>
         </Col>
@@ -304,79 +467,29 @@ const Dashboard = () => {
                 </>
               }
             />
-            <Row>
-              <Row className="task-manager-body pt-0 mt-1 mb-1">
-                <Col xl="8">
-                  <Row className="pl-5">
-                    <Col xl="1">
-                      <Form.Group controlId="formBasicCheckbox">
-                        <Form.Check className="check-box " type="checkbox" />
-                      </Form.Group>
+            <Row className="dashboard-task-manager-row">
+              {taskData.map((t) => (
+                <>
+                  <Row className="task-manager-body pt-0 mt-1 mb-1" key={t._id}>
+                    <Col xl="8">
+                      <Row className="pl-5">
+                        <Col xl="1">
+                          <Form.Group controlId="formBasicCheckbox">
+                            <Form.Check className="check-box " type="checkbox" />
+                          </Form.Group>
+                        </Col>
+                        <Col xl="11" className="task-manager-text">
+                          {t.name}
+                        </Col>
+                      </Row>
                     </Col>
-                    <Col xl="11" className="task-manager-text">
-                      Setting individual sales targets with the sales team
-                    </Col>
-                  </Row>
-                </Col>
-                <Col xl="4">
-                  <TaskManagerPreogressBar />
-                </Col>
-              </Row>
-              <div className="devidre"></div>
-              <Row className="task-manager-body mt-1 mb-1">
-                <Col xl="8">
-                  <Row className="pl-5">
-                    <Col xl="1">
-                      <Form.Group controlId="formBasicCheckbox">
-                        <Form.Check className="check-box " type="checkbox" />
-                      </Form.Group>
-                    </Col>
-                    <Col xl="11" className="task-manager-text">
-                      Feedback for Raj
+                    <Col xl="4">
+                      <TaskManagerPreogressBar duration={t.task_duration} />
                     </Col>
                   </Row>
-                </Col>
-                <Col xl="4">
-                  <TaskManagerPreogressBar type={2} />
-                </Col>
-              </Row>
-              <div className="devidre"></div>
-              <Row className="task-manager-body mt-1 mb-1">
-                <Col xl="8">
-                  <Row className="pl-5">
-                    <Col xl="1">
-                      <Form.Group controlId="formBasicCheckbox">
-                        <Form.Check className="check-box " type="checkbox" />
-                      </Form.Group>
-                    </Col>
-                    <Col xl="11" className="task-manager-text">
-                      Tracking sales goals and reporting of last week
-                    </Col>
-                  </Row>
-                </Col>
-                <Col xl="4">
-                  <TaskManagerPreogressBar type={2} />
-                </Col>
-              </Row>
-              <div className="devidre"></div>
-              <Row className="task-manager-body mt-1 mb-1">
-                <Col xl="8">
-                  <Row className="pl-5">
-                    <Col xl="1">
-                      <Form.Group controlId="formBasicCheckbox">
-                        <Form.Check className="check-box " type="checkbox" />
-                      </Form.Group>
-                    </Col>
-                    <Col xl="11" className="task-manager-text">
-                      Preparing KPIs for Timo
-                    </Col>
-                  </Row>
-                </Col>
-                <Col xl="4">
-                  <TaskManagerPreogressBar type={2} />
-                </Col>
-              </Row>
-              <div className="devidre "></div>
+                  <div className="devidre"></div>
+                </>
+              ))}
             </Row>
           </Card>
         </Col>
@@ -415,70 +528,67 @@ const Dashboard = () => {
               />
               {/* show Breack plan */}
               <div className="break-plan-card">
-                {breacPlanData === "" ? (
-                  <div className="text-center">
-                    <Icon fontSize={24} icon="eos-icons:bubble-loading" />
-                  </div>
-                ) : breacPlanData.length === 0 ? (
-                  "No Break Plan"
-                ) : (
-                  breacPlanData &&
-                  breacPlanData.map((data) => (
-                    <Row key={data._id} className="mt-3">
-                      <Col className="col-2">
-                        <div className="breakplan-icon navy-blue text-center pt-2">
-                          <Image
-                            className="breakplan-img"
-                            src="/icone/WB_Headshots-102-web 1.png"
-                          />
-                        </div>
-                      </Col>
-                      <Col>
-                        <div className="break-user-name">
-                          {data.user[0].first_name} {data.user[0].last_name}
-                        </div>{" "}
-                        <div>
-                          <span
-                          id={currentUser._id+data.name.trim()}
-                            onClick={() => {
-                              currentUser._id === data.user[0]._id
-                                ? editBreakPlan({id:data._id,name:data.name,time:data.time})
-                                : joinOrNewSuggestForm({
-                                  id:data.user[0]._id,breackName:data.name
-                                },
-                                {
-                                  fullName:currentUser.first_name +" "+ currentUser.last_name,breakName:data.name,breakOwnerId:data.user[0]._id
-                                })
-                            }}
-                            className="break-type"
-                          >
-                            {data.name}
-                          </span>
-                          <span
-                            className="break-time"
-                            id={data._id}
-                            onClick={() => {
-                              currentUser._id === data.user[0]._id
-                                ? editBreakPlan({id:data._id,name:data.name,time:data.time})
-                                :timeFormBreakplan ({
-                                time: "",
-                                recevier: data.user[0]._id,
-                                fullName:
-                                  currentUser.first_name +
-                                  "" +
-                                  currentUser.last_name,
-                                breakName: data.name,
-                                breakId: data._id,
-                              });
-                            }}
-                          >
-                            {data.time}
-                          </span>
-                        </div>
-                      </Col>
-                    </Row>
-                  ))
-                )}
+                {breacPlanData === "" ? <Skeleton count={6} />
+                  : breacPlanData.length === 0 ? (
+                    "No Break Plan"
+                  ) : (
+                    breacPlanData &&
+                    breacPlanData.map((data) => (
+                      <Row key={data._id} className="mt-3">
+                        <Col className="col-2">
+                          <div className="breakplan-icon navy-blue text-center pt-2">
+                            <Image
+                              className="breakplan-img"
+                              src="/icone/WB_Headshots-102-web 1.png"
+                            />
+                          </div>
+                        </Col>
+                        <Col>
+                          <div className="break-user-name">
+                            {data.user[0].first_name} {data.user[0].last_name}
+                          </div>{" "}
+                          <div>
+                            <span
+                              id={currentUser._id + data.name.trim()}
+                              onClick={() => {
+                                currentUser._id === data.user[0]._id
+                                  ? editBreakPlan({ id: data._id, name: data.name, time: data.time })
+                                  : joinOrNewSuggestForm({
+                                    id: data.user[0]._id, breackName: data.name
+                                  },
+                                    {
+                                      fullName: currentUser.first_name + " " + currentUser.last_name, breakName: data.name, breakOwnerId: data.user[0]._id
+                                    })
+                              }}
+                              className="break-type"
+                            >
+                              {data.name}
+                            </span>
+                            <span
+                              className="break-time"
+                              id={data._id}
+                              onClick={() => {
+                                currentUser._id === data.user[0]._id
+                                  ? editBreakPlan({ id: data._id, name: data.name, time: data.time })
+                                  : timeFormBreakplan({
+                                    time: "",
+                                    recevier: data.user[0]._id,
+                                    fullName:
+                                      currentUser.first_name +
+                                      "" +
+                                      currentUser.last_name,
+                                    breakName: data.name,
+                                    breakId: data._id,
+                                  });
+                              }}
+                            >
+                              {data.time}
+                            </span>
+                          </div>
+                        </Col>
+                      </Row>
+                    ))
+                  )}
               </div>
               <Row className="mt-3">
                 <Col>
@@ -535,13 +645,23 @@ const Dashboard = () => {
                 <Col md={6}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Date </Form.Label>
-                    <Form.Control type="date" />
+                    <Form.Control
+                      name="data"
+                      type="date"
+                      value={vacationDataInput}
+                      onChange={(e) => { setVacationDataInput(e.target.value) }}
+                    />
                   </Form.Group>
                 </Col>
                 <Col md={6}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Time </Form.Label>
-                    <Form.Control type="time" />
+                    <Form.Label>Name </Form.Label>
+                    <Form.Control
+                      time="text"
+                      type="name"
+                      value={vacationNameInput}
+                      onChange={(e) => { setVacationNameInput(e.target.value) }}
+                    />
                   </Form.Group>
                 </Col>
               </>
@@ -570,8 +690,15 @@ const Dashboard = () => {
                 <Col md={12}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Task name </Form.Label>
-                    <Form.Control type="text" name="name" />
+                    <Form.Control type="text" className={taskError.length > 0 ? "red-border-input" : "no-border-input"}
+                      name="name" onChange={(e) => {
+                        setTaskName({ name: e.target.value })
+                      }} />
+                    {taskError ? (
+                      <div className="invalid-feedback d-block">{taskError}</div>
+                    ) : null}
                   </Form.Group>
+
                 </Col>
                 <Col md={12}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -590,15 +717,19 @@ const Dashboard = () => {
                       <Col xl="8">
                         <Form.Label>Time</Form.Label>
                         <TimePicker
-                          className="form-control taskManagerTime"
+                          className={`form-control taskManagerTime ${error.length > 0 ? "red-border-input" : "no-border-input"
+                            }`}
                           clearIcon
                           closeClock
                           format={timeFormat ? "mm:ss" : "hh:mm:ss"}
                           onChange={(value) => {
-                            console.log("time...", value);
+                            setDuration(value)
                           }}
                         // value={value}
                         />
+                        {error ? (
+                          <div className="invalid-feedback d-block">{error}</div>
+                        ) : null}
                       </Col>
                     </Row>
                   </Form.Group>
@@ -614,8 +745,13 @@ const Dashboard = () => {
             </Button>
             {/* Vacation time btn */}
             {vacationTime && (
-              <Button variant="primary" type="submit">
-                Create Vacation
+              <Button
+                disabled={vacationNameInput === "" || vacationDataInput === "" || vacationLoader ? true : false}
+                variant="primary"
+                type="button"
+                onClick={() => { creatVacationTime() }}
+              >
+                {vacationLoader ? <Icon fontSize={30} icon="eos-icons:three-dots-loading" /> : "Create Vacation"}
               </Button>
             )}
             {/* Next Break Btn */}
@@ -635,13 +771,10 @@ const Dashboard = () => {
                 )}
               </>
             )}
+
             {taskManager && (
-              <Button
-                variant="primary"
-                type="button"
-              // onClick={handleNextBreakOperation}
-              >
-                Create New Task
+              <Button variant="primary" onClick={handleCreateTask}>
+                {loading && duration.length > 0 ? <BeatLoader /> : " Create New Task"}
               </Button>
             )}
           </>

@@ -4,6 +4,9 @@ import { Icon } from "@iconify/react";
 import { useParams, useNavigate } from "react-router-dom";
 import style from "../style.module.css";
 import { API_URL } from "../../../config";
+import { useToasts } from "react-toast-notifications";
+import PulseLoader from "react-spinners/PulseLoader";
+
 const StepTwoRegister = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [inputs, setInputs] = useState({
@@ -12,12 +15,43 @@ const StepTwoRegister = () => {
   });
   const [expired, setExpired] = useState(false);
   const [already, setAlready] = useState({});
+  const { addToast } = useToasts();
   const navigate = useNavigate();
-
+  const [loading, setLoading] = useState(false);
   const { token } = useParams();
   // register function
   const handleRegister = async (e) => {
     e.preventDefault();
+    // check inputs
+    if (inputs.password === "") {
+      addToast("Please Enter Password", {
+        appearance: "warning",
+        autoDismiss: 6000,
+      });
+      return;
+    }
+    if (inputs.c_password === "") {
+      addToast("Please Enter Confirm Password", {
+        appearance: "warning",
+        autoDismiss: 6000,
+      });
+      return;
+    }
+    if (inputs.password !== inputs.c_password) {
+      addToast("Password not matched!", {
+        appearance: "warning",
+        autoDismiss: 6000,
+      });
+      return;
+    }
+    if (inputs.password.length < 6) {
+      addToast("Password must be at least 6 chracters!", {
+        appearance: "warning",
+        autoDismiss: 6000,
+      });
+      return;
+    }
+    setLoading(true);
     // #1- register for company
     if (already?.type === 1) {
       const req = await fetch(`${API_URL}/auth/signup/company`, {
@@ -46,9 +80,7 @@ const StepTwoRegister = () => {
       });
       const res = await req.json();
       if (req.status === 200) {
-        alert(
-          "Your company registered when your company approved by Buffle we will send you email! "
-        );
+        navigate("/?company=true");
       }
     }
     // #2- register for freelancer
@@ -71,8 +103,11 @@ const StepTwoRegister = () => {
           heard: already.heard,
         }),
       });
+      const res = await req.json();
       if (req.status === 200) {
-        alert("Your account successfully created! ");
+        setLoading(false);
+        localStorage.setItem("pp", inputs.password);
+        navigate(`/?new=true&email=${already.email}`);
       }
     }
     // #3- register for student
@@ -97,7 +132,9 @@ const StepTwoRegister = () => {
         }),
       });
       if (req.status === 200) {
-        alert("Your account successfully created! ");
+        setLoading(false);
+        localStorage.setItem("pp", inputs.password);
+        navigate(`/?new=true&email=${already.email}`);
       }
     }
   };
@@ -161,6 +198,7 @@ const StepTwoRegister = () => {
                         type={`${showPassword ? "text" : "password"}`}
                         placeholder="Password"
                         name="password"
+                        disabled={loading}
                         onChange={(e) =>
                           setInputs({
                             ...inputs,
@@ -193,6 +231,7 @@ const StepTwoRegister = () => {
                         type={`${showPassword ? "text" : "password"}`}
                         placeholder="confirem Password"
                         name="c_password"
+                        disabled={loading}
                         onChange={(e) =>
                           setInputs({
                             ...inputs,
@@ -218,8 +257,9 @@ const StepTwoRegister = () => {
                   className={style.submitBtn}
                   type="button"
                   onClick={(e) => handleRegister(e)}
+                  disabled={loading}
                 >
-                  REGISTER
+                  {loading ? <PulseLoader size={10} /> : "REGISTER"}
                 </Button>
               </Form>
             </div>

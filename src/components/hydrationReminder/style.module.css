@@ -340,18 +340,6 @@
   );
 }
 
-@keyframes before {
-  0%,
-  100% {
-    bottom: -50%;
-    transform: rotateX(180deg) rotateY(180deg) rotateZ(0deg);
-  }
-  50% {
-    bottom: -55%;
-    transform: rotateX(180deg) rotateY(180deg) rotateZ(5deg);
-  }
-}
-
 .animat::after {
   animation: after 3s linear infinite;
 }
@@ -359,14 +347,26 @@
   animation: before 3s linear infinite;
 }
 
+@keyframes before {
+  0%,
+  100% {
+    bottom: -50%;
+    transform: rotateX(180deg) rotateY(180deg) rotateZ(0deg);
+  }
+  50% {
+    bottom: -58%;
+    transform: rotateX(180deg) rotateY(180deg) rotateZ(4deg);
+  }
+}
 @keyframes after {
   0%,
   100% {
     bottom: -56%;
-    transform: rotateX(180deg) rotateZ(0deg);
+    transform: rotateX(180deg);
   }
   50% {
-    bottom: -58%;
-    transform: rotateX(180deg) rotateZ(5deg);
+    bottom: -59%;
+    left: -10%;
+    transform: rotateX(180deg) rotateZ(-4deg);
   }
 }
