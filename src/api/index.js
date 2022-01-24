@@ -197,7 +197,7 @@ async function updateProject(id, name, desc) {
 }
 
 // ----------------------tasks--------------
-async function createTask(task, type, duration) {
+async function createTask(task, type, duration, moved) {
   const req = await fetch(`${API_URL}/task/new`, {
     method: "POST",
     credentials: "include",
@@ -211,6 +211,7 @@ async function createTask(task, type, duration) {
       projectId: task.p_id,
       type: type,
       duration: duration,
+      moved: moved,
     }),
   });
   const resault = await req.json();
@@ -312,6 +313,19 @@ async function updateTaskProject(id, p_id) {
   });
   return { status: req.status };
 }
+async function getDashboardTask() {
+  const req = await fetch(`${API_URL}/task/get-one`, {
+    method: "GET",
+    credentials: "include",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+  });
+  const res = await req.json();
+  return { status: req.status, data: res.payload };
+}
 // Hydration Reminder
 async function getWaterHydration() {
   const req = await fetch(`${API_URL}/water_hydration/get`, {
@@ -401,4 +415,5 @@ export {
   updateTaskProject,
   getImportantToday,
   updateTaskImportant,
+  getDashboardTask,
 };

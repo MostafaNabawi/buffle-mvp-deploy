@@ -3,9 +3,8 @@ import { Row, Col, ProgressBar } from "react-bootstrap";
 import { Icon } from "@iconify/react";
 import style from "./style.module.css";
 import Countdown from "react-countdown";
-const TaskManagerPreogressBar = () => {
+const TaskManagerPreogressBar = ({ duration }) => {
   const [play, setPlay] = useState(true);
-  
   return (
     <>
       <Row>
@@ -16,12 +15,7 @@ const TaskManagerPreogressBar = () => {
             icon="bi:clock-fill"
           />
           <ProgressBar
-            label={ `
-                    ${new Date().getHours()}
-                    :${new Date().getMinutes()}
-                    :${new Date().getSeconds()}
-                    `
-            }
+            label={`${duration}`}
             now={80}
             className={style.progress}
           />
@@ -32,8 +26,8 @@ const TaskManagerPreogressBar = () => {
             className={`${style.iconProgress}  text-center`}
           >
             {play ? (
-                  <i><Icon icon="gg:play-pause" /></i>
-                 
+              <i><Icon icon="gg:play-pause" /></i>
+
             ) : (
               <Icon icon="bi:play-fill" />
             )}
