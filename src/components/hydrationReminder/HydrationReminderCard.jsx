@@ -11,11 +11,15 @@ import TimePicker2 from "../common/timePicker/TimePicker2";
 import WaterRepository from "./WaterRepository";
 import { getWaterHydration, createWaterHydration } from "../../api";
 import { useToasts } from "react-toast-notifications";
+import useSound from "use-sound";
 
 function HydrationReminderCard() {
+  // let audio = new Audio("/music/alarm.mp3");
+  // const alarm = "/music/alarm.mp3";
   const { addToast } = useToasts();
   const [id1, setId1] = useState({ id: "" });
   const [id2, setId2] = useState({ id: "" });
+  // const [play, { stop }] = useSound(alarm);
   const [isSubmit, setIsSubmit] = useState(false);
   const [dailyGoal, setDailyGoal] = useState(0);
   const [precent, setPrecent] = useState(0);
@@ -45,24 +49,24 @@ function HydrationReminderCard() {
   });
 
   const fetch = async () => {
-    console.log("fetch");
     const req = await getWaterHydration();
     if (req.data !== null) {
-      console.log("fetched");
       setPrecent(100);
       setDailyGoal(req.data.daily_goal);
       setLiter(req.data.daily_goal);
-      calculteWaterReminderPrecent(req.data.work);
+      calculteWaterReminderPrecent(req.data.daily_goal, req.data.work);
       ReminderNotifiction(req.data.reminder);
-    } else {
-      console.log("data-null");
     }
   };
 
   //useEffect function
   useEffect(() => {
-    console.log("useEffect");
     fetch();
+    console.log(window.id);
+    return () => {
+      clearInterval(id1.id);
+      clearInterval(id2.id);
+    };
   }, [isSubmit]);
 
   const changeTimeFormat = (val) => {
@@ -87,8 +91,7 @@ function HydrationReminderCard() {
   // Reminder notifiction
   const ReminderNotifiction = (time) => {
     const interval = timeInMilliseconds(time);
-    console.log(interval, "Info-interval");
-    if (id1.id !== "") {
+    if (id1.id1 !== undefined) {
       clearInterval(id1.id);
     }
     if (interval !== null) {
@@ -98,24 +101,27 @@ function HydrationReminderCard() {
             autoDismiss: true,
             appearance: "info",
           });
+          // play();
         }
       }, interval);
       setId1({ id: id });
     }
   };
 
-  const calculteWaterReminderPrecent = (time) => {
+  const calculteWaterReminderPrecent = (dailyGoal, time) => {
     const interval = timeInMilliseconds(time) / 100;
-    const reminder = dailyGoal / 100;
-    console.log(interval, "reminder-interval");
-    console.log(reminder, "reminder");
+    const usedَAmount = dailyGoal / 100;
+    console.log(usedَAmount, dailyGoal);
     if (id2.id !== "") {
       clearInterval(id2.id);
     }
-    var val = 100;
+    var precent = 100;
+    var reminder = 0;
     const id = setInterval(() => {
-      if (val > 0) {
-        setPrecent(--val);
+      if (precent > 0) {
+        reminder += usedَAmount;
+        setReminder(Math.round(reminder));
+        setPrecent(--precent);
       }
     }, interval);
     setId2({ id: id });

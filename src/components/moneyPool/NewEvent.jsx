@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Row, Form, Col, Button } from "react-bootstrap";
-import Card from "../card/Card";
 import { Icon } from "@iconify/react";
 import style from "./style.module.css";
 import PersonNameField from "./partials/PersonNameField";
 import { useNavigate } from "react-router-dom";
+import Card from "./../card/Card";
 import CardBody from "./../card/CardBody";
 import AddNewMember from "./partials/AddNewMember";
 const currencyData = [
@@ -34,6 +34,7 @@ function NewEvent() {
   };
 
   return (
+        <Card className="event_card">
     <CardBody className={style.new_event}>
       <Row>
         <Col lg={6}>
@@ -96,6 +97,7 @@ function NewEvent() {
         </Col>
       </Row>
     </CardBody>
+    </Card>
   );
 }
 
