@@ -800,3 +800,7 @@ div.check-box > input {
   overflow-y: auto;
   overflow-x: hidden;
 }
+.notifyTime{
+  color: #707eae !important;
+  font-size: 11px !important;
+}
