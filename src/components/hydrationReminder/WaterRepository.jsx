@@ -2,7 +2,8 @@ import React from "react";
 import style from "./style.module.css";
 
 function WaterRepository(props) {
-  const { precent, liter, reminder } = props;
+  const { precent, liter, reminder, animatClass } = props;
+  const animat = animatClass ? style.animat : "";
   return (
     <div className={style.wrapper}>
       <div className={style.repository}>
@@ -15,9 +16,9 @@ function WaterRepository(props) {
               </span>
             </div>
 
-            <div className={style.wave}></div>
+            <div className={`${style.wave} ${animat}`}></div>
             <div className={style.water_drops}>
-              {[1, 2, 3, 4, 5, 6, , 7, 8, 9, 10,11,12].map((item) => (
+              {[1, 2, 3, 4, 5, 6, , 7, 8, 9, 10, 11, 12].map((item) => (
                 <span key={item}></span>
               ))}
             </div>

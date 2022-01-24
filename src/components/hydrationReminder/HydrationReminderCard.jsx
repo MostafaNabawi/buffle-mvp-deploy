@@ -19,6 +19,7 @@ function HydrationReminderCard() {
   const { addToast } = useToasts();
   const [id1, setId1] = useState({ id: "" });
   const [id2, setId2] = useState({ id: "" });
+  const [animatClass, setAnimatClass] = useState(false);
   // const [play, { stop }] = useSound(alarm);
   const [isSubmit, setIsSubmit] = useState(false);
   const [dailyGoal, setDailyGoal] = useState(0);
@@ -52,6 +53,7 @@ function HydrationReminderCard() {
     const req = await getWaterHydration();
     if (req.data !== null) {
       setPrecent(100);
+      setReminder(0);
       setDailyGoal(req.data.daily_goal);
       setLiter(req.data.daily_goal);
       calculteWaterReminderPrecent(req.data.daily_goal, req.data.work);
@@ -122,11 +124,18 @@ function HydrationReminderCard() {
         reminder += usedَAmount;
         setReminder(Math.round(reminder));
         setPrecent(--precent);
+        setAnimation();
       }
     }, interval);
     setId2({ id: id });
   };
 
+  const setAnimation = () => {
+    setAnimatClass(true);
+    setTimeout(() => {
+      setAnimatClass(false);
+    }, 3000);
+  };
   const handleSubmit = async (e) => {
     const timer_1 = ` ${howLongTime.hours}:${howLongTime.minutes}:${howLongTime.seconds}`;
     const timer_2 = ` ${reminderTime.hours}:${reminderTime.minutes}:${reminderTime.seconds}`;
@@ -190,6 +199,7 @@ function HydrationReminderCard() {
             precent={precent}
             liter={liter}
             reminder={reminder}
+            animatClass={animatClass}
           />
         </CardBody>
       </Card>
