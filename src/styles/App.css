@@ -755,28 +755,33 @@ div.check-box > input {
 }
 /* width */
 .break-plan-card::-webkit-scrollbar,
-.important-today-card-body::-webkit-scrollbar {
+.important-today-card-body::-webkit-scrollbar,
+.dashboard-task-manager-row::-webkit-scrollbar {
   width: 6px;
 }
 
 /* Track */
 .break-plan-card::-webkit-scrollbar,
-.important-today-card-body::-webkit-scrollbar {
+.important-today-card-body::-webkit-scrollbar,
+.dashboard-task-manager-row::-webkit-scrollbar {
   box-shadow: inherit;
   border-radius: 10px;
 }
 
 /* Handle */
 .break-plan-card::-webkit-scrollbar,
-.important-today-card-body::-webkit-scrollbar {
+.important-today-card-body::-webkit-scrollbar,
+.dashboard-task-manager-row::-webkit-scrollbar {
   background: gainsboro;
   border-radius: 10px;
 }
 
 /* Handle on hover */
 .break-plan-card::-webkit-scrollbar-thumb,
-.important-today-card-body::-webkit-scrollbar-thumb {
+.important-today-card-body::-webkit-scrollbar-thumb,
+.dashboard-task-manager-row::-webkit-scrollbar-thumb {
   background: #a8a5a5;
+  border-radius: 10px;
 }
 .modal-sub-title {
   font-size: 16px;
@@ -787,6 +792,15 @@ div.check-box > input {
 .paddingBottom {
   padding-bottom: 15px !important;
 }
-.screen-remainder{
+.screen-remainder {
   height: 61px !important;
+}
+.dashboard-task-manager-row {
+  height: 233px !important;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.notifyTime{
+  color: #707eae !important;
+  font-size: 11px !important;
 }

@@ -65,7 +65,6 @@ const Header = () => {
         const { payload } = await res.json();
         console.log("payload...", payload);
         if (payload.length > 0) {
-          console.log("notifacation", payload);
           setNotificatiion(payload);
           setLoading(false);
         } else {
@@ -261,10 +260,10 @@ const Header = () => {
             localStorage.setItem(
               "loackTime",
               timeLock.getHours() +
-                ":" +
-                timeLock.getMinutes() +
-                ":" +
-                timeLock.getSeconds()
+              ":" +
+              timeLock.getMinutes() +
+              ":" +
+              timeLock.getSeconds()
             );
           }}
           renderer={() => {
@@ -284,9 +283,9 @@ const Header = () => {
             onComplete={() => {
               setStart(true);
             }}
-            // renderer={() => {
-            //   return ""
-            // }}
+          // renderer={() => {
+          //   return ""
+          // }}
           />
         )}
       </div>
@@ -315,12 +314,12 @@ const Header = () => {
               }
               className="navDropdomnIcon notiy "
             >
-              <div className="card p-2 card-notify text-center">
+              <div className="card p-2 card-notify">
                 <a
                   onClick={() => {
                     clearAll();
                   }}
-                  className="clear-all"
+                  className="clear-all text-center"
                 >
                   Clear all
                 </a>
@@ -334,6 +333,7 @@ const Header = () => {
                       <Notify
                         key={notify._id}
                         name={notify.firstName + " " + notify.lastName}
+                        date={notify.date}
                         message={notify.msg}
                         footer={
                           <>
@@ -362,14 +362,16 @@ const Header = () => {
                     ) : notify.type == "report" ? (
                       <Notify
                         key={notify._id}
-                        name=""
+                        name={notify.sender}
+                        date={notify.date}
                         message={notify.msg}
                         footer=""
                       />
                     ) : notify.type === "new-time" ? (
                       <Notify
                         key={notify._id}
-                        name=""
+                        name={notify.sender}
+                        date={notify.date}
                         message={notify.msg}
                         footer={
                           <>

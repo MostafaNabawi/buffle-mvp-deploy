@@ -61,7 +61,7 @@ function ImpotentToDayCard() {
     } else {
       setError("");
       setloading(true);
-      const updateImportant = await updateTaskImportant(itemId, duration);
+      const updateImportant = await updateTaskImportant(itemId, duration, 'stop');
       if (updateImportant.status === 200) {
         addToast("Moved to task susseccfully", {
           autoDismiss: true,

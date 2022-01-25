@@ -2,6 +2,8 @@ import "./styles/App.css";
 
 import { Route, Routes } from "react-router-dom";
 import Login from "./pages/login";
+import ForgetPassword from "./components/user/forgetPassword/indes";
+import RestPassword from "./components/user/restPassword";
 import Register from "./pages/register";
 import IndexRegister from "./components/user/register/index";
 import CompanyRegister from "./components/user/register/Company";
@@ -38,7 +40,12 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Login />} />
+        {/* <Route path="/" element={<Login />} /> */}
+        <Route path="/">
+          <Route index element={<Login />}/>
+          <Route path="forget-password" element={<ForgetPassword />} />
+          <Route path="reset-password/:token" element={<RestPassword/>} />
+        </Route>
         <Route path="/register" element={<Register />}>
           <Route index element={<IndexRegister />} />
           <Route path="company" element={<CompanyRegister />} />

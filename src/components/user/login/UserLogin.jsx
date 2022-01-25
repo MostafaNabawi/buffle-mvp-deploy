@@ -252,7 +252,7 @@ const UserLogin = () => {
                     label="Check me out"
                     disabled={loading}
                   />
-                  <Link className={`${style.forgetPassLink}`} to="">
+                  <Link className={`${style.forgetPassLink}`} to="/forget-password">
                     Forgot password?
                   </Link>
                 </Form.Group>
