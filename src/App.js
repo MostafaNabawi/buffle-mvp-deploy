@@ -20,14 +20,14 @@ import Profile from "./pages/profile";
 import Setting from "./pages/setting";
 import UserList from "./components/user/userList/UserList";
 import { useEffect, useState } from "react";
-
+import UserListAdmin from "./components/user/userList/UserListAdmin";
 function App() {
   const [addUserManagment, setAddUserManagment] = useState({
     render: false,
     type: "",
   });
   useEffect(() => {
-    const space = localStorage.getItem("space");
+    const space = JSON.parse(localStorage.getItem("space"));
     if (space === "c" || space === "a") {
       setAddUserManagment({
         render: true,
@@ -60,7 +60,9 @@ function App() {
           {addUserManagment.render && (
             <Route
               path="user-management"
-              element={<UserList type={addUserManagment.type} />}
+              element={
+                addUserManagment.type === "c" ? <UserList /> : <UserListAdmin />
+              }
             />
           )}
         </Route>

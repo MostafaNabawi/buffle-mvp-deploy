@@ -16,8 +16,8 @@ import Countdown from "react-countdown";
 import Notify from "../components/notification/Notify";
 import { useToasts } from "react-toast-notifications";
 import { ioInstance } from "../config/socket";
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const Header = () => {
   const { addToast } = useToasts();
@@ -214,7 +214,7 @@ const Header = () => {
     getScrrenRemainder();
     const user_storage = JSON.parse(localStorage.getItem("user"));
     const space = JSON.parse(localStorage.getItem("space"));
-    if (space === "c") {
+    if (space === "c" || space === "a") {
       setShowUserRoute(true);
     }
     setUserData(user_storage);
@@ -326,7 +326,7 @@ const Header = () => {
                 </a>
                 {loading ? (
                   <div className="text-center pt-4 pb-4">
-                    <Skeleton className="mb-2" height="34px" count={4}/>
+                    <Skeleton className="mb-2" height="34px" count={4} />
                   </div>
                 ) : notification.length > 0 ? (
                   notification.map((notify) =>

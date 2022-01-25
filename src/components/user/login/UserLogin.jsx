@@ -84,7 +84,7 @@ const UserLogin = () => {
     }
     if (req.status === 200) {
       if (req.data.type === 0) {
-        addToast(req.data.msg, {
+        addToast(`${req.data.msg}⛔`, {
           appearance: "warning",
           autoDismiss: 8000,
         });
