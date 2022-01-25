@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React, useState} from "react";
 import { Row, Col, Image, Form, Button } from "react-bootstrap";
 import { Icon } from "@iconify/react";
 import { Link,useParams, useNavigate } from "react-router-dom";
@@ -6,19 +6,16 @@ import { useToasts } from "react-toast-notifications";
 import style from "../style.module.css";
 import PulseLoader from "react-spinners/PulseLoader";
 import { API_URL } from "../../../config";
-import { useSearchParams } from "react-router-dom";
 const RestPassword = () => {
     const { addToast } = useToasts();
     const navigate = useNavigate();
     const { token } = useParams();
+    const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [inputs, setInputs] = useState({
         confirmPass: "",
         password: "",
     });
-    const [loading, setLoading] = useState(false);
-    const [searchParams, setSearchParams] = useSearchParams();
-
     const handleRestPass= async (event) => {
         event.preventDefault();
         if (inputs.confirmPass === "" || inputs.password === "") {
@@ -55,19 +52,19 @@ const RestPassword = () => {
                     password :inputs.password,
                     token:token
                 }),
-            }).then((res) => {
+            }).then(async(res) => {
                 if (res.status === 200) {
-                    setLoading(false)
-                    addToast("password Change successfully", {
-                        appearance: "success",
-                        autoDismiss: 4000,
-                    });
+                    const {payload}=await res.json()
+                    localStorage.setItem("pp", inputs.password);
+                    navigate(`/?new=true&email=${payload.value.email}`);
                 } else {
                     addToast("error Please Try Again!", {
                         appearance: "error",
                         autoDismiss: 4000,
                     });
                     setLoading(false)
+                    navigate("/forget-password")
+                   
                 }
             })
         } catch {
@@ -76,10 +73,6 @@ const RestPassword = () => {
         }
     };
 
-    useEffect(() => {
-
-    }, []);
-    console.log("token",token)
     return (
         <div className={style.loginPage}>
             <Row className="m-0 justify-content-center">
