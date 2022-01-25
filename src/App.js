@@ -44,7 +44,7 @@ function App() {
         <Route path="/">
           <Route index element={<Login />}/>
           <Route path="forget-password" element={<ForgetPassword />} />
-          <Route path="rest-password" element={<RestPassword/>} />
+          <Route path="reset-password/:token" element={<RestPassword/>} />
         </Route>
         <Route path="/register" element={<Register />}>
           <Route index element={<IndexRegister />} />
