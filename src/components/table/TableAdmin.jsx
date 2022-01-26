@@ -164,6 +164,15 @@ const TableAdmin = ({
       return "";
     }
   };
+  // actions
+  const handleBlock = (uid, space) => {
+    if (uid) {
+      Swal.fire({
+        title: "Are you sure?",
+        html: `Do you want to <strong style="color : red">block</strong> space <b>${space}</b>?<br />😮`,
+      });
+    }
+  };
   const RenderActions = ({ object }) => {
     if (object?.space[0]?.type !== "a") {
       return (
@@ -177,13 +186,16 @@ const TableAdmin = ({
             }}
           />
           {object?.space[0]?.status === "active" && (
-            <Icon icon="grommet-icons:unlock" color="green" />
+            <Icon
+              icon="grommet-icons:unlock"
+              color="green"
+              onClick={() =>
+                handleBlock(object?.space[0]?._id, object?.space[0]?.space_name)
+              }
+            />
           )}
           {object?.space[0]?.status !== "active" && (
-            <Icon
-              icon="grommet-icons:lock"
-              color={object.status !== "active" ? "red" : ""}
-            />
+            <Icon icon="grommet-icons:lock" color="red" />
           )}
         </>
       );
