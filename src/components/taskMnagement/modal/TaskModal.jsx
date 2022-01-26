@@ -190,7 +190,7 @@ function TaskModal(props) {
                         onChange={(value) => {
                           setStartTime(value);
                         }}
-                        // value={value}
+                      // value={value}
                       />
                     </Col>
                   </Row>
