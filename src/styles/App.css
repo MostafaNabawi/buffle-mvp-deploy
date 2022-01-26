@@ -748,7 +748,7 @@ div.check-box > input {
   padding: 10px !important;
 }
 .important-today-card-body {
-  height: 310px !important ;
+  height: 301px !important ;
   overflow-x: hidden !important;
   overflow-y: auto;
   padding: 10px !important;
@@ -799,4 +799,8 @@ div.check-box > input {
   height: 233px !important;
   overflow-y: auto;
   overflow-x: hidden;
+}
+.notifyTime{
+  color: #707eae !important;
+  font-size: 11px !important;
 }

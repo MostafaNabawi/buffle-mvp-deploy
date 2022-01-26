@@ -59,7 +59,7 @@ const UserLogin = () => {
   const handleLogin = async (event) => {
     event.preventDefault();
     if (inputs.email === "" || inputs.password === "") {
-      addToast("Email and Password are required!", {
+      addToast("Email and Password are required!👀", {
         appearance: "warning",
         autoDismiss: 4000,
       });
@@ -84,7 +84,7 @@ const UserLogin = () => {
     }
     if (req.status === 200) {
       if (req.data.type === 0) {
-        addToast(req.data.msg, {
+        addToast(`${req.data.msg}⛔`, {
           appearance: "warning",
           autoDismiss: 8000,
         });
@@ -252,7 +252,7 @@ const UserLogin = () => {
                     label="Check me out"
                     disabled={loading}
                   />
-                  <Link className={`${style.forgetPassLink}`} to="">
+                  <Link className={`${style.forgetPassLink}`} to="/forget-password">
                     Forgot password?
                   </Link>
                 </Form.Group>

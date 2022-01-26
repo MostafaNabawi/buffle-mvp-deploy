@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Card from "../card/Card";
-import CardHeader from "./../card/CardHeader";
 import style from "./style.module.css";
+import Card from "./../card/Card";
+import CardHeader from "./../card/CardHeader";
 import CardBody from "./../card/CardBody";
 import PersonSelectorDropDown from "./partials/PersonSelectorDropDown";
 import { Button, Form, Row } from "react-bootstrap";
@@ -30,7 +30,8 @@ function Event() {
   };
 
   return (
-    <>
+    <Card className="event_card">
+      <CardHeader title="BD" />
       <CardBody className={style.card_body}>
         <div className={style.person_selector}>
           <span>You are </span>
@@ -106,7 +107,7 @@ function Event() {
           </>
         }
       />
-    </>
+    </Card>
   );
 }
 
