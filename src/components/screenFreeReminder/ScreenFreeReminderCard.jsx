@@ -167,9 +167,15 @@ function ScreenFreeReminderCard() {
         getData()
         addToast("Error Please Try Again!", { autoDismiss: true, appearance: 'error' });
         return false
+      }else{
+        if(!isShow){
+          localStorage.setItem("screen","on")
+        }else{
+          localStorage.removeItem("screen")
+        }
+        setChangeMute(false)
+        setIsShow(!isShow)
       }
-      setChangeMute(false)
-      setIsShow(!isShow)
     })
   }
   //
