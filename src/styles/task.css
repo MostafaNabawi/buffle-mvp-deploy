@@ -349,3 +349,11 @@ div.task-check-box > input {
 .important-today-date-picker:hover .react-date-picker__inputGroup__divider {
   color: white !important;
 }
+.react-datepicker__input-container > input {
+  width: 90px;
+  height: 35px;
+  border-color: hsl(0, 0%, 80%);
+}
+.react-datepicker-wrapper {
+  width: 10% !important;
+}

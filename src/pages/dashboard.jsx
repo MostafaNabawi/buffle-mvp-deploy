@@ -2,6 +2,8 @@ import { React, useEffect, useState } from "react";
 import { Row, Col, Image, Form, Button, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 import TimePicker from "react-time-picker";
 import ProgressBar from "../components/common/progressBar/ProgressBar";
 import TaskManagerPreogressBar from "../components/common/progressBar/TaskManagerProgress";
@@ -14,7 +16,7 @@ import ImpotentToDayCard from "./../components/impotentToDay/ImpotentToDayCard";
 import BreakplanFrom from "../components/breakplan/BreakplanForm";
 import Modal from "../components/modal/modal";
 import { nextBreakTimeValidation, timeDifference } from "../config/utils";
-import { addNextBreak, createTask, deleteNextBreak, getNextBreak, getDashboardTask, getTask } from "../api";
+import { addNextBreak, createTask, deleteNextBreak, getNextBreak, getDashboardTask, updateDhashboardTask, getTaskById, deleteMultiTask } from "../api";
 import { getaAllBreackPlan } from "../api/breackPlan";
 import { PulseLoader } from "react-spinners";
 import { useToasts } from "react-toast-notifications";
@@ -24,10 +26,13 @@ import { API_URL } from "../config";
 import Countdown from "react-countdown";
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import moment from 'moment';
 
 const Dashboard = () => {
+  const MySwal = withReactContent(Swal)
   const currentUser = JSON.parse(localStorage.getItem("user"));
   const [timeFormat, setTimeFormat] = useState(false);
+  const [updateTimeFormat, setUpdateTimeFormat] = useState('');
   // show form for breack plan
   const [BreakPlanForm, setBreakPlanFrom] = useState(false);
   const [breakJoinOrSagest, setBreakJoinOrSagest] = useState(false);
@@ -43,7 +48,7 @@ const Dashboard = () => {
     setTaskName('');
     setDuration('');
     setError('');
-    setTaskError('')
+    setTaskError('');
   };
   // Data for Breack plan form
   const [timeData, setTimeData] = useState([]);
@@ -55,6 +60,7 @@ const Dashboard = () => {
   const [vacationTime, setVacationTime] = useState(false);
   const [nextBreak, setNextBreak] = useState(false);
   const [taskManager, setTaskManager] = useState(false);
+  const [taskManagerUpdate, setTaskManagerUpdate] = useState(false);
   // Next Break states
   const [nextBreakTime, setNextBreakTime] = useState({
     startDate: "",
@@ -73,14 +79,20 @@ const Dashboard = () => {
   const [vacationLoader, setVacationLoader] = useState(false)
   // create task
   const [duration, setDuration] = useState('');
+  const [updateDuration, setUpdateDuration] = useState('');
   const [taskName, setTaskName] = useState({ name: "", });
+  const [updateTaskName, setUpdateTaskName] = useState({ name: "", });
   const [showSkleton, setShowSkleton] = useState(false);
   const [loading, setloading] = useState(false);
   const [taskError, setTaskError] = useState("");
+  const [taskUpdateError, setTaskUpdatekError] = useState("");
+  const [errorUpdate, setErrorUpdate] = useState("");
   const [error, setError] = useState("");
   const [taskData, setTaskData] = useState([]);
   const [taskReload, setTaskReload] = useState(false);
-
+  const [checkId, setCheckedId] = useState([]);
+  const [oldTaskName, setOldTaskName] = useState('');
+  const [oldTaskTime, setOldTaskTime] = useState('');
   // next break action
   const handleNextBreakOperation = async () => {
     if (nextBreakDateInput.length === 0) {
@@ -153,11 +165,11 @@ const Dashboard = () => {
       }).then(async (res) => {
         if (res.status === 200) {
           const { payload } = await res.json()
-              if(payload){
-                setVacationData(payload)
-              }else{
-                setVacationData("noVacation")
-              }
+          if (payload) {
+            setVacationData(payload)
+          } else {
+            setVacationData("noVacation")
+          }
         }
       })
     } catch (err) {
@@ -198,18 +210,21 @@ const Dashboard = () => {
       return true;
     }
   }
-  // create new task
-  const handleCreateTask = async () => {
-    validateTaskName(taskName.name)
-    if (!duration) {
-      setError("Duration time is required!");
+  const validateTaskTime = (value) => {
+    if (!value) {
+      setError("Task duration is required!");
       return false;
     }
-
     else {
       setError("");
-      setloading(true);
+      return true;
+    }
+  }
+  // create new task
+  const handleCreateTask = async () => {
 
+    if (validateTaskName(taskName.name) && validateTaskTime(duration)) {
+      setloading(true);
       const createT = await createTask(taskName, 1, duration, true, "stop");
       if (createT.status === 200) {
         setTaskReload(true)
@@ -240,15 +255,162 @@ const Dashboard = () => {
       setModalShow(false);
       setTaskReload(false);
       return true;
+
     }
   };
   // get tasks
   async function getTask() {
+    setShowSkleton(true);
     const req = await getDashboardTask();
     if (req.data.length > 0) {
       setTaskData(req.data);
+      setShowSkleton(false);
     } else {
       setTaskData([]);
+      setShowSkleton(false);
+    }
+  }
+  const handleCheck = (e) => {
+    if (e.target.checked) {
+      setCheckedId([...checkId, e.target.id])
+    }
+    else {
+      const newArr = checkId.filter(i => i !== e.target.id)
+      setCheckedId(newArr)
+    }
+  }
+  // delete selected task or tasks
+  const handleDelete = async () => {
+    if (checkId.length > 0) {
+      MySwal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!',
+        reverseButtons: true,
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            const deleteT = await deleteMultiTask(checkId);
+
+            if (deleteT.status === 200) {
+              setTaskReload(true);
+              Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success',
+              )
+              handleClose();
+              setTaskReload(false);
+            } else {
+              addToast('Error: Please Try Again!.', {
+                appearance: 'error',
+                autoDismiss: true,
+              })
+              handleClose();
+              setTaskReload(false);
+            }
+          } catch (error) {
+            addToast('Error: Please Try Again!.', {
+              appearance: 'error',
+              autoDismiss: true,
+            })
+            handleClose();
+            setTaskReload(false);
+          }
+        }
+      })
+    }
+    else {
+      Swal.fire('Please select an item delete!')
+    }
+  }
+  // validate update form
+  const validateTaskUpdateName = (value) => {
+    if (!value) {
+      setTaskUpdatekError("Task name is required!");
+      return false;
+    }
+    else {
+      setTaskUpdatekError("");
+      return true;
+    }
+  }
+  const validateTaskUpdateTime = (value) => {
+    if (!value) {
+      setErrorUpdate("Task duration is required!");
+      return false;
+    }
+    else {
+      setErrorUpdate("");
+      return true;
+    }
+  }
+  // update slected task (only single task)
+  const updateSelectedTask = async () => {
+    if (validateTaskUpdateName(updateTaskName) && validateTaskUpdateTime(updateDuration)) {
+      setloading(true);
+      const updateTask = await updateDhashboardTask(checkId[0], updateTaskName, updateDuration);
+      if (updateTask.status === 200) {
+        setTaskReload(true);
+        setCheckedId([]);
+        addToast("Updated susseccfully", {
+          autoDismiss: true,
+          appearance: "success",
+        });
+        setloading(false);
+        setUpdateTimeFormat(false);
+        setModalShow(false);
+      } else {
+        addToast("Error Please Try Again!", {
+          autoDismiss: false,
+          appearance: "error",
+        });
+        setCheckedId([]);
+        setloading(false);
+        setUpdateTimeFormat(false)
+        setModalShow(false);
+        setTaskReload(false);
+        return true;
+      }
+      setCheckedId([]);
+      setloading(false);
+      setUpdateDuration("");
+      setUpdateTaskName('');
+      setUpdateTimeFormat(false)
+      setModalShow(false);
+      setTaskReload(false);
+      return true;
+
+    }
+  }
+  // get data according to selected item for edit
+  const handleUpdateTask = async () => {
+
+    if (checkId.length === 1) {
+      const oldData = await getTaskById(checkId[0]);
+      setOldTaskName(oldData.data.name);
+      setOldTaskTime(oldData.data.task_duration);
+      setUpdateDuration(oldData.data.task_duration);
+      setUpdateTaskName(oldData.data.name);
+      if ((oldData.data.task_duration.split(':')[0] == '00')) {
+        setUpdateTimeFormat('min');
+      }
+      setModalShow(true);
+      setNextBreak(false);
+      setVacationTime(false);
+      setTaskManager(false);
+      setTaskManagerUpdate(true);
+      setSizeModal("md");
+      setTitleModa("Update selected Task");
+    }
+    else if (checkId.length > 1) {
+      Swal.fire('You can not update more than one item at the same time!')
+    }
+    else {
+      Swal.fire('Please select an item for edit!')
     }
   }
   // effects
@@ -332,6 +494,7 @@ const Dashboard = () => {
                     setVacationTime(false);
                     setNextBreak(true);
                     setTaskManager(false)
+                    setTaskManagerUpdate(false)
                     setSizeModal("md");
                     setTitleModa("When is your next break?");
                   }}
@@ -364,6 +527,7 @@ const Dashboard = () => {
                     setNextBreak(false);
                     setVacationTime(true);
                     setTaskManager(false);
+                    setTaskManagerUpdate(false);
                     setSizeModal("md");
                     setTitleModa("Add New Vacation Time");
                   }}
@@ -375,7 +539,7 @@ const Dashboard = () => {
             <div className="mt-3">
               <span className="vacation-day">
                 {
-                  vacationData==="noVacation"?<span className="vacation-until">Set your vacation time</span> :vacationData ?
+                  vacationData === "noVacation" ? <span className="vacation-until">Set your vacation time</span> : vacationData ?
                     <Countdown
                       date={vacationData.date}
                       renderer={(props) => (
@@ -388,7 +552,7 @@ const Dashboard = () => {
                         </>
                       )}
                       onComplete={() => {
-                        if(vacationData !="noVacation"){
+                        if (vacationData != "noVacation") {
                           addToast("Today in your vacation Time", {
                             appearance: "info",
                           })
@@ -444,6 +608,7 @@ const Dashboard = () => {
                       setModalShow(true);
                       setNextBreak(false);
                       setVacationTime(false);
+                      setTaskManagerUpdate(false);
                       setTaskManager(true);
                       setSizeModal("md");
                       setTitleModa("Add New Task");
@@ -459,13 +624,13 @@ const Dashboard = () => {
                     <NavDropdown.Item className="reminderNavItem taskManagerNavItem">
                       <i
                         className="delete"
-                        onClick={() => console.log("delete")}
+                        onClick={handleDelete}
                       >
                         <Icon icon="fluent:delete-24-filled" /> Delete
                       </i>
                     </NavDropdown.Item>
                     <NavDropdown.Item className="reminderNavItem taskManagerNavItem">
-                      <i className="edit" onClick={() => console.log("edit")}>
+                      <i className="edit" onClick={handleUpdateTask}>
                         <Icon icon="ant-design:edit-filled" /> Edit
                       </i>
                     </NavDropdown.Item>
@@ -474,14 +639,16 @@ const Dashboard = () => {
               }
             />
             <Row className="dashboard-task-manager-row">
-              {taskData.map((t) => (
+              {showSkleton ? (<Skeleton count={9} />) : taskData.length > 0 ? taskData.map((t) => (
                 <>
                   <Row className="task-manager-body pt-0 mt-1 mb-1" key={t._id}>
                     <Col xl="8">
                       <Row className="pl-5">
                         <Col xl="1">
                           <Form.Group controlId="formBasicCheckbox">
-                            <Form.Check className="check-box " type="checkbox" />
+                            <Form.Check className="check-box " type="checkbox" id={t._id}
+                              onChange={handleCheck}
+                            />
                           </Form.Group>
                         </Col>
                         <Col xl="11" className="task-manager-text">
@@ -490,12 +657,12 @@ const Dashboard = () => {
                       </Row>
                     </Col>
                     <Col xl="4">
-                      <TaskManagerPreogressBar duration={t.task_duration} />
+                      <TaskManagerPreogressBar {...t} />
                     </Col>
                   </Row>
                   <div className="devidre"></div>
                 </>
-              ))}
+              )) : <span >No task for today</span>}
             </Row>
           </Card>
         </Col>
@@ -742,6 +909,62 @@ const Dashboard = () => {
                 </Col>
               </>
             )}
+            {taskManagerUpdate && (
+              <>
+                <Col md={12}>
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Task name </Form.Label>
+                    <Form.Control type="text" className={taskError.length > 0 ? "red-border-input" : "no-border-input"}
+                      name="name" onChange={(e) => {
+                        setUpdateTaskName({ name: e.target.value })
+                      }}
+                      defaultValue={oldTaskName}
+                    />
+                    {taskUpdateError ? (
+                      <div className="invalid-feedback d-block">{taskUpdateError}</div>
+                    ) : null}
+                  </Form.Group>
+
+                </Col>
+                <Col md={12}>
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Row>
+                      <Col xl="4">
+                        <Form.Label>Time Format </Form.Label>
+                        <Form.Select
+                          onChange={(e) => setUpdateTimeFormat(e.target.value)}
+                          className="selectTime"
+                          aria-label="Default select example"
+                        >
+                          <option value="houre" selected={oldTaskTime.split(':')[0] != '00'}>Hour</option>
+                          <option value="min" selected={oldTaskTime.split(':')[0] == '00'}>Minute</option>
+                        </Form.Select>
+                      </Col>
+                      <Col xl="8">
+                        <Form.Label>Time</Form.Label>
+                        <TimePicker
+                          className={`form-control taskManagerTime ${error.length > 0 ? "red-border-input" : "no-border-input"
+                            }`}
+                          clearIcon
+                          closeClock
+                          format={
+                            oldTaskTime.split(':')[0] == '00' && updateTimeFormat === 'min' ?
+                              "mm:ss" : oldTaskTime.split(':')[0] != '00' && updateTimeFormat === 'min' ? "mm:ss" : "hh:mm:ss"
+                          }
+                          onChange={(value) => {
+                            setUpdateDuration(value)
+                          }}
+                          value={oldTaskTime}
+                        />
+                        {errorUpdate ? (
+                          <div className="invalid-feedback d-block">{errorUpdate}</div>
+                        ) : null}
+                      </Col>
+                    </Row>
+                  </Form.Group>
+                </Col>
+              </>
+            )}
           </Row>
         }
         footer={
@@ -781,6 +1004,11 @@ const Dashboard = () => {
             {taskManager && (
               <Button variant="primary" onClick={handleCreateTask}>
                 {loading && duration.length > 0 ? <BeatLoader /> : " Create New Task"}
+              </Button>
+            )}
+            {taskManagerUpdate && (
+              <Button variant="primary" onClick={updateSelectedTask}>
+                {loading && duration.length > 0 ? <BeatLoader /> : " Update"}
               </Button>
             )}
           </>

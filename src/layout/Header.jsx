@@ -28,10 +28,12 @@ const Header = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [du_time, setDu_time] = useState(0);
+  const [defaultTime, setDefault] = useState(0)
   const [dis_time, setDis_time] = useState(0);
   const [start, setStart] = useState(true);
   const [showUserRoute, setShowUserRoute] = useState(false);
   const [webData, setWebData] = useState("");
+
   const handleLogout = async () => {
     const req = await logout();
     if (req.status === 200) {
@@ -44,6 +46,7 @@ const Header = () => {
     const time =
       arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000;
     setDu_time(time);
+
   };
   const handleDisplayTime = (val) => {
     const arr = val.split(":");
@@ -204,6 +207,8 @@ const Header = () => {
       const { payload } = await req.json();
       if (payload) {
         if (payload.mute) {
+          localStorage.setItem("screen", "on")
+          setDefault(payload.duration)
           handleDurationTime(payload.duration);
           handleDisplayTime(payload.display);
         }
@@ -246,29 +251,36 @@ const Header = () => {
       }
     }
   }, [webData]);
+
   return (
     <>
       <Col className="col-12 header-name text-capitalize">
         Hi {userData?.first_name}
       </Col>
-      {du_time > 0 && start && (
+      {du_time > 0 && start  && (
         <Countdown
           date={Date.now() + du_time}
+          onTick={(e) => {
+            setDu_time(e.total)
+          }}
           onComplete={() => {
-            setStart(false);
-            const timeLock = new Date();
-            localStorage.setItem(
-              "loackTime",
-              timeLock.getHours() +
-              ":" +
-              timeLock.getMinutes() +
-              ":" +
-              timeLock.getSeconds()
-            );
-          }}
-          renderer={() => {
-            return "";
-          }}
+            handleDurationTime(defaultTime)
+            if (localStorage.getItem("screen")) {
+              setStart(false);
+              const timeLock = new Date();
+              localStorage.setItem(
+                "loackTime",
+                timeLock.getHours() +
+                ":" +
+                timeLock.getMinutes() +
+                ":" +
+                timeLock.getSeconds()
+              );
+            }
+                }}
+        renderer={() => {
+          return "";
+        }}
         />
       )}
 
@@ -277,7 +289,7 @@ const Header = () => {
         className={`lockScreen text-center ${!start ? "" : "lockScreenHide"}`}
       >
         <h1>Screen Lock For</h1>
-        {du_time > 0 && !start && (
+        {du_time > 0 && !start && localStorage.getItem('screen') && (
           <Countdown
             date={Date.now() + dis_time}
             onComplete={() => {

@@ -20,7 +20,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import BeatLoader from "react-spinners/BeatLoader";
 // paiman changes
 import { PROJECT_TYPE } from "../../data/types";
-const ProjectManagement = () => {
+const ProjectManagement = ({ value }) => {
   const { addToast } = useToasts();
   const [items, setItems] = useState([]);
   const [projects, setProjects] = useState([]);
@@ -73,7 +73,9 @@ const ProjectManagement = () => {
   useEffect(() => {
     request();
   }, []);
-
+  useEffect(() => {
+    request();
+  }, [value]);
   useEffect(() => {
     request();
     setNewProject(false);
@@ -89,12 +91,13 @@ const ProjectManagement = () => {
         });
 
         setNewProject(true);
-        setInputTask("");
+        setInputTask({ name: '', p_id: '' });
       } else {
         addToast("Error Please Try Again!", {
           autoDismiss: false,
           appearance: "error",
         });
+        setInputTask({ name: '', p_id: '' });
       }
     }
   };
@@ -296,6 +299,7 @@ const ProjectManagement = () => {
                           setInputTask({ name: e.target.value, p_id: s.status })
                         }
                         onKeyDown={handleKeyDown}
+                        value={inputTask.name}
                       />
                     </Form.Group>
                   </div>

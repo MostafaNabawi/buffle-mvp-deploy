@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import Login from "./pages/login";
 import ForgetPassword from "./components/user/forgetPassword/indes";
 import RestPassword from "./components/user/restPassword";
+import InviteRegister from "./components/user/invite-register/inviteRegister";
 import Register from "./pages/register";
 import IndexRegister from "./components/user/register/index";
 import CompanyRegister from "./components/user/register/Company";
@@ -25,6 +26,8 @@ import { useEffect, useState } from "react";
 import UserListAdmin from "./components/user/userList/UserListAdmin";
 
 function App() {
+  //
+  //
   const [addUserManagment, setAddUserManagment] = useState({
     render: false,
     type: "",
@@ -41,11 +44,14 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        {/* <Route path="/" element={<Login />} /> */}
         <Route path="/">
           <Route index element={<Login />} />
           <Route path="forget-password" element={<ForgetPassword />} />
           <Route path="reset-password/:token" element={<RestPassword />} />
+          <Route
+            path="register/:campanyName/:companyId"
+            element={<InviteRegister />}
+          />
         </Route>
         <Route path="/register" element={<Register />}>
           <Route index element={<IndexRegister />} />
@@ -64,7 +70,9 @@ function App() {
             <Route path="event/expenses" element={<Expenses />} />
           </Route>
           <Route path="profile" element={<Profile />} />
-          <Route path="setting" element={<Setting />} />
+          {addUserManagment.render && (
+            <Route path="setting" element={<Setting />} />
+          )}
           {addUserManagment.render && (
             <Route
               path="user-management"
