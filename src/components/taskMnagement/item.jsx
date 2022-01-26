@@ -4,7 +4,7 @@ import { Form } from "react-bootstrap";
 import TaskModal from "./modal/TaskModal";
 
 const Item = (props) => {
-  const { item, index, moveItem, status, PTYPE } = props;
+  const { item, index, moveItem, status, PTYPE, handleGet } = props;
   const ref = useRef(null);
   const [, drop] = useDrop({
     accept: PTYPE,
@@ -65,6 +65,7 @@ const Item = (props) => {
         className="create-project-modal"
         title={item.content}
         {...props}
+        handleCheck={handleGet}
       />
     </Fragment>
   );

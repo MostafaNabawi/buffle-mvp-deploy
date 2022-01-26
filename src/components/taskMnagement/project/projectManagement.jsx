@@ -89,12 +89,13 @@ const ProjectManagement = () => {
         });
 
         setNewProject(true);
-        setInputTask("");
+        setInputTask({ name: '', p_id: '' });
       } else {
         addToast("Error Please Try Again!", {
           autoDismiss: false,
           appearance: "error",
         });
+        setInputTask({ name: '', p_id: '' });
       }
     }
   };
@@ -296,6 +297,7 @@ const ProjectManagement = () => {
                           setInputTask({ name: e.target.value, p_id: s.status })
                         }
                         onKeyDown={handleKeyDown}
+                        value={inputTask.name}
                       />
                     </Form.Group>
                   </div>

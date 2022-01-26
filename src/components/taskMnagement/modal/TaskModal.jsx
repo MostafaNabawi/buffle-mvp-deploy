@@ -14,7 +14,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment';
 
 function TaskModal(props) {
-  const { handleClose, title, className, item } = props;
+  const { handleClose, title, className, item, handleCheck } = props;
   const { addToast } = useToasts();
   const MySwal = withReactContent(Swal)
   const [taskTitle, setTaskTitle] = useState(item.content);
@@ -125,7 +125,7 @@ function TaskModal(props) {
         <Form>
           <Modal.Header className={style.modal_header}>
             <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
-            <Project {...props} handleClick={handleClick} value={oldValue} project={projects} />
+            <Project {...props} handleClick={handleClick} value={oldValue} project={projects} handleSetProjct={handleCheck} />
             {/* <RepeatTask /> */}
             <button type="button" onClick={handleDelete}>
               <Icon icon="akar-icons:trash-can" />

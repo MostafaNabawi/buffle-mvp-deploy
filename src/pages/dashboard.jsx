@@ -165,11 +165,11 @@ const Dashboard = () => {
       }).then(async (res) => {
         if (res.status === 200) {
           const { payload } = await res.json()
-              if(payload){
-                setVacationData(payload)
-              }else{
-                setVacationData("noVacation")
-              }
+          if (payload) {
+            setVacationData(payload)
+          } else {
+            setVacationData("noVacation")
+          }
         }
       })
     } catch (err) {
@@ -536,7 +536,7 @@ const Dashboard = () => {
             <div className="mt-3">
               <span className="vacation-day">
                 {
-                  vacationData==="noVacation"?<span className="vacation-until">Set your vacation time</span> :vacationData ?
+                  vacationData === "noVacation" ? <span className="vacation-until">Set your vacation time</span> : vacationData ?
                     <Countdown
                       date={vacationData.date}
                       renderer={(props) => (
@@ -549,7 +549,7 @@ const Dashboard = () => {
                         </>
                       )}
                       onComplete={() => {
-                        if(vacationData !="noVacation"){
+                        if (vacationData != "noVacation") {
                           addToast("Today in your vacation Time", {
                             appearance: "info",
                           })
