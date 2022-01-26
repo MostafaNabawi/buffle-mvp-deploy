@@ -199,7 +199,7 @@ button.btn-primary {
 }
 .showTime {
   position: absolute !important;
-  z-index: 9999 !important;
+  z-index: 100 !important;
   color: black !important;
   margin-left: 6% !important;
 }
@@ -748,7 +748,7 @@ div.check-box > input {
   padding: 10px !important;
 }
 .important-today-card-body {
-  height: 310px !important ;
+  height: 301px !important ;
   overflow-x: hidden !important;
   overflow-y: auto;
   padding: 10px !important;

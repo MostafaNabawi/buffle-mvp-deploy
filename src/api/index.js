@@ -268,7 +268,23 @@ async function updateTask(data) {
   });
   return { status: req.status };
 }
-
+async function updateDhashboardTask(id, name, time) {
+  const req = await fetch(`${API_URL}/task/update-dashboard-task`, {
+    method: "PUT",
+    credentials: "include",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+    body: JSON.stringify({
+      taskId: id,
+      name: name.name,
+      time: time,
+    }),
+  });
+  return { status: req.status };
+}
 async function deleteTask(id) {
   const req = await fetch(`${API_URL}/task/delete?taskId=${id}`, {
     method: "DELETE",
@@ -281,7 +297,19 @@ async function deleteTask(id) {
   });
   return { status: req.status };
 }
-
+async function getTaskById(id) {
+  const req = await fetch(`${API_URL}/task/find-task-byId?id=${id}`, {
+    method: "GET",
+    credentials: "include",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+  });
+  const res = await req.json();
+  return { status: req.status, data: res.payload };
+}
 async function updateTaskDate(id, date) {
   const req = await fetch(`${API_URL}/task/update-task-date`, {
     method: "PUT",
@@ -418,4 +446,6 @@ export {
   getImportantToday,
   updateTaskImportant,
   getDashboardTask,
+  updateDhashboardTask,
+  getTaskById,
 };

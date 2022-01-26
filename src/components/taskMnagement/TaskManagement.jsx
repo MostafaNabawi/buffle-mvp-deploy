@@ -49,12 +49,13 @@ const TaskManagement = () => {
           appearance: "success",
         });
         setNewItems(true);
-        setInputTask("");
+        setInputTask({ name: '', p_id: '' });
       } else {
         addToast("Error Please Try Again!", {
           autoDismiss: false,
           appearance: "error",
         });
+        setInputTask({ name: '', p_id: '' });
       }
     }
   };
@@ -77,7 +78,9 @@ const TaskManagement = () => {
       return [...newItems];
     });
   };
-
+  const handleGet = (value) => {
+    console.log(value)
+  }
   return (
     <Row>
       {statuses.map((s) => {
@@ -101,6 +104,7 @@ const TaskManagement = () => {
                       status={s}
                       PTYPE={ITEM_TYPE}
                       className="task_item"
+                      handleGet={handleGet}
                     ></Item>
                   ))}
                 <div className="new-task-div">
@@ -112,6 +116,7 @@ const TaskManagement = () => {
                       aria-label="New Task"
                       onChange={(e) => setInputTask({ name: e.target.value })}
                       onKeyDown={handleKeyDownWeekDaysItem}
+                      value={inputTask.name}
                     />
                   </Form.Group>
                 </div>
