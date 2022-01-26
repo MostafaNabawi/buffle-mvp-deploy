@@ -341,10 +341,10 @@
 }
 
 .animat::after {
-  animation: after 3s linear infinite;
+  animation: after 1.5s linear infinite;
 }
 .animat::before {
-  animation: before 3s linear infinite;
+  animation: before 1.5s linear infinite;
 }
 
 @keyframes before {
@@ -354,7 +354,7 @@
     transform: rotateX(180deg) rotateY(180deg) rotateZ(0deg);
   }
   50% {
-    bottom: -58%;
+    bottom: -52%;
     transform: rotateX(180deg) rotateY(180deg) rotateZ(4deg);
   }
 }
@@ -365,7 +365,7 @@
     transform: rotateX(180deg);
   }
   50% {
-    bottom: -59%;
+    bottom: -58%;
     left: -10%;
     transform: rotateX(180deg) rotateZ(-4deg);
   }

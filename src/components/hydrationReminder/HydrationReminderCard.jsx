@@ -64,11 +64,6 @@ function HydrationReminderCard() {
   //useEffect function
   useEffect(() => {
     fetch();
-    console.log(window.id);
-    return () => {
-      clearInterval(id1.id);
-      clearInterval(id2.id);
-    };
   }, [isSubmit]);
 
   const changeTimeFormat = (val) => {
@@ -98,13 +93,10 @@ function HydrationReminderCard() {
     }
     if (interval !== null) {
       const id = setInterval(() => {
-        if (!mute) {
-          addToast("INFO", {
-            autoDismiss: true,
-            appearance: "info",
-          });
-          // play();
-        }
+        addToast("INFO", {
+          autoDismiss: true,
+          appearance: "info",
+        });
       }, interval);
       setId1({ id: id });
     }
@@ -125,6 +117,8 @@ function HydrationReminderCard() {
         setReminder(Math.round(reminder));
         setPrecent(--precent);
         setAnimation();
+      } else {
+        clearInterval(id1.id);
       }
     }, interval);
     setId2({ id: id });
@@ -134,7 +128,7 @@ function HydrationReminderCard() {
     setAnimatClass(true);
     setTimeout(() => {
       setAnimatClass(false);
-    }, 3000);
+    }, 1500);
   };
   const handleSubmit = async (e) => {
     const timer_1 = ` ${howLongTime.hours}:${howLongTime.minutes}:${howLongTime.seconds}`;
