@@ -9,7 +9,9 @@ import { updateTask, deleteTask } from '../../../api'
 import { useToasts } from 'react-toast-notifications';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import DatePicker from 'react-date-picker';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import moment from 'moment';
 
 function TaskModal(props) {
   const { handleClose, title, className, item } = props;
@@ -18,10 +20,9 @@ function TaskModal(props) {
   const [taskTitle, setTaskTitle] = useState(item.content);
   const [taskDesc, setTaskDesc] = useState(item.description);
   const [startTime, setStartTime] = useState(item.task_duration);
-  const [value, onChange] = useState(new Date());
-
+  const [startDate, setStartDate] = useState(new Date(item.date));
   const handleKeyDownTask = async () => {
-    const data = { id: item.tb_id, name: taskTitle, type: 0, date: item.date, description: taskDesc, taskTime: startTime }
+    const data = { id: item.tb_id, name: taskTitle, type: 0, date: startDate, description: taskDesc, taskTime: startTime }
 
     const updateT = await updateTask(data);
     if (updateT.status === 200) {
@@ -87,14 +88,7 @@ function TaskModal(props) {
       <Container>
         <Form>
           <Modal.Header className={style.modal_header}>
-            <Button className="important-today-date-picker" variant="outline-dark">
-              <DatePicker
-                calendarAriaLabel="Toggle calendar"
-                locale="us"
-                onChange={onChange}
-                value={value}
-              />
-            </Button>
+            <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
             <Project {...props} />
             {/* <RepeatTask /> */}
             <button type="button" onClick={handleDelete}>

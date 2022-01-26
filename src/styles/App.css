@@ -199,7 +199,7 @@ button.btn-primary {
 }
 .showTime {
   position: absolute !important;
-  z-index: 9999 !important;
+  z-index: 100 !important;
   color: black !important;
   margin-left: 6% !important;
 }
