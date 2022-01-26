@@ -1,3 +1,13 @@
-.haha {
-  animation: haha 2sec liner infinite;
+.selectFeel{
+  animation:identifier 2s linear infinite ;
+  transition: all 5s ease;
+ 
+}
+@keyframes identifier {
+  0%,100%{
+    transform: scale(0.9);
+  }
+  50%{
+    transform: scale(1.2);
+  }
 }

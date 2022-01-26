@@ -3,6 +3,7 @@ import SideBar from "./SideBar";
 import Header from "./Header";
 import { Outlet } from "react-router-dom";
 import { Container } from "react-bootstrap";
+
 function Layout() {
   return (
     <div className="wrapper">

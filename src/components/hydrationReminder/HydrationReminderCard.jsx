@@ -13,30 +13,26 @@ import { getWaterHydration, createWaterHydration } from "../../api";
 import { useToasts } from "react-toast-notifications";
 
 function HydrationReminderCard() {
-  const [delay, setDelay] = useState("");
+  const { addToast } = useToasts();
+  const [id1, setId1] = useState({ id: "" });
+  const [id2, setId2] = useState({ id: "" });
+  const [isSubmit, setIsSubmit] = useState(false);
+  const [dailyGoal, setDailyGoal] = useState(0);
+  const [precent, setPrecent] = useState(0);
+  const [liter, setLiter] = useState(0);
+  const [reminder, setReminder] = useState(0);
   const [mute, setMute] = useState(false);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const changeTimeFormat = (val) => {
-    const arr = val.split(":");
-    const hours = arr[0];
-    const minutes = arr[1];
-    const seconds = arr[2];
-    return { hours, minutes, seconds };
-  };
-
   const handleShow = async () => {
+    setShow(true);
     const req = await getWaterHydration();
-    if (req.status == 200 && req.data !== null) {
-      setDailyGoal(req.data.daily_goal);
+    if (req.data !== null) {
+      setLiter(req.data.daily_goal);
       setHowLongTime(changeTimeFormat(req.data.work));
       setReminderTime(changeTimeFormat(req.data.reminder));
     }
-    setShow(true);
   };
-
-  const { addToast } = useToasts();
-  const [dailyGoal, setDailyGoal] = useState("");
   const [howLongTime, setHowLongTime] = useState({
     hours: "",
     minutes: "",
@@ -47,7 +43,83 @@ function HydrationReminderCard() {
     minutes: "",
     seconds: "",
   });
-  const [startWorkingTime, setstarttWorkingTime] = useState("");
+
+  const fetch = async () => {
+    console.log("fetch");
+    const req = await getWaterHydration();
+    if (req.data !== null) {
+      console.log("fetched");
+      setPrecent(100);
+      setDailyGoal(req.data.daily_goal);
+      setLiter(req.data.daily_goal);
+      calculteWaterReminderPrecent(req.data.work);
+      ReminderNotifiction(req.data.reminder);
+    } else {
+      console.log("data-null");
+    }
+  };
+
+  //useEffect function
+  useEffect(() => {
+    console.log("useEffect");
+    fetch();
+  }, [isSubmit]);
+
+  const changeTimeFormat = (val) => {
+    const arr = val.split(":");
+    const hours = arr[0].trim();
+    const minutes = arr[1].trim();
+    const seconds = arr[2].trim();
+    return { hours, minutes, seconds };
+  };
+
+  const timeInMilliseconds = (time) => {
+    if (time !== undefined) {
+      const arr = time.split(":");
+      const milliseconds =
+        arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000;
+      return milliseconds;
+    } else {
+      return null;
+    }
+  };
+
+  // Reminder notifiction
+  const ReminderNotifiction = (time) => {
+    const interval = timeInMilliseconds(time);
+    console.log(interval, "Info-interval");
+    if (id1.id !== "") {
+      clearInterval(id1.id);
+    }
+    if (interval !== null) {
+      const id = setInterval(() => {
+        if (!mute) {
+          addToast("INFO", {
+            autoDismiss: true,
+            appearance: "info",
+          });
+        }
+      }, interval);
+      setId1({ id: id });
+    }
+  };
+
+  const calculteWaterReminderPrecent = (time) => {
+    const interval = timeInMilliseconds(time) / 100;
+    const reminder = dailyGoal / 100;
+    console.log(interval, "reminder-interval");
+    console.log(reminder, "reminder");
+    if (id2.id !== "") {
+      clearInterval(id2.id);
+    }
+    var val = 100;
+    const id = setInterval(() => {
+      if (val > 0) {
+        setPrecent(--val);
+      }
+    }, interval);
+    setId2({ id: id });
+  };
 
   const handleSubmit = async (e) => {
     const timer_1 = ` ${howLongTime.hours}:${howLongTime.minutes}:${howLongTime.seconds}`;
@@ -57,44 +129,23 @@ function HydrationReminderCard() {
       timer_1,
       timer_2,
     };
-    setDelay(reminderNotificationDelay(timer_2));
-    console.log(reminderNotificationDelay(timer_2));
-    const req = await createWaterHydration(data);
-    if (req.status == 200) {
-      addToast("Created Susseccfully+1", {
-        autoDismiss: true,
-        appearance: "success",
-      });
-      handleClose();
-      setHowLongTime("");
-      setHowLongTime("");
-      setReminderTime("");
-    } else {
-      addToast("Error Please Try Again!", {
-        autoDismiss: false,
-        appearance: "error",
-      });
+    if (dailyGoal > 0 && timer_1 !== "" && timer_2 !== "") {
+      const req = await createWaterHydration(data);
+      if (req.status == 200) {
+        addToast("Created Susseccfully", {
+          autoDismiss: true,
+          appearance: "success",
+        });
+        handleClose();
+        setIsSubmit(!isSubmit);
+      } else {
+        addToast("Error Please Try Again!", {
+          autoDismiss: false,
+          appearance: "error",
+        });
+      }
     }
-    console.log(req);
   };
-
-  useEffect(async () => {
-    const data = await getWaterHydration();
-    console.log(data, "useEffect");
-  }, []);
-
-  const reminderNotificationDelay = (val) => {
-    console.log(val);
-    const arr = val.split(":");
-    return arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000;
-  };
-
-  // setTimeout(() => {
-  //   addToast("Info", {
-  //     autoDismiss: true,
-  //     appearance: "info",
-  //   });
-  // }, delay);
 
   return (
     <>
@@ -129,14 +180,17 @@ function HydrationReminderCard() {
           }
         />
         <CardBody>
-          <WaterRepository data={dailyGoal} />
+          <WaterRepository
+            precent={precent}
+            liter={liter}
+            reminder={reminder}
+          />
         </CardBody>
       </Card>
       <Modal
         show={show}
         handleClose={handleClose}
-        title="Hydration Reminder
-        "
+        title="Hydration Reminder"
         body={
           <Row>
             <Col md={12}>

@@ -143,7 +143,7 @@ button.btn-primary {
 }
 .card-notify {
   width: 400px !important;
-  height:300px !important ;
+  height: 300px !important ;
   overflow-x: hidden !important;
   overflow-y: auto !important;
 }
@@ -735,15 +735,72 @@ div.check-box > input {
 }
 
 /* Login page */
-.notify-badge{
+.notify-badge {
   position: absolute !important;
   margin-top: -10px !important;
   /* margin-left: -15px !important; */
   z-index: 4444 !important;
 }
-.break-plan-card{
+.break-plan-card {
   height: 170px !important ;
   overflow-x: hidden !important;
   overflow-y: auto;
   padding: 10px !important;
+}
+.important-today-card-body {
+  height: 310px !important ;
+  overflow-x: hidden !important;
+  overflow-y: auto;
+  padding: 10px !important;
+}
+/* width */
+.break-plan-card::-webkit-scrollbar,
+.important-today-card-body::-webkit-scrollbar,
+.dashboard-task-manager-row::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track */
+.break-plan-card::-webkit-scrollbar,
+.important-today-card-body::-webkit-scrollbar,
+.dashboard-task-manager-row::-webkit-scrollbar {
+  box-shadow: inherit;
+  border-radius: 10px;
+}
+
+/* Handle */
+.break-plan-card::-webkit-scrollbar,
+.important-today-card-body::-webkit-scrollbar,
+.dashboard-task-manager-row::-webkit-scrollbar {
+  background: gainsboro;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+.break-plan-card::-webkit-scrollbar-thumb,
+.important-today-card-body::-webkit-scrollbar-thumb,
+.dashboard-task-manager-row::-webkit-scrollbar-thumb {
+  background: #a8a5a5;
+  border-radius: 10px;
+}
+.modal-sub-title {
+  font-size: 16px;
+}
+.clear-all {
+  color: #8286ff !important;
+}
+.paddingBottom {
+  padding-bottom: 15px !important;
+}
+.screen-remainder {
+  height: 61px !important;
+}
+.dashboard-task-manager-row {
+  height: 233px !important;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.notifyTime{
+  color: #707eae !important;
+  font-size: 11px !important;
 }

@@ -1,7 +1,7 @@
 ## Buffle MVP configuration:
 
 Complete Guide on how to setup your project.
-Are you ready?
+<b>Are</b> you ready?
 
 
 ## Available Scripts
@@ -71,6 +71,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-=======
 ## Envs and Keys
 
+=======
+## Envs and Keys:!
