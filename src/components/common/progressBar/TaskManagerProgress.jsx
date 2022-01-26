@@ -2,8 +2,11 @@ import { React, useEffect, useState } from "react";
 import { Row, Col, ProgressBar } from "react-bootstrap";
 import { Icon } from "@iconify/react";
 import style from "./style.module.css";
+import moment from 'moment';
 import Countdown from "react-countdown";
-const TaskManagerPreogressBar = ({ duration }) => {
+
+const TaskManagerPreogressBar = (props) => {
+  const { _id, name, date, spend_time, task_duration } = props;
   const [play, setPlay] = useState(true);
   const [data, setData] = useState(0);
   const handlePlay = () => {
@@ -12,11 +15,9 @@ const TaskManagerPreogressBar = ({ duration }) => {
       setPlay(!play);
     }
     if (!play) {
-      console.log('set to play')
-      // const newMeta = getTotalSeconds(range?.startDate, range?.endDate);
-      // setTotal(newMeta.total);
-      // setData(newMeta.passed * 1000);
-      // setPercentUI((100 / newMeta.total) * newMeta?.passed);
+      const seconds = moment.duration(task_duration).asSeconds();
+      console.log(seconds)
+
       setPlay(!play);
     }
   };
@@ -30,8 +31,9 @@ const TaskManagerPreogressBar = ({ duration }) => {
             icon="bi:clock-fill"
           />
           <ProgressBar
-            label={`${duration}`}
-            now={80}
+            label={task_duration}
+
+            now={50}
             className={style.progress}
           />
         </Col>
