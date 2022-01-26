@@ -8,7 +8,7 @@ import { createTask, getTask } from "../../api";
 import { ITEM_TYPE } from "./data/types";
 import moment from "moment";
 
-const TaskManagement = () => {
+const TaskManagement = ({ handleGet }) => {
   const { addToast } = useToasts();
   const [items, setItems] = useState([]);
   const [inputTask, setInputTask] = useState({ name: "", p_id: "" });
@@ -78,9 +78,7 @@ const TaskManagement = () => {
       return [...newItems];
     });
   };
-  const handleGet = (value) => {
-    console.log(value)
-  }
+
   return (
     <Row>
       {statuses.map((s) => {

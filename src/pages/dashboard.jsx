@@ -16,7 +16,7 @@ import ImpotentToDayCard from "./../components/impotentToDay/ImpotentToDayCard";
 import BreakplanFrom from "../components/breakplan/BreakplanForm";
 import Modal from "../components/modal/modal";
 import { nextBreakTimeValidation, timeDifference } from "../config/utils";
-import { addNextBreak, createTask, deleteNextBreak, getNextBreak, getDashboardTask, deleteTask, updateDhashboardTask, getTaskById } from "../api";
+import { addNextBreak, createTask, deleteNextBreak, getNextBreak, getDashboardTask, updateDhashboardTask, getTaskById, deleteMultiTask } from "../api";
 import { getaAllBreackPlan } from "../api/breackPlan";
 import { PulseLoader } from "react-spinners";
 import { useToasts } from "react-toast-notifications";
@@ -293,22 +293,24 @@ const Dashboard = () => {
       }).then(async (result) => {
         if (result.isConfirmed) {
           try {
-            const deleteT = await deleteTask();
-            // const filterData = data.filter((item) => item.id !== id)
-            // setData(filterData)
+            const deleteT = await deleteMultiTask(checkId);
+
             if (deleteT.status === 200) {
+              setTaskReload(true);
               Swal.fire(
                 'Deleted!',
                 'Your file has been deleted.',
                 'success',
               )
               handleClose();
+              setTaskReload(false);
             } else {
               addToast('Error: Please Try Again!.', {
                 appearance: 'error',
                 autoDismiss: true,
               })
               handleClose();
+              setTaskReload(false);
             }
           } catch (error) {
             addToast('Error: Please Try Again!.', {
@@ -316,6 +318,7 @@ const Dashboard = () => {
               autoDismiss: true,
             })
             handleClose();
+            setTaskReload(false);
           }
         }
       })
