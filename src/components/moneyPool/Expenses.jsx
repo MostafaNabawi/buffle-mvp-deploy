@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import style from "./style.module.css";
+import Card from "./../card/Card";
+import CardHeader from "./../card/CardHeader";
 import CardBody from "./../card/CardBody";
 import { Button, Tab, Tabs, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +9,7 @@ import Expense from "./partials/Expense";
 import MoneyGiven from "./partials/MoneyGiven";
 import InCome from "./partials/InCome";
 import { Icon } from "@iconify/react";
+
 const data = [
   { name: "Hassan", icon: <Icon icon="akar-icons:check" color={`#20ca7d`} /> },
   { name: "Ali", icon: <Icon icon="bi:x-lg" color={`#4922ff`} /> },
@@ -21,6 +24,8 @@ function Expenses() {
   };
 
   return (
+        <Card className="event_card">
+      <CardHeader title="BD" />
     <CardBody className={style.card_body}>
       <div>
         <Button onClick={handleBack}>
@@ -59,6 +64,7 @@ function Expenses() {
         </Form>
       </div>
     </CardBody>
+    </Card>
   );
 }
 
