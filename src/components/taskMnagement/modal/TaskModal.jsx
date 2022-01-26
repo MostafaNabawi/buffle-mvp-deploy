@@ -16,7 +16,6 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import moment from "moment";
 
 function TaskModal(props) {
   const { handleClose, title, className, item, handleCheck } = props;
