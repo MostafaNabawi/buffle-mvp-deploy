@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Form, Container, Col, Row, Button } from "react-bootstrap";
 // import DatePicker from "./DatePicker";
 import TimePicker from "react-time-picker";
 import Project from "./Project";
 import style from "./style.module.css";
 import { Icon } from "@iconify/react";
-import { updateTask, deleteTask } from '../../../api'
+import { updateTask, deleteTask, getProject, getProjectById } from '../../../api'
 import { useToasts } from 'react-toast-notifications';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
@@ -18,9 +18,12 @@ function TaskModal(props) {
   const { addToast } = useToasts();
   const MySwal = withReactContent(Swal)
   const [taskTitle, setTaskTitle] = useState(item.content);
+  const [projects, setProjects] = useState({ label: '', value: '' });
   const [taskDesc, setTaskDesc] = useState(item.description);
   const [startTime, setStartTime] = useState(item.task_duration);
   const [startDate, setStartDate] = useState(new Date(item.date));
+  const [projectId, setProjectId] = useState(item.p_id);
+  const [oldValue, setOldValue] = useState();
   const handleKeyDownTask = async () => {
     const data = { id: item.tb_id, name: taskTitle, type: 0, date: startDate, description: taskDesc, taskTime: startTime }
 
@@ -34,6 +37,39 @@ function TaskModal(props) {
       handleClose();
     }
   }
+  const handleClick = (value) => {
+    setProjectId(value);
+  }
+  async function request() {
+    // get project and format
+    const req = await getProject();
+    const formatP = req.data.map((i, n) => {
+      return {
+        label: i.name,
+        value: i._id,
+      };
+
+    });
+    setProjects(formatP);
+    const getP = await getProjectById(projectId);
+    if (getP.data !== null) {
+      const selected = { value: getP.data._id, label: getP.data.name }
+      setOldValue(selected);
+
+    }
+    else {
+      const selected = { value: 0, label: 'No Project' }
+      setOldValue(selected);
+    }
+  }
+
+  useEffect(() => {
+    request();
+  }, []);
+
+  useEffect(() => {
+    request();
+  }, [projectId]);
 
   const handleDelete = async () => {
 
@@ -89,7 +125,7 @@ function TaskModal(props) {
         <Form>
           <Modal.Header className={style.modal_header}>
             <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
-            <Project {...props} />
+            <Project {...props} handleClick={handleClick} value={oldValue} project={projects} />
             {/* <RepeatTask /> */}
             <button type="button" onClick={handleDelete}>
               <Icon icon="akar-icons:trash-can" />

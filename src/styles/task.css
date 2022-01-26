@@ -354,6 +354,6 @@ div.task-check-box > input {
   height: 35px;
   border-color: hsl(0, 0%, 80%);
 }
-.select-input-item-modal {
-  width: 50%;
+.react-datepicker-wrapper {
+  width: 10% !important;
 }
