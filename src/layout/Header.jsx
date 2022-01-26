@@ -442,10 +442,11 @@ const Header = () => {
                   User management
                 </NavDropdown.Item>
               )}
-
-              <NavDropdown.Item href="/dashboard/setting">
-                Setting
+               {showUserRoute && (
+                <NavDropdown.Item href="/dashboard/setting">
+                Settings
               </NavDropdown.Item>
+               )}
               <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
             </NavDropdown>
           </div>
