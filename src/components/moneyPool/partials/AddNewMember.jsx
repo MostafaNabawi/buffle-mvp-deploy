@@ -12,7 +12,9 @@ function AddNewMember() {
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
         email
       );
-    console.log("You clicked submit.", email, value);
+    if (value) {
+      console.log("You clicked submit.", email, value);
+    }
   }
 
   return (

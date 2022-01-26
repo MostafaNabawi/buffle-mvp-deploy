@@ -23,6 +23,7 @@ import Setting from "./pages/setting";
 import UserList from "./components/user/userList/UserList";
 import { useEffect, useState } from "react";
 import UserListAdmin from "./components/user/userList/UserListAdmin";
+
 function App() {
   const [addUserManagment, setAddUserManagment] = useState({
     render: false,
@@ -42,9 +43,9 @@ function App() {
       <Routes>
         {/* <Route path="/" element={<Login />} /> */}
         <Route path="/">
-          <Route index element={<Login />}/>
+          <Route index element={<Login />} />
           <Route path="forget-password" element={<ForgetPassword />} />
-          <Route path="reset-password/:token" element={<RestPassword/>} />
+          <Route path="reset-password/:token" element={<RestPassword />} />
         </Route>
         <Route path="/register" element={<Register />}>
           <Route index element={<IndexRegister />} />
