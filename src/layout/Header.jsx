@@ -283,9 +283,9 @@ const Header = () => {
             );
           }
           }
-        // renderer={() => {
-        //   return "";
-        // }}
+        renderer={() => {
+          return "";
+        }}
         />
       )}
 
