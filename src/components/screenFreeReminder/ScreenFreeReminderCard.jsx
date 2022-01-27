@@ -80,6 +80,11 @@ function ScreenFreeReminderCard() {
         },
       });
       const { payload } = await req.json();
+      if(payload.mute){
+        localStorage.setItem("screen", "on")
+      }else{
+        localStorage.setItem("screen", "off")
+      }
       if (payload) {
        if(payload.display !=''){
         timeFormate(payload.display,displayTime,setDisplayTime)
@@ -167,9 +172,15 @@ function ScreenFreeReminderCard() {
         getData()
         addToast("Error Please Try Again!", { autoDismiss: true, appearance: 'error' });
         return false
+      }else{
+        if(!isShow){
+          localStorage.setItem("screen","on")
+        }else{
+          localStorage.setItem("screen","off")
+        }
+        setChangeMute(false)
+        setIsShow(!isShow)
       }
-      setChangeMute(false)
-      setIsShow(!isShow)
     })
   }
   //

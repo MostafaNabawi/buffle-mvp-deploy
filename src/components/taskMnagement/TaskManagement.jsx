@@ -8,12 +8,12 @@ import { createTask, getTask } from "../../api";
 import { ITEM_TYPE } from "./data/types";
 import moment from "moment";
 
-const TaskManagement = () => {
+const TaskManagement = ({ handleGet }) => {
   const { addToast } = useToasts();
   const [items, setItems] = useState([]);
   const [inputTask, setInputTask] = useState({ name: "", p_id: "" });
   const [newItems, setNewItems] = useState(false);
-
+  const [id, setId] = useState('');
   async function request() {
     const data = await getTask();
     const format = data?.data?.map((i, n) => {
@@ -26,6 +26,7 @@ const TaskManagement = () => {
         date: i.date,
         p_id: i.projectId,
         start_time: i.start_time,
+        completed: i.status,
       };
     });
     setItems(format);
@@ -40,6 +41,16 @@ const TaskManagement = () => {
       setNewItems(false);
     }
   }, [newItems]);
+
+  useEffect(() => {
+    if (id) {
+      request();
+    }
+  }, [id]);
+
+  const handleChecked = (id) => {
+    setId(id);
+  }
   const handleKeyDownWeekDaysItem = async (event) => {
     if (event.key === "Enter") {
       const createT = await createTask(inputTask, 0, 0, false);
@@ -49,12 +60,13 @@ const TaskManagement = () => {
           appearance: "success",
         });
         setNewItems(true);
-        setInputTask("");
+        setInputTask({ name: '', p_id: '' });
       } else {
         addToast("Error Please Try Again!", {
           autoDismiss: false,
           appearance: "error",
         });
+        setInputTask({ name: '', p_id: '' });
       }
     }
   };
@@ -101,6 +113,8 @@ const TaskManagement = () => {
                       status={s}
                       PTYPE={ITEM_TYPE}
                       className="task_item"
+                      handleGet={handleGet}
+                      handleChecked={handleChecked}
                     ></Item>
                   ))}
                 <div className="new-task-div">
@@ -112,6 +126,7 @@ const TaskManagement = () => {
                       aria-label="New Task"
                       onChange={(e) => setInputTask({ name: e.target.value })}
                       onKeyDown={handleKeyDownWeekDaysItem}
+                      value={inputTask.name}
                     />
                   </Form.Group>
                 </div>

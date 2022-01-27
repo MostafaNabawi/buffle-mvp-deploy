@@ -28,10 +28,12 @@ const Header = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [du_time, setDu_time] = useState(0);
+  const [defaultTime, setDefault] = useState(0)
   const [dis_time, setDis_time] = useState(0);
   const [start, setStart] = useState(true);
   const [showUserRoute, setShowUserRoute] = useState(false);
   const [webData, setWebData] = useState("");
+
   const handleLogout = async () => {
     const req = await logout();
     if (req.status === 200) {
@@ -44,6 +46,7 @@ const Header = () => {
     const time =
       arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000;
     setDu_time(time);
+
   };
   const handleDisplayTime = (val) => {
     const arr = val.split(":");
@@ -63,7 +66,6 @@ const Header = () => {
         },
       }).then(async (res) => {
         const { payload } = await res.json();
-        console.log("payload...", payload);
         if (payload.length > 0) {
           setNotificatiion(payload);
           setLoading(false);
@@ -101,7 +103,6 @@ const Header = () => {
         fullName: user.first_name + " " + user.last_name,
       }),
     }).then(async (res) => {
-      console.log("Accept", res);
       if (res.status) {
         getNotification(true);
       }
@@ -128,7 +129,6 @@ const Header = () => {
   //
   const handleAcceptTime = async (id, userId, newTime, breakId, breakName) => {
     const el = document.getElementById(breakId);
-    console.log("brea el 2", el);
     const user = JSON.parse(localStorage.getItem("user"));
     await fetch(`${API_URL}/breakPlan/accept-time`, {
       method: "POST",
@@ -204,9 +204,21 @@ const Header = () => {
       const { payload } = await req.json();
       if (payload) {
         if (payload.mute) {
+          localStorage.setItem("screen", "on")
+          setDefault(payload.duration)
+          handleDurationTime(payload.duration);
+          handleDisplayTime(payload.display);
+        } else {
+          localStorage.setItem("screen", "of")
+          setDefault(payload.duration)
           handleDurationTime(payload.duration);
           handleDisplayTime(payload.display);
         }
+      } else {
+        localStorage.setItem("screen", "of")
+        setDefault("00:10:00")
+        handleDurationTime("00:10:00");
+        handleDisplayTime("00:01:00");
       }
     }
     countNotification();
@@ -223,7 +235,6 @@ const Header = () => {
         ioInstance.close();
       });
       ioInstance.on("notify", (data) => {
-        console.log("...", data);
         setWebData(data);
       });
 
@@ -246,6 +257,7 @@ const Header = () => {
       }
     }
   }, [webData]);
+
   return (
     <>
       <Col className="col-12 header-name text-capitalize">
@@ -254,7 +266,11 @@ const Header = () => {
       {du_time > 0 && start && (
         <Countdown
           date={Date.now() + du_time}
+          onTick={(e) => {
+            setDu_time(e.total)
+          }}
           onComplete={() => {
+            handleDurationTime(defaultTime)
             setStart(false);
             const timeLock = new Date();
             localStorage.setItem(
@@ -265,27 +281,41 @@ const Header = () => {
               ":" +
               timeLock.getSeconds()
             );
-          }}
-          renderer={() => {
-            return "";
-          }}
+          }
+          }
+        renderer={() => {
+          return "";
+        }}
         />
       )}
 
       <div
         id="lockScreenHide"
-        className={`lockScreen text-center ${!start ? "" : "lockScreenHide"}`}
+        className={`${localStorage.getItem("screen") === "on" ? "lockScreen" : ""} text-center ${!start ? "" : "lockScreenHide"}`}
       >
-        <h1>Screen Lock For</h1>
+        {localStorage.getItem("screen") === "on" && du_time > 0 && !start ?
+          <div className="screenDiv">
+            <h1>Screen Lock For</h1>
+            <Countdown
+              date={Date.now() + dis_time}
+              onComplete={() => {
+                setStart(true);
+              }}
+            // renderer={() => {
+            //   return ""
+            // }}
+            />
+          </div>
+          : ""}
         {du_time > 0 && !start && (
           <Countdown
             date={Date.now() + dis_time}
             onComplete={() => {
               setStart(true);
             }}
-          // renderer={() => {
-          //   return ""
-          // }}
+            renderer={() => {
+              return ""
+            }}
           />
         )}
       </div>
@@ -430,10 +460,11 @@ const Header = () => {
                   User management
                 </NavDropdown.Item>
               )}
-
-              <NavDropdown.Item href="/dashboard/setting">
-                Setting
-              </NavDropdown.Item>
+              {showUserRoute && (
+                <NavDropdown.Item href="/dashboard/setting">
+                  Settings
+                </NavDropdown.Item>
+              )}
               <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
             </NavDropdown>
           </div>
