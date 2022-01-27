@@ -20,6 +20,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useDispatch, useSelector } from "react-redux";
 import {setDu_time,setDefault,setDis_time} from "../store/screenReminderSclice"
+import moment from "moment";
 
 const Header = () => {
   //
@@ -29,12 +30,12 @@ const Header = () => {
   //
   const { addToast } = useToasts();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [userData, setUserData] = useState({});
   const [notification, setNotificatiion] = useState("");
   const [count, setCount] = useState(0);
   const [loadData, setLoadData] = useState(false);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
   const [start, setStart] = useState(true);
   const [showUserRoute, setShowUserRoute] = useState(false);
   const [webData, setWebData] = useState("");
@@ -332,7 +333,7 @@ const Header = () => {
 
       <Row className="mb-4">
         <Col className="col-6 text-secondary-dark header-thank mt-3">
-          Thank god it’s friday!
+          Thank god it’s {moment(Date.now()).format("dddd")}!
         </Col>
         <Col className="col-6 header-col-left">
           <div className="header-icon navy-blue text-center pt-2">
