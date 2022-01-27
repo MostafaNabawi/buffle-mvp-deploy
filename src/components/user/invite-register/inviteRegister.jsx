@@ -1,66 +1,31 @@
-import { React, useState, useEffect } from "react";
+import { React, useState } from "react";
 import { Row, Col, Image, Form, Button } from "react-bootstrap";
 import { Icon } from "@iconify/react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
 import style from "../style.module.css";
-import { signin, userStatus } from "../../../api";
 import PulseLoader from "react-spinners/PulseLoader";
 import { API_URL } from "../../../config";
 import { checkEmail } from "../../../config/utils";
-import Swal from "sweetalert2";
-import { useSearchParams } from "react-router-dom";
+
 const InviteRegister = () => {
+    
     const { addToast } = useToasts();
     const {campanyName,companyId}=useParams()
-    console.log("campany",campanyName,companyId)
     const [showPassword, setShowPassword] = useState(false);
     const [inputs, setInputs] = useState({
-        firstname: "",
+        firstName: "",
         lastName: "",
         email: "",
         password: "",
+        space_id:""
     });
     const [loading, setLoading] = useState(false);
-    const [searchParams, setSearchParams] = useSearchParams();
     const navigate = useNavigate();
-    // const { ok } = useParams();
-    const mutulLogin = async (email, pass) => {
-        setLoading(true);
-        const req = await signin({ email: email, password: pass });
-        if (req.status === 400) {
-            setLoading(false);
-            addToast("Email or Password  is invalid!", {
-                appearance: "error",
-                autoDismiss: 4000,
-            });
-            return;
-        }
-        if (req.status === 200) {
-            if (req.data.type === 0) {
-                addToast(req.data.msg, {
-                    appearance: "warning",
-                    autoDismiss: 8000,
-                });
-                setLoading(false);
-            }
-            if (req.data.type === 1) {
-                console.log(req.data);
-                localStorage.setItem("user", JSON.stringify(req.data.user));
-                localStorage.setItem("space", JSON.stringify(req?.data?.stype));
-                localStorage.removeItem("pp");
-                navigate("/dashboard");
-            }
-            if (req.data.type === 2) {
-                localStorage.setItem("user", JSON.stringify(req.data.user));
-                localStorage.setItem("space", JSON.stringify(req?.data?.stype));
-                localStorage.removeItem("pp");
-                navigate("/dashboard");
-            }
-        }
-    };
+
     const handleLogin = async (event) => {
         event.preventDefault();
+        const data={...inputs,['space_id']:companyId}
         if (inputs.email === "" || inputs.password === ""
             || inputs.firstname === "" || inputs.lastName === ""
         ) {
@@ -85,68 +50,32 @@ const InviteRegister = () => {
             return;
         }
         setLoading(true);
-        // try{
-        //     await fetch(`${API_URL}/auth/forget-password`,{
-        //         method: "POST",
-        //         credentials: "include",
-        //         headers: {
-        //           "Content-Type": "application/json",
-        //           "Access-Control-Allow-Credentials": true,
-        //         },
-        //         body: JSON.stringify({
-        //           email: submitEmail,
-        //         }),
-        //     }).then((res)=>{
-        //         if(res.status === 200){
-        //             setLoading(false)
-        //             setSendEmail(true)
-        //         }else{
-        //             addToast("Invalid Email!", {
-        //                 appearance: "error",
-        //                 autoDismiss: 4000,
-        //             });
-        //             setLoading(false)
-        //         }
-        //     })
-        // }catch{
-        //     setLoading(false);
-        //     console.log("Server Error")
-        // }
-        // register
-    };
-    useEffect(() => {
-        let mount = true;
-        async function getStatus() {
-            const req = await userStatus();
-            if (req.status === 200) {
-                navigate("/dashboard");
-            } else {
-                localStorage.removeItem("user");
-            }
-        }
-        if (mount) {
-            const user_storage = JSON.parse(localStorage.getItem("user"));
-            if (user_storage) {
-                getStatus();
-            }
-        }
-        if (searchParams.get("new") === "true") {
-            console.log("login", searchParams.get("email"));
-            mutulLogin(searchParams.get("email"), localStorage.getItem("pp"));
-        }
-        if (searchParams.get("company") === "true") {
-            addToast(
-                "Your company registered when your company approved by Buffle we will send you email!",
-                {
-                    appearance: "success",
+        try{
+            await fetch(`${API_URL}/invite/signup`,{
+                method: "POST",
+                credentials: "include",
+                headers: {
+                  "Content-Type": "application/json",
+                  "Access-Control-Allow-Credentials": true,
+                },
+                body: JSON.stringify(data),
+            }).then((res)=>{
+                if(res.status === 200){
+                    localStorage.setItem("pp", inputs.password);
+                    navigate(`/?new=true&email=${inputs.email}`);
+                }else{
+                    addToast("Error Please try again!", {
+                        appearance: "error",
+                        autoDismiss: 4000,
+                    });
+                    setLoading(false)
                 }
-            );
+            })
+        }catch{
+            setLoading(false);
         }
-
-        return () => {
-            mount = false;
-        };
-    }, []);
+    };
+   
     return (
         <div className={style.loginPage}>
             <Row className="m-0 justify-content-center">

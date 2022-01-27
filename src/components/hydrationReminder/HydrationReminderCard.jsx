@@ -102,10 +102,13 @@ function HydrationReminderCard() {
     if (id1.id1 !== undefined) {
       clearInterval(id1.id);
     }
-    console.log(interval);
     if (interval !== null) {
       const id = setInterval(() => {
-        console.log("INFO");
+        console.log(isMute);
+        addToast("INFO", {
+          autoDismiss: true,
+          appearance: "info",
+        });
       }, interval);
       setId1({ id: id });
     }
@@ -113,17 +116,20 @@ function HydrationReminderCard() {
   const calculteWaterReminderPrecent = (dailyGoal, time) => {
     const interval = timeInMilliseconds(time) / 100;
     const usedَAmount = dailyGoal / 100;
+    console.log(usedَAmount, dailyGoal);
     if (id2.id !== "") {
       clearInterval(id2.id);
     }
-    var reminder = 0;
     const id = setInterval(() => {
       if (precent > 0) {
         reminder += usedَAmount;
-        dispatch(setReminder(Math.round(reminder)));
-        dispatch(setPrecent());
+        setReminder(Math.round(reminder));
+        setPrecent(--precent);
         setAnimation();
+      } else {
+        clearInterval(id1.id);
       }
+      dispatch(setPrecent());
     }, interval);
     setId2({ id: id });
   };

@@ -367,6 +367,23 @@ async function getDashboardTask() {
   const res = await req.json();
   return { status: req.status, data: res.payload };
 }
+
+async function completeTask(id, status) {
+  const req = await fetch(`${API_URL}/task/complete-task`, {
+    method: "PUT",
+    credentials: "include",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+    body: JSON.stringify({
+      taskId: id,
+      status: status,
+    }),
+  });
+  return { status: req.status };
+}
 // Hydration Reminder
 async function getWaterHydration() {
   const req = await fetch(`${API_URL}/water_hydration/get`, {
@@ -461,4 +478,5 @@ export {
   updateDhashboardTask,
   getTaskById,
   deleteMultiTask,
+  completeTask,
 };

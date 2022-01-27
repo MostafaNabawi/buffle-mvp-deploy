@@ -324,7 +324,7 @@ const Dashboard = () => {
       })
     }
     else {
-      Swal.fire('Please select an item delete!')
+      Swal.fire('Please select an item to delete!')
     }
   }
   // validate update form

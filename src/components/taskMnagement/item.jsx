@@ -2,9 +2,14 @@ import React, { Fragment, useState, useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { Form } from "react-bootstrap";
 import TaskModal from "./modal/TaskModal";
+import { completeTask } from "../../api";
+import { useToasts } from "react-toast-notifications";
 
 const Item = (props) => {
-  const { item, index, moveItem, status, PTYPE, handleGet } = props;
+  const { addToast } = useToasts();
+
+  const { item, index, moveItem, status, PTYPE, handleGet, handleChecked } = props;
+  var checked = item.completed === 'completed' ? 'checked' : '';
   const ref = useRef(null);
   const [, drop] = useDrop({
     accept: PTYPE,
@@ -47,11 +52,47 @@ const Item = (props) => {
 
   drag(drop(ref));
 
+
+  const handleCheck = async (e) => {
+    if (e.target.checked) {
+
+      handleChecked(e.target.id)
+      const updateT = await completeTask(e.target.id, 'completed');
+      if (updateT.status === 200) {
+        addToast("Updated Susseccfully", {
+          autoDismiss: true,
+          appearance: "success",
+        });
+      } else {
+        addToast("Error! Please Try Again!", {
+          autoDismiss: false,
+          appearance: "error",
+        });
+      }
+    }
+    else {
+      handleChecked(e.target.id + 't')
+      const updateT = await completeTask(e.target.id, null);
+      if (updateT.status === 200) {
+        addToast("Updated Susseccfully", {
+          autoDismiss: true,
+          appearance: "success",
+        });
+      } else {
+        addToast("Error! Please Try Again!", {
+          autoDismiss: false,
+          appearance: "error",
+        });
+      }
+    }
+
+  }
+
   return (
     <Fragment>
       <div ref={ref} style={{ opacity: isDragging ? 0 : 1 }} className={"item"}>
         <Form.Group controlId="formBasicCheckbox">
-          <Form.Check className="task-check-box" type="checkbox" />
+          <Form.Check className="task-check-box" type="checkbox" id={item.tb_id} onChange={handleCheck} checked={checked ? 'checked' : ''} />
         </Form.Group>
         <span className={"item-title"} onClick={handleShow}>
           {item.content}
