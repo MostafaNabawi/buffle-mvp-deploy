@@ -804,3 +804,13 @@ div.check-box > input {
   color: #707eae !important;
   font-size: 11px !important;
 }
+.screenDiv{
+  padding-top: 5% !important;
+  margin-left: 45% !important;
+  margin-top: -7% !important;
+  height: 300px !important;
+  width: 300px !important;
+  border-radius: 50% !important;
+  background-color: black;
+  color: white !important;
+}

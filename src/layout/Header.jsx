@@ -66,7 +66,6 @@ const Header = () => {
         },
       }).then(async (res) => {
         const { payload } = await res.json();
-        console.log("payload...", payload);
         if (payload.length > 0) {
           setNotificatiion(payload);
           setLoading(false);
@@ -104,7 +103,6 @@ const Header = () => {
         fullName: user.first_name + " " + user.last_name,
       }),
     }).then(async (res) => {
-      console.log("Accept", res);
       if (res.status) {
         getNotification(true);
       }
@@ -131,7 +129,6 @@ const Header = () => {
   //
   const handleAcceptTime = async (id, userId, newTime, breakId, breakName) => {
     const el = document.getElementById(breakId);
-    console.log("brea el 2", el);
     const user = JSON.parse(localStorage.getItem("user"));
     await fetch(`${API_URL}/breakPlan/accept-time`, {
       method: "POST",
@@ -211,7 +208,17 @@ const Header = () => {
           setDefault(payload.duration)
           handleDurationTime(payload.duration);
           handleDisplayTime(payload.display);
+        } else {
+          localStorage.setItem("screen", "of")
+          setDefault(payload.duration)
+          handleDurationTime(payload.duration);
+          handleDisplayTime(payload.display);
         }
+      } else {
+        localStorage.setItem("screen", "of")
+        setDefault("00:10:00")
+        handleDurationTime("00:10:00");
+        handleDisplayTime("00:01:00");
       }
     }
     countNotification();
@@ -228,7 +235,6 @@ const Header = () => {
         ioInstance.close();
       });
       ioInstance.on("notify", (data) => {
-        console.log("...", data);
         setWebData(data);
       });
 
@@ -257,7 +263,7 @@ const Header = () => {
       <Col className="col-12 header-name text-capitalize">
         Hi {userData?.first_name}
       </Col>
-      {du_time > 0 && start  && (
+      {du_time > 0 && start && (
         <Countdown
           date={Date.now() + du_time}
           onTick={(e) => {
@@ -265,39 +271,51 @@ const Header = () => {
           }}
           onComplete={() => {
             handleDurationTime(defaultTime)
-            if (localStorage.getItem("screen")) {
-              setStart(false);
-              const timeLock = new Date();
-              localStorage.setItem(
-                "loackTime",
-                timeLock.getHours() +
-                ":" +
-                timeLock.getMinutes() +
-                ":" +
-                timeLock.getSeconds()
-              );
-            }
-                }}
-        renderer={() => {
-          return "";
-        }}
+            setStart(false);
+            const timeLock = new Date();
+            localStorage.setItem(
+              "loackTime",
+              timeLock.getHours() +
+              ":" +
+              timeLock.getMinutes() +
+              ":" +
+              timeLock.getSeconds()
+            );
+          }
+          }
+        // renderer={() => {
+        //   return "";
+        // }}
         />
       )}
 
       <div
         id="lockScreenHide"
-        className={`lockScreen text-center ${!start ? "" : "lockScreenHide"}`}
+        className={`${localStorage.getItem("screen") === "on" ? "lockScreen" : ""} text-center ${!start ? "" : "lockScreenHide"}`}
       >
-        <h1>Screen Lock For</h1>
-        {du_time > 0 && !start && localStorage.getItem('screen') && (
+        {localStorage.getItem("screen") === "on" && du_time > 0 && !start ?
+          <div className="screenDiv">
+            <h1>Screen Lock For</h1>
+            <Countdown
+              date={Date.now() + dis_time}
+              onComplete={() => {
+                setStart(true);
+              }}
+            // renderer={() => {
+            //   return ""
+            // }}
+            />
+          </div>
+          : ""}
+        {du_time > 0 && !start && (
           <Countdown
             date={Date.now() + dis_time}
             onComplete={() => {
               setStart(true);
             }}
-          // renderer={() => {
-          //   return ""
-          // }}
+            renderer={() => {
+              return ""
+            }}
           />
         )}
       </div>
@@ -442,11 +460,11 @@ const Header = () => {
                   User management
                 </NavDropdown.Item>
               )}
-               {showUserRoute && (
+              {showUserRoute && (
                 <NavDropdown.Item href="/dashboard/setting">
-                Settings
-              </NavDropdown.Item>
-               )}
+                  Settings
+                </NavDropdown.Item>
+              )}
               <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
             </NavDropdown>
           </div>
