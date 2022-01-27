@@ -5,7 +5,6 @@ import TableAdmin from "../../table/TableAdmin";
 import style from "../../table/style.module.css";
 import { PulseLoader } from "react-spinners";
 import { getAllUsers } from "../../../api/admin";
-import { useSearchParams } from "react-router-dom";
 
 const UserListAdmin = () => {
   const [loading, setLoading] = useState(true);
@@ -14,8 +13,8 @@ const UserListAdmin = () => {
   // filter inputs
   const [statusFilter, setStatusFilter] = useState(0);
   const [typeFilter, setTypeFilter] = useState(0);
-
-  const [searchParams, setSearchParams] = useSearchParams();
+  //search input
+  const [searchInput, setSearchInput] = useState("");
 
   useEffect(() => {
     async function pageData() {
@@ -28,21 +27,6 @@ const UserListAdmin = () => {
     }
     pageData();
   }, []);
-  // useEffect(() => {
-  //   if (statusFilter === 0) {
-  //     setFilteredData([]);
-  //   }
-  //   if(statusFilter === 1){
-  //     let filtered =
-  //   }
-  //   if (statusFilter === 2) {
-  //     const filterStatue = data.filter((i) => i.status !== "active");
-  //     setStatusFilterData(filterStatue);
-  //   }
-  //   if (statusFilter === 1) {
-  //     setStatusFilterData([]);
-  //   }
-  // }, [statusFilter]);
   useEffect(() => {
     if (typeFilter === 0) {
       setFilteredData([]);
@@ -62,7 +46,43 @@ const UserListAdmin = () => {
       let filtered = data.filter((i) => i?.space[0]?.type === "f");
       setFilteredData(filtered);
     }
-  }, [typeFilter]);
+  }, [typeFilter, data]);
+  //second useEffect
+  useEffect(() => {
+    if (statusFilter === 0) {
+      setFilteredData([]);
+    }
+    // block spaces
+    if (statusFilter === 1) {
+      let filtered = data.filter((i) => i?.space[0]?.status === "block");
+      setFilteredData(filtered);
+    }
+    // confirm spaces
+    if (statusFilter === 2) {
+      let filtered = data.filter(
+        (i) => i?.space[0]?.status === "active" && i?.space[0]?.type !== "a"
+      );
+      setFilteredData(filtered);
+    }
+    if (statusFilter === 3) {
+      let filtered = data.filter((i) => i?.space[0]?.status === "pending");
+      setFilteredData(filtered);
+    }
+  }, [statusFilter, data]);
+  // refresher
+  useEffect(() => {
+    if (searchInput === "") {
+      setFilteredData([]);
+    } else {
+      let filteredData = data.filter(
+        (i) =>
+          i?.email?.toLowerCase().includes(searchInput.toLowerCase()) ||
+          i?.first_name?.toLowerCase().includes(searchInput.toLowerCase())
+      );
+      console.log("FF => ", filteredData);
+      setFilteredData(filteredData);
+    }
+  }, [searchInput]);
   const refresh = async () => {
     setLoading(true);
     const payload = await getAllUsers();
@@ -110,14 +130,15 @@ const UserListAdmin = () => {
               <Form.Select
                 onChange={(e) => setStatusFilter(Number(e.target.value))}
               >
-                <option value="1">All</option>
-                <option value="2">Block</option>
-                <option value="3">Confirem</option>
+                <option value="0">All</option>
+                <option value="1">Block</option>
+                <option value="2">Active</option>
+                <option value="3">Pending</option>
               </Form.Select>
             </Form.Group>
           </Col>
           <Col xl={3}>
-            <Form>
+            <Form onSubmit={(e) => e.preventDefault()}>
               <Form.Group
                 className="mb-3 input-group"
                 controlId="formBasicPassword"
@@ -125,11 +146,9 @@ const UserListAdmin = () => {
                 <Form.Control
                   type="search"
                   placeholder="Search..."
+                  value={searchInput}
                   onChange={(e) => {
-                    if (e.target.value.length === 0) {
-                      setSearchParams("");
-                    }
-                    setSearchParams(`?q=${e.target.value}`);
+                    setSearchInput(e.target.value);
                   }}
                 />
                 <Button variant="primary" type="submit">
@@ -148,7 +167,11 @@ const UserListAdmin = () => {
                 "Type",
                 "action",
               ]}
-              tableBody={filteredData.length > 0 ? filteredData : data}
+              tableBody={
+                filteredData.length > 0 || searchInput !== ""
+                  ? filteredData
+                  : data
+              }
               isPagination={true}
               refresh={refresh}
             />

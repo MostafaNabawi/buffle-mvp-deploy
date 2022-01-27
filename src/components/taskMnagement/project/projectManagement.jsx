@@ -20,7 +20,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import BeatLoader from "react-spinners/BeatLoader";
 // paiman changes
 import { PROJECT_TYPE } from "../../data/types";
-const ProjectManagement = () => {
+const ProjectManagement = ({ value }) => {
   const { addToast } = useToasts();
   const [items, setItems] = useState([]);
   const [projects, setProjects] = useState([]);
@@ -38,6 +38,7 @@ const ProjectManagement = () => {
   const handleShowPModal = () => setShowPModal(true);
   const [inputTask, setInputTask] = useState({ name: "", p_id: "" });
   const [newItems, setNewItems] = useState([]);
+  const [id, setId] = useState('');
 
   async function request() {
     // get project and format
@@ -65,19 +66,29 @@ const ProjectManagement = () => {
         date: i.date,
         p_id: i.projectId,
         start_time: i.start_time,
+        completed: i.status,
       };
     });
     setItems(format);
   }
-
+  const handleChecked = (id) => {
+    setId(id);
+  }
   useEffect(() => {
     request();
   }, []);
-
+  useEffect(() => {
+    request();
+  }, [value]);
   useEffect(() => {
     request();
     setNewProject(false);
   }, [newProject]);
+  useEffect(() => {
+    if (id) {
+      request();
+    }
+  }, [id]);
   // insert task to database for project
   const handleKeyDown = async (event) => {
     if (event.key === "Enter") {
@@ -284,6 +295,7 @@ const ProjectManagement = () => {
                         moveItem={moveItem}
                         status={s}
                         className="project_item"
+                        handleChecked={handleChecked}
                       ></Item>
                     ))}
                   <div className="new-task-div">

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import '../styles/task.css';
@@ -6,6 +6,10 @@ import TaskManagement from "../components/taskMnagement/TaskManagement";
 import { Card, Row, Col } from "react-bootstrap";
 import ProjectManagement from "../components/taskMnagement/project/projectManagement";
 const TaskManage = () => {
+    const [value, setValue] = useState('');
+    const handleChange = (value) => {
+        setValue(value)
+    }
     return (
         <Card className="secondary-color taskManage ">
             <Row className="task-management-filter-row">
@@ -16,8 +20,8 @@ const TaskManage = () => {
                 </Col>
             </Row>
             <DndProvider backend={HTML5Backend}>
-                <TaskManagement />
-                <ProjectManagement />
+                <TaskManagement handleGet={handleChange} />
+                <ProjectManagement value={value} />
             </DndProvider>
 
         </Card>

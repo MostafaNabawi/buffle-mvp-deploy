@@ -5,7 +5,7 @@ import style from "./style.module.css";
 import Swal from "sweetalert2";
 import Modal from "../modal/modal";
 import { API_URL } from "../../config/index";
-import { Row, Col } from "react-bootstrap";
+import { Row } from "react-bootstrap";
 const country = require("country-state-picker");
 
 const RenderType = (space) => {
@@ -34,7 +34,6 @@ const TableAdmin = ({
   isPagination,
   refresh,
 }) => {
-  const index = 0;
   const [current, setCurrent] = useState(1);
   const [innerData, setInnerData] = useState(tableBody);
   const [total, setTotal] = useState(tableBody.length);
@@ -145,6 +144,7 @@ const TableAdmin = ({
       Swal.fire({
         title: "Are you sure?",
         html: `Do you want to <strong style="color : red">block</strong> space <b>${space}</b>?<br />😮`,
+        showCancelButton: true,
       }).then((res) => {
         if (res.isConfirmed) {
           fetch(`${API_URL}/admin/block-account`, {
@@ -176,6 +176,7 @@ const TableAdmin = ({
       Swal.fire({
         title: "Are you sure?",
         html: `Do you want to <strong style="color : green">Active</strong> space <b>${space}</b>?<br />🧐`,
+        showCancelButton: true,
       }).then((res) => {
         if (res.isConfirmed) {
           fetch(`${API_URL}/admin/active-account`, {
@@ -237,10 +238,22 @@ const TableAdmin = ({
               }
             />
           )}
-          {object?.space[0]?.status !== "active" && (
+          {object?.space[0]?.status === "block" && (
             <Icon
               icon="grommet-icons:lock"
               color="red"
+              onClick={() =>
+                handleActive(
+                  object?.space[0]?._id,
+                  object?.space[0]?.space_name
+                )
+              }
+            />
+          )}
+          {object?.space[0]?.status === "pending" && (
+            <Icon
+              icon="grommet-icons:lock"
+              style={{ color: "#2a52be" }}
               onClick={() =>
                 handleActive(
                   object?.space[0]?._id,
@@ -286,7 +299,7 @@ const TableAdmin = ({
               ))
             ) : (
               <tr>
-                <td>No user added.</td>
+                <td>No user Found!</td>
               </tr>
             )}
           </tbody>
@@ -296,8 +309,7 @@ const TableAdmin = ({
             <Pagination.Prev
               onClick={() => {
                 const newCurrent = current - 1;
-                console.log("New current", newCurrent);
-                if (newCurrent >= 0) {
+                if (newCurrent >= 1) {
                   setCurrent(newCurrent);
                 }
               }}
