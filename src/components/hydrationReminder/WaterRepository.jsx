@@ -17,7 +17,7 @@ function WaterRepository(props) {
 
             <div className={style.wave}></div>
             <div className={style.water_drops}>
-              {[1, 2, 3, 4, 5, 6, , 7, 8, 9, 10,11,12].map((item) => (
+              {[1, 2, 3, 4, 5, 6, , 7, 8, 9, 10, 11, 12].map((item) => (
                 <span key={item}></span>
               ))}
             </div>

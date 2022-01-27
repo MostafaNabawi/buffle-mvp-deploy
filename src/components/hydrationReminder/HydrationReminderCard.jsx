@@ -13,6 +13,7 @@ import { getWaterHydration, createWaterHydration } from "../../api";
 import { useToasts } from "react-toast-notifications";
 //import useSound from "use-sound";
 import { useDispatch, useSelector } from "react-redux";
+import { moment } from "moment";
 import {
   setData,
   setMute,
@@ -25,7 +26,7 @@ function HydrationReminderCard() {
   const { data, isMute, precent, reminder } = useSelector(
     (state) => state.hydration
   );
-  console.log(data, isMute, precent, reminder);
+  console.log(data);
   const dispatch = useDispatch();
 
   const { addToast } = useToasts();
@@ -68,7 +69,6 @@ function HydrationReminderCard() {
       setLiter(req.data.daily_goal);
       calculteWaterReminderPrecent(req.data.daily_goal, req.data.work);
       ReminderNotifiction(req.data.reminder);
-      calculteWaterReminderPrecent(req.data.work);
     }
   };
 
@@ -77,6 +77,20 @@ function HydrationReminderCard() {
     fetch();
     console.log("useEffect");
   }, [isSubmit]);
+
+  useEffect(() => {
+    async function getComponentData() {
+      // get data from server
+      const { data } = await getWaterHydration();
+      console.log("d ", data?.setTime);
+      const differnce = moment(new Date()).diff(
+        new Date(data?.setTime),
+        "hour"
+      );
+      console.log("difference", differnce);
+    }
+    getComponentData();
+  }, []);
 
   const changeTimeFormat = (val) => {
     const arr = val.split(":");
@@ -105,27 +119,27 @@ function HydrationReminderCard() {
     }
     if (interval !== null) {
       const id = setInterval(() => {
-        console.log(isMute);
-        addToast("INFO", {
-          autoDismiss: true,
-          appearance: "info",
-        });
+        // console.log(isMute);
+        // addToast("INFO", {
+        //   autoDismiss: true,
+        //   appearance: "info",
+        // });
       }, interval);
       setId1({ id: id });
     }
   };
+
   const calculteWaterReminderPrecent = (dailyGoal, time) => {
     const interval = timeInMilliseconds(time) / 100;
     const usedَAmount = dailyGoal / 100;
-    console.log(usedَAmount, dailyGoal);
     if (id2.id !== "") {
       clearInterval(id2.id);
     }
     const id = setInterval(() => {
       if (precent > 0) {
-        reminder += usedَAmount;
-        setReminder(Math.round(reminder));
-        setPrecent(--precent);
+        // reminder += usedَAmount;
+        // setReminder(Math.round(reminder));
+        // setPrecent(--precent);
       }
       dispatch(setPrecent());
     }, interval);
