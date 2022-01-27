@@ -9,12 +9,11 @@ import CardHeader from "./../card/CardHeader";
 import Modal from "./../modal/modal";
 import TimePicker2 from "../common/timePicker/TimePicker2";
 import WaterRepository from "./WaterRepository";
-import { createWaterHydration } from "../../api";
+import { getWaterHydration, createWaterHydration } from "../../api";
 import { useToasts } from "react-toast-notifications";
 //import useSound from "use-sound";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getWaterHydration,
   setData,
   setMute,
   setPrecent,
@@ -62,8 +61,19 @@ function HydrationReminderCard() {
     dispatch(setMute());
   };
 
+  const fetch = async () => {
+    const req = await getWaterHydration();
+    if (req.data !== null) {
+      console.log(req.data, "fetched");
+      dispatch(setData(req.data));
+      ReminderNotifiction(req.data.reminder);
+      calculteWaterReminderPrecent(req.data.work);
+    }
+  };
+
   //useEffect function
   useEffect(() => {
+    fetch();
     console.log("useEffect");
   }, [isSubmit]);
 
@@ -92,13 +102,10 @@ function HydrationReminderCard() {
     if (id1.id1 !== undefined) {
       clearInterval(id1.id);
     }
+    console.log(interval);
     if (interval !== null) {
       const id = setInterval(() => {
-        console.log(isMute);
-        addToast("INFO", {
-          autoDismiss: true,
-          appearance: "info",
-        });
+        console.log("INFO");
       }, interval);
       setId1({ id: id });
     }
@@ -106,20 +113,17 @@ function HydrationReminderCard() {
   const calculteWaterReminderPrecent = (dailyGoal, time) => {
     const interval = timeInMilliseconds(time) / 100;
     const usedَAmount = dailyGoal / 100;
-    console.log(usedَAmount, dailyGoal);
     if (id2.id !== "") {
       clearInterval(id2.id);
     }
+    var reminder = 0;
     const id = setInterval(() => {
       if (precent > 0) {
         reminder += usedَAmount;
-        setReminder(Math.round(reminder));
-        setPrecent(--precent);
+        dispatch(setReminder(Math.round(reminder)));
+        dispatch(setPrecent());
         setAnimation();
-      } else {
-        clearInterval(id1.id);
       }
-      dispatch(setPrecent());
     }, interval);
     setId2({ id: id });
   };

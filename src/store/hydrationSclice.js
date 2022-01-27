@@ -1,23 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { API_URL } from "../config";
-
-export const getWaterHydration = createAsyncThunk(
-  "hydration/getWaterHydration",
-  async () => {
-    const response = await fetch(`${API_URL}/water_hydration/get`, {
-      method: "GET",
-      credentials: "include",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Credentials": true,
-      },
-    });
-    const data = await response.json();
-    console.log(data, "data");
-    return data;
-  }
-);
+import { createSlice } from "@reduxjs/toolkit";
 
 export const hydrationSlice = createSlice({
   name: "hydration",
@@ -29,26 +10,19 @@ export const hydrationSlice = createSlice({
   },
   reducers: {
     setData: (state, action) => {
-      state.data = { ...action.payload };
+      state.data = action.payload;
     },
     setMute: (state) => {
       state.isMute = !state.isMute;
     },
     setPrecent: (state) => {
-      if (state.precent >= 1) {
+      if (state.precent > 0) {
         state.precent -= 1;
       }
     },
-    setReminder: (state) => {
-      if (state.reminder <= state.data.daily_goal) {
-        state.reminder += 1;
-      }
+    setReminder: (state, action) => {
+      state.reminder += action.payload;
     },
-  },
-  extraReducers(builder) {
-    builder.addCase(getWaterHydration.fulfilled, (state, { payload }) => {
-      state.data = { payload };
-    });
   },
 });
 
