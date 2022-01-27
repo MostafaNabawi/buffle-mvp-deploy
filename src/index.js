@@ -7,8 +7,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastProvider } from "react-toast-notifications";
 import store from "./store/store";
 import { Provider } from "react-redux";
-import { getWaterHydration } from "./store/hydrationSclice";
-store.dispatch(getWaterHydration());
+// import { getWaterHydration } from "./store/hydrationSclice";
+// store.dispatch(getWaterHydration());
 ReactDOM.render(
   <Provider store={store}>
     <ToastProvider>
