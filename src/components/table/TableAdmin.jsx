@@ -4,6 +4,7 @@ import { Icon } from "@iconify/react";
 import style from "./style.module.css";
 import Swal from "sweetalert2";
 import Modal from "../modal/modal";
+import { API_URL } from "../../config/index";
 import { Row, Col } from "react-bootstrap";
 const country = require("country-state-picker");
 
@@ -31,6 +32,7 @@ const TableAdmin = ({
   headClass,
   bodyClass,
   isPagination,
+  refresh,
 }) => {
   const index = 0;
   const [current, setCurrent] = useState(1);
@@ -53,31 +55,6 @@ const TableAdmin = ({
     setCurrent(1);
     setTotal(tableBody.length);
   }, [tableBody]);
-  const handleUnblock = (id, fullName) => {
-    // console.log("user_id", e.target.id);
-    const loader = Swal;
-
-    Swal.fire({
-      title: "Are you sure?",
-      html: `Do you want to unblock <b>${fullName}</b>`,
-      showCancelButton: true,
-      cancelButtonText: "No",
-      confirmButtonText: "Yes",
-    }).then(({ isConfirmed }) => {
-      if (isConfirmed) {
-        Swal.fire({
-          title: "Loading...",
-          allowEscapeKey: false,
-          allowOutsideClick: false,
-          allowEnterKey: false,
-          showConfirmButton: false,
-          html: `<div aria-busy="true" class="">
-              <svg width="40" height="40" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" aria-label="audio-loading"><defs><linearGradient x1="8.042%" y1="0%" x2="65.682%" y2="23.865%" id="a"><stop stop-color="green" stop-opacity="0" offset="0%"></stop><stop stop-color="green" stop-opacity=".631" offset="63.146%"></stop><stop stop-color="green" offset="100%"></stop></linearGradient></defs><g fill="none" fill-rule="evenodd"><g transform="translate(1 1)"><path d="M36 18c0-9.94-8.06-18-18-18" id="Oval-2" stroke="green" stroke-width="2"><animateTransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18" dur="0.9s" repeatCount="indefinite"></animateTransform></path><circle fill="#fff" cx="36" cy="18" r="1"><animateTransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18" dur="0.9s" repeatCount="indefinite"></animateTransform></circle></g></g></svg>
-              </div>`,
-        });
-      }
-    });
-  };
   const getCountry = (code) => {
     if (!code) {
       return "";
@@ -117,8 +94,6 @@ const TableAdmin = ({
           </>
         );
       }
-      // user is a member!
-      // const data = await userUserWorkspace
       return "";
     }
   };
@@ -170,11 +145,79 @@ const TableAdmin = ({
       Swal.fire({
         title: "Are you sure?",
         html: `Do you want to <strong style="color : red">block</strong> space <b>${space}</b>?<br />😮`,
+      }).then((res) => {
+        if (res.isConfirmed) {
+          fetch(`${API_URL}/admin/block-account`, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              space_id: uid,
+            }),
+          }).then((res) => {
+            if (res.status === 200) {
+              refresh();
+              Swal.fire(
+                "Success",
+                `You have blocked <b>${space}</b> successfully.`,
+                "success"
+              );
+            }
+          });
+        }
       });
     }
   };
+
+  const handleActive = (uid, space) => {
+    if (uid) {
+      Swal.fire({
+        title: "Are you sure?",
+        html: `Do you want to <strong style="color : green">Active</strong> space <b>${space}</b>?<br />🧐`,
+      }).then((res) => {
+        if (res.isConfirmed) {
+          fetch(`${API_URL}/admin/active-account`, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              space_id: uid,
+            }),
+          }).then((res) => {
+            if (res.status === 200) {
+              refresh();
+              Swal.fire(
+                "Success",
+                `You have activated <b>${space}</b> successfully.`,
+                "success"
+              );
+            }
+          });
+        }
+      });
+    }
+  };
+
   const RenderActions = ({ object }) => {
     if (object?.space[0]?.type !== "a") {
+      if (object?.space.length === 0) {
+        return (
+          <>
+            <Icon
+              icon="vaadin:ellipsis-dots-v"
+              className="mx-2"
+              onClick={() => {
+                setSelectedUser(object);
+                setShowModal(true);
+              }}
+            />
+          </>
+        );
+      }
       return (
         <>
           <Icon
@@ -195,7 +238,16 @@ const TableAdmin = ({
             />
           )}
           {object?.space[0]?.status !== "active" && (
-            <Icon icon="grommet-icons:lock" color="red" />
+            <Icon
+              icon="grommet-icons:lock"
+              color="red"
+              onClick={() =>
+                handleActive(
+                  object?.space[0]?._id,
+                  object?.space[0]?.space_name
+                )
+              }
+            />
           )}
         </>
       );
