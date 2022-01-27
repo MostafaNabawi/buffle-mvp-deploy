@@ -26,7 +26,6 @@ import { API_URL } from "../config";
 import Countdown from "react-countdown";
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-import moment from 'moment';
 
 const Dashboard = () => {
   const MySwal = withReactContent(Swal)
@@ -93,6 +92,7 @@ const Dashboard = () => {
   const [checkId, setCheckedId] = useState([]);
   const [oldTaskName, setOldTaskName] = useState('');
   const [oldTaskTime, setOldTaskTime] = useState('');
+  const [spendTime, setSpendTime] = useState('');
   // next break action
   const handleNextBreakOperation = async () => {
     if (nextBreakDateInput.length === 0) {
@@ -413,6 +413,11 @@ const Dashboard = () => {
       Swal.fire('Please select an item for edit!')
     }
   }
+  //get new time when a spend time set to database for task
+  const handleTime = (id) => {
+    setSpendTime(id)
+    console.log('currentTime', id)
+  }
   // effects
   useEffect(() => {
     async function getBreakPlan() {
@@ -657,7 +662,7 @@ const Dashboard = () => {
                       </Row>
                     </Col>
                     <Col xl="4">
-                      <TaskManagerPreogressBar {...t} />
+                      <TaskManagerPreogressBar {...t} handleTime={handleTime} />
                     </Col>
                   </Row>
                   <div className="devidre"></div>
