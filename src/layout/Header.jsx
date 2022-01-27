@@ -18,18 +18,23 @@ import { useToasts } from "react-toast-notifications";
 import { ioInstance } from "../config/socket";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useDispatch, useSelector } from "react-redux";
+import {setDu_time,setDefault,setDis_time} from "../store/screenReminderSclice"
 
 const Header = () => {
+  //
+  const {du_time,defaultTime,dis_time } = useSelector(
+    (state) => state.screen
+  );
+  //
   const { addToast } = useToasts();
+  const dispatch = useDispatch();
   const [userData, setUserData] = useState({});
   const [notification, setNotificatiion] = useState("");
   const [count, setCount] = useState(0);
   const [loadData, setLoadData] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const [du_time, setDu_time] = useState(0);
-  const [defaultTime, setDefault] = useState(0)
-  const [dis_time, setDis_time] = useState(0);
   const [start, setStart] = useState(true);
   const [showUserRoute, setShowUserRoute] = useState(false);
   const [webData, setWebData] = useState("");
@@ -45,14 +50,17 @@ const Header = () => {
     const arr = val.split(":");
     const time =
       arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000;
-    setDu_time(time);
-
+    // setDu_time(time);
+    dispatch(setDu_time(time))
+    return time;
   };
   const handleDisplayTime = (val) => {
     const arr = val.split(":");
     const time =
       arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000;
-    setDis_time(time);
+    // setDis_time(time);
+    dispatch(setDis_time(time))
+    return time;
   };
   // Notification
   const getNotification = async (load) => {
@@ -185,6 +193,7 @@ const Header = () => {
       }
     }
   };
+ 
   useEffect(() => {
     async function getStatus() {
       const req = await userStatus();
@@ -205,12 +214,12 @@ const Header = () => {
       if (payload) {
         if (payload.mute) {
           localStorage.setItem("screen", "on")
-          setDefault(payload.duration)
+          dispatch(setDefault(payload.duration))
           handleDurationTime(payload.duration);
           handleDisplayTime(payload.display);
         } else {
           localStorage.setItem("screen", "of")
-          setDefault(payload.duration)
+          dispatch(setDefault(payload.duration))
           handleDurationTime(payload.duration);
           handleDisplayTime(payload.display);
         }
@@ -266,8 +275,9 @@ const Header = () => {
       {du_time > 0 && start && (
         <Countdown
           date={Date.now() + du_time}
+        
           onTick={(e) => {
-            setDu_time(e.total)
+            dispatch(setDu_time(e.total))
           }}
           onComplete={() => {
             handleDurationTime(defaultTime)

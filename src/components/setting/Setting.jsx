@@ -88,7 +88,6 @@ const Setting = () => {
                 }
             })
         } catch {
-            console.log("server error")
             setLoadingReg(false)
         }
     }
