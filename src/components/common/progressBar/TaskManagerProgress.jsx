@@ -5,8 +5,9 @@ import style from "./style.module.css";
 import { useStopwatch } from 'react-timer-hook';
 import moment from "moment";
 import { updateTaskSpendTime } from "../../../api";
+
 const TaskManagerPreogressBar = (props) => {
-  const { _id, name, date, spend_time, task_duration, handleTime } = props;
+  const { _id, name, date, spend_time, task_duration } = props;
   const [percent, setPercent] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [play, setPlay] = useState(true);
@@ -27,17 +28,15 @@ const TaskManagerPreogressBar = (props) => {
       setPlay(!play);
       if (seconds > 30) {
         const sp_time = `${days + parseInt(time[0])}:${hours + parseInt(time[1])}:${(minutes + parseInt(time[2])) + 1}`;
-        const update = await updateTaskSpendTime(_id, sp_time)
+        const update = await updateTaskSpendTime(_id, sp_time, 'stop', new Date().toISOString())
         if (update.status === 200) {
-          handleTime(currentTime);
           console.log('correct');
         }
       }
       else {
         const sp_time = `${days + parseInt(time[0])}:${hours + parseInt(time[1])}:${minutes + parseInt(time[2])}`;
-        const update = await updateTaskSpendTime(_id, sp_time)
+        const update = await updateTaskSpendTime(_id, sp_time, 'stop', new Date().toISOString())
         if (update.status === 200) {
-          handleTime(currentTime);
           console.log('correct');
         }
       }
@@ -45,9 +44,12 @@ const TaskManagerPreogressBar = (props) => {
 
     }
     if (play) {
-      console.log(parseInt(seconds))
-
-      console.log('d', days, 'h', hours, 'm', minutes, 's', seconds)
+      console.log('running')
+      const sp_time = `${days + parseInt(time[0])}:${hours + parseInt(time[1])}:${minutes + parseInt(time[2])}`;
+      const update = await updateTaskSpendTime(_id, sp_time, 'runnig', new Date().toISOString())
+      if (update.status === 200) {
+        console.log('correct');
+      }
       start()
       setPlay(!play);
     }

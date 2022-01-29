@@ -385,7 +385,7 @@ async function completeTask(id, status) {
   return { status: req.status };
 }
 
-async function updateTaskSpendTime(id, time) {
+async function updateTaskSpendTime(id, time, status, dateTime) {
   const req = await fetch(`${API_URL}/task/update-spend-time`, {
     method: "PUT",
     credentials: "include",
@@ -397,6 +397,8 @@ async function updateTaskSpendTime(id, time) {
     body: JSON.stringify({
       taskId: id,
       time: time,
+      dateTime: dateTime,
+      status: status,
     }),
   });
   return { status: req.status };

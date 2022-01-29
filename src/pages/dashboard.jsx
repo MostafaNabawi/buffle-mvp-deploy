@@ -413,11 +413,7 @@ const Dashboard = () => {
       Swal.fire('Please select an item for edit!')
     }
   }
-  //get new time when a spend time set to database for task
-  const handleTime = (id) => {
-    setSpendTime(id)
-    console.log('currentTime', id)
-  }
+
   // effects
   useEffect(() => {
     async function getBreakPlan() {
@@ -662,7 +658,7 @@ const Dashboard = () => {
                       </Row>
                     </Col>
                     <Col xl="4">
-                      <TaskManagerPreogressBar {...t} handleTime={handleTime} />
+                      <TaskManagerPreogressBar {...t} />
                     </Col>
                   </Row>
                   <div className="devidre"></div>
