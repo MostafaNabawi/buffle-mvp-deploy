@@ -5,7 +5,7 @@ import style from "./../style.module.css";
 function AddNewMember() {
   const [email, setEmail] = useState("");
   const [result, setResult] = useState([]);
-
+  const [loading, setLoading] = useState(false);
   function handleSubmit(e) {
     setEmail(e.target.value);
     const value =
@@ -13,7 +13,7 @@ function AddNewMember() {
         email
       );
     if (value) {
-      console.log("You clicked submit.", email, value);
+      setLoading(true);
     }
   }
 
@@ -30,15 +30,17 @@ function AddNewMember() {
           />
         </Form.Group>
       </Form>
-      <div className={style.search_result}>
-        <div className={style.spinner_wrapper}>
-          {result.length > 0 ? (
-            <div>result</div>
-          ) : (
-            <Spinner animation="border" />
-          )}
+      {loading && (
+        <div className={style.search_result}>
+          <div className={style.spinner_wrapper}>
+            {result.length > 0 ? (
+              <div>result</div>
+            ) : (
+              <Spinner animation="border" />
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
