@@ -1,11 +1,20 @@
-import React from "react";
+import { Icon } from "@iconify/react";
 import { useState } from "react";
 import { Form, Spinner } from "react-bootstrap";
+import { API_URL } from "../../../config";
 import style from "./../style.module.css";
+
 function AddNewMember() {
   const [email, setEmail] = useState("");
   const [result, setResult] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [notFound, setNotFound] = useState(false);
+  const [selected, setSelected] = useState([]);
+
+  const handleAdd = (uid) => {
+    console.log("added", uid);
+    setSelected([...selected, uid]);
+  };
   function handleSubmit(e) {
     setEmail(e.target.value);
     const value =
@@ -14,6 +23,30 @@ function AddNewMember() {
       );
     if (value) {
       setLoading(true);
+      setNotFound(false);
+      fetch(`${API_URL}/user/find`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": true,
+        },
+        body: JSON.stringify({
+          email: e.target.value,
+          moneyPoll: true,
+        }),
+      }).then(async (response) => {
+        const data = await response.json();
+        console.log("rr", data);
+        if (data?.payload) {
+          setLoading(false);
+          setResult([data]);
+        } else {
+          setNotFound(true);
+        }
+      });
+    } else {
+      setLoading(false);
     }
   }
 
@@ -25,18 +58,50 @@ function AddNewMember() {
           <Form.Control
             type="email"
             value={email}
+            autoComplete="false"
+            aria-haspopup="false"
+            autoFocus="false"
             placeholder="Email"
             onChange={handleSubmit}
           />
         </Form.Group>
       </Form>
+      {selected.length > 0 && (
+        <div className={style.search_result}>
+          {selected.map((item, i) => (
+            <div key={`selected-${i}`}>{item?.fullName}</div>
+          ))}
+        </div>
+      )}
       {loading && (
         <div className={style.search_result}>
           <div className={style.spinner_wrapper}>
-            {result.length > 0 ? (
-              <div>result</div>
-            ) : (
-              <Spinner animation="border" />
+            <Spinner animation="border" />
+          </div>
+        </div>
+      )}
+
+      {notFound && (
+        <div className={style.search_result}>
+          <div className={style.spinner_wrapper}>
+            <span style={{ color: "red" }}>User Not Found </span>
+          </div>
+        </div>
+      )}
+      {result.length > 0 && (
+        <div className={style.search_result}>
+          <div className={style.spinner_wrapper}>
+            {result.length > 0 && (
+              <div>
+                {result[0]?.fullName}
+                <Icon
+                  fontSize={20}
+                  color="green"
+                  style={{ marginLeft: "10px", marginTop: "-3px" }}
+                  icon="carbon:add-alt"
+                  onClick={() => handleAdd(result[0])}
+                />
+              </div>
             )}
           </div>
         </div>

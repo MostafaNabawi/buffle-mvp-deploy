@@ -8,17 +8,48 @@ import Card from "./../card/Card";
 import CardBody from "./../card/CardBody";
 import AddNewMember from "./partials/AddNewMember";
 import CurrencyList from "currency-list";
+import { useToasts } from "react-toast-notifications";
+import { API_URL } from "../../config";
 
 function NewEvent() {
   const navigate = useNavigate();
   const [personNum, setPersonNum] = useState([2]);
   const [currencyData, setCurrencyData] = useState(null);
+  const { addToast } = useToasts();
   const addPerson = () => {
     setPersonNum([...personNum, personNum.length + 2]);
   };
 
   const handleSubmit = () => {
     navigate("event");
+  };
+  const handleJoin = (e) => {
+    e.preventDefault();
+    const form = new FormData(e.currentTarget);
+    const code = form.get("invite");
+    if (code === "") {
+      addToast("Code is required!", {
+        appearance: "warning",
+        autoDismiss: 4000,
+      });
+      return;
+    }
+    fetch(`${API_URL}/money-poll/join-event`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        code: code,
+      }),
+    }).then(async (res) => {
+      const data = await res.json();
+      addToast(data?.msg, {
+        appearance: "info",
+        autoDismiss: 3000,
+      });
+    });
   };
   useEffect(() => {
     setCurrencyData(Object.values(CurrencyList.getAll("en_US")));
@@ -77,9 +108,13 @@ function NewEvent() {
               </p>
             </div>
             <div className={style.invite_form_area}>
-              <Form>
+              <Form onSubmit={handleJoin}>
                 <Form.Group controlId="inviteCode">
-                  <Form.Control type="text" placeholder="Invite code" />
+                  <Form.Control
+                    type="text"
+                    placeholder="Invite code"
+                    name="invite"
+                  />
                 </Form.Group>
                 <Button type="submit">Join</Button>
               </Form>
