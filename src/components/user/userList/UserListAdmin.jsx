@@ -145,7 +145,7 @@ const UserListAdmin = () => {
               >
                 <Form.Control
                   type="search"
-                  placeholder="Search..."
+                  placeholder="Search eg(Name , Email)"
                   value={searchInput}
                   onChange={(e) => {
                     setSearchInput(e.target.value);

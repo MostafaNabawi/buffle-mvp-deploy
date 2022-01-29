@@ -108,7 +108,7 @@ const UserList = () => {
               >
                 <Form.Control
                   type="search"
-                  placeholder="Search..."
+                  placeholder="Search eg(Name , Email)"
                   onChange={(e) => {
                     setSearchInput(e.target.value);
                   }}

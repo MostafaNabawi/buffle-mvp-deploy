@@ -213,12 +213,12 @@ function HydrationReminderCard() {
           }
         />
         <CardBody>
-          {/* <WaterRepository
+          <WaterRepository
             precent={1}
             liter={1}
-            reminder={reminder}
+            reminder={3}
             animatClass={animatClass}
-          /> */}
+          />
         </CardBody>
       </Card>
       <Modal
