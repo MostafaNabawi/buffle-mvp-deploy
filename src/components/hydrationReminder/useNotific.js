@@ -1,7 +1,11 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function useNotific(callback, delay) {
   const savedCallback = useRef();
+  // const [id, setId] = useState("");
+  // if (id !== "") {
+  //   clearInterval(id);
+  // }
 
   // Remember the latest callback.
   useEffect(() => {

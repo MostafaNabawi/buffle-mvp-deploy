@@ -153,7 +153,10 @@ function HydrationReminderCard() {
     if (notificDelay !== "") {
       if (!isMute) {
         if (precent > 0) {
-          console.log("info");
+          addToast("INFO", {
+            autoDismiss: true,
+            appearance: "info",
+          });
         }
       }
     }
