@@ -4,12 +4,16 @@ import { Icon } from "@iconify/react";
 import style from "./style.module.css";
 import { useStopwatch } from 'react-timer-hook';
 import moment from "moment";
+import { updateTaskSpendTime } from "../../../api";
+
 const TaskManagerPreogressBar = (props) => {
   const { _id, name, date, spend_time, task_duration } = props;
   const [percent, setPercent] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [play, setPlay] = useState(true);
   const duration = moment.duration(task_duration).asSeconds();
+  const time = spend_time !== null ? spend_time.split(':') : `${0}:${0}:${0}:${0}`.split(":");
+
   const {
     seconds,
     minutes,
@@ -18,21 +22,41 @@ const TaskManagerPreogressBar = (props) => {
     start,
     pause,
   } = useStopwatch({ autoStart: false });
-  const handlePlay = () => {
+  const handlePlay = async () => {
     if (!play) {
       pause()
-      console.log('d', days, 'h', hours, 'm', minutes, 's', seconds)
       setPlay(!play);
+      if (seconds > 30) {
+        const sp_time = `${days + parseInt(time[0])}:${hours + parseInt(time[1])}:${(minutes + parseInt(time[2])) + 1}`;
+        const update = await updateTaskSpendTime(_id, sp_time, 'stop', new Date().toISOString())
+        if (update.status === 200) {
+          console.log('correct');
+        }
+      }
+      else {
+        const sp_time = `${days + parseInt(time[0])}:${hours + parseInt(time[1])}:${minutes + parseInt(time[2])}`;
+        const update = await updateTaskSpendTime(_id, sp_time, 'stop', new Date().toISOString())
+        if (update.status === 200) {
+          console.log('correct');
+        }
+      }
+
+
     }
     if (play) {
-      console.log('d', days, 'h', hours, 'm', minutes, 's', seconds)
+      console.log('running')
+      const sp_time = `${days + parseInt(time[0])}:${hours + parseInt(time[1])}:${minutes + parseInt(time[2])}`;
+      const update = await updateTaskSpendTime(_id, sp_time, 'runnig', new Date().toISOString())
+      if (update.status === 200) {
+        console.log('correct');
+      }
       start()
       setPlay(!play);
     }
   };
   useEffect(() => {
-    setPercent((100 * ((days * 86400) + (hours * 3600) + (minutes * 60) + (seconds))) / duration);
-    setCurrentTime((((days * 86400) + (hours * 3600) + (minutes * 60) + (seconds))));
+    setPercent((100 * (((days + parseInt(time[0])) * 86400) + ((hours + parseInt(time[1])) * 3600) + ((minutes + parseInt(time[2])) * 60) + (seconds))) / duration);
+    setCurrentTime(((days + parseInt(time[0])) * 86400) + ((hours + parseInt(time[1])) * 3600) + ((minutes + parseInt(time[2])) * 60) + (seconds));
     if (currentTime === duration) {
       pause()
       setPlay(!play);
@@ -47,12 +71,12 @@ const TaskManagerPreogressBar = (props) => {
 
         <Col xl="11" className="pl-0">
           <Icon
-            // color={play && percentUI > 0 ? "" : `#4922ff`}
+            // color={play && percent > 0 ? "" : `#4922ff`}
             className={style.iconWatch}
             icon="bi:clock-fill"
           />
           <ProgressBar
-            label={<><span>{days}:{hours}:{minutes}:{seconds}</span></>}
+            label={<><span>{days + parseInt(time[0])}:{hours + parseInt(time[1])}:{minutes + parseInt(time[2])}:{seconds}</span></>}
             now={percent}
             className={style.progress}
           />
