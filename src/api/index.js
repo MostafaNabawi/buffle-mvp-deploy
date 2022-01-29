@@ -384,6 +384,60 @@ async function completeTask(id, status) {
   });
   return { status: req.status };
 }
+
+async function updateTaskSpendTime(id, time, status) {
+  console.log(id, time, status);
+
+  const req = await fetch(`${API_URL}/task/update-spend-time`, {
+    method: "PUT",
+    credentials: "include",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+    body: JSON.stringify({
+      taskId: id,
+      time: time,
+      status: status,
+    }),
+  });
+  return { status: req.status };
+}
+async function updateTaskWhenPlay(id, status, dateTime) {
+  const req = await fetch(`${API_URL}/task/update-status-and-time`, {
+    method: "PUT",
+    credentials: "include",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+    body: JSON.stringify({
+      taskId: id,
+      dateTime: dateTime,
+      status: status,
+    }),
+  });
+  return { status: req.status };
+}
+async function updateTaskWhenCompleted(id, time, status) {
+  const req = await fetch(`${API_URL}/task/update-task-completed`, {
+    method: "PUT",
+    credentials: "include",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+    body: JSON.stringify({
+      taskId: id,
+      time: time,
+      status: status,
+    }),
+  });
+  return { status: req.status };
+}
 // Hydration Reminder
 async function getWaterHydration() {
   const req = await fetch(`${API_URL}/water_hydration/get`, {
@@ -479,4 +533,7 @@ export {
   getTaskById,
   deleteMultiTask,
   completeTask,
+  updateTaskSpendTime,
+  updateTaskWhenPlay,
+  updateTaskWhenCompleted,
 };

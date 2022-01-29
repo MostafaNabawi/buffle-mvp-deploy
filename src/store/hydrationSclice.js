@@ -1,23 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { API_URL } from "../config";
-
-export const getWaterHydration = createAsyncThunk(
-  "hydration/getWaterHydration",
-  async () => {
-    const response = await fetch(`${API_URL}/water_hydration/get`, {
-      method: "GET",
-      credentials: "include",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Credentials": true,
-      },
-    });
-    const data = await response.json();
-    console.log(data, "data");
-    return data;
-  }
-);
+import { createSlice } from "@reduxjs/toolkit";
 
 export const hydrationSlice = createSlice({
   name: "hydration",
@@ -26,33 +7,56 @@ export const hydrationSlice = createSlice({
     precent: 100,
     reminder: 0,
     isMute: false,
+    notificDelay: "",
+    reminderDelay: "",
+    usedPerPercent: 0,
   },
   reducers: {
     setData: (state, action) => {
-      state.data = { ...action.payload };
+      state.data = action.payload;
     },
     setMute: (state) => {
       state.isMute = !state.isMute;
     },
     setPrecent: (state) => {
-      if (state.precent >= 1) {
+      if (state.precent > 0) {
         state.precent -= 1;
       }
     },
-    setReminder: (state) => {
-      if (state.reminder <= state.data.daily_goal) {
-        state.reminder += 1;
+    setPrecentByAmount: (state, action) => {
+      state.precent = action.payload;
+    },
+    setReminder: (state, action) => {
+      if (state.precent > 0) {
+        state.reminder += action.payload;
       }
     },
-  },
-  extraReducers(builder) {
-    builder.addCase(getWaterHydration.fulfilled, (state, { payload }) => {
-      state.data = { payload };
-    });
+    setRemindertByAmount: (state, action) => {
+      state.reminder = action.payload;
+    },
+    setNotificatiionDelay: (state, action) => {
+      state.notificDelay = action.payload;
+    },
+    setReminderDelay: (state, action) => {
+      state.reminderDelay = action.payload;
+    },
+    setUsedPerPercent: (state, action) => {
+      state.usedPerPercent = 0;
+      state.usedPerPercent = action.payload;
+    },
   },
 });
 
-export const { setData, setMute, setPrecent, setReminder } =
-  hydrationSlice.actions;
+export const {
+  setData,
+  setMute,
+  setPrecent,
+  setPrecentByAmount,
+  setReminder,
+  setRemindertByAmount,
+  setNotificatiionDelay,
+  setReminderDelay,
+  setUsedPerPercent,
+} = hydrationSlice.actions;
 
 export default hydrationSlice.reducer;

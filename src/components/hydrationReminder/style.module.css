@@ -109,6 +109,7 @@
   position: absolute;
   width: 110%;
   height: 122%;
+  left: 0;
 }
 
 .wave::before {
@@ -231,7 +232,6 @@
   );
   opacity: 60%;
   bottom: -56%;
-  left: 0%;
   transform: rotateX(180deg);
   clip-path: polygon(
     100% 0%,
