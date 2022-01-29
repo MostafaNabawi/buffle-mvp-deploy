@@ -4,7 +4,7 @@ import { Form, Spinner } from "react-bootstrap";
 import style from "./../style.module.css";
 function AddNewMember() {
   const [email, setEmail] = useState("");
-  const [result, setResult] = useState([]);
+  const [result, setResult] = useState([1]);
 
   function handleSubmit(e) {
     setEmail(e.target.value);
@@ -31,13 +31,13 @@ function AddNewMember() {
         </Form.Group>
       </Form>
       <div className={style.search_result}>
-        <div className={style.spinner_wrapper}>
+        {/* <div className={style.spinner_wrapper}>
           {result.length > 0 ? (
             <div>result</div>
           ) : (
             <Spinner animation="border" />
           )}
-        </div>
+        </div> */}
       </div>
     </div>
   );
