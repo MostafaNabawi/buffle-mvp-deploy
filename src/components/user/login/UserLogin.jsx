@@ -41,6 +41,7 @@ const UserLogin = () => {
         });
         setLoading(false);
       }
+      console.log("rr ", req);
       if (req.data.type === 1) {
         console.log(req.data);
         localStorage.setItem("user", JSON.stringify(req.data.user));
@@ -252,7 +253,10 @@ const UserLogin = () => {
                     label="Check me out"
                     disabled={loading}
                   />
-                  <Link className={`${style.forgetPassLink}`} to="/forget-password">
+                  <Link
+                    className={`${style.forgetPassLink}`}
+                    to="/forget-password"
+                  >
                     Forgot password?
                   </Link>
                 </Form.Group>
