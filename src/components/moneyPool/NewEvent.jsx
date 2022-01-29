@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Form, Col, Button } from "react-bootstrap";
 import { Icon } from "@iconify/react";
 import style from "./style.module.css";
@@ -7,24 +7,15 @@ import { useNavigate } from "react-router-dom";
 import Card from "./../card/Card";
 import CardBody from "./../card/CardBody";
 import AddNewMember from "./partials/AddNewMember";
-const currencyData = [
-  {
-    AbbreviationName: "USD",
-    FullName: "US Doller",
-  },
-  {
-    AbbreviationName: "URE",
-    FullName: "Euro",
-  },
-  {
-    AbbreviationName: "AFG",
-    FullName: "Afghani",
-  },
-];
+import CurrencyList from "currency-list";
+import { useToasts } from "react-toast-notifications";
+import { API_URL } from "../../config";
+
 function NewEvent() {
   const navigate = useNavigate();
   const [personNum, setPersonNum] = useState([2]);
-
+  const [currencyData, setCurrencyData] = useState(null);
+  const { addToast } = useToasts();
   const addPerson = () => {
     setPersonNum([...personNum, personNum.length + 2]);
   };
@@ -32,7 +23,38 @@ function NewEvent() {
   const handleSubmit = () => {
     navigate("event");
   };
-
+  const handleJoin = (e) => {
+    e.preventDefault();
+    const form = new FormData(e.currentTarget);
+    const code = form.get("invite");
+    if (code === "") {
+      addToast("Code is required!", {
+        appearance: "warning",
+        autoDismiss: 4000,
+      });
+      return;
+    }
+    fetch(`${API_URL}/money-poll/join-event`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        code: code,
+      }),
+    }).then(async (res) => {
+      const data = await res.json();
+      addToast(data?.msg, {
+        appearance: "info",
+        autoDismiss: 3000,
+      });
+    });
+  };
+  useEffect(() => {
+    setCurrencyData(Object.values(CurrencyList.getAll("en_US")));
+    // console.log(CurrencyList.get("AFN"));
+  }, []);
   return (
     <Card className="event_card">
       <CardBody className={style.new_event}>
@@ -42,7 +64,7 @@ function NewEvent() {
               <Col md={12}>
                 <Form.Group className="mb-3" controlId="eventName">
                   <Form.Label>Event name </Form.Label>
-                  <Form.Control type="text" placeholder="Birth day" />
+                  <Form.Control type="text" placeholder="Birthday" />
                 </Form.Group>
               </Col>
               <Col md={12} className={style.select_col}>
@@ -53,12 +75,9 @@ function NewEvent() {
                   <Form.Label>Home Currency</Form.Label>
                   <Form.Select aria-label="Default select example">
                     {currencyData &&
-                      currencyData.map((currency) => (
-                        <option
-                          key={currency.FullName}
-                          value={currency.AbbreviationName}
-                        >
-                          {currency.AbbreviationName}
+                      currencyData.map((currency, i) => (
+                        <option key={`${i}-currency`} value={currency?.code}>
+                          {currency?.name} ({currency?.symbol})
                         </option>
                       ))}
                   </Form.Select>
@@ -89,9 +108,13 @@ function NewEvent() {
               </p>
             </div>
             <div className={style.invite_form_area}>
-              <Form>
+              <Form onSubmit={handleJoin}>
                 <Form.Group controlId="inviteCode">
-                  <Form.Control type="text" placeholder="Invite code" />
+                  <Form.Control
+                    type="text"
+                    placeholder="Invite code"
+                    name="invite"
+                  />
                 </Form.Group>
                 <Button type="submit">Join</Button>
               </Form>

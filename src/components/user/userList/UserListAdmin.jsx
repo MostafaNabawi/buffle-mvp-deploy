@@ -5,21 +5,22 @@ import TableAdmin from "../../table/TableAdmin";
 import style from "../../table/style.module.css";
 import { PulseLoader } from "react-spinners";
 import { getAllUsers } from "../../../api/admin";
-import { useSearchParams } from "react-router-dom";
 
 const UserListAdmin = () => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
-  const [statusFilterData, setStatusFilterData] = useState([]);
-  const [statusFilter, setStatusFilter] = useState(1);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [filteredData, setFilteredData] = useState([]);
+  // filter inputs
+  const [statusFilter, setStatusFilter] = useState(0);
+  const [typeFilter, setTypeFilter] = useState(0);
+  //search input
+  const [searchInput, setSearchInput] = useState("");
 
   useEffect(() => {
     async function pageData() {
       const payload = await getAllUsers();
       console.log(payload);
       if (payload?.status === 200) {
-        console.log("payload", payload.data);
         setData(payload?.data);
         setLoading(false);
       }
@@ -27,14 +28,69 @@ const UserListAdmin = () => {
     pageData();
   }, []);
   useEffect(() => {
-    if (statusFilter === 2) {
-      const filterStatue = data.filter((i) => i.status !== "active");
-      setStatusFilterData(filterStatue);
+    if (typeFilter === 0) {
+      setFilteredData([]);
     }
+    // company spaces
+    if (typeFilter === 1) {
+      let filtered = data.filter((i) => i?.space[0]?.type === "c");
+      setFilteredData(filtered);
+    }
+    // Student spaces
+    if (typeFilter === 2) {
+      let filtered = data.filter((i) => i?.space[0]?.type === "s");
+      setFilteredData(filtered);
+    }
+    // freelancer spaces
+    if (typeFilter === 3) {
+      let filtered = data.filter((i) => i?.space[0]?.type === "f");
+      setFilteredData(filtered);
+    }
+  }, [typeFilter, data]);
+  //second useEffect
+  useEffect(() => {
+    if (statusFilter === 0) {
+      setFilteredData([]);
+    }
+    // block spaces
     if (statusFilter === 1) {
-      setStatusFilterData([]);
+      let filtered = data.filter((i) => i?.space[0]?.status === "block");
+      setFilteredData(filtered);
     }
-  }, [statusFilter]);
+    // confirm spaces
+    if (statusFilter === 2) {
+      let filtered = data.filter(
+        (i) => i?.space[0]?.status === "active" && i?.space[0]?.type !== "a"
+      );
+      setFilteredData(filtered);
+    }
+    if (statusFilter === 3) {
+      let filtered = data.filter((i) => i?.space[0]?.status === "pending");
+      setFilteredData(filtered);
+    }
+  }, [statusFilter, data]);
+  // refresher
+  useEffect(() => {
+    if (searchInput === "") {
+      setFilteredData([]);
+    } else {
+      let filteredData = data.filter(
+        (i) =>
+          i?.email?.toLowerCase().includes(searchInput.toLowerCase()) ||
+          i?.first_name?.toLowerCase().includes(searchInput.toLowerCase())
+      );
+      console.log("FF => ", filteredData);
+      setFilteredData(filteredData);
+    }
+  }, [searchInput]);
+  const refresh = async () => {
+    setLoading(true);
+    const payload = await getAllUsers();
+    if (payload?.status === 200) {
+      setData(payload?.data);
+      setLoading(false);
+    }
+  };
   if (loading) {
     return (
       <>
@@ -57,8 +113,12 @@ const UserListAdmin = () => {
           </Col>
           <Col xl={3}>
             <Form.Group className="mb-3 input-group" controlId="formBasicEmail">
-              <Form.Select>
-                <option value="1">All</option>
+              <Form.Select
+                onChange={(e) => {
+                  setTypeFilter(Number(e.target.value));
+                }}
+              >
+                <option value="0">All</option>
                 <option value="1">Company</option>
                 <option value="2">Student</option>
                 <option value="3">Freelancer</option>
@@ -70,26 +130,25 @@ const UserListAdmin = () => {
               <Form.Select
                 onChange={(e) => setStatusFilter(Number(e.target.value))}
               >
-                <option value="1">All</option>
-                <option value="2">Block</option>
-                <option value="3">Confirem</option>
+                <option value="0">All</option>
+                <option value="1">Block</option>
+                <option value="2">Active</option>
+                <option value="3">Pending</option>
               </Form.Select>
             </Form.Group>
           </Col>
           <Col xl={3}>
-            <Form>
+            <Form onSubmit={(e) => e.preventDefault()}>
               <Form.Group
                 className="mb-3 input-group"
                 controlId="formBasicPassword"
               >
                 <Form.Control
                   type="search"
-                  placeholder="Search..."
+                  placeholder="Search eg(Name , Email)"
+                  value={searchInput}
                   onChange={(e) => {
-                    if (e.target.value.length === 0) {
-                      setSearchParams("");
-                    }
-                    setSearchParams(`?q=${e.target.value}`);
+                    setSearchInput(e.target.value);
                   }}
                 />
                 <Button variant="primary" type="submit">
@@ -108,8 +167,13 @@ const UserListAdmin = () => {
                 "Type",
                 "action",
               ]}
-              tableBody={data}
+              tableBody={
+                filteredData.length > 0 || searchInput !== ""
+                  ? filteredData
+                  : data
+              }
               isPagination={true}
+              refresh={refresh}
             />
           </Col>
         </Row>

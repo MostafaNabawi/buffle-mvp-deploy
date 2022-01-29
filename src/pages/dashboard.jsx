@@ -2,8 +2,8 @@ import { React, useEffect, useState } from "react";
 import { Row, Col, Image, Form, Button, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 import TimePicker from "react-time-picker";
 import ProgressBar from "../components/common/progressBar/ProgressBar";
 import TaskManagerPreogressBar from "../components/common/progressBar/TaskManagerProgress";
@@ -16,22 +16,31 @@ import ImpotentToDayCard from "./../components/impotentToDay/ImpotentToDayCard";
 import BreakplanFrom from "../components/breakplan/BreakplanForm";
 import Modal from "../components/modal/modal";
 import { nextBreakTimeValidation, timeDifference } from "../config/utils";
-import { addNextBreak, createTask, deleteNextBreak, getNextBreak, getDashboardTask, updateDhashboardTask, getTaskById, deleteMultiTask } from "../api";
+import {
+  addNextBreak,
+  createTask,
+  deleteNextBreak,
+  getNextBreak,
+  getDashboardTask,
+  updateDhashboardTask,
+  getTaskById,
+  deleteMultiTask,
+} from "../api";
 import { getaAllBreackPlan } from "../api/breackPlan";
 import { PulseLoader } from "react-spinners";
 import { useToasts } from "react-toast-notifications";
 import Felling from "../components/feel/Felling";
-import BeatLoader from 'react-spinners/BeatLoader';
+import BeatLoader from "react-spinners/BeatLoader";
 import { API_URL } from "../config";
 import Countdown from "react-countdown";
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const Dashboard = () => {
-  const MySwal = withReactContent(Swal)
+  const MySwal = withReactContent(Swal);
   const currentUser = JSON.parse(localStorage.getItem("user"));
   const [timeFormat, setTimeFormat] = useState(false);
-  const [updateTimeFormat, setUpdateTimeFormat] = useState('');
+  const [updateTimeFormat, setUpdateTimeFormat] = useState("");
   // show form for breack plan
   const [BreakPlanForm, setBreakPlanFrom] = useState(false);
   const [breakJoinOrSagest, setBreakJoinOrSagest] = useState(false);
@@ -44,16 +53,16 @@ const Dashboard = () => {
   const handleClose = () => {
     setModalShow(false);
     setNextBreakDateInput("");
-    setTaskName('');
-    setDuration('');
-    setError('');
-    setTaskError('');
+    setTaskName("");
+    setDuration("");
+    setError("");
+    setTaskError("");
   };
   // Data for Breack plan form
   const [timeData, setTimeData] = useState([]);
-  const [suggestData, setSuggestData] = useState([])
-  const [joindata, setJoinData] = useState([])
-  const [editData, setEditData] = useState('')
+  const [suggestData, setSuggestData] = useState([]);
+  const [joindata, setJoinData] = useState([]);
+  const [editData, setEditData] = useState("");
   // is show modal for...
   const handleShow = () => setModalShow(true);
   const [vacationTime, setVacationTime] = useState(false);
@@ -72,15 +81,15 @@ const Dashboard = () => {
   const [breacPlanData, setBreakPlanData] = useState("");
   const { addToast } = useToasts();
   // vacation Time statte
-  const [vacationNameInput, setVacationNameInput] = useState('')
-  const [vacationDataInput, setVacationDataInput] = useState('')
-  const [vacationData, setVacationData] = useState('')
-  const [vacationLoader, setVacationLoader] = useState(false)
+  const [vacationNameInput, setVacationNameInput] = useState("");
+  const [vacationDataInput, setVacationDataInput] = useState("");
+  const [vacationData, setVacationData] = useState("");
+  const [vacationLoader, setVacationLoader] = useState(false);
   // create task
-  const [duration, setDuration] = useState('');
-  const [updateDuration, setUpdateDuration] = useState('');
-  const [taskName, setTaskName] = useState({ name: "", });
-  const [updateTaskName, setUpdateTaskName] = useState({ name: "", });
+  const [duration, setDuration] = useState("");
+  const [updateDuration, setUpdateDuration] = useState("");
+  const [taskName, setTaskName] = useState({ name: "" });
+  const [updateTaskName, setUpdateTaskName] = useState({ name: "" });
   const [showSkleton, setShowSkleton] = useState(false);
   const [loading, setloading] = useState(false);
   const [taskError, setTaskError] = useState("");
@@ -90,9 +99,9 @@ const Dashboard = () => {
   const [taskData, setTaskData] = useState([]);
   const [taskReload, setTaskReload] = useState(false);
   const [checkId, setCheckedId] = useState([]);
-  const [oldTaskName, setOldTaskName] = useState('');
-  const [oldTaskTime, setOldTaskTime] = useState('');
-  const [spendTime, setSpendTime] = useState('');
+  const [oldTaskName, setOldTaskName] = useState("");
+  const [oldTaskTime, setOldTaskTime] = useState("");
+  const [spendTime, setSpendTime] = useState("");
   // next break action
   const handleNextBreakOperation = async () => {
     if (nextBreakDateInput.length === 0) {
@@ -125,7 +134,7 @@ const Dashboard = () => {
   //
   const creatVacationTime = async () => {
     try {
-      setVacationLoader(true)
+      setVacationLoader(true);
       await fetch(`${API_URL}/vacation`, {
         method: "POST",
         credentials: "include",
@@ -135,25 +144,28 @@ const Dashboard = () => {
         },
         body: JSON.stringify({
           name: vacationNameInput,
-          date: vacationDataInput
-        })
+          date: vacationDataInput,
+        }),
       }).then((res) => {
         if (res.status === 200) {
-          getVacationTime()
-          setVacationLoader(false)
-          setVacationNameInput('')
-          setVacationDataInput('')
-          handleClose()
+          getVacationTime();
+          setVacationLoader(false);
+          setVacationNameInput("");
+          setVacationDataInput("");
+          handleClose();
           addToast("Saved", { autoDismiss: true, appearance: "success" });
         } else {
-          setVacationLoader(false)
-          addToast("Error Please Try Again", { autoDismiss: true, appearance: "Error" });
+          setVacationLoader(false);
+          addToast("Error Please Try Again", {
+            autoDismiss: true,
+            appearance: "Error",
+          });
         }
-      })
+      });
     } catch (err) {
-      setVacationLoader(false)
+      setVacationLoader(false);
     }
-  }
+  };
   const getVacationTime = async () => {
     try {
       await fetch(`${API_URL}/vacation`, {
@@ -161,73 +173,70 @@ const Dashboard = () => {
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Allow-Credentials": true,
-        }
+        },
       }).then(async (res) => {
         if (res.status === 200) {
-          const { payload } = await res.json()
+          const { payload } = await res.json();
           if (payload) {
-            setVacationData(payload)
+            setVacationData(payload);
           } else {
-            setVacationData("noVacation")
+            setVacationData("noVacation");
           }
         }
-      })
+      });
     } catch (err) {
-      console.log("Server Error")
+      console.log("Server Error");
     }
-  }
+  };
   const editBreakPlan = async (data) => {
-    setEditData(data)
+    setEditData(data);
     setBreakPlanFrom(true);
     setBreakJoinOrSagest(false);
     setBreakNewTime(false);
     setInvateForm(false);
-    return true
-  }
+    return true;
+  };
   const joinOrNewSuggestForm = async (data, join) => {
-    setSuggestData(data)
-    setJoinData(join)
+    setSuggestData(data);
+    setJoinData(join);
     setBreakPlanFrom(true);
     setBreakJoinOrSagest(true);
     setBreakNewTime(false);
     setInvateForm(false);
-  }
+  };
   const timeFormBreakplan = async (data) => {
-    setEditData('')
+    setEditData("");
     setBreakPlanFrom(true);
     setBreakJoinOrSagest(false);
     setBreakNewTime(true);
     setInvateForm(false);
     setTimeData(data);
-  }
+  };
   const validateTaskName = (value) => {
     if (!value) {
       setTaskError("Task name is required!");
       return false;
-    }
-    else {
+    } else {
       setTaskError("");
       return true;
     }
-  }
+  };
   const validateTaskTime = (value) => {
     if (!value) {
       setError("Task duration is required!");
       return false;
-    }
-    else {
+    } else {
       setError("");
       return true;
     }
-  }
+  };
   // create new task
   const handleCreateTask = async () => {
-
     if (validateTaskName(taskName.name) && validateTaskTime(duration)) {
       setloading(true);
       const createT = await createTask(taskName, 1, duration, true, "stop");
       if (createT.status === 200) {
-        setTaskReload(true)
+        setTaskReload(true);
         addToast("Created susseccfully", {
           autoDismiss: true,
           appearance: "success",
@@ -237,25 +246,23 @@ const Dashboard = () => {
         setTimeFormat(false);
         setModalShow(false);
       } else {
-
         addToast("Error Please Try Again!", {
           autoDismiss: false,
           appearance: "error",
         });
         setloading(false);
-        setTimeFormat(false)
+        setTimeFormat(false);
         setModalShow(false);
         setTaskReload(false);
         return true;
       }
       setloading(false);
       setDuration("");
-      setTaskName('');
-      setTimeFormat(false)
+      setTaskName("");
+      setTimeFormat(false);
       setModalShow(false);
       setTaskReload(false);
       return true;
-
     }
   };
   // get tasks
@@ -272,23 +279,22 @@ const Dashboard = () => {
   }
   const handleCheck = (e) => {
     if (e.target.checked) {
-      setCheckedId([...checkId, e.target.id])
+      setCheckedId([...checkId, e.target.id]);
+    } else {
+      const newArr = checkId.filter((i) => i !== e.target.id);
+      setCheckedId(newArr);
     }
-    else {
-      const newArr = checkId.filter(i => i !== e.target.id)
-      setCheckedId(newArr)
-    }
-  }
+  };
   // delete selected task or tasks
   const handleDelete = async () => {
     if (checkId.length > 0) {
       MySwal.fire({
-        title: 'Are you sure?',
+        title: "Are you sure?",
         text: "You won't be able to revert this!",
-        icon: 'warning',
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonText: 'Yes, delete it!',
-        cancelButtonText: 'No, cancel!',
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
         reverseButtons: true,
       }).then(async (result) => {
         if (result.isConfirmed) {
@@ -297,62 +303,62 @@ const Dashboard = () => {
 
             if (deleteT.status === 200) {
               setTaskReload(true);
-              Swal.fire(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success',
-              )
+              Swal.fire("Deleted!", "Your file has been deleted.", "success");
               handleClose();
               setTaskReload(false);
             } else {
-              addToast('Error: Please Try Again!.', {
-                appearance: 'error',
+              addToast("Error: Please Try Again!.", {
+                appearance: "error",
                 autoDismiss: true,
-              })
+              });
               handleClose();
               setTaskReload(false);
             }
           } catch (error) {
-            addToast('Error: Please Try Again!.', {
-              appearance: 'error',
+            addToast("Error: Please Try Again!.", {
+              appearance: "error",
               autoDismiss: true,
-            })
+            });
             handleClose();
             setTaskReload(false);
           }
         }
-      })
+      });
+    } else {
+      Swal.fire("Please select an item to delete!");
     }
-    else {
-      Swal.fire('Please select an item to delete!')
-    }
-  }
+  };
   // validate update form
   const validateTaskUpdateName = (value) => {
     if (!value) {
       setTaskUpdatekError("Task name is required!");
       return false;
-    }
-    else {
+    } else {
       setTaskUpdatekError("");
       return true;
     }
-  }
+  };
   const validateTaskUpdateTime = (value) => {
     if (!value) {
       setErrorUpdate("Task duration is required!");
       return false;
-    }
-    else {
+    } else {
       setErrorUpdate("");
       return true;
     }
-  }
+  };
   // update slected task (only single task)
   const updateSelectedTask = async () => {
-    if (validateTaskUpdateName(updateTaskName) && validateTaskUpdateTime(updateDuration)) {
+    if (
+      validateTaskUpdateName(updateTaskName) &&
+      validateTaskUpdateTime(updateDuration)
+    ) {
       setloading(true);
-      const updateTask = await updateDhashboardTask(checkId[0], updateTaskName, updateDuration);
+      const updateTask = await updateDhashboardTask(
+        checkId[0],
+        updateTaskName,
+        updateDuration
+      );
       if (updateTask.status === 200) {
         setTaskReload(true);
         setCheckedId([]);
@@ -370,7 +376,7 @@ const Dashboard = () => {
         });
         setCheckedId([]);
         setloading(false);
-        setUpdateTimeFormat(false)
+        setUpdateTimeFormat(false);
         setModalShow(false);
         setTaskReload(false);
         return true;
@@ -378,25 +384,23 @@ const Dashboard = () => {
       setCheckedId([]);
       setloading(false);
       setUpdateDuration("");
-      setUpdateTaskName('');
-      setUpdateTimeFormat(false)
+      setUpdateTaskName("");
+      setUpdateTimeFormat(false);
       setModalShow(false);
       setTaskReload(false);
       return true;
-
     }
-  }
+  };
   // get data according to selected item for edit
   const handleUpdateTask = async () => {
-
     if (checkId.length === 1) {
       const oldData = await getTaskById(checkId[0]);
       setOldTaskName(oldData.data.name);
       setOldTaskTime(oldData.data.task_duration);
       setUpdateDuration(oldData.data.task_duration);
       setUpdateTaskName(oldData.data.name);
-      if ((oldData.data.task_duration.split(':')[0] == '00')) {
-        setUpdateTimeFormat('min');
+      if (oldData.data.task_duration.split(":")[0] == "00") {
+        setUpdateTimeFormat("min");
       }
       setModalShow(true);
       setNextBreak(false);
@@ -405,14 +409,12 @@ const Dashboard = () => {
       setTaskManagerUpdate(true);
       setSizeModal("md");
       setTitleModa("Update selected Task");
+    } else if (checkId.length > 1) {
+      Swal.fire("You can not update more than one item at the same time!");
+    } else {
+      Swal.fire("Please select an item for edit!");
     }
-    else if (checkId.length > 1) {
-      Swal.fire('You can not update more than one item at the same time!')
-    }
-    else {
-      Swal.fire('Please select an item for edit!')
-    }
-  }
+  };
 
   // effects
   useEffect(() => {
@@ -451,7 +453,6 @@ const Dashboard = () => {
       }
     }
 
-
     getBreakPlan();
     innerNextBreak();
     getTask();
@@ -459,8 +460,8 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
-    getTask()
-  }, [taskReload])
+    getTask();
+  }, [taskReload]);
   return (
     <section>
       <Row>
@@ -494,8 +495,8 @@ const Dashboard = () => {
                     setModalShow(true);
                     setVacationTime(false);
                     setNextBreak(true);
-                    setTaskManager(false)
-                    setTaskManagerUpdate(false)
+                    setTaskManager(false);
+                    setTaskManagerUpdate(false);
                     setSizeModal("md");
                     setTitleModa("When is your next break?");
                   }}
@@ -539,29 +540,45 @@ const Dashboard = () => {
             />
             <div className="mt-3">
               <span className="vacation-day">
-                {
-                  vacationData === "noVacation" ? <span className="vacation-until">Set your vacation time</span> : vacationData ?
-                    <Countdown
-                      date={vacationData.date}
-                      renderer={(props) => (
-                        <>
-                          {props.days === 0
-                            ? <span className="vacation-until">Injoy your vacation time</span>
-                            : <> <span> {props.days} Days </span>
-                              <span className="vacation-until"> until {vacationData.name}</span></>
-                          }
-                        </>
-                      )}
-                      onComplete={() => {
-                        if (vacationData != "noVacation") {
-                          addToast("Today in your vacation Time", {
-                            appearance: "info",
-                          })
-                        }
-                      }}
-                    />
-                    : <Skeleton count={1} />
-                }
+                {vacationData === "noVacation" ? (
+                  <span className="vacation-until">Set your vacation time</span>
+                ) : vacationData ? (
+                  <Countdown
+                    date={vacationData.date}
+                    renderer={(props) => (
+                      <>
+                        {props.days === 0 && props.hours === 0 ? (
+                          <span className="vacation-until">
+                            Injoy your vacation time
+                          </span>
+                        ) : (
+                          <>
+                            {" "}
+                            <span>
+                              {" "}
+                              {props.days > 0
+                                ? `${props.days + 1} Days`
+                                : `${props.hours} Houres`}{" "}
+                            </span>
+                            <span className="vacation-until">
+                              {" "}
+                              until {vacationData.name}
+                            </span>
+                          </>
+                        )}
+                      </>
+                    )}
+                    onComplete={() => {
+                      if (vacationData != "noVacation") {
+                        addToast("Today in your vacation Time", {
+                          appearance: "info",
+                        });
+                      }
+                    }}
+                  />
+                ) : (
+                  <Skeleton count={1} />
+                )}
               </span>
             </div>
           </Card>
@@ -623,10 +640,7 @@ const Dashboard = () => {
                     id="basic-nav-dropdown"
                   >
                     <NavDropdown.Item className="reminderNavItem taskManagerNavItem">
-                      <i
-                        className="delete"
-                        onClick={handleDelete}
-                      >
+                      <i className="delete" onClick={handleDelete}>
                         <Icon icon="fluent:delete-24-filled" /> Delete
                       </i>
                     </NavDropdown.Item>
@@ -640,30 +654,42 @@ const Dashboard = () => {
               }
             />
             <Row className="dashboard-task-manager-row">
-              {showSkleton ? (<Skeleton count={9} />) : taskData.length > 0 ? taskData.map((t) => (
-                <>
-                  <Row className="task-manager-body pt-0 mt-1 mb-1" key={t._id}>
-                    <Col xl="8">
-                      <Row className="pl-5">
-                        <Col xl="1">
-                          <Form.Group controlId="formBasicCheckbox">
-                            <Form.Check className="check-box " type="checkbox" id={t._id}
-                              onChange={handleCheck}
-                            />
-                          </Form.Group>
-                        </Col>
-                        <Col xl="11" className="task-manager-text">
-                          {t.name}
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col xl="4">
-                      <TaskManagerPreogressBar {...t} />
-                    </Col>
-                  </Row>
-                  <div className="devidre"></div>
-                </>
-              )) : <span >No task for today</span>}
+              {showSkleton ? (
+                <Skeleton count={9} />
+              ) : taskData.length > 0 ? (
+                taskData.map((t) => (
+                  <>
+                    <Row
+                      className="task-manager-body pt-0 mt-1 mb-1"
+                      key={t._id}
+                    >
+                      <Col xl="8">
+                        <Row className="pl-5">
+                          <Col xl="1">
+                            <Form.Group controlId="formBasicCheckbox">
+                              <Form.Check
+                                className="check-box "
+                                type="checkbox"
+                                id={t._id}
+                                onChange={handleCheck}
+                              />
+                            </Form.Group>
+                          </Col>
+                          <Col xl="11" className="task-manager-text">
+                            {t.name}
+                          </Col>
+                        </Row>
+                      </Col>
+                      <Col xl="4">
+                        <TaskManagerPreogressBar {...t} />
+                      </Col>
+                    </Row>
+                    <div className="devidre"></div>
+                  </>
+                ))
+              ) : (
+                <span>No task for today</span>
+              )}
             </Row>
           </Card>
         </Col>
@@ -675,7 +701,7 @@ const Dashboard = () => {
               action={
                 <i
                   onClick={() => {
-                    setEditData('')
+                    setEditData("");
                     setBreakPlanFrom(true);
                     setBreakJoinOrSagest(false);
                     setBreakNewTime(false);
@@ -702,49 +728,66 @@ const Dashboard = () => {
               />
               {/* show Breack plan */}
               <div className="break-plan-card">
-                {breacPlanData === "" ? <Skeleton count={6} />
-                  : breacPlanData.length === 0 ? (
-                    "No Break Plan"
-                  ) : (
-                    breacPlanData &&
-                    breacPlanData.map((data) => (
-                      <Row key={data._id} className="mt-3">
-                        <Col className="col-2">
-                          <div className="breakplan-icon navy-blue text-center pt-2">
-                            <Image
-                              className="breakplan-img"
-                              src="/icone/WB_Headshots-102-web 1.png"
-                            />
-                          </div>
-                        </Col>
-                        <Col>
-                          <div className="break-user-name">
-                            {data.user[0].first_name} {data.user[0].last_name}
-                          </div>{" "}
-                          <div>
-                            <span
-                              id={currentUser._id + data.name.trim()}
-                              onClick={() => {
-                                currentUser._id === data.user[0]._id
-                                  ? editBreakPlan({ id: data._id, name: data.name, time: data.time })
-                                  : joinOrNewSuggestForm({
-                                    id: data.user[0]._id, breackName: data.name
-                                  },
+                {breacPlanData === "" ? (
+                  <Skeleton count={6} />
+                ) : breacPlanData.length === 0 ? (
+                  "No Break Plan"
+                ) : (
+                  breacPlanData &&
+                  breacPlanData.map((data) => (
+                    <Row key={data._id} className="mt-3">
+                      <Col className="col-2">
+                        <div className="breakplan-icon navy-blue text-center pt-2">
+                          <Image
+                            className="breakplan-img"
+                            src="/icone/WB_Headshots-102-web 1.png"
+                          />
+                        </div>
+                      </Col>
+                      <Col>
+                        <div className="break-user-name">
+                          {data.user[0].first_name} {data.user[0].last_name}
+                        </div>{" "}
+                        <div>
+                          <span
+                            id={currentUser._id + data.name.trim()}
+                            onClick={() => {
+                              currentUser._id === data.user[0]._id
+                                ? editBreakPlan({
+                                    id: data._id,
+                                    name: data.name,
+                                    time: data.time,
+                                  })
+                                : joinOrNewSuggestForm(
                                     {
-                                      fullName: currentUser.first_name + " " + currentUser.last_name, breakName: data.name, breakOwnerId: data.user[0]._id
-                                    })
-                              }}
-                              className="break-type"
-                            >
-                              {data.name}
-                            </span>
-                            <span
-                              className="break-time"
-                              id={data._id}
-                              onClick={() => {
-                                currentUser._id === data.user[0]._id
-                                  ? editBreakPlan({ id: data._id, name: data.name, time: data.time })
-                                  : timeFormBreakplan({
+                                      id: data.user[0]._id,
+                                      breackName: data.name,
+                                    },
+                                    {
+                                      fullName:
+                                        currentUser.first_name +
+                                        " " +
+                                        currentUser.last_name,
+                                      breakName: data.name,
+                                      breakOwnerId: data.user[0]._id,
+                                    }
+                                  );
+                            }}
+                            className="break-type"
+                          >
+                            {data.name}
+                          </span>
+                          <span
+                            className="break-time"
+                            id={data._id}
+                            onClick={() => {
+                              currentUser._id === data.user[0]._id
+                                ? editBreakPlan({
+                                    id: data._id,
+                                    name: data.name,
+                                    time: data.time,
+                                  })
+                                : timeFormBreakplan({
                                     time: "",
                                     recevier: data.user[0]._id,
                                     fullName:
@@ -754,15 +797,15 @@ const Dashboard = () => {
                                     breakName: data.name,
                                     breakId: data._id,
                                   });
-                              }}
-                            >
-                              {data.time}
-                            </span>
-                          </div>
-                        </Col>
-                      </Row>
-                    ))
-                  )}
+                            }}
+                          >
+                            {data.time}
+                          </span>
+                        </div>
+                      </Col>
+                    </Row>
+                  ))
+                )}
               </div>
               <Row className="mt-3">
                 <Col>
@@ -774,7 +817,7 @@ const Dashboard = () => {
                           className="break-plan"
                           to=""
                           onClick={() => {
-                            setEditData('')
+                            setEditData("");
                             setBreakPlanFrom(true);
                             setBreakJoinOrSagest(false);
                             setBreakNewTime(false);
@@ -823,7 +866,9 @@ const Dashboard = () => {
                       name="data"
                       type="date"
                       value={vacationDataInput}
-                      onChange={(e) => { setVacationDataInput(e.target.value) }}
+                      onChange={(e) => {
+                        setVacationDataInput(e.target.value);
+                      }}
                     />
                   </Form.Group>
                 </Col>
@@ -834,7 +879,9 @@ const Dashboard = () => {
                       time="text"
                       type="name"
                       value={vacationNameInput}
-                      onChange={(e) => { setVacationNameInput(e.target.value) }}
+                      onChange={(e) => {
+                        setVacationNameInput(e.target.value);
+                      }}
                     />
                   </Form.Group>
                 </Col>
@@ -864,15 +911,24 @@ const Dashboard = () => {
                 <Col md={12}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Task name </Form.Label>
-                    <Form.Control type="text" className={taskError.length > 0 ? "red-border-input" : "no-border-input"}
-                      name="name" onChange={(e) => {
-                        setTaskName({ name: e.target.value })
-                      }} />
+                    <Form.Control
+                      type="text"
+                      className={
+                        taskError.length > 0
+                          ? "red-border-input"
+                          : "no-border-input"
+                      }
+                      name="name"
+                      onChange={(e) => {
+                        setTaskName({ name: e.target.value });
+                      }}
+                    />
                     {taskError ? (
-                      <div className="invalid-feedback d-block">{taskError}</div>
+                      <div className="invalid-feedback d-block">
+                        {taskError}
+                      </div>
                     ) : null}
                   </Form.Group>
-
                 </Col>
                 <Col md={12}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -891,18 +947,23 @@ const Dashboard = () => {
                       <Col xl="8">
                         <Form.Label>Time</Form.Label>
                         <TimePicker
-                          className={`form-control taskManagerTime ${error.length > 0 ? "red-border-input" : "no-border-input"
-                            }`}
+                          className={`form-control taskManagerTime ${
+                            error.length > 0
+                              ? "red-border-input"
+                              : "no-border-input"
+                          }`}
                           clearIcon
                           closeClock
                           format={timeFormat ? "mm:ss" : "hh:mm:ss"}
                           onChange={(value) => {
-                            setDuration(value)
+                            setDuration(value);
                           }}
-                        // value={value}
+                          // value={value}
                         />
                         {error ? (
-                          <div className="invalid-feedback d-block">{error}</div>
+                          <div className="invalid-feedback d-block">
+                            {error}
+                          </div>
                         ) : null}
                       </Col>
                     </Row>
@@ -915,17 +976,25 @@ const Dashboard = () => {
                 <Col md={12}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Task name </Form.Label>
-                    <Form.Control type="text" className={taskError.length > 0 ? "red-border-input" : "no-border-input"}
-                      name="name" onChange={(e) => {
-                        setUpdateTaskName({ name: e.target.value })
+                    <Form.Control
+                      type="text"
+                      className={
+                        taskError.length > 0
+                          ? "red-border-input"
+                          : "no-border-input"
+                      }
+                      name="name"
+                      onChange={(e) => {
+                        setUpdateTaskName({ name: e.target.value });
                       }}
                       defaultValue={oldTaskName}
                     />
                     {taskUpdateError ? (
-                      <div className="invalid-feedback d-block">{taskUpdateError}</div>
+                      <div className="invalid-feedback d-block">
+                        {taskUpdateError}
+                      </div>
                     ) : null}
                   </Form.Group>
-
                 </Col>
                 <Col md={12}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -937,28 +1006,48 @@ const Dashboard = () => {
                           className="selectTime"
                           aria-label="Default select example"
                         >
-                          <option value="houre" selected={oldTaskTime.split(':')[0] != '00'}>Hour</option>
-                          <option value="min" selected={oldTaskTime.split(':')[0] == '00'}>Minute</option>
+                          <option
+                            value="houre"
+                            selected={oldTaskTime.split(":")[0] != "00"}
+                          >
+                            Hour
+                          </option>
+                          <option
+                            value="min"
+                            selected={oldTaskTime.split(":")[0] == "00"}
+                          >
+                            Minute
+                          </option>
                         </Form.Select>
                       </Col>
                       <Col xl="8">
                         <Form.Label>Time</Form.Label>
                         <TimePicker
-                          className={`form-control taskManagerTime ${error.length > 0 ? "red-border-input" : "no-border-input"
-                            }`}
+                          className={`form-control taskManagerTime ${
+                            error.length > 0
+                              ? "red-border-input"
+                              : "no-border-input"
+                          }`}
                           clearIcon
                           closeClock
                           format={
-                            oldTaskTime.split(':')[0] == '00' && updateTimeFormat === 'min' ?
-                              "mm:ss" : oldTaskTime.split(':')[0] != '00' && updateTimeFormat === 'min' ? "mm:ss" : "hh:mm:ss"
+                            oldTaskTime.split(":")[0] == "00" &&
+                            updateTimeFormat === "min"
+                              ? "mm:ss"
+                              : oldTaskTime.split(":")[0] != "00" &&
+                                updateTimeFormat === "min"
+                              ? "mm:ss"
+                              : "hh:mm:ss"
                           }
                           onChange={(value) => {
-                            setUpdateDuration(value)
+                            setUpdateDuration(value);
                           }}
                           value={oldTaskTime}
                         />
                         {errorUpdate ? (
-                          <div className="invalid-feedback d-block">{errorUpdate}</div>
+                          <div className="invalid-feedback d-block">
+                            {errorUpdate}
+                          </div>
                         ) : null}
                       </Col>
                     </Row>
@@ -976,12 +1065,24 @@ const Dashboard = () => {
             {/* Vacation time btn */}
             {vacationTime && (
               <Button
-                disabled={vacationNameInput === "" || vacationDataInput === "" || vacationLoader ? true : false}
+                disabled={
+                  vacationNameInput === "" ||
+                  vacationDataInput === "" ||
+                  vacationLoader
+                    ? true
+                    : false
+                }
                 variant="primary"
                 type="button"
-                onClick={() => { creatVacationTime() }}
+                onClick={() => {
+                  creatVacationTime();
+                }}
               >
-                {vacationLoader ? <Icon fontSize={30} icon="eos-icons:three-dots-loading" /> : "Create Vacation"}
+                {vacationLoader ? (
+                  <Icon fontSize={30} icon="eos-icons:three-dots-loading" />
+                ) : (
+                  "Create Vacation"
+                )}
               </Button>
             )}
             {/* Next Break Btn */}
@@ -1004,7 +1105,11 @@ const Dashboard = () => {
 
             {taskManager && (
               <Button variant="primary" onClick={handleCreateTask}>
-                {loading && duration.length > 0 ? <BeatLoader /> : " Create New Task"}
+                {loading && duration.length > 0 ? (
+                  <BeatLoader />
+                ) : (
+                  " Create New Task"
+                )}
               </Button>
             )}
             {taskManagerUpdate && (
