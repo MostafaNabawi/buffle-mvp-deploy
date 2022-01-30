@@ -80,7 +80,6 @@ const Timer = (props) => {
             }
             request();
         }
-        // console.log(day, hour, minute, second, duration, parseInt(percent), counter % 60, counter, range)
         return () => clearInterval(intervalId);
     }, [play, counter]);
 
