@@ -19,8 +19,8 @@ function NewEvent() {
   const [currencyData, setCurrencyData] = useState(null);
   const { addToast } = useToasts();
   //
-  const [eventName,setEventName]=useState('')
-  const [currency,setCurrency]=useState('')
+  const [eventName, setEventName] = useState("");
+  const [currency, setCurrency] = useState("");
 
   const addPerson = () => {
     setPersonNum([...personNum, personNum.length + 2]);
@@ -77,7 +77,14 @@ function NewEvent() {
                   <Col md={12}>
                     <Form.Group className="mb-3" controlId="eventName">
                       <Form.Label>Event name </Form.Label>
-                      <Form.Control onChange={(e)=>{setEventName(e.target.value)}} value={eventName} type="text" placeholder="Birthday" />
+                      <Form.Control
+                        onChange={(e) => {
+                          setEventName(e.target.value);
+                        }}
+                        value={eventName}
+                        type="text"
+                        placeholder="Birthday"
+                      />
                     </Form.Group>
                   </Col>
                   <Col md={12} className={style.select_col}>
@@ -86,7 +93,12 @@ function NewEvent() {
                       controlId="homeCurrency"
                     >
                       <Form.Label>Home Currency</Form.Label>
-                      <Form.Select  onChange={(e)=>{setCurrency(e.target.value)}} aria-label="Default select example">
+                      <Form.Select
+                        onChange={(e) => {
+                          setCurrency(e.target.value);
+                        }}
+                        aria-label="Default select example"
+                      >
                         {currencyData &&
                           currencyData.map((currency, i) => (
                             <option
@@ -103,7 +115,7 @@ function NewEvent() {
                   <div className={style.participant_section}>
                     <h4>Participants</h4>
                     <Col md={12}>
-                      <AddNewMember eventName={eventName} currency={currency}/>
+                      <AddNewMember eventName={eventName} currency={currency} />
                     </Col>
                   </div>
                 </Form>
