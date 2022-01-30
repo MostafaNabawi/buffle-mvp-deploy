@@ -61,7 +61,6 @@ function NewEvent() {
     });
   };
   function searchEmail() {
-    console.log("email", email);
     const value =
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
         email
@@ -83,6 +82,7 @@ function NewEvent() {
       }).then(async (response) => {
         const result = await response.json();
         if (result.payload) {
+          setEmail('')
           setLoading(false);
           result.email = email;
           setSelected([...selected, result]);
@@ -95,13 +95,21 @@ function NewEvent() {
       setLoading(false);
     }
   }
-  const handleCreatePool = async (uid) => {
+  const handleCreatePool = async () => {
     if (eventName === "" || currency === "") {
+      addToast("All faild is required", { autoDismiss: true, appearance: "error" });
       return "";
     }
+    var userId=[]
+    selected.length >0 &&(
+      selected.map(user=>(
+        userId.push(user.uid)
+      ))
+    )
+    userId=userId.join(',')
     try {
       setCreateing(true);
-      await fetch(`${API_URL}/vacation`, {
+      await fetch(`${API_URL}/money-poll/new `, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -109,12 +117,16 @@ function NewEvent() {
           "Access-Control-Allow-Credentials": true,
         },
         body: JSON.stringify({
-          name: eventName,
-          date: currency,
+          event: eventName,
+          currency: currency,
+          desc:desc,
+          memberIds:userId
         }),
       }).then((res) => {
         if (res.status === 200) {
-          addToast("Saved", { autoDismiss: true, appearance: "success" });
+          setCreateing(false)
+          addToast("Created", { autoDismiss: true, appearance: "success" });
+          navigate('/dashboard/money-pool/event')
         } else {
           addToast("Error Please Try Again", {
             autoDismiss: true,
@@ -122,11 +134,12 @@ function NewEvent() {
           });
         }
       });
-    } catch (err) {}
+    } catch (err) {
+      setCreateing(false)
+    }
   };
   useEffect(() => {
     setCurrencyData(Object.values(CurrencyList.getAll("en_US")));
-
     // console.log(CurrencyList.get("AFN"));
   }, []);
   return (
@@ -169,6 +182,7 @@ function NewEvent() {
                         }}
                         aria-label="Default select example"
                       >
+                        <option value="">Currency</option>
                         {currencyData &&
                           currencyData.map((currency, i) => (
                             <option
@@ -181,7 +195,7 @@ function NewEvent() {
                       </Form.Select>
                     </Form.Group>
                   </Col>
-
+                   {/* email */}
                   <div className={style.participant_section}>
                     <h4>Participants</h4>
                     <Col md={12}>
@@ -216,12 +230,14 @@ function NewEvent() {
                       </div>
                     </Col>
                   </div>
+                  {/* not fount user */}
                   {notFound && (
                     <div style={{ color: "red" }}>
                       {" "}
                       User by this email not found. code.{" "}
                     </div>
                   )}
+                  {/* selected user */}
                   {selected.length > 0 && (
                     <div className={style.participants}>
                       <Table striped className="mb-0">
@@ -246,6 +262,7 @@ function NewEvent() {
                       </Table>
                     </div>
                   )}
+                  {/* desc */}
                   <div className={style.comment}>
                     <div className={style.form_area}>
                       <Form.Group controlId="exampleForm.ControlTextarea1">
@@ -266,6 +283,7 @@ function NewEvent() {
                     }}
                     className="mt-3"
                     type="button"
+                    disabled={createing}
                   >
                     {createing ? (
                       <Icon fontSize={24} icon="eos-icons:loading" />
