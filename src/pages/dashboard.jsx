@@ -103,7 +103,7 @@ const Dashboard = () => {
   const [taskData, setTaskData] = useState([]);
   const [taskReload, setTaskReload] = useState(false);
   const [checkId, setCheckedId] = useState([]);
-  const [oldTaskName, setOldTaskName] = useState("");
+  const [oldTaskName, setOldTaskName] = useState({ name: "" });
   const [oldTaskTime, setOldTaskTime] = useState("");
   const [start, setStart] = useState(0);
   const [opan, setOpan] = useState(0);
@@ -402,10 +402,10 @@ const Dashboard = () => {
   const handleUpdateTask = async () => {
     if (checkId.length === 1) {
       const oldData = await getTaskById(checkId[0]);
-      setOldTaskName(oldData.data.name);
+      setOldTaskName({ name: oldData.data.name });
       setOldTaskTime(oldData.data.task_duration);
       setUpdateDuration(oldData.data.task_duration);
-      setUpdateTaskName(oldData.data.name);
+      setUpdateTaskName({ name: oldData.data.name });
       if (oldData.data.task_duration.split(":")[0] == "00") {
         setUpdateTimeFormat("min");
       }
@@ -485,7 +485,6 @@ const Dashboard = () => {
   useEffect(() => {
     getTask();
     if (switched === "true") {
-      // console.log("seted", b);
       dispatch(setType(JSON.stringify(b)));
       dispatch(setSwitched(true));
     }
@@ -1015,7 +1014,7 @@ const Dashboard = () => {
                       onChange={(e) => {
                         setUpdateTaskName({ name: e.target.value });
                       }}
-                      defaultValue={oldTaskName}
+                      defaultValue={oldTaskName.name}
                     />
                     {taskUpdateError ? (
                       <div className="invalid-feedback d-block">
@@ -1030,7 +1029,7 @@ const Dashboard = () => {
                       <Col xl="4">
                         <Form.Label>Time Format </Form.Label>
                         <Form.Select
-                          onChange={(e) => setUpdateTimeFormat(e.target.value)}
+                          onChange={(e) => (setUpdateTimeFormat(e.target.value), setOldTaskTime(''))}
                           className="selectTime"
                           aria-label="Default select example"
                         >
