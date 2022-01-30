@@ -288,10 +288,10 @@ const Header = () => {
     getScrrenRemainder();
     const user_storage = JSON.parse(localStorage.getItem("user"));
     const space = JSON.parse(localStorage.getItem("space"));
-    const others = JSON.parse(localStorage.getItem("others"));
-    if (others && others?.length > 0) {
-      setWorkSpaces(others);
-    }
+    // const others = JSON.parse(localStorage.getItem("others"));
+    // if (others && others?.length > 0) {
+    //   setWorkSpaces(others);
+    // }
 
     if (space === "c" || space === "a") {
       setShowUserRoute(true);

@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react";
 import { useState } from "react";
-import { Form, Spinner, Button } from "react-bootstrap";
+import { Form, Spinner, Button, Table } from "react-bootstrap";
 import { API_URL } from "../../../config";
 import style from "./../style.module.css";
 
@@ -49,7 +49,7 @@ function AddNewMember() {
       setLoading(false);
     }
   }
-  console.log(email)
+  console.log(email);
   return (
     <div className={style.participants_wrapper}>
       <div className={style.input_with_button}>
@@ -62,9 +62,9 @@ function AddNewMember() {
             aria-haspopup="false"
             autoFocus="false"
             placeholder="Email"
-            onChange={(e) =>{
-              console.log("on change")
-              setEmail(e.target.value)
+            onChange={(e) => {
+              console.log("on change");
+              setEmail(e.target.value);
             }}
           />
         </Form.Group>
@@ -72,10 +72,15 @@ function AddNewMember() {
           Search
         </Button>
       </div>
-      {notFound && (
+
+      {/* {notFound && (
         <div className={style.search_result}>
           <div className={style.spinner_wrapper}>
-            <span style={{ color: "red" }}> User by this email not found, if you want to add please set invite code. </span>
+            <span style={{ color: "red" }}>
+              {" "}
+              User by this email not found, if you want to add please set invite
+              code.{" "}
+            </span>
           </div>
         </div>
       )}
@@ -101,16 +106,22 @@ function AddNewMember() {
             ))}
           </ul>
         </div>
-      )}
+      )} */}
       <div className={style.participants}>
-        {result.map((item) => (
-          <span key={item.name}>
-            {item.name}
-            <i className={style.trash}>
-              <Icon icon="bx:bx-trash" className={style.participants_dismiss} />
-            </i>
-          </span>
-        ))}
+        <Table striped className="mb-0">
+          <tbody>
+            {result.map((item) => (
+              <tr>
+                <td>{item.name}</td>
+                <th>{item.name}</th>
+                <th>{item.name}</th>
+                <th>
+                  <Icon icon="bx:bx-trash" />
+                </th>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
       </div>
     </div>
   );

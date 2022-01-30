@@ -197,6 +197,8 @@ textarea::placeholder {
   list-style: none;
   padding-left: 0;
   margin-bottom: 0;
+  max-height: 4.32rem;
+  overflow: auto;
 }
 
 .result_list li {
@@ -224,7 +226,7 @@ textarea::placeholder {
 }
 
 .trash {
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   position: absolute;
@@ -232,7 +234,10 @@ textarea::placeholder {
   width: 100%;
   height: 100%;
   left: 0;
-  z-index: 1;
   background: #fff;
   font-size: 11px;
+}
+.participants span:hover .trash {
+  cursor: pointer;
+  display: block;
 }
