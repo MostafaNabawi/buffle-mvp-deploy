@@ -105,7 +105,10 @@ function AddNewMember() {
       <div className={style.participants}>
         {result.map((item) => (
           <span key={item.name}>
-            {item.name} {/* <i className={style.participants_dismiss}>x</i> */}
+            {item.name}
+            <i className={style.trash}>
+              <Icon icon="bx:bx-trash" className={style.participants_dismiss} />
+            </i>
           </span>
         ))}
       </div>

@@ -6,7 +6,6 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import TimePicker from "react-time-picker";
 import ProgressBar from "../components/common/progressBar/ProgressBar";
-import TaskManagerPreogressBar from "../components/common/progressBar/TaskManagerProgress";
 import CardHeader from "../components/card/CardHeader";
 import Card from "../components/card/Card";
 import HydrationReminderCard from "./../components/hydrationReminder/HydrationReminderCard";
@@ -33,8 +32,9 @@ import Felling from "../components/feel/Felling";
 import BeatLoader from "react-spinners/BeatLoader";
 import { API_URL } from "../config";
 import Countdown from "react-countdown";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+import Timer from './../components/common/progressBar/TaskProgress';
 
 const Dashboard = () => {
   const MySwal = withReactContent(Swal);
@@ -99,9 +99,9 @@ const Dashboard = () => {
   const [taskData, setTaskData] = useState([]);
   const [taskReload, setTaskReload] = useState(false);
   const [checkId, setCheckedId] = useState([]);
-  const [oldTaskName, setOldTaskName] = useState("");
-  const [oldTaskTime, setOldTaskTime] = useState("");
-  const [spendTime, setSpendTime] = useState("");
+  const [oldTaskName, setOldTaskName] = useState('');
+  const [oldTaskTime, setOldTaskTime] = useState('');
+
   // next break action
   const handleNextBreakOperation = async () => {
     if (nextBreakDateInput.length === 0) {
@@ -654,42 +654,30 @@ const Dashboard = () => {
               }
             />
             <Row className="dashboard-task-manager-row">
-              {showSkleton ? (
-                <Skeleton count={9} />
-              ) : taskData.length > 0 ? (
-                taskData.map((t) => (
-                  <>
-                    <Row
-                      className="task-manager-body pt-0 mt-1 mb-1"
-                      key={t._id}
-                    >
-                      <Col xl="8">
-                        <Row className="pl-5">
-                          <Col xl="1">
-                            <Form.Group controlId="formBasicCheckbox">
-                              <Form.Check
-                                className="check-box "
-                                type="checkbox"
-                                id={t._id}
-                                onChange={handleCheck}
-                              />
-                            </Form.Group>
-                          </Col>
-                          <Col xl="11" className="task-manager-text">
-                            {t.name}
-                          </Col>
-                        </Row>
-                      </Col>
-                      <Col xl="4">
-                        <TaskManagerPreogressBar {...t} />
-                      </Col>
-                    </Row>
-                    <div className="devidre"></div>
-                  </>
-                ))
-              ) : (
-                <span>No task for today</span>
-              )}
+              {showSkleton ? (<Skeleton count={9} />) : taskData.length > 0 ? taskData.map((t) => (
+                <>
+                  <Row className="task-manager-body pt-0 mt-1 mb-1" key={t._id}>
+                    <Col xl="8">
+                      <Row className="pl-5">
+                        <Col xl="1">
+                          <Form.Group controlId="formBasicCheckbox">
+                            <Form.Check className="check-box " type="checkbox" id={t._id}
+                              onChange={handleCheck}
+                            />
+                          </Form.Group>
+                        </Col>
+                        <Col xl="11" className="task-manager-text">
+                          {t.name}
+                        </Col>
+                      </Row>
+                    </Col>
+                    <Col xl="4">
+                      <Timer {...t} />
+                    </Col>
+                  </Row>
+                  <div className="devidre"></div>
+                </>
+              )) : <span >No task for today</span>}
             </Row>
           </Card>
         </Col>
@@ -755,24 +743,24 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                    id: data._id,
-                                    name: data.name,
-                                    time: data.time,
-                                  })
+                                  id: data._id,
+                                  name: data.name,
+                                  time: data.time,
+                                })
                                 : joinOrNewSuggestForm(
-                                    {
-                                      id: data.user[0]._id,
-                                      breackName: data.name,
-                                    },
-                                    {
-                                      fullName:
-                                        currentUser.first_name +
-                                        " " +
-                                        currentUser.last_name,
-                                      breakName: data.name,
-                                      breakOwnerId: data.user[0]._id,
-                                    }
-                                  );
+                                  {
+                                    id: data.user[0]._id,
+                                    breackName: data.name,
+                                  },
+                                  {
+                                    fullName:
+                                      currentUser.first_name +
+                                      " " +
+                                      currentUser.last_name,
+                                    breakName: data.name,
+                                    breakOwnerId: data.user[0]._id,
+                                  }
+                                );
                             }}
                             className="break-type"
                           >
@@ -784,20 +772,20 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                    id: data._id,
-                                    name: data.name,
-                                    time: data.time,
-                                  })
+                                  id: data._id,
+                                  name: data.name,
+                                  time: data.time,
+                                })
                                 : timeFormBreakplan({
-                                    time: "",
-                                    recevier: data.user[0]._id,
-                                    fullName:
-                                      currentUser.first_name +
-                                      "" +
-                                      currentUser.last_name,
-                                    breakName: data.name,
-                                    breakId: data._id,
-                                  });
+                                  time: "",
+                                  recevier: data.user[0]._id,
+                                  fullName:
+                                    currentUser.first_name +
+                                    "" +
+                                    currentUser.last_name,
+                                  breakName: data.name,
+                                  breakId: data._id,
+                                });
                             }}
                           >
                             {data.time}
@@ -948,18 +936,17 @@ const Dashboard = () => {
                       <Col xl="8">
                         <Form.Label>Time</Form.Label>
                         <TimePicker
-                          className={`form-control taskManagerTime ${
-                            error.length > 0
-                              ? "red-border-input"
-                              : "no-border-input"
-                          }`}
+                          className={`form-control taskManagerTime ${error.length > 0
+                            ? "red-border-input"
+                            : "no-border-input"
+                            }`}
                           clearIcon
                           closeClock
                           format={timeFormat ? "mm:ss" : "hh:mm:ss"}
                           onChange={(value) => {
                             setDuration(value);
                           }}
-                          // value={value}
+                        // value={value}
                         />
                         {error ? (
                           <div className="invalid-feedback d-block">
@@ -1024,21 +1011,20 @@ const Dashboard = () => {
                       <Col xl="8">
                         <Form.Label>Time</Form.Label>
                         <TimePicker
-                          className={`form-control taskManagerTime ${
-                            error.length > 0
-                              ? "red-border-input"
-                              : "no-border-input"
-                          }`}
+                          className={`form-control taskManagerTime ${error.length > 0
+                            ? "red-border-input"
+                            : "no-border-input"
+                            }`}
                           clearIcon
                           closeClock
                           format={
                             oldTaskTime.split(":")[0] == "00" &&
-                            updateTimeFormat === "min"
+                              updateTimeFormat === "min"
                               ? "mm:ss"
                               : oldTaskTime.split(":")[0] != "00" &&
                                 updateTimeFormat === "min"
-                              ? "mm:ss"
-                              : "hh:mm:ss"
+                                ? "mm:ss"
+                                : "hh:mm:ss"
                           }
                           onChange={(value) => {
                             setUpdateDuration(value);
@@ -1068,8 +1054,8 @@ const Dashboard = () => {
               <Button
                 disabled={
                   vacationNameInput === "" ||
-                  vacationDataInput === "" ||
-                  vacationLoader
+                    vacationDataInput === "" ||
+                    vacationLoader
                     ? true
                     : false
                 }

@@ -385,7 +385,7 @@ async function completeTask(id, status) {
   return { status: req.status };
 }
 
-async function updateTaskSpendTime(id, time, status) {
+async function updateTaskSpendTime(id, time, percent, status) {
   console.log(id, time, status);
 
   const req = await fetch(`${API_URL}/task/update-spend-time`, {
@@ -399,6 +399,7 @@ async function updateTaskSpendTime(id, time, status) {
     body: JSON.stringify({
       taskId: id,
       time: time,
+      percent: percent,
       status: status,
     }),
   });

@@ -55,7 +55,6 @@ function BreackplanFrom({
       setClose(false);
     }
     if (editData) {
-      console.log("edit", editData);
       setNewBreak({ title: editData.name, createIime: editData.time });
     }
   }, [show]);
@@ -184,7 +183,6 @@ function BreackplanFrom({
 
   // Join
   const handleJoin = async (e) => {
-    console.log(joindata);
     try {
       setloading(true);
       await fetch(`${API_URL}/breakPlan/join`, {
