@@ -480,14 +480,10 @@ const Header = () => {
               <NavDropdown.Item href="/dashboard/profile">
                 Profile
               </NavDropdown.Item>
-              {/* <NavDropdown.Item>
-                {workspace.length > 0 && "workspace"}
-              </NavDropdown.Item> */}
               <DropdownButton
                 as={ButtonGroup}
                 id={`dropdown-button-drop-start`}
                 drop="start"
-                // variant="secondary"
                 className="subDropdown"
                 title={workspace.length > 0 && "workspace"}
               >
