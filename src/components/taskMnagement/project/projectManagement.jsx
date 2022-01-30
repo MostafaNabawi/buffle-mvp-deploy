@@ -189,7 +189,6 @@ const ProjectManagement = ({ value, handleReload }) => {
       const newItems = prevState
         .filter((i) => i.id !== item.id)
         .concat({ ...item, status });
-      // console.log("New Items", newItems);
       return [...newItems];
     });
   };

@@ -74,8 +74,6 @@ const TaskManagement = ({ handleGet, val }) => {
       const newItems = prevState
         .filter((i) => i.id !== item.id)
         .concat({ ...item, status });
-      // console.log("Task => new items", ...newItems);
-
       return [...newItems];
     });
   };
