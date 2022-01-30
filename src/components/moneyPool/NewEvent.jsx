@@ -18,13 +18,14 @@ function NewEvent() {
   const [personNum, setPersonNum] = useState([2]);
   const [currencyData, setCurrencyData] = useState(null);
   const { addToast } = useToasts();
+  //
+  const [eventName,setEventName]=useState('')
+  const [currency,setCurrency]=useState('')
+
   const addPerson = () => {
     setPersonNum([...personNum, personNum.length + 2]);
   };
 
-  const handleSubmit = () => {
-    navigate("event");
-  };
   const handleJoin = (e) => {
     e.preventDefault();
     const form = new FormData(e.currentTarget);
@@ -76,7 +77,7 @@ function NewEvent() {
                   <Col md={12}>
                     <Form.Group className="mb-3" controlId="eventName">
                       <Form.Label>Event name </Form.Label>
-                      <Form.Control type="text" placeholder="Birthday" />
+                      <Form.Control onChange={(e)=>{setEventName(e.target.value)}} value={eventName} type="text" placeholder="Birthday" />
                     </Form.Group>
                   </Col>
                   <Col md={12} className={style.select_col}>
@@ -85,12 +86,12 @@ function NewEvent() {
                       controlId="homeCurrency"
                     >
                       <Form.Label>Home Currency</Form.Label>
-                      <Form.Select aria-label="Default select example">
+                      <Form.Select  onChange={(e)=>{setCurrency(e.target.value)}} aria-label="Default select example">
                         {currencyData &&
                           currencyData.map((currency, i) => (
                             <option
                               key={`${i}-currency`}
-                              value={currency?.code}
+                              value={currency?.symbol}
                             >
                               {currency?.name} ({currency?.symbol})
                             </option>
@@ -102,23 +103,9 @@ function NewEvent() {
                   <div className={style.participant_section}>
                     <h4>Participants</h4>
                     <Col md={12}>
-                      <AddNewMember />
+                      <AddNewMember eventName={eventName} currency={currency}/>
                     </Col>
                   </div>
-                  <div className={style.comment}>
-                    <div className={style.form_area}>
-                      <Form.Group controlId="exampleForm.ControlTextarea1">
-                        <Form.Control
-                          as="textarea"
-                          rows={1}
-                          placeholder="Descraption(optional)"
-                        />
-                      </Form.Group>
-                    </div>
-                  </div>
-                  <Button type="button" onClick={handleSubmit}>
-                    Create Pool
-                  </Button>
                 </Form>
               </Col>
               <Col lg={6} className={style.right_site}>

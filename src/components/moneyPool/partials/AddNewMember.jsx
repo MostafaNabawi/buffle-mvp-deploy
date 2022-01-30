@@ -1,20 +1,22 @@
 import { Icon } from "@iconify/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Form, Spinner, Button, Table } from "react-bootstrap";
 import { API_URL } from "../../../config";
 import style from "./../style.module.css";
 
-function AddNewMember() {
+function AddNewMember({ eventName, currency }) {
+  console.log("ev...", eventName, currency);
   const [email, setEmail] = useState("");
   // const [result, setResult] = useState([{ name: "reza" }, { name: "ali" }]);
   const [loading, setLoading] = useState(false);
   const [notFound, setNotFound] = useState(false);
-  const [selected, setSelected] = useState([{ name: "reza" }, { name: "ali" }]);
+  const [selected, setSelected] = useState([]);
 
-  const handleAdd = (uid) => {
+  const handleCreatePool = (uid) => {
     console.log("added", uid);
     setSelected([...selected, uid]);
   };
+  console.log("selected", selected);
   function searchEmail() {
     console.log("email", email);
     const value =
@@ -36,11 +38,11 @@ function AddNewMember() {
           moneyPoll: true,
         }),
       }).then(async (response) => {
-        const { payload } = await response.json();
-        console.log("rr", payload);
-        if (payload) {
+        const result = await response.json();
+        if (result.payload) {
           setLoading(false);
-          selected.push([payload]);
+          result.email = email;
+          setSelected([...selected, result]);
         } else {
           setNotFound(true);
           setLoading(false);
@@ -50,6 +52,7 @@ function AddNewMember() {
       setLoading(false);
     }
   }
+
   return (
     <div className={style.participants_wrapper}>
       <div className={style.input_with_button}>
@@ -73,14 +76,13 @@ function AddNewMember() {
             searchEmail();
           }}
         >
-          {loading ? <Spinner size="10" animation="border" /> : "Add"}
+          {loading ? <Icon fontSize={24} icon="eos-icons:loading" /> : "Add"}
         </Button>
       </div>
       {notFound && (
         <div style={{ color: "red" }}>
           {" "}
-          User by this email not found, if you want to add please set invite
-          code.{" "}
+          User by this email not found. code.{" "}
         </div>
       )}
       {/* {selected.length > 0 && (
@@ -119,8 +121,8 @@ function AddNewMember() {
             <tbody>
               {selected.map((item) => (
                 <tr>
-                  <td>{item.name}</td>
-                  <td>{item.name}</td>
+                  <td>{item.fullName}</td>
+                  <td>{item.email}</td>
                   <th>
                     <Icon icon="bx:bx-trash" />
                   </th>
@@ -130,6 +132,26 @@ function AddNewMember() {
           </Table>
         </div>
       )}
+      <div className={style.comment}>
+        <div className={style.form_area}>
+          <Form.Group controlId="exampleForm.ControlTextarea1">
+            <Form.Control
+              as="textarea"
+              rows={1}
+              placeholder="Descraption(optional)"
+            />
+          </Form.Group>
+        </div>
+      </div>
+      <Button
+        onClick={() => {
+          handleCreatePool();
+        }}
+        className="mt-3"
+        type="button"
+      >
+        Create Pool
+      </Button>
     </div>
   );
 }
