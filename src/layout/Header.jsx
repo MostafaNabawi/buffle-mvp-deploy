@@ -5,6 +5,9 @@ import {
   Form,
   Image,
   NavDropdown,
+  DropdownButton,
+  ButtonGroup,
+  Dropdown,
   Button,
   Badge,
 } from "react-bootstrap";
@@ -477,9 +480,24 @@ const Header = () => {
               <NavDropdown.Item href="/dashboard/profile">
                 Profile
               </NavDropdown.Item>
-              <NavDropdown.Item>
+              {/* <NavDropdown.Item>
                 {workspace.length > 0 && "workspace"}
-              </NavDropdown.Item>
+              </NavDropdown.Item> */}
+              <DropdownButton
+                as={ButtonGroup}
+                id={`dropdown-button-drop-start`}
+                drop="start"
+                // variant="secondary"
+                className="subDropdown"
+                title={workspace.length > 0 && "workspace"}
+              >
+                <Dropdown.Item eventKey="1">Action</Dropdown.Item>
+                <Dropdown.Item eventKey="2">Another action</Dropdown.Item>
+                <Dropdown.Item eventKey="3">Something else here</Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item eventKey="4">Separated link</Dropdown.Item>
+              </DropdownButton>
+              {/*  */}
               {showUserRoute && (
                 <NavDropdown.Item href="/dashboard/user-management">
                   User management
