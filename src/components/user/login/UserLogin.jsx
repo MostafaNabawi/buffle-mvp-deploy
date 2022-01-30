@@ -107,7 +107,6 @@ const UserLogin = () => {
     }
   };
   const responseGoogleSuccess = async (response) => {
-    console.log("ok", response);
     Swal.fire({
       title: "Loading...",
       allowEscapeKey: false,

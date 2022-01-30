@@ -43,7 +43,8 @@ async function userStatus() {
         "Access-Control-Allow-Credentials": true,
       },
     });
-    return { status: req.status };
+    const res = await req.json();
+    return { status: req.status, current: res };
   } catch {
     return 401;
   }

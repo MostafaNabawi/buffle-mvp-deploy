@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   Row,
   Col,
@@ -28,6 +28,7 @@ import {
   setDis_time,
 } from "../store/screenReminderSclice";
 import moment from "moment";
+import Swal from "sweetalert2";
 
 const Header = () => {
   //
@@ -37,6 +38,7 @@ const Header = () => {
   //
   const { addToast } = useToasts();
   const dispatch = useDispatch();
+  // const { switched, type } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const [userData, setUserData] = useState({});
   const [notification, setNotificatiion] = useState("");
@@ -47,10 +49,14 @@ const Header = () => {
   const [showUserRoute, setShowUserRoute] = useState(false);
   const [webData, setWebData] = useState("");
   const [workspace, setWorkSpaces] = useState([]);
+  const [getCurrent, setCurrent] = useState(
+    JSON.parse(localStorage.getItem("search"))
+  );
   const handleLogout = async () => {
     const req = await logout();
     if (req.status === 200) {
       localStorage.removeItem("user");
+      localStorage.removeItem("search");
       navigate("/");
     }
   };
@@ -201,6 +207,34 @@ const Header = () => {
       }
     }
   };
+  const handleSwitch = async (space) => {
+    Swal.fire({
+      title: "Loading...",
+      allowEscapeKey: false,
+      allowOutsideClick: false,
+      allowEnterKey: false,
+      showConfirmButton: false,
+      html: `<div aria-busy="true" class="">
+          <svg width="40" height="40" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" aria-label="audio-loading"><defs><linearGradient x1="8.042%" y1="0%" x2="65.682%" y2="23.865%" id="a"><stop stop-color="green" stop-opacity="0" offset="0%"></stop><stop stop-color="green" stop-opacity=".631" offset="63.146%"></stop><stop stop-color="green" offset="100%"></stop></linearGradient></defs><g fill="none" fill-rule="evenodd"><g transform="translate(1 1)"><path d="M36 18c0-9.94-8.06-18-18-18" id="Oval-2" stroke="green" stroke-width="2"><animateTransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18" dur="0.9s" repeatCount="indefinite"></animateTransform></path><circle fill="#fff" cx="36" cy="18" r="1"><animateTransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18" dur="0.9s" repeatCount="indefinite"></animateTransform></circle></g></g></svg>
+          </div>`,
+      customClass: { container: "swal-google" },
+    });
+    const changer = await fetch(`${API_URL}/auth/login/switch`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id: space?.space_data[0]?._id,
+      }),
+    });
+    if (changer.status === 200) {
+      const before = JSON.parse(localStorage.getItem("space"));
+      localStorage.setItem("space", JSON.stringify("m"));
+      window.location.href = `/dashboard/true/${before}`;
+    }
+  };
   useEffect(() => {
     if (webData.length > 0) {
       const user = JSON.parse(localStorage.getItem("user"));
@@ -220,6 +254,7 @@ const Header = () => {
         localStorage.removeItem("others");
         navigate("/");
       }
+      // console.log("current status => ", req.current);
     }
     async function getScrrenRemainder() {
       const req = await fetch(`${API_URL}/screen_reminder/get`, {
@@ -279,7 +314,17 @@ const Header = () => {
       ioInstance.close();
     };
   }, []);
-
+  // useEffect(() => {
+  //   console.log("get current", switched, type);
+  //   if (switched) {
+  //     // if(type === "f" || type === "s" || type === "c"){
+  //     //   fetch(`${API_URL}/user/own?` ,{
+  //     //     method : 'GET',
+  //     //     credentials : 'include',
+  //     //   })
+  //     // }
+  //   }
+  // }, [switched]);
   return (
     <>
       <Col className="col-12 header-name text-capitalize">
@@ -479,19 +524,31 @@ const Header = () => {
               <NavDropdown.Item href="/dashboard/profile">
                 Profile
               </NavDropdown.Item>
-              <DropdownButton
-                as={ButtonGroup}
-                id={`dropdown-button-drop-start`}
-                drop="start"
-                className="subDropdown"
-                title={workspace.length > 0 && "workspace"}
-              >
-                <Dropdown.Item eventKey="1">Action</Dropdown.Item>
-                <Dropdown.Item eventKey="2">Another action</Dropdown.Item>
-                <Dropdown.Item eventKey="3">Something else here</Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Item eventKey="4">Separated link</Dropdown.Item>
-              </DropdownButton>
+              {workspace.length > 0 && (
+                <DropdownButton
+                  as={ButtonGroup}
+                  id={`dropdown-button-drop-start`}
+                  drop="start"
+                  className="subDropdown"
+                  title="Workspace"
+                >
+                  {workspace?.map((space, i) => (
+                    <Dropdown.Item
+                      key={`space-${i}`}
+                      onClick={() => handleSwitch(space)}
+                    >
+                      {space?.space_data[0]?.space_name}
+                    </Dropdown.Item>
+                  ))}
+                  {/* <Dropdown.Item eventKey="2">Another action</Dropdown.Item>
+                  <Dropdown.Item eventKey="3">
+                    Something else here
+                  </Dropdown.Item>
+                  <Dropdown.Divider />
+                  <Dropdown.Item eventKey="4">Separated link</Dropdown.Item> */}
+                </DropdownButton>
+              )}
+
               {/*  */}
               {showUserRoute && (
                 <NavDropdown.Item href="/dashboard/user-management">

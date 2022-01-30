@@ -34,19 +34,6 @@ button[type="submit"] {
   flex-flow: column;
 }
 
-.right_site div {
-  height: 50%;
-}
-
-.right_site h4 {
-  padding: 1.2rem 0;
-}
-
-.right_site p {
-  border-left: 5px solid #dee2e6;
-  padding-left: 1rem;
-}
-
 .invite_form_area {
   margin-top: 4.4rem;
 }
@@ -197,6 +184,8 @@ textarea::placeholder {
   list-style: none;
   padding-left: 0;
   margin-bottom: 0;
+  max-height: 4.32rem;
+  overflow: auto;
 }
 
 .result_list li {
@@ -213,15 +202,19 @@ textarea::placeholder {
   padding: 0.5rem 0;
 }
 
-.participants_wrapper .participants span {
-  padding: 0.5rem 1rem;
-  margin-right: 0.5rem;
-  border: 1px solid #ddd;
-  border-radius: 0.25rem;
-  position: relative;
+.participants_wrapper .participants table tr:last-child {
+  border-bottom-color: #fff;
+}
+.participants table tbody tr th svg:hover {
+  cursor: pointer;
 }
 
-.participants_dismiss {
-  padding: 0.2rem;
-  position: absolute;
+.jumbotron h4 {
+  padding: 1.2rem 0;
+}
+
+.jumbotron p {
+  border-left: 5px solid #dee2e6;
+  padding-left: 1rem;
+  margin-bottom: 1rem !important;
 }
