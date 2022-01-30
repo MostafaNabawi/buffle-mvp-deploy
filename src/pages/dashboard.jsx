@@ -107,6 +107,7 @@ const Dashboard = () => {
   const [oldTaskTime, setOldTaskTime] = useState("");
   const [start, setStart] = useState(0);
   const [opan, setOpan] = useState(0);
+  const [complete, setComplete] = useState('');
   // next break action
   const handleNextBreakOperation = async () => {
     if (nextBreakDateInput.length === 0) {
@@ -440,7 +441,9 @@ const Dashboard = () => {
       setStart(start - 1)
     }
   }
-
+  const handleComplete = (val) => {
+    setComplete(val)
+  }
   // effects
   useEffect(() => {
     async function innerNextBreak() {
@@ -483,7 +486,7 @@ const Dashboard = () => {
       dispatch(setType(JSON.stringify(b)));
       dispatch(setSwitched(true));
     }
-  }, [taskReload]);
+  }, [taskReload, complete]);
   return (
     <section>
       <Row>
@@ -703,7 +706,7 @@ const Dashboard = () => {
                         </Row>
                       </Col>
                       <Col xl="4">
-                        <Timer {...t} handleCheckOpenClose={handleCheckOpenClose} />
+                        <Timer {...t} handleCheckOpenClose={handleCheckOpenClose} handleComplet={handleComplete} />
                       </Col>
                     </Row>
                     <div className="devidre"></div>
