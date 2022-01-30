@@ -814,3 +814,8 @@ div.check-box > input {
   background-color: black;
   color: white !important;
 }
+.subDropdown > button.btn-primary{
+  background:none !important;
+  color: #212529 !important;
+  border: none !important;
+}
