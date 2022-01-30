@@ -21,7 +21,7 @@ const TaskManage = () => {
             </Row>
             <DndProvider backend={HTML5Backend}>
                 <TaskManagement handleGet={handleChange} val={value} />
-                <ProjectManagement value={value} handleReload={handleChange} />
+                <ProjectManagement value={value} handleGet={handleChange} />
             </DndProvider>
 
         </Card>

@@ -28,34 +28,7 @@ function TaskModal(props) {
   const [startDate, setStartDate] = useState(new Date(item.date));
   const [projectId, setProjectId] = useState(item.p_id);
   const [oldValue, setOldValue] = useState();
-  const handleKeyDownTask = async () => {
-    const data = {
-      id: item.tb_id,
-      name: taskTitle,
-      type: 0,
-      date: startDate,
-      description: taskDesc,
-      taskTime: startTime,
-    };
 
-    const updateT = await updateTask(data);
-    if (updateT.status === 200) {
-      addToast("Updated Susseccfully", {
-        autoDismiss: true,
-        appearance: "success",
-      });
-      handleClose();
-    } else {
-      addToast("Error! Please Try Again!", {
-        autoDismiss: false,
-        appearance: "error",
-      });
-      handleClose();
-    }
-  };
-  const handleClick = (value) => {
-    setProjectId(value);
-  };
   async function request() {
     // get project and format
     const req = await getProject();
@@ -84,6 +57,35 @@ function TaskModal(props) {
     request();
   }, [projectId]);
 
+  const handleKeyDownTask = async () => {
+    const data = {
+      id: item.tb_id,
+      name: taskTitle,
+      type: 0,
+      date: startDate,
+      description: taskDesc,
+      taskTime: startTime,
+    };
+
+    const updateT = await updateTask(data);
+    if (updateT.status === 200) {
+      addToast("Item susseccfully updated", {
+        autoDismiss: true,
+        appearance: "success",
+      });
+      handleClose();
+      handleCheck(data.id);
+    } else {
+      addToast("Error! Please Try Again!", {
+        autoDismiss: false,
+        appearance: "error",
+      });
+      handleClose();
+    }
+  };
+  const handleClick = (value) => {
+    setProjectId(value);
+  };
   const handleDelete = async () => {
     MySwal.fire({
       title: "Are you sure?",

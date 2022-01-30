@@ -14,6 +14,7 @@ const TaskManagement = ({ handleGet, val }) => {
   const [inputTask, setInputTask] = useState({ name: "", p_id: "" });
   const [newItems, setNewItems] = useState(false);
   const [id, setId] = useState('');
+
   async function request() {
     const data = await getTask();
     const format = data?.data?.map((i, n) => {
@@ -47,7 +48,9 @@ const TaskManagement = ({ handleGet, val }) => {
       request();
     }
   }, [id, val]);
+
   const handleChecked = (id) => {
+    handleGet(id);
     setId(id);
   }
   const handleKeyDownWeekDaysItem = async (event) => {
@@ -112,6 +115,7 @@ const TaskManagement = ({ handleGet, val }) => {
                       className="task_item"
                       handleGet={handleGet}
                       handleChecked={handleChecked}
+
                     ></Item>
                   ))}
                 <div className="new-task-div">
