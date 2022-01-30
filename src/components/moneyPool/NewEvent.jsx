@@ -10,6 +10,7 @@ import AddNewMember from "./partials/AddNewMember";
 import CurrencyList from "currency-list";
 import { useToasts } from "react-toast-notifications";
 import { API_URL } from "../../config";
+import Jumbotron from "./partials/Jumbotron";
 
 function NewEvent() {
   const navigate = useNavigate();
@@ -109,19 +110,21 @@ function NewEvent() {
                 </Form>
               </Col>
               <Col lg={6} className={style.right_site}>
-                <div className={style.jumbotron}>
-                  <h4>Good examples for Creating a Maney Pool</h4>
-                  <p>
-                    Sed porttitor lectus nibh. Nulla quis lorem ut libero
-                    malesuada feugiat. Proin eget tortor risus. Vivamus magna
-                    justo, lacinia eget consectetur sed, convallis at tellus.
-                    Proin eget tortor risus. Vestibulum ante ipsum primis in
-                    faucibus orci luctus et ultrices posuere cubilia Curae;
-                    Donec velit neque, auctor sit amet aliquam vel, ullamcorper
-                    sit amet ligula. Proin eget tortor risus. Donec rutrum
-                    congue leo eget malesuada.
-                  </p>
-                </div>
+                <Jumbotron
+                  title="Good examples for Creating a Maney Pool"
+                  content={
+                    <p>
+                      Sed porttitor lectus nibh. Nulla quis lorem ut libero
+                      malesuada feugiat. Proin eget tortor risus. Vivamus magna
+                      justo, lacinia eget consectetur sed, convallis at tellus.
+                      Proin eget tortor risus. Vestibulum ante ipsum primis in
+                      faucibus orci luctus et ultrices posuere cubilia Curae;
+                      Donec velit neque, auctor sit amet aliquam vel,
+                      ullamcorper sit amet ligula. Proin eget tortor risus.
+                      Donec rutrum congue leo eget malesuada.
+                    </p>
+                  }
+                />
                 <div className={style.invite_form_area}>
                   <Form onSubmit={handleJoin}>
                     <Form.Group controlId="inviteCode">
