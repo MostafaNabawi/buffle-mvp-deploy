@@ -46,6 +46,7 @@ const UserLogin = () => {
         console.log(req.data);
         localStorage.setItem("user", JSON.stringify(req.data.user));
         localStorage.setItem("space", JSON.stringify(req?.data?.stype));
+        localStorage.setItem("own", "true");
         localStorage.removeItem("pp");
         navigate("/dashboard");
       }
@@ -53,6 +54,7 @@ const UserLogin = () => {
         localStorage.setItem("user", JSON.stringify(req.data.user));
         localStorage.setItem("space", JSON.stringify(req?.data?.stype));
         localStorage.removeItem("pp");
+        localStorage.setItem("own", "none");
         navigate("/dashboard");
       }
     }

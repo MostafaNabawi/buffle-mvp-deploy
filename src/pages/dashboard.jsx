@@ -467,7 +467,7 @@ const Dashboard = () => {
     getTask();
     if (switched === "true") {
       // console.log("seted", b);
-      dispatch(setType(JSON.stringify(b)));
+      dispatch(setType(b));
       dispatch(setSwitched(true));
     }
   }, [taskReload]);
