@@ -15,8 +15,8 @@ function AddNewMember() {
     console.log("added", uid);
     setSelected([...selected, uid]);
   };
-  function handleSubmit(e) {
-    setEmail(e.target.value);
+  function searchEmail() {
+    console.log("email", email);
     const value =
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
         email
@@ -32,24 +32,24 @@ function AddNewMember() {
           "Access-Control-Allow-Credentials": true,
         },
         body: JSON.stringify({
-          email: e.target.value,
+          email: email,
           moneyPoll: true,
         }),
       }).then(async (response) => {
-        const data = await response.json();
-        console.log("rr", data);
-        if (data?.payload) {
+        const { payload } = await response.json();
+        console.log("rr", payload);
+        if (payload) {
           setLoading(false);
-          setResult([data]);
+          setResult([payload]);
         } else {
           setNotFound(true);
+          setLoading(false);
         }
       });
     } else {
       setLoading(false);
     }
   }
-  console.log(email)
   return (
     <div className={style.participants_wrapper}>
       <div className={style.input_with_button}>
@@ -62,21 +62,25 @@ function AddNewMember() {
             aria-haspopup="false"
             autoFocus="false"
             placeholder="Email"
-            onChange={(e) =>{
-              console.log("on change")
-              setEmail(e.target.value)
+            onChange={(e) => {
+              setEmail(e.target.value);
             }}
           />
         </Form.Group>
-        <Button type="button" onClick={handleSubmit}>
-          Search
+        <Button
+          type="button"
+          onClick={() => {
+            searchEmail();
+          }}
+        >
+          {loading ? <Spinner size="10" animation="border" /> : "Add"}
         </Button>
       </div>
       {notFound && (
-        <div className={style.search_result}>
-          <div className={style.spinner_wrapper}>
-            <span style={{ color: "red" }}> User by this email not found, if you want to add please set invite code. </span>
-          </div>
+        <div style={{ color: "red" }}>
+          {" "}
+          User by this email not found, if you want to add please set invite
+          code.{" "}
         </div>
       )}
       {selected.length > 0 && (
@@ -86,14 +90,14 @@ function AddNewMember() {
           ))}
         </div>
       )}
-      {loading && (
+      {/* {loading && (
         <div className={style.search_result}>
           <div className={style.spinner_wrapper}>
             <Spinner animation="border" />
           </div>
         </div>
-      )}
-      {result.length > 0 && (
+      )} */}
+      {/* {result.length > 0 ?
         <div className={style.search_result}>
           <ul className={style.result_list}>
             {result.map((item) => (
@@ -101,7 +105,9 @@ function AddNewMember() {
             ))}
           </ul>
         </div>
-      )}
+        :  
+          <div style={{ color: "red" }}> User by this email not found, if you want to add please set invite code. </div>
+      } */}
       <div className={style.participants}>
         {result.map((item) => (
           <span key={item.name}>
