@@ -214,3 +214,6 @@ textarea::placeholder {
 .participants_wrapper .participants table tr:last-child {
   border-bottom-color: #fff;
 }
+.participants table tbody tr th svg:hover {
+  cursor: pointer;
+}

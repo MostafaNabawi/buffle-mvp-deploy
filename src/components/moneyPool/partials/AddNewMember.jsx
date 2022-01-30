@@ -9,7 +9,7 @@ function AddNewMember() {
   // const [result, setResult] = useState([{ name: "reza" }, { name: "ali" }]);
   const [loading, setLoading] = useState(false);
   const [notFound, setNotFound] = useState(false);
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState([{ name: "reza" }, { name: "ali" }]);
 
   const handleAdd = (uid) => {
     console.log("added", uid);
@@ -40,7 +40,7 @@ function AddNewMember() {
         console.log("rr", payload);
         if (payload) {
           setLoading(false);
-          selected.push([payload])
+          selected.push([payload]);
         } else {
           setNotFound(true);
           setLoading(false);
@@ -106,30 +106,30 @@ function AddNewMember() {
           </ul>
         </div>
       )} */}
-     {selected.length >0 &&(
+      {selected.length > 0 && (
         <div className={style.participants}>
-        <Table striped className="mb-0">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            {selected.map((item) => (
+          <Table striped className="mb-0">
+            <thead>
               <tr>
-                <td>{item.name}</td>
-                <td>{item.name}</td>
-                <th>
-                  <Icon icon="bx:bx-trash" />
-                </th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Delete</th>
               </tr>
-            ))}
-          </tbody>
-        </Table>
-      </div>
-     )}
+            </thead>
+            <tbody>
+              {selected.map((item) => (
+                <tr>
+                  <td>{item.name}</td>
+                  <td>{item.name}</td>
+                  <th>
+                    <Icon icon="bx:bx-trash" />
+                  </th>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </div>
+      )}
     </div>
   );
 }
