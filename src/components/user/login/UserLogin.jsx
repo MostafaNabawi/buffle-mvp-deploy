@@ -90,11 +90,13 @@ const UserLogin = () => {
           autoDismiss: 8000,
         });
         setLoading(false);
+        return;
       }
+
       if (req.data.type === 1) {
-        console.log(req.data);
         localStorage.setItem("user", JSON.stringify(req.data.user));
         localStorage.setItem("space", JSON.stringify(req?.data?.stype));
+        localStorage.setItem("others", JSON.stringify(req?.data?.others));
         navigate("/dashboard");
       }
       if (req.data.type === 2) {

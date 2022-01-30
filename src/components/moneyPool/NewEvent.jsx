@@ -53,6 +53,7 @@ function NewEvent() {
   };
   useEffect(() => {
     setCurrencyData(Object.values(CurrencyList.getAll("en_US")));
+
     // console.log(CurrencyList.get("AFN"));
   }, []);
   return (
