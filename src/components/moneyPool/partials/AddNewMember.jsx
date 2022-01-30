@@ -6,7 +6,14 @@ import style from "./../style.module.css";
 
 function AddNewMember() {
   const [email, setEmail] = useState("");
-  const [result, setResult] = useState([{ name: "reza" }, { name: "ali" }]);
+  const [result, setResult] = useState([
+    { name: "reza" },
+    { name: "ali" },
+    { name: "reza" },
+    { name: "ali" },
+    { name: "reza" },
+    { name: "ali" },
+  ]);
   const [loading, setLoading] = useState(false);
   const [notFound, setNotFound] = useState(true);
   const [selected, setSelected] = useState([]);
