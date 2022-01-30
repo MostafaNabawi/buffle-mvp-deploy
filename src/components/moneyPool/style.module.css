@@ -51,16 +51,27 @@ button[type="submit"] {
   margin-top: 4.4rem;
 }
 
-.invite_form_area form {
+.invite_form_area form,
+.input_with_button {
   display: flex;
 }
 
-.invite_form_area form div {
+.input_with_button {
+  align-items: center;
+}
+
+.invite_form_area form div,
+.input_with_button div {
   flex-grow: 1;
 }
 
-.invite_form_area form button {
+.invite_form_area form button,
+.input_with_button button {
   margin-left: 1rem;
+}
+
+.input_with_button button {
+  margin-top: 0.6rem;
 }
 
 /* event card */
