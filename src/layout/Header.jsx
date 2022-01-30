@@ -50,6 +50,7 @@ const Header = () => {
   const [webData, setWebData] = useState("");
   const [workspace, setWorkSpaces] = useState([]);
   const [ownSpace, setOwnSpace] = useState("");
+  const [current, setCurrent] = useState("");
 
   const handleLogout = async () => {
     const req = await logout();
@@ -58,6 +59,7 @@ const Header = () => {
       localStorage.removeItem("search");
       localStorage.removeItem("others");
       localStorage.removeItem("own");
+      localStorage.removeItem("current");
       navigate("/");
     }
   };
@@ -227,13 +229,17 @@ const Header = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        user_id: space?.space_data[0]?._id,
+        user_id: space?._id,
+        type: 2,
       }),
     });
     if (changer.status === 200) {
-      const before = JSON.parse(localStorage.getItem("space"));
-      localStorage.setItem("space", JSON.stringify("m"));
-      localStorage.setItem("own", "false");
+      const before = localStorage.getItem("space");
+      localStorage.setItem("space", "m");
+      if (before !== "m") {
+        localStorage.setItem("own", "true");
+      }
+      localStorage.setItem("current", space?.space_data[0]?._id);
       window.location.href = `/dashboard`;
     }
   };
@@ -249,6 +255,7 @@ const Header = () => {
           </div>`,
       customClass: { container: "swal-google" },
     });
+    // get own space type11111111111111!!!1
     const changer = await fetch(`${API_URL}/auth/login/switch`, {
       method: "POST",
       credentials: "include",
@@ -256,12 +263,15 @@ const Header = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        user_id: workspace?.id,
+        user_id: ownSpace?.id,
+        type: 1,
       }),
     });
+    const data = await changer.json();
     if (changer.status === 200) {
-      localStorage.setItem("space", JSON.stringify("m"));
+      localStorage.setItem("space", data?.type);
       localStorage.setItem("own", "false");
+      localStorage.setItem("current", ownSpace?.id);
       window.location.href = `/dashboard`;
     }
   };
@@ -282,6 +292,7 @@ const Header = () => {
       if (req.status !== 200) {
         localStorage.removeItem("user");
         localStorage.removeItem("others");
+        localStorage.removeItem("current");
         navigate("/");
       }
       // console.log("current status => ", req.current);
@@ -317,8 +328,8 @@ const Header = () => {
     countNotification();
     getScrrenRemainder();
     const user_storage = JSON.parse(localStorage.getItem("user"));
-    const space = JSON.parse(localStorage.getItem("space"));
-    const others = JSON.parse(localStorage.getItem("others"));
+    const space = localStorage.getItem("space");
+    const others = JSON.parse(localStorage.getItem("others") || "[]");
     if (others && others?.length > 0) {
       setWorkSpaces(others);
     }
@@ -328,6 +339,7 @@ const Header = () => {
     }
     setUserData(user_storage);
     if (user_storage) {
+      getStatus();
       ioInstance.on("connect_error", (err) => {
         console.error("socket error!", err);
         ioInstance.close();
@@ -337,7 +349,6 @@ const Header = () => {
       });
 
       // check status
-      getStatus();
     } else {
       navigate("/");
     }
@@ -347,10 +358,13 @@ const Header = () => {
   }, []);
   useEffect(() => {
     const type = localStorage.getItem("own");
+    const space = localStorage.getItem("space");
     const user = JSON.parse(localStorage.getItem("user"));
-    if (type === "false") {
+    if (type === "true" || space !== "m") {
       setOwnSpace({ id: user?._id, space_name: `${user?.first_name}_space` });
     }
+    const currentSpace = localStorage.getItem("current") || user?._id;
+    setCurrent(currentSpace);
   }, []);
   return (
     <>
@@ -565,11 +579,47 @@ const Header = () => {
                       key={`space-${i}`}
                       onClick={() => handleSwitch(space)}
                     >
+                      {space?.space_data[0]?._id === current ? (
+                        <span
+                          style={{
+                            color: "green",
+                            marginLeft: "5px",
+                            marginRight: "5px",
+                          }}
+                        >
+                          ✔
+                        </span>
+                      ) : (
+                        <span
+                          style={{
+                            marginLeft: "5px",
+                            marginRight: "5px",
+                          }}
+                        ></span>
+                      )}
                       {space?.space_data[0]?.space_name}
                     </Dropdown.Item>
                   ))}
                   {ownSpace?.id && (
                     <Dropdown.Item onClick={() => handleSwitchOwn()}>
+                      {ownSpace?.id === current ? (
+                        <span
+                          style={{
+                            color: "green",
+                            marginLeft: "5px",
+                            marginRight: "5px",
+                          }}
+                        >
+                          ✔
+                        </span>
+                      ) : (
+                        <span
+                          style={{
+                            marginLeft: "5px",
+                            marginRight: "5px",
+                          }}
+                        ></span>
+                      )}
                       {ownSpace?.space_name}
                     </Dropdown.Item>
                   )}

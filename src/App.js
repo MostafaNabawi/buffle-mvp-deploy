@@ -33,7 +33,7 @@ function App() {
     type: "",
   });
   useEffect(() => {
-    const space = JSON.parse(localStorage.getItem("space"));
+    const space = localStorage.getItem("space");
     if (space === "c" || space === "a") {
       setAddUserManagment({
         render: true,
