@@ -63,23 +63,6 @@ function Event() {
             ))}
           </div>
         </div>
-        <div className={style.comment}>
-          <div className={style.header}>
-            <h4>Comment</h4>
-          </div>
-          <div className={style.form_area}>
-            <Form>
-              <Form.Group controlId="exampleForm.ControlTextarea1">
-                <Form.Control
-                  as="textarea"
-                  rows={1}
-                  placeholder="Your comment here"
-                />
-              </Form.Group>
-              <Button type="submit">Send</Button>
-            </Form>
-          </div>
-        </div>
       </CardBody>
       <Modal
         show={show}

@@ -98,11 +98,23 @@ function NewEvent() {
                       </Form.Select>
                     </Form.Group>
                   </Col>
+
                   <div className={style.participant_section}>
                     <h4>Participants</h4>
                     <Col md={12}>
                       <AddNewMember />
                     </Col>
+                  </div>
+                  <div className={style.comment}>
+                    <div className={style.form_area}>
+                      <Form.Group controlId="exampleForm.ControlTextarea1">
+                        <Form.Control
+                          as="textarea"
+                          rows={1}
+                          placeholder="Descraption(optional)"
+                        />
+                      </Form.Group>
+                    </div>
                   </div>
                   <Button type="button" onClick={handleSubmit}>
                     Create Pool
