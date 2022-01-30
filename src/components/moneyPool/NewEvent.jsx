@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Row, Form, Col, Button, Tabs, Tab } from "react-bootstrap";
+import { Row, Form, Col, Button, Tabs, Tab, Table } from "react-bootstrap";
 import { Icon } from "@iconify/react";
 import style from "./style.module.css";
 import PersonNameField from "./partials/PersonNameField";
@@ -17,7 +17,13 @@ function NewEvent() {
   const [key, setKey] = useState("createvent");
   const [personNum, setPersonNum] = useState([2]);
   const [currencyData, setCurrencyData] = useState(null);
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
   const { addToast } = useToasts();
+  const [notFound, setNotFound] = useState(false);
+  const [selected, setSelected] = useState([]);
+  const [desc, setDesc] = useState("");
+  const [createing, setCreateing] = useState(false);
   //
   const [eventName, setEventName] = useState("");
   const [currency, setCurrency] = useState("");
@@ -53,6 +59,70 @@ function NewEvent() {
         autoDismiss: 3000,
       });
     });
+  };
+  function searchEmail() {
+    console.log("email", email);
+    const value =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+        email
+      );
+    if (value) {
+      setLoading(true);
+      setNotFound(false);
+      fetch(`${API_URL}/user/find`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": true,
+        },
+        body: JSON.stringify({
+          email: email,
+          moneyPoll: true,
+        }),
+      }).then(async (response) => {
+        const result = await response.json();
+        if (result.payload) {
+          setLoading(false);
+          result.email = email;
+          setSelected([...selected, result]);
+        } else {
+          setNotFound(true);
+          setLoading(false);
+        }
+      });
+    } else {
+      setLoading(false);
+    }
+  }
+  const handleCreatePool = async (uid) => {
+    if (eventName === "" || currency === "") {
+      return "";
+    }
+    try {
+      setCreateing(true);
+      await fetch(`${API_URL}/vacation`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": true,
+        },
+        body: JSON.stringify({
+          name: eventName,
+          date: currency,
+        }),
+      }).then((res) => {
+        if (res.status === 200) {
+          addToast("Saved", { autoDismiss: true, appearance: "success" });
+        } else {
+          addToast("Error Please Try Again", {
+            autoDismiss: true,
+            appearance: "Error",
+          });
+        }
+      });
+    } catch (err) {}
   };
   useEffect(() => {
     setCurrencyData(Object.values(CurrencyList.getAll("en_US")));
@@ -115,9 +185,94 @@ function NewEvent() {
                   <div className={style.participant_section}>
                     <h4>Participants</h4>
                     <Col md={12}>
-                      <AddNewMember eventName={eventName} currency={currency} />
+                      {/* <AddNewMember eventName={eventName} currency={currency}/> */}
+                      <div className={style.input_with_button}>
+                        <Form.Group className="mb-3" controlId="person-1">
+                          <Form.Label>Email </Form.Label>
+                          <Form.Control
+                            type="email"
+                            value={email}
+                            autoComplete="false"
+                            aria-haspopup="false"
+                            autoFocus="false"
+                            placeholder="Email"
+                            onChange={(e) => {
+                              setEmail(e.target.value);
+                            }}
+                          />
+                        </Form.Group>
+                        <Button
+                          type="button"
+                          onClick={() => {
+                            searchEmail();
+                          }}
+                        >
+                          {loading ? (
+                            <Icon fontSize={24} icon="eos-icons:loading" />
+                          ) : (
+                            "Add"
+                          )}
+                        </Button>
+                      </div>
                     </Col>
                   </div>
+                  {notFound && (
+                    <div style={{ color: "red" }}>
+                      {" "}
+                      User by this email not found. code.{" "}
+                    </div>
+                  )}
+                  {selected.length > 0 && (
+                    <div className={style.participants}>
+                      <Table striped className="mb-0">
+                        <thead>
+                          <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Delete</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {selected.map((item) => (
+                            <tr>
+                              <td>{item.fullName}</td>
+                              <td>{item.email}</td>
+                              <th>
+                                <Icon icon="bx:bx-trash" />
+                              </th>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </Table>
+                    </div>
+                  )}
+                  <div className={style.comment}>
+                    <div className={style.form_area}>
+                      <Form.Group controlId="exampleForm.ControlTextarea1">
+                        <Form.Control
+                          as="textarea"
+                          rows={1}
+                          onChange={(e) => {
+                            setDesc(e.target.value);
+                          }}
+                          placeholder="Descraption(optional)"
+                        />
+                      </Form.Group>
+                    </div>
+                  </div>
+                  <Button
+                    onClick={() => {
+                      handleCreatePool();
+                    }}
+                    className="mt-3"
+                    type="button"
+                  >
+                    {createing ? (
+                      <Icon fontSize={24} icon="eos-icons:loading" />
+                    ) : (
+                      "Create Pool"
+                    )}
+                  </Button>
                 </Form>
               </Col>
               <Col lg={6} className={style.right_site}>

@@ -105,7 +105,8 @@ const Dashboard = () => {
   const [checkId, setCheckedId] = useState([]);
   const [oldTaskName, setOldTaskName] = useState("");
   const [oldTaskTime, setOldTaskTime] = useState("");
-
+  const [start, setStart] = useState(0);
+  const [opan, setOpan] = useState(0);
   // next break action
   const handleNextBreakOperation = async () => {
     if (nextBreakDateInput.length === 0) {
@@ -274,6 +275,7 @@ const Dashboard = () => {
     setShowSkleton(true);
     const req = await getDashboardTask();
     if (req.data.length > 0) {
+      setOpan(req.data.length)
       setTaskData(req.data);
       setShowSkleton(false);
     } else {
@@ -427,6 +429,17 @@ const Dashboard = () => {
       setBreakPlanData([]);
     }
   };
+
+  const handleCheckOpenClose = (number) => {
+    if (number === 1) {
+      setStart(start + 1)
+      setOpan(opan - 1)
+    }
+    else {
+      setOpan(opan + 1)
+      setStart(start - 1)
+    }
+  }
 
   // effects
   useEffect(() => {
@@ -626,7 +639,7 @@ const Dashboard = () => {
                 />
               }
               title="Task Manager"
-              subtitle="4 opan ,1 started"
+              subtitle={`${opan} opan, ${start} start.`}
               action={
                 <>
                   <i
@@ -690,7 +703,7 @@ const Dashboard = () => {
                         </Row>
                       </Col>
                       <Col xl="4">
-                        <Timer {...t} />
+                        <Timer {...t} handleCheckOpenClose={handleCheckOpenClose} />
                       </Col>
                     </Row>
                     <div className="devidre"></div>
@@ -764,24 +777,24 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                    id: data._id,
-                                    name: data.name,
-                                    time: data.time,
-                                  })
+                                  id: data._id,
+                                  name: data.name,
+                                  time: data.time,
+                                })
                                 : joinOrNewSuggestForm(
-                                    {
-                                      id: data.user[0]._id,
-                                      breackName: data.name,
-                                    },
-                                    {
-                                      fullName:
-                                        currentUser.first_name +
-                                        " " +
-                                        currentUser.last_name,
-                                      breakName: data.name,
-                                      breakOwnerId: data.user[0]._id,
-                                    }
-                                  );
+                                  {
+                                    id: data.user[0]._id,
+                                    breackName: data.name,
+                                  },
+                                  {
+                                    fullName:
+                                      currentUser.first_name +
+                                      " " +
+                                      currentUser.last_name,
+                                    breakName: data.name,
+                                    breakOwnerId: data.user[0]._id,
+                                  }
+                                );
                             }}
                             className="break-type"
                           >
@@ -793,20 +806,20 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                    id: data._id,
-                                    name: data.name,
-                                    time: data.time,
-                                  })
+                                  id: data._id,
+                                  name: data.name,
+                                  time: data.time,
+                                })
                                 : timeFormBreakplan({
-                                    time: "",
-                                    recevier: data.user[0]._id,
-                                    fullName:
-                                      currentUser.first_name +
-                                      "" +
-                                      currentUser.last_name,
-                                    breakName: data.name,
-                                    breakId: data._id,
-                                  });
+                                  time: "",
+                                  recevier: data.user[0]._id,
+                                  fullName:
+                                    currentUser.first_name +
+                                    "" +
+                                    currentUser.last_name,
+                                  breakName: data.name,
+                                  breakId: data._id,
+                                });
                             }}
                           >
                             {data.time}
@@ -957,18 +970,17 @@ const Dashboard = () => {
                       <Col xl="8">
                         <Form.Label>Time</Form.Label>
                         <TimePicker
-                          className={`form-control taskManagerTime ${
-                            error.length > 0
-                              ? "red-border-input"
-                              : "no-border-input"
-                          }`}
+                          className={`form-control taskManagerTime ${error.length > 0
+                            ? "red-border-input"
+                            : "no-border-input"
+                            }`}
                           clearIcon
                           closeClock
                           format={timeFormat ? "mm:ss" : "hh:mm:ss"}
                           onChange={(value) => {
                             setDuration(value);
                           }}
-                          // value={value}
+                        // value={value}
                         />
                         {error ? (
                           <div className="invalid-feedback d-block">
@@ -1033,21 +1045,20 @@ const Dashboard = () => {
                       <Col xl="8">
                         <Form.Label>Time</Form.Label>
                         <TimePicker
-                          className={`form-control taskManagerTime ${
-                            error.length > 0
-                              ? "red-border-input"
-                              : "no-border-input"
-                          }`}
+                          className={`form-control taskManagerTime ${error.length > 0
+                            ? "red-border-input"
+                            : "no-border-input"
+                            }`}
                           clearIcon
                           closeClock
                           format={
                             oldTaskTime.split(":")[0] == "00" &&
-                            updateTimeFormat === "min"
+                              updateTimeFormat === "min"
                               ? "mm:ss"
                               : oldTaskTime.split(":")[0] != "00" &&
                                 updateTimeFormat === "min"
-                              ? "mm:ss"
-                              : "hh:mm:ss"
+                                ? "mm:ss"
+                                : "hh:mm:ss"
                           }
                           onChange={(value) => {
                             setUpdateDuration(value);
@@ -1077,8 +1088,8 @@ const Dashboard = () => {
               <Button
                 disabled={
                   vacationNameInput === "" ||
-                  vacationDataInput === "" ||
-                  vacationLoader
+                    vacationDataInput === "" ||
+                    vacationLoader
                     ? true
                     : false
                 }

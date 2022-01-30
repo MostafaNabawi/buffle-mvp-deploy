@@ -3,20 +3,16 @@ import { useEffect, useState } from "react";
 import { Form, Spinner, Button, Table } from "react-bootstrap";
 import { API_URL } from "../../../config";
 import style from "./../style.module.css";
+import { useToasts } from "react-toast-notifications";
 
 function AddNewMember({ eventName, currency }) {
+  const { addToast } = useToasts();
   console.log("ev...", eventName, currency);
   const [email, setEmail] = useState("");
   // const [result, setResult] = useState([{ name: "reza" }, { name: "ali" }]);
   const [loading, setLoading] = useState(false);
   const [notFound, setNotFound] = useState(false);
   const [selected, setSelected] = useState([]);
-
-  const handleCreatePool = (uid) => {
-    console.log("added", uid);
-    setSelected([...selected, uid]);
-  };
-  console.log("selected", selected);
   function searchEmail() {
     console.log("email", email);
     const value =
@@ -132,26 +128,6 @@ function AddNewMember({ eventName, currency }) {
           </Table>
         </div>
       )}
-      <div className={style.comment}>
-        <div className={style.form_area}>
-          <Form.Group controlId="exampleForm.ControlTextarea1">
-            <Form.Control
-              as="textarea"
-              rows={1}
-              placeholder="Descraption(optional)"
-            />
-          </Form.Group>
-        </div>
-      </div>
-      <Button
-        onClick={() => {
-          handleCreatePool();
-        }}
-        className="mt-3"
-        type="button"
-      >
-        Create Pool
-      </Button>
     </div>
   );
 }
