@@ -253,10 +253,10 @@ const Header = () => {
     getScrrenRemainder();
     const user_storage = JSON.parse(localStorage.getItem("user"));
     const space = JSON.parse(localStorage.getItem("space"));
-    const others = JSON.parse(localStorage.getItem("others"));
-    if (others && others?.length > 0) {
-      setWorkSpaces(others);
-    }
+    // const others = JSON.parse(localStorage.getItem("others"));
+    // if (others && others?.length > 0) {
+    //   setWorkSpaces(others);
+    // }
     if (space === "c" || space === "a") {
       setShowUserRoute(true);
     }
@@ -298,10 +298,10 @@ const Header = () => {
             localStorage.setItem(
               "loackTime",
               timeLock.getHours() +
-                ":" +
-                timeLock.getMinutes() +
-                ":" +
-                timeLock.getSeconds()
+              ":" +
+              timeLock.getMinutes() +
+              ":" +
+              timeLock.getSeconds()
             );
           }}
           renderer={() => {
@@ -312,9 +312,8 @@ const Header = () => {
 
       <div
         id="lockScreenHide"
-        className={`${
-          localStorage.getItem("screen") === "on" ? "lockScreen" : ""
-        } text-center ${!start ? "" : "lockScreenHide"}`}
+        className={`${localStorage.getItem("screen") === "on" ? "lockScreen" : ""
+          } text-center ${!start ? "" : "lockScreenHide"}`}
       >
         {localStorage.getItem("screen") === "on" && du_time > 0 && !start ? (
           <div className="screenDiv">
@@ -324,9 +323,9 @@ const Header = () => {
               onComplete={() => {
                 setStart(true);
               }}
-              // renderer={() => {
-              //   return ""
-              // }}
+            // renderer={() => {
+            //   return ""
+            // }}
             />
           </div>
         ) : (

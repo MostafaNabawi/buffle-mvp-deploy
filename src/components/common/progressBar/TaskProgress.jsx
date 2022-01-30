@@ -3,10 +3,13 @@ import { Icon } from '@iconify/react';
 import { Row, Col, ProgressBar } from 'react-bootstrap';
 import style from "./style.module.css";
 import moment from "moment";
-import { updateTaskSpendTime, updateTaskWhenPlay, updateTaskWhenCompleted } from "../../../api";
+import { updateTaskSpendTime, updateTaskWhenPlay, updateTaskWhenCompleted, createNotification } from "../../../api";
+import { API_URL } from '../../../config';
+import { useToasts } from "react-toast-notifications";
 
 const Timer = (props) => {
-    const { _id, spend_time, task_duration, start_time, status, task_percent } = props;
+    const { addToast } = useToasts();
+    const { _id, name, spend_time, task_duration, start_time, status, task_percent } = props;
     const time = spend_time !== null ? spend_time.split(':') : `${0}:${0}:${0}:${0}`.split(":");
     const [second, setSecond] = useState('0');
     const [minute, setMinute] = useState('0');
@@ -18,10 +21,11 @@ const Timer = (props) => {
     const [currentTime, setCurrentTime] = useState(0);
     const duration = moment.duration(task_duration).asSeconds();
     const [counter, setCounter] = useState(parseInt(time[3]) > 0 ? parseInt(time[3]) : 0);
+    const data = JSON.parse(localStorage.getItem("user"));
+
     const handlePlay = async () => {
         if (!play) {
             setPlay(!play);
-            console.log('play')
             const update = await updateTaskWhenPlay(_id, 'running', new Date().toISOString())
             if (update.status === 200) {
                 console.log('started')
@@ -63,21 +67,23 @@ const Timer = (props) => {
         setCurrentTime(((parseInt(day)) * 86400) + ((parseInt(hour)) * 3600) + ((parseInt(minute)) * 60) + (parseInt(second)));
         if (currentTime === duration) {
             setPlay(!play)
-
+            async function request() {
+                const sp_time = `${day}:${hour}:${minute}:${second}`;
+                const update = await updateTaskWhenCompleted(_id, sp_time, 'completed')
+                const notify = await createNotification(data._id, name)
+                if (notify.status === 200) {
+                    addToast("Task finished.", {
+                        autoDismiss: true,
+                        appearance: "success",
+                    });
+                }
+            }
+            request();
         }
         // console.log(day, hour, minute, second, duration, parseInt(percent), counter % 60, counter, range)
         return () => clearInterval(intervalId);
-    }, [play, counter])
-    if (percent === 100) {
-        async function request() {
-            const sp_time = `${day}:${hour}:${minute}:${second}`;
-            const update = await updateTaskWhenCompleted(_id, sp_time, 'completed')
-            if (update.status === 200) {
+    }, [play, counter]);
 
-            }
-        }
-        request();
-    }
     useEffect(() => {
         if (status === 'running' && !play) {
             const diffInMs = Math.abs((new Date(start_time).getTime() - new Date().getTime()) / 1000);
@@ -95,13 +101,12 @@ const Timer = (props) => {
         setHour(time[1])
         setDay(time[0])
     }, [task_percent])
-    console.log('percent', task_percent, percent)
     return (
         <div className="container">
             <Row>
                 <Col xl="11" className="pl-0">
                     <Icon
-                        // color={play && percent > 0 ? "" : `#4922ff`}
+                        color={!play && percent > 0 ? "" : `#4922ff`}
                         className={style.iconWatch}
                         icon="bi:clock-fill"
                     />
