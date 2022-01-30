@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import OverView from "./partials/OverView";
 import Modal from "./../modal/modal";
 import Col from "./../taskMnagement/Col";
+import AddNewMember from "./partials/AddNewMember";
 
 const eventData = [
   { name: "Hassan", icon: <Icon icon="akar-icons:check" color={`#20ca7d`} /> },
@@ -62,38 +63,12 @@ function Event() {
             ))}
           </div>
         </div>
-        <div className={style.comment}>
-          <div className={style.header}>
-            <h4>Comment</h4>
-          </div>
-          <div className={style.form_area}>
-            <Form>
-              <Form.Group controlId="exampleForm.ControlTextarea1">
-                <Form.Control
-                  as="textarea"
-                  rows={1}
-                  placeholder="Your comment here"
-                />
-              </Form.Group>
-              <Button type="submit">Send</Button>
-            </Form>
-          </div>
-        </div>
       </CardBody>
       <Modal
         show={show}
         handleClose={handleClose}
         title="Add new member"
-        body={
-          <Row>
-            <Col md={12}>
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Email </Form.Label>
-                <Form.Control type="text" placeholder="email" />
-              </Form.Group>
-            </Col>
-          </Row>
-        }
+        body={<AddNewMember />}
         footer={
           <>
             <Button variant="outline-dark" onClick={handleClose}>

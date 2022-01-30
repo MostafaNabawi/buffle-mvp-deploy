@@ -4,8 +4,8 @@ import { Form, Spinner, Button, Table } from "react-bootstrap";
 import { API_URL } from "../../../config";
 import style from "./../style.module.css";
 
-function AddNewMember({eventName,currency}) {
-  console.log("ev...",eventName,currency)
+function AddNewMember({ eventName, currency }) {
+  console.log("ev...", eventName, currency);
   const [email, setEmail] = useState("");
   // const [result, setResult] = useState([{ name: "reza" }, { name: "ali" }]);
   const [loading, setLoading] = useState(false);
@@ -132,7 +132,26 @@ function AddNewMember({eventName,currency}) {
           </Table>
         </div>
       )}
-      <Button onClick={()=>{handleCreatePool()}} className="mt-3" type="button">Create Pool</Button>
+      <div className={style.comment}>
+        <div className={style.form_area}>
+          <Form.Group controlId="exampleForm.ControlTextarea1">
+            <Form.Control
+              as="textarea"
+              rows={1}
+              placeholder="Descraption(optional)"
+            />
+          </Form.Group>
+        </div>
+      </div>
+      <Button
+        onClick={() => {
+          handleCreatePool();
+        }}
+        className="mt-3"
+        type="button"
+      >
+        Create Pool
+      </Button>
     </div>
   );
 }
