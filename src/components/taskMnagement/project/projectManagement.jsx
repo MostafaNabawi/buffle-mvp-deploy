@@ -168,6 +168,7 @@ const ProjectManagement = ({ value, handleReload }) => {
           autoDismiss: true,
           appearance: "success",
         });
+        request();
         setloading(false);
         setShow(false);
       } else {
