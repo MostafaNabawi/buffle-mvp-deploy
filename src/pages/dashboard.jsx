@@ -1,6 +1,6 @@
-import { React, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Row, Col, Image, Form, Button, NavDropdown } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -35,8 +35,10 @@ import { API_URL } from "../config";
 import Countdown from "react-countdown";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-
+import { useDispatch, useSelector } from "react-redux";
+import { setSwitched, setType } from "../store/userSlice";
 const Dashboard = () => {
+  const { switched, b } = useParams();
   const MySwal = withReactContent(Swal);
   const currentUser = JSON.parse(localStorage.getItem("user"));
   const [timeFormat, setTimeFormat] = useState(false);
@@ -58,6 +60,7 @@ const Dashboard = () => {
     setError("");
     setTaskError("");
   };
+  const dispatch = useDispatch();
   // Data for Breack plan form
   const [timeData, setTimeData] = useState([]);
   const [suggestData, setSuggestData] = useState([]);
@@ -455,12 +458,17 @@ const Dashboard = () => {
 
     getBreakPlan();
     innerNextBreak();
-    getTask();
+    // getTask();
     getVacationTime();
   }, []);
 
   useEffect(() => {
     getTask();
+    if (switched === "true") {
+      // console.log("seted", b);
+      dispatch(setType(JSON.stringify(b)));
+      dispatch(setSwitched(true));
+    }
   }, [taskReload]);
   return (
     <section>
