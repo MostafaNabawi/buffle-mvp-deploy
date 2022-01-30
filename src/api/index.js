@@ -387,8 +387,6 @@ async function completeTask(id, status) {
 }
 
 async function updateTaskSpendTime(id, time, percent, status) {
-  console.log(id, time, status);
-
   const req = await fetch(`${API_URL}/task/update-spend-time`, {
     method: "PUT",
     credentials: "include",
@@ -507,7 +505,6 @@ async function updateTaskImportant(id, duration, status) {
   return { status: req.status };
 }
 async function createNotification(id, name) {
-  console.log(id, name);
   const req = await fetch(`${API_URL}/task/notification`, {
     method: "POST",
     credentials: "include",

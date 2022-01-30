@@ -4,12 +4,11 @@ import { Row, Col, ProgressBar } from 'react-bootstrap';
 import style from "./style.module.css";
 import moment from "moment";
 import { updateTaskSpendTime, updateTaskWhenPlay, updateTaskWhenCompleted, createNotification } from "../../../api";
-import { API_URL } from '../../../config';
 import { useToasts } from "react-toast-notifications";
 
 const Timer = (props) => {
     const { addToast } = useToasts();
-    const { _id, name, spend_time, task_duration, start_time, status, task_percent } = props;
+    const { _id, name, spend_time, task_duration, start_time, status, task_percent, handleCheckOpenClose } = props;
     const time = spend_time !== null ? spend_time.split(':') : `${0}:${0}:${0}:${0}`.split(":");
     const [second, setSecond] = useState('0');
     const [minute, setMinute] = useState('0');
@@ -24,6 +23,7 @@ const Timer = (props) => {
     const data = JSON.parse(localStorage.getItem("user"));
 
     const handlePlay = async () => {
+        handleCheckOpenClose(1);
         if (!play) {
             setPlay(!play);
             const update = await updateTaskWhenPlay(_id, 'running', new Date().toISOString())
@@ -33,6 +33,7 @@ const Timer = (props) => {
         }
 
         if (play) {
+            handleCheckOpenClose(0)
             setPlay(!play);
             const sp_time = `${day}:${hour}:${minute}:${second}`;
             const update = await updateTaskSpendTime(_id, sp_time, percent, 'stop');
@@ -43,7 +44,6 @@ const Timer = (props) => {
     };
     useEffect(() => {
         let intervalId;
-
         if (play) {
             intervalId = setInterval(() => {
                 const secondCounter = counter % 60;
