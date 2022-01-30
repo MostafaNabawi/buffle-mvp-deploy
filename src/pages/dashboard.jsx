@@ -6,7 +6,6 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import TimePicker from "react-time-picker";
 import ProgressBar from "../components/common/progressBar/ProgressBar";
-import TaskManagerPreogressBar from "../components/common/progressBar/TaskManagerProgress";
 import CardHeader from "../components/card/CardHeader";
 import Card from "../components/card/Card";
 import HydrationReminderCard from "./../components/hydrationReminder/HydrationReminderCard";
@@ -673,7 +672,6 @@ const Dashboard = () => {
                       </Row>
                     </Col>
                     <Col xl="4">
-                      {/* <TaskManagerPreogressBar {...t} /> */}
                       <Timer {...t} />
                     </Col>
                   </Row>
@@ -938,8 +936,8 @@ const Dashboard = () => {
                         <Form.Label>Time</Form.Label>
                         <TimePicker
                           className={`form-control taskManagerTime ${error.length > 0
-                              ? "red-border-input"
-                              : "no-border-input"
+                            ? "red-border-input"
+                            : "no-border-input"
                             }`}
                           clearIcon
                           closeClock
@@ -1013,8 +1011,8 @@ const Dashboard = () => {
                         <Form.Label>Time</Form.Label>
                         <TimePicker
                           className={`form-control taskManagerTime ${error.length > 0
-                              ? "red-border-input"
-                              : "no-border-input"
+                            ? "red-border-input"
+                            : "no-border-input"
                             }`}
                           clearIcon
                           closeClock
