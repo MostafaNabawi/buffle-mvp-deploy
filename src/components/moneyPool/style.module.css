@@ -51,16 +51,27 @@ button[type="submit"] {
   margin-top: 4.4rem;
 }
 
-.invite_form_area form {
+.invite_form_area form,
+.input_with_button {
   display: flex;
 }
 
-.invite_form_area form div {
+.input_with_button {
+  align-items: center;
+}
+
+.invite_form_area form div,
+.input_with_button div {
   flex-grow: 1;
 }
 
-.invite_form_area form button {
+.invite_form_area form button,
+.input_with_button button {
   margin-left: 1rem;
+}
+
+.input_with_button button {
+  margin-top: 0.6rem;
 }
 
 /* event card */
@@ -169,20 +180,48 @@ textarea::placeholder {
   border: none;
 }
 
-.live_search {
+.participants_wrapper {
   position: relative;
 }
 
 .search_result {
   position: absolute;
   z-index: 1;
-  background-color: #ddd;
-  width: 100%;
-  top: 66px;
+  background-color: #fff;
+  width: 86%;
+  top: 68px;
+  border: 1px solid #ddd;
 }
 
+.result_list {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0;
+}
+
+.result_list li {
+  padding: 0.3rem 1rem;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+}
+.result_list li:last-child {
+  border-bottom: none;
+}
 .spinner_wrapper {
   display: flex;
   justify-content: center;
   padding: 0.5rem 0;
+}
+
+.participants_wrapper .participants span {
+  padding: 0.5rem 1rem;
+  margin-right: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 0.25rem;
+  position: relative;
+}
+
+.participants_dismiss {
+  padding: 0.2rem;
+  position: absolute;
 }

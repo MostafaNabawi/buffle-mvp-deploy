@@ -5,6 +5,9 @@ import {
   Form,
   Image,
   NavDropdown,
+  DropdownButton,
+  ButtonGroup,
+  Dropdown,
   Button,
   Badge,
 } from "react-bootstrap";
@@ -19,12 +22,16 @@ import { ioInstance } from "../config/socket";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useDispatch, useSelector } from "react-redux";
-import {setDu_time,setDefault,setDis_time} from "../store/screenReminderSclice"
+import {
+  setDu_time,
+  setDefault,
+  setDis_time,
+} from "../store/screenReminderSclice";
 import moment from "moment";
 
 const Header = () => {
   //
-  const {du_time,defaultTime,dis_time } = useSelector(
+  const { du_time, defaultTime, dis_time } = useSelector(
     (state) => state.screen
   );
   //
@@ -39,7 +46,7 @@ const Header = () => {
   const [start, setStart] = useState(true);
   const [showUserRoute, setShowUserRoute] = useState(false);
   const [webData, setWebData] = useState("");
-
+  const [workspace, setWorkSpaces] = useState([]);
   const handleLogout = async () => {
     const req = await logout();
     if (req.status === 200) {
@@ -52,7 +59,7 @@ const Header = () => {
     const time =
       arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000;
     // setDu_time(time);
-    dispatch(setDu_time(time))
+    dispatch(setDu_time(time));
     return time;
   };
   const handleDisplayTime = (val) => {
@@ -60,7 +67,7 @@ const Header = () => {
     const time =
       arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000;
     // setDis_time(time);
-    dispatch(setDis_time(time))
+    dispatch(setDis_time(time));
     return time;
   };
   // Notification
@@ -194,12 +201,23 @@ const Header = () => {
       }
     }
   };
- 
+  useEffect(() => {
+    if (webData.length > 0) {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (user?._id === webData) {
+        //notification related to this user
+        setCount(count + 1);
+        setWebData("");
+      }
+    }
+  }, [webData]);
+
   useEffect(() => {
     async function getStatus() {
       const req = await userStatus();
       if (req.status !== 200) {
         localStorage.removeItem("user");
+        localStorage.removeItem("others");
         navigate("/");
       }
     }
@@ -214,19 +232,19 @@ const Header = () => {
       const { payload } = await req.json();
       if (payload) {
         if (payload.mute) {
-          localStorage.setItem("screen", "on")
-          dispatch(setDefault(payload.duration))
+          localStorage.setItem("screen", "on");
+          dispatch(setDefault(payload.duration));
           handleDurationTime(payload.duration);
           handleDisplayTime(payload.display);
         } else {
-          localStorage.setItem("screen", "of")
-          dispatch(setDefault(payload.duration))
+          localStorage.setItem("screen", "of");
+          dispatch(setDefault(payload.duration));
           handleDurationTime(payload.duration);
           handleDisplayTime(payload.display);
         }
       } else {
-        localStorage.setItem("screen", "of")
-        setDefault("00:10:00")
+        localStorage.setItem("screen", "of");
+        setDefault("00:10:00");
         handleDurationTime("00:10:00");
         handleDisplayTime("00:01:00");
       }
@@ -235,6 +253,10 @@ const Header = () => {
     getScrrenRemainder();
     const user_storage = JSON.parse(localStorage.getItem("user"));
     const space = JSON.parse(localStorage.getItem("space"));
+    const others = JSON.parse(localStorage.getItem("others"));
+    if (others && others?.length > 0) {
+      setWorkSpaces(others);
+    }
     if (space === "c" || space === "a") {
       setShowUserRoute(true);
     }
@@ -257,16 +279,6 @@ const Header = () => {
       ioInstance.close();
     };
   }, []);
-  useEffect(() => {
-    if (webData.length > 0) {
-      const user = JSON.parse(localStorage.getItem("user"));
-      if (user?._id === webData) {
-        //notification related to this user
-        setCount(count + 1);
-        setWebData("");
-      }
-    }
-  }, [webData]);
 
   return (
     <>
@@ -276,35 +288,35 @@ const Header = () => {
       {du_time > 0 && start && (
         <Countdown
           date={Date.now() + du_time}
-        
           onTick={(e) => {
-            dispatch(setDu_time(e.total))
+            dispatch(setDu_time(e.total));
           }}
           onComplete={() => {
-            handleDurationTime(defaultTime)
+            handleDurationTime(defaultTime);
             setStart(false);
             const timeLock = new Date();
             localStorage.setItem(
               "loackTime",
               timeLock.getHours() +
-              ":" +
-              timeLock.getMinutes() +
-              ":" +
-              timeLock.getSeconds()
+                ":" +
+                timeLock.getMinutes() +
+                ":" +
+                timeLock.getSeconds()
             );
-          }
-          }
-        renderer={() => {
-          return "";
-        }}
+          }}
+          renderer={() => {
+            return "";
+          }}
         />
       )}
 
       <div
         id="lockScreenHide"
-        className={`${localStorage.getItem("screen") === "on" ? "lockScreen" : ""} text-center ${!start ? "" : "lockScreenHide"}`}
+        className={`${
+          localStorage.getItem("screen") === "on" ? "lockScreen" : ""
+        } text-center ${!start ? "" : "lockScreenHide"}`}
       >
-        {localStorage.getItem("screen") === "on" && du_time > 0 && !start ?
+        {localStorage.getItem("screen") === "on" && du_time > 0 && !start ? (
           <div className="screenDiv">
             <h1>Screen Lock For</h1>
             <Countdown
@@ -312,12 +324,14 @@ const Header = () => {
               onComplete={() => {
                 setStart(true);
               }}
-            // renderer={() => {
-            //   return ""
-            // }}
+              // renderer={() => {
+              //   return ""
+              // }}
             />
           </div>
-          : ""}
+        ) : (
+          ""
+        )}
         {du_time > 0 && !start && (
           <Countdown
             date={Date.now() + dis_time}
@@ -325,7 +339,7 @@ const Header = () => {
               setStart(true);
             }}
             renderer={() => {
-              return ""
+              return "";
             }}
           />
         )}
@@ -466,6 +480,20 @@ const Header = () => {
               <NavDropdown.Item href="/dashboard/profile">
                 Profile
               </NavDropdown.Item>
+              <DropdownButton
+                as={ButtonGroup}
+                id={`dropdown-button-drop-start`}
+                drop="start"
+                className="subDropdown"
+                title={workspace.length > 0 && "workspace"}
+              >
+                <Dropdown.Item eventKey="1">Action</Dropdown.Item>
+                <Dropdown.Item eventKey="2">Another action</Dropdown.Item>
+                <Dropdown.Item eventKey="3">Something else here</Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item eventKey="4">Separated link</Dropdown.Item>
+              </DropdownButton>
+              {/*  */}
               {showUserRoute && (
                 <NavDropdown.Item href="/dashboard/user-management">
                   User management
