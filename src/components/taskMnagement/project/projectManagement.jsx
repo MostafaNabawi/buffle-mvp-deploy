@@ -20,7 +20,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import BeatLoader from "react-spinners/BeatLoader";
 // paiman changes
 import { PROJECT_TYPE } from "../../data/types";
-const ProjectManagement = ({ value }) => {
+const ProjectManagement = ({ value, handleReload }) => {
   const { addToast } = useToasts();
   const [items, setItems] = useState([]);
   const [projects, setProjects] = useState([]);
@@ -94,6 +94,7 @@ const ProjectManagement = ({ value }) => {
     if (event.key === "Enter") {
       const createT = await createTask(inputTask, 0, 0, false);
       if (createT.status === 200) {
+        handleReload(inputTask.name);
         addToast("Created Susseccfully", {
           autoDismiss: true,
           appearance: "success",

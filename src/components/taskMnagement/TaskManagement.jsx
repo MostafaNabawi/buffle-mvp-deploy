@@ -8,7 +8,7 @@ import { createTask, getTask } from "../../api";
 import { ITEM_TYPE } from "./data/types";
 import moment from "moment";
 
-const TaskManagement = ({ handleGet }) => {
+const TaskManagement = ({ handleGet, val }) => {
   const { addToast } = useToasts();
   const [items, setItems] = useState([]);
   const [inputTask, setInputTask] = useState({ name: "", p_id: "" });
@@ -43,11 +43,10 @@ const TaskManagement = ({ handleGet }) => {
   }, [newItems]);
 
   useEffect(() => {
-    if (id) {
+    if (id || val) {
       request();
     }
-  }, [id]);
-
+  }, [id, val]);
   const handleChecked = (id) => {
     setId(id);
   }
