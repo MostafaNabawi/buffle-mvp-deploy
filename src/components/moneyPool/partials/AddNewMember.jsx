@@ -1,14 +1,14 @@
 import { Icon } from "@iconify/react";
 import { useState } from "react";
-import { Form, Spinner, Button } from "react-bootstrap";
+import { Form, Spinner, Button, Table } from "react-bootstrap";
 import { API_URL } from "../../../config";
 import style from "./../style.module.css";
 
 function AddNewMember() {
   const [email, setEmail] = useState("");
-  const [result, setResult] = useState([{ name: "reza" }, { name: "ali" }]);
+  // const [result, setResult] = useState([{ name: "reza" }, { name: "ali" }]);
   const [loading, setLoading] = useState(false);
-  const [notFound, setNotFound] = useState(true);
+  const [notFound, setNotFound] = useState(false);
   const [selected, setSelected] = useState([]);
 
   const handleAdd = (uid) => {
@@ -40,7 +40,7 @@ function AddNewMember() {
         console.log("rr", payload);
         if (payload) {
           setLoading(false);
-          setResult([payload]);
+          selected.push([payload])
         } else {
           setNotFound(true);
           setLoading(false);
@@ -83,13 +83,13 @@ function AddNewMember() {
           code.{" "}
         </div>
       )}
-      {selected.length > 0 && (
+      {/* {selected.length > 0 && (
         <div className={style.search_result}>
           {selected.map((item, i) => (
             <div key={`selected-${i}`}>{item?.fullName}</div>
           ))}
         </div>
-      )}
+      )} */}
       {/* {loading && (
         <div className={style.search_result}>
           <div className={style.spinner_wrapper}>
@@ -105,19 +105,31 @@ function AddNewMember() {
             ))}
           </ul>
         </div>
-        :  
-          <div style={{ color: "red" }}> User by this email not found, if you want to add please set invite code. </div>
-      } */}
-      <div className={style.participants}>
-        {result.map((item) => (
-          <span key={item.name}>
-            {item.name}
-            <i className={style.trash}>
-              <Icon icon="bx:bx-trash" className={style.participants_dismiss} />
-            </i>
-          </span>
-        ))}
+      )} */}
+     {selected.length >0 &&(
+        <div className={style.participants}>
+        <Table striped className="mb-0">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            {selected.map((item) => (
+              <tr>
+                <td>{item.name}</td>
+                <td>{item.name}</td>
+                <th>
+                  <Icon icon="bx:bx-trash" />
+                </th>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
       </div>
+     )}
     </div>
   );
 }
