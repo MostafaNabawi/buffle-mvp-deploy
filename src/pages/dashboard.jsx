@@ -439,10 +439,13 @@ const Dashboard = () => {
     else {
       setOpan(opan + 1)
       setStart(start - 1)
+
     }
   }
   const handleComplete = (val) => {
     setComplete(val)
+    setOpan(opan - 1)
+    setStart(start - 1)
   }
   // effects
   useEffect(() => {
@@ -642,7 +645,7 @@ const Dashboard = () => {
                 />
               }
               title="Task Manager"
-              subtitle={`${opan} opan, ${start} start.`}
+              subtitle={`${opan < 0 ? 0 : opan} opan, ${start < 0 ? 0 : start} start.`}
               action={
                 <>
                   <i

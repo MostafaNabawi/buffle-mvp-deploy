@@ -80,7 +80,6 @@ const Timer = (props) => {
             }
             request();
             handleComplet(_id);
-            handleCheckOpenClose(0);
         }
         return () => clearInterval(intervalId);
     }, [play, counter]);
