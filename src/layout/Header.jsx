@@ -292,7 +292,6 @@ const Header = () => {
     // if (others && others?.length > 0) {
     //   setWorkSpaces(others);
     // }
-
     if (space === "c" || space === "a") {
       setShowUserRoute(true);
     }
@@ -344,10 +343,10 @@ const Header = () => {
             localStorage.setItem(
               "loackTime",
               timeLock.getHours() +
-                ":" +
-                timeLock.getMinutes() +
-                ":" +
-                timeLock.getSeconds()
+              ":" +
+              timeLock.getMinutes() +
+              ":" +
+              timeLock.getSeconds()
             );
           }}
           renderer={() => {
@@ -358,9 +357,8 @@ const Header = () => {
 
       <div
         id="lockScreenHide"
-        className={`${
-          localStorage.getItem("screen") === "on" ? "lockScreen" : ""
-        } text-center ${!start ? "" : "lockScreenHide"}`}
+        className={`${localStorage.getItem("screen") === "on" ? "lockScreen" : ""
+          } text-center ${!start ? "" : "lockScreenHide"}`}
       >
         {localStorage.getItem("screen") === "on" && du_time > 0 && !start ? (
           <div className="screenDiv">
@@ -370,9 +368,9 @@ const Header = () => {
               onComplete={() => {
                 setStart(true);
               }}
-              // renderer={() => {
-              //   return ""
-              // }}
+            // renderer={() => {
+            //   return ""
+            // }}
             />
           </div>
         ) : (

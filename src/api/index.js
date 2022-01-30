@@ -506,6 +506,24 @@ async function updateTaskImportant(id, duration, status) {
   });
   return { status: req.status };
 }
+async function createNotification(id, name) {
+  console.log(id, name);
+  const req = await fetch(`${API_URL}/task/notification`, {
+    method: "POST",
+    credentials: "include",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+    body: JSON.stringify({
+      user_id: id,
+      name: name,
+    }),
+  });
+  const resault = await req.json();
+  return { status: req.status, data: resault.payload };
+}
 export {
   getCompanySpaceData,
   signin,
@@ -538,4 +556,5 @@ export {
   updateTaskSpendTime,
   updateTaskWhenPlay,
   updateTaskWhenCompleted,
+  createNotification,
 };
