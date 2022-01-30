@@ -180,20 +180,59 @@ textarea::placeholder {
   border: none;
 }
 
-.live_search {
+.participants_wrapper {
   position: relative;
 }
 
 .search_result {
   position: absolute;
   z-index: 1;
-  background-color: #ddd;
-  width: 100%;
-  top: 66px;
+  background-color: #fff;
+  width: 86%;
+  top: 68px;
+  border: 1px solid #ddd;
 }
 
+.result_list {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0;
+}
+
+.result_list li {
+  padding: 0.3rem 1rem;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+}
+.result_list li:last-child {
+  border-bottom: none;
+}
 .spinner_wrapper {
   display: flex;
   justify-content: center;
   padding: 0.5rem 0;
+}
+
+.participants_wrapper .participants > span {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  margin-right: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 0.25rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.trash {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  z-index: 1;
+  background: #fff;
+  font-size: 11px;
 }

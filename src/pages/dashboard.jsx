@@ -6,7 +6,6 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import TimePicker from "react-time-picker";
 import ProgressBar from "../components/common/progressBar/ProgressBar";
-import TaskManagerPreogressBar from "../components/common/progressBar/TaskManagerProgress";
 import CardHeader from "../components/card/CardHeader";
 import Card from "../components/card/Card";
 import HydrationReminderCard from "./../components/hydrationReminder/HydrationReminderCard";
@@ -37,6 +36,8 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useDispatch, useSelector } from "react-redux";
 import { setSwitched, setType } from "../store/userSlice";
+import Timer from "./../components/common/progressBar/TaskProgress";
+
 const Dashboard = () => {
   const { switched, b } = useParams();
   const MySwal = withReactContent(Swal);
@@ -104,7 +105,7 @@ const Dashboard = () => {
   const [checkId, setCheckedId] = useState([]);
   const [oldTaskName, setOldTaskName] = useState("");
   const [oldTaskTime, setOldTaskTime] = useState("");
-  const [spendTime, setSpendTime] = useState("");
+
   // next break action
   const handleNextBreakOperation = async () => {
     if (nextBreakDateInput.length === 0) {
@@ -418,17 +419,17 @@ const Dashboard = () => {
       Swal.fire("Please select an item for edit!");
     }
   };
+  const getBreakPlan = async () => {
+    const req = await getaAllBreackPlan();
+    if (req.length > 0) {
+      setBreakPlanData(req);
+    } else {
+      setBreakPlanData([]);
+    }
+  };
 
   // effects
   useEffect(() => {
-    async function getBreakPlan() {
-      const req = await getaAllBreackPlan();
-      if (req.length > 0) {
-        setBreakPlanData(req);
-      } else {
-        setBreakPlanData([]);
-      }
-    }
     async function innerNextBreak() {
       const result = await getNextBreak();
       // check if it has not passed
@@ -689,7 +690,7 @@ const Dashboard = () => {
                         </Row>
                       </Col>
                       <Col xl="4">
-                        <TaskManagerPreogressBar {...t} />
+                        <Timer {...t} />
                       </Col>
                     </Row>
                     <div className="devidre"></div>
@@ -733,6 +734,7 @@ const Dashboard = () => {
                 newTime={breakNewTime}
                 joinOrSagest={breakJoinOrSagest}
                 invateForm={invateForm}
+                getBreakPlan={getBreakPlan}
               />
               {/* show Breack plan */}
               <div className="break-plan-card">
