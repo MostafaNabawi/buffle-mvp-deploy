@@ -26,6 +26,7 @@ import { API_URL } from "../config";
 import Countdown from "react-countdown";
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import Timer from './../components/common/progressBar/TaskProgress';
 
 const Dashboard = () => {
   const MySwal = withReactContent(Swal)
@@ -92,7 +93,7 @@ const Dashboard = () => {
   const [checkId, setCheckedId] = useState([]);
   const [oldTaskName, setOldTaskName] = useState('');
   const [oldTaskTime, setOldTaskTime] = useState('');
-  const [spendTime, setSpendTime] = useState('');
+
   // next break action
   const handleNextBreakOperation = async () => {
     if (nextBreakDateInput.length === 0) {
@@ -658,7 +659,8 @@ const Dashboard = () => {
                       </Row>
                     </Col>
                     <Col xl="4">
-                      <TaskManagerPreogressBar {...t} />
+                      {/* <TaskManagerPreogressBar {...t} /> */}
+                      <Timer {...t} />
                     </Col>
                   </Row>
                   <div className="devidre"></div>

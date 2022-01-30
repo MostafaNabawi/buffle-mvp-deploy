@@ -12,6 +12,7 @@ function timeDifference(time) {
 }
 // others
 function getTotalSeconds(startDate, endDate) {
+  console.log(startDate, endDate);
   let admission = moment(startDate, "DD-MM-YYYY HH:mm:ss");
   // end time
   var discharge = moment(endDate, "DD-MM-YYYY HH:mm:ss");
