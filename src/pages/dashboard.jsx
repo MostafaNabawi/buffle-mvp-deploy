@@ -108,6 +108,7 @@ const Dashboard = () => {
   const [start, setStart] = useState(0);
   const [opan, setOpan] = useState(0);
   const [complete, setComplete] = useState('');
+  const [move, setMove] = useState('');
   // next break action
   const handleNextBreakOperation = async () => {
     if (nextBreakDateInput.length === 0) {
@@ -447,6 +448,10 @@ const Dashboard = () => {
     setOpan(opan - 1)
     setStart(start - 1)
   }
+
+  const handleMove = (value) => {
+    setMove(value);
+  }
   // effects
   useEffect(() => {
     async function innerNextBreak() {
@@ -488,7 +493,7 @@ const Dashboard = () => {
       dispatch(setType(JSON.stringify(b)));
       dispatch(setSwitched(true));
     }
-  }, [taskReload, complete]);
+  }, [taskReload, complete, move]);
   return (
     <section>
       <Row>
@@ -873,7 +878,7 @@ const Dashboard = () => {
           <EventCalender />
         </Col>
         <Col xl={4}>
-          <ImpotentToDayCard />
+          <ImpotentToDayCard handleMove={handleMove} />
         </Col>
       </Row>
       {/* Modale */}
