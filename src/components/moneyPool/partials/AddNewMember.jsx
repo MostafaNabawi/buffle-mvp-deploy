@@ -6,7 +6,7 @@ import style from "./../style.module.css";
 
 function AddNewMember() {
   const [email, setEmail] = useState("");
-  const [result, setResult] = useState([]);
+  const [result, setResult] = useState([{ name: "reza" }, { name: "ali" }]);
   const [loading, setLoading] = useState(false);
   const [notFound, setNotFound] = useState(false);
   const [selected, setSelected] = useState([]);
@@ -51,21 +51,24 @@ function AddNewMember() {
   }
 
   return (
-    <div className={style.input_with_button}>
-      <Form.Group className="mb-3" controlId="person-1">
-        <Form.Label>Email </Form.Label>
-        <Form.Control
-          type="email"
-          value={email}
-          autoComplete="false"
-          aria-haspopup="false"
-          autoFocus="false"
-          placeholder="Email"
-        />
-      </Form.Group>
-      <Button type="button" onClick={handleSubmit}>
-        Search
-      </Button>
+    <div className={style.participants_wrapper}>
+      <div className={style.input_with_button}>
+        <Form.Group className="mb-3" controlId="person-1">
+          <Form.Label>Email </Form.Label>
+          <Form.Control
+            type="email"
+            value={email}
+            autoComplete="false"
+            aria-haspopup="false"
+            autoFocus="false"
+            placeholder="Email"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </Form.Group>
+        <Button type="button" onClick={handleSubmit}>
+          Search
+        </Button>
+      </div>
       {selected.length > 0 && (
         <div className={style.search_result}>
           {selected.map((item, i) => (
@@ -87,24 +90,22 @@ function AddNewMember() {
           </div>
         </div>
       )}
-      {result.length > 0 && (
+      {result.length > 4 && (
         <div className={style.search_result}>
-          <div className={style.spinner_wrapper}>
-            {result.length > 0 && (
-              <div>
-                {result[0]?.fullName}
-                <Icon
-                  fontSize={20}
-                  color="green"
-                  style={{ marginLeft: "10px", marginTop: "-3px" }}
-                  icon="carbon:add-alt"
-                  onClick={() => handleAdd(result[0])}
-                />
-              </div>
-            )}
-          </div>
+          <ul className={style.result_list}>
+            {result.map((item) => (
+              <li key={item.name}>{item.name}</li>
+            ))}
+          </ul>
         </div>
       )}
+      <div className={style.participants}>
+        {result.map((item) => (
+          <span key={item.name}>
+            {item.name} {/* <i className={style.participants_dismiss}>x</i> */}
+          </span>
+        ))}
+      </div>
     </div>
   );
 }
