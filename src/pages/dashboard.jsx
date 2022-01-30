@@ -415,17 +415,17 @@ const Dashboard = () => {
       Swal.fire("Please select an item for edit!");
     }
   };
+  const getBreakPlan=async()=> {
+    const req = await getaAllBreackPlan();
+    if (req.length > 0) {
+      setBreakPlanData(req);
+    } else {
+      setBreakPlanData([]);
+    }
+  }
 
   // effects
   useEffect(() => {
-    async function getBreakPlan() {
-      const req = await getaAllBreackPlan();
-      if (req.length > 0) {
-        setBreakPlanData(req);
-      } else {
-        setBreakPlanData([]);
-      }
-    }
     async function innerNextBreak() {
       const result = await getNextBreak();
       // check if it has not passed
@@ -725,6 +725,7 @@ const Dashboard = () => {
                 newTime={breakNewTime}
                 joinOrSagest={breakJoinOrSagest}
                 invateForm={invateForm}
+                getBreakPlan={getBreakPlan}
               />
               {/* show Breack plan */}
               <div className="break-plan-card">

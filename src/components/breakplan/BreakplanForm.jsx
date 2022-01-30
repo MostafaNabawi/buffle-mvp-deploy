@@ -20,6 +20,7 @@ function BreackplanFrom({
   setEditData,
   suggestData,
   joindata,
+  getBreakPlan,
 }) {
   const currentUser = JSON.parse(localStorage.getItem("user"));
   const { addToast } = useToasts();
@@ -65,6 +66,7 @@ function BreackplanFrom({
       setloading(true);
       const { status } = await CreateNewPlan(newBreak);
       if (status === 200) {
+        getBreakPlan()
         addToast("Created Susseccfully", {
           autoDismiss: true,
           appearance: "success",

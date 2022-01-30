@@ -8,7 +8,7 @@ function AddNewMember() {
   const [email, setEmail] = useState("");
   const [result, setResult] = useState([{ name: "reza" }, { name: "ali" }]);
   const [loading, setLoading] = useState(false);
-  const [notFound, setNotFound] = useState(false);
+  const [notFound, setNotFound] = useState(true);
   const [selected, setSelected] = useState([]);
 
   const handleAdd = (uid) => {
@@ -49,7 +49,7 @@ function AddNewMember() {
       setLoading(false);
     }
   }
-
+  console.log(email)
   return (
     <div className={style.participants_wrapper}>
       <div className={style.input_with_button}>
@@ -62,13 +62,23 @@ function AddNewMember() {
             aria-haspopup="false"
             autoFocus="false"
             placeholder="Email"
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) =>{
+              console.log("on change")
+              setEmail(e.target.value)
+            }}
           />
         </Form.Group>
         <Button type="button" onClick={handleSubmit}>
           Search
         </Button>
       </div>
+      {notFound && (
+        <div className={style.search_result}>
+          <div className={style.spinner_wrapper}>
+            <span style={{ color: "red" }}> User by this email not found, if you want to add please set invite code. </span>
+          </div>
+        </div>
+      )}
       {selected.length > 0 && (
         <div className={style.search_result}>
           {selected.map((item, i) => (
@@ -83,14 +93,7 @@ function AddNewMember() {
           </div>
         </div>
       )}
-      {notFound && (
-        <div className={style.search_result}>
-          <div className={style.spinner_wrapper}>
-            <span style={{ color: "red" }}>User Not Found </span>
-          </div>
-        </div>
-      )}
-      {result.length > 4 && (
+      {result.length > 0 && (
         <div className={style.search_result}>
           <ul className={style.result_list}>
             {result.map((item) => (
