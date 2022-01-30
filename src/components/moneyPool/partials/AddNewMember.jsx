@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react";
 import { useState } from "react";
-import { Form, Spinner } from "react-bootstrap";
+import { Form, Spinner, Button } from "react-bootstrap";
 import { API_URL } from "../../../config";
 import style from "./../style.module.css";
 
@@ -51,21 +51,21 @@ function AddNewMember() {
   }
 
   return (
-    <div className={style.live_search}>
-      <Form>
-        <Form.Group className="mb-3" controlId="person-1">
-          <Form.Label>Email </Form.Label>
-          <Form.Control
-            type="email"
-            value={email}
-            autoComplete="false"
-            aria-haspopup="false"
-            autoFocus="false"
-            placeholder="Email"
-            onChange={handleSubmit}
-          />
-        </Form.Group>
-      </Form>
+    <div className={style.input_with_button}>
+      <Form.Group className="mb-3" controlId="person-1">
+        <Form.Label>Email </Form.Label>
+        <Form.Control
+          type="email"
+          value={email}
+          autoComplete="false"
+          aria-haspopup="false"
+          autoFocus="false"
+          placeholder="Email"
+        />
+      </Form.Group>
+      <Button type="button" onClick={handleSubmit}>
+        Search
+      </Button>
       {selected.length > 0 && (
         <div className={style.search_result}>
           {selected.map((item, i) => (
@@ -80,7 +80,6 @@ function AddNewMember() {
           </div>
         </div>
       )}
-
       {notFound && (
         <div className={style.search_result}>
           <div className={style.spinner_wrapper}>
