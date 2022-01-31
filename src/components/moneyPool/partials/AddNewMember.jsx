@@ -4,7 +4,7 @@ import { Form, Spinner, Button, Table } from "react-bootstrap";
 import { API_URL } from "../../../config";
 import style from "./../style.module.css";
 
-function AddNewMember({selected,setSelected}) {
+function AddNewMember({ selected, setSelected }) {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [notFound, setNotFound] = useState(false);

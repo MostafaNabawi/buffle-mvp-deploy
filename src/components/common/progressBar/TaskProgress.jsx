@@ -5,11 +5,14 @@ import style from "./style.module.css";
 import moment from "moment";
 import { updateTaskSpendTime, updateTaskWhenPlay, updateTaskWhenCompleted, createNotification } from "../../../api";
 import { useToasts } from "react-toast-notifications";
-
+import { useDispatch, useSelector } from 'react-redux';
+import { setRun } from '../../../store/taskSlice';
 const Timer = (props) => {
     const { addToast } = useToasts();
+    const dispatch = useDispatch();
+    const { run } = useSelector((state) => state.task);
     const { _id, name, spend_time, task_duration, start_time, status, task_percent, handleCheckOpenClose, handleComplet } = props;
-    const time = spend_time !== null ? spend_time.split(':') : `${0}:${0}:${0}:${0}`.split(":");
+    const time = spend_time !== 0 ? spend_time.split(':') : `${0}:${0}:${0}:${0}`.split(":");
     const [second, setSecond] = useState('0');
     const [minute, setMinute] = useState('0');
     const [hour, setHour] = useState('0');
@@ -21,18 +24,20 @@ const Timer = (props) => {
     const duration = moment.duration(task_duration).asSeconds();
     const [counter, setCounter] = useState(parseInt(time[3]) > 0 ? parseInt(time[3]) : 0);
     const data = JSON.parse(localStorage.getItem("user"));
-
     const handlePlay = async () => {
-        handleCheckOpenClose(1);
-        if (!play) {
+        if (!play && !run) {
+            dispatch(setRun(true));
+            console.log('s', play)
+            handleCheckOpenClose(1);
             setPlay(!play);
             const update = await updateTaskWhenPlay(_id, 'running', new Date().toISOString())
             if (update.status === 200) {
                 console.log('started')
             }
         }
-
         if (play) {
+            dispatch(setRun(false));
+            console.log('a', play)
             handleCheckOpenClose(0)
             setPlay(!play);
             const sp_time = `${day}:${hour}:${minute}:${second}`;
@@ -41,6 +46,9 @@ const Timer = (props) => {
                 console.log('updated')
             }
         }
+
+
+
     };
     useEffect(() => {
         let intervalId;
