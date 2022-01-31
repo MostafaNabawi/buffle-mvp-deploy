@@ -11,16 +11,15 @@ import moment from "moment";
 const TaskManagement = ({ handleGet, val }) => {
   const { addToast } = useToasts();
   const [items, setItems] = useState([]);
-  const [inputTask, setInputTask] = useState({ name: "", p_id: "" });
+  const [inputTask, setInputTask] = useState({ name: "", day: "", p_id: '' });
   const [newItems, setNewItems] = useState(false);
   const [id, setId] = useState('');
-
   async function request() {
     const data = await getTask();
     const format = data?.data?.map((i, n) => {
       return {
         id: n,
-        status: moment(i.date, "YYYY-MM-DD HH:mm:ss").format("dddd"),
+        status: i.day_of_week,
         content: i.name,
         tb_id: i._id,
         description: i.description,
@@ -28,6 +27,7 @@ const TaskManagement = ({ handleGet, val }) => {
         p_id: i.projectId,
         start_time: i.start_time,
         completed: i.status,
+        day_of_week: i.day_of_week,
       };
     });
     setItems(format);
@@ -55,7 +55,7 @@ const TaskManagement = ({ handleGet, val }) => {
   }
   const handleKeyDownWeekDaysItem = async (event) => {
     if (event.key === "Enter") {
-      const createT = await createTask(inputTask, 0, 0, false);
+      const createT = await createTask(inputTask, 0, 0, false, 'stop');
       if (createT.status === 200) {
         addToast("Created Susseccfully", {
           autoDismiss: true,
@@ -125,7 +125,7 @@ const TaskManagement = ({ handleGet, val }) => {
                       className="new_task_input"
                       placeholder="New Task"
                       aria-label="New Task"
-                      onChange={(e) => setInputTask({ name: e.target.value })}
+                      onChange={(e) => setInputTask({ name: e.target.value, day: s.status })}
                       onKeyDown={handleKeyDownWeekDaysItem}
                       value={inputTask.name}
                     />

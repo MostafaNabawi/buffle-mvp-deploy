@@ -36,7 +36,7 @@ const ProjectManagement = ({ value, handleGet }) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handleShowPModal = () => setShowPModal(true);
-  const [inputTask, setInputTask] = useState({ name: "", p_id: "" });
+  const [inputTask, setInputTask] = useState({ name: "", day: '', p_id: "" });
   const [id, setId] = useState('');
   async function request() {
     // get project and format
@@ -65,6 +65,7 @@ const ProjectManagement = ({ value, handleGet }) => {
         p_id: i.projectId,
         start_time: i.start_time,
         completed: i.status,
+        day_of_week: i.day_of_week,
       };
     });
     setItems(format);
@@ -90,7 +91,7 @@ const ProjectManagement = ({ value, handleGet }) => {
   // insert task to database for project
   const handleKeyDown = async (event) => {
     if (event.key === "Enter") {
-      const createT = await createTask(inputTask, 0, 0, false);
+      const createT = await createTask(inputTask, 0, 0, false, 'stop');
       if (createT.status === 200) {
         handleGet(inputTask.name);
         addToast("Created Susseccfully", {
@@ -306,7 +307,7 @@ const ProjectManagement = ({ value, handleGet }) => {
                         placeholder="New Task"
                         aria-label="New Task"
                         onChange={(e) =>
-                          setInputTask({ name: e.target.value, p_id: s.status })
+                          setInputTask({ name: e.target.value, day: moment(new Date(), "YYYY-MM-DD HH:mm:ss").format("dddd"), p_id: s.status })
                         }
                         onKeyDown={handleKeyDown}
                         value={inputTask.name}
