@@ -252,7 +252,7 @@ function ScreenFreeReminderCard() {
                   <span>
                     {changeMute
                       ? <Icon fontSize={24} icon="eos-icons:loading" />
-                      : <Form.Check onClick={() => { handleMute() }} checked={isShow} type="checkbox" />
+                      : <Form.Check onClick={() => { handleMute() }} defaultChecked={isShow} type="checkbox" />
                     }
                   </span>
                   <h6>{data?.display} screen free time</h6>

@@ -111,7 +111,7 @@ function ImpotentToDayCard({ handleMove }) {
             data.length > 0 ?
               data.map((item) => (
                 <Widget
-                  key={item._id}
+                  key={item.id}
                   icon={item.icon}
                   title={item.time}
                   content={item.content}
@@ -152,7 +152,6 @@ function ImpotentToDayCard({ handleMove }) {
                     <TimePicker
                       className={`form-control taskManagerTime ${error.length > 0 ? "red-border-input" : "no-border-input"
                         }`}
-                      clearIcon
                       closeClock
                       format={timeFormat ? "mm:ss" : "hh:mm:ss"}
                       onChange={(value) => {

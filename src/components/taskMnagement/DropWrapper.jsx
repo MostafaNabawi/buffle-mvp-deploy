@@ -5,7 +5,7 @@ import { statuses } from "./data";
 import { updateTaskDate } from "../../api";
 import { useToasts } from "react-toast-notifications";
 import moment from "moment";
-const DropWrapper = ({ onDrop, children, status, idNumber }) => {
+const DropWrapper = ({ onDrop, children, status, idNumber, handleDrop }) => {
   const { addToast } = useToasts();
   async function ProjectChange(id, date) {
     const mDate = moment(date); // Thursday Feb 2015
@@ -39,6 +39,7 @@ const DropWrapper = ({ onDrop, children, status, idNumber }) => {
     drop: (item, monitor) => {
       onDrop(item, monitor, status);
       ProjectChange(item.tb_id, item.date, status);
+      handleDrop(status);
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),

@@ -17,7 +17,7 @@ const TaskManagement = ({ handleGet, val }) => {
   const [inputTask, setInputTask] = useState({ name: "", day: "", p_id: '' });
   const [newItems, setNewItems] = useState(false);
   const [id, setId] = useState('');
-
+  const [checkDrop, setCheckDrop] = useState('');
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -51,14 +51,17 @@ const TaskManagement = ({ handleGet, val }) => {
   }, [newItems]);
 
   useEffect(() => {
-    if (id || val) {
+    if (id || val || checkDrop) {
       request();
     }
-  }, [id, val]);
+  }, [id, val, checkDrop]);
 
   const handleChecked = (id) => {
     handleGet(id);
     setId(id);
+  }
+  const handleDrop = (val) => {
+    setCheckDrop(val)
   }
   const handleKeyDownWeekDaysItem = async (event) => {
     if (event.key === "Enter") {
@@ -143,7 +146,7 @@ const TaskManagement = ({ handleGet, val }) => {
               {/* <span className={"col-header-time"}>2.14</span> */}
             </div>
             <hr />
-            <DropWrapper onDrop={onDrop} status={s.status} idNumber={s.id}>
+            <DropWrapper onDrop={onDrop} status={s.status} idNumber={s.id} handleDrop={handleDrop}>
               <Col>
                 {items
                   .filter((i) => i.status === s.status)
