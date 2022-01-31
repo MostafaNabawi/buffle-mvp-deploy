@@ -14,14 +14,14 @@ function PersonSelectorDropDown(props) {
   return (
     <DropdownButton
       id="dropdown-basic-button"
-      title={eventUsers[0].name}
+      // title={eventUsers[0].name}
       variant="secondary"
     >
-      {eventUsers.map((item) => (
+      {/* {eventUsers.map((item) => (
         <Dropdown.Item key={item.name} onClick={() => serUserID(item.name)}>
           {item.name}
         </Dropdown.Item>
-      ))}
+      ))} */}
     </DropdownButton>
   );
 }

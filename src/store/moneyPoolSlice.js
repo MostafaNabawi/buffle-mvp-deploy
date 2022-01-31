@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const moneyPoolSlice = createSlice({
   name: "moneyPool",
   initialState: {
-    eventUsers: [{ name: "Ali" }, { name: "Abbas" }],
+    eventUsers: "",
     SelectedUserID: "",
   },
   reducers: {
