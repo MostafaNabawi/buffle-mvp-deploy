@@ -47,8 +47,6 @@ const Timer = (props) => {
             }
         }
 
-
-
     };
     useEffect(() => {
         let intervalId;
