@@ -8,13 +8,14 @@ import { Button, Form, Row } from "react-bootstrap";
 import NoExpensesYet from "./partials/NoExpensesYet";
 import EventPerson from "./partials/EventPerson";
 import { Icon } from "@iconify/react";
-import {useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import OverView from "./partials/OverView";
 import Modal from "./../modal/modal";
 import Col from "./../taskMnagement/Col";
 import AddNewMember from "./partials/AddNewMember";
 import { useToasts } from "react-toast-notifications";
 import { API_URL } from "../../config";
+import { useDispatch } from "react-redux";
 
 const eventData = [
   { name: "Hassan", icon: <Icon icon="akar-icons:check" color={`#20ca7d`} /> },
@@ -23,9 +24,10 @@ const eventData = [
 
 function Event() {
   // event id
-  const {id}=useParams()
+  const { id } = useParams();
   // add new member state
   const { addToast } = useToasts();
+  const dispatch = useDispatch();
   const [adding, setAdding] = useState(false);
   const [selected, setSelected] = useState([]);
   //
@@ -38,7 +40,8 @@ function Event() {
   const AddExpenses = () => {
     navigate(`/dashboard/money-pool/event/expenses/${id}`);
   };
-  const handleAddMember = async () => {    if (selected.length === 0) {
+  const handleAddMember = async () => {
+    if (selected.length === 0) {
       addToast("Please add user!", { autoDismiss: true, appearance: "error" });
       return "";
     }
@@ -68,7 +71,7 @@ function Event() {
             autoDismiss: true,
             appearance: "success",
           });
-          handleClose()
+          handleClose();
           setAdding(false);
         }
       });
@@ -122,7 +125,14 @@ function Event() {
               Close
             </Button>
 
-            <Button onClick={()=>{ handleAddMember()}} disabled={adding} variant="primary" type="submit">
+            <Button
+              onClick={() => {
+                handleAddMember();
+              }}
+              disabled={adding}
+              variant="primary"
+              type="submit"
+            >
               {" "}
               {adding ? (
                 <Icon fontSize={24} icon="eos-icons:loading" />

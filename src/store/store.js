@@ -3,6 +3,7 @@ import hydrationSclice from "./hydrationSclice";
 import screenReminderSclice from "./screenReminderSclice";
 import userSlice from "./userSlice";
 import taskSlice from "./taskSlice";
+import moneyPoolSlice from "./moneyPoolSlice";
 
 export default configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export default configureStore({
     screen: screenReminderSclice,
     user: userSlice,
     task: taskSlice,
+    moneyPool: moneyPoolSlice,
   },
 });
