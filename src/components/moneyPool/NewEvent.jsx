@@ -19,7 +19,8 @@ function NewEvent() {
   const [currencyData, setCurrencyData] = useState(null);
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
-  const [busy,setBusy]=useState(false)
+  const [loading2, setLoading2] = useState(false);
+  const [busy, setBusy] = useState(false);
   const { addToast } = useToasts();
   const [notFound, setNotFound] = useState(false);
   const [selected, setSelected] = useState([]);
@@ -34,7 +35,7 @@ function NewEvent() {
   // naviget to event when click on event list row
   const handleRowClick = (id) => {
     navigate(`event/${id}`);
-  }
+  };
   const addPerson = () => {
     setPersonNum([...personNum, personNum.length + 2]);
   };
@@ -50,7 +51,7 @@ function NewEvent() {
       });
       return;
     }
-    setBusy(true)
+    setBusy(true);
     fetch(`${API_URL}/money-poll/join-event`, {
       method: "POST",
       credentials: "include",
@@ -66,7 +67,7 @@ function NewEvent() {
         appearance: "info",
         autoDismiss: 3000,
       });
-      setBusy(false)
+      setBusy(false);
       navigate(`/dashboard/money-pool/event/${data?.eventId}`);
     });
   };
@@ -106,8 +107,8 @@ function NewEvent() {
     }
   }
   const handleCreatePool = async () => {
-    const currentUser = JSON.parse(localStorage.getItem("user"))
-    const userName = currentUser.first_name + " " + currentUser.last_name
+    const currentUser = JSON.parse(localStorage.getItem("user"));
+    const userName = currentUser.first_name + " " + currentUser.last_name;
     if (eventName === "" || currency === "") {
       addToast("All faild is required", {
         autoDismiss: true,
@@ -132,11 +133,11 @@ function NewEvent() {
           currency: currency,
           desc: desc,
           memberIds: userId,
-          fullName: userName
+          fullName: userName,
         }),
       }).then(async (res) => {
         if (res.status === 200) {
-          const result = await res.json()
+          const result = await res.json();
           setCreateing(false);
           addToast("Created", { autoDismiss: true, appearance: "success" });
           navigate(`/dashboard/money-pool/event/${result.eventId}`);
@@ -156,15 +157,15 @@ function NewEvent() {
     setSelected(arr);
   };
   async function request() {
-    setLoading(true);
+    setLoading2(true);
     const events = await getEventList();
     if (events.data.length > 0) {
-      setEventList(events.data)
+      setEventList(events.data);
 
-      setLoading(false);
+      setLoading2(false);
     } else {
       setEventList([]);
-      setLoading(false);
+      setLoading2(false);
     }
   }
   useEffect(() => {
@@ -173,7 +174,6 @@ function NewEvent() {
 
     //get event list data
     request();
-
   }, []);
   return (
     <Card className="event_card">
@@ -358,7 +358,7 @@ function NewEvent() {
                       />
                     </Form.Group>
                     <Button type="submit">
-                      {busy ? <Icon icon="eos-icons:loading" />:"Join"}
+                      {busy ? <Icon icon="eos-icons:loading" /> : "Join"}
                     </Button>
                   </Form>
                 </div>
@@ -366,60 +366,40 @@ function NewEvent() {
             </Row>
           </Tab>
           <Tab eventKey="existevent" title="Event list">
-
             <Table responsive hover size="sm">
               <thead>
                 <tr>
-                  <th>
-                    #
-                  </th>
-                  <th>
-                    Event Name
-                  </th>
-                  <th>
-                    Description
-                  </th>
-                  <th>
-                    Currency
-                  </th>
-                  <th>
-                    Event Code
-                  </th>
-
+                  <th>#</th>
+                  <th>Event Name</th>
+                  <th>Description</th>
+                  <th>Currency</th>
+                  <th>Event Code</th>
                 </tr>
               </thead>
               <tbody>
-                {loading ? (<tr colSpan={4}>Loading...</tr>) :
-                  eventList.length > 0 ?
-                    eventList.map((list, i) => (
-                      <tr onClick={() => handleRowClick(list._id)}>
-                        <th scope="row">
-                          {++i}
-                        </th>
-                        <td>
-                          {list.event}
-                        </td>
-                        <td>
-                          {list.description}
-                        </td>
-                        <td>
-                          {list.currency}
-                        </td>
-                        <td>
-                          {list.uuid}
-                        </td>
-
-                      </tr>
-                    ))
-                    : <tr>No event</tr>}
-
-
+                {loading2 ? (
+                  <tr className="text-center" >
+                    <td colSpan={4}>{<Icon fontSize={80} icon="eos-icons:three-dots-loading" />}</td>
+                  </tr>
+                ) : eventList.length > 0 ? (
+                  eventList.map((list, i) => (
+                    <tr onClick={() => handleRowClick(list._id)}>
+                      <th scope="row">{++i}</th>
+                      <td>{list.event}</td>
+                      <td>{list.description}</td>
+                      <td>{list.currency}</td>
+                      <td>{list.uuid}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>No event</tr>
+                )}
               </tbody>
             </Table>
           </Tab>
         </Tabs>
       </CardBody>
-    </Card >
+    </Card>
   );
 }
 
