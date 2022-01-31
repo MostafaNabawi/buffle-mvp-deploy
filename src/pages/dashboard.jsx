@@ -448,7 +448,6 @@ const Dashboard = () => {
     setOpan(opan - 1)
     setStart(start - 1)
   }
-
   const handleMove = (value) => {
     setMove(value);
   }
@@ -494,6 +493,7 @@ const Dashboard = () => {
       dispatch(setSwitched(true));
     }
   }, [taskReload, complete, move]);
+
   return (
     <section>
       <Row>
@@ -689,11 +689,11 @@ const Dashboard = () => {
               {showSkleton ? (
                 <Skeleton count={9} />
               ) : taskData.length > 0 ? (
-                taskData.map((t) => (
+                taskData.map((t, n) => (
                   <>
                     <Row
                       className="task-manager-body pt-0 mt-1 mb-1"
-                      key={t._id}
+                      key={n}
                     >
                       <Col xl="8">
                         <Row className="pl-5">
@@ -767,8 +767,8 @@ const Dashboard = () => {
                   "No Break Plan"
                 ) : (
                   breacPlanData &&
-                  breacPlanData.map((data) => (
-                    <Row key={data._id} className="mt-3">
+                  breacPlanData.map((data, n) => (
+                    <Row key={n} className="mt-3">
                       <Col className="col-2">
                         <div className="breakplan-icon navy-blue text-center pt-2">
                           <Image
@@ -984,7 +984,6 @@ const Dashboard = () => {
                             ? "red-border-input"
                             : "no-border-input"
                             }`}
-                          clearIcon
                           closeClock
                           format={timeFormat ? "mm:ss" : "hh:mm:ss"}
                           onChange={(value) => {
@@ -1059,7 +1058,6 @@ const Dashboard = () => {
                             ? "red-border-input"
                             : "no-border-input"
                             }`}
-                          clearIcon
                           closeClock
                           format={
                             oldTaskTime.split(":")[0] == "00" &&

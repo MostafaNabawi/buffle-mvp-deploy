@@ -183,7 +183,6 @@ function TaskModal(props) {
                       </Form.Label>
                       <TimePicker
                         className="form-control taskManagerTime"
-                        clearIcon
                         closeClock
                         format={"hh:mm:ss"}
                         value={item.start_time}
