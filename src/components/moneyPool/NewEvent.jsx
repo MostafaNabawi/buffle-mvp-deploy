@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Row, Form, Col, Button, Tabs, Tab,Table } from "react-bootstrap";
+import { Row, Form, Col, Button, Tabs, Tab, Table } from "react-bootstrap";
 import { Icon } from "@iconify/react";
 import style from "./style.module.css";
 import PersonNameField from "./partials/PersonNameField";
@@ -82,7 +82,7 @@ function NewEvent() {
       }).then(async (response) => {
         const result = await response.json();
         if (result.payload) {
-          setEmail('')
+          setEmail("");
           setLoading(false);
           result.email = email;
           setSelected([...selected, result]);
@@ -97,16 +97,15 @@ function NewEvent() {
   }
   const handleCreatePool = async () => {
     if (eventName === "" || currency === "") {
-      addToast("All faild is required", { autoDismiss: true, appearance: "error" });
+      addToast("All faild is required", {
+        autoDismiss: true,
+        appearance: "error",
+      });
       return "";
     }
-    var userId=[]
-    selected.length >0 &&(
-      selected.map(user=>(
-        userId.push(user.uid)
-      ))
-    )
-    userId=userId.join(',')
+    var userId = [];
+    selected.length > 0 && selected.map((user) => userId.push(user.uid));
+    userId = userId.join(",");
     try {
       setCreateing(true);
       await fetch(`${API_URL}/money-poll/new `, {
@@ -119,14 +118,14 @@ function NewEvent() {
         body: JSON.stringify({
           event: eventName,
           currency: currency,
-          desc:desc,
-          memberIds:userId
+          desc: desc,
+          memberIds: userId,
         }),
       }).then((res) => {
         if (res.status === 200) {
-          setCreateing(false)
+          setCreateing(false);
           addToast("Created", { autoDismiss: true, appearance: "success" });
-          navigate('/dashboard/money-pool/event')
+          navigate("/dashboard/money-pool/event");
         } else {
           addToast("Error Please Try Again", {
             autoDismiss: true,
@@ -135,9 +134,13 @@ function NewEvent() {
         }
       });
     } catch (err) {
-      setCreateing(false)
+      setCreateing(false);
     }
   };
+  const handleDelete =async (id)=>{
+  const arr=selected.filter(user=>user.uid !=id)
+  setSelected(arr)
+  }
   useEffect(() => {
     setCurrencyData(Object.values(CurrencyList.getAll("en_US")));
     // console.log(CurrencyList.get("AFN"));
@@ -195,7 +198,7 @@ function NewEvent() {
                       </Form.Select>
                     </Form.Group>
                   </Col>
-                   {/* email */}
+                  {/* email */}
                   <div className={style.participant_section}>
                     <h4>Participants</h4>
                     <Col md={12}>
@@ -234,7 +237,7 @@ function NewEvent() {
                   {notFound && (
                     <div style={{ color: "red" }}>
                       {" "}
-                      User by this email not found. code.{" "}
+                      User by this email not found!{" "}
                     </div>
                   )}
                   {/* selected user */}
@@ -254,7 +257,7 @@ function NewEvent() {
                               <td>{item.fullName}</td>
                               <td>{item.email}</td>
                               <th>
-                                <Icon icon="bx:bx-trash" />
+                                <i onClick={()=>{handleDelete(item.uid)}}><Icon icon="bx:bx-trash" /></i>
                               </th>
                             </tr>
                           ))}

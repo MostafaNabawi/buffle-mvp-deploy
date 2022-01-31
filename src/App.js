@@ -67,7 +67,7 @@ function App() {
           <Route path="taskmanagement" element={<TaskManage />} />
           <Route path="money-pool" element={<Moneypool />}>
             <Route index element={<NewEvent />} />
-            <Route path="event" element={<Event />} />
+            <Route path="event/:id" element={<Event />} />
             <Route path="event/expenses" element={<Expenses />} />
           </Route>
           <Route path="profile" element={<Profile />} />

@@ -3,18 +3,13 @@ import { useEffect, useState } from "react";
 import { Form, Spinner, Button, Table } from "react-bootstrap";
 import { API_URL } from "../../../config";
 import style from "./../style.module.css";
-import { useToasts } from "react-toast-notifications";
 
-function AddNewMember({ eventName, currency }) {
-  const {addToast}=useToasts()
-  console.log("ev...", eventName, currency);
+function AddNewMember({selected,setSelected}) {
   const [email, setEmail] = useState("");
-  // const [result, setResult] = useState([{ name: "reza" }, { name: "ali" }]);
   const [loading, setLoading] = useState(false);
   const [notFound, setNotFound] = useState(false);
-  const [selected, setSelected] = useState([]);
+
   function searchEmail() {
-    console.log("email", email);
     const value =
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
         email
@@ -36,6 +31,7 @@ function AddNewMember({ eventName, currency }) {
       }).then(async (response) => {
         const result = await response.json();
         if (result.payload) {
+          setEmail("");
           setLoading(false);
           result.email = email;
           setSelected([...selected, result]);
@@ -48,6 +44,10 @@ function AddNewMember({ eventName, currency }) {
       setLoading(false);
     }
   }
+  const handleDelete = async (id) => {
+    const arr = selected.filter((user) => user.uid != id);
+    setSelected(arr);
+  };
 
   return (
     <div className={style.participants_wrapper}>
@@ -76,34 +76,8 @@ function AddNewMember({ eventName, currency }) {
         </Button>
       </div>
       {notFound && (
-        <div style={{ color: "red" }}>
-          {" "}
-          User by this email not found. code.{" "}
-        </div>
+        <div style={{ color: "red" }}> User by this email not found! </div>
       )}
-      {/* {selected.length > 0 && (
-        <div className={style.search_result}>
-          {selected.map((item, i) => (
-            <div key={`selected-${i}`}>{item?.fullName}</div>
-          ))}
-        </div>
-      )} */}
-      {/* {loading && (
-        <div className={style.search_result}>
-          <div className={style.spinner_wrapper}>
-            <Spinner animation="border" />
-          </div>
-        </div>
-      )} */}
-      {/* {result.length > 0 ?
-        <div className={style.search_result}>
-          <ul className={style.result_list}>
-            {result.map((item) => (
-              <li key={item.name}>{item.name}</li>
-            ))}
-          </ul>
-        </div>
-      )} */}
       {selected.length > 0 && (
         <div className={style.participants}>
           <Table striped className="mb-0">
@@ -116,11 +90,17 @@ function AddNewMember({ eventName, currency }) {
             </thead>
             <tbody>
               {selected.map((item) => (
-                <tr>
+                <tr key={item.uid}>
                   <td>{item.fullName}</td>
                   <td>{item.email}</td>
                   <th>
-                    <Icon icon="bx:bx-trash" />
+                    <i
+                      onClick={() => {
+                        handleDelete(item.uid);
+                      }}
+                    >
+                      <Icon icon="bx:bx-trash" />
+                    </i>
                   </th>
                 </tr>
               ))}
@@ -128,7 +108,6 @@ function AddNewMember({ eventName, currency }) {
           </Table>
         </div>
       )}
-      
     </div>
   );
 }
