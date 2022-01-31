@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, Fragment } from "react";
 import { Row, Col, Image, Form, Button, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
@@ -99,9 +99,12 @@ const Dashboard = () => {
   const [taskData, setTaskData] = useState([]);
   const [taskReload, setTaskReload] = useState(false);
   const [checkId, setCheckedId] = useState([]);
-  const [oldTaskName, setOldTaskName] = useState("");
+  const [oldTaskName, setOldTaskName] = useState({ name: "" });
   const [oldTaskTime, setOldTaskTime] = useState("");
-
+  const [start, setStart] = useState(0);
+  const [opan, setOpan] = useState(0);
+  const [complete, setComplete] = useState("");
+  const [move, setMove] = useState("");
   // next break action
   const handleNextBreakOperation = async () => {
     if (nextBreakDateInput.length === 0) {
@@ -270,6 +273,7 @@ const Dashboard = () => {
     setShowSkleton(true);
     const req = await getDashboardTask();
     if (req.data.length > 0) {
+      setOpan(req.data.length);
       setTaskData(req.data);
       setShowSkleton(false);
     } else {
@@ -395,10 +399,10 @@ const Dashboard = () => {
   const handleUpdateTask = async () => {
     if (checkId.length === 1) {
       const oldData = await getTaskById(checkId[0]);
-      setOldTaskName(oldData.data.name);
+      setOldTaskName({ name: oldData.data.name });
       setOldTaskTime(oldData.data.task_duration);
       setUpdateDuration(oldData.data.task_duration);
-      setUpdateTaskName(oldData.data.name);
+      setUpdateTaskName({ name: oldData.data.name });
       if (oldData.data.task_duration.split(":")[0] == "00") {
         setUpdateTimeFormat("min");
       }
@@ -424,6 +428,23 @@ const Dashboard = () => {
     }
   };
 
+  const handleCheckOpenClose = (number) => {
+    if (number === 1) {
+      setStart(start + 1);
+      setOpan(opan - 1);
+    } else {
+      setOpan(opan + 1);
+      setStart(start - 1);
+    }
+  };
+  const handleComplete = (val) => {
+    setComplete(val);
+    setOpan(opan - 1);
+    setStart(start - 1);
+  };
+  const handleMove = (value) => {
+    setMove(value);
+  };
   // effects
   useEffect(() => {
     async function innerNextBreak() {
@@ -461,7 +482,8 @@ const Dashboard = () => {
 
   useEffect(() => {
     getTask();
-  }, [taskReload]);
+  }, [taskReload, complete, move]);
+
   return (
     <section>
       <Row>
@@ -617,7 +639,9 @@ const Dashboard = () => {
                 />
               }
               title="Task Manager"
-              subtitle="4 opan ,1 started"
+              subtitle={`${opan < 0 ? 0 : opan} opan, ${
+                start < 0 ? 0 : start
+              } start.`}
               action={
                 <>
                   <i
@@ -657,12 +681,9 @@ const Dashboard = () => {
               {showSkleton ? (
                 <Skeleton count={9} />
               ) : taskData.length > 0 ? (
-                taskData.map((t) => (
-                  <>
-                    <Row
-                      className="task-manager-body pt-0 mt-1 mb-1"
-                      key={t._id}
-                    >
+                taskData.map((t, n) => (
+                  <Fragment key={n}>
+                    <Row className="task-manager-body pt-0 mt-1 mb-1">
                       <Col xl="8">
                         <Row className="pl-5">
                           <Col xl="1">
@@ -681,11 +702,15 @@ const Dashboard = () => {
                         </Row>
                       </Col>
                       <Col xl="4">
-                        <Timer {...t} />
+                        <Timer
+                          {...t}
+                          handleCheckOpenClose={handleCheckOpenClose}
+                          handleComplet={handleComplete}
+                        />
                       </Col>
                     </Row>
                     <div className="devidre"></div>
-                  </>
+                  </Fragment>
                 ))
               ) : (
                 <span>No task for today</span>
@@ -735,8 +760,8 @@ const Dashboard = () => {
                   "No Break Plan"
                 ) : (
                   breacPlanData &&
-                  breacPlanData.map((data) => (
-                    <Row key={data._id} className="mt-3">
+                  breacPlanData.map((data, n) => (
+                    <Row key={n} className="mt-3">
                       <Col className="col-2">
                         <div className="breakplan-icon navy-blue text-center pt-2">
                           <Image
@@ -846,7 +871,7 @@ const Dashboard = () => {
           <EventCalender />
         </Col>
         <Col xl={4}>
-          <ImpotentToDayCard />
+          <ImpotentToDayCard handleMove={handleMove} />
         </Col>
       </Row>
       {/* Modale */}
@@ -953,7 +978,6 @@ const Dashboard = () => {
                               ? "red-border-input"
                               : "no-border-input"
                           }`}
-                          clearIcon
                           closeClock
                           format={timeFormat ? "mm:ss" : "hh:mm:ss"}
                           onChange={(value) => {
@@ -988,7 +1012,7 @@ const Dashboard = () => {
                       onChange={(e) => {
                         setUpdateTaskName({ name: e.target.value });
                       }}
-                      defaultValue={oldTaskName}
+                      defaultValue={oldTaskName.name}
                     />
                     {taskUpdateError ? (
                       <div className="invalid-feedback d-block">
@@ -1003,7 +1027,10 @@ const Dashboard = () => {
                       <Col xl="4">
                         <Form.Label>Time Format </Form.Label>
                         <Form.Select
-                          onChange={(e) => setUpdateTimeFormat(e.target.value)}
+                          onChange={(e) => (
+                            setUpdateTimeFormat(e.target.value),
+                            setOldTaskTime("")
+                          )}
                           className="selectTime"
                           aria-label="Default select example"
                         >
@@ -1029,7 +1056,6 @@ const Dashboard = () => {
                               ? "red-border-input"
                               : "no-border-input"
                           }`}
-                          clearIcon
                           closeClock
                           format={
                             oldTaskTime.split(":")[0] == "00" &&

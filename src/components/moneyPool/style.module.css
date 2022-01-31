@@ -1,6 +1,5 @@
 /* new even style */
-.select_col,
-.participant_section {
+.select_col {
   border-bottom: 1px solid #dee2e6;
 }
 .select_input {
@@ -8,7 +7,6 @@
 }
 
 .participant_section {
-  padding-bottom: 1rem;
   margin-bottom: 1rem;
   font-weight: 600;
 }
@@ -27,24 +25,6 @@
 
 button[type="submit"] {
   font-weight: 500;
-}
-
-.right_site {
-  display: flex;
-  flex-flow: column;
-}
-
-.right_site div {
-  height: 50%;
-}
-
-.right_site h4 {
-  padding: 1.2rem 0;
-}
-
-.right_site p {
-  border-left: 5px solid #dee2e6;
-  padding-left: 1rem;
 }
 
 .invite_form_area {
@@ -197,6 +177,8 @@ textarea::placeholder {
   list-style: none;
   padding-left: 0;
   margin-bottom: 0;
+  max-height: 4.32rem;
+  overflow: auto;
 }
 
 .result_list li {
@@ -213,26 +195,19 @@ textarea::placeholder {
   padding: 0.5rem 0;
 }
 
-.participants_wrapper .participants > span {
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  margin-right: 0.5rem;
-  border: 1px solid #ddd;
-  border-radius: 0.25rem;
-  position: relative;
-  overflow: hidden;
+.participants_wrapper .participants table tr:last-child {
+  border-bottom-color: #fff;
+}
+.participants table tbody tr th svg:hover {
+  cursor: pointer;
 }
 
-.trash {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  top: 0px;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  z-index: 1;
-  background: #fff;
-  font-size: 11px;
+.jumbotron h4 {
+  padding: 1.2rem 0;
+}
+
+.jumbotron p {
+  border-left: 5px solid #dee2e6;
+  padding-left: 1rem;
+  margin-bottom: 1rem !important;
 }

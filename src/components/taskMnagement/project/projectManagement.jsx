@@ -6,6 +6,8 @@ import { Button, Col, Form } from "react-bootstrap";
 import { Row } from "react-bootstrap";
 import { Icon } from "@iconify/react";
 import Modal from "../../modal/modal";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 import {
   createTask,
   getProject,
@@ -13,6 +15,7 @@ import {
   getProjectById,
   updateProject,
   createProject,
+  deleteTask
 } from "../../../api";
 import { useToasts } from "react-toast-notifications";
 import moment from "moment";
@@ -20,8 +23,9 @@ import ClipLoader from "react-spinners/ClipLoader";
 import BeatLoader from "react-spinners/BeatLoader";
 // paiman changes
 import { PROJECT_TYPE } from "../../data/types";
-const ProjectManagement = ({ value }) => {
+const ProjectManagement = ({ value, handleGet }) => {
   const { addToast } = useToasts();
+  const MySwal = withReactContent(Swal);
   const [items, setItems] = useState([]);
   const [projects, setProjects] = useState([]);
   const [projectName, setProjectName] = useState("");
@@ -36,10 +40,8 @@ const ProjectManagement = ({ value }) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handleShowPModal = () => setShowPModal(true);
-  const [inputTask, setInputTask] = useState({ name: "", p_id: "" });
-  const [newItems, setNewItems] = useState([]);
+  const [inputTask, setInputTask] = useState({ name: "", day: '', p_id: "" });
   const [id, setId] = useState('');
-
   async function request() {
     // get project and format
     const req = await getProject();
@@ -67,33 +69,35 @@ const ProjectManagement = ({ value }) => {
         p_id: i.projectId,
         start_time: i.start_time,
         completed: i.status,
+        day_of_week: i.day_of_week,
       };
     });
     setItems(format);
   }
+
   const handleChecked = (id) => {
+    handleGet(id);
     setId(id);
   }
   useEffect(() => {
     request();
   }, []);
-  useEffect(() => {
-    request();
-  }, [value]);
+
   useEffect(() => {
     request();
     setNewProject(false);
   }, [newProject]);
   useEffect(() => {
-    if (id) {
+    if (id || value) {
       request();
     }
-  }, [id]);
+  }, [id, value]);
   // insert task to database for project
   const handleKeyDown = async (event) => {
     if (event.key === "Enter") {
-      const createT = await createTask(inputTask, 0, 0, false);
+      const createT = await createTask(inputTask, 0, 0, false, 'stop');
       if (createT.status === 200) {
+        handleGet(inputTask.name);
         addToast("Created Susseccfully", {
           autoDismiss: true,
           appearance: "success",
@@ -167,6 +171,7 @@ const ProjectManagement = ({ value }) => {
           autoDismiss: true,
           appearance: "success",
         });
+        request();
         setloading(false);
         setShow(false);
       } else {
@@ -188,7 +193,6 @@ const ProjectManagement = ({ value }) => {
       const newItems = prevState
         .filter((i) => i.id !== item.id)
         .concat({ ...item, status });
-      // console.log("New Items", newItems);
       return [...newItems];
     });
   };
@@ -198,6 +202,44 @@ const ProjectManagement = ({ value }) => {
       const newItems = prevState.filter((i, idx) => idx !== dragIndex);
       newItems.splice(hoverIndex, 0, item);
       return [...newItems];
+    });
+  };
+
+  const handleDelete = async (id) => {
+    MySwal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, cancel!",
+      reverseButtons: true,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const deleteT = await deleteTask(id);
+
+          if (deleteT.status === 200) {
+            Swal.fire("Deleted!", "Your file has been deleted.", "success");
+            handleClose();
+            const d = items.filter(i => i.tb_id !== id);
+            setItems(d);
+            handleGet(id);
+          } else {
+            addToast("Error: Please Try Again!.", {
+              appearance: "error",
+              autoDismiss: true,
+            });
+            handleClose();
+          }
+        } catch (error) {
+          addToast("Error: Please Try Again!.", {
+            appearance: "error",
+            autoDismiss: true,
+          });
+          handleClose();
+        }
+      }
     });
   };
   if (loading) {
@@ -296,6 +338,8 @@ const ProjectManagement = ({ value }) => {
                         status={s}
                         className="project_item"
                         handleChecked={handleChecked}
+                        handleGet={handleGet}
+                        handleDelete={handleDelete}
                       ></Item>
                     ))}
                   <div className="new-task-div">
@@ -306,7 +350,7 @@ const ProjectManagement = ({ value }) => {
                         placeholder="New Task"
                         aria-label="New Task"
                         onChange={(e) =>
-                          setInputTask({ name: e.target.value, p_id: s.status })
+                          setInputTask({ name: e.target.value, day: moment(new Date(), "YYYY-MM-DD HH:mm:ss").format("dddd"), p_id: s.status })
                         }
                         onKeyDown={handleKeyDown}
                         value={inputTask.name}

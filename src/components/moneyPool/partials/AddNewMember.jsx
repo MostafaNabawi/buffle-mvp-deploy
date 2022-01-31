@@ -1,22 +1,15 @@
 import { Icon } from "@iconify/react";
-import { useState } from "react";
-import { Form, Spinner, Button } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Form, Spinner, Button, Table } from "react-bootstrap";
 import { API_URL } from "../../../config";
 import style from "./../style.module.css";
 
-function AddNewMember() {
+function AddNewMember({ selected, setSelected }) {
   const [email, setEmail] = useState("");
-  const [result, setResult] = useState([{ name: "reza" }, { name: "ali" }]);
   const [loading, setLoading] = useState(false);
-  const [notFound, setNotFound] = useState(true);
-  const [selected, setSelected] = useState([]);
+  const [notFound, setNotFound] = useState(false);
 
-  const handleAdd = (uid) => {
-    console.log("added", uid);
-    setSelected([...selected, uid]);
-  };
-  function handleSubmit(e) {
-    setEmail(e.target.value);
+  function searchEmail() {
     const value =
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
         email
@@ -32,24 +25,30 @@ function AddNewMember() {
           "Access-Control-Allow-Credentials": true,
         },
         body: JSON.stringify({
-          email: e.target.value,
+          email: email,
           moneyPoll: true,
         }),
       }).then(async (response) => {
-        const data = await response.json();
-        console.log("rr", data);
-        if (data?.payload) {
+        const result = await response.json();
+        if (result.payload) {
+          setEmail("");
           setLoading(false);
-          setResult([data]);
+          result.email = email;
+          setSelected([...selected, result]);
         } else {
           setNotFound(true);
+          setLoading(false);
         }
       });
     } else {
       setLoading(false);
     }
   }
-  console.log(email)
+  const handleDelete = async (id) => {
+    const arr = selected.filter((user) => user.uid != id);
+    setSelected(arr);
+  };
+
   return (
     <div className={style.participants_wrapper}>
       <div className={style.input_with_button}>
@@ -62,56 +61,53 @@ function AddNewMember() {
             aria-haspopup="false"
             autoFocus="false"
             placeholder="Email"
-            onChange={(e) =>{
-              console.log("on change")
-              setEmail(e.target.value)
+            onChange={(e) => {
+              setEmail(e.target.value);
             }}
           />
         </Form.Group>
-        <Button type="button" onClick={handleSubmit}>
-          Search
+        <Button
+          type="button"
+          onClick={() => {
+            searchEmail();
+          }}
+        >
+          {loading ? <Icon fontSize={24} icon="eos-icons:loading" /> : "Add"}
         </Button>
       </div>
       {notFound && (
-        <div className={style.search_result}>
-          <div className={style.spinner_wrapper}>
-            <span style={{ color: "red" }}> User by this email not found, if you want to add please set invite code. </span>
-          </div>
-        </div>
+        <div style={{ color: "red" }}> User by this email not found! </div>
       )}
       {selected.length > 0 && (
-        <div className={style.search_result}>
-          {selected.map((item, i) => (
-            <div key={`selected-${i}`}>{item?.fullName}</div>
-          ))}
+        <div className={style.participants}>
+          <Table striped className="mb-0">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {selected.map((item) => (
+                <tr key={item.uid}>
+                  <td>{item.fullName}</td>
+                  <td>{item.email}</td>
+                  <th>
+                    <i
+                      onClick={() => {
+                        handleDelete(item.uid);
+                      }}
+                    >
+                      <Icon icon="bx:bx-trash" />
+                    </i>
+                  </th>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
         </div>
       )}
-      {loading && (
-        <div className={style.search_result}>
-          <div className={style.spinner_wrapper}>
-            <Spinner animation="border" />
-          </div>
-        </div>
-      )}
-      {result.length > 0 && (
-        <div className={style.search_result}>
-          <ul className={style.result_list}>
-            {result.map((item) => (
-              <li key={item.name}>{item.name}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-      <div className={style.participants}>
-        {result.map((item) => (
-          <span key={item.name}>
-            {item.name}
-            <i className={style.trash}>
-              <Icon icon="bx:bx-trash" className={style.participants_dismiss} />
-            </i>
-          </span>
-        ))}
-      </div>
     </div>
   );
 }

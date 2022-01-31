@@ -210,10 +210,12 @@ async function createTask(task, type, duration, moved, status) {
     body: JSON.stringify({
       name: task.name,
       projectId: task.p_id,
+      day: task.day,
       type: type,
       duration: duration,
       moved: moved,
       status: status,
+      spend: 0,
     }),
   });
   const resault = await req.json();
@@ -323,7 +325,7 @@ async function getTaskById(id) {
   const res = await req.json();
   return { status: req.status, data: res.payload };
 }
-async function updateTaskDate(id, date) {
+async function updateTaskDate(id, date, status) {
   const req = await fetch(`${API_URL}/task/update-task-date`, {
     method: "PUT",
     credentials: "include",
@@ -335,6 +337,7 @@ async function updateTaskDate(id, date) {
     body: JSON.stringify({
       taskId: id,
       date: date,
+      status: status,
     }),
   });
   return { status: req.status };
@@ -387,8 +390,6 @@ async function completeTask(id, status) {
 }
 
 async function updateTaskSpendTime(id, time, percent, status) {
-  console.log(id, time, status);
-
   const req = await fetch(`${API_URL}/task/update-spend-time`, {
     method: "PUT",
     credentials: "include",
@@ -506,6 +507,53 @@ async function updateTaskImportant(id, duration, status) {
   });
   return { status: req.status };
 }
+async function createNotification(id, name) {
+  const req = await fetch(`${API_URL}/task/notification`, {
+    method: "POST",
+    credentials: "include",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+    body: JSON.stringify({
+      user_id: id,
+      name: name,
+    }),
+  });
+  const resault = await req.json();
+  return { status: req.status, data: resault.payload };
+}
+
+// -------------------------money pool----------//
+async function getEventList() {
+  const req = await fetch(`${API_URL}/money-poll/get`, {
+    method: "GET",
+    credentials: "include",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+  });
+  const res = await req.json();
+  return { status: req.status, data: res.payload };
+}
+
+async function getEventUsers(id) {
+  const req = await fetch(`${API_URL}/money-poll/get-members?eventId=${id}`, {
+    method: "GET",
+    credentials: "include",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+  });
+  const res = await req.json();
+  return res;
+}
+
 export {
   getCompanySpaceData,
   signin,
@@ -538,4 +586,7 @@ export {
   updateTaskSpendTime,
   updateTaskWhenPlay,
   updateTaskWhenCompleted,
+  createNotification,
+  getEventList,
+  getEventUsers,
 };

@@ -800,11 +800,11 @@ div.check-box > input {
   overflow-y: auto;
   overflow-x: hidden;
 }
-.notifyTime{
+.notifyTime {
   color: #707eae !important;
   font-size: 11px !important;
 }
-.screenDiv{
+.screenDiv {
   padding-top: 5% !important;
   margin-left: 45% !important;
   margin-top: -7% !important;
@@ -814,8 +814,11 @@ div.check-box > input {
   background-color: black;
   color: white !important;
 }
-.subDropdown > button.btn-primary{
-  background:none !important;
+.subDropdown > button.btn-primary {
+  background: none !important;
   color: #212529 !important;
   border: none !important;
+}
+.selectUserVenet{
+  width:auto !important;
 }
