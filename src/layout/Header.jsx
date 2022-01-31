@@ -90,6 +90,7 @@ const Header = () => {
         const { payload } = await res.json();
         if (payload.length > 0) {
           setNotificatiion(payload);
+          setCount(0)
           setLoading(false);
         } else {
           setLoading(false);
