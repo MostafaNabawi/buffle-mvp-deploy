@@ -21,7 +21,9 @@ const UserLogin = () => {
   const [loading, setLoading] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
-  // const { ok } = useParams();
+  // actions
+
+  // #1-login for signups
   const mutulLogin = async (email, pass) => {
     setLoading(true);
     const req = await signin({ email: email, password: pass });
@@ -41,22 +43,24 @@ const UserLogin = () => {
         });
         setLoading(false);
       }
-      console.log("rr ", req);
       if (req.data.type === 1) {
-        console.log(req.data);
         localStorage.setItem("user", JSON.stringify(req.data.user));
-        localStorage.setItem("space", JSON.stringify(req?.data?.stype));
+        localStorage.setItem("space", req?.data?.stype);
+        localStorage.setItem("others", JSON.stringify(req?.data?.others));
         localStorage.removeItem("pp");
         navigate("/dashboard");
       }
       if (req.data.type === 2) {
         localStorage.setItem("user", JSON.stringify(req.data.user));
-        localStorage.setItem("space", JSON.stringify(req?.data?.stype));
+        localStorage.setItem("space", req?.data?.stype);
+        localStorage.setItem("others", JSON.stringify(req?.data?.others));
+        localStorage.setItem("current", req?.data?.current);
         localStorage.removeItem("pp");
         navigate("/dashboard");
       }
     }
   };
+  // login by button
   const handleLogin = async (event) => {
     event.preventDefault();
     if (inputs.email === "" || inputs.password === "") {
@@ -95,13 +99,15 @@ const UserLogin = () => {
 
       if (req.data.type === 1) {
         localStorage.setItem("user", JSON.stringify(req.data.user));
-        localStorage.setItem("space", JSON.stringify(req?.data?.stype));
+        localStorage.setItem("space", req?.data?.stype);
         localStorage.setItem("others", JSON.stringify(req?.data?.others));
         navigate("/dashboard");
       }
       if (req.data.type === 2) {
         localStorage.setItem("user", JSON.stringify(req.data.user));
-        localStorage.setItem("space", JSON.stringify(req?.data?.stype));
+        localStorage.setItem("space", req?.data?.stype);
+        localStorage.setItem("others", JSON.stringify(req?.data?.others));
+        localStorage.setItem("current", req?.data?.current);
         navigate("/dashboard");
       }
     }
@@ -133,13 +139,13 @@ const UserLogin = () => {
       if (res.type === 1) {
         console.log(res.data);
         localStorage.setItem("user", JSON.stringify(res.user));
-        localStorage.setItem("space", JSON.stringify(res?.stype));
+        localStorage.setItem("space", res?.stype);
         document.getElementsByClassName("swal-google")[0].remove();
         navigate("/dashboard");
       }
       if (res.type === 2) {
         localStorage.setItem("user", JSON.stringify(res.user));
-        localStorage.setItem("space", JSON.stringify(res?.stype));
+        localStorage.setItem("space", res?.stype);
         document.getElementsByClassName("swal-google")[0].remove();
         navigate("/dashboard");
       }
