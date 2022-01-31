@@ -7,7 +7,7 @@ import style from "./style.module.css";
 import { Icon } from "@iconify/react";
 import {
   updateTask,
-  deleteTask,
+
   getProject,
   getProjectById,
 } from "../../../api";
@@ -18,7 +18,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 function TaskModal(props) {
-  const { handleClose, title, className, item, handleCheck } = props;
+  const { handleClose, title, className, item, handleCheck, handleDelete } = props;
   const { addToast } = useToasts();
   const MySwal = withReactContent(Swal);
   const [taskTitle, setTaskTitle] = useState(item.content);
@@ -86,41 +86,40 @@ function TaskModal(props) {
   const handleClick = (value) => {
     setProjectId(value);
   };
-  const handleDelete = async () => {
-    MySwal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, delete it!",
-      cancelButtonText: "No, cancel!",
-      reverseButtons: true,
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        try {
-          const deleteT = await deleteTask(item.tb_id);
-          // const filterData = data.filter((item) => item.id !== id)
-          // setData(filterData)
-          if (deleteT.status === 200) {
-            Swal.fire("Deleted!", "Your file has been deleted.", "success");
-            handleClose();
-          } else {
-            addToast("Error: Please Try Again!.", {
-              appearance: "error",
-              autoDismiss: true,
-            });
-            handleClose();
-          }
-        } catch (error) {
-          addToast("Error: Please Try Again!.", {
-            appearance: "error",
-            autoDismiss: true,
-          });
-          handleClose();
-        }
-      }
-    });
-  };
+  // const handleDelete = async () => {
+  //   MySwal.fire({
+  //     title: "Are you sure?",
+  //     text: "You won't be able to revert this!",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonText: "Yes, delete it!",
+  //     cancelButtonText: "No, cancel!",
+  //     reverseButtons: true,
+  //   }).then(async (result) => {
+  //     if (result.isConfirmed) {
+  //       try {
+  //         const deleteT = await deleteTask(item.tb_id);
+
+  //         if (deleteT.status === 200) {
+  //           Swal.fire("Deleted!", "Your file has been deleted.", "success");
+  //           handleClose();
+  //         } else {
+  //           addToast("Error: Please Try Again!.", {
+  //             appearance: "error",
+  //             autoDismiss: true,
+  //           });
+  //           handleClose();
+  //         }
+  //       } catch (error) {
+  //         addToast("Error: Please Try Again!.", {
+  //           appearance: "error",
+  //           autoDismiss: true,
+  //         });
+  //         handleClose();
+  //       }
+  //     }
+  //   });
+  // };
   return (
     <Modal
       {...props}
@@ -145,7 +144,7 @@ function TaskModal(props) {
               handleSetProjct={handleCheck}
             />
             {/* <RepeatTask /> */}
-            <button type="button" onClick={handleDelete}>
+            <button type="button" onClick={() => { handleDelete(item.tb_id) }}>
               <Icon icon="akar-icons:trash-can" />
             </button>
             <button type="button" onClick={handleClose}>

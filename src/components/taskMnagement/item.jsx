@@ -7,7 +7,7 @@ import { useToasts } from "react-toast-notifications";
 
 const Item = (props) => {
   const { addToast } = useToasts();
-  const { item, index, moveItem, PTYPE, handleGet, handleChecked } = props;
+  const { item, index, moveItem, PTYPE, handleGet, handleChecked, handleDelete } = props;
   var checked = item.completed === 'completed' ? 'checked' : '';
   const ref = useRef(null);
   const [, drop] = useDrop({
@@ -106,6 +106,7 @@ const Item = (props) => {
         title={item.content}
         {...props}
         handleCheck={handleGet}
+        handleDelete={handleDelete}
       />
     </Fragment>
   );

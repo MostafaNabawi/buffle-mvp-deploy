@@ -6,6 +6,8 @@ import { Button, Col, Form } from "react-bootstrap";
 import { Row } from "react-bootstrap";
 import { Icon } from "@iconify/react";
 import Modal from "../../modal/modal";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 import {
   createTask,
   getProject,
@@ -13,6 +15,7 @@ import {
   getProjectById,
   updateProject,
   createProject,
+  deleteTask
 } from "../../../api";
 import { useToasts } from "react-toast-notifications";
 import moment from "moment";
@@ -22,6 +25,7 @@ import BeatLoader from "react-spinners/BeatLoader";
 import { PROJECT_TYPE } from "../../data/types";
 const ProjectManagement = ({ value, handleGet }) => {
   const { addToast } = useToasts();
+  const MySwal = withReactContent(Swal);
   const [items, setItems] = useState([]);
   const [projects, setProjects] = useState([]);
   const [projectName, setProjectName] = useState("");
@@ -200,6 +204,44 @@ const ProjectManagement = ({ value, handleGet }) => {
       return [...newItems];
     });
   };
+
+  const handleDelete = async (id) => {
+    MySwal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, cancel!",
+      reverseButtons: true,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const deleteT = await deleteTask(id);
+
+          if (deleteT.status === 200) {
+            Swal.fire("Deleted!", "Your file has been deleted.", "success");
+            handleClose();
+            const d = items.filter(i => i.tb_id !== id);
+            setItems(d);
+            handleGet(id);
+          } else {
+            addToast("Error: Please Try Again!.", {
+              appearance: "error",
+              autoDismiss: true,
+            });
+            handleClose();
+          }
+        } catch (error) {
+          addToast("Error: Please Try Again!.", {
+            appearance: "error",
+            autoDismiss: true,
+          });
+          handleClose();
+        }
+      }
+    });
+  };
   if (loading) {
     return "Loading..";
   }
@@ -297,6 +339,7 @@ const ProjectManagement = ({ value, handleGet }) => {
                         className="project_item"
                         handleChecked={handleChecked}
                         handleGet={handleGet}
+                        handleDelete={handleDelete}
                       ></Item>
                     ))}
                   <div className="new-task-div">

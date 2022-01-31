@@ -4,16 +4,23 @@ import DropWrapper from "./DropWrapper";
 import { statuses } from "./data";
 import { Col, Form, Row } from "react-bootstrap";
 import { useToasts } from "react-toast-notifications";
-import { createTask, getTask } from "../../api";
+import { createTask, getTask, deleteTask } from "../../api";
 import { ITEM_TYPE } from "./data/types";
 import moment from "moment";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 const TaskManagement = ({ handleGet, val }) => {
   const { addToast } = useToasts();
+  const MySwal = withReactContent(Swal);
   const [items, setItems] = useState([]);
   const [inputTask, setInputTask] = useState({ name: "", day: "", p_id: '' });
   const [newItems, setNewItems] = useState(false);
   const [id, setId] = useState('');
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   async function request() {
     const data = await getTask();
     const format = data?.data?.map((i, n) => {
@@ -89,7 +96,43 @@ const TaskManagement = ({ handleGet, val }) => {
       return [...newItems];
     });
   };
+  const handleDelete = async (id) => {
+    MySwal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, cancel!",
+      reverseButtons: true,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const deleteT = await deleteTask(id);
 
+          if (deleteT.status === 200) {
+            Swal.fire("Deleted!", "Your file has been deleted.", "success");
+            handleClose();
+            const d = items.filter(i => i.tb_id !== id);
+            setItems(d);
+            handleGet(id);
+          } else {
+            addToast("Error: Please Try Again!.", {
+              appearance: "error",
+              autoDismiss: true,
+            });
+            handleClose();
+          }
+        } catch (error) {
+          addToast("Error: Please Try Again!.", {
+            appearance: "error",
+            autoDismiss: true,
+          });
+          handleClose();
+        }
+      }
+    });
+  };
   return (
     <Row>
       {statuses.map((s) => {
@@ -115,7 +158,7 @@ const TaskManagement = ({ handleGet, val }) => {
                       className="task_item"
                       handleGet={handleGet}
                       handleChecked={handleChecked}
-
+                      handleDelete={handleDelete}
                     ></Item>
                   ))}
                 <div className="new-task-div">
