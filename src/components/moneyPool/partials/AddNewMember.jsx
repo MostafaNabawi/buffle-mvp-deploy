@@ -4,13 +4,7 @@ import { Form, Spinner, Button, Table } from "react-bootstrap";
 import { API_URL } from "../../../config";
 import style from "./../style.module.css";
 
-<<<<<<< HEAD
 function AddNewMember({selected,setSelected}) {
-=======
-function AddNewMember({ eventName, currency }) {
-  const { addToast } = useToasts();
-  console.log("ev...", eventName, currency);
->>>>>>> 836ec37b151aa16420d6173b51a119ddb528e4e1
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [notFound, setNotFound] = useState(false);
