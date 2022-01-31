@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, Fragment } from "react";
 import { Row, Col, Image, Form, Button, NavDropdown } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import { Icon } from "@iconify/react";
@@ -690,10 +690,9 @@ const Dashboard = () => {
                 <Skeleton count={9} />
               ) : taskData.length > 0 ? (
                 taskData.map((t, n) => (
-                  <>
+                  <Fragment key={n}>
                     <Row
                       className="task-manager-body pt-0 mt-1 mb-1"
-                      key={n}
                     >
                       <Col xl="8">
                         <Row className="pl-5">
@@ -717,7 +716,7 @@ const Dashboard = () => {
                       </Col>
                     </Row>
                     <div className="devidre"></div>
-                  </>
+                  </Fragment>
                 ))
               ) : (
                 <span>No task for today</span>

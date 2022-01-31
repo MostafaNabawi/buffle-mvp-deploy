@@ -11,9 +11,9 @@ import CurrencyList from "currency-list";
 import { useToasts } from "react-toast-notifications";
 import { API_URL } from "../../config";
 import Jumbotron from "./partials/Jumbotron";
+import { getEventList } from "../../api";
 
 function NewEvent() {
-  const navigate = useNavigate();
   const [key, setKey] = useState("createvent");
   const [personNum, setPersonNum] = useState([2]);
   const [currencyData, setCurrencyData] = useState(null);
@@ -24,10 +24,16 @@ function NewEvent() {
   const [selected, setSelected] = useState([]);
   const [desc, setDesc] = useState("");
   const [createing, setCreateing] = useState(false);
+  const [eventList, setEventList] = useState([]);
   //
   const [eventName, setEventName] = useState("");
   const [currency, setCurrency] = useState("");
+  const navigate = useNavigate();
 
+  // naviget to event when click on event list row
+  const handleRowClick = (id) => {
+    navigate(`event/${id}`);
+  }
   const addPerson = () => {
     setPersonNum([...personNum, personNum.length + 2]);
   };
@@ -96,8 +102,8 @@ function NewEvent() {
     }
   }
   const handleCreatePool = async () => {
-    const currentUser =JSON.parse(localStorage.getItem("user"))
-    const userName=currentUser.first_name +" " + currentUser.last_name
+    const currentUser = JSON.parse(localStorage.getItem("user"))
+    const userName = currentUser.first_name + " " + currentUser.last_name
     if (eventName === "" || currency === "") {
       addToast("All faild is required", {
         autoDismiss: true,
@@ -125,8 +131,8 @@ function NewEvent() {
           fullName: userName
         }),
       }).then(async (res) => {
-        if (res.status === 200 ) {
-          const result =await res.json()
+        if (res.status === 200) {
+          const result = await res.json()
           setCreateing(false);
           addToast("Created", { autoDismiss: true, appearance: "success" });
           navigate(`/dashboard/money-pool/event/${result.eventId}`);
@@ -145,9 +151,25 @@ function NewEvent() {
     const arr = selected.filter((user) => user.uid != id);
     setSelected(arr);
   };
+  async function request() {
+    setLoading(true);
+    const events = await getEventList();
+    if (events.data.length > 0) {
+      setEventList(events.data)
+
+      setLoading(false);
+    } else {
+      setEventList([]);
+      setLoading(false);
+    }
+  }
   useEffect(() => {
     setCurrencyData(Object.values(CurrencyList.getAll("en_US")));
     // console.log(CurrencyList.get("AFN"));
+
+    //get event list data
+    request();
+
   }, []);
   return (
     <Card className="event_card">
@@ -338,11 +360,54 @@ function NewEvent() {
             </Row>
           </Tab>
           <Tab eventKey="existevent" title="Event list">
-            Event list
+
+            <Table responsive hover size="sm">
+              <thead>
+                <tr>
+                  <th>
+                    #
+                  </th>
+                  <th>
+                    Event Name
+                  </th>
+                  <th>
+                    Description
+                  </th>
+                  <th>
+                    Currency
+                  </th>
+
+                </tr>
+              </thead>
+              <tbody>
+                {loading ? (<tr colSpan={4}>Loading...</tr>) :
+                  eventList.length > 0 ?
+                    eventList.map((list, i) => (
+                      <tr onClick={() => handleRowClick(list._id)}>
+                        <th scope="row">
+                          {++i}
+                        </th>
+                        <td>
+                          {list.event}
+                        </td>
+                        <td>
+                          {list.description}
+                        </td>
+                        <td>
+                          {list.currency}
+                        </td>
+
+                      </tr>
+                    ))
+                    : <tr>No event</tr>}
+
+
+              </tbody>
+            </Table>
           </Tab>
         </Tabs>
       </CardBody>
-    </Card>
+    </Card >
   );
 }
 

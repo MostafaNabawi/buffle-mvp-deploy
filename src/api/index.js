@@ -524,6 +524,21 @@ async function createNotification(id, name) {
   const resault = await req.json();
   return { status: req.status, data: resault.payload };
 }
+
+// -------------------------money pool----------//
+async function getEventList() {
+  const req = await fetch(`${API_URL}/money-poll/get`, {
+    method: "GET",
+    credentials: "include",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+  });
+  const res = await req.json();
+  return { status: req.status, data: res.payload };
+}
 export {
   getCompanySpaceData,
   signin,
@@ -557,4 +572,5 @@ export {
   updateTaskWhenPlay,
   updateTaskWhenCompleted,
   createNotification,
+  getEventList,
 };
