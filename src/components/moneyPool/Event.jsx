@@ -13,6 +13,8 @@ import OverView from "./partials/OverView";
 import Modal from "./../modal/modal";
 import Col from "./../taskMnagement/Col";
 import AddNewMember from "./partials/AddNewMember";
+import { useToasts } from "react-toast-notifications";
+import { API_URL } from "../../config";
 
 const eventData = [
   { name: "Hassan", icon: <Icon icon="akar-icons:check" color={`#20ca7d`} /> },
@@ -20,6 +22,11 @@ const eventData = [
 ];
 
 function Event() {
+  // add new member state
+  const { addToast } = useToasts();
+  const [adding, setAdding] = useState(false);
+  const [selected, setSelected] = useState([]);
+  //
   const [person, setPerson] = useState(eventData);
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
@@ -28,6 +35,44 @@ function Event() {
 
   const AddExpenses = () => {
     navigate("expenses");
+  };
+  const handleAddMember = async () => {
+    if (selected.length === 0) {
+      addToast("Please add user!", { autoDismiss: true, appearance: "error" });
+      return "";
+    }
+    try {
+      setAdding(true);
+      var userId = [];
+      selected.length > 0 && selected.map((user) => userId.push(user.uid));
+      userId = userId.join(",");
+
+      fetch(`${API_URL}/user/find`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": true,
+        },
+        body: JSON.stringify({
+          memberId: userId,
+          eventId: "id",
+        }),
+      }).then(async (res) => {
+        if (res.status === 200) {
+          addToast("Added!", { autoDismiss: true, appearance: "success" });
+          setAdding(false);
+        } else {
+          addToast("Error Please Try Again!", {
+            autoDismiss: true,
+            appearance: "success",
+          });
+          setAdding(false);
+        }
+      });
+    } catch {
+      setAdding(false);
+    }
   };
 
   return (
@@ -68,16 +113,20 @@ function Event() {
         show={show}
         handleClose={handleClose}
         title="Add new member"
-        body={<AddNewMember />}
+        body={<AddNewMember selected={selected} setSelected={setSelected} />}
         footer={
           <>
             <Button variant="outline-dark" onClick={handleClose}>
               Close
             </Button>
 
-            <Button variant="primary" type="submit">
+            <Button disabled={adding} variant="primary" type="submit">
               {" "}
-              Save
+              {adding ? (
+                <Icon fontSize={24} icon="eos-icons:loading" />
+              ) : (
+                "Save"
+              )}
             </Button>
           </>
         }
