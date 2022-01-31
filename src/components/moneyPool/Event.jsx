@@ -8,7 +8,7 @@ import { Button, Form, Row } from "react-bootstrap";
 import NoExpensesYet from "./partials/NoExpensesYet";
 import EventPerson from "./partials/EventPerson";
 import { Icon } from "@iconify/react";
-import { useNavigate } from "react-router-dom";
+import {useParams, useNavigate } from "react-router-dom";
 import OverView from "./partials/OverView";
 import Modal from "./../modal/modal";
 import Col from "./../taskMnagement/Col";
@@ -22,6 +22,8 @@ const eventData = [
 ];
 
 function Event() {
+  // event id
+  const {id}=useParams()
   // add new member state
   const { addToast } = useToasts();
   const [adding, setAdding] = useState(false);
@@ -34,10 +36,9 @@ function Event() {
   const handleShow = () => setShow(true);
 
   const AddExpenses = () => {
-    navigate("expenses");
+    navigate(`/dashboard/money-pool/event/expenses/${id}`);
   };
-  const handleAddMember = async () => {
-    if (selected.length === 0) {
+  const handleAddMember = async () => {    if (selected.length === 0) {
       addToast("Please add user!", { autoDismiss: true, appearance: "error" });
       return "";
     }
@@ -56,7 +57,7 @@ function Event() {
         },
         body: JSON.stringify({
           memberId: userId,
-          eventId: "id",
+          eventId: id,
         }),
       }).then(async (res) => {
         if (res.status === 200) {
@@ -67,6 +68,7 @@ function Event() {
             autoDismiss: true,
             appearance: "success",
           });
+          handleClose()
           setAdding(false);
         }
       });
@@ -120,7 +122,7 @@ function Event() {
               Close
             </Button>
 
-            <Button disabled={adding} variant="primary" type="submit">
+            <Button onClick={()=>{ handleAddMember()}} disabled={adding} variant="primary" type="submit">
               {" "}
               {adding ? (
                 <Icon fontSize={24} icon="eos-icons:loading" />
