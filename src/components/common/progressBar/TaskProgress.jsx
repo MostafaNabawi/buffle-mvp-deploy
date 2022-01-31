@@ -8,7 +8,7 @@ import { useToasts } from "react-toast-notifications";
 
 const Timer = (props) => {
     const { addToast } = useToasts();
-    const { _id, name, spend_time, task_duration, start_time, status, task_percent, handleCheckOpenClose } = props;
+    const { _id, name, spend_time, task_duration, start_time, status, task_percent, handleCheckOpenClose, handleComplet } = props;
     const time = spend_time !== null ? spend_time.split(':') : `${0}:${0}:${0}:${0}`.split(":");
     const [second, setSecond] = useState('0');
     const [minute, setMinute] = useState('0');
@@ -79,6 +79,7 @@ const Timer = (props) => {
                 }
             }
             request();
+            handleComplet(_id);
         }
         return () => clearInterval(intervalId);
     }, [play, counter]);

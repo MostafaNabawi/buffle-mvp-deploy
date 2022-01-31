@@ -210,10 +210,12 @@ async function createTask(task, type, duration, moved, status) {
     body: JSON.stringify({
       name: task.name,
       projectId: task.p_id,
+      day: task.day,
       type: type,
       duration: duration,
       moved: moved,
       status: status,
+      spend: 0,
     }),
   });
   const resault = await req.json();
@@ -323,7 +325,7 @@ async function getTaskById(id) {
   const res = await req.json();
   return { status: req.status, data: res.payload };
 }
-async function updateTaskDate(id, date) {
+async function updateTaskDate(id, date, status) {
   const req = await fetch(`${API_URL}/task/update-task-date`, {
     method: "PUT",
     credentials: "include",
@@ -335,6 +337,7 @@ async function updateTaskDate(id, date) {
     body: JSON.stringify({
       taskId: id,
       date: date,
+      status: status,
     }),
   });
   return { status: req.status };
