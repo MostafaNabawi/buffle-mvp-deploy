@@ -1,21 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Icon } from "@iconify/react";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { setSelectedUserID } from "../../../store/moneyPoolSlice";
-function PersonSelectorDropDown(props) {
+function PersonSelectorDropDown() {
   const { eventUsers } = useSelector((state) => state.moneyPool);
+  const [selectedItem, setsSelectedItem] = useState(0);
   const dispatch = useDispatch();
+  const handleSetID = (index, id) => {
+    setsSelectedItem(index);
+    dispatch(setSelectedUserID(id));
+  };
+
   const title =
     eventUsers !== "" ? (
-      `${eventUsers[0].first_name} ${eventUsers[0].last_name} `
+      `${eventUsers[selectedItem].first_name} ${eventUsers[selectedItem].last_name} `
     ) : (
       <Icon fontSize={24} icon="eos-icons:loading" />
     );
-  const handleSetID = (id) => {
-    dispatch(setSelectedUserID(id));
-  };
 
   return (
     <DropdownButton
@@ -24,10 +27,15 @@ function PersonSelectorDropDown(props) {
       variant="secondary"
     >
       {eventUsers &&
-        eventUsers.map((item) => (
-          <Dropdown.Item key={item.id} onClick={() => handleSetID(item.id)}>
-            {`${item.first_name} ${item.last_name} `}
-          </Dropdown.Item>
+        eventUsers.map((item, index) => (
+          <>
+            <Dropdown.Item
+              key={item.id}
+              onClick={() => handleSetID(index, item.id)}
+            >
+              {`${item.first_name} ${item.last_name}`}
+            </Dropdown.Item>
+          </>
         ))}
     </DropdownButton>
   );
