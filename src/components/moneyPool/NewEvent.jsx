@@ -19,6 +19,7 @@ function NewEvent() {
   const [currencyData, setCurrencyData] = useState(null);
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+  const [busy,setBusy]=useState(false)
   const { addToast } = useToasts();
   const [notFound, setNotFound] = useState(false);
   const [selected, setSelected] = useState([]);
@@ -49,6 +50,7 @@ function NewEvent() {
       });
       return;
     }
+    setBusy(true)
     fetch(`${API_URL}/money-poll/join-event`, {
       method: "POST",
       credentials: "include",
@@ -64,6 +66,8 @@ function NewEvent() {
         appearance: "info",
         autoDismiss: 3000,
       });
+      setBusy(false)
+      navigate(`/dashboard/money-pool/event/${data?.eventId}`);
     });
   };
   function searchEmail() {
@@ -353,7 +357,9 @@ function NewEvent() {
                         name="invite"
                       />
                     </Form.Group>
-                    <Button type="submit">Join</Button>
+                    <Button type="submit">
+                      {busy ? <Icon icon="eos-icons:loading" />:"Join"}
+                    </Button>
                   </Form>
                 </div>
               </Col>

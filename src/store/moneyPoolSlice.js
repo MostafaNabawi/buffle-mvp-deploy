@@ -4,7 +4,7 @@ export const moneyPoolSlice = createSlice({
   name: "moneyPool",
   initialState: {
     eventUsers: "",
-    SelectedUserID: "",
+    selectedUserID: "",
   },
   reducers: {
     setEventUsers: (state, action) => {
