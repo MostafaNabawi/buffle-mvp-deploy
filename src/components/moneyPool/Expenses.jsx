@@ -14,7 +14,7 @@ import { getEventUsers } from "../../api";
 import { setEventUsers } from "../../store/moneyPoolSlice";
 
 function Expenses() {
-  const { eventUsers } = useSelector((state) => state.expenses);
+  const { eventUsers } = useSelector((state) => state.moneyPool);
   const dispatch = useDispatch();
   const navegite = useNavigate();
   const { id } = useParams();
@@ -28,22 +28,22 @@ function Expenses() {
   const fetch = async () => {
     const req = await getEventUsers(id);
     if (req !== undefined) {
-      const userObj = [
-        {
-          _id: req.ower.id,
-          first_name: req.ower.first_name,
-          last_name: req.ower.last_name,
-        },
-      ];
-      req.users.map((user) => {
-        userObj.push({
-          _id: user.personal[0]._id,
-          first_name: user.personal[0].first_name,
-          last_name: user.personal[0].last_name,
-        });
-      });
-      console.log(userObj);
-      dispatch(setEventUsers(userObj));
+      // const userObj = [
+      //   {
+      //     _id: req.ower.id,
+      //     first_name: req.ower.first_name,
+      //     last_name: req.ower.last_name,
+      //   },
+      // ];
+      // req.users.map((user) => {
+      //   userObj.push({
+      //     _id: user.personal[0]._id,
+      //     first_name: user.personal[0].first_name,
+      //     last_name: user.personal[0].last_name,
+      //   });
+      // });
+      // console.log(userObj);
+      dispatch(setEventUsers());
     }
   };
 
