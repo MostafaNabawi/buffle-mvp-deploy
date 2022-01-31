@@ -382,6 +382,9 @@ function NewEvent() {
                   <th>
                     Currency
                   </th>
+                  <th>
+                    Event Code
+                  </th>
 
                 </tr>
               </thead>
@@ -401,6 +404,9 @@ function NewEvent() {
                         </td>
                         <td>
                           {list.currency}
+                        </td>
+                        <td>
+                          {list.uuid}
                         </td>
 
                       </tr>
