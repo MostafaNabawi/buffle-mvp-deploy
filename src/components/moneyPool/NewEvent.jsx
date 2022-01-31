@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Row, Form, Col, Button, Tabs, Tab,Table } from "react-bootstrap";
+import { Row, Form, Col, Button, Tabs, Tab, Table } from "react-bootstrap";
 import { Icon } from "@iconify/react";
 import style from "./style.module.css";
 import PersonNameField from "./partials/PersonNameField";

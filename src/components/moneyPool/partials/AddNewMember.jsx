@@ -6,7 +6,7 @@ import style from "./../style.module.css";
 import { useToasts } from "react-toast-notifications";
 
 function AddNewMember({ eventName, currency }) {
-  const {addToast}=useToasts()
+  const { addToast } = useToasts();
   console.log("ev...", eventName, currency);
   const [email, setEmail] = useState("");
   // const [result, setResult] = useState([{ name: "reza" }, { name: "ali" }]);
@@ -128,7 +128,6 @@ function AddNewMember({ eventName, currency }) {
           </Table>
         </div>
       )}
-      
     </div>
   );
 }
