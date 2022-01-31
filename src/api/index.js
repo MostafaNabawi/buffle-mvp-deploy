@@ -539,6 +539,21 @@ async function getEventList() {
   const res = await req.json();
   return { status: req.status, data: res.payload };
 }
+
+async function getEventUsers(id) {
+  const req = await fetch(`${API_URL}/money-poll/get-members?eventId=${id}`, {
+    method: "GET",
+    credentials: "include",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+  });
+  const res = await req.json();
+  return res;
+}
+
 export {
   getCompanySpaceData,
   signin,
@@ -573,4 +588,5 @@ export {
   updateTaskWhenCompleted,
   createNotification,
   getEventList,
+  getEventUsers,
 };

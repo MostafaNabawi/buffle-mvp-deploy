@@ -15,6 +15,8 @@ import Col from "./../taskMnagement/Col";
 import AddNewMember from "./partials/AddNewMember";
 import { useToasts } from "react-toast-notifications";
 import { API_URL } from "../../config";
+import { useDispatch } from "react-redux";
+import { setEventUsers } from "../../store/moneyPoolSlice";
 
 const eventData = [
   { name: "Hassan", icon: <Icon icon="akar-icons:check" color={`#20ca7d`} /> },
@@ -24,27 +26,28 @@ const eventData = [
 function Event() {
   // event id
   const { id } = useParams();
-  const currentUser=JSON.parse(localStorage.getItem('user'))
-  const userId=currentUser._id
-  console.log("user id",userId)
+  const currentUser = JSON.parse(localStorage.getItem("user"));
+  const userId = currentUser._id;
+  console.log("user id", userId);
   // add new member state
   const { addToast } = useToasts();
+  const dispatch = useDispatch();
   const [adding, setAdding] = useState(false);
   const [selected, setSelected] = useState([]);
   //
   const [person, setPerson] = useState(eventData);
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
-  const [busy,setBusy]=useState(true)
+  const [busy, setBusy] = useState(true);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [userEvent, setUserEvent] = useState("");
-  const [currencyEvent,setCurrencyEvent]=useState('')
-  const [ownerEvent,setownerEvent]=useState('')
+  const [currencyEvent, setCurrencyEvent] = useState("");
+  const [ownerEvent, setownerEvent] = useState("");
 
   const getData = () => {
     try {
-      setBusy(true)
+      setBusy(true);
       fetch(`${API_URL}/money-poll/get-members?eventId=${id}`, {
         credentials: "include",
         headers: {
@@ -53,34 +56,34 @@ function Event() {
         },
       }).then(async (res) => {
         if (res.status === 200) {
-          const {users,currency,owner} =await res.json()
-          console.log("user",users)
-          var data=[]
+          const { users, currency, owner } = await res.json();
+          console.log("user", users);
+          var data = [];
           data.push({
-            id:owner._id,
-            first_name:owner.first_name,
-            last_name:owner.last_name
-          })
-          users && (
-            users.map(user=>(
-            data.push({
-              id:user.personal[0]._id,
-              first_name:user.personal[0].first_name,
-              last_name:user.personal[0].last_name
-            })
-            ))
-          )
-           setUserEvent(data)
-           setCurrencyEvent(currency)
-           setBusy(false)
+            id: owner._id,
+            first_name: owner.first_name,
+            last_name: owner.last_name,
+          });
+          users &&
+            users.map((user) =>
+              data.push({
+                id: user.personal[0]._id,
+                first_name: user.personal[0].first_name,
+                last_name: user.personal[0].last_name,
+              })
+            );
+          dispatch(setEventUsers(data));
+          setUserEvent(data);
+          setCurrencyEvent(currency);
+          setBusy(false);
         } else {
-          console.log(res)
-          setBusy(false)
+          console.log(res);
+          setBusy(false);
         }
       });
     } catch (err) {
       console.log(err);
-      setBusy(false)
+      setBusy(false);
     }
   };
   const AddExpenses = () => {
@@ -109,10 +112,10 @@ function Event() {
           eventId: id,
         }),
       }).then(async (res) => {
-        console.log("re...",res)
+        console.log("re...", res);
         if (res.status === 200) {
           addToast("Added!", { autoDismiss: true, appearance: "success" });
-          getData()
+          getData();
           setAdding(false);
           handleClose();
         } else {
