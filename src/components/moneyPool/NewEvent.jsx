@@ -121,11 +121,12 @@ function NewEvent() {
           desc: desc,
           memberIds: userId,
         }),
-      }).then((res) => {
-        if (res.status === 200) {
+      }).then(async (res) => {
+        if (res.status === 200 ) {
+          const result =await res.json()
           setCreateing(false);
           addToast("Created", { autoDismiss: true, appearance: "success" });
-          navigate("/dashboard/money-pool/event");
+          navigate(`/dashboard/money-pool/event/${result.eventId}`);
         } else {
           addToast("Error Please Try Again", {
             autoDismiss: true,
@@ -137,10 +138,10 @@ function NewEvent() {
       setCreateing(false);
     }
   };
-  const handleDelete =async (id)=>{
-  const arr=selected.filter(user=>user.uid !=id)
-  setSelected(arr)
-  }
+  const handleDelete = async (id) => {
+    const arr = selected.filter((user) => user.uid != id);
+    setSelected(arr);
+  };
   useEffect(() => {
     setCurrencyData(Object.values(CurrencyList.getAll("en_US")));
     // console.log(CurrencyList.get("AFN"));
@@ -257,7 +258,13 @@ function NewEvent() {
                               <td>{item.fullName}</td>
                               <td>{item.email}</td>
                               <th>
-                                <i onClick={()=>{handleDelete(item.uid)}}><Icon icon="bx:bx-trash" /></i>
+                                <i
+                                  onClick={() => {
+                                    handleDelete(item.uid);
+                                  }}
+                                >
+                                  <Icon icon="bx:bx-trash" />
+                                </i>
                               </th>
                             </tr>
                           ))}
