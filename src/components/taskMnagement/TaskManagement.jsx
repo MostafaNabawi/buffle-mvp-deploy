@@ -8,12 +8,13 @@ import { createTask, getTask } from "../../api";
 import { ITEM_TYPE } from "./data/types";
 import moment from "moment";
 
-const TaskManagement = ({ handleGet }) => {
+const TaskManagement = ({ handleGet, val }) => {
   const { addToast } = useToasts();
   const [items, setItems] = useState([]);
   const [inputTask, setInputTask] = useState({ name: "", p_id: "" });
   const [newItems, setNewItems] = useState(false);
   const [id, setId] = useState('');
+
   async function request() {
     const data = await getTask();
     const format = data?.data?.map((i, n) => {
@@ -43,12 +44,13 @@ const TaskManagement = ({ handleGet }) => {
   }, [newItems]);
 
   useEffect(() => {
-    if (id) {
+    if (id || val) {
       request();
     }
-  }, [id]);
+  }, [id, val]);
 
   const handleChecked = (id) => {
+    handleGet(id);
     setId(id);
   }
   const handleKeyDownWeekDaysItem = async (event) => {
@@ -75,8 +77,6 @@ const TaskManagement = ({ handleGet }) => {
       const newItems = prevState
         .filter((i) => i.id !== item.id)
         .concat({ ...item, status });
-      // console.log("Task => new items", ...newItems);
-
       return [...newItems];
     });
   };
@@ -115,6 +115,7 @@ const TaskManagement = ({ handleGet }) => {
                       className="task_item"
                       handleGet={handleGet}
                       handleChecked={handleChecked}
+
                     ></Item>
                   ))}
                 <div className="new-task-div">

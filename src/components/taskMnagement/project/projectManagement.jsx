@@ -20,7 +20,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import BeatLoader from "react-spinners/BeatLoader";
 // paiman changes
 import { PROJECT_TYPE } from "../../data/types";
-const ProjectManagement = ({ value }) => {
+const ProjectManagement = ({ value, handleGet }) => {
   const { addToast } = useToasts();
   const [items, setItems] = useState([]);
   const [projects, setProjects] = useState([]);
@@ -37,9 +37,7 @@ const ProjectManagement = ({ value }) => {
   const handleShow = () => setShow(true);
   const handleShowPModal = () => setShowPModal(true);
   const [inputTask, setInputTask] = useState({ name: "", p_id: "" });
-  const [newItems, setNewItems] = useState([]);
   const [id, setId] = useState('');
-
   async function request() {
     // get project and format
     const req = await getProject();
@@ -71,29 +69,30 @@ const ProjectManagement = ({ value }) => {
     });
     setItems(format);
   }
+
   const handleChecked = (id) => {
+    handleGet(id);
     setId(id);
   }
   useEffect(() => {
     request();
   }, []);
-  useEffect(() => {
-    request();
-  }, [value]);
+
   useEffect(() => {
     request();
     setNewProject(false);
   }, [newProject]);
   useEffect(() => {
-    if (id) {
+    if (id || value) {
       request();
     }
-  }, [id]);
+  }, [id, value]);
   // insert task to database for project
   const handleKeyDown = async (event) => {
     if (event.key === "Enter") {
       const createT = await createTask(inputTask, 0, 0, false);
       if (createT.status === 200) {
+        handleGet(inputTask.name);
         addToast("Created Susseccfully", {
           autoDismiss: true,
           appearance: "success",
@@ -167,6 +166,7 @@ const ProjectManagement = ({ value }) => {
           autoDismiss: true,
           appearance: "success",
         });
+        request();
         setloading(false);
         setShow(false);
       } else {
@@ -188,7 +188,6 @@ const ProjectManagement = ({ value }) => {
       const newItems = prevState
         .filter((i) => i.id !== item.id)
         .concat({ ...item, status });
-      // console.log("New Items", newItems);
       return [...newItems];
     });
   };
@@ -296,6 +295,7 @@ const ProjectManagement = ({ value }) => {
                         status={s}
                         className="project_item"
                         handleChecked={handleChecked}
+                        handleGet={handleGet}
                       ></Item>
                     ))}
                   <div className="new-task-div">

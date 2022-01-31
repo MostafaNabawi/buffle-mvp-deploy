@@ -14,7 +14,7 @@ import Modal from "../modal/modal";
 import { getImportantToday, updateTaskImportant } from '../../api'
 import BeatLoader from 'react-spinners/BeatLoader';
 
-function ImpotentToDayCard() {
+function ImpotentToDayCard({ handleMove }) {
   const [show, setShow] = useState(false);
   const { addToast } = useToasts();
   const handleShow = () => setShow(true);
@@ -67,6 +67,7 @@ function ImpotentToDayCard() {
           autoDismiss: true,
           appearance: "success",
         });
+        handleMove(itemId);
         request();
         setloading(false);
         setShow(false);
@@ -89,7 +90,7 @@ function ImpotentToDayCard() {
   };
   return (
     <>
-      <Card className="pb-0" onMouseEnter={() => console.log('enterd')}>
+      <Card className="pb-0">
         <CardHeader
           icon={
             <Image
