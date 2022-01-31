@@ -15,18 +15,14 @@ import Col from "./../taskMnagement/Col";
 import AddNewMember from "./partials/AddNewMember";
 import { useToasts } from "react-toast-notifications";
 import { API_URL } from "../../config";
-
-const eventData = [
-  { name: "Hassan", icon: <Icon icon="akar-icons:check" color={`#20ca7d`} /> },
-  { name: "Ali", icon: <Icon icon="bi:x-lg" color={`#4922ff`} /> },
-];
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 function Event() {
   // event id
   const { id } = useParams();
   const currentUser=JSON.parse(localStorage.getItem('user'))
   const userId=currentUser._id
-  console.log("user id",userId)
   // add new member state
   const { addToast } = useToasts();
   const [adding, setAdding] = useState(false);
@@ -54,19 +50,20 @@ function Event() {
       }).then(async (res) => {
         if (res.status === 200) {
           const {users,currency,owner} =await res.json()
-          console.log("user",users)
           var data=[]
           data.push({
             id:owner._id,
             first_name:owner.first_name,
-            last_name:owner.last_name
+            last_name:owner.last_name,
+            seen:true
           })
           users && (
             users.map(user=>(
             data.push({
               id:user.personal[0]._id,
               first_name:user.personal[0].first_name,
-              last_name:user.personal[0].last_name
+              last_name:user.personal[0].last_name,
+              seen:user.seen
             })
             ))
           )
@@ -74,12 +71,10 @@ function Event() {
            setCurrencyEvent(currency)
            setBusy(false)
         } else {
-          console.log(res)
           setBusy(false)
         }
       });
     } catch (err) {
-      console.log(err);
       setBusy(false)
     }
   };
@@ -109,7 +104,6 @@ function Event() {
           eventId: id,
         }),
       }).then(async (res) => {
-        console.log("re...",res)
         if (res.status === 200) {
           addToast("Added!", { autoDismiss: true, appearance: "success" });
           getData()
@@ -127,10 +121,10 @@ function Event() {
       setAdding(false);
     }
   };
-
   useEffect(() => {
     getData();
   }, []);
+
   return (
     <Card className="event_card">
       <CardHeader title="BD" />
@@ -155,13 +149,21 @@ function Event() {
             <Button onClick={handleShow}>Add new member</Button>
           </div>
           <div className={style.event_person_list}>
-            {person.map((item) => (
-              <EventPerson
-                key={item.name}
-                icon={item.icon}
-                person={item.name}
-              />
-            ))}
+            {
+              busy 
+              ? <Skeleton count={3} />
+              :userEvent && (
+                userEvent.map((item) => (
+               <EventPerson
+                 key={item.id}
+                 icon={item.seen 
+                   ? <Icon icon="akar-icons:check" color={`#20ca7d`}/>
+                   :<Icon icon="bi:x-lg" color={`#4922ff`} />}
+                 person={item.first_name +" "+item.last_name }
+               />
+             ))
+             )
+            }
           </div>
         </div>
       </CardBody>
