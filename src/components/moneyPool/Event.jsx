@@ -18,6 +18,11 @@ import { API_URL } from "../../config";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
+const eventData = [
+  { name: "Hassan", icon: <Icon icon="akar-icons:check" color={`#20ca7d`} /> },
+  { name: "Ali", icon: <Icon icon="bi:x-lg" color={`#4922ff`} /> },
+];
+
 function Event() {
   // event id
   const { id } = useParams();
