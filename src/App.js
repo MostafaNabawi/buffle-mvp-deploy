@@ -68,7 +68,7 @@ function App() {
           <Route path="money-pool" element={<Moneypool />}>
             <Route index element={<NewEvent />} />
             <Route path="event/:id" element={<Event />} />
-            <Route path="event/expenses" element={<Expenses />} />
+            <Route path="event/expenses/:id" element={<Expenses />} />
           </Route>
           <Route path="profile" element={<Profile />} />
           {addUserManagment.render && (

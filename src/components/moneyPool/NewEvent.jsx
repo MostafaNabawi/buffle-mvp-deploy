@@ -96,6 +96,8 @@ function NewEvent() {
     }
   }
   const handleCreatePool = async () => {
+    const currentUser =JSON.parse(localStorage.getItem("user"))
+    const userName=currentUser.first_name +" " + currentUser.last_name
     if (eventName === "" || currency === "") {
       addToast("All faild is required", {
         autoDismiss: true,
@@ -120,6 +122,7 @@ function NewEvent() {
           currency: currency,
           desc: desc,
           memberIds: userId,
+          fullName: userName
         }),
       }).then(async (res) => {
         if (res.status === 200 ) {
