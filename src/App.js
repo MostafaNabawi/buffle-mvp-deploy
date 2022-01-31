@@ -63,7 +63,6 @@ function App() {
         <Route path="/companyLogin" element={<CompanyLogin />} />
         <Route path="/dashboard" element={<Layout />}>
           <Route index element={<Dashboard />} />
-          <Route path=":switched/:b" element={<Dashboard />} />
           <Route path="taskmanagement" element={<TaskManage />} />
           <Route path="money-pool" element={<Moneypool />}>
             <Route index element={<NewEvent />} />

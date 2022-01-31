@@ -38,7 +38,6 @@ const Header = () => {
   //
   const { addToast } = useToasts();
   const dispatch = useDispatch();
-  const { switched, type } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const [userData, setUserData] = useState({});
   const [notification, setNotificatiion] = useState("");
@@ -276,9 +275,10 @@ const Header = () => {
     }
   };
   useEffect(() => {
+    console.log("socket.......");
     if (webData.length > 0) {
-      const user = JSON.parse(localStorage.getItem("user"));
-      if (user?._id === webData) {
+      const current = localStorage.getItem("current");
+      if (current === webData) {
         //notification related to this user
         setCount(count + 1);
         setWebData("");
