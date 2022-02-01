@@ -739,7 +739,7 @@ div.check-box > input {
   position: absolute !important;
   margin-top: -10px !important;
   /* margin-left: -15px !important; */
-  z-index: 4444 !important;
+  z-index: 100 !important;
 }
 .break-plan-card {
   height: 170px !important ;
@@ -800,11 +800,11 @@ div.check-box > input {
   overflow-y: auto;
   overflow-x: hidden;
 }
-.notifyTime{
+.notifyTime {
   color: #707eae !important;
   font-size: 11px !important;
 }
-.screenDiv{
+.screenDiv {
   padding-top: 5% !important;
   margin-left: 45% !important;
   margin-top: -7% !important;
@@ -813,4 +813,12 @@ div.check-box > input {
   border-radius: 50% !important;
   background-color: black;
   color: white !important;
+}
+.subDropdown > button.btn-primary {
+  background: none !important;
+  color: #212529 !important;
+  border: none !important;
+}
+.selectUserVenet {
+  width: auto !important;
 }

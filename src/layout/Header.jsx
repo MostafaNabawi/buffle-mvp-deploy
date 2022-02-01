@@ -1,10 +1,13 @@
-import { React, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   Row,
   Col,
   Form,
   Image,
   NavDropdown,
+  DropdownButton,
+  ButtonGroup,
+  Dropdown,
   Button,
   Badge,
 } from "react-bootstrap";
@@ -19,12 +22,17 @@ import { ioInstance } from "../config/socket";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useDispatch, useSelector } from "react-redux";
-import {setDu_time,setDefault,setDis_time} from "../store/screenReminderSclice"
+import {
+  setDu_time,
+  setDefault,
+  setDis_time,
+} from "../store/screenReminderSclice";
 import moment from "moment";
+import Swal from "sweetalert2";
 
 const Header = () => {
   //
-  const {du_time,defaultTime,dis_time } = useSelector(
+  const { du_time, defaultTime, dis_time } = useSelector(
     (state) => state.screen
   );
   //
@@ -39,11 +47,18 @@ const Header = () => {
   const [start, setStart] = useState(true);
   const [showUserRoute, setShowUserRoute] = useState(false);
   const [webData, setWebData] = useState("");
+  const [workspace, setWorkSpaces] = useState([]);
+  const [ownSpace, setOwnSpace] = useState("");
+  const [current, setCurrent] = useState("");
 
   const handleLogout = async () => {
     const req = await logout();
     if (req.status === 200) {
       localStorage.removeItem("user");
+      localStorage.removeItem("search");
+      localStorage.removeItem("others");
+      localStorage.removeItem("own");
+      localStorage.removeItem("current");
       navigate("/");
     }
   };
@@ -52,7 +67,7 @@ const Header = () => {
     const time =
       arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000;
     // setDu_time(time);
-    dispatch(setDu_time(time))
+    dispatch(setDu_time(time));
     return time;
   };
   const handleDisplayTime = (val) => {
@@ -60,7 +75,7 @@ const Header = () => {
     const time =
       arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000;
     // setDis_time(time);
-    dispatch(setDis_time(time))
+    dispatch(setDis_time(time));
     return time;
   };
   // Notification
@@ -77,6 +92,7 @@ const Header = () => {
         const { payload } = await res.json();
         if (payload.length > 0) {
           setNotificatiion(payload);
+          setCount(0);
           setLoading(false);
         } else {
           setLoading(false);
@@ -194,14 +210,93 @@ const Header = () => {
       }
     }
   };
- 
+  const handleSwitch = async (space) => {
+    Swal.fire({
+      title: "Loading...",
+      allowEscapeKey: false,
+      allowOutsideClick: false,
+      allowEnterKey: false,
+      showConfirmButton: false,
+      html: `<div aria-busy="true" class="">
+          <svg width="40" height="40" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" aria-label="audio-loading"><defs><linearGradient x1="8.042%" y1="0%" x2="65.682%" y2="23.865%" id="a"><stop stop-color="green" stop-opacity="0" offset="0%"></stop><stop stop-color="green" stop-opacity=".631" offset="63.146%"></stop><stop stop-color="green" offset="100%"></stop></linearGradient></defs><g fill="none" fill-rule="evenodd"><g transform="translate(1 1)"><path d="M36 18c0-9.94-8.06-18-18-18" id="Oval-2" stroke="green" stroke-width="2"><animateTransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18" dur="0.9s" repeatCount="indefinite"></animateTransform></path><circle fill="#fff" cx="36" cy="18" r="1"><animateTransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18" dur="0.9s" repeatCount="indefinite"></animateTransform></circle></g></g></svg>
+          </div>`,
+      customClass: { container: "swal-google" },
+    });
+    const changer = await fetch(`${API_URL}/auth/login/switch`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id: space?._id,
+        type: 2,
+      }),
+    });
+    if (changer.status === 200) {
+      const before = localStorage.getItem("space");
+      localStorage.setItem("space", "m");
+      if (before !== "m") {
+        localStorage.setItem("own", "true");
+      }
+      localStorage.setItem("current", space?.space_data[0]?._id);
+      window.location.href = `/dashboard`;
+    }
+  };
+  const handleSwitchOwn = async () => {
+    Swal.fire({
+      title: "Loading...",
+      allowEscapeKey: false,
+      allowOutsideClick: false,
+      allowEnterKey: false,
+      showConfirmButton: false,
+      html: `<div aria-busy="true" class="">
+          <svg width="40" height="40" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" aria-label="audio-loading"><defs><linearGradient x1="8.042%" y1="0%" x2="65.682%" y2="23.865%" id="a"><stop stop-color="green" stop-opacity="0" offset="0%"></stop><stop stop-color="green" stop-opacity=".631" offset="63.146%"></stop><stop stop-color="green" offset="100%"></stop></linearGradient></defs><g fill="none" fill-rule="evenodd"><g transform="translate(1 1)"><path d="M36 18c0-9.94-8.06-18-18-18" id="Oval-2" stroke="green" stroke-width="2"><animateTransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18" dur="0.9s" repeatCount="indefinite"></animateTransform></path><circle fill="#fff" cx="36" cy="18" r="1"><animateTransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18" dur="0.9s" repeatCount="indefinite"></animateTransform></circle></g></g></svg>
+          </div>`,
+      customClass: { container: "swal-google" },
+    });
+    // get own space type11111111111111!!!1
+    const changer = await fetch(`${API_URL}/auth/login/switch`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id: ownSpace?.id,
+        type: 1,
+      }),
+    });
+    const data = await changer.json();
+    if (changer.status === 200) {
+      localStorage.setItem("space", data?.type);
+      localStorage.setItem("own", "false");
+      localStorage.setItem("current", ownSpace?.id);
+      window.location.href = `/dashboard`;
+    }
+  };
+  useEffect(() => {
+    console.log("socket.......");
+    if (webData.length > 0) {
+      const current = localStorage.getItem("current");
+      if (current === webData) {
+        //notification related to this user
+        setCount(count + 1);
+        setWebData("");
+      }
+    }
+  }, [webData]);
+
   useEffect(() => {
     async function getStatus() {
       const req = await userStatus();
       if (req.status !== 200) {
         localStorage.removeItem("user");
+        localStorage.removeItem("others");
+        localStorage.removeItem("current");
         navigate("/");
       }
+      // console.log("current status => ", req.current);
     }
     async function getScrrenRemainder() {
       const req = await fetch(`${API_URL}/screen_reminder/get`, {
@@ -214,19 +309,19 @@ const Header = () => {
       const { payload } = await req.json();
       if (payload) {
         if (payload.mute) {
-          localStorage.setItem("screen", "on")
-          dispatch(setDefault(payload.duration))
+          localStorage.setItem("screen", "on");
+          dispatch(setDefault(payload.duration));
           handleDurationTime(payload.duration);
           handleDisplayTime(payload.display);
         } else {
-          localStorage.setItem("screen", "of")
-          dispatch(setDefault(payload.duration))
+          localStorage.setItem("screen", "of");
+          dispatch(setDefault(payload.duration));
           handleDurationTime(payload.duration);
           handleDisplayTime(payload.display);
         }
       } else {
-        localStorage.setItem("screen", "of")
-        setDefault("00:10:00")
+        localStorage.setItem("screen", "of");
+        setDefault("00:10:00");
         handleDurationTime("00:10:00");
         handleDisplayTime("00:01:00");
       }
@@ -234,12 +329,18 @@ const Header = () => {
     countNotification();
     getScrrenRemainder();
     const user_storage = JSON.parse(localStorage.getItem("user"));
-    const space = JSON.parse(localStorage.getItem("space"));
+    const space = localStorage.getItem("space");
+    const others = JSON.parse(localStorage.getItem("others") || "[]");
+    if (others && others?.length > 0) {
+      setWorkSpaces(others);
+    }
+
     if (space === "c" || space === "a") {
       setShowUserRoute(true);
     }
     setUserData(user_storage);
     if (user_storage) {
+      getStatus();
       ioInstance.on("connect_error", (err) => {
         console.error("socket error!", err);
         ioInstance.close();
@@ -249,7 +350,6 @@ const Header = () => {
       });
 
       // check status
-      getStatus();
     } else {
       navigate("/");
     }
@@ -258,16 +358,15 @@ const Header = () => {
     };
   }, []);
   useEffect(() => {
-    if (webData.length > 0) {
-      const user = JSON.parse(localStorage.getItem("user"));
-      if (user?._id === webData) {
-        //notification related to this user
-        setCount(count + 1);
-        setWebData("");
-      }
+    const type = localStorage.getItem("own");
+    const space = localStorage.getItem("space");
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (type === "true" || space !== "m") {
+      setOwnSpace({ id: user?._id, space_name: `${user?.first_name}_space` });
     }
-  }, [webData]);
-
+    const currentSpace = localStorage.getItem("current") || user?._id;
+    setCurrent(currentSpace);
+  }, []);
   return (
     <>
       <Col className="col-12 header-name text-capitalize">
@@ -276,35 +375,35 @@ const Header = () => {
       {du_time > 0 && start && (
         <Countdown
           date={Date.now() + du_time}
-        
           onTick={(e) => {
-            dispatch(setDu_time(e.total))
+            dispatch(setDu_time(e.total));
           }}
           onComplete={() => {
-            handleDurationTime(defaultTime)
+            handleDurationTime(defaultTime);
             setStart(false);
             const timeLock = new Date();
             localStorage.setItem(
               "loackTime",
               timeLock.getHours() +
-              ":" +
-              timeLock.getMinutes() +
-              ":" +
-              timeLock.getSeconds()
+                ":" +
+                timeLock.getMinutes() +
+                ":" +
+                timeLock.getSeconds()
             );
-          }
-          }
-        renderer={() => {
-          return "";
-        }}
+          }}
+          renderer={() => {
+            return "";
+          }}
         />
       )}
 
       <div
         id="lockScreenHide"
-        className={`${localStorage.getItem("screen") === "on" ? "lockScreen" : ""} text-center ${!start ? "" : "lockScreenHide"}`}
+        className={`${
+          localStorage.getItem("screen") === "on" ? "lockScreen" : ""
+        } text-center ${!start ? "" : "lockScreenHide"}`}
       >
-        {localStorage.getItem("screen") === "on" && du_time > 0 && !start ?
+        {localStorage.getItem("screen") === "on" && du_time > 0 && !start ? (
           <div className="screenDiv">
             <h1>Screen Lock For</h1>
             <Countdown
@@ -312,12 +411,14 @@ const Header = () => {
               onComplete={() => {
                 setStart(true);
               }}
-            // renderer={() => {
-            //   return ""
-            // }}
+              // renderer={() => {
+              //   return ""
+              // }}
             />
           </div>
-          : ""}
+        ) : (
+          ""
+        )}
         {du_time > 0 && !start && (
           <Countdown
             date={Date.now() + dis_time}
@@ -325,7 +426,7 @@ const Header = () => {
               setStart(true);
             }}
             renderer={() => {
-              return ""
+              return "";
             }}
           />
         )}
@@ -466,6 +567,73 @@ const Header = () => {
               <NavDropdown.Item href="/dashboard/profile">
                 Profile
               </NavDropdown.Item>
+              {workspace.length > 0 && (
+                <DropdownButton
+                  as={ButtonGroup}
+                  id={`dropdown-button-drop-start`}
+                  drop="start"
+                  className="subDropdown"
+                  title="Workspace"
+                >
+                  {workspace?.map((space, i) => (
+                    <Dropdown.Item
+                      key={`space-${i}`}
+                      onClick={() => handleSwitch(space)}
+                    >
+                      {space?.space_data[0]?._id === current ? (
+                        <span
+                          style={{
+                            color: "green",
+                            marginLeft: "5px",
+                            marginRight: "5px",
+                          }}
+                        >
+                          ✔
+                        </span>
+                      ) : (
+                        <span
+                          style={{
+                            marginLeft: "5px",
+                            marginRight: "5px",
+                          }}
+                        ></span>
+                      )}
+                      {space?.space_data[0]?.space_name}
+                    </Dropdown.Item>
+                  ))}
+                  {ownSpace?.id && (
+                    <Dropdown.Item onClick={() => handleSwitchOwn()}>
+                      {ownSpace?.id === current ? (
+                        <span
+                          style={{
+                            color: "green",
+                            marginLeft: "5px",
+                            marginRight: "5px",
+                          }}
+                        >
+                          ✔
+                        </span>
+                      ) : (
+                        <span
+                          style={{
+                            marginLeft: "5px",
+                            marginRight: "5px",
+                          }}
+                        ></span>
+                      )}
+                      {ownSpace?.space_name}
+                    </Dropdown.Item>
+                  )}
+                  {/* <Dropdown.Item eventKey="2">Another action</Dropdown.Item>
+                  <Dropdown.Item eventKey="3">
+                    Something else here
+                  </Dropdown.Item>
+                  <Dropdown.Divider />
+                  <Dropdown.Item eventKey="4">Separated link</Dropdown.Item> */}
+                </DropdownButton>
+              )}
+
+              {/*  */}
               {showUserRoute && (
                 <NavDropdown.Item href="/dashboard/user-management">
                   User management

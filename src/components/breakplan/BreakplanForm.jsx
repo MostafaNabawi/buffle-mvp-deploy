@@ -20,6 +20,7 @@ function BreackplanFrom({
   setEditData,
   suggestData,
   joindata,
+  getBreakPlan,
 }) {
   const currentUser = JSON.parse(localStorage.getItem("user"));
   const { addToast } = useToasts();
@@ -54,7 +55,6 @@ function BreackplanFrom({
       setClose(false);
     }
     if (editData) {
-      console.log("edit", editData);
       setNewBreak({ title: editData.name, createIime: editData.time });
     }
   }, [show]);
@@ -65,6 +65,7 @@ function BreackplanFrom({
       setloading(true);
       const { status } = await CreateNewPlan(newBreak);
       if (status === 200) {
+        getBreakPlan()
         addToast("Created Susseccfully", {
           autoDismiss: true,
           appearance: "success",
@@ -182,7 +183,6 @@ function BreackplanFrom({
 
   // Join
   const handleJoin = async (e) => {
-    console.log(joindata);
     try {
       setloading(true);
       await fetch(`${API_URL}/breakPlan/join`, {

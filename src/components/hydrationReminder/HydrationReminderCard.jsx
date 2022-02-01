@@ -2,7 +2,6 @@ import { Icon } from "@iconify/react";
 import { Image, Form, Row, Col, Button, NavDropdown } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 
-import { API_URL } from "../../config/index";
 import Card from "./../card/Card";
 import CardBody from "./../card/CardBody";
 import CardHeader from "./../card/CardHeader";
@@ -68,7 +67,6 @@ function HydrationReminderCard() {
   //useEffect function
   useEffect(() => {
     fetch();
-    console.log("useEffect");
   }, [isSubmit]);
 
   const fetch = async () => {
@@ -153,7 +151,10 @@ function HydrationReminderCard() {
     if (notificDelay !== "") {
       if (!isMute) {
         if (precent > 0) {
-          console.log("info");
+          addToast("INFO", {
+            autoDismiss: true,
+            appearance: "info",
+          });
         }
       }
     }

@@ -1,6 +1,5 @@
 /* new even style */
-.select_col,
-.participant_section {
+.select_col {
   border-bottom: 1px solid #dee2e6;
 }
 .select_input {
@@ -8,7 +7,6 @@
 }
 
 .participant_section {
-  padding-bottom: 1rem;
   margin-bottom: 1rem;
   font-weight: 600;
 }
@@ -29,38 +27,31 @@ button[type="submit"] {
   font-weight: 500;
 }
 
-.right_site {
-  display: flex;
-  flex-flow: column;
-}
-
-.right_site div {
-  height: 50%;
-}
-
-.right_site h4 {
-  padding: 1.2rem 0;
-}
-
-.right_site p {
-  border-left: 5px solid #dee2e6;
-  padding-left: 1rem;
-}
-
 .invite_form_area {
   margin-top: 4.4rem;
 }
 
-.invite_form_area form {
+.invite_form_area form,
+.input_with_button {
   display: flex;
 }
 
-.invite_form_area form div {
+.input_with_button {
+  align-items: center;
+}
+
+.invite_form_area form div,
+.input_with_button div {
   flex-grow: 1;
 }
 
-.invite_form_area form button {
+.invite_form_area form button,
+.input_with_button button {
   margin-left: 1rem;
+}
+
+.input_with_button button {
+  margin-top: 0.6rem;
 }
 
 /* event card */
@@ -169,20 +160,54 @@ textarea::placeholder {
   border: none;
 }
 
-.live_search {
+.participants_wrapper {
   position: relative;
 }
 
 .search_result {
   position: absolute;
   z-index: 1;
-  background-color: #ddd;
-  width: 100%;
-  top: 66px;
+  background-color: #fff;
+  width: 86%;
+  top: 68px;
+  border: 1px solid #ddd;
 }
 
+.result_list {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0;
+  max-height: 4.32rem;
+  overflow: auto;
+}
+
+.result_list li {
+  padding: 0.3rem 1rem;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+}
+.result_list li:last-child {
+  border-bottom: none;
+}
 .spinner_wrapper {
   display: flex;
   justify-content: center;
   padding: 0.5rem 0;
+}
+
+.participants_wrapper .participants table tr:last-child {
+  border-bottom-color: #fff;
+}
+.participants table tbody tr th svg:hover {
+  cursor: pointer;
+}
+
+.jumbotron h4 {
+  padding: 1.2rem 0;
+}
+
+.jumbotron p {
+  border-left: 5px solid #dee2e6;
+  padding-left: 1rem;
+  margin-bottom: 1rem !important;
 }
