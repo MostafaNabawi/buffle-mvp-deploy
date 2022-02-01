@@ -15,10 +15,9 @@ import { useParams } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
 import { createMoneyGiven } from "../../../api";
 function MoneyGiven(props) {
-  const { handleBack } = props;
-  const { eventUsers, selectedUserID } = useSelector(
-    (state) => state.moneyPool
-  );
+  const { handleBack, currency } = props;
+  const { eventUsers, selectedUserID, currencyName, currencyCode } =
+    useSelector((state) => state.moneyPool);
   const { id } = useParams();
   const [whoId, setWhoId] = useState("");
   const [amount, setAmount] = useState("");
@@ -36,7 +35,7 @@ function MoneyGiven(props) {
     };
 
     const req = await createMoneyGiven(data);
-    if (req.status == 200) {
+    if (req.status === 200) {
       addToast("Created Susseccfully", {
         autoDismiss: true,
         appearance: "success",
@@ -59,9 +58,11 @@ function MoneyGiven(props) {
           <div className="mb-3">
             <Form.Label>How Much? </Form.Label>
             <InputGroup className="mb-1">
-              <InputGroup.Text id="basic-addon1">$</InputGroup.Text>
+              <InputGroup.Text id="basic-addon1">
+                {currencyCode}
+              </InputGroup.Text>
               <FormControl
-                placeholder="Amount in USA Doller"
+                placeholder={`Amount in ${currencyName}`}
                 aria-label="amount"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
@@ -74,16 +75,21 @@ function MoneyGiven(props) {
           </div>
           <div className="mb-3">
             <Form.Label> To Who?</Form.Label>
-            {eventUsers.map((user) => (
-              <Form.Check
-                type="radio"
-                name="whoId"
-                value={whoId}
-                label={`${user.first_name} ${user.last_name}`}
-                onChange={(e) => setWhoId(user.id)}
-                id="default radio"
-              />
-            ))}
+            {eventUsers &&
+              eventUsers.map(
+                (user) =>
+                  user.id !== selectedUserID && (
+                    <Form.Check
+                      type="radio"
+                      name="whoId"
+                      value={whoId}
+                      key={user.id}
+                      label={`${user.first_name} ${user.last_name}`}
+                      onChange={(e) => setWhoId(user.id)}
+                      id="default radio"
+                    />
+                  )
+              )}
           </div>
           <div className="mb-3">
             <Form.Group controlId="wathfor">
@@ -105,7 +111,6 @@ function MoneyGiven(props) {
                 type="date"
                 value={when}
                 onChange={(e) => setWhen(e.target.value)}
-                defaultValue="2022-1-10"
               />
               <InputGroup.Text id="basic-addon1">MM/DD/YYYY</InputGroup.Text>
             </InputGroup>

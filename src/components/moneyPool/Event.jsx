@@ -15,36 +15,35 @@ import Col from "./../taskMnagement/Col";
 import AddNewMember from "./partials/AddNewMember";
 import { useToasts } from "react-toast-notifications";
 import { API_URL } from "../../config";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import { useDispatch } from "react-redux";
 import { setEventUsers } from "../../store/moneyPoolSlice";
-
-const eventData = [
-  { name: "Hassan", icon: <Icon icon="akar-icons:check" color={`#20ca7d`} /> },
-  { name: "Ali", icon: <Icon icon="bi:x-lg" color={`#4922ff`} /> },
-];
 
 function Event() {
   // event id
   const { id } = useParams();
   const currentUser = JSON.parse(localStorage.getItem("user"));
   const userId = currentUser._id;
-  console.log("user id", userId);
   // add new member state
   const { addToast } = useToasts();
   const dispatch = useDispatch();
   const [adding, setAdding] = useState(false);
   const [selected, setSelected] = useState([]);
   //
-  const [person, setPerson] = useState(eventData);
+  // const [person, setPerson] = useState(eventData);
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [busy, setBusy] = useState(true);
+  const [loading, setLoading] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [userEvent, setUserEvent] = useState("");
   const [currencyEvent, setCurrencyEvent] = useState("");
   const [ownerEvent, setownerEvent] = useState("");
-
+  const [eventName,setEventName]=useState('')
+  const [uCode,setUCode]=useState('')
+  
   const getData = () => {
     try {
       setBusy(true);
@@ -56,13 +55,15 @@ function Event() {
         },
       }).then(async (res) => {
         if (res.status === 200) {
-          const { users, currency, owner } = await res.json();
-          console.log("user", users);
+          const { users, currency, owner,name,uuid } = await res.json();
+          setEventName(name)
+          setUCode(uuid)
           var data = [];
           data.push({
             id: owner._id,
             first_name: owner.first_name,
             last_name: owner.last_name,
+            seen:true
           });
           users &&
             users.map((user) =>
@@ -70,6 +71,7 @@ function Event() {
                 id: user.personal[0]._id,
                 first_name: user.personal[0].first_name,
                 last_name: user.personal[0].last_name,
+                seen:user.seen
               })
             );
           dispatch(setEventUsers(data));
@@ -84,6 +86,30 @@ function Event() {
     } catch (err) {
       console.log(err);
       setBusy(false);
+    }
+  };
+  const getExpendes = () => {
+    try {
+      loading(true);
+      fetch(`${API_URL}/money-poll/get-members?eventId=${id}`, {
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": true,
+        },
+      }).then(async (res) => {
+        if (res.status === 200) {
+          const data = await res.json();
+          console.log("exp....", data);
+          setLoading(false);
+        } else {
+          console.log(res);
+          setLoading(false);
+        }
+      });
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
     }
   };
   const AddExpenses = () => {
@@ -112,7 +138,6 @@ function Event() {
           eventId: id,
         }),
       }).then(async (res) => {
-        console.log("re...", res);
         if (res.status === 200) {
           addToast("Added!", { autoDismiss: true, appearance: "success" });
           getData();
@@ -130,17 +155,24 @@ function Event() {
       setAdding(false);
     }
   };
-
   useEffect(() => {
     getData();
   }, []);
+
   return (
     <Card className="event_card">
-      <CardHeader title="BD" />
+      <CardHeader title={eventName +":  "+ uCode} />
       <CardBody className={style.card_body}>
         <div className={style.person_selector}>
           <span>You are </span>
-          <PersonSelectorDropDown data={person} />
+          {/* <PersonSelectorDropDown /> */}
+          <Form.Select className="selectUserVenet" aria-label="Default select example">
+            {busy 
+            ?""
+          : userEvent.map(item=>(
+            <option key={item.id}>{item.last_name+" "+item.last_name}</option>
+          ))}
+          </Form.Select>
         </div>
         <div className={style.overview}>
           <div className={style.header}>
@@ -158,13 +190,24 @@ function Event() {
             <Button onClick={handleShow}>Add new member</Button>
           </div>
           <div className={style.event_person_list}>
-            {person.map((item) => (
-              <EventPerson
-                key={item.name}
-                icon={item.icon}
-                person={item.name}
-              />
-            ))}
+            {busy ? (
+              <Skeleton count={3} />
+            ) : (
+              userEvent &&
+              userEvent.map((item) => (
+                <EventPerson
+                  key={item.id}
+                  icon={
+                    item.seen ? (
+                      <Icon icon="akar-icons:check" color={`#20ca7d`} />
+                    ) : (
+                      <Icon icon="bi:x-lg" color={`#4922ff`} />
+                    )
+                  }
+                  person={item.first_name + " " + item.last_name}
+                />
+              ))
+            )}
           </div>
         </div>
       </CardBody>

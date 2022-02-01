@@ -526,6 +526,22 @@ async function createNotification(id, name) {
 }
 
 //expenses
+
+// -------------------------money pool----------//
+async function getEventList() {
+  const req = await fetch(`${API_URL}/money-poll/get`, {
+    method: "GET",
+    credentials: "include",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+  });
+  const res = await req.json();
+  return { status: req.status, data: res.payload };
+}
+
 async function createExpense(data) {
   const req = await fetch(`${API_URL}/money-poll/add-expense`, {
     method: "POST",
@@ -626,4 +642,5 @@ export {
   createExpense,
   createMoneyGiven,
   createIncome,
+  getEventList,
 };
