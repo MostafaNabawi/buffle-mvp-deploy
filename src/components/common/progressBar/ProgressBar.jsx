@@ -55,12 +55,15 @@ const PreogressBar = ({ range }) => {
   return (
     <>
       <Row>
-        <Col xl="11" className="pl-0">
+        <Col xl="1">
           <Icon
             color={play && percentUI > 0 ? "" : `#4922ff`}
             className={style.iconWatch}
             icon="bi:clock-fill"
           />
+        </Col>
+        <Col xl="10" className="pl-0">
+
           <ProgressBar
             label={
               play && (

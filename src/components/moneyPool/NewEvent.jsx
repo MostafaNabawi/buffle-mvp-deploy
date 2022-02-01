@@ -19,6 +19,7 @@ function NewEvent() {
   const [currencyData, setCurrencyData] = useState(null);
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+  const [loading2, setLoading2] = useState(false);
   const [busy, setBusy] = useState(false);
   const { addToast } = useToasts();
   const [notFound, setNotFound] = useState(false);
@@ -156,15 +157,15 @@ function NewEvent() {
     setSelected(arr);
   };
   async function request() {
-    setLoading(true);
+    setLoading2(true);
     const events = await getEventList();
     if (events.data.length > 0) {
       setEventList(events.data);
 
-      setLoading(false);
+      setLoading2(false);
     } else {
       setEventList([]);
-      setLoading(false);
+      setLoading2(false);
     }
   }
   useEffect(() => {
@@ -376,8 +377,17 @@ function NewEvent() {
                 </tr>
               </thead>
               <tbody>
-                {loading ? (
-                  <tr colSpan={4}>Loading...</tr>
+                {loading2 ? (
+                  <tr className="text-center">
+                    <td colSpan={4}>
+                      {
+                        <Icon
+                          fontSize={80}
+                          icon="eos-icons:three-dots-loading"
+                        />
+                      }
+                    </td>
+                  </tr>
                 ) : eventList.length > 0 ? (
                   eventList.map((list, i) => (
                     <tr onClick={() => handleRowClick(list._id)}>

@@ -110,12 +110,15 @@ const Timer = (props) => {
     return (
         <div className="container">
             <Row>
-                <Col xl="11" className="pl-0">
+                <Col xl="1">
                     <Icon
                         color={!play && percent > 0 ? "" : `#4922ff`}
                         className={style.iconWatch}
                         icon="bi:clock-fill"
                     />
+                </Col>
+                <Col xl="10" className="pl-0">
+
                     <ProgressBar
                         label={<><span>{`${parseInt(day)}:${parseInt(hour)}:${parseInt(minute)}:${parseInt(second)}`}</span></>}
                         now={status === 'completed' ? 100 : percent}

@@ -33,7 +33,7 @@ function App() {
     type: "",
   });
   useEffect(() => {
-    const space = JSON.parse(localStorage.getItem("space"));
+    const space = localStorage.getItem("space");
     if (space === "c" || space === "a") {
       setAddUserManagment({
         render: true,
@@ -63,7 +63,6 @@ function App() {
         <Route path="/companyLogin" element={<CompanyLogin />} />
         <Route path="/dashboard" element={<Layout />}>
           <Route index element={<Dashboard />} />
-          <Route path=":switched/:b" element={<Dashboard />} />
           <Route path="taskmanagement" element={<TaskManage />} />
           <Route path="money-pool" element={<Moneypool />}>
             <Route index element={<NewEvent />} />

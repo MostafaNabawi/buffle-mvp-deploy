@@ -40,10 +40,9 @@ function Event() {
   const handleShow = () => setShow(true);
   const [userEvent, setUserEvent] = useState("");
   const [currencyEvent, setCurrencyEvent] = useState("");
-  const [ownerEvent, setownerEvent] = useState("");
   const [eventName,setEventName]=useState('')
   const [uCode,setUCode]=useState('')
-  
+
   const getData = () => {
     try {
       setBusy(true);
@@ -161,7 +160,7 @@ function Event() {
 
   return (
     <Card className="event_card">
-      <CardHeader title={eventName +":  "+ uCode} />
+      <CardHeader title={eventName} />
       <CardBody className={style.card_body}>
         <div className={style.person_selector}>
           <span>You are </span>
