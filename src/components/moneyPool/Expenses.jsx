@@ -67,8 +67,7 @@ function Expenses() {
             id="uncontrolled-tab-example"
             activeKey={key}
             onSelect={(k) => setKey(k)}
-            className="mb-3"
-            className={style.tab}
+            className={`${style.tab} mb-3`}
           >
             <Tab eventKey="expense" title="Expense">
               <Expense eventUsers={eventUsers} handleBack={handleBack} />
