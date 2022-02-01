@@ -28,7 +28,7 @@ function Expense(props) {
   const hadleAddExpense = async () => {
     const data = {
       userId: selectedUserID,
-      evenId: id,
+      eventId: id,
       amount: amount,
       reason: reason,
       when: when,

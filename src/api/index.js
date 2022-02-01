@@ -553,7 +553,7 @@ async function createExpense(data) {
     },
     body: JSON.stringify({
       userId: data.userId,
-      evenId: data.evenId,
+      eventId: data.eventId,
       amount: data.amount,
       reason: data.reason,
       when: data.when,
@@ -574,7 +574,7 @@ async function createMoneyGiven(data) {
     },
     body: JSON.stringify({
       userId: data.userId,
-      evenId: data.evenId,
+      eventId: data.eventId,
       amount: data.amount,
       whoId: data.whoId,
       reason: data.reason,
@@ -596,7 +596,7 @@ async function createIncome(data) {
     },
     body: JSON.stringify({
       userId: data.userId,
-      evenId: data.evenId,
+      eventId: data.eventId,
       amount: data.amount,
       reason: data.reason,
       when: data.when,
