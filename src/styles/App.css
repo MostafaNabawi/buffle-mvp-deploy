@@ -739,7 +739,7 @@ div.check-box > input {
   position: absolute !important;
   margin-top: -10px !important;
   /* margin-left: -15px !important; */
-  z-index: 4444 !important;
+  z-index: 100 !important;
 }
 .break-plan-card {
   height: 170px !important ;
@@ -819,6 +819,6 @@ div.check-box > input {
   color: #212529 !important;
   border: none !important;
 }
-.selectUserVenet{
-  width:auto !important;
+.selectUserVenet {
+  width: auto !important;
 }
