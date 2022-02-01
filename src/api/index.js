@@ -525,6 +525,8 @@ async function createNotification(id, name) {
   return { status: req.status, data: resault.payload };
 }
 
+//expenses
+
 // -------------------------money pool----------//
 async function getEventList() {
   const req = await fetch(`${API_URL}/money-poll/get`, {
@@ -540,18 +542,68 @@ async function getEventList() {
   return { status: req.status, data: res.payload };
 }
 
-async function getEventUsers(id) {
-  const req = await fetch(`${API_URL}/money-poll/get-members?eventId=${id}`, {
-    method: "GET",
+async function createExpense(data) {
+  const req = await fetch(`${API_URL}/money-poll/add-expense`, {
+    method: "POST",
     credentials: "include",
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
       "Access-Control-Allow-Credentials": true,
     },
+    body: JSON.stringify({
+      userId: data.userId,
+      evenId: data.evenId,
+      amount: data.amount,
+      reason: data.reason,
+      when: data.when,
+    }),
   });
-  const res = await req.json();
-  return res;
+  const resault = await req.json();
+  return { status: req.status, data: resault.payload };
+}
+
+async function createMoneyGiven(data) {
+  const req = await fetch(`${API_URL}/money-poll/add-money-given`, {
+    method: "POST",
+    credentials: "include",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+    body: JSON.stringify({
+      userId: data.userId,
+      evenId: data.evenId,
+      amount: data.amount,
+      whoId: data.whoId,
+      reason: data.reason,
+      when: data.when,
+    }),
+  });
+  const resault = await req.json();
+  return { status: req.status, data: resault.payload };
+}
+
+async function createIncome(data) {
+  const req = await fetch(`${API_URL}/money-poll/add-income`, {
+    method: "POST",
+    credentials: "include",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+    body: JSON.stringify({
+      userId: data.userId,
+      evenId: data.evenId,
+      amount: data.amount,
+      reason: data.reason,
+      when: data.when,
+    }),
+  });
+  const resault = await req.json();
+  return { status: req.status, data: resault.payload };
 }
 
 export {
@@ -587,6 +639,8 @@ export {
   updateTaskWhenPlay,
   updateTaskWhenCompleted,
   createNotification,
+  createExpense,
+  createMoneyGiven,
+  createIncome,
   getEventList,
-  getEventUsers,
 };
