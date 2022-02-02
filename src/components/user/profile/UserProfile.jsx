@@ -70,25 +70,25 @@ const UserProfile = () => {
       setBusy(true);
     }
   };
-  const getAllTags =() =>{
+  const getAllTags = () => {
     // get-all-tags
-    fetch(`${API_URL}/get-all-tags`, {
-      method: "POST",
+    fetch(`${API_URL}/tags/get-all-tags`, {
+      method: "GET",
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
       }
     }).then(async (res) => {
-        const {payload}=await res.json
-        if(payload){
-          payload.map(tag=>{
-            const data={
-              value:tag._id,
-              lable:tag.name
-            }
-            options.push(data)
-          })
-        }
+      const { payload } = await res.json();
+      if (payload) {
+        payload.map(tag => {
+          const data = {
+            value: tag._id,
+            lable: tag.name
+          }
+          options.push(data)
+        })
+      }
     });
   }
   const handleEdite = (e) => {
