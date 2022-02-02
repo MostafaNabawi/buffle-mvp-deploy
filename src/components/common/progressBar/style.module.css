@@ -31,7 +31,9 @@
   cursor: pointer;
 }
 .iconWatch {
-  position: absolute;
+  position: relative;
+  margin-left: 23px;
+  margin-top: -3px;
   font-size: x-large;
   padding: 5px !important;
   color: white;

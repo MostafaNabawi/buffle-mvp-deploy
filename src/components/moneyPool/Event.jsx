@@ -40,8 +40,8 @@ function Event() {
   const handleShow = () => setShow(true);
   const [userEvent, setUserEvent] = useState("");
   const [currencyEvent, setCurrencyEvent] = useState("");
-  const [eventName,setEventName]=useState('')
-  const [uCode,setUCode]=useState('')
+  const [eventName, setEventName] = useState("");
+  const [uCode, setUCode] = useState("");
 
   const getData = () => {
     try {
@@ -54,15 +54,15 @@ function Event() {
         },
       }).then(async (res) => {
         if (res.status === 200) {
-          const { users, currency, owner,name,uuid } = await res.json();
-          setEventName(name)
-          setUCode(uuid)
+          const { users, currency, owner, name, uuid } = await res.json();
+          setEventName(name);
+          setUCode(uuid);
           var data = [];
           data.push({
             id: owner._id,
             first_name: owner.first_name,
             last_name: owner.last_name,
-            seen:true
+            seen: true,
           });
           users &&
             users.map((user) =>
@@ -70,7 +70,7 @@ function Event() {
                 id: user.personal[0]._id,
                 first_name: user.personal[0].first_name,
                 last_name: user.personal[0].last_name,
-                seen:user.seen
+                seen: user.seen,
               })
             );
           dispatch(setEventUsers(data));
@@ -165,12 +165,17 @@ function Event() {
         <div className={style.person_selector}>
           <span>You are </span>
           {/* <PersonSelectorDropDown /> */}
-          <Form.Select className="selectUserVenet" aria-label="Default select example">
-            {busy 
-            ?""
-          : userEvent.map(item=>(
-            <option key={item.id}>{item.last_name+" "+item.last_name}</option>
-          ))}
+          <Form.Select
+            className="selectUserVenet"
+            aria-label="Default select example"
+          >
+            {busy
+              ? ""
+              : userEvent.map((item) => (
+                  <option key={item.id}>
+                    {item.first_name + " " + item.last_name}
+                  </option>
+                ))}
           </Form.Select>
         </div>
         <div className={style.overview}>

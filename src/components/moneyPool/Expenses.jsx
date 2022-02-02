@@ -10,50 +10,93 @@ import MoneyGiven from "./partials/MoneyGiven";
 import InCome from "./partials/InCome";
 import { Icon } from "@iconify/react";
 import { useDispatch, useSelector } from "react-redux";
-import { getEventUsers } from "../../api";
-import { setEventUsers } from "../../store/moneyPoolSlice";
+import {
+  setCurrencyCode,
+  setCurrencyName,
+  setEventUsers,
+  setOwnerID,
+  setSelectedUserID,
+} from "../../store/moneyPoolSlice";
+import { useToasts } from "react-toast-notifications";
+import { API_URL } from "../../config";
+import CurrencyList from "currency-list";
 
 function Expenses() {
-  const { eventUsers } = useSelector((state) => state.moneyPool);
+  const { ownerID } = useSelector((state) => state.moneyPool);
+  const { id } = useParams();
   const dispatch = useDispatch();
   const navegite = useNavigate();
-  const { id } = useParams();
+  const { addToast } = useToasts();
   const [key, setKey] = useState("expense");
-
-  //useEffect function
-  useEffect(() => {
-    fetch();
-  }, []);
-
-  const fetch = async () => {
-    const req = await getEventUsers(id);
-    if (req !== undefined) {
-      // const userObj = [
-      //   {
-      //     _id: req.ower.id,
-      //     first_name: req.ower.first_name,
-      //     last_name: req.ower.last_name,
-      //   },
-      // ];
-      // req.users.map((user) => {
-      //   userObj.push({
-      //     _id: user.personal[0]._id,
-      //     first_name: user.personal[0].first_name,
-      //     last_name: user.personal[0].last_name,
-      //   });
-      // });
-      // console.log(userObj);
-      dispatch(setEventUsers());
-    }
-  };
-
+  const [eventCurrency, setEventCurrency] = useState("expense");
+  const [eventName, setEventName] = useState("");
+  const [uCode, setUCode] = useState("");
   const handleBack = () => {
     navegite(-1);
   };
 
+  const HandlesetKey = (key) => {
+    dispatch(setSelectedUserID(ownerID));
+    setKey(key);
+  };
+
+  const getData = () => {
+    try {
+      fetch(`${API_URL}/money-poll/get-members?eventId=${id}`, {
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": true,
+        },
+      }).then(async (res) => {
+        if (res.status === 200) {
+          const { users, currency, owner, name, uuid } = await res.json();
+          setEventName(name);
+          setUCode(uuid);
+          var data = [];
+          data.push({
+            id: owner._id,
+            first_name: owner.first_name,
+            last_name: owner.last_name,
+            seen: true,
+          });
+          users &&
+            users.map((user) =>
+              data.push({
+                id: user.personal[0]._id,
+                first_name: user.personal[0].first_name,
+                last_name: user.personal[0].last_name,
+                seen: user.seen,
+              })
+            );
+
+          dispatch(setEventUsers(data));
+          dispatch(setSelectedUserID(owner._id));
+          dispatch(setOwnerID(owner._id));
+          dispatch(setCurrencyName(CurrencyList.get(currency).name));
+          dispatch(setCurrencyCode(currency));
+        } else {
+          addToast("Error Please Try Again!", {
+            autoDismiss: false,
+            appearance: "error",
+          });
+        }
+      });
+    } catch (err) {
+      addToast("Error Please Try Again!", {
+        autoDismiss: false,
+        appearance: "error",
+      });
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
     <Card className="event_card">
-      <CardHeader title="BD" />
+      <CardHeader title={eventName + ":  " + uCode} />
       <CardBody className={style.card_body}>
         <div>
           <Button onClick={handleBack}>
@@ -66,11 +109,11 @@ function Expenses() {
             defaultActiveKey="profile"
             id="uncontrolled-tab-example"
             activeKey={key}
-            onSelect={(k) => setKey(k)}
-            className={`${style.tab} mb-3`}
+            onSelect={(k) => HandlesetKey(k)}
+            className={style.tab}
           >
             <Tab eventKey="expense" title="Expense">
-              <Expense eventUsers={eventUsers} handleBack={handleBack} />
+              <Expense handleBack={handleBack} />
             </Tab>
             <Tab eventKey="moneygiven" title="Money Given">
               <MoneyGiven handleBack={handleBack} />

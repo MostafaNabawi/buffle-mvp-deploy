@@ -183,7 +183,6 @@ function NewEvent() {
           id="uncontrolled-tab-example"
           activeKey={key}
           onSelect={(k) => setKey(k)}
-          className="mb-3"
           className={style.tab}
         >
           <Tab eventKey="createvent" title="Creat event">
@@ -220,9 +219,9 @@ function NewEvent() {
                           currencyData.map((currency, i) => (
                             <option
                               key={`${i}-currency`}
-                              value={currency?.symbol}
+                              value={currency?.code}
                             >
-                              {currency?.name} ({currency?.symbol})
+                              {currency?.name} ({currency?.code})
                             </option>
                           ))}
                       </Form.Select>
@@ -378,8 +377,15 @@ function NewEvent() {
               </thead>
               <tbody>
                 {loading2 ? (
-                  <tr className="text-center" >
-                    <td colSpan={4}>{<Icon fontSize={80} icon="eos-icons:three-dots-loading" />}</td>
+                  <tr className="text-center">
+                    <td colSpan={4}>
+                      {
+                        <Icon
+                          fontSize={80}
+                          icon="eos-icons:three-dots-loading"
+                        />
+                      }
+                    </td>
                   </tr>
                 ) : eventList.length > 0 ? (
                   eventList.map((list, i) => (
