@@ -3,6 +3,7 @@ import { Table } from "react-bootstrap";
 import style from "./../style.module.css";
 function OverView(props) {
   const { data } = props;
+  console.log(data);
   return (
     <div>
       <Table striped>
@@ -31,18 +32,15 @@ function OverView(props) {
           </tr> */}
         </tbody>
       </Table>
-
-      {data.lent.length > 0 && (
-        <div className={style.settle}>
-          <div className={style.header}>
-            <h4>How to settle all debts</h4>
-          </div>
-          <div className={style.settle_content}>
-            {data &&
-              data.lent.map((item) => <div key={item.msg}>{item.msg}</div>)}
-          </div>
+      <div className={style.settle}>
+        <div className={style.header}>
+          <h4>How to settle all debts</h4>
         </div>
-      )}
+        <div className={style.settle_content}>
+          {data &&
+            data.lent.map((item) => <div key={item.msg}>{item.msg}</div>)}
+        </div>
+      </div>
     </div>
   );
 }

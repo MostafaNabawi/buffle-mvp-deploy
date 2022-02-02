@@ -157,6 +157,11 @@ function Event() {
     }
   };
 
+  const handleSelectUser = (e) => {
+    const userId = e.target.value;
+    hanldOverView(userId, id);
+  };
+
   const hanldOverView = async (userId, eventId) => {
     const res = await getOverView(userId, eventId);
     setOverView(res);
@@ -177,12 +182,12 @@ function Event() {
           <Form.Select
             className="selectUserVenet"
             aria-label="Default select example"
-            onChange={hanldOverView}
+            onChange={(e) => handleSelectUser(e)}
           >
             {busy
               ? ""
               : userEvent.map((item) => (
-                  <option key={item.id}>
+                  <option key={item.id} value={item.id}>
                     {item.first_name + " " + item.last_name}
                   </option>
                 ))}
