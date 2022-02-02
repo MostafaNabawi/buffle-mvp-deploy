@@ -27,11 +27,7 @@ const UserProfile = () => {
   const [departure, setDeparture] = useState("");
   const [tags, setTags] = useState([]);
   const [newTag, setNewTag] = useState("");
-  const options = [
-    { value: "1", label: "Chocolate" },
-    { value: "2", label: "Strawberry" },
-    { value: "3", label: "Vanilla" },
-  ];
+  const options = [];
   const setUsetLocalStorage = () => {
     try {
       fetch(`${API_URL}/user/me`, {
@@ -74,6 +70,27 @@ const UserProfile = () => {
       setBusy(true);
     }
   };
+  const getAllTags =() =>{
+    // get-all-tags
+    fetch(`${API_URL}/get-all-tags`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    }).then(async (res) => {
+        const {payload}=await res.json
+        if(payload){
+          payload.map(tag=>{
+            const data={
+              value:tag._id,
+              lable:tag.name
+            }
+            options.push(data)
+          })
+        }
+    });
+  }
   const handleEdite = (e) => {
     e.preventDefault();
 
@@ -154,6 +171,7 @@ const UserProfile = () => {
 
   useEffect(() => {
     getUser();
+    getAllTags()
   }, []);
   return (
     <>
