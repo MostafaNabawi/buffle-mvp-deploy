@@ -823,7 +823,7 @@ div.check-box > input {
   width: auto !important;
 }
 .selectTags{
-  width: 390px !important;
+  width: 90% !important;
   color: green;
 }
 .btnAdd{

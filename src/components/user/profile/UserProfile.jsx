@@ -91,12 +91,12 @@ const UserProfile = () => {
               tags: tags
             }),
           }).then(async (res) => {
-            console.log("tage res...", res)
             if (res.status != 200) {
               addToast("Error Please Try Again!", {
                 appearance: "warning",
                 autoDismiss: 4000,
               });
+              setLoading(false)
               return false
             }
           });
