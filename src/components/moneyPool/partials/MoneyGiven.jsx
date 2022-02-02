@@ -27,7 +27,7 @@ function MoneyGiven(props) {
   const hadleAddMoneyGiven = async () => {
     const data = {
       userId: selectedUserID,
-      evenId: id,
+      eventId: id,
       amount: amount,
       reason: reason,
       whoId: whoId,

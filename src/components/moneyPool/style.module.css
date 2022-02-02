@@ -211,3 +211,8 @@ textarea::placeholder {
   padding-left: 1rem;
   margin-bottom: 1rem !important;
 }
+
+.settle .settle_content {
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.05);
+}

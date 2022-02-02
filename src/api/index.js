@@ -553,7 +553,7 @@ async function createExpense(data) {
     },
     body: JSON.stringify({
       userId: data.userId,
-      evenId: data.evenId,
+      eventId: data.eventId,
       amount: data.amount,
       reason: data.reason,
       when: data.when,
@@ -574,7 +574,7 @@ async function createMoneyGiven(data) {
     },
     body: JSON.stringify({
       userId: data.userId,
-      evenId: data.evenId,
+      eventId: data.eventId,
       amount: data.amount,
       whoId: data.whoId,
       reason: data.reason,
@@ -596,7 +596,7 @@ async function createIncome(data) {
     },
     body: JSON.stringify({
       userId: data.userId,
-      evenId: data.evenId,
+      eventId: data.eventId,
       amount: data.amount,
       reason: data.reason,
       when: data.when,
@@ -604,6 +604,23 @@ async function createIncome(data) {
   });
   const resault = await req.json();
   return { status: req.status, data: resault.payload };
+}
+
+async function getOverView(userId, eventId) {
+  const req = await fetch(
+    `${API_URL}/money-poll/overview?userId=${userId}&eventId=${eventId}`,
+    {
+      method: "GET",
+      credentials: "include",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Credentials": true,
+      },
+    }
+  );
+  const res = await req.json();
+  return res;
 }
 
 export {
@@ -643,4 +660,5 @@ export {
   createMoneyGiven,
   createIncome,
   getEventList,
+  getOverView,
 };
