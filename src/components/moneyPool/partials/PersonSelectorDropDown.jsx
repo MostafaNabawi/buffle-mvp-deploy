@@ -23,7 +23,7 @@ function PersonSelectorDropDown() {
       title = `${eventUsers[selectedItem].first_name} ${eventUsers[selectedItem].last_name} `;
     }
   } else {
-    title = <Icon fontSize={24} icon="eos-icons:loading" />;
+    title = <Icon fontSize={40} icon="eos-icons:three-dots-loading" />;
   }
 
   return (

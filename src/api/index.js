@@ -606,6 +606,23 @@ async function createIncome(data) {
   return { status: req.status, data: resault.payload };
 }
 
+async function getOverView(userId, eventId) {
+  const req = await fetch(
+    `${API_URL}/money-poll/overview?userId=${userId}&eventId=${eventId}`,
+    {
+      method: "GET",
+      credentials: "include",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Credentials": true,
+      },
+    }
+  );
+  const res = await req.json();
+  return res;
+}
+
 export {
   getCompanySpaceData,
   signin,
@@ -643,4 +660,5 @@ export {
   createMoneyGiven,
   createIncome,
   getEventList,
+  getOverView,
 };

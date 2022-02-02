@@ -19,6 +19,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useDispatch } from "react-redux";
 import { setEventUsers } from "../../store/moneyPoolSlice";
+import { getOverView } from "../../api";
 
 function Event() {
   // event id
@@ -42,6 +43,7 @@ function Event() {
   const [currencyEvent, setCurrencyEvent] = useState("");
   const [eventName, setEventName] = useState("");
   const [uCode, setUCode] = useState("");
+  const [overView, setOverView] = useState("");
 
   const getData = () => {
     try {
@@ -154,8 +156,15 @@ function Event() {
       setAdding(false);
     }
   };
+
+  const hanldOverView = async (userId, eventId) => {
+    const res = await getOverView(userId, eventId);
+    setOverView(res);
+  };
+
   useEffect(() => {
     getData();
+    hanldOverView(userId, id);
   }, []);
 
   return (
@@ -168,6 +177,7 @@ function Event() {
           <Form.Select
             className="selectUserVenet"
             aria-label="Default select example"
+            onChange={hanldOverView}
           >
             {busy
               ? ""
@@ -185,7 +195,7 @@ function Event() {
           </div>
           <div className={style.overview_body}>
             {/* <NoExpensesYet /> */}
-            <OverView />
+            <OverView data={overView} />
           </div>
         </div>
         <div className={style.seen}>
