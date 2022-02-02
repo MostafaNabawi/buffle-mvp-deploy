@@ -97,6 +97,7 @@ const UserProfile = () => {
               appearance: "warning",
               autoDismiss: 4000,
             });
+            setLoading(false)
             return false
            }
           });
