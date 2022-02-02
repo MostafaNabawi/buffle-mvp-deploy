@@ -47,7 +47,7 @@ const UserProfile = () => {
           setBusy(true);
         }
       });
-    } catch {}
+    } catch { }
   };
   const getUser = () => {
     try {
@@ -80,7 +80,7 @@ const UserProfile = () => {
     if (firstName && lastName && email && slack && departure) {
       setLoading(true);
       try {
-        if (tags.length >0) {
+        if (tags.length > 0) {
           fetch(`${API_URL}/tags/create`, {
             method: "POST",
             credentials: "include",
@@ -88,17 +88,17 @@ const UserProfile = () => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              tag:tags
+              tags: tags
             }),
           }).then(async (res) => {
-            console.log("tage res...",res)
-           if(res.status !=200){
-            addToast("Error Please Try Again!", {
-              appearance: "warning",
-              autoDismiss: 4000,
-            });
-            return false
-           }
+            console.log("tage res...", res)
+            if (res.status != 200) {
+              addToast("Error Please Try Again!", {
+                appearance: "warning",
+                autoDismiss: 4000,
+              });
+              return false
+            }
           });
         }
         fetch(`${API_URL}/user/update`, {
