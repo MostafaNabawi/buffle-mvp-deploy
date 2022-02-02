@@ -101,8 +101,6 @@ const UserProfile = () => {
            }
           });
         }
-        return ""
-        //
         fetch(`${API_URL}/user/update`, {
           method: "PUT",
           credentials: "include",
