@@ -822,3 +822,13 @@ div.check-box > input {
 .selectUserVenet {
   width: auto !important;
 }
+.selectTags{
+  width: 390px !important;
+  color: green;
+}
+.btnAdd{
+  color: green;
+}
+.btnAdd:active{
+  border: none !important;
+}
