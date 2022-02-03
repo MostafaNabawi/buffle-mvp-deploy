@@ -35,6 +35,7 @@ import Countdown from "react-countdown";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import Timer from "./../components/common/progressBar/TaskProgress";
+import moment, { now } from "moment";
 
 const Dashboard = () => {
   const MySwal = withReactContent(Swal);
@@ -169,6 +170,7 @@ const Dashboard = () => {
       setVacationLoader(false);
     }
   };
+  
   const getVacationTime = async () => {
     try {
       await fetch(`${API_URL}/vacation`, {
@@ -180,7 +182,7 @@ const Dashboard = () => {
       }).then(async (res) => {
         if (res.status === 200) {
           const { payload } = await res.json();
-          if (payload) {
+          if (payload && payload.date) {
             setVacationData(payload);
           } else {
             setVacationData("noVacation");
@@ -592,7 +594,7 @@ const Dashboard = () => {
                     )}
                     onComplete={() => {
                       if (vacationData != "noVacation") {
-                        addToast("Today in your vacation Time", {
+                        addToast("It's time for vacation", {
                           appearance: "info",
                         });
                       }
