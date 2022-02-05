@@ -276,10 +276,9 @@ const Header = () => {
     }
   };
   useEffect(() => {
-    console.log("socket.......");
-    if (webData.length > 0) {
-      const current = localStorage.getItem("current");
-      if (current === webData) {
+    if (webData) {
+      const current = JSON.parse(localStorage.getItem("user"));
+      if (current?._id === webData) {
         //notification related to this user
         setCount(count + 1);
         setWebData("");

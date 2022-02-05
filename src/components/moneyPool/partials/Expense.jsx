@@ -33,6 +33,7 @@ function Expense(props) {
       reason: reason,
       when: when,
     };
+    console.log("dd", data);
     const req = await createExpense(data);
     if (req.status === 200) {
       addToast("Created Susseccfully", {
