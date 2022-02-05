@@ -10,24 +10,27 @@ import { API_URL } from "../../config/index";
 import { useToasts } from "react-toast-notifications";
 import Loader from "react-spinners/BeatLoader";
 import style from "./style.module.css";
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setDu_time, setDefault, setDis_time } from "../../store/screenReminderSclice"
+import {
+  setDu_time,
+  setDefault,
+  setDis_time,
+} from "../../store/screenReminderSclice";
 
 function ScreenFreeReminderCard() {
-
   const { du_time, defaultTime, dis_time } = useSelector(
     (state) => state.screen
   );
   const dispatch = useDispatch();
   const { addToast } = useToasts();
-  const [changeMute, setChangeMute] = useState(false)
-  const [data, setData] = useState([])
-  const [isShow, setIsShow] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [getting, setGetting] = useState(false)
-  const [loadData, setLoadData] = useState(false)
+  const [changeMute, setChangeMute] = useState(false);
+  const [data, setData] = useState([]);
+  const [isShow, setIsShow] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [getting, setGetting] = useState(false);
+  const [loadData, setLoadData] = useState(false);
   // Modal
   const [sizeModal, setSizeModal] = useState("");
   const [modalShow, setModalShow] = useState(false);
@@ -42,14 +45,14 @@ function ScreenFreeReminderCard() {
   const [displayTime, setDisplayTime] = useState({
     hours: "",
     minutes: "",
-    seconds: ""
-  })
+    seconds: "",
+  });
   const handleDurationTime = (val) => {
     const arr = val.split(":");
     const time =
       arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000;
     // setDu_time(time);
-    dispatch(setDu_time(time))
+    dispatch(setDu_time(time));
     return time;
   };
   const handleDisplayTime = (val) => {
@@ -57,20 +60,25 @@ function ScreenFreeReminderCard() {
     const time =
       arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000;
     // setDis_time(time);
-    dispatch(setDis_time(time))
+    dispatch(setDis_time(time));
     return time;
   };
   const timeFormate = (val, getter, setter) => {
     const arr = val.split(":");
-    const hover = arr[0]
-    const minutes = arr[1]
-    const seconds = arr[2]
-    setter({ ...getter, ['hours']: hover, ['minutes']: minutes, ['seconds']: seconds });
+    const hover = arr[0];
+    const minutes = arr[1];
+    const seconds = arr[2];
+    setter({
+      ...getter,
+      ["hours"]: hover,
+      ["minutes"]: minutes,
+      ["seconds"]: seconds,
+    });
   };
   const getData = async () => {
     try {
       // dispatch(setDu_time("test"))
-      setGetting(true)
+      setGetting(true);
       const req = await fetch(`${API_URL}/screen_reminder/get`, {
         credentials: "include",
         headers: {
@@ -83,17 +91,17 @@ function ScreenFreeReminderCard() {
         if (payload.mute) {
           setIsShow(true);
         }
-        setData(payload)
-        setGetting(false)
+        setData(payload);
+        setGetting(false);
       } else {
-        setData([])
-        setGetting(false)
+        setData([]);
+        setGetting(false);
       }
     } catch {
-      setData([])
-      setGetting(false)
+      setData([]);
+      setGetting(false);
     }
-  }
+  };
   const getUpdataData = async () => {
     try {
       const req = await fetch(`${API_URL}/screen_reminder/get`, {
@@ -105,29 +113,29 @@ function ScreenFreeReminderCard() {
       });
       const { payload } = await req.json();
       if (payload.mute) {
-        localStorage.setItem("screen", "on")
-        dispatch(setDu_time(payload.duration))
+        localStorage.setItem("screen", "on");
+        dispatch(setDu_time(payload.duration));
         handleDurationTime(payload.duration);
         handleDisplayTime(payload.display);
       } else {
-        localStorage.setItem("screen", "off")
-        dispatch(setDu_time(payload.duration))
+        localStorage.setItem("screen", "off");
+        dispatch(setDu_time(payload.duration));
         handleDurationTime(payload.duration);
         handleDisplayTime(payload.display);
       }
       if (payload) {
-        if (payload.display != '') {
-          timeFormate(payload.display, displayTime, setDisplayTime)
+        if (payload.display != "") {
+          timeFormate(payload.display, displayTime, setDisplayTime);
         }
-        if (payload.duration != '') {
-          timeFormate(payload.duration, durationTime, setDurationTime)
+        if (payload.duration != "") {
+          timeFormate(payload.duration, durationTime, setDurationTime);
         }
       }
     } catch {
-      setData([])
-      setLoadData(false)
+      setData([]);
+      setLoadData(false);
     }
-  }
+  };
   const handleSubmit = async () => {
     if (
       (durationTime.hours === "" &&
@@ -167,13 +175,16 @@ function ScreenFreeReminderCard() {
         }),
       });
       if (status === 200) {
-        getUpdataData()
-        setLoading(false)
-        setDurationTime({ hours: "", minutes: "", seconds: "" })
-        setDisplayTime({ hours: "", minutes: "", seconds: "" })
-        setModalShow(false)
-        getData()
-        addToast("Added Susseccfully", { autoDismiss: true, appearance: 'success' });
+        getUpdataData();
+        setLoading(false);
+        setDurationTime({ hours: "", minutes: "", seconds: "" });
+        setDisplayTime({ hours: "", minutes: "", seconds: "" });
+        setModalShow(false);
+        getData();
+        addToast("Added Susseccfully", {
+          autoDismiss: true,
+          appearance: "success",
+        });
       } else {
         setLoading(false);
         setModalShow(false);
@@ -198,26 +209,31 @@ function ScreenFreeReminderCard() {
       }),
     }).then((res) => {
       if (res.status != 200) {
-        setChangeMute(false)
-        getData()
-        addToast("Error Please Try Again!", { autoDismiss: true, appearance: 'error' });
-        return false
+        setChangeMute(false);
+        getData();
+        addToast("Error Please Try Again!", {
+          autoDismiss: true,
+          appearance: "error",
+        });
+        return false;
       } else {
         if (!isShow) {
-          localStorage.setItem("screen", "on")
+          localStorage.setItem("screen", "on");
+          setIsShow(true);
         } else {
-          localStorage.setItem("screen", "off")
+          localStorage.setItem("screen", "off");
+          setIsShow(false);
         }
-        setChangeMute(false)
-        setIsShow(!isShow)
+        setChangeMute(false);
+        // setIsShow(!isShow)
       }
-    })
-  }
+    });
+  };
   //
   useEffect(() => {
-    getData()
-    getUpdataData()
-  }, [])
+    getData();
+    getUpdataData();
+  }, []);
 
   return (
     <>
@@ -237,32 +253,52 @@ function ScreenFreeReminderCard() {
               >
                 <Icon icon="vaadin:plus" />
               </i>
+              <i
+               onClick={() => {
+                // getUpdataData ()
+                setModalShow(true);
+                setSizeModal("md");
+              }}
+              >
               <Icon icon="vaadin:ellipsis-dots-v" />
+              </i>
             </>
           }
           className="border-bottom"
         />
         <CardBody className="text-center screen-remainder">
-          {getting ? <Skeleton height="34px" count={1} />
-            : data.length === 0
-              ? "Not set screen reminder"
-              :
-              data && (<div className={style.wrapper}>
+          {getting ? (
+            <Skeleton height="34px" count={1} />
+          ) : data.length === 0 ? (
+            "Not set screen reminder"
+          ) : (
+            data && (
+              <div className={style.wrapper}>
                 <div className={style.header}>
                   <span>
-                    {changeMute
-                      ? <Icon fontSize={24} icon="eos-icons:loading" />
-                      : <Form.Check onClick={() => { handleMute() }} defaultChecked={isShow} type="checkbox" />
-                    }
+                    {changeMute ? (
+                      <Icon fontSize={24} icon="eos-icons:loading" />
+                    ) : (
+                      <Form.Check
+                        onClick={() => {
+                          handleMute();
+                        }}
+                        defaultChecked={isShow}
+                        type="checkbox"
+                      />
+                    )}
                   </span>
                   <h6>{data?.display} screen free time</h6>
                 </div>
-                <p>last intermission {
-                  localStorage.getItem("loackTime") ? localStorage.getItem("loackTime") : "00:00:00"
-                }</p>
+                <p>
+                  last intermission{" "}
+                  {localStorage.getItem("loackTime")
+                    ? localStorage.getItem("loackTime")
+                    : "00:00:00"}
+                </p>
               </div>
-              )
-          }
+            )
+          )}
         </CardBody>
       </Card>
       {/* Modal */}

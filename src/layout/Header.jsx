@@ -369,7 +369,7 @@ const Header = () => {
   return (
     <>
       <Col className="col-12 header-name text-capitalize">
-        Hi {userData?.first_name}
+        Hi <span id="userFullName">{userData?.first_name}</span>
       </Col>
       {du_time > 0 && start && (
         <Countdown
@@ -380,15 +380,17 @@ const Header = () => {
           onComplete={() => {
             handleDurationTime(defaultTime);
             setStart(false);
-            const timeLock = new Date();
-            localStorage.setItem(
-              "loackTime",
-              timeLock.getHours() +
-                ":" +
-                timeLock.getMinutes() +
-                ":" +
-                timeLock.getSeconds()
-            );
+            if(localStorage.getItem("screen") === "on"){
+              const timeLock = new Date();
+              localStorage.setItem(
+                "loackTime",
+                timeLock.getHours() +
+                  ":" +
+                  timeLock.getMinutes() +
+                  ":" +
+                  timeLock.getSeconds()
+              );
+            }
           }}
           renderer={() => {
             return "";
