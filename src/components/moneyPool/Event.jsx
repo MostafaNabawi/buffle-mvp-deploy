@@ -3,15 +3,15 @@ import style from "./style.module.css";
 import Card from "./../card/Card";
 import CardHeader from "./../card/CardHeader";
 import CardBody from "./../card/CardBody";
-import PersonSelectorDropDown from "./partials/PersonSelectorDropDown";
+
 import { Button, Form, Overlay, Row, Tooltip } from "react-bootstrap";
-import NoExpensesYet from "./partials/NoExpensesYet";
+
 import EventPerson from "./partials/EventPerson";
 import { Icon } from "@iconify/react";
 import { useParams, useNavigate } from "react-router-dom";
 import OverView from "./partials/OverView";
 import Modal from "./../modal/modal";
-import Col from "./../taskMnagement/Col";
+
 import AddNewMember from "./partials/AddNewMember";
 import { useToasts } from "react-toast-notifications";
 import { API_URL } from "../../config";
