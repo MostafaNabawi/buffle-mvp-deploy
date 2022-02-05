@@ -183,7 +183,6 @@ function NewEvent() {
           id="uncontrolled-tab-example"
           activeKey={key}
           onSelect={(k) => setKey(k)}
-          className="mb-3"
           className={style.tab}
         >
           <Tab eventKey="createvent" title="Creat event">
