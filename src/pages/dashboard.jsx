@@ -121,7 +121,6 @@ const Dashboard = () => {
     minutes: "",
     seconds: "",
   });
-  console.log("oldDat", oldTaskInput);
   // next break action
   const handleNextBreakOperation = async () => {
     if (nextBreakDateInput.length === 0) {
@@ -431,7 +430,6 @@ const Dashboard = () => {
     if (checkId.length === 1) {
       const oldData = await getTaskById(checkId[0]);
       const time = oldData.data.task_duration.split(":");
-      console.log("time",time)
       setOldTaskInput({
         hours:time[0],
         minutes:time[1],

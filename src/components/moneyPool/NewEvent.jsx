@@ -378,7 +378,7 @@ function NewEvent() {
               <tbody>
                 {loading2 ? (
                   <tr className="text-center">
-                    <td colSpan={4}>
+                    <td colSpan={5}>
                       {
                         <Icon
                           fontSize={80}

@@ -50,7 +50,7 @@ function TaskModal(props) {
       setOldValue(selected);
     }
   }
-
+  console.log('startDate', startDate);
   useEffect(() => {
     request();
   }, []);

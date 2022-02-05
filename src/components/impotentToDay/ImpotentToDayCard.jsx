@@ -102,7 +102,6 @@ function ImpotentToDayCard({ handleMove }) {
           action={
             <>
               <Link to="/dashboard/taskmanagement" className="secondary-dark-gray"><Icon icon="vaadin:plus" /></Link>
-              <Icon icon="vaadin:ellipsis-dots-v" />
             </>
           }
         />
