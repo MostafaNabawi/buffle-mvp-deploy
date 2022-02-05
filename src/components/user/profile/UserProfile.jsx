@@ -81,12 +81,14 @@ const UserProfile = () => {
     }).then(async (res) => {
       const { payload } = await res.json();
       if (payload) {
+        console.log("payload",payload)
         payload.map(tag => {
-          const data = {
+          const data = [{
             value: tag._id,
             lable: tag.name
-          }
-          options.push(data)
+          }]
+          console.log("data",data[0])
+          options.push(data[0])
         })
       }
     });
