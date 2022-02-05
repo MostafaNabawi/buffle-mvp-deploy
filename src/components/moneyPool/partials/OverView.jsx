@@ -4,6 +4,7 @@ import style from "./../style.module.css";
 function OverView({ data }) {
   const [innerData, setInnerData] = useState(null);
   useEffect(() => {
+    // this is a comment for overview
     console.log("overview", data);
     setInnerData(data);
   }, [data]);
@@ -29,7 +30,7 @@ function OverView({ data }) {
         </>
       );
     }
-    // {data && data.lent.map((item) => <div key={item.msg}>{item.msg}</div>)}
+    // {data && data.lent.map((item) => <div key={item.msg + ""} >{item.msg}</div>)}
 
     return <div>Your not owed.😊</div>;
   };

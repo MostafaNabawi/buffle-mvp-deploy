@@ -136,32 +136,67 @@ const UserLogin = () => {
     });
     const res = await req.json();
     if (req.status === 200) {
+      document.getElementsByClassName("swal-google")[0].remove();
+      if (res.type === 0) {
+        addToast(`${res?.msg}⛔`, {
+          appearance: "warning",
+          autoDismiss: 8000,
+        });
+        setLoading(false);
+        return;
+      }
+
       if (res.type === 1) {
-        console.log(res.data);
         localStorage.setItem("user", JSON.stringify(res.user));
-        localStorage.setItem("space", res?.stype);
-        document.getElementsByClassName("swal-google")[0].remove();
+        localStorage.setItem("space", res.stype);
+        localStorage.setItem("others", JSON.stringify(res.others));
         navigate("/dashboard");
       }
       if (res.type === 2) {
         localStorage.setItem("user", JSON.stringify(res.user));
         localStorage.setItem("space", res?.stype);
-        document.getElementsByClassName("swal-google")[0].remove();
+        localStorage.setItem("others", JSON.stringify(res?.others));
+        localStorage.setItem("current", res?.current);
         navigate("/dashboard");
       }
     } else {
-      Swal.update({
-        icon: "error",
-        text: "No user found by this email!",
-        title: "Invalid",
-        showConfirmButton: true,
-        allowOutsideClick: true,
-        html: "",
+      document.getElementsByClassName("swal-google")[0].remove();
+      addToast("Error While signin with google", {
+        appearance: "error",
+        autoDismiss: 5000,
       });
     }
+    // if (req.status === 200) {
+    //   if (res.type === 1) {
+    //     console.log(res.data);
+    //     localStorage.setItem("user", JSON.stringify(res.user));
+    //     localStorage.setItem("space", res?.stype);
+    //     document.getElementsByClassName("swal-google")[0].remove();
+    //     navigate("/dashboard");
+    //   }
+    //   if (res.type === 2) {
+    //     localStorage.setItem("user", JSON.stringify(res.user));
+    //     localStorage.setItem("space", res?.stype);
+    //     document.getElementsByClassName("swal-google")[0].remove();
+    //     navigate("/dashboard");
+    //   }
+    // } else {
+    //   Swal.update({
+    //     icon: "error",
+    //     text: "No user found by this email!",
+    //     title: "Invalid",
+    //     showConfirmButton: true,
+    //     allowOutsideClick: true,
+    //     html: "",
+    //   });
+    // }
   };
   const responseGoogleFailur = (response) => {
-    console.log("failed", response);
+    document.getElementsByClassName("swal-google")[0].remove();
+    addToast("Error While signin with google", {
+      appearance: "error",
+      autoDismiss: 5000,
+    });
   };
   useEffect(() => {
     let mount = true;

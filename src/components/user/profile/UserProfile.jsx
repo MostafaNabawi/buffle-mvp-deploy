@@ -27,7 +27,8 @@ const UserProfile = () => {
   const [departure, setDeparture] = useState("");
   const [tags, setTags] = useState([]);
   const [newTag, setNewTag] = useState("");
-  const options = [];
+  const [options,setOptions]=useState([])
+
   const setUsetLocalStorage = () => {
     try {
       fetch(`${API_URL}/user/me`, {
@@ -43,7 +44,7 @@ const UserProfile = () => {
           setBusy(true);
         }
       });
-    } catch { }
+    } catch {}
   };
   const getUser = () => {
     try {
@@ -71,46 +72,64 @@ const UserProfile = () => {
     }
   };
   const getAllTags = () => {
-    // get-all-tags
     fetch(`${API_URL}/tags/get-all-tags`, {
       method: "GET",
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
-      }
+      },
     }).then(async (res) => {
       const { payload } = await res.json();
       if (payload) {
-        console.log("payload",payload)
-        payload.map(tag => {
-          const data = [{
+        payload.map((tag) => {
+          const data = {
             value: tag._id,
-            lable: tag.name
-          }]
-          console.log("data",data[0])
-          options.push(data[0])
-        })
+            label: tag.name,
+          };
+          options.push(data);
+        });
       }
     });
-  }
-  const handleEdite = (e) => {
+  };
+  const getUserTags = async () => {
+    fetch(`${API_URL}/user/tags`, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then(async (res) => {
+      const { payload } = await res.json();
+      if (payload) {
+        payload.map((item) =>{
+          const data = {
+            value: item.tag[0]._id,
+            label: item.tag[0].name,
+          };
+          tags.push(data)
+        }
+        );
+      }
+    });
+  };
+  const handleEdite = async (e) => {
     e.preventDefault();
 
     if (firstName && lastName && email && slack && departure) {
       setLoading(true);
       try {
         if (tags.length > 0) {
-        const {status}=fetch(`${API_URL}/tags/create`, {
+          const res = await fetch(`${API_URL}/tags/create`, {
             method: "POST",
             credentials: "include",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              tags: tags
+              tags: tags,
             }),
-          })
-          if(status !=200){
+          });
+          if (res.status != 200) {
             addToast("Error Please Try Again!", {
               appearance: "warning",
               autoDismiss: 4000,
@@ -136,6 +155,8 @@ const UserProfile = () => {
           const { msg } = await res.json();
           if (res.status === 200) {
             setUsetLocalStorage();
+            const headerName=document.getElementById('userFullName')
+            headerName.innerHTML=firstName + " " + lastName
             addToast(msg, {
               appearance: "success",
               autoDismiss: 4000,
@@ -173,7 +194,9 @@ const UserProfile = () => {
   useEffect(() => {
     getUser();
     getAllTags()
+    getUserTags()
   }, []);
+
   return (
     <>
       <Col className="card" xl={8}>
@@ -182,7 +205,7 @@ const UserProfile = () => {
           <Row>
             <Form.Group className="mb-3">
               <Image className={style.userPhoto} src="/img/user-3.png" />
-              <Form.Label className={style.lablePhoto} for="photoUser">
+              <Form.Label className={style.lablePhoto} htmlFor="photoUser">
                 <Icon icon="uil:image-upload" />
               </Form.Label>
               <Form.Control className={style.hide} id="photoUser" type="file" />
