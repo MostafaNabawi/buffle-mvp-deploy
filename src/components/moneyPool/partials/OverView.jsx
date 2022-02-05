@@ -26,10 +26,10 @@ function OverView(props) {
             <td>You are owed</td>
             <th>{data.owed}</th>
           </tr>
-          {/* <tr>
-            <td>You've received</td>
-            <th>$121,273.00</th>
-          </tr> */}
+          <tr>
+            <td>You've owe</td>
+            <th>{data.creditor}</th>
+          </tr>
         </tbody>
       </Table>
       <div className={style.settle}>
@@ -38,7 +38,7 @@ function OverView(props) {
         </div>
         <div className={style.settle_content}>
           {data &&
-            data.lent.map((item) => <div key={item.msg}>{item.msg}</div>)}
+            data.report.map((item) => <div key={item.msg}>{item.msg}</div>)}
         </div>
       </div>
     </div>
