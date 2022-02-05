@@ -40,7 +40,7 @@
 }
 .iconWatch2{
   position: relative;
-  z-index: 9999 !important;
+  z-index: 100 !important;
   margin-left: 30px;
   margin-top: 1px;
   font-size: x-large;
