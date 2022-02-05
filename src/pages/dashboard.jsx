@@ -184,6 +184,8 @@ const Dashboard = () => {
           const { payload } = await res.json();
           if (payload && payload.date) {
             setVacationData(payload);
+            setVacationDataInput(payload.date);
+            setVacationNameInput(payload.name);
           } else {
             setVacationData("noVacation");
           }
