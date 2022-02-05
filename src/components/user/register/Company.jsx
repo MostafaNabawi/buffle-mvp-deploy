@@ -114,12 +114,12 @@ const CompanyRegister = () => {
   };
 
   return (
-    <div className="pt-5">
+    <div>
       {!sendEmail ? (
         <Row className="p-0 m-0 row">
           <Col xl="9">
             <div className={style.registerCard}>
-              <div className={`${style.header}  text-center pt-4`}>
+              <div className={`${style.header}  text-center`}>
                 <div className={style.floatLeft}>1/2</div>
                 <Image src="/favicon.ico" />
                 <div className={`${style.headerTitle} mt-3`}>

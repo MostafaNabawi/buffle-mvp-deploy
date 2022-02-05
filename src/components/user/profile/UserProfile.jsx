@@ -72,7 +72,6 @@ const UserProfile = () => {
     }
   };
   const getAllTags = () => {
-    // get-all-tags
     fetch(`${API_URL}/tags/get-all-tags`, {
       method: "GET",
       credentials: "include",
@@ -156,6 +155,8 @@ const UserProfile = () => {
           const { msg } = await res.json();
           if (res.status === 200) {
             setUsetLocalStorage();
+            const headerName=document.getElementById('userFullName')
+            headerName.innerHTML=firstName + " " + lastName
             addToast(msg, {
               appearance: "success",
               autoDismiss: 4000,

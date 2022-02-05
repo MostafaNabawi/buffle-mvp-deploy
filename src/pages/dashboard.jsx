@@ -1,6 +1,6 @@
 import { useEffect, useState, Fragment } from "react";
 import { Row, Col, Image, Form, Button, NavDropdown } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -35,9 +35,12 @@ import Countdown from "react-countdown";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import Timer from "./../components/common/progressBar/TaskProgress";
+import Player from "../components/spotify/Player";
 import moment, { now } from "moment";
+import SpotifyLogin from "../components/spotify/Login";
 
 const Dashboard = () => {
+  const code = new URLSearchParams(window.location.search).get("code");
   const MySwal = withReactContent(Swal);
   const currentUser = JSON.parse(localStorage.getItem("user"));
   const [timeFormat, setTimeFormat] = useState(false);
@@ -51,6 +54,7 @@ const Dashboard = () => {
   const [titleModal, setTitleModa] = useState("");
   const [sizeModal, setSizeModal] = useState("");
   const [modalShow, setModalShow] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams({});
   const handleClose = () => {
     setModalShow(false);
     setNextBreakDateInput("");
@@ -184,6 +188,8 @@ const Dashboard = () => {
           const { payload } = await res.json();
           if (payload && payload.date) {
             setVacationData(payload);
+            setVacationDataInput(payload.date);
+            setVacationNameInput(payload.name);
           } else {
             setVacationData("noVacation");
           }
@@ -617,6 +623,7 @@ const Dashboard = () => {
               }
               title="Worktunes"
             />
+            {/* {code ? <Player code={code} /> : <SpotifyLogin />} */}
             {/* muted */}
             <audio controls className="mt-3">
               <source src="/music/1.mp3" type="audio/ogg" />
@@ -641,8 +648,9 @@ const Dashboard = () => {
                 />
               }
               title="Task Manager"
-              subtitle={`${opan < 0 ? 0 : opan} opan, ${start < 0 ? 0 : start
-                } start.`}
+              subtitle={`${opan < 0 ? 0 : opan} opan, ${
+                start < 0 ? 0 : start
+              } start.`}
               action={
                 <>
                   <i
@@ -685,7 +693,7 @@ const Dashboard = () => {
                 taskData.map((t, n) => (
                   <Fragment key={n}>
                     <Row className="task-manager-body pt-0 mt-1 mb-1">
-                      <Col xl="8">
+                      <Col xl="7">
                         <Row className="pl-5">
                           <Col xl="1">
                             <Form.Group controlId="formBasicCheckbox">
@@ -702,7 +710,7 @@ const Dashboard = () => {
                           </Col>
                         </Row>
                       </Col>
-                      <Col xl="4">
+                      <Col xl="5">
                         <Timer
                           {...t}
                           handleCheckOpenClose={handleCheckOpenClose}
@@ -781,24 +789,24 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                  id: data._id,
-                                  name: data.name,
-                                  time: data.time,
-                                })
+                                    id: data._id,
+                                    name: data.name,
+                                    time: data.time,
+                                  })
                                 : joinOrNewSuggestForm(
-                                  {
-                                    id: data.user[0]._id,
-                                    breackName: data.name,
-                                  },
-                                  {
-                                    fullName:
-                                      currentUser.first_name +
-                                      " " +
-                                      currentUser.last_name,
-                                    breakName: data.name,
-                                    breakOwnerId: data.user[0]._id,
-                                  }
-                                );
+                                    {
+                                      id: data.user[0]._id,
+                                      breackName: data.name,
+                                    },
+                                    {
+                                      fullName:
+                                        currentUser.first_name +
+                                        " " +
+                                        currentUser.last_name,
+                                      breakName: data.name,
+                                      breakOwnerId: data.user[0]._id,
+                                    }
+                                  );
                             }}
                             className="break-type"
                           >
@@ -810,20 +818,20 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                  id: data._id,
-                                  name: data.name,
-                                  time: data.time,
-                                })
+                                    id: data._id,
+                                    name: data.name,
+                                    time: data.time,
+                                  })
                                 : timeFormBreakplan({
-                                  time: "",
-                                  recevier: data.user[0]._id,
-                                  fullName:
-                                    currentUser.first_name +
-                                    "" +
-                                    currentUser.last_name,
-                                  breakName: data.name,
-                                  breakId: data._id,
-                                });
+                                    time: "",
+                                    recevier: data.user[0]._id,
+                                    fullName:
+                                      currentUser.first_name +
+                                      "" +
+                                      currentUser.last_name,
+                                    breakName: data.name,
+                                    breakId: data._id,
+                                  });
                             }}
                           >
                             {data.time}
@@ -974,16 +982,17 @@ const Dashboard = () => {
                       <Col xl="8">
                         <Form.Label>Time</Form.Label>
                         <TimePicker
-                          className={`form-control taskManagerTime ${error.length > 0
+                          className={`form-control taskManagerTime ${
+                            error.length > 0
                               ? "red-border-input"
                               : "no-border-input"
-                            }`}
+                          }`}
                           closeClock
                           format={timeFormat ? "mm:ss" : "hh:mm:ss"}
                           onChange={(value) => {
                             setDuration(value);
                           }}
-                        // value={value}
+                          // value={value}
                         />
                         {error ? (
                           <div className="invalid-feedback d-block">
@@ -1051,19 +1060,20 @@ const Dashboard = () => {
                       <Col xl="8">
                         <Form.Label>Time</Form.Label>
                         <TimePicker
-                          className={`form-control taskManagerTime ${error.length > 0
+                          className={`form-control taskManagerTime ${
+                            error.length > 0
                               ? "red-border-input"
                               : "no-border-input"
-                            }`}
+                          }`}
                           closeClock
                           format={
                             oldTaskTime.split(":")[0] == "00" &&
-                              updateTimeFormat === "min"
+                            updateTimeFormat === "min"
                               ? "mm:ss"
                               : oldTaskTime.split(":")[0] != "00" &&
                                 updateTimeFormat === "min"
-                                ? "mm:ss"
-                                : "hh:mm:ss"
+                              ? "mm:ss"
+                              : "hh:mm:ss"
                           }
                           onChange={(value) => {
                             setUpdateDuration(value);
@@ -1093,8 +1103,8 @@ const Dashboard = () => {
               <Button
                 disabled={
                   vacationNameInput === "" ||
-                    vacationDataInput === "" ||
-                    vacationLoader
+                  vacationDataInput === "" ||
+                  vacationLoader
                     ? true
                     : false
                 }
