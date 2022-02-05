@@ -64,5 +64,6 @@ function checkEmail(value) {
     return true;
   }
 }
+
 // ---------------------------- Other Utils ------------------------------------
 export { timeDifference, nextBreakTimeValidation, getTotalSeconds, checkEmail };

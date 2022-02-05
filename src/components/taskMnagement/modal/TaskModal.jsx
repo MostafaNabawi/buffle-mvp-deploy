@@ -1,3 +1,5 @@
+/* eslint-disable  no-unused-vars */
+/* eslint-disable  react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import { Modal, Form, Container, Col, Row, Button } from "react-bootstrap";
 // import DatePicker from "./DatePicker";
@@ -12,15 +14,13 @@ import {
   getProjectById,
 } from "../../../api";
 import { useToasts } from "react-toast-notifications";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
+
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 function TaskModal(props) {
   const { handleClose, title, className, item, handleCheck, handleDelete } = props;
   const { addToast } = useToasts();
-  const MySwal = withReactContent(Swal);
   const [taskTitle, setTaskTitle] = useState(item.content);
   const [projects, setProjects] = useState({ label: "", value: "" });
   const [taskDesc, setTaskDesc] = useState(item.description);
@@ -51,7 +51,7 @@ function TaskModal(props) {
 
   useEffect(() => {
     request();
-  }, []);
+  });
 
   useEffect(() => {
     request();

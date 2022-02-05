@@ -157,14 +157,15 @@ function Event() {
     }
   };
 
-  const hanldOverView = async (userId, eventId) => {
-    const res = await getOverView(userId, eventId);
+  const hanldOverView = async (userId) => {
+    console.log("user id", userId, id);
+    const res = await getOverView(userId, id);
     setOverView(res);
   };
 
   useEffect(() => {
     getData();
-    hanldOverView(userId, id);
+    hanldOverView(userId);
   }, []);
 
   return (
@@ -177,12 +178,12 @@ function Event() {
           <Form.Select
             className="selectUserVenet"
             aria-label="Default select example"
-            onChange={hanldOverView}
+            onChange={(e) => hanldOverView(e.target.value)}
           >
             {busy
               ? ""
               : userEvent.map((item) => (
-                  <option key={item.id}>
+                  <option key={item.id} value={item.id}>
                     {item.first_name + " " + item.last_name}
                   </option>
                 ))}
