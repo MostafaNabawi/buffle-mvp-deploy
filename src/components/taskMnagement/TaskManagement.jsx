@@ -55,7 +55,6 @@ const TaskManagement = ({ handleGet, val }) => {
       request();
     }
   }, [id, val, checkDrop]);
-
   const handleChecked = (id) => {
     handleGet(id);
     setId(id);
