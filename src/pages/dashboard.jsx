@@ -38,6 +38,7 @@ import Timer from "./../components/common/progressBar/TaskProgress";
 import Player from "../components/spotify/Player";
 import moment, { now } from "moment";
 import SpotifyLogin from "../components/spotify/Login";
+import TimePicker2 from "../components/common/timePicker/TimePicker2";
 
 const Dashboard = () => {
   const code = new URLSearchParams(window.location.search).get("code");
@@ -110,6 +111,16 @@ const Dashboard = () => {
   const [opan, setOpan] = useState(0);
   const [complete, setComplete] = useState("");
   const [move, setMove] = useState("");
+  const [durationTime, setDurationTime] = useState({
+    hours: "00",
+    minutes: "25",
+    seconds: "00",
+  });
+  const [oldTaskinout,setOldTaskInput]=useState({
+    hours: "00",
+    minutes: "25",
+    seconds: "00",
+  })
   // next break action
   const handleNextBreakOperation = async () => {
     if (nextBreakDateInput.length === 0) {
@@ -243,9 +254,10 @@ const Dashboard = () => {
   };
   // create new task
   const handleCreateTask = async () => {
-    if (validateTaskName(taskName.name) && validateTaskTime(duration)) {
+    if (validateTaskName(taskName.name)) {
+      const time=durationTime.hours+":"+durationTime.minutes+":"+durationTime.seconds
       setloading(true);
-      const createT = await createTask(taskName, 1, duration, true, "stop");
+      const createT = await createTask(taskName, 1, time, true, "stop");
       if (createT.status === 200) {
         setTaskReload(true);
         addToast("Created susseccfully", {
@@ -966,7 +978,12 @@ const Dashboard = () => {
                   </Form.Group>
                 </Col>
                 <Col md={12}>
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                <TimePicker2
+                label={"duration time"}
+                value={durationTime}
+                setValue={setDurationTime}
+              />
+                  {/* <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Row>
                       <Col xl="4">
                         <Form.Label>Time Format </Form.Label>
@@ -1001,7 +1018,7 @@ const Dashboard = () => {
                         ) : null}
                       </Col>
                     </Row>
-                  </Form.Group>
+                  </Form.Group> */}
                 </Col>
               </>
             )}
