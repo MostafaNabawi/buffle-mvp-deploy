@@ -24,7 +24,7 @@ import Setting from "./pages/setting";
 import UserList from "./components/user/userList/UserList";
 import { useEffect, useState } from "react";
 import UserListAdmin from "./components/user/userList/UserListAdmin";
-
+import SpotifyLogin from "./components/spotify/Login";
 function App() {
   //
   //
@@ -62,7 +62,7 @@ function App() {
           <Route path="step-two/:token" element={<StepTwoRegister />} />
         </Route>
         <Route path="/companyLogin" element={<CompanyLogin />} />
-        <Route path="/dashboard" element={<Layout />}>
+        <Route path="/dashboard/*" element={<Layout />}>
           <Route index element={<Dashboard />} />
           <Route path="taskmanagement" element={<TaskManage />} />
           <Route path="money-pool" element={<Moneypool />}>
@@ -82,6 +82,9 @@ function App() {
               }
             />
           )}
+        </Route>
+        <Route path="/spotify" element={<Layout />}>
+          <Route index element={<SpotifyLogin />} />
         </Route>
       </Routes>
     </div>
