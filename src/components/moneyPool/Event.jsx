@@ -139,15 +139,16 @@ function Event() {
           eventId: id,
         }),
       }).then(async (res) => {
+        const payback = await res.json();
         if (res.status === 200) {
           addToast("Added!", { autoDismiss: true, appearance: "success" });
           getData();
           setAdding(false);
           handleClose();
         } else {
-          addToast("Error Please Try Again!", {
-            autoDismiss: true,
-            appearance: "success",
+          addToast(`${payback?.msg || "Error While adding member"}`, {
+            autoDismiss: 500,
+            appearance: "error",
           });
           setAdding(false);
         }
