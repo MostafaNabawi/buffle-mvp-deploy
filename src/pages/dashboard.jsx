@@ -116,11 +116,12 @@ const Dashboard = () => {
     minutes: "25",
     seconds: "00",
   });
-  const [oldTaskinout,setOldTaskInput]=useState({
-    hours: "00",
-    minutes: "25",
-    seconds: "00",
-  })
+  const [oldTaskInput, setOldTaskInput] = useState({
+    hours: "",
+    minutes: "",
+    seconds: "",
+  });
+  console.log("oldDat", oldTaskInput);
   // next break action
   const handleNextBreakOperation = async () => {
     if (nextBreakDateInput.length === 0) {
@@ -255,7 +256,12 @@ const Dashboard = () => {
   // create new task
   const handleCreateTask = async () => {
     if (validateTaskName(taskName.name)) {
-      const time=durationTime.hours+":"+durationTime.minutes+":"+durationTime.seconds
+      const time =
+        durationTime.hours +
+        ":" +
+        durationTime.minutes +
+        ":" +
+        durationTime.seconds;
       setloading(true);
       const createT = await createTask(taskName, 1, time, true, "stop");
       if (createT.status === 200) {
@@ -374,14 +380,19 @@ const Dashboard = () => {
   // update slected task (only single task)
   const updateSelectedTask = async () => {
     if (
-      validateTaskUpdateName(updateTaskName) &&
-      validateTaskUpdateTime(updateDuration)
+      validateTaskUpdateName(updateTaskName)
     ) {
+      const time =
+      oldTaskInput.hours +
+      ":" +
+      oldTaskInput.minutes +
+      ":" +
+      oldTaskInput.seconds;
       setloading(true);
       const updateTask = await updateDhashboardTask(
         checkId[0],
         updateTaskName,
-        updateDuration
+        time
       );
       if (updateTask.status === 200) {
         setTaskReload(true);
@@ -419,13 +430,21 @@ const Dashboard = () => {
   const handleUpdateTask = async () => {
     if (checkId.length === 1) {
       const oldData = await getTaskById(checkId[0]);
+      const time = oldData.data.task_duration.split(":");
+      console.log("time",time)
+      setOldTaskInput({
+        hours:time[0],
+        minutes:time[1],
+        seconds:time[2],
+      });
+      
       setOldTaskName({ name: oldData.data.name });
-      setOldTaskTime(oldData.data.task_duration);
-      setUpdateDuration(oldData.data.task_duration);
+      // setOldTaskTime(oldData.data.task_duration);
+      // setUpdateDuration(oldData.data.task_duration);
       setUpdateTaskName({ name: oldData.data.name });
-      if (oldData.data.task_duration.split(":")[0] == "00") {
-        setUpdateTimeFormat("min");
-      }
+      // if (oldData.data.task_duration.split(":")[0] == "00") {
+      //   setUpdateTimeFormat("min");
+      // }
       setModalShow(true);
       setNextBreak(false);
       setVacationTime(false);
@@ -978,11 +997,11 @@ const Dashboard = () => {
                   </Form.Group>
                 </Col>
                 <Col md={12}>
-                <TimePicker2
-                label={"duration time"}
-                value={durationTime}
-                setValue={setDurationTime}
-              />
+                  <TimePicker2
+                    label={"duration time"}
+                    value={durationTime}
+                    setValue={setDurationTime}
+                  />
                   {/* <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Row>
                       <Col xl="4">
@@ -1048,7 +1067,12 @@ const Dashboard = () => {
                   </Form.Group>
                 </Col>
                 <Col md={12}>
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                <TimePicker2
+                    label={"duration time"}
+                    value={oldTaskInput}
+                    setValue={setOldTaskInput}
+                  />
+                  {/* <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Row>
                       <Col xl="4">
                         <Form.Label>Time Format </Form.Label>
@@ -1104,7 +1128,7 @@ const Dashboard = () => {
                         ) : null}
                       </Col>
                     </Row>
-                  </Form.Group>
+                  </Form.Group> */}
                 </Col>
               </>
             )}
