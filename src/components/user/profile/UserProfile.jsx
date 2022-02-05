@@ -81,12 +81,14 @@ const UserProfile = () => {
     }).then(async (res) => {
       const { payload } = await res.json();
       if (payload) {
+        console.log("payload",payload)
         payload.map(tag => {
-          const data = {
+          const data = [{
             value: tag._id,
             lable: tag.name
-          }
-          options.push(data)
+          }]
+          console.log("data",data[0])
+          options.push(data[0])
         })
       }
     });
@@ -98,7 +100,7 @@ const UserProfile = () => {
       setLoading(true);
       try {
         if (tags.length > 0) {
-          fetch(`${API_URL}/tags/create`, {
+        const {status}=fetch(`${API_URL}/tags/create`, {
             method: "POST",
             credentials: "include",
             headers: {
@@ -107,16 +109,15 @@ const UserProfile = () => {
             body: JSON.stringify({
               tags: tags
             }),
-          }).then(async (res) => {
-            if (res.status != 200) {
-              addToast("Error Please Try Again!", {
-                appearance: "warning",
-                autoDismiss: 4000,
-              });
-              setLoading(false)
-              return false
-            }
-          });
+          })
+          if(status !=200){
+            addToast("Error Please Try Again!", {
+              appearance: "warning",
+              autoDismiss: 4000,
+            });
+            setLoading(false);
+            return false;
+          }
         }
         fetch(`${API_URL}/user/update`, {
           method: "PUT",
