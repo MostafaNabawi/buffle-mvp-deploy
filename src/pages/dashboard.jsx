@@ -623,13 +623,13 @@ const Dashboard = () => {
               }
               title="Worktunes"
             />
-            {code ? <Player code={code} /> : <SpotifyLogin />}
+            {/* {code ? <Player code={code} /> : <SpotifyLogin />} */}
             {/* muted */}
-            {/* <audio controls className="mt-3">
+            <audio controls className="mt-3">
               <source src="/music/1.mp3" type="audio/ogg" />
               <source src="/music/2.mp3" type="audio/mpeg" />
               Your browser does not support the audio element.
-            </audio> */}
+            </audio>
           </Card>
         </Col>
       </Row>
