@@ -4,7 +4,6 @@ import style from "./../style.module.css";
 function OverView({ data }) {
   const [innerData, setInnerData] = useState(null);
   useEffect(() => {
-    // this is a comment for overview
     console.log("overview", data);
     setInnerData(data);
   }, [data]);
@@ -66,10 +65,12 @@ function OverView({ data }) {
         <div className={style.header}>
           <h4>How to settle all debts</h4>
         </div>
-        <div className={style.settle_content}>
-          {data &&
-            data.report.map((item) => <div key={item.msg}>{item.msg}</div>)}
-        </div>
+        {data &&
+          data.report.map((item) => (
+            <div key={item.msg} className={style.settle_content}>
+              {item.msg}
+            </div>
+          ))}
       </div>
     </div>
   );
