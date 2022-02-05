@@ -30,6 +30,9 @@
   margin: auto;
   padding-bottom: 15px !important;
 }
+.registerCard{
+  align-items: center !important;
+}
 .iconCheck{
   text-align:center;
 }

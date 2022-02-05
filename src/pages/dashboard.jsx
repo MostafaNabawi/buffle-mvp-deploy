@@ -693,7 +693,7 @@ const Dashboard = () => {
                 taskData.map((t, n) => (
                   <Fragment key={n}>
                     <Row className="task-manager-body pt-0 mt-1 mb-1">
-                      <Col xl="8">
+                      <Col xl="7">
                         <Row className="pl-5">
                           <Col xl="1">
                             <Form.Group controlId="formBasicCheckbox">
@@ -710,7 +710,7 @@ const Dashboard = () => {
                           </Col>
                         </Row>
                       </Col>
-                      <Col xl="4">
+                      <Col xl="5">
                         <Timer
                           {...t}
                           handleCheckOpenClose={handleCheckOpenClose}
