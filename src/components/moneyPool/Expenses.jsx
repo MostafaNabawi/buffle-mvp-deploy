@@ -28,9 +28,7 @@ function Expenses() {
   const navegite = useNavigate();
   const { addToast } = useToasts();
   const [key, setKey] = useState("expense");
-  const [eventCurrency, setEventCurrency] = useState("expense");
   const [eventName, setEventName] = useState("");
-  const [uCode, setUCode] = useState("");
   const handleBack = () => {
     navegite(-1);
   };
@@ -50,9 +48,8 @@ function Expenses() {
         },
       }).then(async (res) => {
         if (res.status === 200) {
-          const { users, currency, owner, name, uuid } = await res.json();
+          const { users, currency, owner, name } = await res.json();
           setEventName(name);
-          setUCode(uuid);
           var data = [];
           data.push({
             id: owner._id,
@@ -96,14 +93,13 @@ function Expenses() {
 
   return (
     <Card className="event_card">
-      <CardHeader title={eventName + ":  " + uCode} />
+      <CardHeader title={eventName} />
       <CardBody className={style.card_body}>
-        <div>
-          <Button onClick={handleBack}>
-            <Icon icon="ic:baseline-arrow-back-ios" />
-            Back
-          </Button>
-        </div>
+        <Button onClick={handleBack}>
+          <Icon icon="ic:baseline-arrow-back-ios" />
+          Back
+        </Button>
+
         <div className={style.tab_container}>
           <Tabs
             defaultActiveKey="profile"
