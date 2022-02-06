@@ -1,7 +1,6 @@
 import { React, useState, useEffect } from "react";
 import Item from "../item";
 import DropWrapperProject from "./DropWrapperProject";
-import DropWrapper from "../DropWrapper";
 import { Button, Col, Form } from "react-bootstrap";
 import { Row } from "react-bootstrap";
 import { Icon } from "@iconify/react";
@@ -41,6 +40,7 @@ const ProjectManagement = ({ value, handleGet }) => {
   const handleShow = () => setShow(true);
   const handleShowPModal = () => setShowPModal(true);
   const [inputTask, setInputTask] = useState({ name: "", day: '', p_id: "" });
+  const [checkDrop, setCheckDrop] = useState('');
   const [id, setId] = useState('');
   async function request() {
     // get project and format
@@ -79,6 +79,9 @@ const ProjectManagement = ({ value, handleGet }) => {
     handleGet(id);
     setId(id);
   }
+  const handleDrop = (val) => {
+    setCheckDrop(val)
+  }
   useEffect(() => {
     request();
   }, []);
@@ -88,7 +91,9 @@ const ProjectManagement = ({ value, handleGet }) => {
     setNewProject(false);
   }, [newProject]);
   useEffect(() => {
+
     if (id || value) {
+
       request();
     }
   }, [id, value]);
@@ -245,6 +250,7 @@ const ProjectManagement = ({ value, handleGet }) => {
   if (loading) {
     return "Loading..";
   }
+
   return (
     <>
       <Row className="creat-project-row">
@@ -324,6 +330,7 @@ const ProjectManagement = ({ value, handleGet }) => {
                 onDrop={onDrop}
                 status={s.status}
                 statuses={projects}
+                handleDrop={handleDrop}
               >
                 <Col>
                   {items
@@ -340,6 +347,7 @@ const ProjectManagement = ({ value, handleGet }) => {
                         handleChecked={handleChecked}
                         handleGet={handleGet}
                         handleDelete={handleDelete}
+                        isDroped={checkDrop}
                       ></Item>
                     ))}
                   <div className="new-task-div">

@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { getProject, setProjectToItem, getProjectById } from "../../../api";
-import Button from "./Button";
-import style from "./style.module.css";
+import React, { useState } from "react";
+import { setProjectToItem } from "../../../api";
 import Select from 'react-select';
 import { useToasts } from 'react-toast-notifications';
 import PulseLoader from "react-spinners/PulseLoader";

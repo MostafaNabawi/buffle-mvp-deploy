@@ -19,7 +19,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 function TaskModal(props) {
-  const { handleClose, title, className, item, handleCheck, handleDelete } = props;
+  const { handleClose, title, className, item, handleCheck, handleDelete, isDroped } = props;
   const { addToast } = useToasts();
   const [taskTitle, setTaskTitle] = useState(item.content);
   const [projects, setProjects] = useState({ label: "", value: "" });
@@ -29,11 +29,9 @@ function TaskModal(props) {
   const [projectId, setProjectId] = useState(item.p_id);
   const [oldValue, setOldValue] = useState();
   const [pname, setPname] = useState('');
-
   async function request() {
     // get project and format
     const req = await getProject();
-    console.log(req)
     const formatP = req.data.map((i, n) => {
       return {
         label: i.name,
@@ -50,16 +48,15 @@ function TaskModal(props) {
       setOldValue(selected);
     }
   }
-  console.log('startDate', startDate);
   useEffect(() => {
     request();
   }, []);
   useEffect(() => {
-    request();
-    setPname('');
-
-  }, [projectId]);
-
+    if (projectId || isDroped) {
+      request();
+      setPname('');
+    }
+  }, [projectId, isDroped]);
   const handleKeyDownTask = async () => {
     const data = {
       id: item.tb_id,
@@ -112,7 +109,7 @@ function TaskModal(props) {
             <Project
               {...props}
               handleClick={handleClick}
-              value={pname.length > 0 ? pname : oldValue}
+              value={oldValue}
               project={projects}
               handleSetProjct={handleCheck}
             />
@@ -182,8 +179,7 @@ function TaskModal(props) {
           </Modal.Body>
 
           <Modal.Footer className="important-today-modal-footer">
-            <Button variant="primarimport { moment } from 'moment';
-y" type="button" onClick={handleKeyDownTask}>
+            <Button variant="primary" type="button" onClick={handleKeyDownTask}>
               Save
             </Button>
           </Modal.Footer>
