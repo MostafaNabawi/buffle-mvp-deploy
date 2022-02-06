@@ -1,4 +1,4 @@
-import { useEffect, useState, Fragment } from "react";
+import { useEffect, useState, Fragment, useMemo } from "react";
 import { Row, Col, Image, Form, Button, NavDropdown } from "react-bootstrap";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import { Icon } from "@iconify/react";
@@ -40,7 +40,10 @@ import moment, { now } from "moment";
 import SpotifyLogin from "../components/spotify/Login";
 
 const Dashboard = () => {
-  const code = new URLSearchParams(window.location.search).get("code");
+  const [code, setCode] = useState(
+    new URLSearchParams(window.location.search).get("code")
+  );
+  const [showPlayer, setShowPlayer] = useState(false);
   const MySwal = withReactContent(Swal);
   const currentUser = JSON.parse(localStorage.getItem("user"));
   const [timeFormat, setTimeFormat] = useState(false);
@@ -110,6 +113,14 @@ const Dashboard = () => {
   const [opan, setOpan] = useState(0);
   const [complete, setComplete] = useState("");
   const [move, setMove] = useState("");
+  const RenderPlayerOrLogin = useMemo(() => {
+    if (showPlayer) {
+      const codeToken = localStorage.getItem("spotToken");
+      return <Player code={codeToken} />;
+    }
+    return <SpotifyLogin />;
+  }, [showPlayer]);
+
   // next break action
   const handleNextBreakOperation = async () => {
     if (nextBreakDateInput.length === 0) {
@@ -491,7 +502,53 @@ const Dashboard = () => {
   useEffect(() => {
     getTask();
   }, [taskReload, complete, move]);
-
+  useEffect(() => {
+    const spotToken = localStorage.getItem("spotToken");
+    const spotRefresh = localStorage.getItem("spotRefresh");
+    if (code) {
+      setSearchParams({ hi: "true" });
+      fetch(`${API_URL}/spotify/login`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          code: code,
+        }),
+      }).then(async (response) => {
+        if (response.status === 200) {
+          const payback = await response.json();
+          localStorage.setItem("spotToken", payback.accessToken);
+          localStorage.setItem("spotRefresh", payback.refreshToken);
+          setShowPlayer(true);
+        }
+      });
+    }
+    if (spotToken && spotRefresh) {
+      // refresh the token again
+      fetch(`${API_URL}/spotify/login`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          refresh: true,
+          code: spotRefresh,
+        }),
+      }).then(async (response) => {
+        if (response.status === 200) {
+          const payback = await response.json();
+          localStorage.setItem("spotToken", payback?.accessToken);
+          setShowPlayer(true);
+        } else {
+          localStorage.removeItem("spotToken");
+          localStorage.removeItem("spotRefresh");
+        }
+      });
+    }
+  }, [code]);
   return (
     <section>
       <Row>
@@ -623,13 +680,14 @@ const Dashboard = () => {
               }
               title="Worktunes"
             />
+            {RenderPlayerOrLogin}
             {/* {code ? <Player code={code} /> : <SpotifyLogin />} */}
             {/* muted */}
-            <audio controls className="mt-3">
+            {/* <audio controls className="mt-3">
               <source src="/music/1.mp3" type="audio/ogg" />
               <source src="/music/2.mp3" type="audio/mpeg" />
               Your browser does not support the audio element.
-            </audio>
+            </audio> */}
           </Card>
         </Col>
       </Row>

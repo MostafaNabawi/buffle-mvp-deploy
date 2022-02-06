@@ -1,8 +1,31 @@
+import { useEffect, useState } from "react";
+import { SPOTIFY_CLIENT } from "../../config";
+
 export default function SpotifyLogin() {
-  const AUTH_URL = `https://accounts.spotify.com/authorize?client_id=b2cc798a3c574821a3d91efcd4159124&response_type=code&redirect_uri=http://localhost:3000/dashboard&scope=streaming%20user-read-email%20user-read-private%20user-library-read%20user-library-modify%20user-read-playback-state%20user-modify-playback-state`;
+  const [url, setUrl] = useState("");
+  useEffect(() => {
+    const main_uri = "https://accounts.spotify.com/authorize";
+    const redirect_uri = window.location.href;
+    console.log("rrr", redirect_uri);
+    const scopes = [
+      "streaming",
+      "user-read-email",
+      "user-read-private",
+      "user-library-read",
+      "user-library-modify",
+      "user-read-playback-state",
+      "user-modify-playback-state",
+      "playlist-read-collaborative",
+      "playlist-read-private",
+    ];
+    const full_url = `${main_uri}?client_id=${SPOTIFY_CLIENT}&response_type=code&show_dialog=true&redirect_uri=${redirect_uri}&scope=${scopes.join(
+      "%20"
+    )}`;
+    setUrl(full_url);
+  }, []);
   return (
-    <div className="Login">
-      <a href={AUTH_URL}>Login with Spotify</a>
+    <div className="Login" style={{ color: "white" }}>
+      <a href={url}>Login with Spotify</a>
     </div>
   );
 }
