@@ -203,7 +203,7 @@ button.btn-primary {
   color: black !important;
   margin-left: 6% !important;
 }
-.showTimeTask{
+.showTimeTask {
   position: absolute !important;
   z-index: 100 !important;
   color: black !important;
@@ -212,7 +212,7 @@ button.btn-primary {
 .showTimeReverse {
   color: white;
 }
-.taskManaterProgress{
+.taskManaterProgress {
   position: relative !important ;
 }
 /* .selectTime ,.taskManagerTime {
@@ -628,10 +628,9 @@ ul.sidebar-list {
   height: 35px;
   color: #1b2559;
 }
-.task-manager-body {
-  padding-top: 12px !important ;
-  padding-bottom: 12px !important ;
-}
+/* .task-manager-body {
+  height: 0px !important;
+} */
 div.check-box > input {
   width: 20px;
   height: 20px;
@@ -831,13 +830,13 @@ div.check-box > input {
 .selectUserVenet {
   width: auto !important;
 }
-.selectTags{
+.selectTags {
   width: 90% !important;
   color: green;
 }
-.btnAdd{
+.btnAdd {
   color: green;
 }
-.btnAdd:active{
+.btnAdd:active {
   border: none !important;
 }

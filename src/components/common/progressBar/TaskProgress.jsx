@@ -46,7 +46,6 @@ const Timer = (props) => {
   const handlePlay = async () => {
     if (!play && !run) {
       dispatch(setRun(true));
-      console.log("s", play);
       handleCheckOpenClose(1);
       setPlay(!play);
       const update = await updateTaskWhenPlay(
@@ -60,7 +59,6 @@ const Timer = (props) => {
     }
     if (play) {
       dispatch(setRun(false));
-      console.log("a", play);
       handleCheckOpenClose(0);
       setPlay(!play);
       const sp_time = `${day}:${hour}:${minute}:${second}`;
@@ -105,13 +103,13 @@ const Timer = (props) => {
           parseInt(hour) * 3600 +
           parseInt(minute) * 60 +
           parseInt(second))) /
-        parseInt(duration)
+      parseInt(duration)
     );
     setCurrentTime(
       parseInt(day) * 86400 +
-        parseInt(hour) * 3600 +
-        parseInt(minute) * 60 +
-        parseInt(second)
+      parseInt(hour) * 3600 +
+      parseInt(minute) * 60 +
+      parseInt(second)
     );
     if (currentTime === duration) {
       setPlay(!play);
@@ -156,11 +154,11 @@ const Timer = (props) => {
       <Row>
         <Col xl="1">
           <i>
-          <Icon
-            color={!play && percent > 0 ? "" : `#4922ff`}
-            className={style.iconWatch2}
-            icon="bi:clock-fill"
-          />
+            <Icon
+              color={!play && percent > 0 ? "" : `#4922ff`}
+              className={style.iconWatch2}
+              icon="bi:clock-fill"
+            />
           </i>
         </Col>
         <Col xl="10" className="pl-0 taskManaterProgress">

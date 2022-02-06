@@ -4,7 +4,6 @@ import { Link, useParams, useSearchParams } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import TimePicker from "react-time-picker";
 import ProgressBar from "../components/common/progressBar/ProgressBar";
 import CardHeader from "../components/card/CardHeader";
 import Card from "../components/card/Card";
@@ -382,11 +381,11 @@ const Dashboard = () => {
       validateTaskUpdateName(updateTaskName)
     ) {
       const time =
-      oldTaskInput.hours +
-      ":" +
-      oldTaskInput.minutes +
-      ":" +
-      oldTaskInput.seconds;
+        oldTaskInput.hours +
+        ":" +
+        oldTaskInput.minutes +
+        ":" +
+        oldTaskInput.seconds;
       setloading(true);
       const updateTask = await updateDhashboardTask(
         checkId[0],
@@ -431,18 +430,14 @@ const Dashboard = () => {
       const oldData = await getTaskById(checkId[0]);
       const time = oldData.data.task_duration.split(":");
       setOldTaskInput({
-        hours:time[0],
-        minutes:time[1],
-        seconds:time[2],
+        hours: time[0],
+        minutes: time[1],
+        seconds: time[2],
       });
-      
+
       setOldTaskName({ name: oldData.data.name });
-      // setOldTaskTime(oldData.data.task_duration);
-      // setUpdateDuration(oldData.data.task_duration);
       setUpdateTaskName({ name: oldData.data.name });
-      // if (oldData.data.task_duration.split(":")[0] == "00") {
-      //   setUpdateTimeFormat("min");
-      // }
+
       setModalShow(true);
       setNextBreak(false);
       setVacationTime(false);
@@ -677,9 +672,8 @@ const Dashboard = () => {
                 />
               }
               title="Task Manager"
-              subtitle={`${opan < 0 ? 0 : opan} opan, ${
-                start < 0 ? 0 : start
-              } start.`}
+              subtitle={`${opan < 0 ? 0 : opan} opan, ${start < 0 ? 0 : start
+                } start.`}
               action={
                 <>
                   <i
@@ -818,24 +812,24 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                    id: data._id,
-                                    name: data.name,
-                                    time: data.time,
-                                  })
+                                  id: data._id,
+                                  name: data.name,
+                                  time: data.time,
+                                })
                                 : joinOrNewSuggestForm(
-                                    {
-                                      id: data.user[0]._id,
-                                      breackName: data.name,
-                                    },
-                                    {
-                                      fullName:
-                                        currentUser.first_name +
-                                        " " +
-                                        currentUser.last_name,
-                                      breakName: data.name,
-                                      breakOwnerId: data.user[0]._id,
-                                    }
-                                  );
+                                  {
+                                    id: data.user[0]._id,
+                                    breackName: data.name,
+                                  },
+                                  {
+                                    fullName:
+                                      currentUser.first_name +
+                                      " " +
+                                      currentUser.last_name,
+                                    breakName: data.name,
+                                    breakOwnerId: data.user[0]._id,
+                                  }
+                                );
                             }}
                             className="break-type"
                           >
@@ -847,20 +841,20 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                    id: data._id,
-                                    name: data.name,
-                                    time: data.time,
-                                  })
+                                  id: data._id,
+                                  name: data.name,
+                                  time: data.time,
+                                })
                                 : timeFormBreakplan({
-                                    time: "",
-                                    recevier: data.user[0]._id,
-                                    fullName:
-                                      currentUser.first_name +
-                                      "" +
-                                      currentUser.last_name,
-                                    breakName: data.name,
-                                    breakId: data._id,
-                                  });
+                                  time: "",
+                                  recevier: data.user[0]._id,
+                                  fullName:
+                                    currentUser.first_name +
+                                    "" +
+                                    currentUser.last_name,
+                                  breakName: data.name,
+                                  breakId: data._id,
+                                });
                             }}
                           >
                             {data.time}
@@ -1000,42 +994,7 @@ const Dashboard = () => {
                     value={durationTime}
                     setValue={setDurationTime}
                   />
-                  {/* <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Row>
-                      <Col xl="4">
-                        <Form.Label>Time Format </Form.Label>
-                        <Form.Select
-                          onChange={() => setTimeFormat(!timeFormat)}
-                          className="selectTime"
-                          aria-label="Default select example"
-                        >
-                          <option>Hour</option>
-                          <option>Minute</option>
-                        </Form.Select>
-                      </Col>
-                      <Col xl="8">
-                        <Form.Label>Time</Form.Label>
-                        <TimePicker
-                          className={`form-control taskManagerTime ${
-                            error.length > 0
-                              ? "red-border-input"
-                              : "no-border-input"
-                          }`}
-                          closeClock
-                          format={timeFormat ? "mm:ss" : "hh:mm:ss"}
-                          onChange={(value) => {
-                            setDuration(value);
-                          }}
-                          // value={value}
-                        />
-                        {error ? (
-                          <div className="invalid-feedback d-block">
-                            {error}
-                          </div>
-                        ) : null}
-                      </Col>
-                    </Row>
-                  </Form.Group> */}
+
                 </Col>
               </>
             )}
@@ -1065,68 +1024,12 @@ const Dashboard = () => {
                   </Form.Group>
                 </Col>
                 <Col md={12}>
-                <TimePicker2
+                  <TimePicker2
                     label={"duration time"}
                     value={oldTaskInput}
                     setValue={setOldTaskInput}
                   />
-                  {/* <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Row>
-                      <Col xl="4">
-                        <Form.Label>Time Format </Form.Label>
-                        <Form.Select
-                          onChange={(e) => (
-                            setUpdateTimeFormat(e.target.value),
-                            setOldTaskTime("")
-                          )}
-                          className="selectTime"
-                          aria-label="Default select example"
-                        >
-                          <option
-                            value="houre"
-                            selected={oldTaskTime.split(":")[0] != "00"}
-                          >
-                            Hour
-                          </option>
-                          <option
-                            value="min"
-                            selected={oldTaskTime.split(":")[0] == "00"}
-                          >
-                            Minute
-                          </option>
-                        </Form.Select>
-                      </Col>
-                      <Col xl="8">
-                        <Form.Label>Time</Form.Label>
-                        <TimePicker
-                          className={`form-control taskManagerTime ${
-                            error.length > 0
-                              ? "red-border-input"
-                              : "no-border-input"
-                          }`}
-                          closeClock
-                          format={
-                            oldTaskTime.split(":")[0] == "00" &&
-                            updateTimeFormat === "min"
-                              ? "mm:ss"
-                              : oldTaskTime.split(":")[0] != "00" &&
-                                updateTimeFormat === "min"
-                              ? "mm:ss"
-                              : "hh:mm:ss"
-                          }
-                          onChange={(value) => {
-                            setUpdateDuration(value);
-                          }}
-                          value={oldTaskTime}
-                        />
-                        {errorUpdate ? (
-                          <div className="invalid-feedback d-block">
-                            {errorUpdate}
-                          </div>
-                        ) : null}
-                      </Col>
-                    </Row>
-                  </Form.Group> */}
+
                 </Col>
               </>
             )}
@@ -1142,8 +1045,8 @@ const Dashboard = () => {
               <Button
                 disabled={
                   vacationNameInput === "" ||
-                  vacationDataInput === "" ||
-                  vacationLoader
+                    vacationDataInput === "" ||
+                    vacationLoader
                     ? true
                     : false
                 }
