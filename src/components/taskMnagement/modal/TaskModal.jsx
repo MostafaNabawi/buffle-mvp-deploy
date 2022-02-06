@@ -14,7 +14,7 @@ import {
   getProjectById,
 } from "../../../api";
 import { useToasts } from "react-toast-notifications";
-
+import moment from 'moment';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -24,14 +24,16 @@ function TaskModal(props) {
   const [taskTitle, setTaskTitle] = useState(item.content);
   const [projects, setProjects] = useState({ label: "", value: "" });
   const [taskDesc, setTaskDesc] = useState(item.description);
-  const [startTime, setStartTime] = useState(item.task_duration);
+  const [newTime, setNewTime] = useState({ createIime: item.start_time });
   const [startDate, setStartDate] = useState(new Date(item.date));
   const [projectId, setProjectId] = useState(item.p_id);
   const [oldValue, setOldValue] = useState();
+  const [pname, setPname] = useState('');
 
   async function request() {
     // get project and format
     const req = await getProject();
+    console.log(req)
     const formatP = req.data.map((i, n) => {
       return {
         label: i.name,
@@ -48,13 +50,14 @@ function TaskModal(props) {
       setOldValue(selected);
     }
   }
-
+  console.log('startDate', startDate);
   useEffect(() => {
     request();
-  });
-
+  }, []);
   useEffect(() => {
     request();
+    setPname('');
+
   }, [projectId]);
 
   const handleKeyDownTask = async () => {
@@ -64,17 +67,19 @@ function TaskModal(props) {
       type: 0,
       date: startDate,
       description: taskDesc,
-      taskTime: startTime,
+      taskTime: newTime.createIime,
+      day_of_week: moment(startDate).format('dddd')
     };
-
     const updateT = await updateTask(data);
     if (updateT.status === 200) {
       addToast("Item susseccfully updated", {
         autoDismiss: true,
         appearance: "success",
       });
-      handleClose();
       handleCheck(data.id);
+      handleClose();
+      handleCheck('');
+
     } else {
       addToast("Error! Please Try Again!", {
         autoDismiss: false,
@@ -84,7 +89,8 @@ function TaskModal(props) {
     }
   };
   const handleClick = (value) => {
-    setProjectId(value);
+    setPname(value.label);
+    setProjectId(value.value);
   };
 
   return (
@@ -106,7 +112,7 @@ function TaskModal(props) {
             <Project
               {...props}
               handleClick={handleClick}
-              value={oldValue}
+              value={pname.length > 0 ? pname : oldValue}
               project={projects}
               handleSetProjct={handleCheck}
             />
@@ -129,10 +135,14 @@ function TaskModal(props) {
                 />
               </label>
             </div>
+            <Form.Label className="important-modal-textarea-label">
+              Description
+            </Form.Label>
             <Form.Group
               controlId="exampleForm.ControlTextarea1"
               className="important-modal-input-textarea"
             >
+
               <Form.Control
                 as="textarea"
                 rows={3}
@@ -148,16 +158,22 @@ function TaskModal(props) {
                       <Form.Label className="important-modal-input-label">
                         Time
                       </Form.Label>
-                      <TimePicker
-                        className="form-control taskManagerTime"
-                        closeClock
-                        format={"hh:mm:ss"}
-                        value={item.start_time}
-                        onChange={(value) => {
-                          setStartTime(value);
-                        }}
-                      // value={value}
-                      />
+
+                      <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Control
+                          required
+                          type="time"
+                          placeholder="Time"
+                          name="createIime"
+                          value={newTime.createIime}
+                          onChange={(e) =>
+                            setNewTime({
+                              ...newTime,
+                              [e.target.name]: e.target.value,
+                            })
+                          }
+                        />
+                      </Form.Group>
                     </Col>
                   </Row>
                 </Form.Group>
@@ -166,7 +182,8 @@ function TaskModal(props) {
           </Modal.Body>
 
           <Modal.Footer className="important-today-modal-footer">
-            <Button variant="primary" type="button" onClick={handleKeyDownTask}>
+            <Button variant="primarimport { moment } from 'moment';
+y" type="button" onClick={handleKeyDownTask}>
               Save
             </Button>
           </Modal.Footer>

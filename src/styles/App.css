@@ -203,8 +203,17 @@ button.btn-primary {
   color: black !important;
   margin-left: 6% !important;
 }
+.showTimeTask{
+  position: absolute !important;
+  z-index: 100 !important;
+  color: black !important;
+  margin-left: 20% !important;
+}
 .showTimeReverse {
   color: white;
+}
+.taskManaterProgress{
+  position: relative !important ;
 }
 /* .selectTime ,.taskManagerTime {
   display: inline  !important;

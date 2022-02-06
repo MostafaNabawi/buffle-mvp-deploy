@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import style from "./style.module.css";
 import Card from "./../card/Card";
 import CardHeader from "./../card/CardHeader";
 import CardBody from "./../card/CardBody";
-import PersonSelectorDropDown from "./partials/PersonSelectorDropDown";
-import { Button, Form, Row } from "react-bootstrap";
-import NoExpensesYet from "./partials/NoExpensesYet";
+
+import { Button, Form, Overlay, Row, Tooltip } from "react-bootstrap";
+
 import EventPerson from "./partials/EventPerson";
 import { Icon } from "@iconify/react";
 import { useParams, useNavigate } from "react-router-dom";
 import OverView from "./partials/OverView";
 import Modal from "./../modal/modal";
-import Col from "./../taskMnagement/Col";
+
 import AddNewMember from "./partials/AddNewMember";
 import { useToasts } from "react-toast-notifications";
 import { API_URL } from "../../config";
@@ -20,6 +20,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { useDispatch } from "react-redux";
 import { setEventUsers } from "../../store/moneyPoolSlice";
 import { getOverView } from "../../api";
+import CopyToClipboard from "react-copy-to-clipboard";
 
 function Event() {
   // event id
@@ -40,10 +41,11 @@ function Event() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [userEvent, setUserEvent] = useState("");
-  const [currencyEvent, setCurrencyEvent] = useState("");
   const [eventName, setEventName] = useState("");
-  const [uCode, setUCode] = useState("");
   const [overView, setOverView] = useState("");
+  const [copyValue, setCopyValue] = useState("");
+  const [showTooltip, setShowTooltip] = useState(false);
+  const target = useRef(null);
 
   const getData = () => {
     try {
@@ -58,7 +60,7 @@ function Event() {
         if (res.status === 200) {
           const { users, currency, owner, name, uuid } = await res.json();
           setEventName(name);
-          setUCode(uuid);
+          setCopyValue(uuid);
           var data = [];
           data.push({
             id: owner._id,
@@ -77,7 +79,6 @@ function Event() {
             );
           dispatch(setEventUsers(data));
           setUserEvent(data);
-          setCurrencyEvent(currency);
           setBusy(false);
         } else {
           console.log(res);
@@ -139,15 +140,16 @@ function Event() {
           eventId: id,
         }),
       }).then(async (res) => {
+        const payback = await res.json();
         if (res.status === 200) {
           addToast("Added!", { autoDismiss: true, appearance: "success" });
           getData();
           setAdding(false);
           handleClose();
         } else {
-          addToast("Error Please Try Again!", {
-            autoDismiss: true,
-            appearance: "success",
+          addToast(`${payback?.msg || "Error While adding member"}`, {
+            autoDismiss: 500,
+            appearance: "error",
           });
           setAdding(false);
         }
@@ -172,23 +174,41 @@ function Event() {
     <Card className="event_card">
       <CardHeader title={eventName} />
       <CardBody className={style.card_body}>
-        <div className={style.person_selector}>
-          <span>You are </span>
-          {/* <PersonSelectorDropDown /> */}
-          <Form.Select
-            className="selectUserVenet"
-            aria-label="Default select example"
-            onChange={(e) => hanldOverView(e.target.value)}
-          >
-            {busy
-              ? ""
-              : userEvent.map((item) => (
-                  <option key={item.id} value={item.id}>
-                    {item.first_name + " " + item.last_name}
-                  </option>
-                ))}
-          </Form.Select>
+        <div className="justify-content-between">
+          {" "}
+          <div className={style.person_selector}>
+            <span>You are </span>
+            {/* <PersonSelectorDropDown /> */}
+            <Form.Select
+              className="selectUserVenet"
+              aria-label="Default select example"
+              onChange={(e) => hanldOverView(e.target.value)}
+            >
+              {busy
+                ? ""
+                : userEvent.map((item) => (
+                    <option key={item.id} value={item.id}>
+                      {item.first_name + " " + item.last_name}
+                    </option>
+                  ))}
+            </Form.Select>
+          </div>
+          <div>
+            <CopyToClipboard text={copyValue}>
+              <Button
+                ref={target}
+                onClick={() => setShowTooltip(true)}
+                onMouseLeave={() => setShowTooltip(false)}
+              >
+                <Icon icon="akar-icons:copy" /> Invite code
+              </Button>
+            </CopyToClipboard>
+            <Overlay target={target.current} show={showTooltip} placement="top">
+              <Tooltip id="overlay-example">Copied</Tooltip>
+            </Overlay>
+          </div>
         </div>
+
         <div className={style.overview}>
           <div className={style.header}>
             <h4>Overview</h4>

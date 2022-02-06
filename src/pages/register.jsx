@@ -6,8 +6,8 @@ const Register = () => {
   return (
     <>
       {/* <Outlet /> */}
-      <Container className="secondary-color register-container" fluid>
-        <Row className="justify-content-center">
+      <Container className="secondary-color register-container d-flex  justify-content-center align-items-center" fluid>
+        <Row className="justify-content-center ">
           <Col xl='5' className="pt-4 text-center">
             <Image src='/img/register.png' />
           </Col>

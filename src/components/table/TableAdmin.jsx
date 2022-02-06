@@ -171,7 +171,8 @@ const TableAdmin = ({
     }
   };
 
-  const handleActive = (uid, space) => {
+  const handleActive = (uid, space, before = "", email) => {
+    const mustSendMail = before === "pending" ? true : false;
     if (uid) {
       Swal.fire({
         title: "Are you sure?",
@@ -187,15 +188,28 @@ const TableAdmin = ({
             },
             body: JSON.stringify({
               space_id: uid,
+              send: mustSendMail,
+              email: email,
             }),
-          }).then((res) => {
+          }).then(async (res) => {
+            const payload = await res.json();
             if (res.status === 200) {
-              refresh();
-              Swal.fire(
-                "Success",
-                `You have activated <b>${space}</b> successfully.`,
-                "success"
-              );
+              if (payload.type === 2) {
+                refresh();
+                Swal.fire(
+                  "Success",
+                  `You have activated <b>${space}</b> successfully.`,
+                  "success"
+                );
+              }
+              if (payload.type === 1) {
+                refresh();
+                Swal.fire(
+                  "Success",
+                  `You have activated <b>${space}</b> ${payload?.msg}`,
+                  "success"
+                );
+              }
             }
           });
         }
@@ -257,7 +271,9 @@ const TableAdmin = ({
               onClick={() =>
                 handleActive(
                   object?.space[0]?._id,
-                  object?.space[0]?.space_name
+                  object?.space[0]?.space_name,
+                  "pending",
+                  object?.email
                 )
               }
             />

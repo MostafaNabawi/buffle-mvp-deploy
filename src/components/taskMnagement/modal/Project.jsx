@@ -12,8 +12,8 @@ function Project(props) {
   const [itemId, setItemId] = useState(props.item.tb_id);
 
   async function ProjectChange(val) {
-    handleClick(val.value);
-    handleSetProjct(val.value)
+    handleClick(val);
+    handleSetProjct(val.label)
     const update = await setProjectToItem(itemId, val.value);
     if (update.status === 200) {
       addToast("Project set successfully", { autoDismiss: true, appearance: 'success' });
