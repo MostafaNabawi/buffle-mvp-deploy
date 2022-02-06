@@ -13,7 +13,6 @@ const Player = ({ code }) => {
     clientId: SPOTIFY_CLIENT,
     accessToken: code,
   });
-  const [err, setErr] = useState(false);
   useEffect(() => {
     async function getUserPlaylists() {
       spotifyApi.getMySavedAlbums({ offset: 1, limit: 10 }).then((data) => {
@@ -45,9 +44,7 @@ const Player = ({ code }) => {
         <PulseLoader size={12} />{" "}
       </div>
     );
-  if (err) {
-    return <Login />;
-  }
+
   if (data.length > 0) {
     return (
       <SpotifyPlayer
