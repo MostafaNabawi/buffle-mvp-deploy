@@ -9,10 +9,11 @@ import CardHeader from "./../card/CardHeader";
 import Widget from "./../common/widget/Widget";
 import { useToasts } from "react-toast-notifications";
 import { Image, Row, Col, Button, Form } from "react-bootstrap";
-import TimePicker from "react-time-picker";
 import Modal from "../modal/modal";
 import { getImportantToday, updateTaskImportant } from '../../api'
 import BeatLoader from 'react-spinners/BeatLoader';
+import TimePicker2 from "../common/timePicker/TimePicker2";
+
 
 function ImpotentToDayCard({ handleMove }) {
   const [show, setShow] = useState(false);
@@ -25,6 +26,12 @@ function ImpotentToDayCard({ handleMove }) {
   const [itemId, setItemId] = useState('');
   const [error, setError] = useState("");
   const [data, setData] = useState([])
+  const [durationTime, setDurationTime] = useState({
+    hours: "00",
+    minutes: "25",
+    seconds: "00",
+  });
+
   const handleClose = () => {
     setShow(false);
     setError('');
@@ -55,10 +62,16 @@ function ImpotentToDayCard({ handleMove }) {
     setItemId(value);
   }
   const handleSubmit = async () => {
-    if (!duration) {
+    if (duration.length < 0) {
       setError("Duration time is required!");
       return false;
     } else {
+      const duration =
+        durationTime.hours +
+        ":" +
+        durationTime.minutes +
+        ":" +
+        durationTime.seconds;
       setError("");
       setloading(true);
       const updateImportant = await updateTaskImportant(itemId, duration, 'stop');
@@ -102,7 +115,6 @@ function ImpotentToDayCard({ handleMove }) {
           action={
             <>
               <Link to="/dashboard/taskmanagement" className="secondary-dark-gray"><Icon icon="vaadin:plus" /></Link>
-              <Icon icon="vaadin:ellipsis-dots-v" />
             </>
           }
         />
@@ -136,32 +148,12 @@ function ImpotentToDayCard({ handleMove }) {
             <Col md={12}>
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Row>
-                  <Col xl="4">
-                    <Form.Label>Time Format </Form.Label>
-                    <Form.Select
-                      onChange={() => setTimeFormat(!timeFormat)}
-                      className="selectTime"
-                      aria-label="Default select example"
-                    >
-                      <option>Hour</option>
-                      <option>Minute</option>
-                    </Form.Select>
-                  </Col>
-                  <Col xl="8">
-                    <Form.Label>Time</Form.Label>
-                    <TimePicker
-                      className={`form-control taskManagerTime ${error.length > 0 ? "red-border-input" : "no-border-input"
-                        }`}
-                      closeClock
-                      format={timeFormat ? "mm:ss" : "hh:mm:ss"}
-                      onChange={(value) => {
-                        setDuration(value)
-                      }}
-                    // value={value}
+                  <Col xl="12">
+                    <TimePicker2
+                      label={"duration time"}
+                      value={durationTime}
+                      setValue={setDurationTime}
                     />
-                    {error ? (
-                      <div className="invalid-feedback d-block">{error}</div>
-                    ) : null}
                   </Col>
                 </Row>
               </Form.Group>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { SPOTIFY_CLIENT } from "../../config";
-
+import { Icon } from "@iconify/react";
 export default function SpotifyLogin() {
   const [url, setUrl] = useState("");
   useEffect(() => {
@@ -24,8 +24,15 @@ export default function SpotifyLogin() {
     setUrl(full_url);
   }, []);
   return (
-    <div className="Login" style={{ color: "white" }}>
-      <a href={url}>Login with Spotify</a>
+    <div className="Login">
+      <Icon
+        icon="logos:spotify-icon"
+        fontSize={30}
+        style={{ marginRight: "8px", color: "#fff" }}
+      />
+      <a style={{ color: "#fff" }} href={url}>
+        Login with Spotify to access your music inside buffle 😊.
+      </a>
     </div>
   );
 }

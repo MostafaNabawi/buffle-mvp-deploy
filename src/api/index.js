@@ -267,6 +267,7 @@ async function updateTask(data) {
       type: data.type,
       description: data.description,
       startTime: data.taskTime,
+      day_of_week: data.day_of_week,
     }),
   });
   return { status: req.status };

@@ -4,7 +4,6 @@ import { Link, useParams, useSearchParams } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import TimePicker from "react-time-picker";
 import ProgressBar from "../components/common/progressBar/ProgressBar";
 import CardHeader from "../components/card/CardHeader";
 import Card from "../components/card/Card";
@@ -38,6 +37,7 @@ import Timer from "./../components/common/progressBar/TaskProgress";
 import Player from "../components/spotify/Player";
 import moment, { now } from "moment";
 import SpotifyLogin from "../components/spotify/Login";
+import TimePicker2 from "../components/common/timePicker/TimePicker2";
 
 const Dashboard = () => {
   const [code, setCode] = useState(
@@ -121,6 +121,16 @@ const Dashboard = () => {
     return <SpotifyLogin />;
   }, [showPlayer]);
 
+  const [durationTime, setDurationTime] = useState({
+    hours: "00",
+    minutes: "25",
+    seconds: "00",
+  });
+  const [oldTaskInput, setOldTaskInput] = useState({
+    hours: "",
+    minutes: "",
+    seconds: "",
+  });
   // next break action
   const handleNextBreakOperation = async () => {
     if (nextBreakDateInput.length === 0) {
@@ -254,9 +264,15 @@ const Dashboard = () => {
   };
   // create new task
   const handleCreateTask = async () => {
-    if (validateTaskName(taskName.name) && validateTaskTime(duration)) {
+    if (validateTaskName(taskName.name)) {
+      const time =
+        durationTime.hours +
+        ":" +
+        durationTime.minutes +
+        ":" +
+        durationTime.seconds;
       setloading(true);
-      const createT = await createTask(taskName, 1, duration, true, "stop");
+      const createT = await createTask(taskName, 1, time, true, "stop");
       if (createT.status === 200) {
         setTaskReload(true);
         addToast("Created susseccfully", {
@@ -372,15 +388,18 @@ const Dashboard = () => {
   };
   // update slected task (only single task)
   const updateSelectedTask = async () => {
-    if (
-      validateTaskUpdateName(updateTaskName) &&
-      validateTaskUpdateTime(updateDuration)
-    ) {
+    if (validateTaskUpdateName(updateTaskName)) {
+      const time =
+        oldTaskInput.hours +
+        ":" +
+        oldTaskInput.minutes +
+        ":" +
+        oldTaskInput.seconds;
       setloading(true);
       const updateTask = await updateDhashboardTask(
         checkId[0],
         updateTaskName,
-        updateDuration
+        time
       );
       if (updateTask.status === 200) {
         setTaskReload(true);
@@ -418,13 +437,16 @@ const Dashboard = () => {
   const handleUpdateTask = async () => {
     if (checkId.length === 1) {
       const oldData = await getTaskById(checkId[0]);
+      const time = oldData.data.task_duration.split(":");
+      setOldTaskInput({
+        hours: time[0],
+        minutes: time[1],
+        seconds: time[2],
+      });
+
       setOldTaskName({ name: oldData.data.name });
-      setOldTaskTime(oldData.data.task_duration);
-      setUpdateDuration(oldData.data.task_duration);
       setUpdateTaskName({ name: oldData.data.name });
-      if (oldData.data.task_duration.split(":")[0] == "00") {
-        setUpdateTimeFormat("min");
-      }
+
       setModalShow(true);
       setNextBreak(false);
       setVacationTime(false);
@@ -1024,42 +1046,11 @@ const Dashboard = () => {
                   </Form.Group>
                 </Col>
                 <Col md={12}>
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Row>
-                      <Col xl="4">
-                        <Form.Label>Time Format </Form.Label>
-                        <Form.Select
-                          onChange={() => setTimeFormat(!timeFormat)}
-                          className="selectTime"
-                          aria-label="Default select example"
-                        >
-                          <option>Hour</option>
-                          <option>Minute</option>
-                        </Form.Select>
-                      </Col>
-                      <Col xl="8">
-                        <Form.Label>Time</Form.Label>
-                        <TimePicker
-                          className={`form-control taskManagerTime ${
-                            error.length > 0
-                              ? "red-border-input"
-                              : "no-border-input"
-                          }`}
-                          closeClock
-                          format={timeFormat ? "mm:ss" : "hh:mm:ss"}
-                          onChange={(value) => {
-                            setDuration(value);
-                          }}
-                          // value={value}
-                        />
-                        {error ? (
-                          <div className="invalid-feedback d-block">
-                            {error}
-                          </div>
-                        ) : null}
-                      </Col>
-                    </Row>
-                  </Form.Group>
+                  <TimePicker2
+                    label={"duration time"}
+                    value={durationTime}
+                    setValue={setDurationTime}
+                  />
                 </Col>
               </>
             )}
@@ -1089,63 +1080,11 @@ const Dashboard = () => {
                   </Form.Group>
                 </Col>
                 <Col md={12}>
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Row>
-                      <Col xl="4">
-                        <Form.Label>Time Format </Form.Label>
-                        <Form.Select
-                          onChange={(e) => (
-                            setUpdateTimeFormat(e.target.value),
-                            setOldTaskTime("")
-                          )}
-                          className="selectTime"
-                          aria-label="Default select example"
-                        >
-                          <option
-                            value="houre"
-                            selected={oldTaskTime.split(":")[0] != "00"}
-                          >
-                            Hour
-                          </option>
-                          <option
-                            value="min"
-                            selected={oldTaskTime.split(":")[0] == "00"}
-                          >
-                            Minute
-                          </option>
-                        </Form.Select>
-                      </Col>
-                      <Col xl="8">
-                        <Form.Label>Time</Form.Label>
-                        <TimePicker
-                          className={`form-control taskManagerTime ${
-                            error.length > 0
-                              ? "red-border-input"
-                              : "no-border-input"
-                          }`}
-                          closeClock
-                          format={
-                            oldTaskTime.split(":")[0] == "00" &&
-                            updateTimeFormat === "min"
-                              ? "mm:ss"
-                              : oldTaskTime.split(":")[0] != "00" &&
-                                updateTimeFormat === "min"
-                              ? "mm:ss"
-                              : "hh:mm:ss"
-                          }
-                          onChange={(value) => {
-                            setUpdateDuration(value);
-                          }}
-                          value={oldTaskTime}
-                        />
-                        {errorUpdate ? (
-                          <div className="invalid-feedback d-block">
-                            {errorUpdate}
-                          </div>
-                        ) : null}
-                      </Col>
-                    </Row>
-                  </Form.Group>
+                  <TimePicker2
+                    label={"duration time"}
+                    value={oldTaskInput}
+                    setValue={setOldTaskInput}
+                  />
                 </Col>
               </>
             )}

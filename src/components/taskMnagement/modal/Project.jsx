@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { getProject, setProjectToItem, getProjectById } from "../../../api";
-import Button from "./Button";
-import style from "./style.module.css";
+import React, { useState } from "react";
+import { setProjectToItem } from "../../../api";
 import Select from 'react-select';
 import { useToasts } from 'react-toast-notifications';
 import PulseLoader from "react-spinners/PulseLoader";
@@ -12,8 +10,8 @@ function Project(props) {
   const [itemId, setItemId] = useState(props.item.tb_id);
 
   async function ProjectChange(val) {
-    handleClick(val.value);
-    handleSetProjct(val.value)
+    handleClick(val);
+    handleSetProjct(val.label)
     const update = await setProjectToItem(itemId, val.value);
     if (update.status === 200) {
       addToast("Project set successfully", { autoDismiss: true, appearance: 'success' });

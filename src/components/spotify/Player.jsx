@@ -18,8 +18,12 @@ const Player = ({ code }) => {
     async function getUserPlaylists() {
       spotifyApi.getMySavedAlbums({ offset: 1, limit: 10 }).then((data) => {
         const rndInt = Math.floor(Math.random() * data.body.items.length) + 1;
-        console.log("dd", rndInt, data.body.items[rndInt].album.artists[0].uri);
-        setData([data.body.items[rndInt].album.artists[0].uri]);
+        console.log(
+          "dd",
+          rndInt,
+          data.body.items[rndInt - 1].album.artists[0].uri
+        );
+        setData([data.body.items[rndInt - 1].album.artists[0].uri]);
         setLoading(false);
         setPlay(true);
       });

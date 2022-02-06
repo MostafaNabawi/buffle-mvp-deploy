@@ -216,3 +216,8 @@ textarea::placeholder {
   padding: 1rem;
   background-color: rgba(0, 0, 0, 0.05);
 }
+
+.copyToClipboard {
+  display: flex;
+  justify-content: space-between;
+}
