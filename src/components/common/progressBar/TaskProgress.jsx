@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { Icon } from '@iconify/react';
 import { Row, Col, ProgressBar } from 'react-bootstrap';
@@ -25,6 +26,7 @@ const Timer = (props) => {
     const [counter, setCounter] = useState(parseInt(time[3]) > 0 ? parseInt(time[3]) : 0);
     const data = JSON.parse(localStorage.getItem("user"));
     const handlePlay = async () => {
+
         if (!play && !run) {
             dispatch(setRun(true));
             console.log('s', play)
@@ -75,7 +77,7 @@ const Timer = (props) => {
             setPlay(!play)
             async function request() {
                 const sp_time = `${day}:${hour}:${minute}:${second}`;
-                const update = await updateTaskWhenCompleted(_id, sp_time, 'completed')
+                await updateTaskWhenCompleted(_id, sp_time, 'completed')
                 const notify = await createNotification(data._id, name)
                 if (notify.status === 200) {
                     addToast("Task finished.", {

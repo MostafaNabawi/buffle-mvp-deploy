@@ -110,7 +110,6 @@ function Expenses() {
             id="uncontrolled-tab-example"
             activeKey={key}
             onSelect={(k) => HandlesetKey(k)}
-            className="mb-3"
             className={style.tab}
           >
             <Tab eventKey="expense" title="Expense">

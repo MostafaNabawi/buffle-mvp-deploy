@@ -27,7 +27,8 @@ const UserProfile = () => {
   const [departure, setDeparture] = useState("");
   const [tags, setTags] = useState([]);
   const [newTag, setNewTag] = useState("");
-  const options = [];
+  const [options,setOptions]=useState([])
+
   const setUsetLocalStorage = () => {
     try {
       fetch(`${API_URL}/user/me`, {
@@ -43,7 +44,7 @@ const UserProfile = () => {
           setBusy(true);
         }
       });
-    } catch { }
+    } catch {}
   };
   const getUser = () => {
     try {
@@ -77,46 +78,66 @@ const UserProfile = () => {
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
-      }
+      },
     }).then(async (res) => {
       const { payload } = await res.json();
       if (payload) {
-        payload.map(tag => {
+        payload.map((tag) => {
           const data = {
             value: tag._id,
-            lable: tag.name
-          }
-          options.push(data)
-        })
+            label: tag.name,
+          };
+          options.push(data);
+        });
       }
     });
-  }
-  const handleEdite = (e) => {
+  };
+  const getUserTags = async () => {
+    fetch(`${API_URL}/user/tags`, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then(async (res) => {
+      const { payload } = await res.json();
+      if (payload) {
+        payload.map((item) =>{
+          const data = {
+            value: item.tag[0]._id,
+            label: item.tag[0].name,
+          };
+          tags.push(data)
+        }
+        );
+      }
+    });
+  };
+  const handleEdite = async (e) => {
     e.preventDefault();
 
     if (firstName && lastName && email && slack && departure) {
       setLoading(true);
       try {
         if (tags.length > 0) {
-          fetch(`${API_URL}/tags/create`, {
+          const res = await fetch(`${API_URL}/tags/create`, {
             method: "POST",
             credentials: "include",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              tags: tags
+              tags: tags,
             }),
-          }).then(async (res) => {
-            if (res.status != 200) {
-              addToast("Error Please Try Again!", {
-                appearance: "warning",
-                autoDismiss: 4000,
-              });
-              setLoading(false)
-              return false
-            }
           });
+          if (res.status != 200) {
+            addToast("Error Please Try Again!", {
+              appearance: "warning",
+              autoDismiss: 4000,
+            });
+            setLoading(false);
+            return false;
+          }
         }
         fetch(`${API_URL}/user/update`, {
           method: "PUT",
@@ -172,7 +193,9 @@ const UserProfile = () => {
   useEffect(() => {
     getUser();
     getAllTags()
+    getUserTags()
   }, []);
+
   return (
     <>
       <Col className="card" xl={8}>
@@ -181,7 +204,7 @@ const UserProfile = () => {
           <Row>
             <Form.Group className="mb-3">
               <Image className={style.userPhoto} src="/img/user-3.png" />
-              <Form.Label className={style.lablePhoto} for="photoUser">
+              <Form.Label className={style.lablePhoto} htmlFor="photoUser">
                 <Icon icon="uil:image-upload" />
               </Form.Label>
               <Form.Control className={style.hide} id="photoUser" type="file" />
