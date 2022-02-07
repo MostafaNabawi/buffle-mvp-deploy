@@ -29,6 +29,7 @@ import {
 } from "../store/screenReminderSclice";
 import moment from "moment";
 import Swal from "sweetalert2";
+import { emitSound } from "../config/utils";
 
 const Header = () => {
   //
@@ -112,6 +113,9 @@ const Header = () => {
       },
     }).then(async (res) => {
       const { payload } = await res.json();
+      if (payload > 0) {
+        emitSound();
+      }
       setCount(payload);
     });
   };

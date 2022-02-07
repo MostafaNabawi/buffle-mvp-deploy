@@ -1,6 +1,6 @@
 import { useEffect, useState, Fragment, useMemo } from "react";
 import { Row, Col, Image, Form, Button, NavDropdown } from "react-bootstrap";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -13,7 +13,11 @@ import EventCalender from "./../components/eventCalender/EventCalender";
 import ImpotentToDayCard from "./../components/impotentToDay/ImpotentToDayCard";
 import BreakplanFrom from "../components/breakplan/BreakplanForm";
 import Modal from "../components/modal/modal";
-import { nextBreakTimeValidation, timeDifference } from "../config/utils";
+import {
+  nextBreakTimeValidation,
+  timeDifference,
+  emitSound,
+} from "../config/utils";
 import {
   addNextBreak,
   createTask,
@@ -35,10 +39,8 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import Timer from "./../components/common/progressBar/TaskProgress";
 import Player from "../components/spotify/Player";
-import moment, { now } from "moment";
 import SpotifyLogin from "../components/spotify/Login";
 import TimePicker2 from "../components/common/timePicker/TimePicker2";
-
 const Dashboard = () => {
   const [code, setCode] = useState(
     new URLSearchParams(window.location.search).get("code")
@@ -253,15 +255,15 @@ const Dashboard = () => {
       return true;
     }
   };
-  const validateTaskTime = (value) => {
-    if (!value) {
-      setError("Task duration is required!");
-      return false;
-    } else {
-      setError("");
-      return true;
-    }
-  };
+  // const validateTaskTime = (value) => {
+  //   if (!value) {
+  //     setError("Task duration is required!");
+  //     return false;
+  //   } else {
+  //     setError("");
+  //     return true;
+  //   }
+  // };
   // create new task
   const handleCreateTask = async () => {
     if (validateTaskName(taskName.name)) {
@@ -377,15 +379,15 @@ const Dashboard = () => {
       return true;
     }
   };
-  const validateTaskUpdateTime = (value) => {
-    if (!value) {
-      setErrorUpdate("Task duration is required!");
-      return false;
-    } else {
-      setErrorUpdate("");
-      return true;
-    }
-  };
+  // const validateTaskUpdateTime = (value) => {
+  //   if (!value) {
+  //     setErrorUpdate("Task duration is required!");
+  //     return false;
+  //   } else {
+  //     setErrorUpdate("");
+  //     return true;
+  //   }
+  // };
   // update slected task (only single task)
   const updateSelectedTask = async () => {
     if (validateTaskUpdateName(updateTaskName)) {
@@ -601,6 +603,7 @@ const Dashboard = () => {
                 <i
                   title="When is your next break?"
                   onClick={() => {
+                    emitSound();
                     setModalShow(true);
                     setVacationTime(false);
                     setNextBreak(true);
