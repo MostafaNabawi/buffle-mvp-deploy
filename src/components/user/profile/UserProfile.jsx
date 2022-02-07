@@ -203,13 +203,20 @@ const UserProfile = () => {
         <h1 className={`${style.title} text-center`}>Your Account</h1>
         <Form onSubmit={handleEdite}>
           <Row>
-            <Form.Group className="mb-3">
+           <Col xl={4}>
+           <Form.Group className="mb-3">
               <Image className={style.userPhoto} src="/img/user-3.png" />
               <Form.Label className={style.lablePhoto} htmlFor="photoUser">
                 <Icon icon="uil:image-upload" />
               </Form.Label>
               <Form.Control className={style.hide} id="photoUser" type="file" />
             </Form.Group>
+           </Col>
+           <Col xl={8} className="pt-5">
+           <h2 className={`${style.title}`}>
+             <span>{firstName +" "+ lastName}</span>
+           </h2>
+           </Col>
           </Row>
           <Row>
             <Col xl={6}>

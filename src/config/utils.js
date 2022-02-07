@@ -1,5 +1,6 @@
 import moment from "moment";
 import { calcTimeDelta } from "react-countdown";
+import boop from "./boop.mp3";
 // ---------------------------------------- Next Break Utils Function ------------------------
 function timeDifference(time) {
   const dateTime = `${moment().get("M") + 1}/${moment().get(
@@ -64,6 +65,15 @@ function checkEmail(value) {
     return true;
   }
 }
-
+function emitSound() {
+  const audio = new Audio(boop);
+  audio.play();
+}
 // ---------------------------- Other Utils ------------------------------------
-export { timeDifference, nextBreakTimeValidation, getTotalSeconds, checkEmail };
+export {
+  timeDifference,
+  nextBreakTimeValidation,
+  getTotalSeconds,
+  checkEmail,
+  emitSound,
+};
