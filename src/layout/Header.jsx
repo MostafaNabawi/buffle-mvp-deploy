@@ -59,6 +59,9 @@ const Header = () => {
       localStorage.removeItem("others");
       localStorage.removeItem("own");
       localStorage.removeItem("current");
+      // delte spotify data
+      localStorage.removeItem("spotToken");
+      localStorage.removeItem("spotRefresh");
       navigate("/");
     }
   };
@@ -380,7 +383,7 @@ const Header = () => {
           onComplete={() => {
             handleDurationTime(defaultTime);
             setStart(false);
-            if(localStorage.getItem("screen") === "on"){
+            if (localStorage.getItem("screen") === "on") {
               const timeLock = new Date();
               localStorage.setItem(
                 "loackTime",

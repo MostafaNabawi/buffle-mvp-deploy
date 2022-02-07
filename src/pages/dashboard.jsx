@@ -1,4 +1,4 @@
-import { useEffect, useState, Fragment } from "react";
+import { useEffect, useState, Fragment, useMemo } from "react";
 import { Row, Col, Image, Form, Button, NavDropdown } from "react-bootstrap";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import { Icon } from "@iconify/react";
@@ -40,7 +40,10 @@ import SpotifyLogin from "../components/spotify/Login";
 import TimePicker2 from "../components/common/timePicker/TimePicker2";
 
 const Dashboard = () => {
-  const code = new URLSearchParams(window.location.search).get("code");
+  const [code, setCode] = useState(
+    new URLSearchParams(window.location.search).get("code")
+  );
+  const [showPlayer, setShowPlayer] = useState(false);
   const MySwal = withReactContent(Swal);
   const currentUser = JSON.parse(localStorage.getItem("user"));
   const [timeFormat, setTimeFormat] = useState(false);
@@ -110,6 +113,14 @@ const Dashboard = () => {
   const [opan, setOpan] = useState(0);
   const [complete, setComplete] = useState("");
   const [move, setMove] = useState("");
+  const RenderPlayerOrLogin = useMemo(() => {
+    if (showPlayer) {
+      const codeToken = localStorage.getItem("spotToken");
+      return <Player code={codeToken} />;
+    }
+    return <SpotifyLogin />;
+  }, [showPlayer]);
+
   const [durationTime, setDurationTime] = useState({
     hours: "00",
     minutes: "25",
@@ -377,9 +388,7 @@ const Dashboard = () => {
   };
   // update slected task (only single task)
   const updateSelectedTask = async () => {
-    if (
-      validateTaskUpdateName(updateTaskName)
-    ) {
+    if (validateTaskUpdateName(updateTaskName)) {
       const time =
         oldTaskInput.hours +
         ":" +
@@ -515,7 +524,53 @@ const Dashboard = () => {
   useEffect(() => {
     getTask();
   }, [taskReload, complete, move]);
-
+  useEffect(() => {
+    const spotToken = localStorage.getItem("spotToken");
+    const spotRefresh = localStorage.getItem("spotRefresh");
+    if (code) {
+      setSearchParams({ hi: "true" });
+      fetch(`${API_URL}/spotify/login`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          code: code,
+        }),
+      }).then(async (response) => {
+        if (response.status === 200) {
+          const payback = await response.json();
+          localStorage.setItem("spotToken", payback.accessToken);
+          localStorage.setItem("spotRefresh", payback.refreshToken);
+          setShowPlayer(true);
+        }
+      });
+    }
+    if (spotToken && spotRefresh) {
+      // refresh the token again
+      fetch(`${API_URL}/spotify/login`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          refresh: true,
+          code: spotRefresh,
+        }),
+      }).then(async (response) => {
+        if (response.status === 200) {
+          const payback = await response.json();
+          localStorage.setItem("spotToken", payback?.accessToken);
+          setShowPlayer(true);
+        } else {
+          localStorage.removeItem("spotToken");
+          localStorage.removeItem("spotRefresh");
+        }
+      });
+    }
+  }, [code]);
   return (
     <section>
       <Row>
@@ -647,13 +702,14 @@ const Dashboard = () => {
               }
               title="Worktunes"
             />
+            {RenderPlayerOrLogin}
             {/* {code ? <Player code={code} /> : <SpotifyLogin />} */}
             {/* muted */}
-            <audio controls className="mt-3">
+            {/* <audio controls className="mt-3">
               <source src="/music/1.mp3" type="audio/ogg" />
               <source src="/music/2.mp3" type="audio/mpeg" />
               Your browser does not support the audio element.
-            </audio>
+            </audio> */}
           </Card>
         </Col>
       </Row>
@@ -672,8 +728,9 @@ const Dashboard = () => {
                 />
               }
               title="Task Manager"
-              subtitle={`${opan < 0 ? 0 : opan} opan, ${start < 0 ? 0 : start
-                } start.`}
+              subtitle={`${opan < 0 ? 0 : opan} opan, ${
+                start < 0 ? 0 : start
+              } start.`}
               action={
                 <>
                   <i
@@ -812,24 +869,24 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                  id: data._id,
-                                  name: data.name,
-                                  time: data.time,
-                                })
+                                    id: data._id,
+                                    name: data.name,
+                                    time: data.time,
+                                  })
                                 : joinOrNewSuggestForm(
-                                  {
-                                    id: data.user[0]._id,
-                                    breackName: data.name,
-                                  },
-                                  {
-                                    fullName:
-                                      currentUser.first_name +
-                                      " " +
-                                      currentUser.last_name,
-                                    breakName: data.name,
-                                    breakOwnerId: data.user[0]._id,
-                                  }
-                                );
+                                    {
+                                      id: data.user[0]._id,
+                                      breackName: data.name,
+                                    },
+                                    {
+                                      fullName:
+                                        currentUser.first_name +
+                                        " " +
+                                        currentUser.last_name,
+                                      breakName: data.name,
+                                      breakOwnerId: data.user[0]._id,
+                                    }
+                                  );
                             }}
                             className="break-type"
                           >
@@ -841,20 +898,20 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                  id: data._id,
-                                  name: data.name,
-                                  time: data.time,
-                                })
+                                    id: data._id,
+                                    name: data.name,
+                                    time: data.time,
+                                  })
                                 : timeFormBreakplan({
-                                  time: "",
-                                  recevier: data.user[0]._id,
-                                  fullName:
-                                    currentUser.first_name +
-                                    "" +
-                                    currentUser.last_name,
-                                  breakName: data.name,
-                                  breakId: data._id,
-                                });
+                                    time: "",
+                                    recevier: data.user[0]._id,
+                                    fullName:
+                                      currentUser.first_name +
+                                      "" +
+                                      currentUser.last_name,
+                                    breakName: data.name,
+                                    breakId: data._id,
+                                  });
                             }}
                           >
                             {data.time}
@@ -994,7 +1051,6 @@ const Dashboard = () => {
                     value={durationTime}
                     setValue={setDurationTime}
                   />
-
                 </Col>
               </>
             )}
@@ -1029,7 +1085,6 @@ const Dashboard = () => {
                     value={oldTaskInput}
                     setValue={setOldTaskInput}
                   />
-
                 </Col>
               </>
             )}
@@ -1045,8 +1100,8 @@ const Dashboard = () => {
               <Button
                 disabled={
                   vacationNameInput === "" ||
-                    vacationDataInput === "" ||
-                    vacationLoader
+                  vacationDataInput === "" ||
+                  vacationLoader
                     ? true
                     : false
                 }
