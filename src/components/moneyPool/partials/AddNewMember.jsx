@@ -34,7 +34,14 @@ function AddNewMember({ selected, setSelected }) {
           setEmail("");
           setLoading(false);
           result.email = email;
-          setSelected([...selected, result]);
+          if (selected.length > 0) {
+            const exist = selected.filter((user) => user.uid === result.uid);
+            if (exist.length === 0) {
+              setSelected([...selected, result]);
+            }
+          }else{
+            setSelected([...selected, result]);
+          }
         } else {
           setNotFound(true);
           setLoading(false);
