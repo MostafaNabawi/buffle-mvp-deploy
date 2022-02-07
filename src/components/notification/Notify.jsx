@@ -6,10 +6,10 @@ function inviteNotify({ name,date, message, footer }) {
     return (
         <>
             <Row className="p-2 pb-0">
-                <Col xl="2" className="pt-2">
+                <Col xl="2" className="pt-0 pb-3">
                     <div className="breakplan-icon navy-blue text-center pt-2">
                         <Image
-                            className="breakplan-img"
+                            className="breakplan-img mb-2"
                             src="/icone/WB_Headshots-102-web 1.png"
                         />
                     </div>
