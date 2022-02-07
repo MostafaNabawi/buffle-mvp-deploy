@@ -780,7 +780,7 @@ const Dashboard = () => {
                             <Col xl="1">
                               <Form.Group controlId="formBasicCheckbox">
                                 <Form.Check
-                                  className="check-box "
+                                  className="check-box"
                                   type="checkbox"
                                   id={t._id}
                                   onChange={handleCheck}
