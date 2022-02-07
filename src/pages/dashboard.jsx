@@ -13,11 +13,7 @@ import EventCalender from "./../components/eventCalender/EventCalender";
 import ImpotentToDayCard from "./../components/impotentToDay/ImpotentToDayCard";
 import BreakplanFrom from "../components/breakplan/BreakplanForm";
 import Modal from "../components/modal/modal";
-import {
-  nextBreakTimeValidation,
-  timeDifference,
-  emitSound,
-} from "../config/utils";
+import { nextBreakTimeValidation, timeDifference } from "../config/utils";
 import {
   addNextBreak,
   createTask,
@@ -604,7 +600,6 @@ const Dashboard = () => {
                 <i
                   title="When is your next break?"
                   onClick={() => {
-                    emitSound();
                     setModalShow(true);
                     setVacationTime(false);
                     setNextBreak(true);
