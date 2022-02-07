@@ -31,7 +31,6 @@ function NewEvent() {
   const [eventName, setEventName] = useState("");
   const [currency, setCurrency] = useState("");
   const navigate = useNavigate();
-
   // naviget to event when click on event list row
   const handleRowClick = (id) => {
     navigate(`event/${id}`);
@@ -96,7 +95,14 @@ function NewEvent() {
           setEmail("");
           setLoading(false);
           result.email = email;
-          setSelected([...selected, result]);
+          if(selected.length >0){
+           const exist= selected.filter(user=> user.uid ===result.uid)
+           if(exist.length ===0){
+            setSelected([...selected, result]);
+           }
+          }else{
+            setSelected([...selected, result]);
+          }
         } else {
           setNotFound(true);
           setLoading(false);
@@ -170,7 +176,6 @@ function NewEvent() {
   }
   useEffect(() => {
     setCurrencyData(Object.values(CurrencyList.getAll("en_US")));
-    // console.log(CurrencyList.get("AFN"));
 
     //get event list data
     request();

@@ -573,6 +573,7 @@ const Dashboard = () => {
       });
     }
   }, [code]);
+
   return (
     <section>
       <Row>
@@ -769,45 +770,47 @@ const Dashboard = () => {
                 </>
               }
             />
-            <Row className="dashboard-task-manager-row">
-              {showSkleton ? (
-                <Skeleton count={9} />
-              ) : taskData.length > 0 ? (
-                taskData.map((t, n) => (
-                  <Fragment key={n}>
-                    <Row className="task-manager-body pt-0 mt-1 mb-1">
-                      <Col xl="7">
-                        <Row className="pl-5">
-                          <Col xl="1">
-                            <Form.Group controlId="formBasicCheckbox">
-                              <Form.Check
-                                className="check-box "
-                                type="checkbox"
-                                id={t._id}
-                                onChange={handleCheck}
-                              />
-                            </Form.Group>
-                          </Col>
-                          <Col xl="11" className="task-manager-text">
-                            {t.name}
-                          </Col>
-                        </Row>
-                      </Col>
-                      <Col xl="5">
-                        <Timer
-                          {...t}
-                          handleCheckOpenClose={handleCheckOpenClose}
-                          handleComplet={handleComplete}
-                        />
-                      </Col>
-                    </Row>
-                    <div className="devidre"></div>
-                  </Fragment>
-                ))
-              ) : (
-                <span>No task for today</span>
-              )}
-            </Row>
+            <div className="dashboard-task-manager-row">
+              <Row>
+                {showSkleton ? (
+                  <Skeleton count={9} />
+                ) : taskData.length > 0 ? (
+                  taskData.map((t, n) => (
+                    <div key={n}>
+                      <Row className="task-manager-body pt-0 mt-1 mb-1">
+                        <Col xl="7">
+                          <Row className="pl-5">
+                            <Col xl="1">
+                              <Form.Group controlId="formBasicCheckbox">
+                                <Form.Check
+                                  className="check-box"
+                                  type="checkbox"
+                                  id={t._id}
+                                  onChange={handleCheck}
+                                />
+                              </Form.Group>
+                            </Col>
+                            <Col xl="11" className="task-manager-text">
+                              {t.name}
+                            </Col>
+                          </Row>
+                        </Col>
+                        <Col xl="5">
+                          <Timer
+                            {...t}
+                            handleCheckOpenClose={handleCheckOpenClose}
+                            handleComplet={handleComplete}
+                          />
+                        </Col>
+                      </Row>
+                      <div className="devidre mt-2 mb-2"></div>
+                    </div>
+                  ))
+                ) : (
+                  <span>No task for today</span>
+                )}
+              </Row>
+            </div>
           </Card>
         </Col>
         <Col xl={4}>
