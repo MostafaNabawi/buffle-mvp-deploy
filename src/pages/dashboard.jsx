@@ -16,7 +16,6 @@ import Modal from "../components/modal/modal";
 import {
   nextBreakTimeValidation,
   timeDifference,
-  emitSound,
 } from "../config/utils";
 import {
   addNextBreak,
@@ -604,7 +603,6 @@ const Dashboard = () => {
                 <i
                   title="When is your next break?"
                   onClick={() => {
-                    emitSound();
                     setModalShow(true);
                     setVacationTime(false);
                     setNextBreak(true);
