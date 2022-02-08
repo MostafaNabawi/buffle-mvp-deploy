@@ -26,6 +26,7 @@ import {
 } from "./../../store/hydrationSclice";
 import useReminder from "./useReminder";
 import useNotific from "./useNotific";
+import { Countdown } from 'react-countdown';
 
 function HydrationReminderCard() {
   const {
@@ -147,18 +148,27 @@ function HydrationReminderCard() {
     dispatch(setMute());
   };
 
-  useNotific(() => {
-    if (notificDelay !== "") {
+  // useNotific(() => {
+  //   if (notificDelay !== "") {
+  //     if (!isMute) {
+  //       if (precent > 0) {
+  //           //notific
+
+  //       }
+  //     }
+  //   }
+  // }, notificDelay);
+
+  const sendNotific = () => {
+      if (notificDelay !== "") {
       if (!isMute) {
         if (precent > 0) {
-          addToast("INFO", {
-            autoDismiss: true,
-            appearance: "info",
-          });
+            //notific
+            
         }
       }
     }
-  }, notificDelay);
+  }
 
   useReminder(() => {
     if (reminderDelay !== "") {
@@ -205,6 +215,18 @@ function HydrationReminderCard() {
   return (
     <>
       <Card>
+      <Countdown
+          date={Date.now() + notificDelay }
+          onTick={(e) => {
+            dispatch();
+          }}
+          onComplete={() => {
+            sendNotific()
+          }}
+          renderer={() => {
+            return "";
+          }}
+        />
         <CardHeader
           icon={<Image src="/icone/Vector.png" alt="water drop icon" />}
           title="Hydration Reminder"
