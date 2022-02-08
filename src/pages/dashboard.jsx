@@ -1,6 +1,6 @@
 import { useEffect, useState, Fragment, useMemo } from "react";
 import { Row, Col, Image, Form, Button, NavDropdown } from "react-bootstrap";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -35,10 +35,8 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import Timer from "./../components/common/progressBar/TaskProgress";
 import Player from "../components/spotify/Player";
-import moment, { now } from "moment";
 import SpotifyLogin from "../components/spotify/Login";
 import TimePicker2 from "../components/common/timePicker/TimePicker2";
-
 const Dashboard = () => {
   const [code, setCode] = useState(
     new URLSearchParams(window.location.search).get("code")
@@ -253,15 +251,15 @@ const Dashboard = () => {
       return true;
     }
   };
-  const validateTaskTime = (value) => {
-    if (!value) {
-      setError("Task duration is required!");
-      return false;
-    } else {
-      setError("");
-      return true;
-    }
-  };
+  // const validateTaskTime = (value) => {
+  //   if (!value) {
+  //     setError("Task duration is required!");
+  //     return false;
+  //   } else {
+  //     setError("");
+  //     return true;
+  //   }
+  // };
   // create new task
   const handleCreateTask = async () => {
     if (validateTaskName(taskName.name)) {
@@ -377,15 +375,15 @@ const Dashboard = () => {
       return true;
     }
   };
-  const validateTaskUpdateTime = (value) => {
-    if (!value) {
-      setErrorUpdate("Task duration is required!");
-      return false;
-    } else {
-      setErrorUpdate("");
-      return true;
-    }
-  };
+  // const validateTaskUpdateTime = (value) => {
+  //   if (!value) {
+  //     setErrorUpdate("Task duration is required!");
+  //     return false;
+  //   } else {
+  //     setErrorUpdate("");
+  //     return true;
+  //   }
+  // };
   // update slected task (only single task)
   const updateSelectedTask = async () => {
     if (validateTaskUpdateName(updateTaskName)) {
@@ -571,6 +569,7 @@ const Dashboard = () => {
       });
     }
   }, [code]);
+
   return (
     <section>
       <Row>
@@ -766,45 +765,47 @@ const Dashboard = () => {
                 </>
               }
             />
-            <Row className="dashboard-task-manager-row">
-              {showSkleton ? (
-                <Skeleton count={9} />
-              ) : taskData.length > 0 ? (
-                taskData.map((t, n) => (
-                  <Fragment key={n}>
-                    <Row className="task-manager-body pt-0 mt-1 mb-1">
-                      <Col xl="7">
-                        <Row className="pl-5">
-                          <Col xl="1">
-                            <Form.Group controlId="formBasicCheckbox">
-                              <Form.Check
-                                className="check-box "
-                                type="checkbox"
-                                id={t._id}
-                                onChange={handleCheck}
-                              />
-                            </Form.Group>
-                          </Col>
-                          <Col xl="11" className="task-manager-text">
-                            {t.name}
-                          </Col>
-                        </Row>
-                      </Col>
-                      <Col xl="5">
-                        <Timer
-                          {...t}
-                          handleCheckOpenClose={handleCheckOpenClose}
-                          handleComplet={handleComplete}
-                        />
-                      </Col>
-                    </Row>
-                    <div className="devidre"></div>
-                  </Fragment>
-                ))
-              ) : (
-                <span>No task for today</span>
-              )}
-            </Row>
+            <div className="dashboard-task-manager-row">
+              <Row>
+                {showSkleton ? (
+                  <Skeleton count={9} />
+                ) : taskData.length > 0 ? (
+                  taskData.map((t, n) => (
+                    <div key={n}>
+                      <Row className="task-manager-body pt-0 mt-1 mb-1">
+                        <Col xl="7">
+                          <Row className="pl-5">
+                            <Col xl="1">
+                              <Form.Group controlId="formBasicCheckbox">
+                                <Form.Check
+                                  className="check-box"
+                                  type="checkbox"
+                                  id={t._id}
+                                  onChange={handleCheck}
+                                />
+                              </Form.Group>
+                            </Col>
+                            <Col xl="11" className="task-manager-text">
+                              {t.name}
+                            </Col>
+                          </Row>
+                        </Col>
+                        <Col xl="5">
+                          <Timer
+                            {...t}
+                            handleCheckOpenClose={handleCheckOpenClose}
+                            handleComplet={handleComplete}
+                          />
+                        </Col>
+                      </Row>
+                      <div className="devidre mt-2 mb-2"></div>
+                    </div>
+                  ))
+                ) : (
+                  <span>No task for today</span>
+                )}
+              </Row>
+            </div>
           </Card>
         </Col>
         <Col xl={4}>
