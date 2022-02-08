@@ -185,14 +185,6 @@ function HydrationReminderCard() {
     }
   };
 
-  // const rendreCoundown = useMemo(() => {
-  //   console.log("nn ", notificTimer, notificDelay);
-  //   if (notificTimer === 1000) {
-  //     return <CustomeDown notTimer={notificDelay} notDelay={notificDelay} />;
-  //   }
-  //   return <CustomeDown notTimer={notificTimer} notDelay={notificDelay} />;
-  // }, [notificTimer]);
-
   return (
     <>
       <Card>
