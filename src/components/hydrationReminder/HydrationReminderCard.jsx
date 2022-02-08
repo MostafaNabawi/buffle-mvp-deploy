@@ -1,5 +1,3 @@
-/** @format */
-
 import { Icon } from "@iconify/react";
 import { Image, Form, Row, Col, Button, NavDropdown } from "react-bootstrap";
 import React, { useState, useEffect, useMemo } from "react";
@@ -13,7 +11,6 @@ import WaterRepository from "./WaterRepository";
 import { getWaterHydration, createWaterHydration, logout } from "../../api";
 import { useToasts } from "react-toast-notifications";
 import moment from "moment";
-//import useSound from "use-sound";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setData,
@@ -25,23 +22,12 @@ import {
   setUsedPerPercent,
   setPrecentByAmount,
   setRemindertByAmount,
-  setNotificatiionTimer,
 } from "./../../store/hydrationSclice";
 import useReminder from "./useReminder";
-import useNotific from "./useNotific";
-import Countdown from "react-countdown";
 
 function HydrationReminderCard() {
-  const {
-    data,
-    isMute,
-    precent,
-    reminder,
-    notificDelay,
-    notificTimer,
-    reminderDelay,
-    usedPerPercent,
-  } = useSelector((state) => state.hydration);
+  const { data, precent, reminder, reminderDelay, usedPerPercent } =
+    useSelector((state) => state.hydration);
   const dispatch = useDispatch();
   const { addToast } = useToasts();
   const [isSubmit, setIsSubmit] = useState(false);
@@ -136,7 +122,6 @@ function HydrationReminderCard() {
   const ReminderNotifiction = (time) => {
     const interval = timeInMilliseconds(time);
     dispatch(setNotificatiionDelay(interval));
-    dispatch(setNotificatiionTimer(interval));
   };
 
   const calculteWaterReminderPrecent = (time) => {
@@ -195,14 +180,6 @@ function HydrationReminderCard() {
       }
     }
   };
-
-  // const rendreCoundown = useMemo(() => {
-  //   console.log("nn ", notificTimer, notificDelay);
-  //   if (notificTimer === 1000) {
-  //     return <CustomeDown notTimer={notificDelay} notDelay={notificDelay} />;
-  //   }
-  //   return <CustomeDown notTimer={notificTimer} notDelay={notificDelay} />;
-  // }, [notificTimer]);
 
   return (
     <>
