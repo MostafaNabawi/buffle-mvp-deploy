@@ -13,7 +13,6 @@ import WaterRepository from "./WaterRepository";
 import { getWaterHydration, createWaterHydration, logout } from "../../api";
 import { useToasts } from "react-toast-notifications";
 import moment from "moment";
-//import useSound from "use-sound";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setData,
@@ -28,20 +27,10 @@ import {
   setNotificatiionTimer,
 } from "./../../store/hydrationSclice";
 import useReminder from "./useReminder";
-import useNotific from "./useNotific";
-import Countdown from "react-countdown";
 
 function HydrationReminderCard() {
-  const {
-    data,
-    isMute,
-    precent,
-    reminder,
-    notificDelay,
-    notificTimer,
-    reminderDelay,
-    usedPerPercent,
-  } = useSelector((state) => state.hydration);
+  const { data, precent, reminder, reminderDelay, usedPerPercent } =
+    useSelector((state) => state.hydration);
   const dispatch = useDispatch();
   const { addToast } = useToasts();
   const [isSubmit, setIsSubmit] = useState(false);
@@ -153,28 +142,6 @@ function HydrationReminderCard() {
     dispatch(setMute());
   };
 
-  // useNotific(() => {
-  //   if (notificDelay !== "") {
-  //     if (!isMute) {
-  //       if (precent > 0) {
-  //           //notific
-
-  //       }
-  //     }
-  //   }
-  // }, notificDelay);
-
-  const sendNotific = () => {
-    if (notificDelay !== "") {
-      if (!isMute) {
-        if (precent > 0) {
-          //notific
-          console.log("end");
-        }
-      }
-    }
-  };
-
   useReminder(() => {
     if (reminderDelay !== "") {
       if (precent > 0) {
@@ -221,25 +188,6 @@ function HydrationReminderCard() {
   return (
     <>
       <Card>
-        {notificTimer !== "" && (
-          <>
-            {notificTimer}
-            <Countdown
-              date={Date.now() + notificTimer}
-              onTick={(e) => {
-                dispatch(setNotificatiionTimer(e.total));
-              }}
-              onComplete={() => {
-                dispatch(setNotificatiionTimer(notificDelay));
-                console.log("end");
-              }}
-              renderer={() => {
-                return "";
-              }}
-            />
-          </>
-        )}
-
         <CardHeader
           icon={<Image src="/icone/Vector.png" alt="water drop icon" />}
           title="Hydration Reminder"
