@@ -2,7 +2,7 @@
 
 import { Icon } from "@iconify/react";
 import { Image, Form, Row, Col, Button, NavDropdown } from "react-bootstrap";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 
 import Card from "./../card/Card";
 import CardBody from "./../card/CardBody";
@@ -153,28 +153,6 @@ function HydrationReminderCard() {
     dispatch(setMute());
   };
 
-  // useNotific(() => {
-  //   if (notificDelay !== "") {
-  //     if (!isMute) {
-  //       if (precent > 0) {
-  //           //notific
-
-  //       }
-  //     }
-  //   }
-  // }, notificDelay);
-
-  const sendNotific = () => {
-    if (notificDelay !== "") {
-      if (!isMute) {
-        if (precent > 0) {
-          //notific
-          console.log("end");
-        }
-      }
-    }
-  };
-
   useReminder(() => {
     if (reminderDelay !== "") {
       if (precent > 0) {
@@ -218,28 +196,17 @@ function HydrationReminderCard() {
     }
   };
 
+  // const rendreCoundown = useMemo(() => {
+  //   console.log("nn ", notificTimer, notificDelay);
+  //   if (notificTimer === 1000) {
+  //     return <CustomeDown notTimer={notificDelay} notDelay={notificDelay} />;
+  //   }
+  //   return <CustomeDown notTimer={notificTimer} notDelay={notificDelay} />;
+  // }, [notificTimer]);
+
   return (
     <>
       <Card>
-        {notificTimer !== "" && (
-          <>
-            {notificTimer}
-            <Countdown
-              date={Date.now() + notificTimer}
-              onTick={(e) => {
-                dispatch(setNotificatiionTimer(e.total));
-              }}
-              onComplete={() => {
-                dispatch(setNotificatiionTimer(notificDelay));
-                console.log("end");
-              }}
-              renderer={() => {
-                return "";
-              }}
-            />
-          </>
-        )}
-
         <CardHeader
           icon={<Image src="/icone/Vector.png" alt="water drop icon" />}
           title="Hydration Reminder"
