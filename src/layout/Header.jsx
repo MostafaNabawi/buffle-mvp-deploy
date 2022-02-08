@@ -29,14 +29,21 @@ import {
 } from "../store/screenReminderSclice";
 import moment from "moment";
 import Swal from "sweetalert2";
-import { emitSound } from "../config/utils";
-
+import { setNotificatiionTimer } from "../store/hydrationSclice";
+import boop from "./boop.mp3";
+import UIFx from "uifx";
 const Header = () => {
   //
   const { du_time, defaultTime, dis_time } = useSelector(
     (state) => state.screen
   );
+  const { notificDelay, notificTimer, isMute, precent } = useSelector(
+    (state) => state.hydration
+  );
   //
+  const beep = new UIFx(boop, {
+    volume: 0.8,
+  });
   const { addToast } = useToasts();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -114,7 +121,8 @@ const Header = () => {
     }).then(async (res) => {
       const { payload } = await res.json();
       if (payload > 0) {
-        emitSound();
+        // emitSound().play();
+        beep.play();
       }
       setCount(payload);
     });
@@ -373,8 +381,58 @@ const Header = () => {
     const currentSpace = localStorage.getItem("current") || user?._id;
     setCurrent(currentSpace);
   }, []);
+
+  const sendNotific = () => {
+    if (notificDelay !== "") {
+      if (!isMute) {
+        if (precent > 0) {
+          //notific
+          fetch(`${API_URL}/user/water-notify`, {
+            method: "POST",
+            credentials: "include",
+          }).then((res) => {
+            if (res.status === 200) {
+              // setChanger(changer + 1);
+              setCount(count + 1);
+              beep.play();
+              // emitSound().play();
+            }
+          });
+        }
+      }
+    }
+  };
+  // useEffect(() => {
+  //   console.log("cc", changer);
+  //   if (changer > 1) {
+  //     setCount(count + 1);
+  //     emitSound();
+  //   }
+  // }, [changer]);
   return (
     <>
+      {notificTimer !== "" && (
+        <>
+          {/* {notificTimer} */}
+          <Countdown
+            date={
+              notificTimer === 1000
+                ? Date.now() + notificDelay + 1000
+                : Date.now() + notificTimer
+            }
+            onTick={(e) => {
+              if (e.total === 1000) {
+                sendNotific();
+              }
+
+              dispatch(setNotificatiionTimer(e.total));
+            }}
+            renderer={() => {
+              return "";
+            }}
+          />
+        </>
+      )}
       <Col className="col-12 header-name text-capitalize">
         Hi <span id="userFullName">{userData?.first_name}</span>
       </Col>

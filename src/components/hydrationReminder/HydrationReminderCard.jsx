@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react";
 import { Image, Form, Row, Col, Button, NavDropdown } from "react-bootstrap";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 
 import Card from "./../card/Card";
 import CardBody from "./../card/CardBody";
@@ -8,10 +8,9 @@ import CardHeader from "./../card/CardHeader";
 import Modal from "./../modal/modal";
 import TimePicker2 from "../common/timePicker/TimePicker2";
 import WaterRepository from "./WaterRepository";
-import { getWaterHydration, createWaterHydration } from "../../api";
+import { getWaterHydration, createWaterHydration, logout } from "../../api";
 import { useToasts } from "react-toast-notifications";
 import moment from "moment";
-//import useSound from "use-sound";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setData,
@@ -23,20 +22,13 @@ import {
   setUsedPerPercent,
   setPrecentByAmount,
   setRemindertByAmount,
+  setNotificatiionTimer,
 } from "./../../store/hydrationSclice";
 import useReminder from "./useReminder";
-import useNotific from "./useNotific";
 
 function HydrationReminderCard() {
-  const {
-    data,
-    isMute,
-    precent,
-    reminder,
-    notificDelay,
-    reminderDelay,
-    usedPerPercent,
-  } = useSelector((state) => state.hydration);
+  const { data, precent, reminder, reminderDelay, usedPerPercent } =
+    useSelector((state) => state.hydration);
   const dispatch = useDispatch();
   const { addToast } = useToasts();
   const [isSubmit, setIsSubmit] = useState(false);
@@ -131,6 +123,7 @@ function HydrationReminderCard() {
   const ReminderNotifiction = (time) => {
     const interval = timeInMilliseconds(time);
     dispatch(setNotificatiionDelay(interval));
+    dispatch(setNotificatiionTimer(interval));
   };
 
   const calculteWaterReminderPrecent = (time) => {
@@ -146,19 +139,6 @@ function HydrationReminderCard() {
   const handleMute = () => {
     dispatch(setMute());
   };
-
-  useNotific(() => {
-    if (notificDelay !== "") {
-      if (!isMute) {
-        if (precent > 0) {
-          addToast("INFO", {
-            autoDismiss: true,
-            appearance: "info",
-          });
-        }
-      }
-    }
-  }, notificDelay);
 
   useReminder(() => {
     if (reminderDelay !== "") {
@@ -176,6 +156,7 @@ function HydrationReminderCard() {
       setAnimat(false);
     }, 1500);
   };
+
   const handleSubmit = async (e) => {
     const timer_1 = ` ${howLongTime.hours}:${howLongTime.minutes}:${howLongTime.seconds}`;
     const timer_2 = ` ${reminderTime.hours}:${reminderTime.minutes}:${reminderTime.seconds}`;

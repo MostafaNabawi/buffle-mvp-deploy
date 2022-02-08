@@ -8,6 +8,7 @@ export const hydrationSlice = createSlice({
     reminder: 0,
     isMute: false,
     notificDelay: "",
+    notificTimer: "",
     reminderDelay: "",
     usedPerPercent: 0,
   },
@@ -37,6 +38,9 @@ export const hydrationSlice = createSlice({
     setNotificatiionDelay: (state, action) => {
       state.notificDelay = action.payload;
     },
+    setNotificatiionTimer: (state, action) => {
+      state.notificTimer = action.payload;
+    },
     setReminderDelay: (state, action) => {
       state.reminderDelay = action.payload;
     },
@@ -55,6 +59,7 @@ export const {
   setReminder,
   setRemindertByAmount,
   setNotificatiionDelay,
+  setNotificatiionTimer,
   setReminderDelay,
   setUsedPerPercent,
 } = hydrationSlice.actions;
