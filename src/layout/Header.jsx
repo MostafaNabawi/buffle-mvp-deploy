@@ -29,9 +29,9 @@ import {
 } from "../store/screenReminderSclice";
 import moment from "moment";
 import Swal from "sweetalert2";
-import { emitSound } from "../config/utils";
 import { setNotificatiionTimer } from "../store/hydrationSclice";
-
+import boop from "./boop.mp3";
+import UIFx from "uifx";
 const Header = () => {
   //
   const { du_time, defaultTime, dis_time } = useSelector(
@@ -41,6 +41,9 @@ const Header = () => {
     (state) => state.hydration
   );
   //
+  const beep = new UIFx(boop, {
+    volume: 0.8,
+  });
   const { addToast } = useToasts();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -119,7 +122,8 @@ const Header = () => {
     }).then(async (res) => {
       const { payload } = await res.json();
       if (payload > 0) {
-        emitSound().play();
+        // emitSound().play();
+        beep.play();
       }
       setCount(payload);
     });
@@ -391,7 +395,8 @@ const Header = () => {
             if (res.status === 200) {
               // setChanger(changer + 1);
               setCount(count + 1);
-              emitSound().play();
+              beep.play();
+              // emitSound().play();
             }
           });
         }
