@@ -8,7 +8,7 @@ import CardHeader from "./../card/CardHeader";
 import Modal from "./../modal/modal";
 import TimePicker2 from "../common/timePicker/TimePicker2";
 import WaterRepository from "./WaterRepository";
-import { getWaterHydration, createWaterHydration } from "../../api";
+import { getWaterHydration, createWaterHydration, logout } from "../../api";
 import { useToasts } from "react-toast-notifications";
 import moment from "moment";
 //import useSound from "use-sound";
@@ -26,7 +26,7 @@ import {
 } from "./../../store/hydrationSclice";
 import useReminder from "./useReminder";
 import useNotific from "./useNotific";
-import { Countdown } from 'react-countdown';
+import  Countdown  from 'react-countdown';
 
 function HydrationReminderCard() {
   const {
@@ -164,7 +164,7 @@ function HydrationReminderCard() {
       if (!isMute) {
         if (precent > 0) {
             //notific
-            
+            console.log("end")
         }
       }
     }
@@ -186,6 +186,7 @@ function HydrationReminderCard() {
       setAnimat(false);
     }, 1500);
   };
+
   const handleSubmit = async (e) => {
     const timer_1 = ` ${howLongTime.hours}:${howLongTime.minutes}:${howLongTime.seconds}`;
     const timer_2 = ` ${reminderTime.hours}:${reminderTime.minutes}:${reminderTime.seconds}`;
@@ -215,10 +216,11 @@ function HydrationReminderCard() {
   return (
     <>
       <Card>
+      {Date.now() + notificDelay}
       <Countdown
-          date={Date.now() + notificDelay }
+          date={Date.now()+ notificDelay }
           onTick={(e) => {
-            dispatch();
+            console.log("tick")
           }}
           onComplete={() => {
             sendNotific()
