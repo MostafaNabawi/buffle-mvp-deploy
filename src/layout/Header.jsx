@@ -1,3 +1,5 @@
+/** @format */
+
 import { useState, useEffect } from "react";
 import {
   Row,
@@ -393,28 +395,19 @@ const Header = () => {
             credentials: "include",
           }).then((res) => {
             if (res.status === 200) {
-              // setChanger(changer + 1);
+              console.log("notific");
               setCount(count + 1);
               beep.play();
-              // emitSound().play();
             }
           });
         }
       }
     }
   };
-  // useEffect(() => {
-  //   console.log("cc", changer);
-  //   if (changer > 1) {
-  //     setCount(count + 1);
-  //     emitSound();
-  //   }
-  // }, [changer]);
   return (
     <>
       {notificTimer !== "" && (
         <>
-          {/* {notificTimer} */}
           <Countdown
             date={
               notificTimer === 1000
@@ -427,9 +420,9 @@ const Header = () => {
                 sendNotific();
               }
             }}
-            renderer={() => {
-              return "";
-            }}
+            // renderer={() => {
+            //   return "";
+            // }}
           />
         </>
       )}
