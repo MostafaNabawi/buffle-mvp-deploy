@@ -58,7 +58,6 @@ const Header = () => {
   const [workspace, setWorkSpaces] = useState([]);
   const [ownSpace, setOwnSpace] = useState("");
   const [current, setCurrent] = useState("");
-  const [changer, setChanger] = useState(0);
 
   const handleLogout = async () => {
     const req = await logout();
@@ -422,10 +421,11 @@ const Header = () => {
                 : Date.now() + notificTimer
             }
             onTick={(e) => {
-              dispatch(setNotificatiionTimer(e.total));
               if (e.total === 1000) {
                 sendNotific();
               }
+
+              dispatch(setNotificatiionTimer(e.total));
             }}
             renderer={() => {
               return "";
