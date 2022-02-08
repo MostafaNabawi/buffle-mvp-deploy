@@ -1,5 +1,3 @@
-/** @format */
-
 import { Icon } from "@iconify/react";
 import { Image, Form, Row, Col, Button, NavDropdown } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
@@ -25,11 +23,10 @@ import {
   setUsedPerPercent,
   setPrecentByAmount,
   setRemindertByAmount,
-  setNotificatiionTimer,
 } from "./../../store/hydrationSclice";
 import useReminder from "./useReminder";
 import useNotific from "./useNotific";
-import Countdown from "react-countdown";
+import  Countdown  from 'react-countdown';
 
 function HydrationReminderCard() {
   const {
@@ -38,7 +35,6 @@ function HydrationReminderCard() {
     precent,
     reminder,
     notificDelay,
-    notificTimer,
     reminderDelay,
     usedPerPercent,
   } = useSelector((state) => state.hydration);
@@ -136,7 +132,6 @@ function HydrationReminderCard() {
   const ReminderNotifiction = (time) => {
     const interval = timeInMilliseconds(time);
     dispatch(setNotificatiionDelay(interval));
-    dispatch(setNotificatiionTimer(interval));
   };
 
   const calculteWaterReminderPrecent = (time) => {
@@ -165,15 +160,15 @@ function HydrationReminderCard() {
   // }, notificDelay);
 
   const sendNotific = () => {
-    if (notificDelay !== "") {
+      if (notificDelay !== "") {
       if (!isMute) {
         if (precent > 0) {
-          //notific
-          console.log("end");
+            //notific
+            console.log("end")
         }
       }
     }
-  };
+  }
 
   useReminder(() => {
     if (reminderDelay !== "") {
@@ -221,25 +216,19 @@ function HydrationReminderCard() {
   return (
     <>
       <Card>
-        {notificTimer !== "" && (
-          <>
-            {notificTimer}
-            <Countdown
-              date={Date.now() + notificTimer}
-              onTick={(e) => {
-                dispatch(setNotificatiionTimer(e.total));
-              }}
-              onComplete={() => {
-                dispatch(setNotificatiionTimer(notificDelay));
-                console.log("end");
-              }}
-              renderer={() => {
-                return "";
-              }}
-            />
-          </>
-        )}
-
+      {Date.now() + notificDelay}
+      <Countdown
+          date={Date.now()+ notificDelay }
+          onTick={(e) => {
+            console.log("tick")
+          }}
+          onComplete={() => {
+            sendNotific()
+          }}
+          renderer={() => {
+            return "";
+          }}
+        />
         <CardHeader
           icon={<Image src="/icone/Vector.png" alt="water drop icon" />}
           title="Hydration Reminder"
