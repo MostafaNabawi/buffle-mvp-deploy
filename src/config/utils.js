@@ -67,7 +67,7 @@ function checkEmail(value) {
 }
 function emitSound() {
   const audio = new Audio(boop);
-  audio.play();
+  return audio;
 }
 // ---------------------------- Other Utils ------------------------------------
 export {
