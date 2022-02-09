@@ -22,6 +22,7 @@ import {
   setUsedPerPercent,
   setPrecentByAmount,
   setRemindertByAmount,
+  setNotificatiionTimer,
 } from "./../../store/hydrationSclice";
 import useReminder from "./useReminder";
 
@@ -122,6 +123,7 @@ function HydrationReminderCard() {
   const ReminderNotifiction = (time) => {
     const interval = timeInMilliseconds(time);
     dispatch(setNotificatiionDelay(interval));
+    dispatch(setNotificatiionTimer(interval));
   };
 
   const calculteWaterReminderPrecent = (time) => {
