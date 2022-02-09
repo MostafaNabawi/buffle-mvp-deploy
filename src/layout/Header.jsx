@@ -428,7 +428,6 @@ const Header = () => {
     <>
       {notificTimer !== "" && (
         <>
-          {notificDelay + " " + notificTimer + " "}
           <Countdown
             date={
               notificTimer === 1000
@@ -441,9 +440,9 @@ const Header = () => {
               }
               dispatch(setNotificatiionTimer(e.total));
             }}
-            // renderer={() => {
-            //   return "";
-            // }}
+            renderer={() => {
+              return "";
+            }}
           />
         </>
       )}
