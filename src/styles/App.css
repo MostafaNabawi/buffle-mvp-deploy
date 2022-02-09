@@ -841,3 +841,7 @@ div.check-box > input {
 .btnAdd:active {
   border: none !important;
 }
+.customLink{
+  color: #212529 !important;
+  text-decoration: none !important;
+}
