@@ -126,6 +126,7 @@ const TableList = ({
                       <Icon
                         icon="grommet-icons:unlock"
                         color="green"
+                        className={style.pointer}
                         onClick={() =>
                           handleBlock(
                             i?._id,
@@ -137,6 +138,7 @@ const TableList = ({
                       <Icon
                         icon="grommet-icons:lock"
                         color="red"
+                        className={style.pointer}
                         onClick={() =>
                           handleActive(
                             i?._id,
