@@ -1,3 +1,5 @@
+/** @format */
+
 import { Icon } from "@iconify/react";
 import { Image, Form, Row, Col, Button, NavDropdown } from "react-bootstrap";
 import React, { useState, useEffect, useMemo } from "react";
@@ -27,8 +29,9 @@ import {
 import useReminder from "./useReminder";
 
 function HydrationReminderCard() {
-  const { data, precent, reminder, reminderDelay, usedPerPercent } =
-    useSelector((state) => state.hydration);
+  const { data, precent, reminderDelay, usedPerPercent, isMute } = useSelector(
+    (state) => state.hydration
+  );
   const dispatch = useDispatch();
   const { addToast } = useToasts();
   const [isSubmit, setIsSubmit] = useState(false);
@@ -199,13 +202,11 @@ function HydrationReminderCard() {
                 id="basic-nav-dropdown"
               >
                 <NavDropdown.Item className="reminderNavItem">
-                  Mute{" "}
+                  {isMute ? "mute" : "unMute"}
                   <i onClick={handleMute}>
                     <Icon
                       fontSize={25}
-                      icon={
-                        data.isMute ? "gg:play-pause-o" : "fa-solid:stop-circle"
-                      }
+                      icon={isMute ? "gg:play-pause-o" : "fa-solid:stop-circle"}
                     />
                   </i>
                 </NavDropdown.Item>
@@ -214,12 +215,7 @@ function HydrationReminderCard() {
           }
         />
         <CardBody>
-          <WaterRepository
-            precent={precent}
-            liter={liter}
-            reminder={reminder}
-            animat={animat}
-          />
+          <WaterRepository liter={liter} animat={animat} />
         </CardBody>
       </Card>
       <Modal

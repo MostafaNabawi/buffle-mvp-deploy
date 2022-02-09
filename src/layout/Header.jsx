@@ -1,3 +1,5 @@
+/** @format */
+
 import { useState, useEffect } from "react";
 import {
   Row,
@@ -11,7 +13,7 @@ import {
   Button,
   Badge,
 } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import { logout, userStatus } from "../api";
 import { API_URL } from "../config/index";
@@ -387,44 +389,42 @@ const Header = () => {
     if (notificDelay !== "") {
       if (!isMute) {
         if (precent > 0) {
+        console.log("notific send")
           //notific
           fetch(`${API_URL}/user/water-notify`, {
             method: "POST",
             credentials: "include",
           }).then((res) => {
             if (res.status === 200) {
-              // setChanger(changer + 1);
+              console.log("notific");
               setCount(count + 1);
               beep.play();
-              // emitSound().play();
             }
           });
         }
       }
     }
   };
-
   return (
     <>
       {notificTimer !== "" && (
         <>
-          {/* {notificTimer} */}
+        {notificDelay+" "+ notificTimer+" "}
           <Countdown
             date={
               notificTimer === 1000
-                ? Date.now() + notificDelay + 1000
+                ? Date.now() + notificDelay 
                 : Date.now() + notificTimer
             }
             onTick={(e) => {
               if (e.total === 1000) {
                 sendNotific();
               }
-
               dispatch(setNotificatiionTimer(e.total));
             }}
-            renderer={() => {
-              return "";
-            }}
+            // renderer={() => {
+            //   return "";
+            // }}
           />
         </>
       )}
@@ -633,8 +633,8 @@ const Header = () => {
               }
               className="navDropdomnIcon"
             >
-              <NavDropdown.Item href="/dashboard/profile">
-                Profile
+              <NavDropdown.Item >
+                <Link to="/dashboard/profile" className="customLink">Profile</Link>
               </NavDropdown.Item>
               {workspace.length > 0 && (
                 <DropdownButton
@@ -704,13 +704,13 @@ const Header = () => {
 
               {/*  */}
               {showUserRoute && (
-                <NavDropdown.Item href="/dashboard/user-management">
-                  User management
+                <NavDropdown.Item >
+                  <Link to="/dashboard/user-management">User management</Link>
                 </NavDropdown.Item>
               )}
               {showUserRoute && (
-                <NavDropdown.Item href="/dashboard/setting">
-                  Settings
+                <NavDropdown.Item>
+                  <Link to="/dashboard/setting"> Settings</Link>
                 </NavDropdown.Item>
               )}
               <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>

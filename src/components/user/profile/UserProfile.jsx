@@ -174,7 +174,7 @@ const UserProfile = () => {
         setLoading(false);
       }
     } else {
-      addToast("All field is required!", {
+      addToast("Please fill all required field (*)!", {
         appearance: "warning",
         autoDismiss: 4000,
       });
@@ -225,7 +225,7 @@ const UserProfile = () => {
                   <Skeleton height={50} count={1} />
                 ) : (
                   <>
-                    <Form.Label>First name</Form.Label>
+                    <Form.Label>First name *</Form.Label>
                     <Form.Control
                       type="text"
                       placeholder="First  name"
@@ -245,7 +245,7 @@ const UserProfile = () => {
                   <Skeleton height={50} count={1} />
                 ) : (
                   <>
-                    <Form.Label>Last Name</Form.Label>
+                    <Form.Label>Last Name *</Form.Label>
                     <Form.Control
                       type="text"
                       placeholder="Last Name"
@@ -267,7 +267,7 @@ const UserProfile = () => {
                   <Skeleton height={50} count={1} />
                 ) : (
                   <>
-                    <Form.Label>Email address</Form.Label>
+                    <Form.Label>Email address *</Form.Label>
                     <Form.Control
                       type="email"
                       placeholder="Enter email"
