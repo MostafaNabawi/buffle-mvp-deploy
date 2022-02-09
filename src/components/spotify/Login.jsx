@@ -6,7 +6,6 @@ export default function SpotifyLogin() {
   useEffect(() => {
     const main_uri = "https://accounts.spotify.com/authorize";
     const redirect_uri = window.location.href;
-    console.log("rrr", redirect_uri);
     const scopes = [
       "streaming",
       "user-read-email",
