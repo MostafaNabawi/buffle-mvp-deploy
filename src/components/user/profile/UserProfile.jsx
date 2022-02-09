@@ -115,7 +115,7 @@ const UserProfile = () => {
   const handleEdite = async (e) => {
     e.preventDefault();
 
-    if (firstName && lastName && email && slack && departure) {
+    if (firstName && lastName && email) {
       setLoading(true);
       try {
         if (tags.length > 0) {

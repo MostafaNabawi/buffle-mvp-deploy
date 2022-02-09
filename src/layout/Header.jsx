@@ -26,6 +26,7 @@ import {
   setDu_time,
   setDefault,
   setDis_time,
+  setDefault_dis_time
 } from "../store/screenReminderSclice";
 import moment from "moment";
 import Swal from "sweetalert2";
@@ -34,7 +35,7 @@ import boop from "./boop.mp3";
 import UIFx from "uifx";
 const Header = () => {
   //
-  const { du_time, defaultTime, dis_time } = useSelector(
+  const { du_time, defaultTime, dis_time, default_dis_time } = useSelector(
     (state) => state.screen
   );
   const { notificDelay, notificTimer, isMute, precent } = useSelector(
@@ -77,7 +78,6 @@ const Header = () => {
     const arr = val.split(":");
     const time =
       arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000;
-    // setDu_time(time);
     dispatch(setDu_time(time));
     return time;
   };
@@ -85,7 +85,6 @@ const Header = () => {
     const arr = val.split(":");
     const time =
       arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000;
-    // setDis_time(time);
     dispatch(setDis_time(time));
     return time;
   };
@@ -302,6 +301,17 @@ const Header = () => {
   }, [webData]);
 
   useEffect(() => {
+    const type = localStorage.getItem("own");
+    const space = localStorage.getItem("space");
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (type === "true" || space !== "m") {
+      setOwnSpace({ id: user?._id, space_name: `${user?.first_name}_space` });
+    }
+    const currentSpace = localStorage.getItem("current") || user?._id;
+    setCurrent(currentSpace);
+  }, []);
+
+  useEffect(() => {
     async function getStatus() {
       const req = await userStatus();
       if (req.status !== 200) {
@@ -325,19 +335,20 @@ const Header = () => {
         if (payload.mute) {
           localStorage.setItem("screen", "on");
           dispatch(setDefault(payload.duration));
+          dispatch(setDefault_dis_time(payload.display));
           handleDurationTime(payload.duration);
           handleDisplayTime(payload.display);
         } else {
           localStorage.setItem("screen", "of");
           dispatch(setDefault(payload.duration));
+          dispatch(setDefault_dis_time(payload.display));
           handleDurationTime(payload.duration);
           handleDisplayTime(payload.display);
         }
       } else {
         localStorage.setItem("screen", "of");
-        setDefault("00:10:00");
-        handleDurationTime("00:10:00");
-        handleDisplayTime("00:01:00");
+        handleDurationTime(du_time);
+        handleDisplayTime(dis_time);
       }
     }
     countNotification();
@@ -371,16 +382,6 @@ const Header = () => {
       ioInstance.close();
     };
   }, []);
-  useEffect(() => {
-    const type = localStorage.getItem("own");
-    const space = localStorage.getItem("space");
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (type === "true" || space !== "m") {
-      setOwnSpace({ id: user?._id, space_name: `${user?.first_name}_space` });
-    }
-    const currentSpace = localStorage.getItem("current") || user?._id;
-    setCurrent(currentSpace);
-  }, []);
 
   const sendNotific = () => {
     if (notificDelay !== "") {
@@ -402,13 +403,7 @@ const Header = () => {
       }
     }
   };
-  // useEffect(() => {
-  //   console.log("cc", changer);
-  //   if (changer > 1) {
-  //     setCount(count + 1);
-  //     emitSound();
-  //   }
-  // }, [changer]);
+
   return (
     <>
       {notificTimer !== "" && (
@@ -474,7 +469,11 @@ const Header = () => {
             <h1>Screen Lock For</h1>
             <Countdown
               date={Date.now() + dis_time}
+              onTick={(e) => {
+                dispatch(setDis_time(e.total));
+              }}
               onComplete={() => {
+                handleDisplayTime (default_dis_time)
                 setStart(true);
               }}
               // renderer={() => {
@@ -488,7 +487,11 @@ const Header = () => {
         {du_time > 0 && !start && (
           <Countdown
             date={Date.now() + dis_time}
+            onTick={(e) => {
+              dispatch(setDis_time(e.total));
+            }}
             onComplete={() => {
+              handleDisplayTime (default_dis_time)
               setStart(true);
             }}
             renderer={() => {
