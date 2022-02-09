@@ -1,5 +1,3 @@
-/** @format */
-
 import { useState, useEffect } from "react";
 import {
   Row,
@@ -309,6 +307,7 @@ const Header = () => {
       if (String(webData) === String(checkup)) {
         //notification related to this user
         setCount(count + 1);
+        beep.play();
         setWebData("");
       }
     }
@@ -417,17 +416,11 @@ const Header = () => {
       }
     }
   };
-  // useEffect(() => {
-  //   console.log("cc", changer);
-  //   if (changer > 1) {
-  //     setCount(count + 1);
-  //     emitSound();
-  //   }
-  // }, [changer]);
   useEffect(() => {
     if (alert) {
       beep.play();
       dispatch(setAlert(false));
+      setCount(count + 1);
       dispatch(setRun(false));
     }
   }, [alert]);
