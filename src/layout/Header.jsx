@@ -388,6 +388,7 @@ const Header = () => {
     if (notificDelay !== "") {
       if (!isMute) {
         if (precent > 0) {
+        console.log("notific send")
           //notific
           fetch(`${API_URL}/user/water-notify`, {
             method: "POST",
@@ -407,22 +408,22 @@ const Header = () => {
     <>
       {notificTimer !== "" && (
         <>
+        {notificDelay+" "+ notificTimer+" "}
           <Countdown
             date={
               notificTimer === 1000
-                ? Date.now() + notificDelay + 1000
+                ? Date.now() + notificDelay 
                 : Date.now() + notificTimer
             }
             onTick={(e) => {
               if (e.total === 1000) {
                 sendNotific();
               }
-
               dispatch(setNotificatiionTimer(e.total));
             }}
-            renderer={() => {
-              return "";
-            }}
+            // renderer={() => {
+            //   return "";
+            // }}
           />
         </>
       )}
