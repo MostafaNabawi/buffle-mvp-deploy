@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   Row,
   Col,
@@ -424,26 +424,49 @@ const Header = () => {
       dispatch(setRun(false));
     }
   }, [alert]);
+
+  const app = useCallback(() => {
+    console.log("n", notificTimer);
+    if (precent > 0 && notificTimer > 0) {
+      setTimeout(() => {
+        console.log("I have excuted!!!!!!");
+        dispatch(setNotificatiionTimer(notificTimer - 1000));
+        if (notificTimer === 1000) {
+          sendNotific();
+          dispatch(setNotificatiionTimer(notificDelay));
+        }
+      }, 1000);
+    }
+  }, [notificTimer]);
+  // useEffect(() => {
+  //   console.log("Notific ", precent, notificTimer);
+  //   app();
+  // }, [notificTimer]);
+  useEffect(() => {
+    console.log("NOT EFFECT", precent, notificTimer);
+    app();
+  }, [notificTimer]);
   return (
     <>
-      {notificTimer !== "" && (
+      {notificTimer !== "" && precent > 0 && (
         <>
-          <Countdown
+          {/* <Countdown
             date={
               notificTimer === 1000
                 ? Date.now() + notificDelay
                 : Date.now() + notificTimer
             }
+            key={`c-3`}
             onTick={(e) => {
               if (e.total === 1000) {
                 sendNotific();
               }
               dispatch(setNotificatiionTimer(e.total));
             }}
-            renderer={() => {
-              return "";
-            }}
-          />
+            // renderer={() => {
+            //   return "";
+            // }}
+          /> */}
         </>
       )}
       <Col className="col-12 header-name text-capitalize">
@@ -451,6 +474,7 @@ const Header = () => {
       </Col>
       {du_time > 0 && start && (
         <Countdown
+          key={`c-4`}
           date={Date.now() + du_time}
           onTick={(e) => {
             dispatch(setDu_time(e.total));
@@ -486,6 +510,7 @@ const Header = () => {
           <div className="screenDiv">
             <h1>Screen Lock For</h1>
             <Countdown
+              key={`c-5`}
               date={Date.now() + dis_time}
               onTick={(e) => {
                 dispatch(setDis_time(e.total));
@@ -504,6 +529,7 @@ const Header = () => {
         )}
         {du_time > 0 && !start && (
           <Countdown
+            key={`c-6`}
             date={Date.now() + dis_time}
             onTick={(e) => {
               dispatch(setDis_time(e.total));

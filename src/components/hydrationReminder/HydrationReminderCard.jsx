@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setData,
   setMute,
+  setIsRun,
   setPrecent,
   setReminder,
   setNotificatiionDelay,
@@ -75,6 +76,7 @@ function HydrationReminderCard() {
         new Date(req.data?.setTime),
         "milliseconds"
       );
+      console.log("seted time", seconds);
       if (seconds == 0) {
         dispatch(setPrecentByAmount(100));
         dispatch(setRemindertByAmount(0));
@@ -92,17 +94,18 @@ function HydrationReminderCard() {
         } else if (pastedPrecent > 100) {
           dispatch(setPrecentByAmount(0));
           dispatch(setRemindertByAmount(req.data.daily_goal));
+          console.warn("No data !!!!!!!!!!");
         }
       }
       dispatch(setData(req.data));
       setDailyGoal(req.data.daily_goal);
       setLiter(req.data.daily_goal);
       calculteWaterReminderPrecent(req.data.work);
+      // dispatch(setNotificatiionTimer)
       ReminderNotifiction(req.data.reminder);
       calculteUsedPerPercent(req.data.daily_goal);
     }
   };
-
   const changeTimeFormat = (val) => {
     const arr = val.split(":");
     const hours = arr[0].trim();
