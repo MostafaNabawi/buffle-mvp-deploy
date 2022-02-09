@@ -420,9 +420,9 @@ const Header = () => {
                 sendNotific();
               }
             }}
-            // renderer={() => {
-            //   return "";
-            // }}
+            renderer={() => {
+              return "";
+            }}
           />
         </>
       )}
