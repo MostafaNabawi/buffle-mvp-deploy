@@ -30,9 +30,12 @@ import {
 import moment from "moment";
 import Swal from "sweetalert2";
 import { setNotificatiionTimer } from "../store/hydrationSclice";
+import { setAlert, setRun } from "../store/taskSlice";
 import boop from "./boop.mp3";
 import UIFx from "uifx";
 const Header = () => {
+  const { alert } = useSelector((state) => state.task);
+
   //
   const { du_time, defaultTime, dis_time } = useSelector(
     (state) => state.screen
@@ -254,7 +257,9 @@ const Header = () => {
       if (before !== "m") {
         localStorage.setItem("own", "true");
       }
-      localStorage.setItem("current", space?.space_data[0]?._id);
+
+      localStorage.setItem("current", space?._id);
+
       window.location.href = `/dashboard`;
     }
   };
@@ -292,8 +297,15 @@ const Header = () => {
   };
   useEffect(() => {
     if (webData) {
-      const current = JSON.parse(localStorage.getItem("user"));
-      if (current?._id === webData) {
+      let checkup = "";
+      if (localStorage.getItem("current")) {
+        checkup = localStorage.getItem("current");
+      } else {
+        const user = JSON.parse(localStorage.getItem("user"));
+        checkup = user?._id;
+      }
+      console.log("cc", checkup, webData);
+      if (String(webData) === String(checkup)) {
         //notification related to this user
         setCount(count + 1);
         setWebData("");
@@ -409,6 +421,13 @@ const Header = () => {
   //     emitSound();
   //   }
   // }, [changer]);
+  useEffect(() => {
+    if (alert) {
+      beep.play();
+      dispatch(setAlert(false));
+      dispatch(setRun(false));
+    }
+  }, [alert]);
   return (
     <>
       {notificTimer !== "" && (
