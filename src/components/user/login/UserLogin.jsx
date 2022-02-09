@@ -136,7 +136,6 @@ const UserLogin = () => {
     });
     const res = await req.json();
     if (req.status === 200) {
-      document.getElementsByClassName("swal-google")[0].remove();
       if (res.type === 0) {
         addToast(`${res?.msg}⛔`, {
           appearance: "warning",
@@ -150,14 +149,14 @@ const UserLogin = () => {
         localStorage.setItem("user", JSON.stringify(res.user));
         localStorage.setItem("space", res.stype);
         localStorage.setItem("others", JSON.stringify(res.others));
-        navigate("/dashboard");
+        window.location.href = `${window.location.href}dashboard`;
       }
       if (res.type === 2) {
         localStorage.setItem("user", JSON.stringify(res.user));
         localStorage.setItem("space", res?.stype);
         localStorage.setItem("others", JSON.stringify(res?.others));
         localStorage.setItem("current", res?.current);
-        navigate("/dashboard");
+        window.location.href = `${window.location.href}dashboard`;
       }
     } else {
       document.getElementsByClassName("swal-google")[0].remove();

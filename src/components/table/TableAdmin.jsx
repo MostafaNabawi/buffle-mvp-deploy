@@ -224,7 +224,7 @@ const TableAdmin = ({
           <>
             <Icon
               icon="vaadin:ellipsis-dots-v"
-              className="mx-2"
+              className={`mx-2 ${style.pointer}`}
               onClick={() => {
                 setSelectedUser(object);
                 setShowModal(true);
@@ -237,7 +237,7 @@ const TableAdmin = ({
         <>
           <Icon
             icon="vaadin:ellipsis-dots-v"
-            className="mx-2"
+            className={`mx-2 ${style.pointer}`}
             onClick={() => {
               setSelectedUser(object);
               setShowModal(true);
@@ -247,6 +247,7 @@ const TableAdmin = ({
             <Icon
               icon="grommet-icons:unlock"
               color="green"
+              className={style.pointer}
               onClick={() =>
                 handleBlock(object?.space[0]?._id, object?.space[0]?.space_name)
               }
@@ -256,6 +257,7 @@ const TableAdmin = ({
             <Icon
               icon="grommet-icons:lock"
               color="red"
+              className={style.pointer}
               onClick={() =>
                 handleActive(
                   object?.space[0]?._id,
@@ -268,6 +270,7 @@ const TableAdmin = ({
             <Icon
               icon="grommet-icons:lock"
               style={{ color: "#2a52be" }}
+              className={style.pointer}
               onClick={() =>
                 handleActive(
                   object?.space[0]?._id,
