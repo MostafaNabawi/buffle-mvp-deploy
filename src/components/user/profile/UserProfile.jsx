@@ -213,9 +213,9 @@ const UserProfile = () => {
             </Form.Group>
            </Col>
            <Col xl={8} className="pt-5">
-           <h2 className={`${style.title}`}>
+           <h1 className={`${style.title}`}>
              <span>{firstName +" "+ lastName}</span>
-           </h2>
+           </h1>
            </Col>
           </Row>
           <Row>
