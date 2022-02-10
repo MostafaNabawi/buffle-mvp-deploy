@@ -68,7 +68,7 @@ function HydrationReminderCard() {
   const fetch = async () => {
     const req = await getWaterHydration();
     if (req.data !== null) {
-      const seconds = moment(new Date()).diff(
+      let seconds = moment(new Date()).diff(
         new Date(req.data?.setTime),
         "seconds"
       );
@@ -80,18 +80,23 @@ function HydrationReminderCard() {
       if (seconds == 0) {
         dispatch(setPrecentByAmount(100));
         dispatch(setRemindertByAmount(0));
+        console.log("1111111111");
       } else {
+        console.log("2222222222222222");
+
         const reminderDelay = timeInMilliseconds(req.data.work) / 100;
         const usedPerPercent = req.data.daily_goal / 100;
         var temp = 0;
         const pastedPrecent = Math.floor(milliseconds / reminderDelay);
         if (pastedPrecent <= 100) {
+          console.log("333333333333333");
           for (let index = 0; index < pastedPrecent; index++) {
             temp += usedPerPercent;
           }
           dispatch(setPrecentByAmount(100 - pastedPrecent));
           dispatch(setRemindertByAmount(temp));
         } else if (pastedPrecent > 100) {
+          console.log("4444444444444444");
           dispatch(setPrecentByAmount(0));
           dispatch(setRemindertByAmount(req.data.daily_goal));
           console.warn("No data !!!!!!!!!!");
@@ -103,6 +108,7 @@ function HydrationReminderCard() {
       calculteWaterReminderPrecent(req.data.work);
       // dispatch(setNotificatiionTimer)
       ReminderNotifiction(req.data.reminder);
+
       calculteUsedPerPercent(req.data.daily_goal);
     }
   };
@@ -173,7 +179,7 @@ function HydrationReminderCard() {
     };
     if (dailyGoal > 0 && timer_1 !== "" && timer_2 !== "") {
       const req = await createWaterHydration(data);
-      if (req.status == 200) {
+      if (req.status === 200) {
         addToast("Created Susseccfully", {
           autoDismiss: true,
           appearance: "success",

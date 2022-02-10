@@ -30,10 +30,10 @@ import {
 } from "../store/screenReminderSclice";
 import moment from "moment";
 import Swal from "sweetalert2";
-import { setNotificatiionTimer } from "../store/hydrationSclice";
 import { setAlert, setRun } from "../store/taskSlice";
 import boop from "./boop.mp3";
 import UIFx from "uifx";
+import TimerCustome from "./TimerCustome";
 const Header = () => {
   const { alert } = useSelector((state) => state.task);
 
@@ -396,26 +396,6 @@ const Header = () => {
     };
   }, []);
 
-  const sendNotific = () => {
-    if (notificDelay !== "") {
-      if (!isMute) {
-        if (precent > 0) {
-          console.log("notific send");
-          //notific
-          fetch(`${API_URL}/user/water-notify`, {
-            method: "POST",
-            credentials: "include",
-          }).then((res) => {
-            if (res.status === 200) {
-              console.log("notific");
-              setCount(count + 1);
-              beep.play();
-            }
-          });
-        }
-      }
-    }
-  };
   useEffect(() => {
     if (alert) {
       beep.play();
@@ -425,48 +405,11 @@ const Header = () => {
     }
   }, [alert]);
 
-  const app = useCallback(() => {
-    console.log("n", notificTimer);
-    if (precent > 0 && notificTimer > 0) {
-      setTimeout(() => {
-        console.log("I have excuted!!!!!!");
-        dispatch(setNotificatiionTimer(notificTimer - 1000));
-        if (notificTimer === 1000) {
-          sendNotific();
-          dispatch(setNotificatiionTimer(notificDelay));
-        }
-      }, 1000);
-    }
-  }, [notificTimer]);
-  // useEffect(() => {
-  //   console.log("Notific ", precent, notificTimer);
-  //   app();
-  // }, [notificTimer]);
-  useEffect(() => {
-    console.log("NOT EFFECT", precent, notificTimer);
-    app();
-  }, [notificTimer]);
   return (
     <>
       {notificTimer !== "" && precent > 0 && (
         <>
-          {/* <Countdown
-            date={
-              notificTimer === 1000
-                ? Date.now() + notificDelay
-                : Date.now() + notificTimer
-            }
-            key={`c-3`}
-            onTick={(e) => {
-              if (e.total === 1000) {
-                sendNotific();
-              }
-              dispatch(setNotificatiionTimer(e.total));
-            }}
-            // renderer={() => {
-            //   return "";
-            // }}
-          /> */}
+          <TimerCustome />
         </>
       )}
       <Col className="col-12 header-name text-capitalize">
