@@ -29,6 +29,7 @@ const PreogressBar = ({ range }) => {
 
   useEffect(() => {
     if (range?.startDate) {
+      console.log("End", range?.endDate);
       // check type
       if (range?.type === 1) {
         const meta = getTotalSeconds(range?.startDate, range?.endDate);
@@ -63,11 +64,11 @@ const PreogressBar = ({ range }) => {
           />
         </Col>
         <Col xl="10" className="pl-0">
-
           <ProgressBar
             label={
               play && (
                 <Countdown
+                  key={`c-1`}
                   date={new Date(range?.endDate)}
                   onTick={(time) => {
                     setData(time.total);

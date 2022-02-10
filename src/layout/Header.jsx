@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   Row,
   Col,
@@ -30,10 +30,10 @@ import {
 } from "../store/screenReminderSclice";
 import moment from "moment";
 import Swal from "sweetalert2";
-import { setNotificatiionTimer } from "../store/hydrationSclice";
 import { setAlert, setRun } from "../store/taskSlice";
 import boop from "./boop.mp3";
 import UIFx from "uifx";
+import TimerCustome from "./TimerCustome";
 const Header = () => {
   const { alert } = useSelector((state) => state.task);
 
@@ -396,26 +396,6 @@ const Header = () => {
     };
   }, []);
 
-  const sendNotific = () => {
-    if (notificDelay !== "") {
-      if (!isMute) {
-        if (precent > 0) {
-          console.log("notific send");
-          //notific
-          fetch(`${API_URL}/user/water-notify`, {
-            method: "POST",
-            credentials: "include",
-          }).then((res) => {
-            if (res.status === 200) {
-              console.log("notific");
-              setCount(count + 1);
-              beep.play();
-            }
-          });
-        }
-      }
-    }
-  };
   useEffect(() => {
     if (alert) {
       beep.play();
@@ -427,24 +407,9 @@ const Header = () => {
 
   return (
     <>
-      {notificTimer !== "" && (
+      {notificTimer !== "" && precent > 0 && (
         <>
-          <Countdown
-            date={
-              notificTimer === 1000
-                ? Date.now() + notificDelay
-                : Date.now() + notificTimer
-            }
-            onTick={(e) => {
-              if (e.total === 1000) {
-                sendNotific();
-              }
-              dispatch(setNotificatiionTimer(e.total));
-            }}
-            renderer={() => {
-              return "";
-            }}
-          />
+          <TimerCustome />
         </>
       )}
       <Col className="col-12 header-name text-capitalize">
@@ -452,6 +417,7 @@ const Header = () => {
       </Col>
       {du_time > 0 && start && (
         <Countdown
+          key={`c-4`}
           date={Date.now() + du_time}
           onTick={(e)=>{
             if(localStorage.getItem("screen") === "on"){
@@ -489,6 +455,7 @@ const Header = () => {
           <div className="screenDiv">
             <h1>Screen Lock For</h1>
             <Countdown
+              key={`c-5`}
               date={Date.now() + dis_time}
               onTick={() => {
               }}
@@ -507,6 +474,7 @@ const Header = () => {
         )}
         {du_time > 0 && !start && (
           <Countdown
+            key={`c-6`}
             date={Date.now() + dis_time}
             autoStart={localStorage.getItem("screen") === "on"?false:true}
             onTick={() => {
