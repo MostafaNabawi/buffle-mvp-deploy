@@ -29,9 +29,9 @@ import {
 import useReminder from "./useReminder";
 
 function HydrationReminderCard() {
-  const { data, precent, reminderDelay, usedPerPercent, isMute } = useSelector(
-    (state) => state.hydration
-  );
+  const { data, precent, reminderDelay, usedPerPercent, isMute, inChanged } =
+    useSelector((state) => state.hydration);
+
   const dispatch = useDispatch();
   const { addToast } = useToasts();
   const [isSubmit, setIsSubmit] = useState(false);
@@ -42,6 +42,7 @@ function HydrationReminderCard() {
   const handleClose = () => setShow(false);
   const handleShow = async () => {
     setShow(true);
+    dispatch(setIsChanged(false));
     if (data !== "") {
       setDailyGoal(data.daily_goal);
       setHowLongTime(changeTimeFormat(data.work));
@@ -67,15 +68,11 @@ function HydrationReminderCard() {
   const fetch = async () => {
     const req = await getWaterHydration();
     if (req.data !== null) {
-      const seconds = moment(new Date()).diff(
-        new Date(req.data?.setTime),
-        "seconds"
-      );
       const milliseconds = moment(new Date()).diff(
         new Date(req.data?.setTime),
         "milliseconds"
       );
-      if (seconds == 0) {
+      if (inChanged) {
         dispatch(setPrecentByAmount(100));
         dispatch(setRemindertByAmount(0));
       } else {
@@ -176,6 +173,7 @@ function HydrationReminderCard() {
           appearance: "success",
         });
         handleClose();
+        dispatch(setIsChanged(true));
         setIsSubmit(!isSubmit);
       } else {
         addToast("Error Please Try Again!", {
