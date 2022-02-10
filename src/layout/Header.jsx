@@ -424,6 +424,7 @@ const Header = () => {
       dispatch(setRun(false));
     }
   }, [alert]);
+
   return (
     <>
       {notificTimer !== "" && (
@@ -452,8 +453,10 @@ const Header = () => {
       {du_time > 0 && start && (
         <Countdown
           date={Date.now() + du_time}
-          onTick={(e) => {
-            dispatch(setDu_time(e.total));
+          onTick={(e)=>{
+            if(localStorage.getItem("screen") === "on"){
+              dispatch(setDu_time(e.total));
+            }
           }}
           onComplete={() => {
             handleDurationTime(defaultTime);
@@ -482,31 +485,34 @@ const Header = () => {
           localStorage.getItem("screen") === "on" ? "lockScreen" : ""
         } text-center ${!start ? "" : "lockScreenHide"}`}
       >
-        {localStorage.getItem("screen") === "on" && du_time > 0 && !start ? (
+        {localStorage.getItem("screen") === "on" && du_time > 0 && !start && (
           <div className="screenDiv">
             <h1>Screen Lock For</h1>
             <Countdown
               date={Date.now() + dis_time}
-              onTick={(e) => {
-                dispatch(setDis_time(e.total));
+              onTick={() => {
               }}
+              autoStart={localStorage.getItem("screen") === "on"?true:false}
               onComplete={() => {
                 handleDisplayTime(default_dis_time);
-                setStart(true);
+                if (localStorage.getItem("screen") === "on") {
+                  setStart(true);
+                }
               }}
               // renderer={() => {
               //   return ""
               // }}
             />
           </div>
-        ) : (
-          ""
         )}
         {du_time > 0 && !start && (
           <Countdown
             date={Date.now() + dis_time}
-            onTick={(e) => {
-              dispatch(setDis_time(e.total));
+            autoStart={localStorage.getItem("screen") === "on"?false:true}
+            onTick={() => {
+              if (localStorage.getItem("screen") === "on") {
+                setStart(true);
+              }
             }}
             onComplete={() => {
               handleDisplayTime(default_dis_time);

@@ -117,13 +117,13 @@ function ScreenFreeReminderCard() {
       if (payload.mute) {
         localStorage.setItem("screen", "on");
         dispatch(setDu_time(payload.duration));
-        dispatch(setDefault_dis_time(payload.duration));
+        dispatch(setDefault_dis_time(payload.display));
         handleDurationTime(payload.duration);
         handleDisplayTime(payload.display);
       } else {
         localStorage.setItem("screen", "off");
         dispatch(setDu_time(payload.duration));
-        dispatch(setDefault_dis_time(payload.duration));
+        dispatch(setDefault_dis_time(payload.display));
         handleDurationTime(payload.duration);
         handleDisplayTime(payload.display);
       }
