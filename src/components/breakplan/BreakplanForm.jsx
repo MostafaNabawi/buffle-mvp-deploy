@@ -66,7 +66,7 @@ function BreackplanFrom({
       const { status } = await CreateNewPlan(newBreak);
       if (status === 200) {
         getBreakPlan()
-        addToast("Created Susseccfully", {
+        addToast("New breack plan created Susseccfully", {
           autoDismiss: true,
           appearance: "success",
         });
@@ -156,7 +156,7 @@ function BreackplanFrom({
           }),
         }).then((res) => {
           if (res.status == 200) {
-            addToast("Sended", { autoDismiss: true, appearance: "success" });
+            addToast("Your suggest sended", { autoDismiss: true, appearance: "success" });
             setNewSuggestInput("");
             setShow(false);
             setClose(true);
@@ -195,7 +195,7 @@ function BreackplanFrom({
         body: JSON.stringify(joindata),
       }).then((res) => {
         if (res.status == 200) {
-          addToast("Sended", { autoDismiss: true, appearance: "success" });
+          addToast("Request sended", { autoDismiss: true, appearance: "success" });
           setShow(false);
           setClose(true);
           setloading(false);
@@ -232,7 +232,7 @@ function BreackplanFrom({
         body: JSON.stringify(data),
       }).then((res) => {
         if (res.status == 200) {
-          addToast("Sended", { autoDismiss: true, appearance: "success" });
+          addToast("Request sended", { autoDismiss: true, appearance: "success" });
           setEmail("");
           setShow(false);
           setClose(true);
@@ -269,7 +269,7 @@ function BreackplanFrom({
         }),
       }).then((res) => {
         if (res.status == 200) {
-          addToast("Sended", { autoDismiss: true, appearance: "success" });
+          addToast("Sended invited request", { autoDismiss: true, appearance: "success" });
           setEmail("");
           setShow(false);
           setClose(true);

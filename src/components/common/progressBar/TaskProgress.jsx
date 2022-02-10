@@ -12,7 +12,7 @@ import {
 } from "../../../api";
 import { useToasts } from "react-toast-notifications";
 import { useDispatch, useSelector } from "react-redux";
-import { setRun } from "../../../store/taskSlice";
+import { setRun, setAlert } from "../../../store/taskSlice";
 const Timer = (props) => {
   const { addToast } = useToasts();
   const dispatch = useDispatch();
@@ -103,13 +103,13 @@ const Timer = (props) => {
           parseInt(hour) * 3600 +
           parseInt(minute) * 60 +
           parseInt(second))) /
-      parseInt(duration)
+        parseInt(duration)
     );
     setCurrentTime(
       parseInt(day) * 86400 +
-      parseInt(hour) * 3600 +
-      parseInt(minute) * 60 +
-      parseInt(second)
+        parseInt(hour) * 3600 +
+        parseInt(minute) * 60 +
+        parseInt(second)
     );
     if (currentTime === duration) {
       setPlay(!play);
@@ -122,6 +122,7 @@ const Timer = (props) => {
             autoDismiss: true,
             appearance: "success",
           });
+          dispatch(setAlert(true));
         }
       }
       request();

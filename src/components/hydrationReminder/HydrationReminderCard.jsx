@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setData,
   setMute,
+  setIsRun,
   setPrecent,
   setReminder,
   setNotificatiionDelay,
@@ -25,12 +26,20 @@ import {
   setPrecentByAmount,
   setRemindertByAmount,
   setNotificatiionTimer,
+  setIsChanged,
 } from "./../../store/hydrationSclice";
 import useReminder from "./useReminder";
 
 function HydrationReminderCard() {
-  const { data, precent, reminderDelay, usedPerPercent, isMute, inChanged } =
-    useSelector((state) => state.hydration);
+  const {
+    data,
+    precent,
+    reminderDelay,
+    usedPerPercent,
+    isMute,
+    inChanged,
+    timeOutId,
+  } = useSelector((state) => state.hydration);
 
   const dispatch = useDispatch();
   const { addToast } = useToasts();
@@ -63,11 +72,15 @@ function HydrationReminderCard() {
   //useEffect function
   useEffect(() => {
     fetch();
+    return () => {
+      dispatch(setIsChanged(false));
+    };
   }, [isSubmit]);
 
   const fetch = async () => {
     const req = await getWaterHydration();
     if (req.data !== null) {
+      clearTimeout(timeOutId);
       const milliseconds = moment(new Date()).diff(
         new Date(req.data?.setTime),
         "milliseconds"
@@ -95,11 +108,11 @@ function HydrationReminderCard() {
       setDailyGoal(req.data.daily_goal);
       setLiter(req.data.daily_goal);
       calculteWaterReminderPrecent(req.data.work);
+      // dispatch(setNotificatiionTimer)
       ReminderNotifiction(req.data.reminder);
       calculteUsedPerPercent(req.data.daily_goal);
     }
   };
-
   const changeTimeFormat = (val) => {
     const arr = val.split(":");
     const hours = arr[0].trim();
@@ -167,7 +180,7 @@ function HydrationReminderCard() {
     };
     if (dailyGoal > 0 && timer_1 !== "" && timer_2 !== "") {
       const req = await createWaterHydration(data);
-      if (req.status == 200) {
+      if (req.status === 200) {
         addToast("Created Susseccfully", {
           autoDismiss: true,
           appearance: "success",

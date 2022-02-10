@@ -1,3 +1,5 @@
+/** @format */
+
 // const API_URL = process.env.API_URL || "http://localhost:8000/api";
 const API_URL =
   process.env.API_URL || "https://buffle-api-test.herokuapp.com/api";
