@@ -34,11 +34,7 @@ function TimerCustome() {
       }
     });
   };
-  return (
-    <div>
-      TimerCustome {notificTimer} || delay {notificDelay}
-    </div>
-  );
+  return "";
 }
 
 export default TimerCustome;
