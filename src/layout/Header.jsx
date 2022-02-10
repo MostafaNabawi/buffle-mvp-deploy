@@ -459,7 +459,7 @@ const Header = () => {
               date={Date.now() + dis_time}
               onTick={() => {
               }}
-              autoStart={localStorage.getItem("screen") === "on"?true:false}
+              // autoStart={localStorage.getItem("screen") === "on"?true:false}
               onComplete={() => {
                 handleDisplayTime(default_dis_time);
                 if (localStorage.getItem("screen") === "on") {
@@ -699,12 +699,12 @@ const Header = () => {
               {/*  */}
               {showUserRoute && (
                 <NavDropdown.Item>
-                  <Link to="/dashboard/user-management">User management</Link>
+                  <Link  className="customLink" to="/dashboard/user-management">User management</Link>
                 </NavDropdown.Item>
               )}
               {showUserRoute && (
                 <NavDropdown.Item>
-                  <Link to="/dashboard/setting"> Settings</Link>
+                  <Link  className="customLink" to="/dashboard/setting"> Settings</Link>
                 </NavDropdown.Item>
               )}
               <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
