@@ -20,15 +20,8 @@ const SideBar = () => {
               setStart(false)
             }}
           />
-<<<<<<< HEAD
-        </div>
-       )
-     
-      }
-=======
         </>
       )} */}
->>>>>>> 9ed2cfb53181b3048bed931a9c3418220df57e99
       <div className="pt-3">
         <ul className="m-0 sidebar-list">
           <li className="mt-3">
