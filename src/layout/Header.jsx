@@ -407,11 +407,11 @@ const Header = () => {
 
   return (
     <>
-      {notificTimer !== "" && precent > 0 && (
+      {/* {notificTimer !== "" && precent > 0 && (
         <>
           <TimerCustome />
         </>
-      )}
+      )} */}
       <Col className="col-12 header-name text-capitalize">
         Hi <span id="userFullName">{userData?.first_name}</span>
       </Col>
@@ -419,8 +419,8 @@ const Header = () => {
         <Countdown
           key={`c-4`}
           date={Date.now() + du_time}
-          onTick={(e)=>{
-            if(localStorage.getItem("screen") === "on"){
+          onTick={(e) => {
+            if (localStorage.getItem("screen") === "on") {
               dispatch(setDu_time(e.total));
             }
           }}
@@ -457,9 +457,8 @@ const Header = () => {
             <Countdown
               key={`c-5`}
               date={Date.now() + dis_time}
-              onTick={() => {
-              }}
-              autoStart={localStorage.getItem("screen") === "on"?true:false}
+              onTick={() => {}}
+              autoStart={localStorage.getItem("screen") === "on" ? true : false}
               onComplete={() => {
                 handleDisplayTime(default_dis_time);
                 if (localStorage.getItem("screen") === "on") {
@@ -476,7 +475,7 @@ const Header = () => {
           <Countdown
             key={`c-6`}
             date={Date.now() + dis_time}
-            autoStart={localStorage.getItem("screen") === "on"?false:true}
+            autoStart={localStorage.getItem("screen") === "on" ? false : true}
             onTick={() => {
               if (localStorage.getItem("screen") === "on") {
                 setStart(true);
