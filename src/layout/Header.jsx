@@ -407,11 +407,11 @@ const Header = () => {
 
   return (
     <>
-      {notificTimer !== "" && precent > 0 && (
+      {/* {notificTimer !== "" && precent > 0 && (
         <>
           <TimerCustome />
         </>
-      )}
+      )} */}
       <Col className="col-12 header-name text-capitalize">
         Hi <span id="userFullName">{userData?.first_name}</span>
       </Col>
@@ -420,7 +420,9 @@ const Header = () => {
           key={`c-4`}
           date={Date.now() + du_time}
           onTick={(e) => {
-            dispatch(setDu_time(e.total));
+            if (localStorage.getItem("screen") === "on") {
+              dispatch(setDu_time(e.total));
+            }
           }}
           onComplete={() => {
             handleDurationTime(defaultTime);
@@ -449,33 +451,33 @@ const Header = () => {
           localStorage.getItem("screen") === "on" ? "lockScreen" : ""
         } text-center ${!start ? "" : "lockScreenHide"}`}
       >
-        {localStorage.getItem("screen") === "on" && du_time > 0 && !start ? (
+        {localStorage.getItem("screen") === "on" && du_time > 0 && !start && (
           <div className="screenDiv">
             <h1>Screen Lock For</h1>
             <Countdown
               key={`c-5`}
               date={Date.now() + dis_time}
-              onTick={(e) => {
-                dispatch(setDis_time(e.total));
-              }}
               onComplete={() => {
                 handleDisplayTime(default_dis_time);
-                setStart(true);
+                if (localStorage.getItem("screen") === "on") {
+                  setStart(true);
+                }
               }}
               // renderer={() => {
               //   return ""
               // }}
             />
           </div>
-        ) : (
-          ""
         )}
         {du_time > 0 && !start && (
           <Countdown
             key={`c-6`}
             date={Date.now() + dis_time}
-            onTick={(e) => {
-              dispatch(setDis_time(e.total));
+            autoStart={localStorage.getItem("screen") === "on" ? false : true}
+            onTick={() => {
+              if (localStorage.getItem("screen") === "on") {
+                setStart(true);
+              }
             }}
             onComplete={() => {
               handleDisplayTime(default_dis_time);
@@ -694,12 +696,17 @@ const Header = () => {
               {/*  */}
               {showUserRoute && (
                 <NavDropdown.Item>
-                  <Link to="/dashboard/user-management">User management</Link>
+                  <Link className="customLink" to="/dashboard/user-management">
+                    User management
+                  </Link>
                 </NavDropdown.Item>
               )}
               {showUserRoute && (
                 <NavDropdown.Item>
-                  <Link to="/dashboard/setting"> Settings</Link>
+                  <Link className="customLink" to="/dashboard/setting">
+                    {" "}
+                    Settings
+                  </Link>
                 </NavDropdown.Item>
               )}
               <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
