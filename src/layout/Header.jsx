@@ -407,11 +407,11 @@ const Header = () => {
 
   return (
     <>
-      {/* {notificTimer !== "" && precent > 0 && (
+      {notificTimer !== "" && precent > 0 && (
         <>
           <TimerCustome />
         </>
-      )} */}
+      )}
       <Col className="col-12 header-name text-capitalize">
         Hi <span id="userFullName">{userData?.first_name}</span>
       </Col>

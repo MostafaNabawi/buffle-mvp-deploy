@@ -1,3 +1,5 @@
+/** @format */
+
 import { createSlice } from "@reduxjs/toolkit";
 
 export const hydrationSlice = createSlice({
@@ -11,6 +13,8 @@ export const hydrationSlice = createSlice({
     notificTimer: "",
     reminderDelay: "",
     usedPerPercent: 0,
+    inChanged: false,
+    timeOutId: "",
   },
   reducers: {
     setData: (state, action) => {
@@ -48,6 +52,12 @@ export const hydrationSlice = createSlice({
       state.usedPerPercent = 0;
       state.usedPerPercent = action.payload;
     },
+    setIsChanged: (state, action) => {
+      state.inChanged = action.payload;
+    },
+    setTimeOutID: (state, action) => {
+      state.timeOutId = action.payload;
+    },
   },
 });
 
@@ -62,6 +72,8 @@ export const {
   setNotificatiionTimer,
   setReminderDelay,
   setUsedPerPercent,
+  setIsChanged,
+  setTimeOutID,
 } = hydrationSlice.actions;
 
 export default hydrationSlice.reducer;

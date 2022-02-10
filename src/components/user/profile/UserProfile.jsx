@@ -27,7 +27,7 @@ const UserProfile = () => {
   const [departure, setDeparture] = useState("");
   const [tags, setTags] = useState([]);
   const [newTag, setNewTag] = useState("");
-  const [options,setOptions]=useState([])
+  const [options, setOptions] = useState([]);
 
   const setUsetLocalStorage = () => {
     try {
@@ -84,7 +84,7 @@ const UserProfile = () => {
         payload.map((tag) => {
           const data = {
             value: tag._id,
-            label: tag.name,
+            label: tag.name + " " + `(${tag?.count || 0})`,
           };
           options.push(data);
         });
@@ -101,14 +101,13 @@ const UserProfile = () => {
     }).then(async (res) => {
       const { payload } = await res.json();
       if (payload) {
-        payload.map((item) =>{
+        payload.map((item) => {
           const data = {
             value: item.tag[0]._id,
             label: item.tag[0].name,
           };
-          tags.push(data)
-        }
-        );
+          tags.push(data);
+        });
       }
     });
   };
@@ -155,8 +154,8 @@ const UserProfile = () => {
           const { msg } = await res.json();
           if (res.status === 200) {
             setUsetLocalStorage();
-            const headerName=document.getElementById('userFullName')
-            headerName.innerHTML=firstName + " " + lastName
+            const headerName = document.getElementById("userFullName");
+            headerName.innerHTML = firstName + " " + lastName;
             addToast(msg, {
               appearance: "success",
               autoDismiss: 4000,
@@ -193,8 +192,8 @@ const UserProfile = () => {
 
   useEffect(() => {
     getUser();
-    getAllTags()
-    getUserTags()
+    getAllTags();
+    getUserTags();
   }, []);
 
   return (
@@ -203,20 +202,24 @@ const UserProfile = () => {
         <h1 className={`${style.title} text-center`}>Your Account</h1>
         <Form onSubmit={handleEdite}>
           <Row>
-           <Col xl={4}>
-           <Form.Group className="mb-3">
-              <Image className={style.userPhoto} src="/img/user-3.png" />
-              <Form.Label className={style.lablePhoto} htmlFor="photoUser">
-                <Icon icon="uil:image-upload" />
-              </Form.Label>
-              <Form.Control className={style.hide} id="photoUser" type="file" />
-            </Form.Group>
-           </Col>
-           <Col xl={8} className="pt-5">
-           <h1 className={`${style.title}`}>
-             <span>{firstName +" "+ lastName}</span>
-           </h1>
-           </Col>
+            <Col xl={4}>
+              <Form.Group className="mb-3">
+                <Image className={style.userPhoto} src="/img/user-3.png" />
+                <Form.Label className={style.lablePhoto} htmlFor="photoUser">
+                  <Icon icon="uil:image-upload" />
+                </Form.Label>
+                <Form.Control
+                  className={style.hide}
+                  id="photoUser"
+                  type="file"
+                />
+              </Form.Group>
+            </Col>
+            <Col xl={8} className="pt-5">
+              <h1 className={`${style.title}`}>
+                <span>{firstName + " " + lastName}</span>
+              </h1>
+            </Col>
           </Row>
           <Row>
             <Col xl={6}>

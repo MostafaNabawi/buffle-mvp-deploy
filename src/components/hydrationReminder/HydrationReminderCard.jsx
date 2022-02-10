@@ -26,13 +26,21 @@ import {
   setPrecentByAmount,
   setRemindertByAmount,
   setNotificatiionTimer,
+  setIsChanged,
 } from "./../../store/hydrationSclice";
 import useReminder from "./useReminder";
 
 function HydrationReminderCard() {
-  const { data, precent, reminderDelay, usedPerPercent, isMute } = useSelector(
-    (state) => state.hydration
-  );
+  const {
+    data,
+    precent,
+    reminderDelay,
+    usedPerPercent,
+    isMute,
+    inChanged,
+    timeOutId,
+  } = useSelector((state) => state.hydration);
+
   const dispatch = useDispatch();
   const { addToast } = useToasts();
   const [isSubmit, setIsSubmit] = useState(false);
@@ -43,6 +51,7 @@ function HydrationReminderCard() {
   const handleClose = () => setShow(false);
   const handleShow = async () => {
     setShow(true);
+    dispatch(setIsChanged(false));
     if (data !== "") {
       setDailyGoal(data.daily_goal);
       setHowLongTime(changeTimeFormat(data.work));
@@ -63,43 +72,36 @@ function HydrationReminderCard() {
   //useEffect function
   useEffect(() => {
     fetch();
+    return () => {
+      dispatch(setIsChanged(false));
+    };
   }, [isSubmit]);
 
   const fetch = async () => {
     const req = await getWaterHydration();
     if (req.data !== null) {
-      let seconds = moment(new Date()).diff(
-        new Date(req.data?.setTime),
-        "seconds"
-      );
+      clearTimeout(timeOutId);
       const milliseconds = moment(new Date()).diff(
         new Date(req.data?.setTime),
         "milliseconds"
       );
-      console.log("seted time", seconds);
-      if (seconds == 0) {
+      if (inChanged) {
         dispatch(setPrecentByAmount(100));
         dispatch(setRemindertByAmount(0));
-        console.log("1111111111");
       } else {
-        console.log("2222222222222222");
-
         const reminderDelay = timeInMilliseconds(req.data.work) / 100;
         const usedPerPercent = req.data.daily_goal / 100;
         var temp = 0;
         const pastedPrecent = Math.floor(milliseconds / reminderDelay);
         if (pastedPrecent <= 100) {
-          console.log("333333333333333");
           for (let index = 0; index < pastedPrecent; index++) {
             temp += usedPerPercent;
           }
           dispatch(setPrecentByAmount(100 - pastedPrecent));
           dispatch(setRemindertByAmount(temp));
         } else if (pastedPrecent > 100) {
-          console.log("4444444444444444");
           dispatch(setPrecentByAmount(0));
           dispatch(setRemindertByAmount(req.data.daily_goal));
-          console.warn("No data !!!!!!!!!!");
         }
       }
       dispatch(setData(req.data));
@@ -108,7 +110,6 @@ function HydrationReminderCard() {
       calculteWaterReminderPrecent(req.data.work);
       // dispatch(setNotificatiionTimer)
       ReminderNotifiction(req.data.reminder);
-
       calculteUsedPerPercent(req.data.daily_goal);
     }
   };
@@ -185,6 +186,7 @@ function HydrationReminderCard() {
           appearance: "success",
         });
         handleClose();
+        dispatch(setIsChanged(true));
         setIsSubmit(!isSubmit);
       } else {
         addToast("Error Please Try Again!", {

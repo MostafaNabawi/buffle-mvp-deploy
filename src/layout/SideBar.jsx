@@ -1,22 +1,11 @@
 import { React,useState } from "react";
 import { Image } from "react-bootstrap";
-import Countdown from "react-countdown";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { setNotificatiionTimer } from "../store/hydrationSclice";
-
 const SideBar = () => {
-  const [start,setStart]=useState(true)
-  const dispatch = useDispatch();
-  const { notificDelay, notificTimer, precent } = useSelector(
-    (state) => state.hydration
-  );
   return (
     <section className="h-sidebar sidebar-container ">
-      {
-       notificTimer !== "" && precent > 0 && start && (
-        <div>
-          {console.log("one...")}
+      {/* {notificTimer !== "" && precent > 0 && (
+        <>
           <Countdown
             date={
                Date.now() + notificTimer
@@ -31,10 +20,15 @@ const SideBar = () => {
               setStart(false)
             }}
           />
+<<<<<<< HEAD
         </div>
        )
      
       }
+=======
+        </>
+      )} */}
+>>>>>>> 9ed2cfb53181b3048bed931a9c3418220df57e99
       <div className="pt-3">
         <ul className="m-0 sidebar-list">
           <li className="mt-3">
