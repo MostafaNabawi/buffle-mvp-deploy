@@ -115,7 +115,7 @@ const UserProfile = () => {
   const handleEdite = async (e) => {
     e.preventDefault();
 
-    if (firstName && lastName && email && slack && departure) {
+    if (firstName && lastName && email) {
       setLoading(true);
       try {
         if (tags.length > 0) {
@@ -174,7 +174,7 @@ const UserProfile = () => {
         setLoading(false);
       }
     } else {
-      addToast("All field is required!", {
+      addToast("Please fill all required field (*)!", {
         appearance: "warning",
         autoDismiss: 4000,
       });
@@ -213,9 +213,9 @@ const UserProfile = () => {
             </Form.Group>
            </Col>
            <Col xl={8} className="pt-5">
-           <h2 className={`${style.title}`}>
+           <h1 className={`${style.title}`}>
              <span>{firstName +" "+ lastName}</span>
-           </h2>
+           </h1>
            </Col>
           </Row>
           <Row>
@@ -225,7 +225,7 @@ const UserProfile = () => {
                   <Skeleton height={50} count={1} />
                 ) : (
                   <>
-                    <Form.Label>First name</Form.Label>
+                    <Form.Label>First name *</Form.Label>
                     <Form.Control
                       type="text"
                       placeholder="First  name"
@@ -245,7 +245,7 @@ const UserProfile = () => {
                   <Skeleton height={50} count={1} />
                 ) : (
                   <>
-                    <Form.Label>Last Name</Form.Label>
+                    <Form.Label>Last Name *</Form.Label>
                     <Form.Control
                       type="text"
                       placeholder="Last Name"
@@ -267,7 +267,7 @@ const UserProfile = () => {
                   <Skeleton height={50} count={1} />
                 ) : (
                   <>
-                    <Form.Label>Email address</Form.Label>
+                    <Form.Label>Email address *</Form.Label>
                     <Form.Control
                       type="email"
                       placeholder="Enter email"

@@ -17,10 +17,11 @@ import {
   setDu_time,
   setDefault,
   setDis_time,
+  setDefault_dis_time,
 } from "../../store/screenReminderSclice";
 
 function ScreenFreeReminderCard() {
-  const { du_time, defaultTime, dis_time } = useSelector(
+  const { du_time, defaultTime, dis_time, default_dis_time } = useSelector(
     (state) => state.screen
   );
   const dispatch = useDispatch();
@@ -51,7 +52,6 @@ function ScreenFreeReminderCard() {
     const arr = val.split(":");
     const time =
       arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000;
-    // setDu_time(time);
     dispatch(setDu_time(time));
     return time;
   };
@@ -59,7 +59,6 @@ function ScreenFreeReminderCard() {
     const arr = val.split(":");
     const time =
       arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000;
-    // setDis_time(time);
     dispatch(setDis_time(time));
     return time;
   };
@@ -89,7 +88,10 @@ function ScreenFreeReminderCard() {
       const { payload } = await req.json();
       if (payload) {
         if (payload.mute) {
+          localStorage.setItem("screen", "on");
           setIsShow(true);
+        } else {
+          localStorage.setItem("screen", "off");
         }
         setData(payload);
         setGetting(false);
@@ -115,11 +117,13 @@ function ScreenFreeReminderCard() {
       if (payload.mute) {
         localStorage.setItem("screen", "on");
         dispatch(setDu_time(payload.duration));
+        dispatch(setDefault_dis_time(payload.display));
         handleDurationTime(payload.duration);
         handleDisplayTime(payload.display);
       } else {
         localStorage.setItem("screen", "off");
         dispatch(setDu_time(payload.duration));
+        dispatch(setDefault_dis_time(payload.display));
         handleDurationTime(payload.duration);
         handleDisplayTime(payload.display);
       }
@@ -254,13 +258,13 @@ function ScreenFreeReminderCard() {
                 <Icon icon="vaadin:plus" />
               </i>
               <i
-               onClick={() => {
-                // getUpdataData ()
-                setModalShow(true);
-                setSizeModal("md");
-              }}
+                onClick={() => {
+                  // getUpdataData ()
+                  setModalShow(true);
+                  setSizeModal("md");
+                }}
               >
-              <Icon icon="vaadin:ellipsis-dots-v" />
+                <Icon icon="vaadin:ellipsis-dots-v" />
               </i>
             </>
           }
