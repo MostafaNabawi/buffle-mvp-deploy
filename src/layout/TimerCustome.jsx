@@ -1,6 +1,8 @@
+/** @format */
+
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setNotificatiionTimer } from "../store/hydrationSclice";
+import { setNotificatiionTimer, setTimeOutID } from "../store/hydrationSclice";
 import { API_URL } from "../config/index";
 import boop from "./boop.mp3";
 import UIFx from "uifx";
@@ -19,9 +21,10 @@ function TimerCustome() {
       console.log("😍😎👌");
       sendNotific();
     } else {
-      setTimeout(() => {
+      let id = setTimeout(() => {
         dispatch(setNotificatiionTimer(notificTimer - 1000));
       }, 1000);
+      dispatch(setTimeOutID(id));
     }
   }, [notificTimer]);
   const sendNotific = () => {
@@ -34,11 +37,7 @@ function TimerCustome() {
       }
     });
   };
-  return (
-    <div>
-      TimerCustome {notificTimer} || delay {notificDelay}
-    </div>
-  );
+  return "";
 }
 
 export default TimerCustome;

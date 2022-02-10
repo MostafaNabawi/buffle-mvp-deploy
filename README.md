@@ -3,7 +3,6 @@
 Complete Guide on how to setup your project!
 <b>Are</b> you ready?
 
-<<<<<<< HEAD
 
 ## Available Scripts
 
@@ -74,8 +73,6 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 ## Envs and Keys
 
 ## Envs and Keys:!
-=======
 ## Envs and Keys:
 =======
 ## Envs and Keys:!
->>>>>>> a68243fa49378c264659f75f947bcd04f883eeba
