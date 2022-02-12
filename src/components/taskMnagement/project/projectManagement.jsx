@@ -315,22 +315,24 @@ const ProjectManagement = ({ value, handleGet }) => {
           return (
             <Col key={s.id} className={"col-wrapper secondary-dark"}>
               <Row className={"col-header"}>
-                <Col xl="1">
-                  <div className="bt_gs849b">
-                    <div>
-                      <div className="bt_1t4hv5t" style={{ background: s.color }}>
+                <header className="bt_k3dhnz">
+                  <div>
+                    <div className="bt_gs849b">
+                      <div>
+                        <div className="bt_1t4hv5t" style={{ background: s.color }}>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </Col>
-                <Col xl="9" className="important-today-project-title">{s.content}</Col>
-                <Col xl="2" className="project-setting">
+                  <p className="bt_1j944bq">{s.content}</p>
+                  <div className="bt_jvz5b9"></div>
                   <Icon
                     icon="icon-park-outline:setting"
-                    className="project-setting-icon"
+                    className="edit project-setting-icon"
                     onClick={() => getData(s.status)}
                   />
-                </Col>
+                </header>
+
               </Row>
               <hr className="task-manage-hr" />
               <DropWrapperProject

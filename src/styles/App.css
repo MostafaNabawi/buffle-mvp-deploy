@@ -842,6 +842,27 @@ div.check-box > input {
   border: none !important;
 }
 /*-----------color-------------*/
+.bt_k3dhnz {
+  padding: 15px 15px 13px 15px;
+  display: flex;
+  font-size: 15px;
+  font-weight: 600;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.bt_1j944bq {
+  margin-left: 10px;
+  line-height: 20px;
+}
+.bt_jvz5b9 {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+.bt_k3dhnz .edit {
+  opacity: 0.5;
+  transition: all 0.3s;
+}
 .bt_1rsx30z {
   padding: 15px;
   border: solid 1px gainsboro;
