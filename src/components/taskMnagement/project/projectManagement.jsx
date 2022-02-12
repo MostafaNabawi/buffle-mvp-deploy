@@ -22,7 +22,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import BeatLoader from "react-spinners/BeatLoader";
 // paiman changes
 import { PROJECT_TYPE } from "../../data/types";
-const ProjectManagement = ({ value, handleGet }) => {
+const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope }) => {
   const { addToast } = useToasts();
   const MySwal = withReactContent(Swal);
   const [items, setItems] = useState([]);
@@ -93,11 +93,11 @@ const ProjectManagement = ({ value, handleGet }) => {
   }, [newProject]);
   useEffect(() => {
 
-    if (id || value) {
+    if (id || value || pDrope) {
 
       request();
     }
-  }, [id, value]);
+  }, [id, value, pDrope]);
   // insert task to database for project
   const handleKeyDown = async (event) => {
     if (event.key === "Enter") {
@@ -259,10 +259,12 @@ const ProjectManagement = ({ value, handleGet }) => {
     const color2 = color[1].slice(0, color[1].length - 1) + color[1].slice(color[1].length, color[1].length);
     const setColor = await setColorToProject(projectIdEdit, color2)
     if (setColor.status === 200) {
+
       addToast("Color set Susseccfully", {
         autoDismiss: true,
         appearance: "success",
       });
+      colorChange(color2);
       request();
       setloading(false);
       setShow(false);
@@ -371,6 +373,7 @@ const ProjectManagement = ({ value, handleGet }) => {
                 onDrop={onDrop}
                 status={s.status}
                 statuses={projects}
+                handleDrop={handleDrop}
               >
                 <Col>
                   {items
