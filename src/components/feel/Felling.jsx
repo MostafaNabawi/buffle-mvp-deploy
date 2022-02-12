@@ -64,7 +64,7 @@ export default function Felling() {
       {data && isToday ? (
         <>
           <Image
-          title="Smiling"
+            title="Smiling"
             className={`feel-icon ${
               data[0]?.feel === "smiling" ? style.selectFeel : ""
             }`}
@@ -73,7 +73,7 @@ export default function Felling() {
             onClick={() => setFeel("smiling")}
           />
           <Image
-          title="Happy"
+            title="Happy"
             className={`feel-icon ${
               data[0]?.feel === "happy" ? style.selectFeel : ""
             }`}
@@ -82,7 +82,7 @@ export default function Felling() {
             onClick={() => setFeel("happy")}
           />
           <Image
-          title="Normal"
+            title="Normal"
             className={`feel-icon ${
               data[0]?.feel === "normal" ? style.selectFeel : ""
             }`}
@@ -91,16 +91,16 @@ export default function Felling() {
             onClick={() => setFeel("normal")}
           />
           <Image
-          title="Said"
+            title="Said"
             className={`feel-icon ${
               data[0]?.feel === "said" ? style.selectFeel : ""
             }`}
             src="/icone/4.png"
             alt="vector image"
-            onClick={() => setFeel("said")}
+            onClick={() => setFeel("sad")}
           />
           <Image
-          title="Crying"
+            title="Crying"
             className={`feel-icon ${
               data[0]?.feel === "crying" ? style.selectFeel : ""
             }`}
