@@ -409,7 +409,7 @@ const Header = () => {
     <>
       {notificTimer !== "" && precent > 0 && (
         <>
-          <TimerCustome />
+          <TimerCustome count={count} setCount={setCount} />
         </>
       )}
       <Col className="col-12 header-name text-capitalize">
