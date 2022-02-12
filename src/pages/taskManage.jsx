@@ -7,8 +7,12 @@ import { Card, Row, Col } from "react-bootstrap";
 import ProjectManagement from "../components/taskMnagement/project/projectManagement";
 const TaskManage = () => {
     const [value, setValue] = useState('');
+    const [changeColor, setChangeColor] = useState('');
     const handleChange = (value) => {
         setValue(value)
+    }
+    const colorChange = (val) => {
+        setChangeColor(val);
     }
     return (
         <Card className="secondary-color taskManage ">
@@ -20,8 +24,8 @@ const TaskManage = () => {
                 </Col>
             </Row>
             <DndProvider backend={HTML5Backend}>
-                <TaskManagement handleGet={handleChange} val={value} />
-                <ProjectManagement value={value} handleGet={handleChange} />
+                <TaskManagement handleGet={handleChange} val={value} colChange={changeColor} />
+                <ProjectManagement value={value} handleGet={handleChange} colorChange={colorChange} />
             </DndProvider>
 
         </Card>

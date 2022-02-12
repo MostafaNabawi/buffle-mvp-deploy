@@ -22,7 +22,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import BeatLoader from "react-spinners/BeatLoader";
 // paiman changes
 import { PROJECT_TYPE } from "../../data/types";
-const ProjectManagement = ({ value, handleGet }) => {
+const ProjectManagement = ({ value, handleGet, colorChange }) => {
   const { addToast } = useToasts();
   const MySwal = withReactContent(Swal);
   const [items, setItems] = useState([]);
@@ -42,6 +42,7 @@ const ProjectManagement = ({ value, handleGet }) => {
   const [inputTask, setInputTask] = useState({ name: "", day: '', p_id: "" });
   const [id, setId] = useState('');
   const [current, setCurrent] = useState('');
+
   async function request() {
     // get project and format
     const req = await getProject();
@@ -259,10 +260,12 @@ const ProjectManagement = ({ value, handleGet }) => {
     const color2 = color[1].slice(0, color[1].length - 1) + color[1].slice(color[1].length, color[1].length);
     const setColor = await setColorToProject(projectIdEdit, color2)
     if (setColor.status === 200) {
+
       addToast("Color set Susseccfully", {
         autoDismiss: true,
         appearance: "success",
       });
+      colorChange(color2);
       request();
       setloading(false);
       setShow(false);

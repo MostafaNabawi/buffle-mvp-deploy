@@ -10,7 +10,7 @@ import { ITEM_TYPE } from "./data/types";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
-const TaskManagement = ({ handleGet, val }) => {
+const TaskManagement = ({ handleGet, val, colChange }) => {
   const { addToast } = useToasts();
   const MySwal = withReactContent(Swal);
   const [items, setItems] = useState([]);
@@ -52,10 +52,10 @@ const TaskManagement = ({ handleGet, val }) => {
   }, [newItems]);
 
   useEffect(() => {
-    if (id || val || checkDrop) {
+    if (id || val || checkDrop || colChange) {
       request();
     }
-  }, [id, val, checkDrop]);
+  }, [id, val, checkDrop, colChange]);
   const handleChecked = (id) => {
     handleGet(id);
     setId(id);
