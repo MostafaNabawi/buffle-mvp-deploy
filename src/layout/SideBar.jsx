@@ -1,10 +1,23 @@
 import { React } from "react";
 import { Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
-
 const SideBar = () => {
   return (
     <section className="h-sidebar sidebar-container ">
+      {/* {notificTimer !== "" && precent > 0 && (
+        <>
+          <Countdown
+            date={
+              notificTimer === 1000
+                ? Date.now() + notificDelay
+                : Date.now() + notificTimer
+            }
+            onTick={(e) => {
+              dispatch(setNotificatiionTimer(e.total));
+            }}
+          />
+        </>
+      )} */}
       <div className="pt-3">
         <ul className="m-0 sidebar-list">
           <li className="mt-3">

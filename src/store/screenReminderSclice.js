@@ -3,9 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 export const screenReminderSclice = createSlice({
   name: "screen",
   initialState: {
-    du_time: "00:10:00",
-    defaultTime: "00:10:00",
-    dis_time: "00:00:10",
+    du_time: "00:20:00",
+    defaultTime: "00:20:00",
+    dis_time: "00:00:05",
+    default_dis_time:"00:00:05"
   },
   reducers: {
     setDu_time: (state, action) => {
@@ -17,10 +18,13 @@ export const screenReminderSclice = createSlice({
     setDis_time: (state, action) => {
       state.dis_time = action.payload;
     },
+    setDefault_dis_time: (state, action) => {
+      state.default_dis_time = action.payload;
+    },
   },
 });
 
-export const { setValue, setDu_time, setDefault, setDis_time } =
+export const { setValue, setDu_time, setDefault, setDis_time,setDefault_dis_time } =
   screenReminderSclice.actions;
 
 export default screenReminderSclice.reducer;

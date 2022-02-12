@@ -1,8 +1,12 @@
+/** @format */
+
 import React from "react";
 import style from "./style.module.css";
+import { useSelector } from "react-redux";
 
 function WaterRepository(props) {
-  const { precent, liter, reminder, animat } = props;
+  const { liter, animat } = props;
+  const { precent, reminder } = useSelector((state) => state.hydration);
   const animatClass = animat ? style.animat : "";
   return (
     <div className={style.wrapper}>
