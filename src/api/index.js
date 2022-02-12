@@ -149,7 +149,7 @@ async function getProject() {
   return { status: req.status, data: res.payload };
 }
 
-async function createProject(project_name, desc) {
+async function createProject(project_name, desc, clr) {
   const req = await fetch(`${API_URL}/project/new`, {
     method: "POST",
     credentials: "include",
@@ -161,6 +161,7 @@ async function createProject(project_name, desc) {
     body: JSON.stringify({
       name: project_name,
       description: desc,
+      color: clr,
     }),
   });
   return { status: req.status };
