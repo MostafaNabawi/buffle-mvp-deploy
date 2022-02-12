@@ -81,17 +81,13 @@ const CharReport = () => {
   const getFeeling = async (month) => {
     try {
       setBasy(true);
-      await fetch(`${API_URL}/`, {
-        method:"POST",
+      await fetch(`${API_URL}/user/feel-report?month=${month}`, {
         credentials: "include",
         mode: "cors",
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Allow-Credentials": true,
         },
-        body: JSON.stringify({
-          month: month,
-        }),
       }).then(async (res) => {
         const result = await res.json();
         console.log("result", result);
