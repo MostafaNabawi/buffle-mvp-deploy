@@ -8,11 +8,16 @@ import ProjectManagement from "../components/taskMnagement/project/projectManage
 const TaskManage = () => {
     const [value, setValue] = useState('');
     const [changeColor, setChangeColor] = useState('');
+    const [drop, setDrop] = useState('');
     const handleChange = (value) => {
         setValue(value)
     }
     const colorChange = (val) => {
         setChangeColor(val);
+    }
+    const handleDrop = (value) => {
+        console.log('droped', value)
+        setDrop(value);
     }
     return (
         <Card className="secondary-color taskManage ">
@@ -24,8 +29,8 @@ const TaskManage = () => {
                 </Col>
             </Row>
             <DndProvider backend={HTML5Backend}>
-                <TaskManagement handleGet={handleChange} val={value} colChange={changeColor} />
-                <ProjectManagement value={value} handleGet={handleChange} colorChange={colorChange} />
+                <TaskManagement handleGet={handleChange} val={value} colChange={changeColor} projectDroped={drop} />
+                <ProjectManagement value={value} handleGet={handleChange} colorChange={colorChange} handleDrop={handleDrop} pDrope={drop} />
             </DndProvider>
 
         </Card>

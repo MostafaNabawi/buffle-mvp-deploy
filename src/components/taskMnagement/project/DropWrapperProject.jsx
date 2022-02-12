@@ -4,12 +4,13 @@ import { PROJECT_ITEM } from "../data/types";
 import { updateTaskProject } from "../../../api";
 import { useToasts } from "react-toast-notifications";
 
-const DropWrapperProject = ({ onDrop, children, status, statuses }) => {
+const DropWrapperProject = ({ onDrop, children, status, statuses, handleDrop }) => {
   async function ProjectChange(id, p_id) {
     const update = await updateTaskProject(id, p_id);
 
     if (update.status === 200) {
       addToast("Droped successfully", { autoDismiss: true, appearance: 'success' });
+      handleDrop(p_id);
     }
     else {
       addToast("Error! Please Try Again!", { autoDismiss: false, appearance: 'error' });

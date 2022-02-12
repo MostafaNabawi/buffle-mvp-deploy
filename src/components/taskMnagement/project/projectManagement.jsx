@@ -22,7 +22,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import BeatLoader from "react-spinners/BeatLoader";
 // paiman changes
 import { PROJECT_TYPE } from "../../data/types";
-const ProjectManagement = ({ value, handleGet, colorChange }) => {
+const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope }) => {
   const { addToast } = useToasts();
   const MySwal = withReactContent(Swal);
   const [items, setItems] = useState([]);
@@ -42,7 +42,6 @@ const ProjectManagement = ({ value, handleGet, colorChange }) => {
   const [inputTask, setInputTask] = useState({ name: "", day: '', p_id: "" });
   const [id, setId] = useState('');
   const [current, setCurrent] = useState('');
-
   async function request() {
     // get project and format
     const req = await getProject();
@@ -94,11 +93,11 @@ const ProjectManagement = ({ value, handleGet, colorChange }) => {
   }, [newProject]);
   useEffect(() => {
 
-    if (id || value) {
+    if (id || value || pDrope) {
 
       request();
     }
-  }, [id, value]);
+  }, [id, value, pDrope]);
   // insert task to database for project
   const handleKeyDown = async (event) => {
     if (event.key === "Enter") {
@@ -374,6 +373,7 @@ const ProjectManagement = ({ value, handleGet, colorChange }) => {
                 onDrop={onDrop}
                 status={s.status}
                 statuses={projects}
+                handleDrop={handleDrop}
               >
                 <Col>
                   {items
