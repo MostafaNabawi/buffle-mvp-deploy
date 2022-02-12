@@ -1,4 +1,4 @@
-import { React } from "react";
+import { React,useState } from "react";
 import { Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 const SideBar = () => {
@@ -8,12 +8,16 @@ const SideBar = () => {
         <>
           <Countdown
             date={
-              notificTimer === 1000
-                ? Date.now() + notificDelay
-                : Date.now() + notificTimer
+               Date.now() + notificTimer
             }
+            autoStart={start}
             onTick={(e) => {
               dispatch(setNotificatiionTimer(e.total));
+            }}
+            onComplete={()=>{
+              dispatch(setNotificatiionTimer(notificDelay));
+              console.log("11")
+              setStart(false)
             }}
           />
         </>
