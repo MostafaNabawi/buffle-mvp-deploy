@@ -86,7 +86,7 @@ function HydrationReminderCard() {
         "milliseconds"
       );
       if (inChanged) {
-        dispatch(setPrecentByAmount(100));
+        dispatch(setPrecentByAmount(0));
         dispatch(setRemindertByAmount(0));
       } else {
         const reminderDelay = timeInMilliseconds(req.data.work) / 100;
@@ -97,10 +97,10 @@ function HydrationReminderCard() {
           for (let index = 0; index < pastedPrecent; index++) {
             temp += usedPerPercent;
           }
-          dispatch(setPrecentByAmount(100 - pastedPrecent));
+          dispatch(setPrecentByAmount(pastedPrecent));
           dispatch(setRemindertByAmount(temp));
         } else if (pastedPrecent > 100) {
-          dispatch(setPrecentByAmount(0));
+          dispatch(setPrecentByAmount(100));
           dispatch(setRemindertByAmount(req.data.daily_goal));
         }
       }
@@ -155,7 +155,7 @@ function HydrationReminderCard() {
 
   useReminder(() => {
     if (reminderDelay !== "") {
-      if (precent > 0) {
+      if (precent < 100) {
         dispatch(setReminder(usedPerPercent));
         dispatch(setPrecent());
         setAnimationClass();
