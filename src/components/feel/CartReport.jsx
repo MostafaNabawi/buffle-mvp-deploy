@@ -12,7 +12,6 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { Card, Row, Col, Form } from "react-bootstrap";
-import { useState } from "react";
 import { API_URL } from "../../config";
 const { faker } = require("@faker-js/faker");
 
@@ -63,7 +62,7 @@ export const data = {
       backgroundColor: "rgba(122,252,67, 0.5)",
     },
     {
-      label: "said",
+      label: "sad",
       data: labels.map(() => faker.datatype.number({ min: 0, max: 100 })),
       borderColor: "rgb(52,109,139)",
       backgroundColor: "rgba(52,109,139, 0.5)",
@@ -83,12 +82,16 @@ const CharReport = () => {
     try {
       setBasy(true);
       await fetch(`${API_URL}/`, {
+        method:"POST",
         credentials: "include",
         mode: "cors",
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Allow-Credentials": true,
         },
+        body: JSON.stringify({
+          month: month,
+        }),
       }).then(async (res) => {
         const result = await res.json();
         console.log("result", result);
@@ -97,6 +100,9 @@ const CharReport = () => {
       setBasy(false);
     }
   };
+  useEffect(()=>{
+
+  })
   return (
     <Row className={`p-0 m-0`}>
       <Card className={`${style.cardReport}`}>
