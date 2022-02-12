@@ -251,6 +251,22 @@ async function setProjectToItem(id, p_id) {
   });
   return { status: req.status };
 }
+async function setColorToProject(id, color) {
+  const req = await fetch(`${API_URL}/project/update-project-color`, {
+    method: "PUT",
+    credentials: "include",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
+    },
+    body: JSON.stringify({
+      projectId: id,
+      color: color,
+    }),
+  });
+  return { status: req.status };
+}
 
 async function updateTask(data) {
   const req = await fetch(`${API_URL}/task/update`, {
@@ -663,4 +679,5 @@ export {
   createIncome,
   getEventList,
   getOverView,
+  setColorToProject,
 };

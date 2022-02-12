@@ -14,7 +14,7 @@ import {
   getProjectById,
   updateProject,
   createProject,
-  deleteTask
+  deleteTask, setColorToProject
 } from "../../../api";
 import { useToasts } from "react-toast-notifications";
 import moment from "moment";
@@ -41,6 +41,7 @@ const ProjectManagement = ({ value, handleGet }) => {
   const handleShowPModal = () => setShowPModal(true);
   const [inputTask, setInputTask] = useState({ name: "", day: '', p_id: "" });
   const [id, setId] = useState('');
+  const [current, setCurrent] = useState('');
   async function request() {
     // get project and format
     const req = await getProject();
@@ -58,6 +59,7 @@ const ProjectManagement = ({ value, handleGet }) => {
 
     //get tasks and format
     const data = await getTask();
+
     const format = data?.data?.map((i, n) => {
       return {
         id: n,
@@ -70,6 +72,7 @@ const ProjectManagement = ({ value, handleGet }) => {
         start_time: i.start_time,
         completed: i.status,
         day_of_week: i.day_of_week,
+        color: i.project_tasks[0]?.color
       };
     });
     setItems(format);
@@ -126,6 +129,7 @@ const ProjectManagement = ({ value, handleGet }) => {
     setProjectName(data.data.name);
     setProjectDesc(data.data.description);
     setProjectIdEdit(id);
+    setCurrent(data.data.color);
   };
   const handleSubmitProject = async () => {
     if (!projectName) {
@@ -249,6 +253,34 @@ const ProjectManagement = ({ value, handleGet }) => {
   if (loading) {
     return "Loading..";
   }
+  const handleColor = async (value) => {
+
+    const color = value.split(':');
+    const color2 = color[1].slice(0, color[1].length - 1) + color[1].slice(color[1].length, color[1].length);
+    const setColor = await setColorToProject(projectIdEdit, color2)
+    if (setColor.status === 200) {
+      addToast("Color set Susseccfully", {
+        autoDismiss: true,
+        appearance: "success",
+      });
+      request();
+      setloading(false);
+      setShow(false);
+      setProjectIdEdit();
+    } else {
+      addToast("Error! Please Try Again!", {
+        autoDismiss: false,
+        appearance: "error",
+      });
+      setloading(false);
+      setProjectIdEdit("")
+      return true;
+    }
+    setloading(false);
+    setProjectIdEdit("");
+    return true;
+  }
+
 
   return (
     <>
@@ -315,22 +347,24 @@ const ProjectManagement = ({ value, handleGet }) => {
           return (
             <Col key={s.id} className={"col-wrapper secondary-dark"}>
               <Row className={"col-header"}>
-                <Col xl="1">
-                  <div className="bt_gs849b">
-                    <div>
-                      <div className="bt_1t4hv5t" style={{ background: s.color }}>
+                <header className="bt_k3dhnz">
+                  <div>
+                    <div className="bt_gs849b">
+                      <div>
+                        <div className="bt_1t4hv5t" style={{ background: s.color }}>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </Col>
-                <Col xl="9" className="important-today-project-title">{s.content}</Col>
-                <Col xl="2" className="project-setting">
+                  <p className="bt_1j944bq">{s.content}</p>
+                  <div className="bt_jvz5b9"></div>
                   <Icon
                     icon="icon-park-outline:setting"
-                    className="project-setting-icon"
+                    className="edit project-setting-icon"
                     onClick={() => getData(s.status)}
                   />
-                </Col>
+                </header>
+
               </Row>
               <hr className="task-manage-hr" />
               <DropWrapperProject
@@ -408,14 +442,14 @@ const ProjectManagement = ({ value, handleGet }) => {
                     <Form.Group>
                       <label>Color</label>
                       <div className="bt_1rsx30z">
-                        <div className="bt_1ln56ky" style={{ background: "rgb(56, 103, 214)" }}></div>
-                        <div className="bt_1ln56ky" style={{ background: "rgb(136, 84, 208)" }}></div>
-                        <div className="bt_1ln56ky" style={{ background: "rgb(235, 59, 90)" }}></div>
-                        <div className="bt_1ln56ky" style={{ background: "rgb(250, 130, 49)" }}></div>
-                        <div className="bt_1ln56ky current" style={{ background: "rgb(247, 183, 49)" }}></div>
-                        <div className="bt_1ln56ky" style={{ background: "rgb(32, 191, 107)" }}></div>
-                        <div className="bt_1ln56ky" style={{ background: "rgb(45, 152, 218)" }}></div>
-                        <div className="bt_1ln56ky" style={{ background: "rgb(247, 143, 179)" }}></div>
+                        <div className={`bt_1ln56ky ${current === " rgb(56, 103, 214)" ? 'current' : ''}`} style={{ background: "rgb(56, 103, 214)" }} onClick={(e) => handleColor(e.target.getAttribute('style'))}></div>
+                        <div className={`bt_1ln56ky ${current === " rgb(136, 84, 208)" ? 'current' : ''}`} style={{ background: "rgb(136, 84, 208)" }} onClick={(e) => handleColor(e.target.getAttribute('style'))}></div>
+                        <div className={`bt_1ln56ky ${current === " rgb(235, 59, 90)" ? 'current' : ''}`} style={{ background: "rgb(235, 59, 90)" }} onClick={(e) => handleColor(e.target.getAttribute('style'))}></div>
+                        <div className={`bt_1ln56ky ${current === " rgb(250, 130, 49)" ? 'current' : ''}`} style={{ background: "rgb(250, 130, 49)" }} onClick={(e) => handleColor(e.target.getAttribute('style'))}></div>
+                        <div className={`bt_1ln56ky ${current === " rgb(247, 183, 49)" ? 'current' : ''}`} style={{ background: "rgb(247, 183, 49)" }} onClick={(e) => handleColor(e.target.getAttribute('style'))}></div>
+                        <div className={`bt_1ln56ky ${current === " rgb(32, 191, 107)" ? 'current' : ''}`} style={{ background: "rgb(32, 191, 107)" }} onClick={(e) => handleColor(e.target.getAttribute('style'))}></div>
+                        <div className={`bt_1ln56ky ${current === " rgb(45, 152, 218)" ? 'current' : ''}`} style={{ background: "rgb(45, 152, 218)" }} onClick={(e) => handleColor(e.target.getAttribute('style'))}></div>
+                        <div className={`bt_1ln56ky ${current === " rgb(247, 143, 179)" ? 'current' : ''}`} style={{ background: "rgb(247, 143, 179)" }} onClick={(e) => handleColor(e.target.getAttribute('style'))}></div>
                       </div>
                     </Form.Group>
                   </>
