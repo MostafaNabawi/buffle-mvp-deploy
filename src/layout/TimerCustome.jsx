@@ -7,7 +7,7 @@ import { API_URL } from "../config/index";
 import boop from "./boop.mp3";
 import UIFx from "uifx";
 
-function TimerCustome() {
+function TimerCustome({ count, setCount }) {
   const dispatch = useDispatch();
   const beep = new UIFx(boop, {
     volume: 0.8,
@@ -34,6 +34,7 @@ function TimerCustome() {
     }).then((res) => {
       if (res.status === 200) {
         beep.play();
+        setCount(count + 1);
       }
     });
   };
