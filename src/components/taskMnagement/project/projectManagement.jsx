@@ -14,7 +14,7 @@ import {
   getProjectById,
   updateProject,
   createProject,
-  deleteTask
+  deleteTask, setColorToProject
 } from "../../../api";
 import { useToasts } from "react-toast-notifications";
 import moment from "moment";
@@ -58,6 +58,7 @@ const ProjectManagement = ({ value, handleGet }) => {
 
     //get tasks and format
     const data = await getTask();
+
     const format = data?.data?.map((i, n) => {
       return {
         id: n,
@@ -70,6 +71,7 @@ const ProjectManagement = ({ value, handleGet }) => {
         start_time: i.start_time,
         completed: i.status,
         day_of_week: i.day_of_week,
+        color: i.project_tasks[0]?.color
       };
     });
     setItems(format);
@@ -249,6 +251,33 @@ const ProjectManagement = ({ value, handleGet }) => {
   if (loading) {
     return "Loading..";
   }
+  const handleColor = async (value) => {
+    const color = value.split(':');
+    const color2 = color[1].slice(0, color[1].length - 1) + color[1].slice(color[1].length, color[1].length);
+    const setColor = await setColorToProject(projectIdEdit, color2)
+    if (setColor.status === 200) {
+      addToast("Color set Susseccfully", {
+        autoDismiss: true,
+        appearance: "success",
+      });
+      request();
+      setloading(false);
+      setShow(false);
+      setProjectIdEdit();
+    } else {
+      addToast("Error! Please Try Again!", {
+        autoDismiss: false,
+        appearance: "error",
+      });
+      setloading(false);
+      setProjectIdEdit("")
+      return true;
+    }
+    setloading(false);
+    setProjectIdEdit("");
+    return true;
+  }
+
 
   return (
     <>
@@ -410,14 +439,14 @@ const ProjectManagement = ({ value, handleGet }) => {
                     <Form.Group>
                       <label>Color</label>
                       <div className="bt_1rsx30z">
-                        <div className="bt_1ln56ky" style={{ background: "rgb(56, 103, 214)" }}></div>
-                        <div className="bt_1ln56ky" style={{ background: "rgb(136, 84, 208)" }}></div>
-                        <div className="bt_1ln56ky" style={{ background: "rgb(235, 59, 90)" }}></div>
-                        <div className="bt_1ln56ky" style={{ background: "rgb(250, 130, 49)" }}></div>
-                        <div className="bt_1ln56ky current" style={{ background: "rgb(247, 183, 49)" }}></div>
-                        <div className="bt_1ln56ky" style={{ background: "rgb(32, 191, 107)" }}></div>
-                        <div className="bt_1ln56ky" style={{ background: "rgb(45, 152, 218)" }}></div>
-                        <div className="bt_1ln56ky" style={{ background: "rgb(247, 143, 179)" }}></div>
+                        <div className="bt_1ln56ky" style={{ background: "rgb(56, 103, 214)" }} onClick={(e) => handleColor(e.target.getAttribute('style'))}></div>
+                        <div className="bt_1ln56ky" style={{ background: "rgb(136, 84, 208)" }} onClick={(e) => handleColor(e.target.getAttribute('style'))}></div>
+                        <div className="bt_1ln56ky" style={{ background: "rgb(235, 59, 90)" }} onClick={(e) => handleColor(e.target.getAttribute('style'))}></div>
+                        <div className="bt_1ln56ky" style={{ background: "rgb(250, 130, 49)" }} onClick={(e) => handleColor(e.target.getAttribute('style'))}></div>
+                        <div className="bt_1ln56ky current" style={{ background: "rgb(247, 183, 49)" }} onClick={(e) => handleColor(e.target.getAttribute('style'))}></div>
+                        <div className="bt_1ln56ky" style={{ background: "rgb(32, 191, 107)" }} onClick={(e) => handleColor(e.target.getAttribute('style'))}></div>
+                        <div className="bt_1ln56ky" style={{ background: "rgb(45, 152, 218)" }} onClick={(e) => handleColor(e.target.getAttribute('style'))}></div>
+                        <div className="bt_1ln56ky" style={{ background: "rgb(247, 143, 179)" }} onClick={(e) => handleColor(e.target.getAttribute('style'))}></div>
                       </div>
                     </Form.Group>
                   </>
