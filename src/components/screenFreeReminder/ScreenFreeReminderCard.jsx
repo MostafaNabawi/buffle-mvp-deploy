@@ -346,17 +346,25 @@ function ScreenFreeReminderCard() {
             className="mb-3"
           >
             <Tab eventKey="default" title="Default" className="pt-3 pb-4">
-            <Form.Label>Options</Form.Label>
-              <Form.Select
+              <Form.Label>Options</Form.Label>
+              <Form.Check
                 onChange={(e) => {
                   setScreeanValue(e.target.value);
                 }}
-                aria-label="Default select example"
-              >
-                <option value="0">Select options</option>
-                <option value="1"> In every hours 5 minut</option>
-                <option value="2">In every 20 minut one minut</option>
-              </Form.Select>
+                value="1"
+                name="screen"
+                type="radio"
+                label={`In every hours 5 minut`}
+              />
+              <Form.Check
+                onChange={(e) => {
+                  setScreeanValue(e.target.value);
+                }}
+                value="2"
+                name="screen"
+                type="radio"
+                label={`In every 20 minut one minut`}
+              />
             </Tab>
             <Tab eventKey="custome" title="Custome">
               <Row>
