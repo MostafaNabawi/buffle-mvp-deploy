@@ -2,8 +2,6 @@
 /* eslint-disable  react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import { Modal, Form, Container, Col, Row, Button } from "react-bootstrap";
-// import DatePicker from "./DatePicker";
-import TimePicker from "react-time-picker";
 import Project from "./Project";
 import style from "./style.module.css";
 import { Icon } from "@iconify/react";
@@ -19,7 +17,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 function TaskModal(props) {
-  const { handleClose, title, className, item, handleCheck, handleDelete, isDroped } = props;
+  const { handleClose, title, className, item, handleCheck, handleDelete, droped } = props;
   const { addToast } = useToasts();
   const [taskTitle, setTaskTitle] = useState(item.content);
   const [projects, setProjects] = useState({ label: "", value: "" });
@@ -28,7 +26,6 @@ function TaskModal(props) {
   const [startDate, setStartDate] = useState(new Date(item.date));
   const [projectId, setProjectId] = useState(item.p_id);
   const [oldValue, setOldValue] = useState();
-  const [pname, setPname] = useState('');
   async function request() {
     // get project and format
     const req = await getProject();
@@ -52,11 +49,11 @@ function TaskModal(props) {
     request();
   }, []);
   useEffect(() => {
-    if (projectId || isDroped) {
+    if (projectId || droped) {
+
       request();
-      setPname('');
     }
-  }, [projectId, isDroped]);
+  }, [projectId, droped]);
   const handleKeyDownTask = async () => {
     const data = {
       id: item.tb_id,
@@ -86,7 +83,6 @@ function TaskModal(props) {
     }
   };
   const handleClick = (value) => {
-    setPname(value.label);
     setProjectId(value.value);
   };
 

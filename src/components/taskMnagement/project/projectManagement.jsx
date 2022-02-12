@@ -40,7 +40,6 @@ const ProjectManagement = ({ value, handleGet }) => {
   const handleShow = () => setShow(true);
   const handleShowPModal = () => setShowPModal(true);
   const [inputTask, setInputTask] = useState({ name: "", day: '', p_id: "" });
-  const [checkDrop, setCheckDrop] = useState('');
   const [id, setId] = useState('');
   async function request() {
     // get project and format
@@ -51,6 +50,7 @@ const ProjectManagement = ({ value, handleGet }) => {
         content: i.name,
         description: i.description,
         status: i._id,
+        color: i.color
       };
     });
 
@@ -79,9 +79,7 @@ const ProjectManagement = ({ value, handleGet }) => {
     handleGet(id);
     setId(id);
   }
-  const handleDrop = (val) => {
-    setCheckDrop(val)
-  }
+
   useEffect(() => {
     request();
   }, []);
@@ -136,7 +134,7 @@ const ProjectManagement = ({ value, handleGet }) => {
     } else {
       setError("");
       setloading(true);
-      const createP = await createProject(projectName, projectDesc);
+      const createP = await createProject(projectName, projectDesc, "rgb(247, 143, 179)");
       if (createP.status === 200) {
         addToast("Created Susseccfully", {
           autoDismiss: true,
@@ -169,7 +167,8 @@ const ProjectManagement = ({ value, handleGet }) => {
       const updateP = await updateProject(
         projectIdEdit,
         projectName,
-        projectDesc
+        projectDesc,
+
       );
       if (updateP.status === 200) {
         addToast("Updated Susseccfully", {
@@ -316,8 +315,16 @@ const ProjectManagement = ({ value, handleGet }) => {
           return (
             <Col key={s.id} className={"col-wrapper secondary-dark"}>
               <Row className={"col-header"}>
-                <Col lg="10">{s.content}</Col>
-                <Col lg="2" className="project-setting">
+                <Col xl="1">
+                  <div className="bt_gs849b">
+                    <div>
+                      <div className="bt_1t4hv5t" style={{ background: s.color }}>
+                      </div>
+                    </div>
+                  </div>
+                </Col>
+                <Col xl="9" className="important-today-project-title">{s.content}</Col>
+                <Col xl="2" className="project-setting">
                   <Icon
                     icon="icon-park-outline:setting"
                     className="project-setting-icon"
@@ -330,7 +337,6 @@ const ProjectManagement = ({ value, handleGet }) => {
                 onDrop={onDrop}
                 status={s.status}
                 statuses={projects}
-                handleDrop={handleDrop}
               >
                 <Col>
                   {items
@@ -347,7 +353,6 @@ const ProjectManagement = ({ value, handleGet }) => {
                         handleChecked={handleChecked}
                         handleGet={handleGet}
                         handleDelete={handleDelete}
-                        isDroped={checkDrop}
                       ></Item>
                     ))}
                   <div className="new-task-div">
@@ -374,13 +379,13 @@ const ProjectManagement = ({ value, handleGet }) => {
           show={show}
           handleClose={handleClose}
           title="Update Project"
-          className="create-project-modal"
           body={
             <Row>
               <Col md={12}>
                 {projectName.length > 0 ? (
                   <>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
+                      <label>Project Name</label>
                       <Form.Control
                         type="text"
                         placeholder="Name your project..."
@@ -391,13 +396,27 @@ const ProjectManagement = ({ value, handleGet }) => {
                         <div className="invalid-feedback d-block">{error}</div>
                       ) : null}
                     </Form.Group>
-                    <Form.Group>
+                    <Form.Group className="update-project-textarea">
+                      <label>Project description</label>
                       <Form.Control
                         as="textarea"
-                        rows={5}
+                        rows={3}
                         defaultValue={projectDesc}
                         onChange={(e) => setProjectDesc(e.target.value)}
                       />
+                    </Form.Group>
+                    <Form.Group>
+                      <label>Color</label>
+                      <div className="bt_1rsx30z">
+                        <div className="bt_1ln56ky" style={{ background: "rgb(56, 103, 214)" }}></div>
+                        <div className="bt_1ln56ky" style={{ background: "rgb(136, 84, 208)" }}></div>
+                        <div className="bt_1ln56ky" style={{ background: "rgb(235, 59, 90)" }}></div>
+                        <div className="bt_1ln56ky" style={{ background: "rgb(250, 130, 49)" }}></div>
+                        <div className="bt_1ln56ky current" style={{ background: "rgb(247, 183, 49)" }}></div>
+                        <div className="bt_1ln56ky" style={{ background: "rgb(32, 191, 107)" }}></div>
+                        <div className="bt_1ln56ky" style={{ background: "rgb(45, 152, 218)" }}></div>
+                        <div className="bt_1ln56ky" style={{ background: "rgb(247, 143, 179)" }}></div>
+                      </div>
                     </Form.Group>
                   </>
                 ) : (
