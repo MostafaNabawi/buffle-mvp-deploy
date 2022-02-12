@@ -7,7 +7,7 @@ import { useToasts } from "react-toast-notifications";
 
 const Item = (props) => {
   const { addToast } = useToasts();
-  const { item, index, moveItem, PTYPE, handleGet, handleChecked, handleDelete, isDroped, pid } = props;
+  const { item, index, moveItem, PTYPE, handleGet, handleChecked, handleDelete } = props;
   var checked = item.completed === 'completed' ? 'checked' : '';
   const ref = useRef(null);
   const [, drop] = useDrop({
@@ -96,7 +96,8 @@ const Item = (props) => {
         <span className={"item-title"} onClick={handleShow}>
           {item.content}
         </span>
-        <div className={`color-bar color-bar-${item.day_of_week}`} />
+        {/* <div className={`color-bar color-bar-${item.day_of_week}`} /> */}
+        <div className="color-bar" style={{ background: item.color }} />
       </div>
 
       <TaskModal
@@ -107,7 +108,6 @@ const Item = (props) => {
         {...props}
         handleCheck={handleGet}
         handleDelete={handleDelete}
-        isDroped={isDroped}
       />
     </Fragment>
   );

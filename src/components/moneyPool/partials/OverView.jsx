@@ -30,6 +30,9 @@ function OverView({ data }) {
           {innerData.owedReport.map((i, n) => (
             <div key={`over-${n}`}>{i?.msg}</div>
           ))}
+          {innerData.owedReport.map((i, n) => (
+            <div key={`over-${n}`}>{i?.msg}</div>
+          ))}
         </>
       );
     }

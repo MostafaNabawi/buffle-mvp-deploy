@@ -35,6 +35,7 @@ const TaskManagement = ({ handleGet, val }) => {
         start_time: i.start_time,
         completed: i.status,
         day_of_week: i.day_of_week,
+        color: i.project_tasks[0]?.color
       };
     });
     setItems(format);

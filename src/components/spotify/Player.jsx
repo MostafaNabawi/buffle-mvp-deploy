@@ -54,7 +54,8 @@ const Player = ({ code }) => {
         uris={data}
         styles={{
           activeColor: "#fff",
-          bgColor: "#333",
+          bgColor:
+            "radial-gradient( 100% 682.41% at 4.04% 0%, var(--low-vein-blue) 0%, var(--primary-color) 100% )",
           color: "#fff",
           loaderColor: "#fff",
           sliderColor: "#fff",
