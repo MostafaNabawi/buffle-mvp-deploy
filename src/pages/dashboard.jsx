@@ -579,6 +579,11 @@ const Dashboard = () => {
               className="p-0"
               icon={<Image src="/icone/brain 1.png" alt="vector image" />}
               title="How you feel today"
+              action={
+                <Link to={"feel-report"}>
+                  <Icon color="black" icon="iconoir:reports" />
+                </Link>
+              }
             />
             <div className="pt-3 pb-0 mb-0 card-feel-icon ">
               <Felling />
