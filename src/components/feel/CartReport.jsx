@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import style from "./style.module.css";
 import {
   Chart as ChartJS,
@@ -12,6 +12,8 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { Card, Row, Col, Form } from "react-bootstrap";
+import { useState } from "react";
+import { API_URL } from "../../config";
 const { faker } = require("@faker-js/faker");
 
 ChartJS.register(
@@ -37,34 +39,64 @@ export const options = {
   },
 };
 
-const labels = [
-  "Start",
-  "1 Week",
-  "2 Week",
-  "3 Week",
-  "4 Week",
-  "End"
-];
+const labels = ["", "1 Week", "2 Week", "3 Week", "4 Week"];
 
 export const data = {
   labels,
   datasets: [
     {
-      label: "test",
-      data: labels.map(() => faker.datatype.number({ min: 50, max: 100 })),
-      borderColor: "rgb(255, 99, 132)",
-      backgroundColor: "rgba(255, 99, 132, 0.5)",
+      label: "Happy",
+      data: labels.map(() => faker.datatype.number({ min: 0, max: 100 })),
+      borderColor: "rgb(235,129,115)",
+      backgroundColor: "rgba(235,129,115, 0.5)",
     },
     {
-      label: "Dataset 2",
+      label: "Smiling",
+      data: labels.map(() => faker.datatype.number({ min: 50, max: 100 })),
+      borderColor: "rgb(238,180,21)",
+      backgroundColor: "rgba(238,180,21, 0.5)",
+    },
+    {
+      label: "Normal",
       data: labels.map(() => faker.datatype.number({ min: 0, max: 100 })),
-      borderColor: "rgb(53, 162, 235)",
-      backgroundColor: "rgba(53, 162, 235, 0.5)",
+      borderColor: "rgb(122,252,67)",
+      backgroundColor: "rgba(122,252,67, 0.5)",
+    },
+    {
+      label: "said",
+      data: labels.map(() => faker.datatype.number({ min: 0, max: 100 })),
+      borderColor: "rgb(52,109,139)",
+      backgroundColor: "rgba(52,109,139, 0.5)",
+    },
+    {
+      label: "Crying",
+      data: labels.map(() => faker.datatype.number({ min: 0, max: 100 })),
+      borderColor: "rgb(25,55,105)",
+      backgroundColor: "rgba(25,55,105, 0.5)",
     },
   ],
 };
 // console.log(labels.map(() => faker.datatype.number({ min: 50, max: 100 })),)
 const CharReport = () => {
+  const [basy, setBasy] = useState(false);
+  const getFeeling = async (month) => {
+    try {
+      setBasy(true);
+      await fetch(`${API_URL}/`, {
+        credentials: "include",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": true,
+        },
+      }).then(async (res) => {
+        const result = await res.json();
+        console.log("result", result);
+      });
+    } catch {
+      setBasy(false);
+    }
+  };
   return (
     <Row className={`p-0 m-0`}>
       <Card className={`${style.cardReport}`}>
@@ -80,7 +112,7 @@ const CharReport = () => {
             <option value="9">August</option>
             <option value="10">Sebtember</option>
             <option value="11">October</option>
-            <option value="12">November</option>  
+            <option value="12">November</option>
           </Form.Select>
         </Col>
         <Line options={options} data={data} />
