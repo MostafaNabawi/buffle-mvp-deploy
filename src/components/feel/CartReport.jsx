@@ -68,7 +68,7 @@ export const data = {
     },
   ],
 };
-console.log(labels.map(() => faker.datatype.number({ min: 50, max: 100 })),)
+// console.log(labels.map(() => faker.datatype.number({ min: 50, max: 100 })),)
 const CharReport = () => {
   return (
     <Row className={`p-0 m-0`}>
