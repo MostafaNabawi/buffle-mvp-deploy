@@ -404,7 +404,7 @@ const Header = () => {
       dispatch(setRun(false));
     }
   }, [alert]);
-
+  console.log("ss => ", current);
   return (
     <>
       {notificTimer !== "" && precent > 0 && (
@@ -640,7 +640,7 @@ const Header = () => {
                       key={`space-${i}`}
                       onClick={() => handleSwitch(space)}
                     >
-                      {space?.space_data[0]?._id === current ? (
+                      {space?._id === current ? (
                         <span
                           style={{
                             color: "green",
