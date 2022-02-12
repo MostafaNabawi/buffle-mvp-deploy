@@ -402,7 +402,6 @@ const Header = () => {
       dispatch(setRun(false));
     }
   }, [alert]);
-  console.log("ss => ", current);
   return (
     <>
       {notificTimer !== "" && precent > 0 && (
