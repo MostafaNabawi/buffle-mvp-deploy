@@ -15,9 +15,10 @@ import { useToasts } from "react-toast-notifications";
 import moment from 'moment';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useSelector } from 'react-redux';
 
 function TaskModal(props) {
-  const { handleClose, title, className, item, handleCheck, handleDelete, droped } = props;
+  const { handleClose, title, className, item, handleCheck, handleDelete, projectChange } = props;
   const { addToast } = useToasts();
   const [taskTitle, setTaskTitle] = useState(item.content);
   const [projects, setProjects] = useState({ label: "", value: "" });
@@ -26,6 +27,9 @@ function TaskModal(props) {
   const [startDate, setStartDate] = useState(new Date(item.date));
   const [projectId, setProjectId] = useState(item.p_id);
   const [oldValue, setOldValue] = useState();
+  const [pName, setPaName] = useState();
+  const { value } = useSelector((state) => state.projectName);
+
   async function request() {
     // get project and format
     const req = await getProject();
@@ -49,11 +53,27 @@ function TaskModal(props) {
     request();
   }, []);
   useEffect(() => {
-    if (projectId || droped) {
+    if (projectId || projectChange) {
 
       request();
     }
-  }, [projectId, droped]);
+  }, [projectId, projectChange]);
+  async function getNewData() {
+    const getP = await getProjectById(value);
+    if (getP.data !== null) {
+      const selected = { value: getP.data._id, label: getP.data.name };
+      setPaName(selected);
+    } else {
+      const selected = { value: 0, label: "" };
+      setPaName(selected);
+    }
+  }
+  useEffect(() => {
+    if (value) {
+
+      getNewData();
+    }
+  }, [value]);
   const handleKeyDownTask = async () => {
     const data = {
       id: item.tb_id,
@@ -85,7 +105,6 @@ function TaskModal(props) {
   const handleClick = (value) => {
     setProjectId(value.value);
   };
-
   return (
     <Modal
       {...props}
@@ -105,7 +124,7 @@ function TaskModal(props) {
             <Project
               {...props}
               handleClick={handleClick}
-              value={oldValue}
+              value={pName != null ? pName : oldValue}
               project={projects}
               handleSetProjct={handleCheck}
             />

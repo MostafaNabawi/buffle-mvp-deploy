@@ -16,7 +16,6 @@ const TaskManage = () => {
         setChangeColor(val);
     }
     const handleDrop = (value) => {
-        console.log('droped', value)
         setDrop(value);
     }
     return (

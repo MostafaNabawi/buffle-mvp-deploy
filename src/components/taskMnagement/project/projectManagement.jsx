@@ -94,10 +94,9 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope }
   useEffect(() => {
 
     if (id || value || pDrope) {
-
       request();
     }
-  }, [id, value, pDrope]);
+  }, [id, value || pDrope]);
   // insert task to database for project
   const handleKeyDown = async (event) => {
     if (event.key === "Enter") {
