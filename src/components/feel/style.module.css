@@ -11,3 +11,6 @@
     transform: scale(1.2);
   }
 }
+.cardReport{
+  height: fit-content !important;
+}
