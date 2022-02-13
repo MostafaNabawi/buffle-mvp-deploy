@@ -58,6 +58,7 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
       request();
     }
   }, [id, val, checkDrop, colChange, projectDroped]);
+
   const handleChecked = (id) => {
     handleGet(id);
     setId(id);

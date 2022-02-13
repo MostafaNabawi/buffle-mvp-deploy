@@ -14,3 +14,6 @@
 .cardReport{
   height: fit-content !important;
 }
+.chartTitle{
+  padding-left: 25% !important;
+}

@@ -199,7 +199,8 @@ async function updateProject(id, name, desc) {
 }
 
 // ----------------------tasks--------------
-async function createTask(task, type, duration, moved, status) {
+async function createTask(task, type, duration, moved, status, checked) {
+  console.log("true", checked);
   const req = await fetch(`${API_URL}/task/new`, {
     method: "POST",
     credentials: "include",
@@ -217,8 +218,10 @@ async function createTask(task, type, duration, moved, status) {
       moved: moved,
       status: status,
       spend: 0,
+      check: checked,
     }),
   });
+
   const resault = await req.json();
   return { status: req.status, data: resault.payload };
 }

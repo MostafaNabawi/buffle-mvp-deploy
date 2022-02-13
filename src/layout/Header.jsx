@@ -255,7 +255,7 @@ const Header = () => {
         localStorage.setItem("own", "true");
       }
 
-      localStorage.setItem("current", space?._id);
+      localStorage.setItem("current", space?.space_id);
 
       window.location.href = `/dashboard`;
     }
@@ -301,7 +301,6 @@ const Header = () => {
         const user = JSON.parse(localStorage.getItem("user"));
         checkup = user?._id;
       }
-      console.log("cc", checkup, webData);
       if (String(webData) === String(checkup)) {
         //notification related to this user
         setCount(count + 1);
@@ -402,6 +401,11 @@ const Header = () => {
       dispatch(setRun(false));
     }
   }, [alert]);
+  const handleSearchByTag = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    navigate(`/hashtag/${formData.get("search-input")}`);
+  };
   return (
     <>
       {notificTimer !== "" && precent > 0 && (
@@ -635,7 +639,7 @@ const Header = () => {
                       key={`space-${i}`}
                       onClick={() => handleSwitch(space)}
                     >
-                      {space?._id === current ? (
+                      {space?.space_id === current ? (
                         <span
                           style={{
                             color: "green",
@@ -697,7 +701,7 @@ const Header = () => {
             </NavDropdown>
           </div>
           <div className="form-search">
-            <Form>
+            <Form onSubmit={handleSearchByTag}>
               <Form.Group
                 className="mb-3 serach-input input-group"
                 controlId="formBasicEmail"
@@ -708,7 +712,8 @@ const Header = () => {
                 <Form.Control
                   className="search-input2"
                   type="search"
-                  placeholder="search"
+                  name="search-input"
+                  placeholder="search tags..."
                 />
               </Form.Group>
             </Form>

@@ -26,6 +26,7 @@ import UserList from "./components/user/userList/UserList";
 import { useEffect, useState } from "react";
 import UserListAdmin from "./components/user/userList/UserListAdmin";
 import SpotifyLogin from "./components/spotify/Login";
+import Hashtag from "./pages/hashtag";
 function App() {
   //
   //
@@ -87,6 +88,9 @@ function App() {
         </Route>
         <Route path="/spotify" element={<Layout />}>
           <Route index element={<SpotifyLogin />} />
+        </Route>
+        <Route path="/hashtag" element={<Layout />}>
+          <Route path="/hashtag/:tag" element={<Hashtag />} />
         </Route>
       </Routes>
     </div>

@@ -905,3 +905,6 @@ div.check-box > input {
   color: #212529 !important;
   text-decoration: none !important;
 }
+.extra-break-time {
+  text-transform: none !important;
+}
