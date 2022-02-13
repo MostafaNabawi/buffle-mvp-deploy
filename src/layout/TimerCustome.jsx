@@ -26,6 +26,7 @@ function TimerCustome({ count, setCount }) {
       dispatch(setTimeOutID(id));
     }
   }, [notificTimer]);
+
   const sendNotific = () => {
     if (percent <= 100 && !isMute) {
       fetch(`${API_URL}/user/water-notify`, {
@@ -37,6 +38,9 @@ function TimerCustome({ count, setCount }) {
           setCount(count + 1);
         }
       });
+      console.log("if");
+    } else {
+      console.log("else");
     }
   };
   return "";
