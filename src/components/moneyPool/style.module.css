@@ -221,3 +221,8 @@ textarea::placeholder {
   display: flex;
   justify-content: space-between;
 }
+
+
+.event_list tbody tr td:nth-child(2):hover{
+  cursor: pointer;
+}

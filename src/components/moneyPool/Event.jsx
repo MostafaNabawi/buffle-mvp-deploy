@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useState, useEffect, useRef } from "react";
 import style from "./style.module.css";
 import Card from "./../card/Card";
@@ -32,7 +34,7 @@ function Event() {
   const dispatch = useDispatch();
   const [adding, setAdding] = useState(false);
   const [selected, setSelected] = useState([]);
-  //
+
   // const [person, setPerson] = useState(eventData);
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
