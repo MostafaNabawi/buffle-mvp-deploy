@@ -241,7 +241,7 @@ const CharReport = () => {
             </Form.Select>
           </Col>
           <Col>
-            <h2 className={`${style.chartTitle}`}>Monthly feel report</h2>
+            <h2 className={`${style.chartTitle}`}>Monthly (How to feel) Report</h2>
           </Col>
         </Row>
         {basy ? (
