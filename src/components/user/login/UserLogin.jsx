@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from "react";
-import { Row, Col, Image, Form, Button } from "react-bootstrap";
+import { Row, Col, Image, Form, Button, Alert } from "react-bootstrap";
 import { Icon } from "@iconify/react";
 import { Link, useNavigate } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
@@ -17,6 +17,11 @@ const UserLogin = () => {
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
+  });
+  const [errors, setErrors] = useState({
+    emailError: "",
+    passwordError: "",
+    serverError: "",
   });
   const [loading, setLoading] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -63,35 +68,55 @@ const UserLogin = () => {
   // login by button
   const handleLogin = async (event) => {
     event.preventDefault();
-    if (inputs.email === "" || inputs.password === "") {
-      addToast("Email and Password are required!👀", {
-        appearance: "warning",
-        autoDismiss: 4000,
+    if (inputs.email === "") {
+      setErrors((previousState) => {
+        return {
+          ...previousState,
+          emailError: "Email is required!",
+          passwordError: "",
+        };
+      });
+      return;
+    }
+    if (inputs.password === "") {
+      setErrors((previousState) => {
+        return {
+          ...previousState,
+          passwordError: "Password is required!",
+          emailError: "",
+        };
       });
       return;
     }
     if (!checkEmail(inputs.email)) {
-      addToast("Invalid Email!", {
-        appearance: "warning",
-        autoDismiss: 4000,
+      setErrors((previousState) => {
+        return {
+          ...previousState,
+          emailError: "Email is invalid!",
+          passwordError: "",
+        };
       });
       return;
     }
     setLoading(true);
     const req = await signin(inputs);
     if (req.status === 400) {
-      setLoading(false);
-      addToast("Email or Password  is invalid!", {
-        appearance: "error",
-        autoDismiss: 4000,
+      setErrors((previousState) => {
+        return {
+          ...previousState,
+          serverError: "⛔ Email or Password is incorrect!",
+        };
       });
+      setLoading(false);
       return;
     }
     if (req.status === 200) {
       if (req.data.type === 0) {
-        addToast(`${req.data.msg}⛔`, {
-          appearance: "warning",
-          autoDismiss: 8000,
+        setErrors((previousState) => {
+          return {
+            ...previousState,
+            serverError: `⛔ ${req?.data?.msg}`,
+          };
         });
         setLoading(false);
         return;
@@ -250,13 +275,24 @@ const UserLogin = () => {
                   <Form.Control
                     className={style.formInput}
                     type="text"
+                    isInvalid={errors.emailError !== ""}
                     placeholder="Enter email"
                     name="email"
                     disabled={loading}
-                    onChange={(e) =>
-                      setInputs({ ...inputs, [e.target.name]: e.target.value })
-                    }
+                    onChange={(e) => {
+                      if (e.target.value) {
+                        setErrors((previous) => {
+                          return { ...previous, emailError: "" };
+                        });
+                      }
+                      setInputs({ ...inputs, [e.target.name]: e.target.value });
+                    }}
                   />
+                  {errors.emailError !== "" && (
+                    <Form.Control.Feedback type="invalid">
+                      {errors.emailError}
+                    </Form.Control.Feedback>
+                  )}
                 </Form.Group>
                 <Form.Group className="mb-5" controlId="formBasicPassword">
                   <Form.Label className={style.lableForm}>Password</Form.Label>
@@ -266,14 +302,25 @@ const UserLogin = () => {
                       type={`${showPassword ? "text" : "password"}`}
                       placeholder="Password"
                       name="password"
+                      isInvalid={errors.passwordError !== ""}
                       disabled={loading}
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        if (e.target.value) {
+                          setErrors((previous) => {
+                            return { ...previous, passwordError: "" };
+                          });
+                        }
                         setInputs({
                           ...inputs,
                           [e.target.name]: e.target.value,
-                        })
-                      }
+                        });
+                      }}
                     />
+                    {errors.passwordError !== "" && (
+                      <Form.Control.Feedback type="invalid">
+                        {errors.passwordError}
+                      </Form.Control.Feedback>
+                    )}
                     <i
                       onClick={() => setShowPassword(!showPassword)}
                       className={`${style.formInput} ${style.passwordIcon} input-group-text`}
@@ -287,6 +334,14 @@ const UserLogin = () => {
                     </i>
                   </div>
                 </Form.Group>
+                {errors.serverError !== "" && (
+                  <Form.Group>
+                    <Alert variant="danger" style={{ textAlign: "center" }}>
+                      {" "}
+                      {errors.serverError}{" "}
+                    </Alert>
+                  </Form.Group>
+                )}
                 <Form.Group className="mb-4" controlId="formBasicCheckbox">
                   <Form.Check
                     type="checkbox"
@@ -301,6 +356,7 @@ const UserLogin = () => {
                     Forgot password?
                   </Link>
                 </Form.Group>
+
                 <Button
                   className={style.submitBtn}
                   type="submit"

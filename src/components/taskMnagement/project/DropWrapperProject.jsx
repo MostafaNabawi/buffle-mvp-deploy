@@ -3,8 +3,11 @@ import { useDrop } from "react-dnd";
 import { PROJECT_ITEM } from "../data/types";
 import { updateTaskProject } from "../../../api";
 import { useToasts } from "react-toast-notifications";
+import { useDispatch } from 'react-redux';
+import { setProjectValue } from "../../../store/projectSlice";
 
-const DropWrapperProject = ({ onDrop, children, status, statuses }) => {
+const DropWrapperProject = ({ onDrop, children, status, statuses, handleDrop }) => {
+  const dispatch = useDispatch();
   async function ProjectChange(id, p_id) {
     const update = await updateTaskProject(id, p_id);
 
@@ -26,7 +29,8 @@ const DropWrapperProject = ({ onDrop, children, status, statuses }) => {
     drop: (item, monitor) => {
       onDrop(item, monitor, status);
       ProjectChange(item.tb_id, status)
-
+      handleDrop(item.content + item.p_id);
+      dispatch(setProjectValue(status));
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),

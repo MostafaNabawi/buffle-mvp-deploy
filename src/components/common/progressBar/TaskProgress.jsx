@@ -103,13 +103,13 @@ const Timer = (props) => {
           parseInt(hour) * 3600 +
           parseInt(minute) * 60 +
           parseInt(second))) /
-        parseInt(duration)
+      parseInt(duration)
     );
     setCurrentTime(
       parseInt(day) * 86400 +
-        parseInt(hour) * 3600 +
-        parseInt(minute) * 60 +
-        parseInt(second)
+      parseInt(hour) * 3600 +
+      parseInt(minute) * 60 +
+      parseInt(second)
     );
     if (currentTime === duration) {
       setPlay(!play);
