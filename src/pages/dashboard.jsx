@@ -725,7 +725,7 @@ const Dashboard = () => {
                 />
               }
               title="Task Manager"
-              subtitle={`${opan < 0 ? 0 : opan} opan, ${
+              subtitle={`${opan < 0 ? 0 : opan} open, ${
                 start < 0 ? 0 : start
               } start.`}
               action={
