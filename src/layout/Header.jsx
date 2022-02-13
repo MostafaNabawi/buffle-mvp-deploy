@@ -255,7 +255,7 @@ const Header = () => {
         localStorage.setItem("own", "true");
       }
 
-      localStorage.setItem("current", space?._id);
+      localStorage.setItem("current", space?.space_id);
 
       window.location.href = `/dashboard`;
     }
@@ -301,7 +301,6 @@ const Header = () => {
         const user = JSON.parse(localStorage.getItem("user"));
         checkup = user?._id;
       }
-      console.log("cc", checkup, webData);
       if (String(webData) === String(checkup)) {
         //notification related to this user
         setCount(count + 1);
@@ -640,7 +639,7 @@ const Header = () => {
                       key={`space-${i}`}
                       onClick={() => handleSwitch(space)}
                     >
-                      {space?._id === current ? (
+                      {space?.space_id === current ? (
                         <span
                           style={{
                             color: "green",

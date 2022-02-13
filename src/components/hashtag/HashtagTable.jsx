@@ -33,7 +33,7 @@ function HashtagTable({ data }) {
       <Table responsive>
         <thead>
           <tr>
-            <th>fullName</th>
+            <th>full Name</th>
             <th>Tag Name</th>
             <th>Ping</th>
           </tr>
