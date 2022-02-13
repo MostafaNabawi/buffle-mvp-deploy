@@ -8,7 +8,7 @@ import { API_URL } from "../../../config";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import Modal from "../../modal/modal";
-
+import { DotLoader } from "react-spinners";
 const UserProfile = () => {
   const { addToast } = useToasts();
   const [loading, setLoading] = useState(false);
@@ -23,12 +23,11 @@ const UserProfile = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [slack, setSlack] = useState("");
   const [departure, setDeparture] = useState("");
   const [tags, setTags] = useState([]);
   const [newTag, setNewTag] = useState("");
   const [options, setOptions] = useState([]);
-
+  const [addLoading, setAddLoading] = useState(false);
   const setUsetLocalStorage = () => {
     try {
       fetch(`${API_URL}/user/me`, {
@@ -60,7 +59,6 @@ const UserProfile = () => {
           setFirstName(payload.first_name);
           setLastName(payload.last_name);
           setEmail(payload.email);
-          setSlack(payload.slack);
           setDeparture(payload.departure);
           setBusy(true);
         } else {
@@ -81,13 +79,14 @@ const UserProfile = () => {
     }).then(async (res) => {
       const { payload } = await res.json();
       if (payload) {
+        let formatted = [];
         payload.map((tag) => {
-          const data = {
+          formatted.push({
             value: tag._id,
             label: tag.name + " " + `(${tag?.count || 0})`,
-          };
-          options.push(data);
+          });
         });
+        setOptions([...options, ...formatted]);
       }
     });
   };
@@ -101,13 +100,18 @@ const UserProfile = () => {
     }).then(async (res) => {
       const { payload } = await res.json();
       if (payload) {
+        let data = [];
         payload.map((item) => {
-          const data = {
+          data.push({
             value: item.tag[0]._id,
             label: item.tag[0].name,
-          };
-          tags.push(data);
+          });
+
+          // tags.push(data);
         });
+        setTags([...tags, ...data]);
+
+        console.log("Format", data);
       }
     });
   };
@@ -118,7 +122,7 @@ const UserProfile = () => {
       setLoading(true);
       try {
         if (tags.length > 0) {
-          const res = await fetch(`${API_URL}/tags/create`, {
+          const res = await fetch(`${API_URL}/tags/create-user`, {
             method: "POST",
             credentials: "include",
             headers: {
@@ -128,7 +132,7 @@ const UserProfile = () => {
               tags: tags,
             }),
           });
-          if (res.status != 200) {
+          if (res.status !== 200) {
             addToast("Error Please Try Again!", {
               appearance: "warning",
               autoDismiss: 4000,
@@ -146,7 +150,6 @@ const UserProfile = () => {
           body: JSON.stringify({
             name: firstName,
             lastName: lastName,
-            slack: slack,
             departure: departure,
             email: email,
           }),
@@ -184,9 +187,44 @@ const UserProfile = () => {
     if (!newTag) {
       return "";
     }
-    const tagOption = [{ value: "", label: newTag }];
-    tags.push(tagOption[0]);
-    setNewTag("");
+    setAddLoading(true);
+    fetch(`${API_URL}/tags/create`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ tag: newTag }),
+    }).then(async (response) => {
+      if (response.status === 200) {
+        const { payload } = await response.json();
+        console.log(payload);
+        let formatted = [];
+        payload.map((tag) => {
+          formatted.push({
+            value: tag._id,
+            label: tag.name + " " + `(${tag?.count || 0})`,
+          });
+        });
+        setOptions([...options, ...formatted]);
+        setAddLoading(false);
+        addToast("Tag added to list", {
+          appearance: "success",
+          autoDismiss: 5000,
+        });
+        handleClose();
+      } else {
+        setAddLoading(false);
+        addToast("Error while adding tag", {
+          appearance: "error",
+          autoDismiss: 5000,
+        });
+        handleClose();
+      }
+    });
+    // const tagOption = [{ value: "", label: newTag }];
+    // tags.push(tagOption[0]);
+    // setNewTag("");
     handleClose();
   };
 
@@ -290,28 +328,6 @@ const UserProfile = () => {
                   <Skeleton height={50} count={1} />
                 ) : (
                   <>
-                    <Form.Label>Slack:</Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="Slack"
-                      name="slack"
-                      value={slack}
-                      onChange={(e) => {
-                        setSlack(e.target.value);
-                      }}
-                    />
-                  </>
-                )}
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row>
-            <Col xl={6}>
-              <Form.Group className="mb-3">
-                {!busy ? (
-                  <Skeleton height={50} count={1} />
-                ) : (
-                  <>
                     <Form.Label>Departure</Form.Label>
                     <Form.Control
                       type="text"
@@ -326,13 +342,16 @@ const UserProfile = () => {
                 )}
               </Form.Group>
             </Col>
-            <Col xl={6}>
+          </Row>
+          <Row>
+            <Col md={12}>
               <Form.Label>Tags</Form.Label>
               <InputGroup className="mb-3">
                 <Select
                   className="selectTags"
                   value={tags}
                   onChange={(e) => {
+                    console.log("ee", e);
                     setTags(e);
                   }}
                   isSearchable
@@ -379,16 +398,21 @@ const UserProfile = () => {
         }
         footer={
           <>
-            <Button variant="outline-dark" onClick={handleClose}>
-              Close
-            </Button>
             <Button
               variant="primary"
               onClick={() => {
                 handleTag();
               }}
+              disabled={addLoading}
             >
-              Add
+              {addLoading ? <DotLoader size={10} /> : "Add"}
+            </Button>
+            <Button
+              variant="outline-dark"
+              disabled={addLoading}
+              onClick={handleClose}
+            >
+              Close
             </Button>
           </>
         }
