@@ -116,7 +116,7 @@ const CharReport = () => {
         backgroundColor: "rgba(25,55,105, 0.5)",
         fill: false,
         cubicInterpolationMode: "monotone",
-        tension: 0.5,
+        tension: 0.4,
       },
     ],
   };
@@ -126,7 +126,7 @@ const CharReport = () => {
     var h = (data.happy * 100) / countAll[1];
     var n = (data.normal * 100) / countAll[2];
     var sa = (data.sad * 100) / countAll[3];
-    var c = (data.cry * 100) / countAll[4];
+    var c = (data.crying * 100) / countAll[4];
     smiling.push(s);
     happy.push(h);
     normal.push(n);
