@@ -567,7 +567,7 @@ const Dashboard = () => {
               title="How you feel today"
               action={
                 <Link to={"feel-report"}>
-                  <Icon color="black" icon="iconoir:reports" />
+                  <Icon color="#2a3464" icon="iconoir:reports" />
                 </Link>
               }
             />
