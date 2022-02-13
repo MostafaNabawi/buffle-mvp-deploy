@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import {
   Row,
   Col,
@@ -41,9 +41,7 @@ const Header = () => {
   const { du_time, defaultTime, dis_time, default_dis_time } = useSelector(
     (state) => state.screen
   );
-  const { notificDelay, notificTimer, isMute, precent } = useSelector(
-    (state) => state.hydration
-  );
+  const { notificTimer, precent } = useSelector((state) => state.hydration);
   //
   const beep = new UIFx(boop, {
     volume: 0.8,
@@ -404,12 +402,11 @@ const Header = () => {
       dispatch(setRun(false));
     }
   }, [alert]);
-
   return (
     <>
       {notificTimer !== "" && precent > 0 && (
         <>
-          <TimerCustome />
+          <TimerCustome count={count} setCount={setCount} />
         </>
       )}
       <Col className="col-12 header-name text-capitalize">
@@ -622,11 +619,9 @@ const Header = () => {
               }
               className="navDropdomnIcon"
             >
-              <NavDropdown.Item>
-                <Link to="/dashboard/profile" className="customLink">
-                  Profile
-                </Link>
-              </NavDropdown.Item>
+              <Dropdown.Item as={Link} to="/dashboard/profile">
+                Profile
+              </Dropdown.Item>
               {workspace.length > 0 && (
                 <DropdownButton
                   as={ButtonGroup}
@@ -640,7 +635,7 @@ const Header = () => {
                       key={`space-${i}`}
                       onClick={() => handleSwitch(space)}
                     >
-                      {space?.space_data[0]?._id === current ? (
+                      {space?._id === current ? (
                         <span
                           style={{
                             color: "green",
@@ -684,29 +679,18 @@ const Header = () => {
                       {ownSpace?.space_name}
                     </Dropdown.Item>
                   )}
-                  {/* <Dropdown.Item eventKey="2">Another action</Dropdown.Item>
-                  <Dropdown.Item eventKey="3">
-                    Something else here
-                  </Dropdown.Item>
-                  <Dropdown.Divider />
-                  <Dropdown.Item eventKey="4">Separated link</Dropdown.Item> */}
                 </DropdownButton>
               )}
 
               {/*  */}
               {showUserRoute && (
-                <NavDropdown.Item>
-                  <Link className="customLink" to="/dashboard/user-management">
-                    User management
-                  </Link>
+                <NavDropdown.Item as={Link} to="/dashboard/user-management">
+                  User management
                 </NavDropdown.Item>
               )}
               {showUserRoute && (
-                <NavDropdown.Item>
-                  <Link className="customLink" to="/dashboard/setting">
-                    {" "}
-                    Settings
-                  </Link>
+                <NavDropdown.Item as={Link} to="/dashboard/setting">
+                  Settings
                 </NavDropdown.Item>
               )}
               <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>

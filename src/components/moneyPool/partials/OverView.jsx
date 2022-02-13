@@ -1,10 +1,12 @@
+/** @format */
+
 import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
 import style from "./../style.module.css";
 import Skeleton from "react-loading-skeleton";
 function OverView({ data }) {
   const [innerData, setInnerData] = useState(null);
-
+  console.log(data);
   useEffect(() => {
     setInnerData(data);
   }, [data]);
@@ -25,6 +27,9 @@ function OverView({ data }) {
     if (innerData?.owedReport?.length > 0) {
       return (
         <>
+          {innerData.owedReport.map((i, n) => (
+            <div key={`over-${n}`}>{i?.msg}</div>
+          ))}
           {innerData.owedReport.map((i, n) => (
             <div key={`over-${n}`}>{i?.msg}</div>
           ))}
@@ -65,18 +70,7 @@ function OverView({ data }) {
               </tr>
             </tbody>
           </Table>
-          {data.report.length > 0 && (
-            <div className={style.settle}>
-              <div className={style.header}>
-                <h4>How to settle all debts</h4>
-              </div>
-              {data.report.map((item) => (
-                <div key={item.msg} className={style.settle_content}>
-                  {item.msg}
-                </div>
-              ))}
-            </div>
-          )}
+          {FormatSettle()}
         </div>
       ) : (
         <Skeleton count={3} />

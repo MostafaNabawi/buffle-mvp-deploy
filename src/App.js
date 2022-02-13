@@ -13,6 +13,7 @@ import FreelancerRegister from "./components/user/register/Freelancer";
 import StepTwoRegister from "./components/user/register/StepTwo";
 import CompanyLogin from "./pages/companyLogin";
 import Moneypool from "./pages/moneypool";
+import FeelReport from "./pages/feelReport";
 import Dashboard from "./pages/dashboard";
 import Layout from "./layout/Layout";
 import TaskManage from "./pages/taskManage";
@@ -64,6 +65,7 @@ function App() {
         <Route path="/companyLogin" element={<CompanyLogin />} />
         <Route path="/dashboard/*" element={<Layout />}>
           <Route index element={<Dashboard />} />
+          <Route path="feel-report" element={<FeelReport />} />
           <Route path="taskmanagement" element={<TaskManage />} />
           <Route path="money-pool" element={<Moneypool />}>
             <Route index element={<NewEvent />} />

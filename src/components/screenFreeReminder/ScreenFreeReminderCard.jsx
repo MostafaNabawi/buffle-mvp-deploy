@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import { Row, Col, Button, Form, Image } from "react-bootstrap";
+import { Row, Col, Button, Form, Image, Tabs, Tab } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import TimePicker2 from "../common/timePicker/TimePicker2";
 import Card from "./../card/Card";
@@ -234,6 +234,33 @@ function ScreenFreeReminderCard() {
     });
   };
   //
+  const setScreeanValue = (e) => {
+    if (e === "1") {
+      setDurationTime({
+        hours: "01",
+        minutes: "00",
+        seconds: "00",
+      });
+      setDisplayTime({
+        hours: "00",
+        minutes: "05",
+        seconds: "00",
+      });
+    }
+    if (e === "2") {
+      setDurationTime({
+        hours: "00",
+        minutes: "20",
+        seconds: "00",
+      });
+      setDisplayTime({
+        hours: "00",
+        minutes: "01",
+        seconds: "00",
+      });
+    }
+  };
+  //
   useEffect(() => {
     getData();
     getUpdataData();
@@ -312,25 +339,55 @@ function ScreenFreeReminderCard() {
         handleClose={handleClose}
         title="Set your screen free Reminder"
         body={
-          <Row>
-            <Col md={12}>
-              <TimePicker2
-                label={"duration time"}
-                value={durationTime}
-                setValue={setDurationTime}
+          <Tabs
+            defaultActiveKey="default"
+            transition={true}
+            id="noanim-tab-example"
+            className="mb-3"
+          >
+            <Tab eventKey="default" title="Default" className="pt-3 pb-4">
+              <Form.Label>Options</Form.Label>
+              <Form.Check
+                onChange={(e) => {
+                  setScreeanValue(e.target.value);
+                }}
+                value="1"
+                name="screen"
+                type="radio"
+                label={`In every hours 5 minut`}
               />
-            </Col>
-            <Col md={12}>
-              <TimePicker2
-                label={"Display Time"}
-                value={displayTime}
-                setValue={setDisplayTime}
+              <Form.Check
+                onChange={(e) => {
+                  setScreeanValue(e.target.value);
+                }}
+                value="2"
+                name="screen"
+                type="radio"
+                label={`In every 20 minut one minut`}
               />
-            </Col>
-            {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+            </Tab>
+            <Tab eventKey="custome" title="Custome">
+              <Row>
+                <Col md={12}>
+                  <TimePicker2
+                    label={"duration time"}
+                    value={durationTime}
+                    setValue={setDurationTime}
+                  />
+                </Col>
+                <Col md={12}>
+                  <TimePicker2
+                    label={"Display Time"}
+                    value={displayTime}
+                    setValue={setDisplayTime}
+                  />
+                </Col>
+                {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
               <Form.Check type="checkbox" label="Mute " />
             </Form.Group> */}
-          </Row>
+              </Row>
+            </Tab>
+          </Tabs>
         }
         footer={
           <>

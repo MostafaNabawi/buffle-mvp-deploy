@@ -24,8 +24,8 @@ export const hydrationSlice = createSlice({
       state.isMute = !state.isMute;
     },
     setPrecent: (state) => {
-      if (state.precent > 0) {
-        state.precent -= 1;
+      if (state.precent < 100) {
+        state.precent += 1;
       }
     },
     setPrecentByAmount: (state, action) => {

@@ -7,18 +7,17 @@ import { API_URL } from "../config/index";
 import boop from "./boop.mp3";
 import UIFx from "uifx";
 
-function TimerCustome() {
+function TimerCustome({ count, setCount }) {
   const dispatch = useDispatch();
   const beep = new UIFx(boop, {
     volume: 0.8,
   });
-  const { notificDelay, notificTimer } = useSelector(
+  const { notificDelay, notificTimer, percent, isMute } = useSelector(
     (state) => state.hydration
   );
   useEffect(() => {
     if (notificTimer === 1000) {
       dispatch(setNotificatiionTimer(notificDelay + 1000));
-      console.log("😍😎👌");
       sendNotific();
     } else {
       let id = setTimeout(() => {
@@ -28,14 +27,17 @@ function TimerCustome() {
     }
   }, [notificTimer]);
   const sendNotific = () => {
-    fetch(`${API_URL}/user/water-notify`, {
-      method: "POST",
-      credentials: "include",
-    }).then((res) => {
-      if (res.status === 200) {
-        beep.play();
-      }
-    });
+    if (percent <= 100 && !isMute) {
+      fetch(`${API_URL}/user/water-notify`, {
+        method: "POST",
+        credentials: "include",
+      }).then((res) => {
+        if (res.status === 200) {
+          beep.play();
+          setCount(count + 1);
+        }
+      });
+    }
   };
   return "";
 }
