@@ -58,7 +58,7 @@ export const options = {
   },
 };
 
-const labels = ["", "1 Week", "2 Week", "3 Week", "4 Week"];
+const labels = ["", "First week", "Second week", "Third week", "Forth week"];
 
 const CharReport = () => {
   const [basy, setBasy] = useState(false);
