@@ -8,7 +8,6 @@ function Project(props) {
   const { handleClick, value, project, handleSetProjct } = props;
   const { addToast } = useToasts();
   const [itemId, setItemId] = useState(props.item.tb_id);
-
   async function ProjectChange(val) {
     handleClick(val);
     handleSetProjct(val.label)

@@ -5,7 +5,7 @@ import DropWrapper from "./DropWrapper";
 import { statuses } from "./data";
 import { Col, Form, Row } from "react-bootstrap";
 import { useToasts } from "react-toast-notifications";
-import { createTask, getTask, deleteTask } from "../../api";
+import { createTask, getTask, deleteTask, userStatus } from "../../api";
 import { ITEM_TYPE } from "./data/types";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -52,6 +52,8 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
   }, [newItems]);
 
   useEffect(() => {
+
+
     if (id || val || checkDrop || colChange || projectDroped) {
       request();
     }
