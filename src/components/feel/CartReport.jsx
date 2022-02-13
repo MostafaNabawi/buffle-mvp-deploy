@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import style from "./style.module.css";
-import { Icon } from '@iconify/react';
+import { Icon } from "@iconify/react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -32,7 +32,7 @@ export const options = {
       position: "top",
     },
     title: {
-      display: true,
+      display: false,
       text: "Feel report",
     },
   },
@@ -50,7 +50,7 @@ export const options = {
       display: true,
       title: {
         display: true,
-        text: "Percent",
+        text: "Percentage",
       },
       suggestedMin: 0,
       suggestedMax: 100,
@@ -121,7 +121,6 @@ const CharReport = () => {
     ],
   };
   //
-
   const calculatePercent = (data, countAll) => {
     var s = (data.smiling * 100) / countAll[0];
     var h = (data.happy * 100) / countAll[1];
@@ -184,69 +183,74 @@ const CharReport = () => {
     setCurrentMonth(d.getMonth() + 1);
     getFeeling(d.getMonth() + 1);
   }, []);
-  
+
   return (
     <Row className={`p-0 m-0`}>
       <Card className={`${style.cardReport}`}>
-        <Col className="col-2">
-          <Form.Select
-            onChange={(e) => {
-              if (e.target.value != "0") {
-                smiling.length = 0;
-                happy.length = 0;
-                normal.length = 0;
-                sad.length = 0;
-                cry.length = 0;
-                getFeeling(e.target.value);
-              }
-            }}
-            aria-label="Default select example"
-          >
-            <option value="1" selected={currentMonth === 1 ? true : false}>
-              January
-            </option>
-            <option value="2" selected={currentMonth === 2 ? true : false}>
-              February
-            </option>
-            <option value="3" selected={currentMonth === 3 ? true : false}>
-              March
-            </option>
-            <option value="4" selected={currentMonth === 4 ? true : false}>
-              April
-            </option>
-            <option value="5" selected={currentMonth === 5 ? true : false}>
-              May
-            </option>
-            <option value="6" selected={currentMonth === 6 ? true : false}>
-              June
-            </option>
-            <option value="7" selected={currentMonth === 7 ? true : false}>
-              July
-            </option>
-            <option value="8" selected={currentMonth === 8 ? true : false}>
-              August
-            </option>
-            <option value="0" selected={currentMonth === 0 ? true : false}>
-              Sebtember
-            </option>
-            <option value="10" selected={currentMonth === 10 ? true : false}>
-              October
-            </option>
-            <option value="11" selected={currentMonth === 11 ? true : false}>
-              November
-            </option>
-            <option value="12" selected={currentMonth === 12 ? true : false}>
-             December
-            </option>
-          </Form.Select>
-        </Col>
+        <Row className="mb-3">
+          <Col className="col-2">
+            <Form.Select
+              onChange={(e) => {
+                if (e.target.value != "0") {
+                  smiling.length = 0;
+                  happy.length = 0;
+                  normal.length = 0;
+                  sad.length = 0;
+                  cry.length = 0;
+                  getFeeling(e.target.value);
+                }
+              }}
+              aria-label="Default select example"
+            >
+              <option value="1" selected={currentMonth === 1 ? true : false}>
+                January
+              </option>
+              <option value="2" selected={currentMonth === 2 ? true : false}>
+                February
+              </option>
+              <option value="3" selected={currentMonth === 3 ? true : false}>
+                March
+              </option>
+              <option value="4" selected={currentMonth === 4 ? true : false}>
+                April
+              </option>
+              <option value="5" selected={currentMonth === 5 ? true : false}>
+                May
+              </option>
+              <option value="6" selected={currentMonth === 6 ? true : false}>
+                June
+              </option>
+              <option value="7" selected={currentMonth === 7 ? true : false}>
+                July
+              </option>
+              <option value="8" selected={currentMonth === 8 ? true : false}>
+                August
+              </option>
+              <option value="0" selected={currentMonth === 0 ? true : false}>
+                Sebtember
+              </option>
+              <option value="10" selected={currentMonth === 10 ? true : false}>
+                October
+              </option>
+              <option value="11" selected={currentMonth === 11 ? true : false}>
+                November
+              </option>
+              <option value="12" selected={currentMonth === 12 ? true : false}>
+                December
+              </option>
+            </Form.Select>
+          </Col>
+          <Col>
+            <h2 className={`${style.chartTitle}`}>Monthly feel report</h2>
+          </Col>
+        </Row>
         {basy ? (
           <div className="text-center pt-5 mt-5 pb-5 mb-5">
             <Icon fontSize={44} icon="eos-icons:bubble-loading" />
           </div>
         ) : (
           <>
-            <Line options={options} data={data} />
+            <Line height={115} options={options} data={data} />
           </>
         )}
       </Card>
