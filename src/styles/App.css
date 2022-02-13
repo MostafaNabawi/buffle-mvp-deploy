@@ -909,3 +909,8 @@ div.check-box > input {
 .extra-break-time {
   text-transform: none !important;
 }
+.icon-report {
+  color: var(--secondary-dark-gray) !important;
+  padding-bottom: 1rem !important;
+  line-height: 20px !important;
+}

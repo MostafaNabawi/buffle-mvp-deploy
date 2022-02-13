@@ -36,7 +36,7 @@ function Hashtag() {
   }, [tag]);
   return (
     <>
-      <div>Result For (#{tag}):</div>
+      <div>Result For (#{tag})</div>
       <Row>
         <Col md={12}>{DynamicTable}</Col>
       </Row>
