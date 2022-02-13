@@ -12,6 +12,7 @@ const TaskManage = () => {
     const handleChange = (value) => {
         setValue(value)
     }
+
     const colorChange = (val) => {
         setChangeColor(val);
     }
