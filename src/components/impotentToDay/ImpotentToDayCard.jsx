@@ -24,8 +24,10 @@ function ImpotentToDayCard({ handleMove }) {
   const [showSkleton, setShowSkleton] = useState(false);
   const [loading, setloading] = useState(false);
   const [itemId, setItemId] = useState('');
+  const [itemName, setItemName] = useState('');
   const [error, setError] = useState("");
-  const [data, setData] = useState([])
+  const [data, setData] = useState([]);
+  const [checked, setChecked] = useState(false);
   const [durationTime, setDurationTime] = useState({
     hours: "00",
     minutes: "25",
@@ -58,8 +60,9 @@ function ImpotentToDayCard({ handleMove }) {
   useEffect(() => {
     request();
   }, [])
-  const handleClick = (value) => {
-    setItemId(value);
+  const handleClick = (id, name) => {
+    setItemName(name);
+    setItemId(id);
   }
   const handleSubmit = async () => {
     if (duration.length < 0) {
@@ -74,7 +77,7 @@ function ImpotentToDayCard({ handleMove }) {
         durationTime.seconds;
       setError("");
       setloading(true);
-      const updateImportant = await updateTaskImportant(itemId, duration, 'stop');
+      const updateImportant = await updateTaskImportant(itemId, itemName, duration, 'stop', checked);
       if (updateImportant.status === 200) {
         addToast("Moved to task susseccfully", {
           autoDismiss: true,
@@ -155,6 +158,14 @@ function ImpotentToDayCard({ handleMove }) {
                       setValue={setDurationTime}
                     />
                   </Col>
+                  <Col xl="12">
+                    <Form.Group check>
+                      <Form.Label check className="extra-break-time">
+                        <input type="checkbox" onChange={(e) => setChecked(e.target.checked)} />
+                        Do you want to have 5 minutes break after this task finished?
+                      </Form.Label>
+                    </Form.Group>
+                  </Col>
                 </Row>
               </Form.Group>
             </Col>
@@ -163,9 +174,6 @@ function ImpotentToDayCard({ handleMove }) {
         }
         footer={
           <>
-            <Button variant="outline-dark" onClick={handleClose}>
-              Cancel
-            </Button>
             {loading && duration.length > 0 ? (
               <Button variant="primary">
                 <BeatLoader />
@@ -175,7 +183,9 @@ function ImpotentToDayCard({ handleMove }) {
                 Move
               </Button>
             )}
-
+            <Button variant="outline-dark" onClick={handleClose}>
+              Cancel
+            </Button>
           </>
         }
       />
