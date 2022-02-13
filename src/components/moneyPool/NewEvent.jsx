@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useEffect, useState } from "react";
 import { Row, Form, Col, Button, Tabs, Tab, Table } from "react-bootstrap";
 import { Icon } from "@iconify/react";
@@ -12,6 +14,8 @@ import { useToasts } from "react-toast-notifications";
 import { API_URL } from "../../config";
 import Jumbotron from "./partials/Jumbotron";
 import { getEventList } from "../../api";
+import CopyLinkButton from "./partials/CopyLinkButton";
+import { moment } from "moment";
 
 function NewEvent() {
   const [key, setKey] = useState("createvent");
@@ -95,12 +99,12 @@ function NewEvent() {
           setEmail("");
           setLoading(false);
           result.email = email;
-          if(selected.length >0){
-           const exist= selected.filter(user=> user.uid ===result.uid)
-           if(exist.length ===0){
-            setSelected([...selected, result]);
-           }
-          }else{
+          if (selected.length > 0) {
+            const exist = selected.filter((user) => user.uid === result.uid);
+            if (exist.length === 0) {
+              setSelected([...selected, result]);
+            }
+          } else {
             setSelected([...selected, result]);
           }
         } else {
@@ -377,13 +381,14 @@ function NewEvent() {
                   <th>Event Name</th>
                   <th>Description</th>
                   <th>Currency</th>
+                  <th>Create date</th>
                   <th>Event Code</th>
                 </tr>
               </thead>
               <tbody>
                 {loading2 ? (
                   <tr className="text-center">
-                    <td colSpan={5}>
+                    <td colSpan={6}>
                       {
                         <Icon
                           fontSize={80}
@@ -399,7 +404,10 @@ function NewEvent() {
                       <td>{list.event}</td>
                       <td>{list.description}</td>
                       <td>{list.currency}</td>
-                      <td>{list.uuid}</td>
+                      <td>{moment.foramt("YYYY:II:DD")}</td>
+                      <td>
+                        <CopyLinkButton copyValue={list.uuid} />
+                      </td>
                     </tr>
                   ))
                 ) : (
