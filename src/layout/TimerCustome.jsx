@@ -1,5 +1,3 @@
-/** @format */
-
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setNotificatiionTimer, setTimeOutID } from "../store/hydrationSclice";
@@ -12,13 +10,12 @@ function TimerCustome({ count, setCount }) {
   const beep = new UIFx(boop, {
     volume: 0.8,
   });
-  const { notificDelay, notificTimer } = useSelector(
+  const { notificDelay, notificTimer, precent, isMute } = useSelector(
     (state) => state.hydration
   );
   useEffect(() => {
     if (notificTimer === 1000) {
       dispatch(setNotificatiionTimer(notificDelay + 1000));
-      console.log("😍😎👌");
       sendNotific();
     } else {
       let id = setTimeout(() => {
@@ -27,16 +24,19 @@ function TimerCustome({ count, setCount }) {
       dispatch(setTimeOutID(id));
     }
   }, [notificTimer]);
+
   const sendNotific = () => {
-    fetch(`${API_URL}/user/water-notify`, {
-      method: "POST",
-      credentials: "include",
-    }).then((res) => {
-      if (res.status === 200) {
-        beep.play();
-        setCount(count + 1);
-      }
-    });
+    if (precent <= 100 && !isMute) {
+      fetch(`${API_URL}/user/water-notify`, {
+        method: "POST",
+        credentials: "include",
+      }).then((res) => {
+        if (res.status === 200) {
+          beep.play();
+          setCount(count + 1);
+        }
+      });
+    }
   };
   return "";
 }

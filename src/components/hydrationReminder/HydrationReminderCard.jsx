@@ -213,7 +213,7 @@ function HydrationReminderCard() {
                 id="basic-nav-dropdown"
               >
                 <NavDropdown.Item className="reminderNavItem">
-                  {isMute ? "mute" : "unMute"}
+                  {isMute ? "unMute" : "mute"}
                   <i onClick={handleMute}>
                     <Icon
                       fontSize={25}

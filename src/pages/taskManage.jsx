@@ -12,11 +12,11 @@ const TaskManage = () => {
     const handleChange = (value) => {
         setValue(value)
     }
+
     const colorChange = (val) => {
         setChangeColor(val);
     }
     const handleDrop = (value) => {
-        console.log('droped', value)
         setDrop(value);
     }
     return (
