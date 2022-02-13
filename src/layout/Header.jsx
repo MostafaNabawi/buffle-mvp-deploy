@@ -402,6 +402,11 @@ const Header = () => {
       dispatch(setRun(false));
     }
   }, [alert]);
+  const handleSearchByTag = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    navigate(`/hashtag/${formData.get("search-input")}`);
+  };
   return (
     <>
       {notificTimer !== "" && precent > 0 && (
@@ -697,7 +702,7 @@ const Header = () => {
             </NavDropdown>
           </div>
           <div className="form-search">
-            <Form>
+            <Form onSubmit={handleSearchByTag}>
               <Form.Group
                 className="mb-3 serach-input input-group"
                 controlId="formBasicEmail"
@@ -708,7 +713,8 @@ const Header = () => {
                 <Form.Control
                   className="search-input2"
                   type="search"
-                  placeholder="search"
+                  name="search-input"
+                  placeholder="search tags..."
                 />
               </Form.Group>
             </Form>

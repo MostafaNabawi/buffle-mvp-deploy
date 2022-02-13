@@ -1,17 +1,19 @@
+/** @format */
+
 import React, { useEffect, useState } from "react";
 import { Row, Form, Col, Button, Tabs, Tab, Table } from "react-bootstrap";
 import { Icon } from "@iconify/react";
 import style from "./style.module.css";
-import PersonNameField from "./partials/PersonNameField";
 import { useNavigate } from "react-router-dom";
 import Card from "./../card/Card";
 import CardBody from "./../card/CardBody";
-import AddNewMember from "./partials/AddNewMember";
 import CurrencyList from "currency-list";
 import { useToasts } from "react-toast-notifications";
 import { API_URL } from "../../config";
 import Jumbotron from "./partials/Jumbotron";
 import { getEventList } from "../../api";
+import CopyLinkButton from "./partials/CopyLinkButton";
+import moment from "moment";
 
 function NewEvent() {
   const [key, setKey] = useState("createvent");
@@ -95,12 +97,12 @@ function NewEvent() {
           setEmail("");
           setLoading(false);
           result.email = email;
-          if(selected.length >0){
-           const exist= selected.filter(user=> user.uid ===result.uid)
-           if(exist.length ===0){
-            setSelected([...selected, result]);
-           }
-          }else{
+          if (selected.length > 0) {
+            const exist = selected.filter((user) => user.uid === result.uid);
+            if (exist.length === 0) {
+              setSelected([...selected, result]);
+            }
+          } else {
             setSelected([...selected, result]);
           }
         } else {
@@ -370,20 +372,21 @@ function NewEvent() {
             </Row>
           </Tab>
           <Tab eventKey="existevent" title="Event list">
-            <Table responsive hover size="sm">
+            <Table responsive hover size="sm" className={style.event_list}>
               <thead>
                 <tr>
                   <th>#</th>
                   <th>Event Name</th>
                   <th>Description</th>
                   <th>Currency</th>
+                  <th>Create date</th>
                   <th>Event Code</th>
                 </tr>
               </thead>
               <tbody>
                 {loading2 ? (
                   <tr className="text-center">
-                    <td colSpan={5}>
+                    <td colSpan={6}>
                       {
                         <Icon
                           fontSize={80}
@@ -394,12 +397,17 @@ function NewEvent() {
                   </tr>
                 ) : eventList.length > 0 ? (
                   eventList.map((list, i) => (
-                    <tr onClick={() => handleRowClick(list._id)}>
+                    <tr style={{ verticalAlign: "middle" }} key={list.i}>
                       <th scope="row">{++i}</th>
-                      <td>{list.event}</td>
+                      <td onClick={() => handleRowClick(list._id)}>
+                        {list.event}
+                      </td>
                       <td>{list.description}</td>
                       <td>{list.currency}</td>
-                      <td>{list.uuid}</td>
+                      <td>{moment(list.created_at).format("MMMM DD, YYYY")}</td>
+                      <td>
+                        <CopyLinkButton copyValue={list.uuid} />
+                      </td>
                     </tr>
                   ))
                 ) : (
