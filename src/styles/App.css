@@ -929,3 +929,6 @@ div.check-box > input {
 .extra-break-time input {
   margin-right: 5px !important;
 }
+.important-today-skeleton {
+  background: white !important;
+}
