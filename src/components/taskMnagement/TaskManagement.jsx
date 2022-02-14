@@ -173,8 +173,7 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
                       handleDelete={handleDelete}
                     ></Item>
                   )) : <Skeleton className="important-today-skeleton" count={1} />}
-                <div className="new-task-divimport FreelancerRegister from './../user/register/Freelancer';
-">
+                <div className="new-task-divimport FreelancerRegister from './../user/register/Freelancer';">
                   <Form.Group className="mb-3" controlId="form-new-task">
                     <input
                       type="text"

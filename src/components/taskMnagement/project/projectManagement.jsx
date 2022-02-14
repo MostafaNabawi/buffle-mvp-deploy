@@ -468,7 +468,6 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
           }
           footer={
             <>
-              <Button onClick={handleClose}>Close</Button>
               {loading && projectName.length > 0 ? (
                 <Button variant="primary">
                   <BeatLoader />
@@ -478,6 +477,7 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
                   Save
                 </Button>
               )}
+              <Button variant="outline-dark" onClick={handleClose}>Close</Button>
             </>
           }
         />
