@@ -26,7 +26,7 @@ function TimerCustome({ count, setCount }) {
   }, [notificTimer]);
 
   const sendNotific = () => {
-    if (precent <= 100 && !isMute) {
+    if (precent > 0 && precent <= 100 && !isMute) {
       fetch(`${API_URL}/user/water-notify`, {
         method: "POST",
         credentials: "include",

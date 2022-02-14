@@ -408,7 +408,7 @@ const Header = () => {
   };
   return (
     <>
-      {notificTimer !== "" && precent > 0 && (
+      {notificTimer !== "" && precent > 0 && precent <= 100 && (
         <>
           <TimerCustome count={count} setCount={setCount} />
         </>

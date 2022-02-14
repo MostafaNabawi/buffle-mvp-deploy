@@ -1,0 +1,15 @@
+{
+  "app.password": "Passwort",
+  "app.login.your": "Deine E-Mail",
+  "app.login": "Anmeldung",
+  "app.login.google": "mit google einloggen",
+  "app.login.forget": "Passwort vergessen",
+  "app.login.checkout": "überprüfe mich",
+  "app.login.register": "jetzt registrieren",
+  "app.login.qs": "Sie haben noch kein Konto?",
+  "app.login.emailError": "E-Mail ist erforderlich!",
+  "app.login.passError": "Passwort ist erforderlich!",
+  "app.login.header": "Geben Sie Ihre E-Mail-Adresse und Ihr Passwort ein.",
+  "app.login.place.em": "Email eingeben",
+  "app.login.invalidEmail": "E-Mail ist ungültig!"
+}
