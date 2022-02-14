@@ -73,6 +73,7 @@ function HydrationReminderCard() {
   //useEffect function
   useEffect(() => {
     fetch();
+
     return () => {
       dispatch(setIsChanged(false));
     };
@@ -105,6 +106,7 @@ function HydrationReminderCard() {
           dispatch(setRemindertByAmount(req.data.daily_goal));
         }
       }
+      dispatch(setRender(true));
       dispatch(setData(req.data));
       setDailyGoal(req.data.daily_goal);
       setLiter(req.data.daily_goal);
