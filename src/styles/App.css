@@ -674,6 +674,7 @@ div.check-box > input {
   height: 30px !important;
 }
 .break-user-name {
+  margin-left: -20px !important;
   height: 16px;
   font-family: DM Sans;
   font-style: normal;
@@ -683,6 +684,7 @@ div.check-box > input {
   color: var(--secondary-dark-gray);
 }
 .break-type {
+  margin-left: -20px !important;
   cursor: pointer;
   height: 10px;
   font-family: DM Sans;
