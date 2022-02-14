@@ -44,8 +44,6 @@ const Dashboard = () => {
   const [showPlayer, setShowPlayer] = useState(false);
   const MySwal = withReactContent(Swal);
   const currentUser = JSON.parse(localStorage.getItem("user"));
-  const [timeFormat, setTimeFormat] = useState(false);
-  const [updateTimeFormat, setUpdateTimeFormat] = useState("");
   // show form for breack plan
   const [BreakPlanForm, setBreakPlanFrom] = useState(false);
   const [breakJoinOrSagest, setBreakJoinOrSagest] = useState(false);
@@ -110,6 +108,7 @@ const Dashboard = () => {
   const [complete, setComplete] = useState("");
   const [move, setMove] = useState("");
   const [checked, setChecked] = useState(false);
+  const [updateTaskLoader, setUpdateTaskLoader] = useState(false);
   const RenderPlayerOrLogin = useMemo(() => {
     if (showPlayer) {
       const codeToken = localStorage.getItem("spotToken");
@@ -271,7 +270,6 @@ const Dashboard = () => {
         });
 
         setloading(false);
-        setTimeFormat(false);
         setModalShow(false);
       } else {
         addToast("Error Please Try Again!", {
@@ -279,7 +277,6 @@ const Dashboard = () => {
           appearance: "error",
         });
         setloading(false);
-        setTimeFormat(false);
         setModalShow(false);
         setTaskReload(false);
         return true;
@@ -287,7 +284,6 @@ const Dashboard = () => {
       setloading(false);
       setDuration("");
       setTaskName("");
-      setTimeFormat(false);
       setModalShow(false);
       setTaskReload(false);
       return true;
@@ -391,7 +387,6 @@ const Dashboard = () => {
           appearance: "success",
         });
         setloading(false);
-        setUpdateTimeFormat(false);
         setModalShow(false);
       } else {
         addToast("Error Please Try Again!", {
@@ -400,7 +395,6 @@ const Dashboard = () => {
         });
         setCheckedId([]);
         setloading(false);
-        setUpdateTimeFormat(false);
         setModalShow(false);
         setTaskReload(false);
         return true;
@@ -409,7 +403,6 @@ const Dashboard = () => {
       setloading(false);
       setUpdateDuration("");
       setUpdateTaskName("");
-      setUpdateTimeFormat(false);
       setModalShow(false);
       setTaskReload(false);
       return true;
@@ -418,6 +411,8 @@ const Dashboard = () => {
   // get data according to selected item for edit
   const handleUpdateTask = async () => {
     if (checkId.length === 1) {
+      setUpdateTaskLoader(true);
+      setModalShow(true);
       const oldData = await getTaskById(checkId[0]);
       const time = oldData.data.task_duration.split(":");
       setOldTaskInput({
@@ -429,7 +424,7 @@ const Dashboard = () => {
       setOldTaskName({ name: oldData.data.name });
       setUpdateTaskName({ name: oldData.data.name });
 
-      setModalShow(true);
+      setUpdateTaskLoader(false);
       setNextBreak(false);
       setVacationTime(false);
       setTaskManager(false);
@@ -1044,9 +1039,11 @@ const Dashboard = () => {
                 </Col>
               </>
             )}
-            {taskManagerUpdate && (
+            {taskManagerUpdate && updateTaskLoader === true ? < BeatLoader /> : (
+
               <>
                 <Col md={12}>
+
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Task name </Form.Label>
                     <Form.Control
