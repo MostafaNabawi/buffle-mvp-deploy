@@ -842,7 +842,7 @@ const Dashboard = () => {
                   breacPlanData &&
                   breacPlanData.map((data, n) => (
                     <Row key={n} className="mt-3">
-                      <Col className="col-2 break-plan-image">
+                      <Col className="col-3 break-plan-image">
                         <div className="breakplan-icon navy-blue text-center pt-2">
                           <Image
                             className="breakplan-img"
@@ -863,7 +863,7 @@ const Dashboard = () => {
                             </div>
                           ))}
                       </Col>
-                      <Col>
+                      <Col className="col-9">
                         <div className="break-user-name">
                           {data.user[0].first_name} {data.user[0].last_name}
                         </div>{" "}
