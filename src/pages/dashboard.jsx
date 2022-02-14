@@ -100,13 +100,11 @@ const Dashboard = () => {
   const [loading, setloading] = useState(false);
   const [taskError, setTaskError] = useState("");
   const [taskUpdateError, setTaskUpdatekError] = useState("");
-  const [errorUpdate, setErrorUpdate] = useState("");
   const [error, setError] = useState("");
   const [taskData, setTaskData] = useState([]);
   const [taskReload, setTaskReload] = useState(false);
   const [checkId, setCheckedId] = useState([]);
   const [oldTaskName, setOldTaskName] = useState({ name: "" });
-  const [oldTaskTime, setOldTaskTime] = useState("");
   const [start, setStart] = useState(0);
   const [opan, setOpan] = useState(0);
   const [complete, setComplete] = useState("");

@@ -178,7 +178,11 @@ function NewEvent() {
   }
   useEffect(() => {
     setCurrencyData(Object.values(CurrencyList.getAll("en_US")));
-
+    // fetch(`${API_URL}/money-poll/currency`, {
+    //   credentials: "include",
+    // }).then((res) => {
+    //   console.log(res.status);
+    // });
     //get event list data
     request();
   }, []);

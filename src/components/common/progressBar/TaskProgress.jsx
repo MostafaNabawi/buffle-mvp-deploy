@@ -30,10 +30,10 @@ const Timer = (props) => {
   } = props;
   const time =
     spend_time !== 0 ? spend_time.split(":") : `${0}:${0}:${0}:${0}`.split(":");
-  const [second, setSecond] = useState("0");
-  const [minute, setMinute] = useState("0");
-  const [hour, setHour] = useState("0");
-  const [day, setDay] = useState("0");
+  const [second, setSecond] = useState("00");
+  const [minute, setMinute] = useState("00");
+  const [hour, setHour] = useState("00");
+  const [day, setDay] = useState("00");
   const [range, setRange] = useState(0);
   const [play, setPlay] = useState(false);
   const [percent, setPercent] = useState(0);
@@ -150,6 +150,7 @@ const Timer = (props) => {
     setHour(time[1]);
     setDay(time[0]);
   }, [task_percent]);
+
   return (
     <div className="container">
       <Row>
@@ -167,9 +168,8 @@ const Timer = (props) => {
             label={
               <>
                 <span className={percent >= 28 ? "" : "showTimeTask"}>
-                  {`${parseInt(day)}:${parseInt(hour)}:${parseInt(
-                    minute
-                  )}:${parseInt(second)}`}
+                  {`${parseInt(day) < 10 ? '0' + parseInt(day) : parseInt(day)}:${parseInt(hour) < 10 ? '0' + parseInt(hour) : parseInt(hour)}:${parseInt(
+                    minute) < 10 ? '0' + parseInt(minute) : parseInt(minute)}:${parseInt(second) < 10 ? '0' + parseInt(second) : parseInt(second)}`}
                 </span>
               </>
             }
