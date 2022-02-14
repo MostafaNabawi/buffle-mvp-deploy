@@ -27,6 +27,7 @@ import {
   setRemindertByAmount,
   setNotificatiionTimer,
   setIsChanged,
+  setRender,
 } from "./../../store/hydrationSclice";
 import useReminder from "./useReminder";
 import { FormattedMessage } from "react-intl";
@@ -159,6 +160,8 @@ function HydrationReminderCard() {
         dispatch(setReminder(usedPerPercent));
         dispatch(setPrecent());
         setAnimationClass();
+      } else {
+        dispatch(setRender(false));
       }
     }
   }, reminderDelay);
