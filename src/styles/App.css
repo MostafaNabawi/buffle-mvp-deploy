@@ -923,7 +923,7 @@ div.check-box > input {
 .jone-icon {
   color: var(--secondary-dark-gray) !important;
   position: absolute !important;
-  top: 5px !important;
+  top: 2px !important;
   left: 40px !important;
 }
 .extra-break-time input {
