@@ -913,3 +913,15 @@ div.check-box > input {
   padding-bottom: 1rem !important;
   line-height: 20px !important;
 }
+.break-plan-image {
+  position: relative !important;
+}
+.break-plan-image > div {
+  z-index: 0px !important;
+}
+.jone-icon {
+  color: var(--secondary-dark-gray) !important;
+  position: absolute !important;
+  top: 0px !important;
+  left: 40px !important;
+}
