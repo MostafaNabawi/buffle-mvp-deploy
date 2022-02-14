@@ -7,7 +7,7 @@ function Widget(props) {
   return (
     <div className={style.widget} onClick={() => {
       handleShow()
-      handleClick(id)
+      handleClick(id, content)
     }}>
       <div className={style.widget_header}>
         <span>{icon}</span>

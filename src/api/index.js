@@ -509,7 +509,8 @@ async function getImportantToday() {
   const res = await req.json();
   return { status: req.status, data: res.payload };
 }
-async function updateTaskImportant(id, duration, status) {
+async function updateTaskImportant(id, name, duration, status, checked) {
+  console.log("checked", checked);
   const req = await fetch(`${API_URL}/task/update-important`, {
     method: "PUT",
     credentials: "include",
@@ -520,10 +521,12 @@ async function updateTaskImportant(id, duration, status) {
     },
     body: JSON.stringify({
       taskId: id,
+      name: name,
       moved: true,
       duration: duration,
       type: 1,
       status: status,
+      checked: checked,
     }),
   });
   return { status: req.status };
