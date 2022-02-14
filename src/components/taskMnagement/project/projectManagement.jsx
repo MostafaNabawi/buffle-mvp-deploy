@@ -138,7 +138,7 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
     } else {
       setError("");
       setloading(true);
-      const createP = await createProject(projectName, projectDesc, "rgb(247, 143, 179)");
+      const createP = await createProject(projectName, projectDesc, " rgb(247, 143, 179)");
       if (createP.status === 200) {
         addToast("Created Susseccfully", {
           autoDismiss: true,
@@ -251,7 +251,7 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
     });
   };
   if (loading) {
-    return "Loading..";
+    return <Row><Col className="text-center"><BeatLoader /></Col></Row>;
   }
   const handleColor = async (value) => {
 
@@ -345,7 +345,7 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
         />
       </Row>
       <Row className="projectManagement">
-        {projects.map((s) => {
+        {projects.length > 0 ? projects.map((s) => {
           return (
             <Col key={s.id} className={"col-wrapper secondary-dark"}>
               <Row className={"col-header"}>
@@ -411,7 +411,7 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
               </DropWrapperProject>
             </Col>
           );
-        })}
+        }) : <Row><Col className="text-center"><BeatLoader /></Col></Row>}
         <Modal
           show={show}
           handleClose={handleClose}
