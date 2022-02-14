@@ -29,7 +29,6 @@ function TaskModal(props) {
   const [oldValue, setOldValue] = useState();
   const [pName, setPaName] = useState();
   const { value } = useSelector((state) => state.projectName);
-
   async function request() {
     // get project and format
     const req = await getProject();
@@ -41,6 +40,8 @@ function TaskModal(props) {
     });
     setProjects(formatP);
     const getP = await getProjectById(projectId);
+
+
     if (getP.data !== null) {
       const selected = { value: getP.data._id, label: getP.data.name };
       setOldValue(selected);
@@ -49,6 +50,10 @@ function TaskModal(props) {
       setOldValue(selected);
     }
   }
+  useEffect(() => {
+    setStartDate(new Date(item?.date))
+    setNewTime({ createIime: item?.start_time })
+  }, [item])
   useEffect(() => {
     request();
   }, []);
