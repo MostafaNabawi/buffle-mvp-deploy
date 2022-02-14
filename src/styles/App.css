@@ -914,3 +914,6 @@ div.check-box > input {
   padding-bottom: 1rem !important;
   line-height: 20px !important;
 }
+.extra-break-time input {
+  margin-right: 5px !important;
+}
