@@ -440,6 +440,7 @@ const Dashboard = () => {
   const getBreakPlan = async () => {
     const req = await getaAllBreackPlan();
     if (req.length > 0) {
+      console.log("req....",req)
       setBreakPlanData(req);
     } else {
       setBreakPlanData([]);
@@ -828,12 +829,15 @@ const Dashboard = () => {
                   breacPlanData &&
                   breacPlanData.map((data, n) => (
                     <Row key={n} className="mt-3">
-                      <Col className="col-2">
+                      <Col className="col-2 break-plan-image">
                         <div className="breakplan-icon navy-blue text-center pt-2">
                           <Image
                             className="breakplan-img"
                             src="/icone/WB_Headshots-102-web 1.png"
                           />
+                        </div>
+                        <div className="breakplan-icon jone-icon navy-blue text-center pt-2">
+                          +1
                         </div>
                       </Col>
                       <Col>
@@ -862,6 +866,7 @@ const Dashboard = () => {
                                       currentUser.last_name,
                                     breakName: data.name,
                                     breakOwnerId: data.user[0]._id,
+                                    breakId:data._id
                                   }
                                 );
                             }}
