@@ -7,30 +7,18 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastProvider } from "react-toast-notifications";
 import store from "./store/store";
 import { Provider } from "react-redux";
-import { IntlProvider } from "react-intl";
-import German from "./lang/de.json";
-import English from "./lang/en.json";
+import Wrapper from "./layout/Wrapper";
 // import { getWaterHydration } from "./store/hydrationSclice";
 // store.dispatch(getWaterHydration());
-const locale = navigator.language;
-console.log("Locale ", locale);
-let lang;
-if (locale.includes("en")) {
-  lang = English;
-} else if (locale.includes("de")) {
-  lang = German;
-} else {
-  lang = English;
-}
 ReactDOM.render(
   <Provider store={store}>
-    <IntlProvider locale={locale} messages={lang}>
+    <Wrapper>
       <ToastProvider>
         <BrowserRouter>
           <App />
         </BrowserRouter>
       </ToastProvider>
-    </IntlProvider>
+    </Wrapper>
   </Provider>,
   document.getElementById("root")
 );

@@ -11,5 +11,7 @@
   "app.login.passError": "Passwort ist erforderlich!",
   "app.login.header": "Geben Sie Ihre E-Mail-Adresse und Ihr Passwort ein.",
   "app.login.place.em": "Email eingeben",
-  "app.login.invalidEmail": "E-Mail ist ungültig!"
+  "app.login.invalidEmail": "E-Mail ist ungültig!",
+  "app.header.language": "Sprache",
+  "app.header.profile": "Profil"
 }
