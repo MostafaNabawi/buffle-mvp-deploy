@@ -440,7 +440,7 @@ const Dashboard = () => {
   const getBreakPlan = async () => {
     const req = await getaAllBreackPlan();
     if (req.length > 0) {
-      console.log("req....",req)
+      console.log("req....", req)
       setBreakPlanData(req);
     } else {
       setBreakPlanData([]);
@@ -866,7 +866,7 @@ const Dashboard = () => {
                                       currentUser.last_name,
                                     breakName: data.name,
                                     breakOwnerId: data.user[0]._id,
-                                    breakId:data._id
+                                    breakId: data._id
                                   }
                                 );
                             }}
@@ -1044,41 +1044,42 @@ const Dashboard = () => {
                 </Col>
               </>
             )}
-            {taskManagerUpdate && updateTaskLoader === true ? < BeatLoader /> : (
+            {taskManagerUpdate && (
+              updateTaskLoader ? < BeatLoader /> :
 
-              <>
-                <Col md={12}>
+                <>
+                  <Col md={12}>
 
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Task name </Form.Label>
-                    <Form.Control
-                      type="text"
-                      className={
-                        taskError.length > 0
-                          ? "red-border-input"
-                          : "no-border-input"
-                      }
-                      name="name"
-                      onChange={(e) => {
-                        setUpdateTaskName({ name: e.target.value });
-                      }}
-                      defaultValue={oldTaskName.name}
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                      <Form.Label>Task name </Form.Label>
+                      <Form.Control
+                        type="text"
+                        className={
+                          taskError.length > 0
+                            ? "red-border-input"
+                            : "no-border-input"
+                        }
+                        name="name"
+                        onChange={(e) => {
+                          setUpdateTaskName({ name: e.target.value });
+                        }}
+                        defaultValue={oldTaskName.name}
+                      />
+                      {taskUpdateError ? (
+                        <div className="invalid-feedback d-block">
+                          {taskUpdateError}
+                        </div>
+                      ) : null}
+                    </Form.Group>
+                  </Col>
+                  <Col md={12}>
+                    <TimePicker2
+                      label={"duration time"}
+                      value={oldTaskInput}
+                      setValue={setOldTaskInput}
                     />
-                    {taskUpdateError ? (
-                      <div className="invalid-feedback d-block">
-                        {taskUpdateError}
-                      </div>
-                    ) : null}
-                  </Form.Group>
-                </Col>
-                <Col md={12}>
-                  <TimePicker2
-                    label={"duration time"}
-                    value={oldTaskInput}
-                    setValue={setOldTaskInput}
-                  />
-                </Col>
-              </>
+                  </Col>
+                </>
             )}
           </Row>
         }
