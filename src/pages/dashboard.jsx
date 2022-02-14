@@ -858,7 +858,7 @@ const Dashboard = () => {
                           ))}
                       </Col>
                       <Col className="col-9">
-                        <div className="break-user-name">
+                        <div className="break-user-name2">
                           {data.user[0].first_name} {data.user[0].last_name}
                         </div>{" "}
                         <div>
