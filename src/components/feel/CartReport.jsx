@@ -250,7 +250,7 @@ const CharReport = () => {
           </div>
         ) : (
           <>
-            <Line height={115} options={options} data={data} />
+            <Line height={100} options={options} data={data} />
           </>
         )}
       </Card>
