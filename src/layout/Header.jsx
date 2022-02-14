@@ -360,8 +360,8 @@ const Header = () => {
         }
       } else {
         localStorage.setItem("screen", "of");
-        handleDurationTime(du_time);
-        handleDisplayTime(dis_time);
+        handleDurationTime("01:00:00");
+        handleDisplayTime("00:05:00");
       }
     }
     countNotification();

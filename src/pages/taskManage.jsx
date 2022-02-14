@@ -24,7 +24,7 @@ const TaskManage = () => {
             <Row className="task-management-filter-row">
                 <Col>
                     <div className="task-management-filter">
-                        <span>Date filter</span>
+                        <span>Important today items</span>
                     </div>
                 </Col>
             </Row>

@@ -20,8 +20,12 @@ import { useToasts } from "react-toast-notifications";
 import moment from "moment";
 import ClipLoader from "react-spinners/ClipLoader";
 import BeatLoader from "react-spinners/BeatLoader";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+
 // paiman changes
 import { PROJECT_TYPE } from "../../data/types";
+
 const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, dateChanged }) => {
   const { addToast } = useToasts();
   const MySwal = withReactContent(Swal);
@@ -376,7 +380,7 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
                 handleDrop={handleDrop}
               >
                 <Col>
-                  {items
+                  {items.length > 0 ? items
                     .filter((i) => i.status === s.status)
                     .map((i, idx) => (
                       <Item
@@ -391,7 +395,7 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
                         handleGet={handleGet}
                         handleDelete={handleDelete}
                       ></Item>
-                    ))}
+                    )) : <Skeleton className="important-today-skeleton" count={1} />}
                   <div className="new-task-div">
                     <Form.Group className="mb-3" controlId="form-new-task">
                       <input
@@ -464,7 +468,6 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
           }
           footer={
             <>
-              <Button onClick={handleClose}>Close</Button>
               {loading && projectName.length > 0 ? (
                 <Button variant="primary">
                   <BeatLoader />
@@ -474,6 +477,7 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
                   Save
                 </Button>
               )}
+              <Button variant="outline-dark" onClick={handleClose}>Close</Button>
             </>
           }
         />

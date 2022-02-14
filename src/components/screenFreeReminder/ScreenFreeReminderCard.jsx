@@ -397,9 +397,6 @@ function ScreenFreeReminderCard() {
         }
         footer={
           <>
-            <Button variant="outline-dark" onClick={handleClose}>
-              Close
-            </Button>
             <Button
               onClick={() => {
                 handleSubmit();
@@ -409,6 +406,9 @@ function ScreenFreeReminderCard() {
               type="button"
             >
               {loading ? <Loader color="#fff" size={13} /> : "Save"}
+            </Button>
+            <Button variant="outline-dark" onClick={handleClose}>
+              Close
             </Button>
           </>
         }
