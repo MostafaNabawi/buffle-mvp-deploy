@@ -2,7 +2,7 @@
 
 import { Icon } from "@iconify/react";
 import { Image, Form, Row, Col, Button, NavDropdown } from "react-bootstrap";
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 
 import Card from "./../card/Card";
 import CardBody from "./../card/CardBody";
@@ -29,7 +29,7 @@ import {
   setIsChanged,
 } from "./../../store/hydrationSclice";
 import useReminder from "./useReminder";
-
+import { FormattedMessage } from "react-intl";
 function HydrationReminderCard() {
   const {
     data,
@@ -202,7 +202,12 @@ function HydrationReminderCard() {
       <Card>
         <CardHeader
           icon={<Image src="/icone/Vector.png" alt="water drop icon" />}
-          title="Hydration Reminder"
+          title={
+            <FormattedMessage
+              defaultMessage="Hydration Reminder"
+              id="app.waterHydretion"
+            />
+          }
           action={
             <>
               <Icon className="pr-5" icon="vaadin:plus" onClick={handleShow} />

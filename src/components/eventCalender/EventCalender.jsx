@@ -8,6 +8,7 @@ import Widget from "./../common/widget/Widget";
 import { Image } from "react-bootstrap";
 
 import style from "./style.module.css";
+import { FormattedMessage } from "react-intl";
 const widgetData = [
   {
     icon: <Icon icon="bi:clock-fill" color={`#4922ff`} />,
@@ -25,7 +26,12 @@ function EventCalender() {
     <Card className={style.card}>
       <CardHeader
         icon={<Image src="/icone/exclamation-mark 4.png" alt="calender icon" />}
-        title="Event Calender"
+        title={
+          <FormattedMessage
+            defaultMessage="Event Calendar"
+            id="app.eventCalendar"
+          />
+        }
         action={
           <>
             <Icon icon="vaadin:plus" />

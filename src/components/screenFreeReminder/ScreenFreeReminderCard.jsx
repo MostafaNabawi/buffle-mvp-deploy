@@ -19,6 +19,7 @@ import {
   setDis_time,
   setDefault_dis_time,
 } from "../../store/screenReminderSclice";
+import { FormattedMessage } from "react-intl";
 
 function ScreenFreeReminderCard() {
   const { du_time, defaultTime, dis_time, default_dis_time } = useSelector(
@@ -271,7 +272,12 @@ function ScreenFreeReminderCard() {
       <Card className={style.card}>
         <CardHeader
           icon={<Image src="/icone/eye 1.png" alt="eye icon" />}
-          title="ScreenFree Reminder"
+          title={
+            <FormattedMessage
+              defaultMessage="ScreenFree Reminder"
+              id="app.screen"
+            />
+          }
           action={
             <>
               <i

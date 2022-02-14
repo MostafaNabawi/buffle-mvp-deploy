@@ -13,5 +13,20 @@
   "app.login.place.em": "Email eingeben",
   "app.login.invalidEmail": "E-Mail ist ungültig!",
   "app.header.language": "Sprache",
-  "app.header.profile": "Profil"
+  "app.header.profile": "Profil",
+  "app.header.workspace": "Arbeitsplatz",
+  "app.header.logout": "Ausloggen",
+  "app.dashboard.nextBreak": "Nächste Pause",
+  "app.dashboard.vacationTime": "Ferienzeit",
+  "app.dashboard.music": "Arbeitsmelodien",
+  "app.dashboard.feel": "Wie fühlst du dich heute",
+  "app.dashboard.task": "Taskmanager",
+  "app.task.open": "{num} offen. {start} Anfang",
+  "app.breakPlan": "Pausenplan",
+  "app.invite": "einladen",
+  "app.waterHydretion": "Trinkerinnerung",
+  "app.eventCalendar": "Veranstaltungskalender",
+  "app.imToday": "heute wichtig",
+  "app.breakPlan.qs": "Was ist Pausenplan?",
+  "app.screen": "Bildschirmerinnerung"
 }

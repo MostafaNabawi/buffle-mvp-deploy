@@ -662,7 +662,12 @@ const Header = () => {
                   id={`dropdown-button-drop-start`}
                   drop="start"
                   className="subDropdown"
-                  title="Workspace"
+                  title={
+                    <FormattedMessage
+                      defaultMessage="Workspace"
+                      id="app.header.workspace"
+                    />
+                  }
                 >
                   {workspace?.map((space, i) => (
                     <Dropdown.Item
@@ -727,7 +732,12 @@ const Header = () => {
                   Settings
                 </NavDropdown.Item>
               )}
-              <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
+              <NavDropdown.Item onClick={handleLogout}>
+                <FormattedMessage
+                  defaultMessage="Logout"
+                  id="app.header.logout"
+                />
+              </NavDropdown.Item>
             </NavDropdown>
           </div>
           <div className="form-search">

@@ -2,29 +2,29 @@ import React, { useState, useEffect } from "react";
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
 import Card from "./../card/Card";
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import CardBody from "./../card/CardBody";
 import CardHeader from "./../card/CardHeader";
 import Widget from "./../common/widget/Widget";
 import { useToasts } from "react-toast-notifications";
 import { Image, Row, Col, Button, Form } from "react-bootstrap";
 import Modal from "../modal/modal";
-import { getImportantToday, updateTaskImportant } from '../../api'
-import BeatLoader from 'react-spinners/BeatLoader';
+import { getImportantToday, updateTaskImportant } from "../../api";
+import BeatLoader from "react-spinners/BeatLoader";
 import TimePicker2 from "../common/timePicker/TimePicker2";
-
+import { FormattedMessage } from "react-intl";
 
 function ImpotentToDayCard({ handleMove }) {
   const [show, setShow] = useState(false);
   const { addToast } = useToasts();
   const handleShow = () => setShow(true);
   const [timeFormat, setTimeFormat] = useState(false);
-  const [duration, setDuration] = useState('');
+  const [duration, setDuration] = useState("");
   const [showSkleton, setShowSkleton] = useState(false);
   const [loading, setloading] = useState(false);
-  const [itemId, setItemId] = useState('');
-  const [itemName, setItemName] = useState('');
+  const [itemId, setItemId] = useState("");
+  const [itemName, setItemName] = useState("");
   const [error, setError] = useState("");
   const [data, setData] = useState([]);
   const [checked, setChecked] = useState(false);
@@ -36,8 +36,8 @@ function ImpotentToDayCard({ handleMove }) {
 
   const handleClose = () => {
     setShow(false);
-    setError('');
-    setTimeFormat(false)
+    setError("");
+    setTimeFormat(false);
   };
 
   async function request() {
@@ -50,20 +50,19 @@ function ImpotentToDayCard({ handleMove }) {
         time: i.start_time,
         content: i.name,
         id: i._id,
-
       };
     });
-    setData(format)
+    setData(format);
     setShowSkleton(false);
   }
 
   useEffect(() => {
     request();
-  }, [])
+  }, []);
   const handleClick = (id, name) => {
     setItemName(name);
     setItemId(id);
-  }
+  };
   const handleSubmit = async () => {
     if (duration.length < 0) {
       setError("Duration time is required!");
@@ -77,7 +76,13 @@ function ImpotentToDayCard({ handleMove }) {
         durationTime.seconds;
       setError("");
       setloading(true);
-      const updateImportant = await updateTaskImportant(itemId, itemName, duration, 'stop', checked);
+      const updateImportant = await updateTaskImportant(
+        itemId,
+        itemName,
+        duration,
+        "stop",
+        checked
+      );
       if (updateImportant.status === 200) {
         addToast("Moved to task susseccfully", {
           autoDismiss: true,
@@ -87,19 +92,19 @@ function ImpotentToDayCard({ handleMove }) {
         request();
         setloading(false);
         setShow(false);
-        setTimeFormat(false)
+        setTimeFormat(false);
       } else {
         addToast("Error Please Try Again!", {
           autoDismiss: false,
           appearance: "error",
         });
         setloading(false);
-        setTimeFormat(false)
+        setTimeFormat(false);
         return true;
       }
       setloading(false);
       setDuration("");
-      setTimeFormat(false)
+      setTimeFormat(false);
 
       return true;
     }
@@ -114,30 +119,45 @@ function ImpotentToDayCard({ handleMove }) {
               alt="exclamation mark icon"
             />
           }
-          title="Importent Today"
+          title={
+            <FormattedMessage
+              defaultMessage="Important Today"
+              id="app.imToday"
+            />
+          }
           action={
             <>
-              <Link to="/dashboard/taskmanagement" className="secondary-dark-gray"><Icon icon="vaadin:plus" /></Link>
+              <Link
+                to="/dashboard/taskmanagement"
+                className="secondary-dark-gray"
+              >
+                <Icon icon="vaadin:plus" />
+              </Link>
             </>
           }
         />
-        <CardBody className={`important-today-card-body ${data.length === 0 ? 'paddingBottom' : ''}`}>
-          {showSkleton ? (<Skeleton count={4} />) :
-            data.length > 0 ?
-              data.map((item) => (
-                <Widget
-                  key={item.id}
-                  icon={item.icon}
-                  title={item.time}
-                  content={item.content}
-                  handleShow={handleShow}
-                  id={item.id}
-                  handleClick={handleClick}
-                />
-              )) : <span >No important for today</span>
-
-
-          }
+        <CardBody
+          className={`important-today-card-body ${
+            data.length === 0 ? "paddingBottom" : ""
+          }`}
+        >
+          {showSkleton ? (
+            <Skeleton count={4} />
+          ) : data.length > 0 ? (
+            data.map((item) => (
+              <Widget
+                key={item.id}
+                icon={item.icon}
+                title={item.time}
+                content={item.content}
+                handleShow={handleShow}
+                id={item.id}
+                handleClick={handleClick}
+              />
+            ))
+          ) : (
+            <span>No important for today</span>
+          )}
         </CardBody>
       </Card>
       <Modal
@@ -147,7 +167,6 @@ function ImpotentToDayCard({ handleMove }) {
         subTitle="Set duration time to task."
         body={
           <Row>
-
             <Col md={12}>
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Row>
@@ -161,15 +180,18 @@ function ImpotentToDayCard({ handleMove }) {
                   <Col xl="12">
                     <Form.Group check>
                       <Form.Label check className="extra-break-time">
-                        <input type="checkbox" onChange={(e) => setChecked(e.target.checked)} />
-                        Do you want to have 5 minutes break after this task finished?
+                        <input
+                          type="checkbox"
+                          onChange={(e) => setChecked(e.target.checked)}
+                        />
+                        Do you want to have 5 minutes break after this task
+                        finished?
                       </Form.Label>
                     </Form.Group>
                   </Col>
                 </Row>
               </Form.Group>
             </Col>
-
           </Row>
         }
         footer={
