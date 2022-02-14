@@ -96,7 +96,6 @@ const Item = (props) => {
         <span className={"item-title"} onClick={handleShow}>
           {item.content}
         </span>
-        {/* <div className={`color-bar color-bar-${item.day_of_week}`} /> */}
         <div className="color-bar" style={{ background: item.color }} />
       </div>
 
