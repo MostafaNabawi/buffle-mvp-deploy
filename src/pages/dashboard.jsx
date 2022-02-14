@@ -261,10 +261,17 @@ const Dashboard = () => {
         ":" +
         durationTime.seconds;
       setloading(true);
-      const createT = await createTask(taskName, 1, time, true, "stop", checked);
+      const createT = await createTask(
+        taskName,
+        1,
+        time,
+        true,
+        "stop",
+        checked
+      );
       if (createT.status === 200) {
         setTaskReload(true);
-        setChecked(false)
+        setChecked(false);
         addToast("Created susseccfully", {
           autoDismiss: true,
           appearance: "success",
@@ -445,7 +452,7 @@ const Dashboard = () => {
   const getBreakPlan = async () => {
     const req = await getaAllBreackPlan();
     if (req.length > 0) {
-      console.log("req....",req)
+      console.log("req....", req);
       setBreakPlanData(req);
     } else {
       setBreakPlanData([]);
@@ -710,8 +717,9 @@ const Dashboard = () => {
                 />
               }
               title="Task Manager"
-              subtitle={`${opan < 0 ? 0 : opan} open, ${start < 0 ? 0 : start
-                } start.`}
+              subtitle={`${opan < 0 ? 0 : opan} open, ${
+                start < 0 ? 0 : start
+              } start.`}
               action={
                 <>
                   <i
@@ -841,9 +849,19 @@ const Dashboard = () => {
                             src="/icone/WB_Headshots-102-web 1.png"
                           />
                         </div>
-                        <div className="breakplan-icon jone-icon navy-blue text-center pt-2">
-                          +1
-                        </div>
+                        {data.joinNumber.length > 0 &&
+                          (data.joinNumber.length === 1 ? (
+                            <div className="breakplan-icon jone-icon navy-blue text-center pt-2">
+                              <Image
+                                className="breakplan-img"
+                                src="/icone/WB_Headshots-102-web 1.png"
+                              />
+                            </div>
+                          ) : (
+                            <div className="breakplan-icon jone-icon navy-blue text-center pt-2">
+                               + {data.joinNumber.length}
+                            </div>
+                          ))}
                       </Col>
                       <Col>
                         <div className="break-user-name">
@@ -855,25 +873,25 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                  id: data._id,
-                                  name: data.name,
-                                  time: data.time,
-                                })
+                                    id: data._id,
+                                    name: data.name,
+                                    time: data.time,
+                                  })
                                 : joinOrNewSuggestForm(
-                                  {
-                                    id: data.user[0]._id,
-                                    breackName: data.name,
-                                  },
-                                  {
-                                    fullName:
-                                      currentUser.first_name +
-                                      " " +
-                                      currentUser.last_name,
-                                    breakName: data.name,
-                                    breakOwnerId: data.user[0]._id,
-                                    breakId:data._id
-                                  }
-                                );
+                                    {
+                                      id: data.user[0]._id,
+                                      breackName: data.name,
+                                    },
+                                    {
+                                      fullName:
+                                        currentUser.first_name +
+                                        " " +
+                                        currentUser.last_name,
+                                      breakName: data.name,
+                                      breakOwnerId: data.user[0]._id,
+                                      breakId: data._id,
+                                    }
+                                  );
                             }}
                             className="break-type"
                           >
@@ -885,20 +903,20 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                  id: data._id,
-                                  name: data.name,
-                                  time: data.time,
-                                })
+                                    id: data._id,
+                                    name: data.name,
+                                    time: data.time,
+                                  })
                                 : timeFormBreakplan({
-                                  time: "",
-                                  recevier: data.user[0]._id,
-                                  fullName:
-                                    currentUser.first_name +
-                                    "" +
-                                    currentUser.last_name,
-                                  breakName: data.name,
-                                  breakId: data._id,
-                                });
+                                    time: "",
+                                    recevier: data.user[0]._id,
+                                    fullName:
+                                      currentUser.first_name +
+                                      "" +
+                                      currentUser.last_name,
+                                    breakName: data.name,
+                                    breakId: data._id,
+                                  });
                             }}
                           >
                             {data.time}
@@ -1042,8 +1060,12 @@ const Dashboard = () => {
                 <Col md={12}>
                   <Form.Group check>
                     <Form.Label check className="extra-break-time">
-                      <input type="checkbox" onChange={(e) => setChecked(e.target.checked)} />
-                      Do you want to have 5 minutes break after this task finished?
+                      <input
+                        type="checkbox"
+                        onChange={(e) => setChecked(e.target.checked)}
+                      />
+                      Do you want to have 5 minutes break after this task
+                      finished?
                     </Form.Label>
                   </Form.Group>
                 </Col>
@@ -1087,14 +1109,13 @@ const Dashboard = () => {
         }
         footer={
           <>
-
             {/* Vacation time btn */}
             {vacationTime && (
               <Button
                 disabled={
                   vacationNameInput === "" ||
-                    vacationDataInput === "" ||
-                    vacationLoader
+                  vacationDataInput === "" ||
+                  vacationLoader
                     ? true
                     : false
                 }
