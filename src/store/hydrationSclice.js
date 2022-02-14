@@ -15,6 +15,7 @@ export const hydrationSlice = createSlice({
     usedPerPercent: 0,
     inChanged: false,
     timeOutId: "",
+    isFinished: false,
   },
   reducers: {
     setData: (state, action) => {
@@ -58,6 +59,9 @@ export const hydrationSlice = createSlice({
     setTimeOutID: (state, action) => {
       state.timeOutId = action.payload;
     },
+    setIsFinished: (state, action) => {
+      state.isFinished = action.payload;
+    },
   },
 });
 
@@ -74,6 +78,7 @@ export const {
   setUsedPerPercent,
   setIsChanged,
   setTimeOutID,
+  setIsFinished,
 } = hydrationSlice.actions;
 
 export default hydrationSlice.reducer;

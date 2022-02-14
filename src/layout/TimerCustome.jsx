@@ -12,7 +12,7 @@ function TimerCustome({ count, setCount }) {
   const beep = new UIFx(boop, {
     volume: 0.8,
   });
-  const { notificDelay, notificTimer, percent, isMute } = useSelector(
+  const { notificDelay, notificTimer, isFinished, isMute } = useSelector(
     (state) => state.hydration
   );
   useEffect(() => {
@@ -28,7 +28,7 @@ function TimerCustome({ count, setCount }) {
   }, [notificTimer]);
 
   const sendNotific = () => {
-    if (percent <= 100 && !isMute) {
+    if (!isFinished && !isMute) {
       fetch(`${API_URL}/user/water-notify`, {
         method: "POST",
         credentials: "include",
