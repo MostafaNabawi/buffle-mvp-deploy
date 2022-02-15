@@ -3,8 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 export const screenReminderSclice = createSlice({
   name: "screen",
   initialState: {
-    du_time: "00:20:00",
-    dis_time: "00:00:01",
+    du_time: "10:00:00",
+    dis_time: "00:50:00",
     updating:true
   },
   reducers: {

@@ -12,12 +12,13 @@ import Loader from "react-spinners/BeatLoader";
 import style from "./style.module.css";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import {
   setDu_time,
   setDis_time,
   setUpdating,
 } from "../../store/screenReminderSclice";
+import { FormattedMessage } from "react-intl";
 
 function ScreenFreeReminderCard() {
 
@@ -270,7 +271,12 @@ function ScreenFreeReminderCard() {
       <Card className={style.card}>
         <CardHeader
           icon={<Image src="/icone/eye 1.png" alt="eye icon" />}
-          title="ScreenFree Reminder"
+          title={
+            <FormattedMessage
+              defaultMessage="ScreenFree Reminder"
+              id="app.screen"
+            />
+          }
           action={
             <>
               <i

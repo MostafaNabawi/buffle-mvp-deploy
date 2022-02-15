@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import {
   Row,
   Col,
@@ -33,6 +33,8 @@ import { setAlert, setRun } from "../store/taskSlice";
 import boop from "./boop.mp3";
 import UIFx from "uifx";
 import TimerCustome from "./TimerCustome";
+import { Context } from "./Wrapper";
+import { FormattedMessage } from "react-intl";
 const Header = () => {
   const { alert } = useSelector((state) => state.task);
   //
@@ -44,6 +46,7 @@ const Header = () => {
   const beep = new UIFx(boop, {
     volume: 0.8,
   });
+  const context = useContext(Context);
   const { addToast } = useToasts();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -58,7 +61,7 @@ const Header = () => {
   const [workspace, setWorkSpaces] = useState([]);
   const [ownSpace, setOwnSpace] = useState("");
   const [current, setCurrent] = useState("");
-
+  const [lang, setLang] = useState("");
   const handleLogout = async () => {
     const req = await logout();
     if (req.status === 200) {
@@ -404,6 +407,12 @@ const Header = () => {
       dispatch(setRun(false));
     }
   }, [alert]);
+
+  useEffect(() => {
+    if (lang !== "") {
+      context.selectLanguage(lang);
+    }
+  }, [lang]);
   const handleSearchByTag = (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -412,7 +421,7 @@ const Header = () => {
 
   return (
     <>
-      {notificTimer !== "" && precent > 0 && (
+      {notificTimer !== "" && precent > 0 && precent <= 100 && (
         <>
           <TimerCustome count={count} setCount={setCount} />
         </>
@@ -445,9 +454,9 @@ const Header = () => {
               );
             }
           }}
-          // renderer={() => {
-          //   return "";
-          // }}
+          renderer={() => {
+            return "";
+          }}
         />
       )}
 
@@ -493,9 +502,9 @@ const Header = () => {
               setStart(true);
               handleDisplayTime(dis_time);
             }}
-            // renderer={() => {
-            //   return "";
-            // }}
+            renderer={() => {
+              return "";
+            }}
           />
         )}
       </div>
@@ -633,15 +642,42 @@ const Header = () => {
               className="navDropdomnIcon"
             >
               <Dropdown.Item as={Link} to="/dashboard/profile">
-                Profile
+                <FormattedMessage
+                  defaultMessage="Profile"
+                  id="app.header.profile"
+                />
               </Dropdown.Item>
+              <DropdownButton
+                as={ButtonGroup}
+                id={`dropdown-button-drop-start`}
+                drop="start"
+                className="subDropdown"
+                title={
+                  <FormattedMessage
+                    defaultMessage="Language"
+                    id="app.header.language"
+                  />
+                }
+              >
+                <Dropdown.Item onClick={() => setLang("de")}>
+                  Desutch
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => setLang("en")}>
+                  English
+                </Dropdown.Item>
+              </DropdownButton>
               {workspace.length > 0 && (
                 <DropdownButton
                   as={ButtonGroup}
                   id={`dropdown-button-drop-start`}
                   drop="start"
                   className="subDropdown"
-                  title="Workspace"
+                  title={
+                    <FormattedMessage
+                      defaultMessage="Workspace"
+                      id="app.header.workspace"
+                    />
+                  }
                 >
                   {workspace?.map((space, i) => (
                     <Dropdown.Item
@@ -706,7 +742,12 @@ const Header = () => {
                   Settings
                 </NavDropdown.Item>
               )}
-              <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
+              <NavDropdown.Item onClick={handleLogout}>
+                <FormattedMessage
+                  defaultMessage="Logout"
+                  id="app.header.logout"
+                />
+              </NavDropdown.Item>
             </NavDropdown>
           </div>
           <div className="form-search">

@@ -37,6 +37,7 @@ import Timer from "./../components/common/progressBar/TaskProgress";
 import Player from "../components/spotify/Player";
 import SpotifyLogin from "../components/spotify/Login";
 import TimePicker2 from "../components/common/timePicker/TimePicker2";
+import { FormattedMessage } from "react-intl";
 const Dashboard = () => {
   const [code, setCode] = useState(
     new URLSearchParams(window.location.search).get("code")
@@ -565,7 +566,12 @@ const Dashboard = () => {
             <CardHeader
               className="p-0"
               icon={<Image src="/icone/brain 1.png" alt="vector image" />}
-              title="How you feel today"
+              title={
+                <FormattedMessage
+                  defaultMessage="How you feel today"
+                  id="app.dashboard.feel"
+                />
+              }
               action={
                 <Link to={"feel-report"}>
                   <Icon color="#2a3464" icon="iconoir:reports" />
@@ -587,7 +593,12 @@ const Dashboard = () => {
                   alt="vector image"
                 />
               }
-              title="Next break"
+              title={
+                <FormattedMessage
+                  defaultMessage="Next Break"
+                  id="app.dashboard.nextBreak"
+                />
+              }
               action={
                 <i
                   title="When is your next break?"
@@ -620,7 +631,12 @@ const Dashboard = () => {
                   alt="vector image"
                 />
               }
-              title="Vacation Time"
+              title={
+                <FormattedMessage
+                  defaultMessage="Vacation Time"
+                  id="app.dashboard.vacationTime"
+                />
+              }
               action={
                 <i
                   title="Add New Vacation Time"
@@ -691,7 +707,12 @@ const Dashboard = () => {
               icon={
                 <Image src="/icone/musical-note 1.png" alt="vector image" />
               }
-              title="Worktunes"
+              title={
+                <FormattedMessage
+                  defaultMessage="Worktunes"
+                  id="app.dashboard.music"
+                />
+              }
             />
             {RenderPlayerOrLogin}
           </Card>
@@ -711,9 +732,27 @@ const Dashboard = () => {
                   alt="vector image"
                 />
               }
-              title="Task Manager"
-              subtitle={`${opan < 0 ? 0 : opan} open, ${start < 0 ? 0 : start
-                } start.`}
+              title={
+                <FormattedMessage
+                  defaultMessage="Task Manager"
+                  id="app.dashboard.task"
+                />
+              }
+              subtitle={
+                <FormattedMessage
+                  defaultMessage={`${opan < 0 ? 0 : opan} open, ${
+                    start < 0 ? 0 : start
+                  } start.`}
+                  id="app.task.open"
+                  values={{
+                    num: opan < 0 ? 0 : opan,
+                    start: start < 0 ? 0 : start,
+                  }}
+                />
+              }
+              // subtitle={`${opan < 0 ? 0 : opan} open, ${
+              //   start < 0 ? 0 : start
+              // } start.`}
               action={
                 <>
                   <i
@@ -796,7 +835,12 @@ const Dashboard = () => {
           <Card className="breakplan-card">
             <CardHeader
               icon={<Image src="/icone/direct-hit 1.png" alt="vector image" />}
-              title="Breakplan"
+              title={
+                <FormattedMessage
+                  defaultMessage="Breakplan"
+                  id="app.breakPlan"
+                />
+              }
               action={
                 <i
                   onClick={() => {
@@ -808,7 +852,8 @@ const Dashboard = () => {
                   }}
                   className="invaleIcone"
                 >
-                  <Icon icon="flat-color-icons:invite" /> Invite
+                  <Icon icon="flat-color-icons:invite" />{" "}
+                  <FormattedMessage defaultMessage="Invite" id="app.invite" />
                 </i>
               }
             />
@@ -867,25 +912,25 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                  id: data._id,
-                                  name: data.name,
-                                  time: data.time,
-                                })
+                                    id: data._id,
+                                    name: data.name,
+                                    time: data.time,
+                                  })
                                 : joinOrNewSuggestForm(
-                                  {
-                                    id: data.user[0]._id,
-                                    breackName: data.name,
-                                  },
-                                  {
-                                    fullName:
-                                      currentUser.first_name +
-                                      " " +
-                                      currentUser.last_name,
-                                    breakName: data.name,
-                                    breakOwnerId: data.user[0]._id,
-                                    breakId: data._id,
-                                  }
-                                );
+                                    {
+                                      id: data.user[0]._id,
+                                      breackName: data.name,
+                                    },
+                                    {
+                                      fullName:
+                                        currentUser.first_name +
+                                        " " +
+                                        currentUser.last_name,
+                                      breakName: data.name,
+                                      breakOwnerId: data.user[0]._id,
+                                      breakId: data._id,
+                                    }
+                                  );
                             }}
                             className="break-type"
                           >
@@ -897,20 +942,20 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                  id: data._id,
-                                  name: data.name,
-                                  time: data.time,
-                                })
+                                    id: data._id,
+                                    name: data.name,
+                                    time: data.time,
+                                  })
                                 : timeFormBreakplan({
-                                  time: "",
-                                  recevier: data.user[0]._id,
-                                  fullName:
-                                    currentUser.first_name +
-                                    "" +
-                                    currentUser.last_name,
-                                  breakName: data.name,
-                                  breakId: data._id,
-                                });
+                                    time: "",
+                                    recevier: data.user[0]._id,
+                                    fullName:
+                                      currentUser.first_name +
+                                      "" +
+                                      currentUser.last_name,
+                                    breakName: data.name,
+                                    breakId: data._id,
+                                  });
                             }}
                           >
                             {data.time}
@@ -924,7 +969,12 @@ const Dashboard = () => {
               <Row className="mt-3">
                 <Col>
                   <div className="creat-breack-time">
-                    <div className="what-is-breack">What’s your breakplan?</div>
+                    <div className="what-is-breack">
+                      <FormattedMessage
+                        defaultMessage="What’s your breakplan?"
+                        id="app.breakPlan.qs"
+                      />
+                    </div>
                     <ul className="pt-1 pl-2">
                       <li>
                         <Link
@@ -1065,12 +1115,12 @@ const Dashboard = () => {
                 </Col>
               </>
             )}
-            {taskManagerUpdate && (
-              updateTaskLoader ? < BeatLoader /> :
-
+            {taskManagerUpdate &&
+              (updateTaskLoader ? (
+                <BeatLoader />
+              ) : (
                 <>
                   <Col md={12}>
-
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                       <Form.Label>Task name </Form.Label>
                       <Form.Control
@@ -1101,7 +1151,7 @@ const Dashboard = () => {
                     />
                   </Col>
                 </>
-            )}
+              ))}
           </Row>
         }
         footer={
@@ -1111,8 +1161,8 @@ const Dashboard = () => {
               <Button
                 disabled={
                   vacationNameInput === "" ||
-                    vacationDataInput === "" ||
-                    vacationLoader
+                  vacationDataInput === "" ||
+                  vacationLoader
                     ? true
                     : false
                 }
