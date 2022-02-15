@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import {
   Row,
   Col,
@@ -51,6 +51,7 @@ const Header = () => {
   const context = useContext(Context);
   const { addToast } = useToasts();
   const dispatch = useDispatch();
+  const imageRef = useRef();
   const navigate = useNavigate();
   const [userData, setUserData] = useState({});
   const [notification, setNotificatiion] = useState("");
@@ -409,6 +410,26 @@ const Header = () => {
       context.selectLanguage(lang);
     }
   }, [lang]);
+  useEffect(() => {
+    async function getAvatar() {
+      const req = await fetch(
+        `${API_URL}/user/my-avatar?key=${userData?.avatar?.key}`,
+        {
+          credentials: "include",
+        }
+      );
+      const data = await req.blob().then((myBlob) => {
+        var objectURL = URL.createObjectURL(myBlob);
+        // myImage.src = objectURL;
+        imageRef.current.src = objectURL;
+      });
+    }
+    if (userData?.avatar) {
+      getAvatar();
+    } else {
+      imageRef.current.src = "/icone/hcphotos-Headshots-1 1.png";
+    }
+  }, [userData]);
   const handleSearchByTag = (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -626,7 +647,15 @@ const Header = () => {
               title={
                 <Image
                   className="sidebar-icon"
-                  src="/icone/hcphotos-Headshots-1 1.png"
+                  id="header-img"
+                  src={`data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M12 2A10 10 0 1 0 22 12A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8A8 8 0 0 1 12 20Z" opacity=".5"%2F%3E%3Cpath fill="currentColor" d="M20 12h2A10 10 0 0 0 12 2V4A8 8 0 0 1 20 12Z"%3E%3CanimateTransform attributeName="transform" dur="1s" from="0 12 12" repeatCount="indefinite" to="360 12 12" type="rotate"%2F%3E%3C%2Fpath%3E%3C%2Fsvg%3E`}
+                  ref={imageRef}
+                  style={{
+                    objectFit: "fill",
+                    width: "120px",
+                    height: "120px",
+                    borderRadius: "50px",
+                  }}
                 />
               }
               className="navDropdomnIcon"
