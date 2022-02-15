@@ -15,15 +15,12 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setDu_time,
-  setDefault,
   setDis_time,
-  setDefault_dis_time,
+  setUpdating,
 } from "../../store/screenReminderSclice";
 
 function ScreenFreeReminderCard() {
-  const { du_time, defaultTime, dis_time, default_dis_time } = useSelector(
-    (state) => state.screen
-  );
+
   const dispatch = useDispatch();
   const { addToast } = useToasts();
   const [changeMute, setChangeMute] = useState(false);
@@ -52,14 +49,15 @@ function ScreenFreeReminderCard() {
     const arr = val.split(":");
     const time =
       arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000;
-    dispatch(setDu_time(time));
+    localStorage.setItem("duration_time", time);
+    dispatch(setUpdating(false));
     return time;
   };
   const handleDisplayTime = (val) => {
     const arr = val.split(":");
     const time =
       arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000;
-    dispatch(setDis_time(time));
+    localStorage.setItem("display_time", time);
     return time;
   };
   const timeFormate = (val, getter, setter) => {
@@ -117,13 +115,13 @@ function ScreenFreeReminderCard() {
       if (payload.mute) {
         localStorage.setItem("screen", "on");
         dispatch(setDu_time(payload.duration));
-        dispatch(setDefault_dis_time(payload.display));
+        dispatch(setDis_time(payload.display));
         handleDurationTime(payload.duration);
         handleDisplayTime(payload.display);
       } else {
         localStorage.setItem("screen", "off");
         dispatch(setDu_time(payload.duration));
-        dispatch(setDefault_dis_time(payload.display));
+        dispatch(setDis_time(payload.display));
         handleDurationTime(payload.duration);
         handleDisplayTime(payload.display);
       }
@@ -152,6 +150,7 @@ function ScreenFreeReminderCard() {
       return false;
     } else {
       setLoading(true);
+      dispatch(setUpdating(true));
       const du_time =
         durationTime.hours +
         ":" +

@@ -4,27 +4,23 @@ export const screenReminderSclice = createSlice({
   name: "screen",
   initialState: {
     du_time: "00:20:00",
-    defaultTime: "00:20:00",
-    dis_time: "00:00:05",
-    default_dis_time:"00:00:05"
+    dis_time: "00:00:01",
+    updating:true
   },
   reducers: {
     setDu_time: (state, action) => {
       state.du_time = action.payload;
     },
-    setDefault: (state, action) => {
-      state.defaultTime = action.payload;
-    },
     setDis_time: (state, action) => {
       state.dis_time = action.payload;
     },
-    setDefault_dis_time: (state, action) => {
-      state.default_dis_time = action.payload;
+    setUpdating: (state, action) => {
+      state.updating = action.payload;
     },
   },
 });
 
-export const { setValue, setDu_time, setDefault, setDis_time,setDefault_dis_time } =
+export const {setDu_time, setDis_time,setUpdating } =
   screenReminderSclice.actions;
 
 export default screenReminderSclice.reducer;

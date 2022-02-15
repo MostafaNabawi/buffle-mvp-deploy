@@ -24,9 +24,8 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setDu_time,
-  setDefault,
   setDis_time,
-  setDefault_dis_time,
+  setUpdating,
 } from "../store/screenReminderSclice";
 import moment from "moment";
 import Swal from "sweetalert2";
@@ -36,9 +35,8 @@ import UIFx from "uifx";
 import TimerCustome from "./TimerCustome";
 const Header = () => {
   const { alert } = useSelector((state) => state.task);
-
   //
-  const { du_time, defaultTime, dis_time, default_dis_time } = useSelector(
+  const { du_time, dis_time,updating } = useSelector(
     (state) => state.screen
   );
   const { notificTimer, precent } = useSelector((state) => state.hydration);
@@ -72,6 +70,10 @@ const Header = () => {
       // delte spotify data
       localStorage.removeItem("spotToken");
       localStorage.removeItem("spotRefresh");
+      // delete screen reminder data
+      localStorage.removeItem("duration_time");
+      localStorage.removeItem("display_time");
+      localStorage.removeItem('screen')
       navigate("/");
     }
   };
@@ -79,14 +81,15 @@ const Header = () => {
     const arr = val.split(":");
     const time =
       arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000;
-    dispatch(setDu_time(time));
+    localStorage.setItem("duration_time", time);
+    dispatch(setUpdating(false))
     return time;
   };
   const handleDisplayTime = (val) => {
     const arr = val.split(":");
     const time =
       arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000;
-    dispatch(setDis_time(time));
+    localStorage.setItem("display_time", time);
     return time;
   };
   // Notification
@@ -344,19 +347,19 @@ const Header = () => {
       if (payload) {
         if (payload.mute) {
           localStorage.setItem("screen", "on");
-          dispatch(setDefault(payload.duration));
-          dispatch(setDefault_dis_time(payload.display));
+          dispatch(setDu_time(payload.duration));
+          dispatch(setDis_time(payload.display));
           handleDurationTime(payload.duration);
           handleDisplayTime(payload.display);
         } else {
-          localStorage.setItem("screen", "of");
-          dispatch(setDefault(payload.duration));
-          dispatch(setDefault_dis_time(payload.display));
+          localStorage.setItem("screen", "off");
+          dispatch(setDu_time(payload.duration));
+          dispatch(setDis_time(payload.display));
           handleDurationTime(payload.duration);
           handleDisplayTime(payload.display);
         }
       } else {
-        localStorage.setItem("screen", "of");
+        localStorage.setItem("screen", "off");
         handleDurationTime("01:00:00");
         handleDisplayTime("00:05:00");
       }
@@ -406,6 +409,7 @@ const Header = () => {
     const formData = new FormData(e.currentTarget);
     navigate(`/hashtag/${formData.get("search-input")}`);
   };
+console.log("....",localStorage.getItem("screen"))
   return (
     <>
       {notificTimer !== "" && precent > 0 && (
@@ -416,18 +420,19 @@ const Header = () => {
       <Col className="col-12 header-name text-capitalize">
         Hi <span id="userFullName">{userData?.first_name}</span>
       </Col>
-      {du_time > 0 && start && (
+      {start && (
         <Countdown
           key={`c-4`}
-          date={Date.now() + du_time}
+          date={Date.now() + +localStorage.getItem("duration_time")}
+          autoStart={start ? true : false}
           onTick={(e) => {
-            if (localStorage.getItem("screen") === "on") {
-              dispatch(setDu_time(e.total));
+            if (!updating ) {
+             localStorage.setItem('duration_time',e.total)
             }
           }}
           onComplete={() => {
-            handleDurationTime(defaultTime);
             setStart(false);
+            handleDurationTime(du_time);
             if (localStorage.getItem("screen") === "on") {
               const timeLock = new Date();
               localStorage.setItem(
@@ -440,9 +445,9 @@ const Header = () => {
               );
             }
           }}
-          renderer={() => {
-            return "";
-          }}
+          // renderer={() => {
+          //   return "";
+          // }}
         />
       )}
 
@@ -452,17 +457,20 @@ const Header = () => {
           localStorage.getItem("screen") === "on" ? "lockScreen" : ""
         } text-center ${!start ? "" : "lockScreenHide"}`}
       >
-        {localStorage.getItem("screen") === "on" && du_time > 0 && !start && (
+        {localStorage.getItem("screen") === "on" && !start && (
           <div className="screenDiv">
             <h1>Screen Lock For</h1>
             <Countdown
               key={`c-5`}
-              date={Date.now() + dis_time}
+              date={Date.now() + +localStorage.getItem("display_time")}
+              onTick={(e) => {
+                 localStorage.setItem('display_time',e.total)
+              }}
               onComplete={() => {
-                handleDisplayTime(default_dis_time);
                 if (localStorage.getItem("screen") === "on") {
                   setStart(true);
                 }
+                handleDisplayTime(dis_time);
               }}
               // renderer={() => {
               //   return ""
@@ -470,23 +478,24 @@ const Header = () => {
             />
           </div>
         )}
-        {du_time > 0 && !start && (
+        {localStorage.getItem("screen") === "off" && !start && (
           <Countdown
             key={`c-6`}
-            date={Date.now() + dis_time}
-            autoStart={localStorage.getItem("screen") === "on" ? false : true}
-            onTick={() => {
+            date={Date.now() + +localStorage.getItem("display_time")}
+          
+            onTick={(e) => {
+              localStorage.setItem('display_time',e.total)
               if (localStorage.getItem("screen") === "on") {
                 setStart(true);
               }
             }}
             onComplete={() => {
-              handleDisplayTime(default_dis_time);
               setStart(true);
+              handleDisplayTime(dis_time);
             }}
-            renderer={() => {
-              return "";
-            }}
+            // renderer={() => {
+            //   return "";
+            // }}
           />
         )}
       </div>
