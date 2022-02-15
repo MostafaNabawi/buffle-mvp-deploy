@@ -37,6 +37,7 @@ import Timer from "./../components/common/progressBar/TaskProgress";
 import Player from "../components/spotify/Player";
 import SpotifyLogin from "../components/spotify/Login";
 import TimePicker2 from "../components/common/timePicker/TimePicker2";
+import { FormattedMessage } from "react-intl";
 const Dashboard = () => {
   const [code, setCode] = useState(
     new URLSearchParams(window.location.search).get("code")
@@ -44,8 +45,6 @@ const Dashboard = () => {
   const [showPlayer, setShowPlayer] = useState(false);
   const MySwal = withReactContent(Swal);
   const currentUser = JSON.parse(localStorage.getItem("user"));
-  const [timeFormat, setTimeFormat] = useState(false);
-  const [updateTimeFormat, setUpdateTimeFormat] = useState("");
   // show form for breack plan
   const [BreakPlanForm, setBreakPlanFrom] = useState(false);
   const [breakJoinOrSagest, setBreakJoinOrSagest] = useState(false);
@@ -110,6 +109,7 @@ const Dashboard = () => {
   const [complete, setComplete] = useState("");
   const [move, setMove] = useState("");
   const [checked, setChecked] = useState(false);
+  const [updateTaskLoader, setUpdateTaskLoader] = useState(false);
   const RenderPlayerOrLogin = useMemo(() => {
     if (showPlayer) {
       const codeToken = localStorage.getItem("spotToken");
@@ -261,17 +261,23 @@ const Dashboard = () => {
         ":" +
         durationTime.seconds;
       setloading(true);
-      const createT = await createTask(taskName, 1, time, true, "stop", checked);
+      const createT = await createTask(
+        taskName,
+        1,
+        time,
+        true,
+        "stop",
+        checked
+      );
       if (createT.status === 200) {
         setTaskReload(true);
-        setChecked(false)
+        setChecked(false);
         addToast("Created susseccfully", {
           autoDismiss: true,
           appearance: "success",
         });
 
         setloading(false);
-        setTimeFormat(false);
         setModalShow(false);
       } else {
         addToast("Error Please Try Again!", {
@@ -279,7 +285,6 @@ const Dashboard = () => {
           appearance: "error",
         });
         setloading(false);
-        setTimeFormat(false);
         setModalShow(false);
         setTaskReload(false);
         return true;
@@ -287,7 +292,6 @@ const Dashboard = () => {
       setloading(false);
       setDuration("");
       setTaskName("");
-      setTimeFormat(false);
       setModalShow(false);
       setTaskReload(false);
       return true;
@@ -322,8 +326,8 @@ const Dashboard = () => {
         text: "You won't be able to revert this!",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonText: "Yes, delete it!",
         cancelButtonText: "No, cancel!",
+        confirmButtonText: "Yes, delete it!",
         reverseButtons: true,
       }).then(async (result) => {
         if (result.isConfirmed) {
@@ -391,7 +395,6 @@ const Dashboard = () => {
           appearance: "success",
         });
         setloading(false);
-        setUpdateTimeFormat(false);
         setModalShow(false);
       } else {
         addToast("Error Please Try Again!", {
@@ -400,7 +403,6 @@ const Dashboard = () => {
         });
         setCheckedId([]);
         setloading(false);
-        setUpdateTimeFormat(false);
         setModalShow(false);
         setTaskReload(false);
         return true;
@@ -409,7 +411,6 @@ const Dashboard = () => {
       setloading(false);
       setUpdateDuration("");
       setUpdateTaskName("");
-      setUpdateTimeFormat(false);
       setModalShow(false);
       setTaskReload(false);
       return true;
@@ -418,6 +419,8 @@ const Dashboard = () => {
   // get data according to selected item for edit
   const handleUpdateTask = async () => {
     if (checkId.length === 1) {
+      setUpdateTaskLoader(true);
+      setModalShow(true);
       const oldData = await getTaskById(checkId[0]);
       const time = oldData.data.task_duration.split(":");
       setOldTaskInput({
@@ -429,7 +432,7 @@ const Dashboard = () => {
       setOldTaskName({ name: oldData.data.name });
       setUpdateTaskName({ name: oldData.data.name });
 
-      setModalShow(true);
+      setUpdateTaskLoader(false);
       setNextBreak(false);
       setVacationTime(false);
       setTaskManager(false);
@@ -445,6 +448,7 @@ const Dashboard = () => {
   const getBreakPlan = async () => {
     const req = await getaAllBreackPlan();
     if (req.length > 0) {
+      console.log("req....", req);
       setBreakPlanData(req);
     } else {
       setBreakPlanData([]);
@@ -562,7 +566,12 @@ const Dashboard = () => {
             <CardHeader
               className="p-0"
               icon={<Image src="/icone/brain 1.png" alt="vector image" />}
-              title="How you feel today"
+              title={
+                <FormattedMessage
+                  defaultMessage="How you feel today"
+                  id="app.dashboard.feel"
+                />
+              }
               action={
                 <Link to={"feel-report"}>
                   <Icon color="#2a3464" icon="iconoir:reports" />
@@ -584,7 +593,12 @@ const Dashboard = () => {
                   alt="vector image"
                 />
               }
-              title="Next break"
+              title={
+                <FormattedMessage
+                  defaultMessage="Next Break"
+                  id="app.dashboard.nextBreak"
+                />
+              }
               action={
                 <i
                   title="When is your next break?"
@@ -617,7 +631,12 @@ const Dashboard = () => {
                   alt="vector image"
                 />
               }
-              title="Vacation Time"
+              title={
+                <FormattedMessage
+                  defaultMessage="Vacation Time"
+                  id="app.dashboard.vacationTime"
+                />
+              }
               action={
                 <i
                   title="Add New Vacation Time"
@@ -688,7 +707,12 @@ const Dashboard = () => {
               icon={
                 <Image src="/icone/musical-note 1.png" alt="vector image" />
               }
-              title="Worktunes"
+              title={
+                <FormattedMessage
+                  defaultMessage="Worktunes"
+                  id="app.dashboard.music"
+                />
+              }
             />
             {RenderPlayerOrLogin}
           </Card>
@@ -708,9 +732,27 @@ const Dashboard = () => {
                   alt="vector image"
                 />
               }
-              title="Task Manager"
-              subtitle={`${opan < 0 ? 0 : opan} open, ${start < 0 ? 0 : start
-                } start.`}
+              title={
+                <FormattedMessage
+                  defaultMessage="Task Manager"
+                  id="app.dashboard.task"
+                />
+              }
+              subtitle={
+                <FormattedMessage
+                  defaultMessage={`${opan < 0 ? 0 : opan} open, ${
+                    start < 0 ? 0 : start
+                  } start.`}
+                  id="app.task.open"
+                  values={{
+                    num: opan < 0 ? 0 : opan,
+                    start: start < 0 ? 0 : start,
+                  }}
+                />
+              }
+              // subtitle={`${opan < 0 ? 0 : opan} open, ${
+              //   start < 0 ? 0 : start
+              // } start.`}
               action={
                 <>
                   <i
@@ -793,7 +835,12 @@ const Dashboard = () => {
           <Card className="breakplan-card">
             <CardHeader
               icon={<Image src="/icone/direct-hit 1.png" alt="vector image" />}
-              title="Breakplan"
+              title={
+                <FormattedMessage
+                  defaultMessage="Breakplan"
+                  id="app.breakPlan"
+                />
+              }
               action={
                 <i
                   onClick={() => {
@@ -805,7 +852,8 @@ const Dashboard = () => {
                   }}
                   className="invaleIcone"
                 >
-                  <Icon icon="flat-color-icons:invite" /> Invite
+                  <Icon icon="flat-color-icons:invite" />{" "}
+                  <FormattedMessage defaultMessage="Invite" id="app.invite" />
                 </i>
               }
             />
@@ -833,16 +881,29 @@ const Dashboard = () => {
                   breacPlanData &&
                   breacPlanData.map((data, n) => (
                     <Row key={n} className="mt-3">
-                      <Col className="col-2">
+                      <Col className="col-3 break-plan-image">
                         <div className="breakplan-icon navy-blue text-center pt-2">
                           <Image
                             className="breakplan-img"
                             src="/icone/WB_Headshots-102-web 1.png"
                           />
                         </div>
+                        {data.joinNumber.length > 0 &&
+                          (data.joinNumber.length === 1 ? (
+                            <div className="breakplan-icon jone-icon navy-blue text-center pt-2">
+                              <Image
+                                className="breakplan-img"
+                                src="/icone/WB_Headshots-102-web 1.png"
+                              />
+                            </div>
+                          ) : (
+                            <div className="breakplan-icon jone-icon navy-blue text-center pt-2">
+                              + {data.joinNumber.length}
+                            </div>
+                          ))}
                       </Col>
-                      <Col>
-                        <div className="break-user-name">
+                      <Col className="col-9">
+                        <div className="break-user-name2">
                           {data.user[0].first_name} {data.user[0].last_name}
                         </div>{" "}
                         <div>
@@ -851,24 +912,25 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                  id: data._id,
-                                  name: data.name,
-                                  time: data.time,
-                                })
+                                    id: data._id,
+                                    name: data.name,
+                                    time: data.time,
+                                  })
                                 : joinOrNewSuggestForm(
-                                  {
-                                    id: data.user[0]._id,
-                                    breackName: data.name,
-                                  },
-                                  {
-                                    fullName:
-                                      currentUser.first_name +
-                                      " " +
-                                      currentUser.last_name,
-                                    breakName: data.name,
-                                    breakOwnerId: data.user[0]._id,
-                                  }
-                                );
+                                    {
+                                      id: data.user[0]._id,
+                                      breackName: data.name,
+                                    },
+                                    {
+                                      fullName:
+                                        currentUser.first_name +
+                                        " " +
+                                        currentUser.last_name,
+                                      breakName: data.name,
+                                      breakOwnerId: data.user[0]._id,
+                                      breakId: data._id,
+                                    }
+                                  );
                             }}
                             className="break-type"
                           >
@@ -880,20 +942,20 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                  id: data._id,
-                                  name: data.name,
-                                  time: data.time,
-                                })
+                                    id: data._id,
+                                    name: data.name,
+                                    time: data.time,
+                                  })
                                 : timeFormBreakplan({
-                                  time: "",
-                                  recevier: data.user[0]._id,
-                                  fullName:
-                                    currentUser.first_name +
-                                    "" +
-                                    currentUser.last_name,
-                                  breakName: data.name,
-                                  breakId: data._id,
-                                });
+                                    time: "",
+                                    recevier: data.user[0]._id,
+                                    fullName:
+                                      currentUser.first_name +
+                                      "" +
+                                      currentUser.last_name,
+                                    breakName: data.name,
+                                    breakId: data._id,
+                                  });
                             }}
                           >
                             {data.time}
@@ -907,7 +969,12 @@ const Dashboard = () => {
               <Row className="mt-3">
                 <Col>
                   <div className="creat-breack-time">
-                    <div className="what-is-breack">What’s your breakplan?</div>
+                    <div className="what-is-breack">
+                      <FormattedMessage
+                        defaultMessage="What’s your breakplan?"
+                        id="app.breakPlan.qs"
+                      />
+                    </div>
                     <ul className="pt-1 pl-2">
                       <li>
                         <Link
@@ -1037,59 +1104,65 @@ const Dashboard = () => {
                 <Col md={12}>
                   <Form.Group check>
                     <Form.Label check className="extra-break-time">
-                      <input type="checkbox" onChange={(e) => setChecked(e.target.checked)} />
-                      Do you want to have 5 minutes break after this task finished?
+                      <input
+                        type="checkbox"
+                        onChange={(e) => setChecked(e.target.checked)}
+                      />
+                      Do you want to have 5 minutes break after this task
+                      finished?
                     </Form.Label>
                   </Form.Group>
                 </Col>
               </>
             )}
-            {taskManagerUpdate && (
-              <>
-                <Col md={12}>
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Task name </Form.Label>
-                    <Form.Control
-                      type="text"
-                      className={
-                        taskError.length > 0
-                          ? "red-border-input"
-                          : "no-border-input"
-                      }
-                      name="name"
-                      onChange={(e) => {
-                        setUpdateTaskName({ name: e.target.value });
-                      }}
-                      defaultValue={oldTaskName.name}
+            {taskManagerUpdate &&
+              (updateTaskLoader ? (
+                <BeatLoader />
+              ) : (
+                <>
+                  <Col md={12}>
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                      <Form.Label>Task name </Form.Label>
+                      <Form.Control
+                        type="text"
+                        className={
+                          taskError.length > 0
+                            ? "red-border-input"
+                            : "no-border-input"
+                        }
+                        name="name"
+                        onChange={(e) => {
+                          setUpdateTaskName({ name: e.target.value });
+                        }}
+                        defaultValue={oldTaskName.name}
+                      />
+                      {taskUpdateError ? (
+                        <div className="invalid-feedback d-block">
+                          {taskUpdateError}
+                        </div>
+                      ) : null}
+                    </Form.Group>
+                  </Col>
+                  <Col md={12}>
+                    <TimePicker2
+                      label={"duration time"}
+                      value={oldTaskInput}
+                      setValue={setOldTaskInput}
                     />
-                    {taskUpdateError ? (
-                      <div className="invalid-feedback d-block">
-                        {taskUpdateError}
-                      </div>
-                    ) : null}
-                  </Form.Group>
-                </Col>
-                <Col md={12}>
-                  <TimePicker2
-                    label={"duration time"}
-                    value={oldTaskInput}
-                    setValue={setOldTaskInput}
-                  />
-                </Col>
-              </>
-            )}
+                  </Col>
+                </>
+              ))}
           </Row>
         }
         footer={
           <>
-
             {/* Vacation time btn */}
             {vacationTime && (
               <Button
                 disabled={
                   vacationNameInput === "" ||
-                    vacationDataInput === "" ||
-                    vacationLoader
+                  vacationDataInput === "" ||
+                  vacationLoader
                     ? true
                     : false
                 }
