@@ -1,3 +1,5 @@
+/** @format */
+
 import { useState, useEffect } from "react";
 import {
   Row,
@@ -404,7 +406,7 @@ const Header = () => {
   }, [alert]);
   return (
     <>
-      {notificTimer !== "" && precent > 0 && (
+      {notificTimer !== "" && (
         <>
           <TimerCustome count={count} setCount={setCount} />
         </>
