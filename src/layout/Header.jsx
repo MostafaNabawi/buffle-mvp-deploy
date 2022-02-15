@@ -409,7 +409,7 @@ const Header = () => {
     const formData = new FormData(e.currentTarget);
     navigate(`/hashtag/${formData.get("search-input")}`);
   };
-console.log("....",localStorage.getItem("screen"))
+
   return (
     <>
       {notificTimer !== "" && precent > 0 && (
