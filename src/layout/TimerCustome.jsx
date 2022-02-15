@@ -29,6 +29,7 @@ function TimerCustome({ count, setCount }) {
 
   const sendNotific = () => {
     if (!isFinished && !isMute) {
+      console.log("send");
       fetch(`${API_URL}/user/water-notify`, {
         method: "POST",
         credentials: "include",
@@ -38,9 +39,6 @@ function TimerCustome({ count, setCount }) {
           setCount(count + 1);
         }
       });
-      console.log("if");
-    } else {
-      console.log("else");
     }
   };
   return "";
