@@ -38,9 +38,7 @@ import { FormattedMessage } from "react-intl";
 const Header = () => {
   const { alert } = useSelector((state) => state.task);
   //
-  const { du_time, dis_time,updating } = useSelector(
-    (state) => state.screen
-  );
+  const { du_time, dis_time, updating } = useSelector((state) => state.screen);
   const { notificTimer, precent } = useSelector((state) => state.hydration);
   //
   const beep = new UIFx(boop, {
@@ -77,7 +75,7 @@ const Header = () => {
       // delete screen reminder data
       localStorage.removeItem("duration_time");
       localStorage.removeItem("display_time");
-      localStorage.removeItem('screen')
+      localStorage.removeItem("screen");
       navigate("/");
     }
   };
@@ -86,7 +84,7 @@ const Header = () => {
     const time =
       arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000;
     localStorage.setItem("duration_time", time);
-    dispatch(setUpdating(false))
+    dispatch(setUpdating(false));
     return time;
   };
   const handleDisplayTime = (val) => {
@@ -430,9 +428,10 @@ const Header = () => {
     }
     if (userData?.avatar) {
       getAvatar();
-    } else {
-      imageRef.current.src = "/icone/hcphotos-Headshots-1 1.png";
     }
+    // } else {
+    //   imageRef.current.src = "/icone/hcphotos-Headshots-1 1.png";
+    // }
   }, [userData]);
   const handleSearchByTag = (e) => {
     e.preventDefault();
@@ -456,8 +455,8 @@ const Header = () => {
           date={Date.now() + +localStorage.getItem("duration_time")}
           autoStart={start ? true : false}
           onTick={(e) => {
-            if (!updating ) {
-             localStorage.setItem('duration_time',e.total)
+            if (!updating) {
+              localStorage.setItem("duration_time", e.total);
             }
           }}
           onComplete={() => {
@@ -494,7 +493,7 @@ const Header = () => {
               key={`c-5`}
               date={Date.now() + +localStorage.getItem("display_time")}
               onTick={(e) => {
-                 localStorage.setItem('display_time',e.total)
+                localStorage.setItem("display_time", e.total);
               }}
               onComplete={() => {
                 if (localStorage.getItem("screen") === "on") {
@@ -512,9 +511,8 @@ const Header = () => {
           <Countdown
             key={`c-6`}
             date={Date.now() + +localStorage.getItem("display_time")}
-          
             onTick={(e) => {
-              localStorage.setItem('display_time',e.total)
+              localStorage.setItem("display_time", e.total);
               if (localStorage.getItem("screen") === "on") {
                 setStart(true);
               }
@@ -657,9 +655,9 @@ const Header = () => {
               title={
                 <Image
                   className="sidebar-icon"
-                  id="header-img"
-                  src={`data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M12 2A10 10 0 1 0 22 12A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8A8 8 0 0 1 12 20Z" opacity=".5"%2F%3E%3Cpath fill="currentColor" d="M20 12h2A10 10 0 0 0 12 2V4A8 8 0 0 1 20 12Z"%3E%3CanimateTransform attributeName="transform" dur="1s" from="0 12 12" repeatCount="indefinite" to="360 12 12" type="rotate"%2F%3E%3C%2Fpath%3E%3C%2Fsvg%3E`}
                   ref={imageRef}
+                  id="header-img"
+                  src="/icone/hcphotos-Headshots-1 1.png"
                   style={{
                     objectFit: "fill",
                     width: "120px",
