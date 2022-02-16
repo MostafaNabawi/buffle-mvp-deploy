@@ -38,51 +38,7 @@ import Player from "../components/spotify/Player";
 import SpotifyLogin from "../components/spotify/Login";
 import TimePicker2 from "../components/common/timePicker/TimePicker2";
 import { FormattedMessage } from "react-intl";
-import { readImage } from "../api/readImage";
-
-const RenderImage = ({ code }) => {
-  const [url, setUrl] = useState("");
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    async function readInnerImage() {
-      const result = await readImage(code);
-      setUrl(result);
-      setLoading(false);
-    }
-    if (code) {
-      readInnerImage();
-    }
-  }, [code]);
-  if (code.length === 0) {
-    return (
-      <Image
-        className="breakplan-img"
-        src="/icone/WB_Headshots-102-web 1.png"
-      />
-    );
-  }
-  if (loading) {
-    return (
-      <div style={{ marginTop: "-11px" }}>
-        <Skeleton style={{ borderRadius: "48%" }} width={37} height={37} />
-      </div>
-    );
-  }
-  return (
-    <Image
-      style={{
-        width: "100%",
-        height: "100%",
-        borderRadius: "50%",
-        objectFit: "cover",
-        objectPosition: "center",
-      }}
-      className="breakplan-img"
-      src={url}
-      alt={<PulseLoader size={10} />}
-    />
-  );
-};
+import RenderImage from "../components/cutomeImage/RenderImage";
 const Dashboard = () => {
   const [code, setCode] = useState(
     new URLSearchParams(window.location.search).get("code")

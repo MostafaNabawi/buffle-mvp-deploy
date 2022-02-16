@@ -37,6 +37,8 @@ import UIFx from "uifx";
 import TimerCustome from "./TimerCustome";
 import { Context } from "./Wrapper";
 import { FormattedMessage } from "react-intl";
+import RenderImage from "../components/cutomeImage/RenderImage";
+
 const Header = () => {
   const { alert } = useSelector((state) => state.task);
   //
@@ -51,7 +53,6 @@ const Header = () => {
   const context = useContext(Context);
   const { addToast } = useToasts();
   const dispatch = useDispatch();
-  const imageRef = useRef();
   const navigate = useNavigate();
   const [userData, setUserData] = useState({});
   const [notification, setNotificatiion] = useState("");
@@ -416,27 +417,6 @@ const Header = () => {
       context.selectLanguage(lang);
     }
   }, [lang]);
-  useEffect(() => {
-    async function getAvatar() {
-      const req = await fetch(
-        `${API_URL}/user/my-avatar?key=${userData?.avatar?.key}`,
-        {
-          credentials: "include",
-        }
-      );
-      const data = await req.blob().then((myBlob) => {
-        var objectURL = URL.createObjectURL(myBlob);
-        // myImage.src = objectURL;
-        imageRef.current.src = objectURL;
-      });
-    }
-    if (userData?.avatar) {
-      getAvatar();
-    }
-    // } else {
-    //   imageRef.current.src = "/icone/hcphotos-Headshots-1 1.png";
-    // }
-  }, [userData]);
   const handleSearchByTag = (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -657,18 +637,19 @@ const Header = () => {
           <div className="header-icon navy-blue text-center pt-2">
             <NavDropdown
               title={
-                <Image
-                  className="sidebar-icon"
-                  ref={imageRef}
-                  id="header-img"
-                  src="/icone/hcphotos-Headshots-1 1.png"
-                  style={{
-                    objectFit: "fill",
-                    width: "120px",
-                    height: "120px",
-                    borderRadius: "50px",
-                  }}
-                />
+                <RenderImage code={userData?.avatar?.key || ""} type={1} />
+                // <Image
+                //   className="sidebar-icon"
+                //   ref={imageRef}
+                //   id="header-img"
+                //   src="/icone/hcphotos-Headshots-1 1.png"
+                //   style={{
+                //     objectFit: "fill",
+                //     width: "120px",
+                //     height: "120px",
+                //     borderRadius: "50px",
+                //   }}
+                // />
               }
               className="navDropdomnIcon"
             >
