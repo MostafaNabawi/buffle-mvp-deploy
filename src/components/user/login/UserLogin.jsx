@@ -114,6 +114,12 @@ const UserLogin = () => {
       });
       return;
     }
+    setErrors((previousState) => {
+      return {
+        ...previousState,
+        serverError: "",
+      };
+    });
     setLoading(true);
     const req = await signin(inputs);
     if (req.status === 400) {
