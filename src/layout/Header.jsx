@@ -1,4 +1,6 @@
-import { useState, useEffect, useContext } from "react";
+/** @format */
+
+import { useState, useEffect, useContext, useRef } from "react";
 import {
   Row,
   Col,
@@ -35,13 +37,15 @@ import UIFx from "uifx";
 import TimerCustome from "./TimerCustome";
 import { Context } from "./Wrapper";
 import { FormattedMessage } from "react-intl";
+import RenderImage from "../components/cutomeImage/RenderImage";
+
 const Header = () => {
   const { alert } = useSelector((state) => state.task);
   //
-  const { du_time, dis_time,updating } = useSelector(
-    (state) => state.screen
+  const { du_time, dis_time, updating } = useSelector((state) => state.screen);
+  const { notificTimer, precent, render } = useSelector(
+    (state) => state.hydration
   );
-  const { notificTimer, precent } = useSelector((state) => state.hydration);
   //
   const beep = new UIFx(boop, {
     volume: 0.8,
@@ -76,7 +80,7 @@ const Header = () => {
       // delete screen reminder data
       localStorage.removeItem("duration_time");
       localStorage.removeItem("display_time");
-      localStorage.removeItem('screen')
+      localStorage.removeItem("screen");
       navigate("/");
     }
   };
@@ -85,7 +89,7 @@ const Header = () => {
     const time =
       arr[0] * 24 * 60 * 60 * 1000 + arr[1] * 60 * 1000 + arr[2] * 1000;
     localStorage.setItem("duration_time", time);
-    dispatch(setUpdating(false))
+    dispatch(setUpdating(false));
     return time;
   };
   const handleDisplayTime = (val) => {
@@ -421,7 +425,7 @@ const Header = () => {
 
   return (
     <>
-      {notificTimer !== "" && precent > 0 && precent <= 100 && (
+      {notificTimer !== "" && render && (
         <>
           <TimerCustome count={count} setCount={setCount} />
         </>
@@ -435,8 +439,8 @@ const Header = () => {
           date={Date.now() + +localStorage.getItem("duration_time")}
           autoStart={start ? true : false}
           onTick={(e) => {
-            if (!updating ) {
-             localStorage.setItem('duration_time',e.total)
+            if (!updating) {
+              localStorage.setItem("duration_time", e.total);
             }
           }}
           onComplete={() => {
@@ -473,7 +477,7 @@ const Header = () => {
               key={`c-5`}
               date={Date.now() + +localStorage.getItem("display_time")}
               onTick={(e) => {
-                 localStorage.setItem('display_time',e.total)
+                localStorage.setItem("display_time", e.total);
               }}
               onComplete={() => {
                 if (localStorage.getItem("screen") === "on") {
@@ -491,9 +495,8 @@ const Header = () => {
           <Countdown
             key={`c-6`}
             date={Date.now() + +localStorage.getItem("display_time")}
-          
             onTick={(e) => {
-              localStorage.setItem('display_time',e.total)
+              localStorage.setItem("display_time", e.total);
               if (localStorage.getItem("screen") === "on") {
                 setStart(true);
               }
@@ -634,10 +637,19 @@ const Header = () => {
           <div className="header-icon navy-blue text-center pt-2">
             <NavDropdown
               title={
-                <Image
-                  className="sidebar-icon"
-                  src="/icone/hcphotos-Headshots-1 1.png"
-                />
+                <RenderImage code={userData?.avatar?.key || ""} type={1} />
+                // <Image
+                //   className="sidebar-icon"
+                //   ref={imageRef}
+                //   id="header-img"
+                //   src="/icone/hcphotos-Headshots-1 1.png"
+                //   style={{
+                //     objectFit: "fill",
+                //     width: "120px",
+                //     height: "120px",
+                //     borderRadius: "50px",
+                //   }}
+                // />
               }
               className="navDropdomnIcon"
             >

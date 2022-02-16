@@ -38,6 +38,7 @@ import Player from "../components/spotify/Player";
 import SpotifyLogin from "../components/spotify/Login";
 import TimePicker2 from "../components/common/timePicker/TimePicker2";
 import { FormattedMessage } from "react-intl";
+import RenderImage from "../components/cutomeImage/RenderImage";
 const Dashboard = () => {
   const [code, setCode] = useState(
     new URLSearchParams(window.location.search).get("code")
@@ -883,22 +884,24 @@ const Dashboard = () => {
                     <Row key={n} className="mt-3">
                       <Col className="col-3 break-plan-image">
                         <div className="breakplan-icon navy-blue text-center pt-2">
-                          <Image
-                            className="breakplan-img"
-                            src="/icone/WB_Headshots-102-web 1.png"
+                          <RenderImage
+                            code={data?.user[0]?.avatar?.key || ""}
                           />
                         </div>
                         {data.joinNumber.length > 0 &&
                           (data.joinNumber.length === 1 ? (
                             <div className="breakplan-icon jone-icon navy-blue text-center pt-2">
-                              <Image
+                              <RenderImage
+                                code={data?.joinPhotos[0]?.avatar?.key || ""}
+                              />
+                              {/* <Image
                                 className="breakplan-img"
                                 src="/icone/WB_Headshots-102-web 1.png"
-                              />
+                              /> */}
                             </div>
                           ) : (
                             <div className="breakplan-icon jone-icon navy-blue text-center pt-2">
-                              + {data.joinNumber.length}
+                              + {data.joinNumber.length - 1}
                             </div>
                           ))}
                       </Col>
