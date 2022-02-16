@@ -11,7 +11,7 @@ import { API_URL, GOOGLE_CLIENT_ID } from "../../../config";
 import { checkEmail } from "../../../config/utils";
 import Swal from "sweetalert2";
 import { useSearchParams } from "react-router-dom";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, injectIntl } from "react-intl";
 const UserLogin = () => {
   const { addToast } = useToasts();
   const [showPassword, setShowPassword] = useState(false);
@@ -300,22 +300,32 @@ const UserLogin = () => {
                       id="app.login.your"
                     />
                   </Form.Label>
-                  <Form.Control
-                    className={style.formInput}
-                    type="text"
-                    isInvalid={errors.emailError !== ""}
-                    placeholder="Enter Email"
-                    name="email"
-                    disabled={loading}
-                    onChange={(e) => {
-                      if (e.target.value) {
-                        setErrors((previous) => {
-                          return { ...previous, emailError: "" };
-                        });
-                      }
-                      setInputs({ ...inputs, [e.target.name]: e.target.value });
-                    }}
-                  />
+                  <FormattedMessage
+                    id="app.screen"
+                    defaultMessage="Enter Email"
+                  >
+                    {(msg) => (
+                      <Form.Control
+                        className={style.formInput}
+                        type="text"
+                        isInvalid={errors.emailError !== ""}
+                        placeholder={msg}
+                        name="email"
+                        disabled={loading}
+                        onChange={(e) => {
+                          if (e.target.value) {
+                            setErrors((previous) => {
+                              return { ...previous, emailError: "" };
+                            });
+                          }
+                          setInputs({
+                            ...inputs,
+                            [e.target.name]: e.target.value,
+                          });
+                        }}
+                      />
+                    )}
+                  </FormattedMessage>
                   {errors.emailError !== "" && (
                     <Form.Control.Feedback type="invalid">
                       {errors.emailError}
