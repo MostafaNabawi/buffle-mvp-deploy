@@ -16,11 +16,20 @@ export default function RenderImage({ code, type = 2 }) {
       readInnerImage();
     }
   }, [code]);
-  if (code.length === 0) {
+  if (code.length === 0 && type === 2) {
     return (
       <Image
         className="breakplan-img"
         src="/icone/WB_Headshots-102-web 1.png"
+      />
+    );
+  }
+  if (code.length === 0 && type === 1) {
+    return (
+      <Image
+        src="/icone/WB_Headshots-102-web 1.png"
+        id="header-img"
+        className="sidebar-icon"
       />
     );
   }
