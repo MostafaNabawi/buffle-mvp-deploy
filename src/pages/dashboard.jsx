@@ -891,14 +891,17 @@ const Dashboard = () => {
                         {data.joinNumber.length > 0 &&
                           (data.joinNumber.length === 1 ? (
                             <div className="breakplan-icon jone-icon navy-blue text-center pt-2">
-                              <Image
+                              <RenderImage
+                                code={data?.joinPhotos[0]?.avatar?.key || ""}
+                              />
+                              {/* <Image
                                 className="breakplan-img"
                                 src="/icone/WB_Headshots-102-web 1.png"
-                              />
+                              /> */}
                             </div>
                           ) : (
                             <div className="breakplan-icon jone-icon navy-blue text-center pt-2">
-                              + {data.joinNumber.length}
+                              + {data.joinNumber.length - 1}
                             </div>
                           ))}
                       </Col>
