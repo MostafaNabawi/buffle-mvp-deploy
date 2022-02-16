@@ -1,3 +1,5 @@
+/** @format */
+
 import { useState, useEffect, useContext, useRef } from "react";
 import {
   Row,
@@ -39,7 +41,9 @@ const Header = () => {
   const { alert } = useSelector((state) => state.task);
   //
   const { du_time, dis_time, updating } = useSelector((state) => state.screen);
-  const { notificTimer, precent } = useSelector((state) => state.hydration);
+  const { notificTimer, precent, render } = useSelector(
+    (state) => state.hydration
+  );
   //
   const beep = new UIFx(boop, {
     volume: 0.8,
@@ -441,7 +445,7 @@ const Header = () => {
 
   return (
     <>
-      {notificTimer !== "" && precent > 0 && precent <= 100 && (
+      {notificTimer !== "" && render && (
         <>
           <TimerCustome count={count} setCount={setCount} />
         </>

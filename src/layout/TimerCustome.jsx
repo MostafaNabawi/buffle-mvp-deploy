@@ -1,3 +1,5 @@
+/** @format */
+
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setNotificatiionTimer, setTimeOutID } from "../store/hydrationSclice";
