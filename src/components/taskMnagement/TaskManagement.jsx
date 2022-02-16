@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { FormattedMessage } from "react-intl";
 
 const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
   const { addToast } = useToasts();
@@ -151,7 +152,7 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
         return (
           <Col key={s.status} className={"col-wrapper secondary-dark"}>
             <div className={"col-header"}>
-              <span>{s.status}</span>
+              <span><FormattedMessage defaultMessage={s.status} id={`day.${s.status}`} /></span>
               {/* <span className={"col-header-time"}>2.14</span> */}
             </div>
             <hr />
@@ -174,7 +175,8 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
                     ></Item>
                   )) : <Skeleton className="important-today-skeleton" count={1} />}
                 <div className="new-task-divimport FreelancerRegister from './../user/register/Freelancer';">
-                  <Form.Group className="mb-3" controlId="form-new-task">
+                  <Form.Group className="mb-import { FormattedMessage } from 'react-intl';
+3" controlId="form-new-task">
                     <input
                       type="text"
                       className="new_task_input"

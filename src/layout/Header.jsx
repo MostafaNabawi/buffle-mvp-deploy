@@ -451,10 +451,10 @@ const Header = () => {
               localStorage.setItem(
                 "loackTime",
                 timeLock.getHours() +
-                  ":" +
-                  timeLock.getMinutes() +
-                  ":" +
-                  timeLock.getSeconds()
+                ":" +
+                timeLock.getMinutes() +
+                ":" +
+                timeLock.getSeconds()
               );
             }
           }}
@@ -466,9 +466,8 @@ const Header = () => {
 
       <div
         id="lockScreenHide"
-        className={`${
-          localStorage.getItem("screen") === "on" ? "lockScreen" : ""
-        } text-center ${!start ? "" : "lockScreenHide"}`}
+        className={`${localStorage.getItem("screen") === "on" ? "lockScreen" : ""
+          } text-center ${!start ? "" : "lockScreenHide"}`}
       >
         {localStorage.getItem("screen") === "on" && !start && (
           <div className="screenDiv">
@@ -485,9 +484,9 @@ const Header = () => {
                 }
                 handleDisplayTime(dis_time);
               }}
-              // renderer={() => {
-              //   return ""
-              // }}
+            // renderer={() => {
+            //   return ""
+            // }}
             />
           </div>
         )}
@@ -543,7 +542,7 @@ const Header = () => {
                   }}
                   className="clear-all text-center"
                 >
-                  Clear all
+                  <FormattedMessage defaultMessage="Clear all" id="noti.clear" />
                 </a>
                 {loading ? (
                   <div className="text-center pt-4 pb-4">
@@ -629,7 +628,7 @@ const Header = () => {
                     )
                   )
                 ) : (
-                  <div className="text-center pt-2 pb-2">No Notification</div>
+                  <div className="text-center pt-2 pb-2"><FormattedMessage defaultMessage="No Notification" id="noti.noNotify" /></div>
                 )}
               </div>
             </NavDropdown>
@@ -656,7 +655,7 @@ const Header = () => {
               <Dropdown.Item as={Link} to="/dashboard/profile">
                 <FormattedMessage
                   defaultMessage="Profile"
-                  id="app.header.profile"
+                  id="prof.profile"
                 />
               </Dropdown.Item>
               <DropdownButton
@@ -757,7 +756,7 @@ const Header = () => {
               <NavDropdown.Item onClick={handleLogout}>
                 <FormattedMessage
                   defaultMessage="Logout"
-                  id="app.header.logout"
+                  id="prof.logout"
                 />
               </NavDropdown.Item>
             </NavDropdown>
