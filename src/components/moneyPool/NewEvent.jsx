@@ -196,7 +196,7 @@ function NewEvent() {
           onSelect={(k) => setKey(k)}
           className={style.tab}
         >
-          <Tab eventKey="createvent" title="Creat event">
+          <Tab eventKey="createvent" title="Create event">
             <Row>
               <Col lg={6}>
                 <Form>
