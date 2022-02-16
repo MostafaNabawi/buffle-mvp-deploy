@@ -7,15 +7,18 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastProvider } from "react-toast-notifications";
 import store from "./store/store";
 import { Provider } from "react-redux";
+import Wrapper from "./layout/Wrapper";
 // import { getWaterHydration } from "./store/hydrationSclice";
 // store.dispatch(getWaterHydration());
 ReactDOM.render(
   <Provider store={store}>
-    <ToastProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </ToastProvider>
+    <Wrapper>
+      <ToastProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ToastProvider>
+    </Wrapper>
   </Provider>,
   document.getElementById("root")
 );

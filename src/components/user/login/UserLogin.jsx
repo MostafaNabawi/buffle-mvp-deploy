@@ -11,6 +11,7 @@ import { API_URL, GOOGLE_CLIENT_ID } from "../../../config";
 import { checkEmail } from "../../../config/utils";
 import Swal from "sweetalert2";
 import { useSearchParams } from "react-router-dom";
+import { FormattedMessage } from "react-intl";
 const UserLogin = () => {
   const { addToast } = useToasts();
   const [showPassword, setShowPassword] = useState(false);
@@ -72,7 +73,12 @@ const UserLogin = () => {
       setErrors((previousState) => {
         return {
           ...previousState,
-          emailError: "Email is required!",
+          emailError: (
+            <FormattedMessage
+              defaultMessage="Email is required!"
+              id="app.login.emailError"
+            />
+          ),
           passwordError: "",
         };
       });
@@ -82,7 +88,12 @@ const UserLogin = () => {
       setErrors((previousState) => {
         return {
           ...previousState,
-          passwordError: "Password is required!",
+          passwordError: (
+            <FormattedMessage
+              defaultMessage="Password is required!"
+              id="app.login.passError"
+            />
+          ),
           emailError: "",
         };
       });
@@ -92,7 +103,12 @@ const UserLogin = () => {
       setErrors((previousState) => {
         return {
           ...previousState,
-          emailError: "Email is invalid!",
+          emailError: (
+            <FormattedMessage
+              defaultMessage="Email is invalid!"
+              id="app.login.invalidEmail"
+            />
+          ),
           passwordError: "",
         };
       });
@@ -263,20 +279,26 @@ const UserLogin = () => {
             <div className={`${style.header}  text-center pt-4`}>
               <Image src="/favicon.ico" />
               <div className={`${style.headerTitle} mt-3`}>
-                Enter your email and password.
+                <FormattedMessage
+                  defaultMessage="Enter your email and password."
+                  id="app.login.header"
+                />
               </div>
             </div>
             <div className={style.body}>
               <Form onSubmit={handleLogin}>
                 <Form.Group className="mb-4" controlId="formBasicEmail">
                   <Form.Label className={style.lableForm}>
-                    Your Email
+                    <FormattedMessage
+                      defaultMessage="Your Email"
+                      id="app.login.your"
+                    />
                   </Form.Label>
                   <Form.Control
                     className={style.formInput}
                     type="text"
                     isInvalid={errors.emailError !== ""}
-                    placeholder="Enter email"
+                    placeholder="Enter Email"
                     name="email"
                     disabled={loading}
                     onChange={(e) => {
@@ -295,7 +317,12 @@ const UserLogin = () => {
                   )}
                 </Form.Group>
                 <Form.Group className="mb-5" controlId="formBasicPassword">
-                  <Form.Label className={style.lableForm}>Password</Form.Label>
+                  <Form.Label className={style.lableForm}>
+                    <FormattedMessage
+                      id="app.password"
+                      defaultMessage="Password"
+                    />
+                  </Form.Label>
                   <div className="mb-4 input-group">
                     <Form.Control
                       className={style.formInput}
@@ -346,14 +373,22 @@ const UserLogin = () => {
                   <Form.Check
                     type="checkbox"
                     className={`${style.lableForm} mt-2`}
-                    label="Check me out"
+                    label={
+                      <FormattedMessage
+                        id="app.login.checkout"
+                        defaultMessage="check me out"
+                      />
+                    }
                     disabled={loading}
                   />
                   <Link
                     className={`${style.forgetPassLink}`}
                     to="/forget-password"
                   >
-                    Forgot password?
+                    <FormattedMessage
+                      id="app.login.forget"
+                      defaultMessage="Forgot password?"
+                    />
                   </Link>
                 </Form.Group>
 
@@ -362,7 +397,11 @@ const UserLogin = () => {
                   type="submit"
                   disabled={loading}
                 >
-                  {loading ? <PulseLoader size={10} /> : "LOGIN"}
+                  {loading ? (
+                    <PulseLoader size={10} />
+                  ) : (
+                    <FormattedMessage id="app.login" defaultMessage="LOGIN" />
+                  )}
                 </Button>
                 <GoogleLogin
                   clientId={GOOGLE_CLIENT_ID}
@@ -377,7 +416,10 @@ const UserLogin = () => {
                         className={style.googleIcon}
                         icon="flat-color-icons:google"
                       />
-                      Login with Google
+                      <FormattedMessage
+                        id="app.login.google"
+                        defaultMessage="Login with Google"
+                      />
                     </button>
                   )}
                   onSuccess={responseGoogleSuccess}
@@ -400,9 +442,15 @@ const UserLogin = () => {
             </div>
           </div>
           <div className={style.footer}>
-            Don’t have account yet?{" "}
+            <FormattedMessage
+              id="app.login.qs"
+              defaultMessage="Don’t have account yet?"
+            />
             <Link className={style.registerLink} to="/register">
-              Register now
+              <FormattedMessage
+                id="app.login.register"
+                defaultMessage="Register now"
+              />
             </Link>
           </div>
         </Col>

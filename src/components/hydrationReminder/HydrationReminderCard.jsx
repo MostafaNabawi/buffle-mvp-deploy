@@ -2,7 +2,7 @@
 
 import { Icon } from "@iconify/react";
 import { Image, Form, Row, Col, Button, NavDropdown } from "react-bootstrap";
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 
 import Card from "./../card/Card";
 import CardBody from "./../card/CardBody";
@@ -27,10 +27,10 @@ import {
   setRemindertByAmount,
   setNotificatiionTimer,
   setIsChanged,
-  setIsFinished,
+  setRender,
 } from "./../../store/hydrationSclice";
 import useReminder from "./useReminder";
-
+import { FormattedMessage } from "react-intl";
 function HydrationReminderCard() {
   const {
     data,
@@ -73,6 +73,7 @@ function HydrationReminderCard() {
   //useEffect function
   useEffect(() => {
     fetch();
+
     return () => {
       dispatch(setIsChanged(false));
     };
@@ -105,6 +106,7 @@ function HydrationReminderCard() {
           dispatch(setRemindertByAmount(req.data.daily_goal));
         }
       }
+      dispatch(setRender(true));
       dispatch(setData(req.data));
       setDailyGoal(req.data.daily_goal);
       setLiter(req.data.daily_goal);
@@ -161,7 +163,7 @@ function HydrationReminderCard() {
         dispatch(setPrecent());
         setAnimationClass();
       } else {
-        dispatch(setIsFinished(true));
+        dispatch(setRender(false));
       }
     }
   }, reminderDelay);
@@ -205,7 +207,12 @@ function HydrationReminderCard() {
       <Card>
         <CardHeader
           icon={<Image src="/icone/Vector.png" alt="water drop icon" />}
-          title="Hydration Reminder"
+          title={
+            <FormattedMessage
+              defaultMessage="Hydration Reminder"
+              id="app.waterHydretion"
+            />
+          }
           action={
             <>
               <Icon className="pr-5" icon="vaadin:plus" onClick={handleShow} />
@@ -216,7 +223,7 @@ function HydrationReminderCard() {
                 id="basic-nav-dropdown"
               >
                 <NavDropdown.Item className="reminderNavItem">
-                  {isMute ? "mute" : "unMute"}
+                  {isMute ? "unMute" : "mute"}
                   <i onClick={handleMute}>
                     <Icon
                       fontSize={25}
@@ -267,12 +274,11 @@ function HydrationReminderCard() {
         }
         footer={
           <>
-            <Button variant="outline-dark" onClick={handleClose}>
-              Close
-            </Button>
-            {/* Vacation time btn */}
             <Button variant="primary" onClick={handleSubmit}>
               Save
+            </Button>
+            <Button variant="outline-dark" onClick={handleClose}>
+              Close
             </Button>
           </>
         }

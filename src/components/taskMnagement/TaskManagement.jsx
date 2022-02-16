@@ -9,6 +9,8 @@ import { createTask, getTask, deleteTask, userStatus } from "../../api";
 import { ITEM_TYPE } from "./data/types";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
   const { addToast } = useToasts();
@@ -21,6 +23,7 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [showSkleton, setShowSkleton] = useState(false);
   async function request() {
     const data = await getTask();
     const format = data?.data?.map((i, n) => {
@@ -58,6 +61,7 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
       request();
     }
   }, [id, val, checkDrop, colChange, projectDroped]);
+
   const handleChecked = (id) => {
     handleGet(id);
     setId(id);
@@ -67,6 +71,7 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
   }
   const handleKeyDownWeekDaysItem = async (event) => {
     if (event.key === "Enter") {
+      setShowSkleton(true);
       const createT = await createTask(inputTask, 0, 0, false, 'stop');
       if (createT.status === 200) {
         addToast("Created Susseccfully", {
@@ -75,12 +80,14 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
         });
         setNewItems(true);
         setInputTask({ name: '', p_id: '' });
+        setShowSkleton(false);
       } else {
         addToast("Error Please Try Again!", {
           autoDismiss: false,
           appearance: "error",
         });
         setInputTask({ name: '', p_id: '' });
+        setShowSkleton(false);
       }
     }
   };
@@ -150,7 +157,7 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
             <hr />
             <DropWrapper onDrop={onDrop} status={s.status} idNumber={s.id} handleDrop={handleDrop}>
               <Col>
-                {items
+                {items.length > 0 ? items
                   .filter((i) => i.status === s.status)
                   .map((i, idx) => (
                     <Item
@@ -165,8 +172,8 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
                       handleChecked={handleChecked}
                       handleDelete={handleDelete}
                     ></Item>
-                  ))}
-                <div className="new-task-div">
+                  )) : <Skeleton className="important-today-skeleton" count={1} />}
+                <div className="new-task-divimport FreelancerRegister from './../user/register/Freelancer';">
                   <Form.Group className="mb-3" controlId="form-new-task">
                     <input
                       type="text"

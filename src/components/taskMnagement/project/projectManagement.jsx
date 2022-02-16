@@ -20,9 +20,13 @@ import { useToasts } from "react-toast-notifications";
 import moment from "moment";
 import ClipLoader from "react-spinners/ClipLoader";
 import BeatLoader from "react-spinners/BeatLoader";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+
 // paiman changes
 import { PROJECT_TYPE } from "../../data/types";
-const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope }) => {
+
+const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, dateChanged }) => {
   const { addToast } = useToasts();
   const MySwal = withReactContent(Swal);
   const [items, setItems] = useState([]);
@@ -79,6 +83,7 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope }
   }
 
   const handleChecked = (id) => {
+
     handleGet(id);
     setId(id);
   }
@@ -96,7 +101,7 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope }
     if (id || value || pDrope) {
       request();
     }
-  }, [id, value || pDrope]);
+  }, [id, value, pDrope,]);
   // insert task to database for project
   const handleKeyDown = async (event) => {
     if (event.key === "Enter") {
@@ -137,7 +142,7 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope }
     } else {
       setError("");
       setloading(true);
-      const createP = await createProject(projectName, projectDesc, "rgb(247, 143, 179)");
+      const createP = await createProject(projectName, projectDesc, " rgb(247, 143, 179)");
       if (createP.status === 200) {
         addToast("Created Susseccfully", {
           autoDismiss: true,
@@ -250,7 +255,7 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope }
     });
   };
   if (loading) {
-    return "Loading..";
+    return <Row><Col className="text-center"><BeatLoader /></Col></Row>;
   }
   const handleColor = async (value) => {
 
@@ -344,7 +349,7 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope }
         />
       </Row>
       <Row className="projectManagement">
-        {projects.map((s) => {
+        {projects.length > 0 ? projects.map((s) => {
           return (
             <Col key={s.id} className={"col-wrapper secondary-dark"}>
               <Row className={"col-header"}>
@@ -375,7 +380,7 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope }
                 handleDrop={handleDrop}
               >
                 <Col>
-                  {items
+                  {items.length > 0 ? items
                     .filter((i) => i.status === s.status)
                     .map((i, idx) => (
                       <Item
@@ -390,7 +395,7 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope }
                         handleGet={handleGet}
                         handleDelete={handleDelete}
                       ></Item>
-                    ))}
+                    )) : <Skeleton className="important-today-skeleton" count={1} />}
                   <div className="new-task-div">
                     <Form.Group className="mb-3" controlId="form-new-task">
                       <input
@@ -410,7 +415,7 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope }
               </DropWrapperProject>
             </Col>
           );
-        })}
+        }) : <Row><Col className="text-center"><BeatLoader /></Col></Row>}
         <Modal
           show={show}
           handleClose={handleClose}
@@ -463,7 +468,6 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope }
           }
           footer={
             <>
-              <Button onClick={handleClose}>Close</Button>
               {loading && projectName.length > 0 ? (
                 <Button variant="primary">
                   <BeatLoader />
@@ -473,6 +477,7 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope }
                   Save
                 </Button>
               )}
+              <Button variant="outline-dark" onClick={handleClose}>Close</Button>
             </>
           }
         />
