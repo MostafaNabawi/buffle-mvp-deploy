@@ -42,12 +42,12 @@ import { readImage } from "../api/readImage";
 
 const RenderImage = ({ code }) => {
   const [url, setUrl] = useState("");
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     async function readInnerImage() {
       const result = await readImage(code);
-      console.log("Hahahah ", result);
       setUrl(result);
+      setLoading(false);
     }
     if (code) {
       readInnerImage();
@@ -61,6 +61,13 @@ const RenderImage = ({ code }) => {
       />
     );
   }
+  if (loading) {
+    return (
+      <div style={{ marginTop: "-11px" }}>
+        <Skeleton style={{ borderRadius: "48%" }} width={37} height={37} />
+      </div>
+    );
+  }
   return (
     <Image
       style={{
@@ -72,6 +79,7 @@ const RenderImage = ({ code }) => {
       }}
       className="breakplan-img"
       src={url}
+      alt={<PulseLoader size={10} />}
     />
   );
 };

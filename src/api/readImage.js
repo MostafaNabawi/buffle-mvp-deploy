@@ -12,7 +12,6 @@ async function readImage(key) {
     var objectURL = URL.createObjectURL(myBlob);
     return objectURL;
   });
-  console.log("main", main);
   return main;
 }
 
