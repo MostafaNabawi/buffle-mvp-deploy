@@ -900,7 +900,7 @@ const Dashboard = () => {
                             </div>
                           ) : (
                             <div className="breakplan-icon jone-icon navy-blue text-center pt-2">
-                              + {data.joinNumber.length - 1}
+                              + {data.joinNumber.length}
                             </div>
                           ))}
                       </Col>
