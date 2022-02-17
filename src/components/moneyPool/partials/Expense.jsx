@@ -61,7 +61,9 @@ function Expense(props) {
               <InputGroup.Text id="basic-addon1">
                 {currencyCode}
               </InputGroup.Text>
-              <FormattedMessage id="event.amountIn" defaultMessage={`Amount in ${currencyName}`} >
+              <FormattedMessage id="event.amountIn" values={{
+                currencyName: currencyName
+              }} defaultMessage={`Amount in ${currencyName}`} >
                 {(msg) => (
                   <FormControl
                     placeholder={msg}

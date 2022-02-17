@@ -252,7 +252,7 @@ function Event() {
       <Modal
         show={show}
         handleClose={handleClose}
-        title="Add new member"
+        title={<FormattedMessage id="btn.addNewMem" defaultMessage="Add new member" />}
         body={<AddNewMember selected={selected} setSelected={setSelected} />}
         footer={
           <>
