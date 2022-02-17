@@ -242,12 +242,12 @@ function HydrationReminderCard() {
       <Modal
         show={show}
         handleClose={handleClose}
-        title="Hydration Reminder"
+        title={<FormattedMessage defaultMessage="Hydration Reminder" id="app.waterHydretion" />}
         body={
           <Row>
             <Col md={12}>
               <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>new daily goal(2L) </Form.Label>
+                <Form.Label><FormattedMessage defaultMessage="new daily goal(2L)" id="app.newDaily" /> </Form.Label>
                 <Form.Control
                   type="number"
                   placeholder="2L"

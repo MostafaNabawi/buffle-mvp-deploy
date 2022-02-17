@@ -137,9 +137,8 @@ function ImpotentToDayCard({ handleMove }) {
           }
         />
         <CardBody
-          className={`important-today-card-body ${
-            data.length === 0 ? "paddingBottom" : ""
-          }`}
+          className={`important-today-card-body ${data.length === 0 ? "paddingBottom" : ""
+            }`}
         >
           {showSkleton ? (
             <Skeleton count={4} />
@@ -156,7 +155,7 @@ function ImpotentToDayCard({ handleMove }) {
               />
             ))
           ) : (
-            <span>No important for today</span>
+            <span><FormattedMessage defaultMessage="No important for today" id="msg.noImportantToday" /></span>
           )}
         </CardBody>
       </Card>

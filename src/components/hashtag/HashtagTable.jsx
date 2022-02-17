@@ -2,9 +2,11 @@ import { Icon } from "@iconify/react";
 import { useState } from "react";
 import { Card, Table } from "react-bootstrap";
 import { API_URL } from "../../config";
+import RenderImage from "../cutomeImage/RenderImage";
+
 function HashtagTable({ data }) {
   const [working, setWorking] = useState(false);
-
+  console.log("dd", data);
   const pingUser = (e, id, name, tr) => {
     let fullName = JSON.parse(localStorage.getItem("user"));
     fullName = fullName?.first_name + " " + fullName?.last_name;
@@ -43,7 +45,12 @@ function HashtagTable({ data }) {
             return item.userSelected.map((user, n) => {
               return (
                 <tr key={`t-${index}-u-${n}`}>
-                  <td> {user?.first_name + " " + user?.last_name} </td>
+                  <td className="d-flex p-2 align-items-center">
+                    <RenderImage code={user?.avatar?.key || ""} />
+                    <p className="ml-2">
+                      {user?.first_name + " " + user?.last_name}
+                    </p>
+                  </td>
                   <td> {item?.name} </td>
                   <td id={`item-${index}-u-${n}`}>
                     {" "}

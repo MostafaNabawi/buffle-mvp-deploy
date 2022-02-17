@@ -16,6 +16,7 @@ import moment from 'moment';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useSelector } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 
 function TaskModal(props) {
   const { handleClose, title, className, item, handleCheck, handleDelete, projectChange } = props;
@@ -153,7 +154,7 @@ function TaskModal(props) {
               </label>
             </div>
             <Form.Label className="important-modal-textarea-label">
-              Description
+              <FormattedMessage id="label.desc" defaultMessage="Description" />
             </Form.Label>
             <Form.Group
               controlId="exampleForm.ControlTextarea1"
@@ -173,7 +174,7 @@ function TaskModal(props) {
                   <Row>
                     <Col xl="12">
                       <Form.Label className="important-modal-input-label">
-                        Time
+                        <FormattedMessage id="label.time" defaultMessage="Time" />
                       </Form.Label>
 
                       <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -200,12 +201,12 @@ function TaskModal(props) {
 
           <Modal.Footer className="important-today-modal-footer">
             <Button variant="primary" type="button" onClick={handleKeyDownTask}>
-              Save
+              <FormattedMessage id="btn.save" defaultMessage="Save" />
             </Button>
           </Modal.Footer>
         </Form>
       </Container>
-    </Modal>
+    </Modal >
   );
 }
 

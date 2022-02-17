@@ -21,13 +21,13 @@ const TaskManage = () => {
     }
     return (
         <Card className="secondary-color taskManage ">
-            <Row className="task-management-filter-row">
+            {/* <Row className="task-management-filter-row">
                 <Col>
                     <div className="task-management-filter">
                         <span>Important today items</span>
                     </div>
                 </Col>
-            </Row>
+            </Row> */}
             <DndProvider backend={HTML5Backend}>
                 <TaskManagement handleGet={handleChange} val={value} colChange={changeColor} projectDroped={drop} />
                 <ProjectManagement value={value} handleGet={handleChange} colorChange={colorChange} handleDrop={handleDrop} pDrope={drop} />

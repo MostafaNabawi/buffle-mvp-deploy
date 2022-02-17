@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { FormattedMessage } from "react-intl";
 
 const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
   const { addToast } = useToasts();
@@ -151,8 +152,7 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
         return (
           <Col key={s.status} className={"col-wrapper secondary-dark"}>
             <div className={"col-header"}>
-              <span>{s.status}</span>
-              {/* <span className={"col-header-time"}>2.14</span> */}
+              <span><FormattedMessage defaultMessage={s.status} id={`day.${s.status}`} /></span>
             </div>
             <hr />
             <DropWrapper onDrop={onDrop} status={s.status} idNumber={s.id} handleDrop={handleDrop}>
