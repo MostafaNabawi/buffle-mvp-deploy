@@ -1,6 +1,14 @@
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useRef, useState } from "react";
 import Select from "react-select";
-import { Row, Col, Image, Form, Button, InputGroup } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Image,
+  Form,
+  Button,
+  InputGroup,
+  Alert,
+} from "react-bootstrap";
 import { Icon } from "@iconify/react";
 import style from "./style.module.css";
 import { useToasts } from "react-toast-notifications";
@@ -28,6 +36,9 @@ const UserProfile = () => {
   const [newTag, setNewTag] = useState("");
   const [options, setOptions] = useState([]);
   const [addLoading, setAddLoading] = useState(false);
+  const [imgError, setImgError] = useState("");
+  const preview = useRef();
+  const [file, setFile] = useState(null);
   const setUsetLocalStorage = () => {
     try {
       fetch(`${API_URL}/user/me`, {
@@ -110,15 +121,70 @@ const UserProfile = () => {
           // tags.push(data);
         });
         setTags([...tags, ...data]);
-
-        console.log("Format", data);
       }
     });
   };
   const handleEdite = async (e) => {
     e.preventDefault();
-
-    if (firstName && lastName && email) {
+    if (firstName && lastName && email && file) {
+      setLoading(true);
+      const formData = new FormData();
+      formData.append("image", file);
+      formData.append("name", firstName);
+      formData.append("lastName", lastName);
+      formData.append("departure", departure);
+      formData.append("email", email);
+      // update tags
+      if (tags.length > 0) {
+        const res = await fetch(`${API_URL}/tags/create-user`, {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            tags: tags,
+          }),
+        });
+        if (res.status !== 200) {
+          addToast("Error Please Try Again!", {
+            appearance: "warning",
+            autoDismiss: 4000,
+          });
+          setLoading(false);
+          return false;
+        }
+      }
+      // upload form data
+      fetch(`${API_URL}/user/update`, {
+        method: "PUT",
+        credentials: "include",
+        body: formData,
+      })
+        .then(async (res) => {
+          const { msg } = await res.json();
+          if (res.status === 200) {
+            setUsetLocalStorage();
+            const headerName = document.getElementById("userFullName");
+            headerName.innerHTML = firstName + " " + lastName;
+            addToast(msg, {
+              appearance: "success",
+              autoDismiss: 4000,
+            });
+            setLoading(false);
+          } else {
+            addToast(msg, {
+              appearance: "warning",
+              autoDismiss: 4000,
+            });
+            setLoading(false);
+          }
+        })
+        .catch((err) => {
+          setLoading(false);
+        });
+      //end upload
+    } else if (firstName && lastName && email) {
       setLoading(true);
       try {
         if (tags.length > 0) {
@@ -198,7 +264,6 @@ const UserProfile = () => {
     }).then(async (response) => {
       if (response.status === 200) {
         const { payload } = await response.json();
-        console.log(payload);
         let formatted = [];
         payload.map((tag) => {
           formatted.push({
@@ -227,8 +292,40 @@ const UserProfile = () => {
     // setNewTag("");
     handleClose();
   };
-
+  const handlePreview = (e) => {
+    let files = e.target.files;
+    const length = Math.ceil(files[0].size / 1024);
+    const type = files[0].type;
+    if (!type.includes("image")) {
+      setImgError("Only image file must upload!");
+      return;
+    } else {
+      setImgError("");
+    }
+    // max file size 3MB
+    if (length > 3072) {
+      setImgError("Maximum image size is 3MB!");
+      return;
+    } else {
+      setImgError("");
+    }
+    setFile(files[0]);
+    // FileReader support
+    if (FileReader && files && files.length) {
+      var fr = new FileReader();
+      fr.onload = function () {
+        preview.current.src = fr.result;
+      };
+      fr.readAsDataURL(files[0]);
+    } else {
+      alert("Image selected ✔");
+    }
+  };
   useEffect(() => {
+    const element = document.getElementById("header-img").getAttribute("src");
+    if (element.includes("blob")) {
+      preview.current.src = element;
+    }
     getUser();
     getAllTags();
     getUserTags();
@@ -238,11 +335,21 @@ const UserProfile = () => {
     <>
       <Col className="card" xl={8}>
         <h1 className={`${style.title} text-center`}>Your Account</h1>
-        <Form onSubmit={handleEdite}>
+        <Form onSubmit={handleEdite} encType="multipart/form-data">
           <Row>
             <Col xl={4}>
               <Form.Group className="mb-3">
-                <Image className={style.userPhoto} src="/img/user-3.png" />
+                <Image
+                  className={style.userPhoto}
+                  src="/img/user-3.png"
+                  ref={preview}
+                  style={{
+                    borderRadius: "50%",
+                    width: "150px",
+                    height: "150px",
+                    objectFit: "contain",
+                  }}
+                />
                 <Form.Label className={style.lablePhoto} htmlFor="photoUser">
                   <Icon icon="uil:image-upload" />
                 </Form.Label>
@@ -250,8 +357,12 @@ const UserProfile = () => {
                   className={style.hide}
                   id="photoUser"
                   type="file"
+                  accept="image/jpg , image/png , image/jpeg"
+                  name="image"
+                  onChange={handlePreview}
                 />
               </Form.Group>
+              {imgError !== "" && <Alert variant="danger">{imgError}</Alert>}
             </Col>
             <Col xl={8} className="pt-5">
               <h1 className={`${style.title}`}>
@@ -351,7 +462,6 @@ const UserProfile = () => {
                   className="selectTags"
                   value={tags}
                   onChange={(e) => {
-                    console.log("ee", e);
                     setTags(e);
                   }}
                   isSearchable

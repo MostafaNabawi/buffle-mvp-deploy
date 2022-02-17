@@ -5,12 +5,9 @@ import { setUserFeel } from "../../api";
 import style from "./style.module.css";
 import { API_URL } from "../../config";
 import moment from "moment";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
 
 export default function Felling() {
   const { addToast } = useToasts();
-  const [loading, setLoading] = useState(false);
   const [data, setData] = useState("");
   const [isToday, setIsToday] = useState(false);
 

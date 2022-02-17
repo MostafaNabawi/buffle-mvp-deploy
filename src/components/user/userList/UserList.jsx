@@ -17,7 +17,6 @@ const UserList = () => {
     async function pageData() {
       const payload = await getCompanySpaceData();
       if (payload?.status === 200) {
-        console.log(payload.data);
         setData(payload?.data);
         setLoading(false);
       }

@@ -5,7 +5,6 @@ import { CreateNewPlan } from "../../api/breackPlan";
 import style from "./style.module.css";
 import { useToasts } from "react-toast-notifications";
 import Loader from "react-spinners/BeatLoader";
-import { checkEmail } from "../../config/utils";
 import { API_URL } from "../../config";
 
 function BreackplanFrom({
@@ -65,7 +64,7 @@ function BreackplanFrom({
       setloading(true);
       const { status } = await CreateNewPlan(newBreak);
       if (status === 200) {
-        getBreakPlan()
+        getBreakPlan();
         addToast("New breack plan created Susseccfully", {
           autoDismiss: true,
           appearance: "success",
@@ -156,7 +155,10 @@ function BreackplanFrom({
           }),
         }).then((res) => {
           if (res.status == 200) {
-            addToast("Your suggest sended", { autoDismiss: true, appearance: "success" });
+            addToast("Your suggest sended", {
+              autoDismiss: true,
+              appearance: "success",
+            });
             setNewSuggestInput("");
             setShow(false);
             setClose(true);
@@ -195,7 +197,10 @@ function BreackplanFrom({
         body: JSON.stringify(joindata),
       }).then((res) => {
         if (res.status == 200) {
-          addToast("Request sended", { autoDismiss: true, appearance: "success" });
+          addToast("Request sended", {
+            autoDismiss: true,
+            appearance: "success",
+          });
           setShow(false);
           setClose(true);
           setloading(false);
@@ -232,7 +237,10 @@ function BreackplanFrom({
         body: JSON.stringify(data),
       }).then((res) => {
         if (res.status == 200) {
-          addToast("Request sended", { autoDismiss: true, appearance: "success" });
+          addToast("Request sended", {
+            autoDismiss: true,
+            appearance: "success",
+          });
           setEmail("");
           setShow(false);
           setClose(true);
@@ -269,7 +277,10 @@ function BreackplanFrom({
         }),
       }).then((res) => {
         if (res.status == 200) {
-          addToast("Sended invited request", { autoDismiss: true, appearance: "success" });
+          addToast("Sended invited request", {
+            autoDismiss: true,
+            appearance: "success",
+          });
           setEmail("");
           setShow(false);
           setClose(true);

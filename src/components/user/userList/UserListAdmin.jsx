@@ -19,7 +19,6 @@ const UserListAdmin = () => {
   useEffect(() => {
     async function pageData() {
       const payload = await getAllUsers();
-      console.log(payload);
       if (payload?.status === 200) {
         setData(payload?.data);
         setLoading(false);
@@ -79,7 +78,6 @@ const UserListAdmin = () => {
           i?.email?.toLowerCase().includes(searchInput.toLowerCase()) ||
           i?.first_name?.toLowerCase().includes(searchInput.toLowerCase())
       );
-      console.log("FF => ", filteredData);
       setFilteredData(filteredData);
     }
   }, [searchInput]);

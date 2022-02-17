@@ -1,5 +1,4 @@
-import { React, useState } from "react";
-import { Row, Col, Image, Form, Button } from "react-bootstrap";
+import { Row, Col, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import style from "../style.module.css";
 const IndexRegister = () => {

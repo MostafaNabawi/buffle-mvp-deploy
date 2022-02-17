@@ -22,7 +22,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import BeatLoader from "react-spinners/BeatLoader";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-
+import { FormattedMessage } from "react-intl";
 // paiman changes
 import { PROJECT_TYPE } from "../../data/types";
 
@@ -291,33 +291,42 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
   return (
     <>
       <Row className="creat-project-row">
-        <Col lg="6">projects</Col>
+        <Col lg="6"><FormattedMessage id="pro.projects" defaultMessage="Projects" /></Col>
         <Col lg="6" className="creat-project-col">
           <div className="creat-project-div">
             <span className="creat-project-plus">
               <Icon icon="bi:plus-lg" />
             </span>
             <span className="creat-project-btn" onClick={handleShowPModal}>
-              create project
+              <FormattedMessage id="pro.createPro" defaultMessage="Create Project" />
             </span>
           </div>
         </Col>
         <Modal
           show={showPModal}
           handleClose={handleClosePModal}
-          title="Create Project"
+          title={<FormattedMessage id="pro.createPro" defaultMessage="Create Project" />}
           className="create-project-modal"
           body={
             <Row>
               <Col md={12}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Control
-                    type="text"
-                    className={`${error.length > 0 ? "red-border-input" : "no-border-input"
-                      }`}
-                    placeholder="Name your project..."
-                    onChange={(e) => setProjectName(e.target.value)}
-                  />
+                  <FormattedMessage
+                    id="place.projectName"
+                    defaultMessage="Name your project"
+                  >
+                    {(msg) => (
+                      <Form.Control
+                        type="text"
+                        className={`${error.length > 0 ? "red-border-input" : "no-border-input"
+                          }`}
+                        onChange={(e) => setProjectName(e.target.value)}
+                        placeholder={msg}
+
+                      />
+                    )}
+                  </FormattedMessage>
+
                   {error ? (
                     <div className="invalid-feedback d-block">{error}</div>
                   ) : null}
@@ -334,16 +343,17 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
           }
           footer={
             <>
-              <Button onClick={handleClosePModal}>Close</Button>
               {loading && projectName.length > 0 ? (
                 <Button variant="primary">
                   <BeatLoader />
                 </Button>
               ) : (
                 <Button variant="primary" onClick={handleSubmitProject}>
-                  Save
+                  <FormattedMessage id="btn.save" defaultMessage="Save" />
                 </Button>
               )}
+              <Button variant="outline-dark" onClick={handleClosePModal}><FormattedMessage id="btn.close" defaultMessage="Close" /></Button>
+
             </>
           }
         />
@@ -419,14 +429,14 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
         <Modal
           show={show}
           handleClose={handleClose}
-          title="Update Project"
+          title={<FormattedMessage id="pro.updatePro" defaultMessage="Update Project" />}
           body={
             <Row>
               <Col md={12}>
                 {projectName.length > 0 ? (
                   <>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                      <label>Project Name</label>
+                      <label><FormattedMessage id="pro.proName" defaultMessage="Project Name" /></label>
                       <Form.Control
                         type="text"
                         placeholder="Name your project..."
@@ -438,7 +448,7 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
                       ) : null}
                     </Form.Group>
                     <Form.Group className="update-project-textarea">
-                      <label>Project description</label>
+                      <label><FormattedMessage id="pro.proDesc" defaultMessage="Project Description" /></label>
                       <Form.Control
                         as="textarea"
                         rows={3}
@@ -447,7 +457,7 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
                       />
                     </Form.Group>
                     <Form.Group>
-                      <label>Color</label>
+                      <label><FormattedMessage id="pro.proColor" defaultMessage="Color" /></label>
                       <div className="bt_1rsx30z">
                         <div className={`bt_1ln56ky ${current === " rgb(56, 103, 214)" ? 'current' : ''}`} style={{ background: "rgb(56, 103, 214)" }} onClick={(e) => handleColor(e.target.getAttribute('style'))}></div>
                         <div className={`bt_1ln56ky ${current === " rgb(136, 84, 208)" ? 'current' : ''}`} style={{ background: "rgb(136, 84, 208)" }} onClick={(e) => handleColor(e.target.getAttribute('style'))}></div>
@@ -474,10 +484,10 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
                 </Button>
               ) : (
                 <Button variant="primary" onClick={handleSubmit}>
-                  Save
+                  <FormattedMessage id="btn.save" defaultMessage="Save" />
                 </Button>
               )}
-              <Button variant="outline-dark" onClick={handleClose}>Close</Button>
+              <Button variant="outline-dark" onClick={handleClose}><FormattedMessage id="btn.close" defaultMessage="Close" /></Button>
             </>
           }
         />

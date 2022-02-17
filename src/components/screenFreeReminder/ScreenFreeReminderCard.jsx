@@ -12,7 +12,7 @@ import Loader from "react-spinners/BeatLoader";
 import style from "./style.module.css";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   setDu_time,
   setDis_time,
@@ -306,7 +306,7 @@ function ScreenFreeReminderCard() {
           {getting ? (
             <Skeleton height="34px" count={1} />
           ) : data.length === 0 ? (
-            "Not set screen reminder"
+            <FormattedMessage defaultMessage="Not set screen reminder" id="msg.noScreenR" />
           ) : (
             data && (
               <div className={style.wrapper}>
@@ -342,7 +342,7 @@ function ScreenFreeReminderCard() {
         size={sizeModal}
         show={modalShow}
         handleClose={handleClose}
-        title="Set your screen free Reminder"
+        title={<FormattedMessage id="app.screenR" defaultMessage="Set your screen free Reminder" />}
         body={
           <Tabs
             defaultActiveKey="default"
@@ -350,8 +350,8 @@ function ScreenFreeReminderCard() {
             id="noanim-tab-example"
             className="mb-3"
           >
-            <Tab eventKey="default" title="Default" className="pt-3 pb-4">
-              <Form.Label>Options</Form.Label>
+            <Tab eventKey="default" title={<FormattedMessage id="app.default" defaultMessage="Default" />} className="pt-3 pb-4">
+              <Form.Label><FormattedMessage defaultMessage="Options" id="app.options" /></Form.Label>
               <Form.Check
                 onChange={(e) => {
                   setScreeanValue(e.target.value);
@@ -359,7 +359,7 @@ function ScreenFreeReminderCard() {
                 value="1"
                 name="screen"
                 type="radio"
-                label={`In every hours 5 minut`}
+                label={<FormattedMessage id="label.5min" defaultMessage="In every hours 5 minut" />}
               />
               <Form.Check
                 onChange={(e) => {
@@ -368,21 +368,21 @@ function ScreenFreeReminderCard() {
                 value="2"
                 name="screen"
                 type="radio"
-                label={`In every 20 minut one minut`}
+                label={<FormattedMessage id="label.20min" defaultMessage="In every 20 minut one minut" />}
               />
             </Tab>
-            <Tab eventKey="custome" title="Custome">
+            <Tab eventKey="custome" title={<FormattedMessage defaultMessage="Custome" id="app.custome" />}>
               <Row>
                 <Col md={12}>
                   <TimePicker2
-                    label={"duration time"}
+                    label={<FormattedMessage defaultMessage="duration time" id="label.duTime" />}
                     value={durationTime}
                     setValue={setDurationTime}
                   />
                 </Col>
                 <Col md={12}>
                   <TimePicker2
-                    label={"Display Time"}
+                    label={<FormattedMessage defaultMessage="Display Time" id="label.disTime" />}
                     value={displayTime}
                     setValue={setDisplayTime}
                   />
@@ -404,10 +404,10 @@ function ScreenFreeReminderCard() {
               variant="primary"
               type="button"
             >
-              {loading ? <Loader color="#fff" size={13} /> : "Save"}
+              {loading ? <Loader color="#fff" size={13} /> : <FormattedMessage defaultMessage="Save" id="btn.save" />}
             </Button>
             <Button variant="outline-dark" onClick={handleClose}>
-              Close
+              <FormattedMessage defaultMessage="Close" id="btn.close" />
             </Button>
           </>
         }

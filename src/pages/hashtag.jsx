@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Alert } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { API_URL } from "../config";
 import HashtagTable from "../components/hashtag/HashtagTable";
@@ -10,10 +10,18 @@ function Hashtag() {
   const [loading, setLoading] = useState(false);
   const DynamicTable = useMemo(() => {
     if (loading) {
-      return <DotLoader size={15} />;
+      return (
+        <div className="d-flex justify-content-center">
+          <DotLoader size={30} />
+        </div>
+      );
     }
     if (data.length === 0) {
-      return <p>Not Found</p>;
+      return (
+        <div>
+          <Alert variant="info">Tag Not Found!</Alert>
+        </div>
+      );
     }
     return <HashtagTable data={data} />;
   }, [loading, data]);
@@ -27,7 +35,6 @@ function Hashtag() {
         },
       });
       const res = await req.json();
-      console.log(res);
       setData(res.payload);
       setLoading(false);
     }
