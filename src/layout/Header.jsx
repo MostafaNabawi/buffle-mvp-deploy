@@ -770,12 +770,21 @@ const Header = () => {
                 <i className="search-icon">
                   <Icon icon="ci:search-small" />
                 </i>
-                <Form.Control
-                  className="search-input2"
-                  type="search"
-                  name="search-input"
-                  placeholder="search tags..."
-                />
+                <FormattedMessage
+                  id="app.searchTag"
+                  defaultMessage="Search tags..."
+                >
+                  {(msg) => (
+                    <Form.Control
+                      className="search-input2"
+                      type="search"
+                      name="search-input"
+                      placeholder={msg}
+
+                    />
+                  )}
+                </FormattedMessage>
+
               </Form.Group>
             </Form>
           </div>
