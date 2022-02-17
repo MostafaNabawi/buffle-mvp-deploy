@@ -20,6 +20,7 @@ import {
 import { useToasts } from "react-toast-notifications";
 import { API_URL } from "../../config";
 import CurrencyList from "currency-list";
+import { FormattedMessage } from 'react-intl';
 
 function Expenses() {
   const { ownerID } = useSelector((state) => state.moneyPool);
@@ -97,7 +98,7 @@ function Expenses() {
       <CardBody className={style.card_body}>
         <Button onClick={handleBack}>
           <Icon icon="ic:baseline-arrow-back-ios" />
-          Back
+          <FormattedMessage id="btn.back" defaultMessage="Back" />
         </Button>
 
         <div className={style.tab_container}>

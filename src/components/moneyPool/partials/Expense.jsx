@@ -14,6 +14,7 @@ import {
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { createExpense } from "../../../api";
+import { FormattedMessage } from 'react-intl';
 
 function Expense(props) {
   const { handleBack } = props;
@@ -52,39 +53,47 @@ function Expense(props) {
         <Form>
           <div className={`${style.person_seletor} mb-5`}>
             <PersonSelectorDropDown />
-            <span>paid for something.</span>
+            <span><FormattedMessage id="event.paidFor" defaultMessage="paid for something." /></span>
           </div>
           <div className="mb-3">
-            <Form.Label>How Much? </Form.Label>
+            <Form.Label><FormattedMessage id="event.howMuch" defaultMessage="How Much?" /> </Form.Label>
             <InputGroup className="mb-1">
               <InputGroup.Text id="basic-addon1">
                 {currencyCode}
               </InputGroup.Text>
-              <FormControl
-                placeholder={`Amount in ${currencyName}`}
-                aria-label="amount"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-                aria-describedby="basic-addon1"
-              />
+              <FormattedMessage id="event.amountIn" defaultMessage={`Amount in ${currencyName}`} >
+                {(msg) => (
+                  <FormControl
+                    placeholder={msg}
+                    aria-label="amount"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                    aria-describedby="basic-addon1"
+                  />
+                )}
+              </FormattedMessage>
             </InputGroup>
             <Form.Text className="text-muted">
-              Your expenses will calculate equally.
+              <FormattedMessage id="event.yourExpenseC" defaultMessage="Your expenses will calculate equally." />
             </Form.Text>
           </div>
           <div className="mb-3">
             <Form.Group controlId="wathfor">
-              <Form.Label> Wath for? </Form.Label>
-              <Form.Control
-                type="text"
-                value={reason}
-                onChange={(e) => setReason(e.target.value)}
-                placeholder="Event pass"
-              />
+              <Form.Label><FormattedMessage id="event.whatFor" defaultMessage="Wath for?" /> </Form.Label>
+              <FormattedMessage id="event.eventPass" defaultMessage="Event pass" >
+                {(msg) => (
+                  <Form.Control
+                    type="text"
+                    value={reason}
+                    onChange={(e) => setReason(e.target.value)}
+                    placeholder={msg}
+                  />
+                )}
+              </FormattedMessage>
             </Form.Group>
           </div>
           <div className="mb-3">
-            <Form.Label>When? </Form.Label>
+            <Form.Label><FormattedMessage id="event.when" defaultMessage="When?" /> </Form.Label>
             <InputGroup className="mb-1">
               <FormControl
                 aria-label="when"
@@ -98,21 +107,21 @@ function Expense(props) {
           </div>
           <div>
             <Button className="me-2" onClick={hadleAddExpense}>
-              Add
+              <FormattedMessage id="btn.add" defaultMessage="Add" />
             </Button>
             <Button variant="secondary" onClick={handleBack}>
-              Cancel
+              <FormattedMessage id="btn.cancel" defaultMessage="Cancel" />
             </Button>
           </div>
         </Form>
       </Col>
       <Col lg={4}>
         <Jumbotron
-          title="Some ideas"
+          title={<FormattedMessage id="event.idea" />}
           content={
             <>
-              <p>Abbas paid for the rental car.</p>
-              <p>Abbas got some supplies from the supermarket.</p>
+              <p><FormattedMessage id="event.ideaText" defaultMessage="Abbas paid for the rental car." /></p>
+              <p><FormattedMessage id="event.ideaText2" defaultMessage="Abbas got some supplies from the supermarket." /></p>
             </>
           }
         />
