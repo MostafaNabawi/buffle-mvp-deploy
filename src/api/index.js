@@ -1,5 +1,5 @@
 import { API_URL } from "../config";
-// --------------------------USER MANGEMENT ----------------------------------
+// --------------------------USER MANGEMENT ------------------------------
 //company admin
 async function getCompanySpaceData() {
   try {
