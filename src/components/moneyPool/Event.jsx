@@ -23,6 +23,7 @@ import { useDispatch } from "react-redux";
 import { setEventUsers } from "../../store/moneyPoolSlice";
 import { getOverView } from "../../api";
 import CopyToClipboard from "react-copy-to-clipboard";
+import { FormattedMessage } from 'react-intl';
 
 function Event() {
   // event id
@@ -179,7 +180,7 @@ function Event() {
         <div className="justify-content-between">
           {" "}
           <div className={style.person_selector}>
-            <span>You are </span>
+            <span><FormattedMessage id="event.youAre" defaultMessage="You are" /></span>
             {/* <PersonSelectorDropDown /> */}
             <Form.Select
               className="selectUserVenet"
@@ -189,10 +190,10 @@ function Event() {
               {busy
                 ? ""
                 : userEvent.map((item) => (
-                    <option key={item.id} value={item.id}>
-                      {item.first_name + " " + item.last_name}
-                    </option>
-                  ))}
+                  <option key={item.id} value={item.id}>
+                    {item.first_name + " " + item.last_name}
+                  </option>
+                ))}
             </Form.Select>
           </div>
           <div>
@@ -202,19 +203,19 @@ function Event() {
                 onClick={() => setShowTooltip(true)}
                 onMouseLeave={() => setShowTooltip(false)}
               >
-                <Icon icon="akar-icons:copy" /> Invite code
+                <Icon icon="akar-icons:copy" /> <FormattedMessage id="btn.inviteCode" defaultMessage="Invite code" />
               </Button>
             </CopyToClipboard>
             <Overlay target={target.current} show={showTooltip} placement="top">
-              <Tooltip id="overlay-example">Copied</Tooltip>
+              <Tooltip id="overlay-example"><FormattedMessage id="event.copied" defaultMessage="Copied" /></Tooltip>
             </Overlay>
           </div>
         </div>
 
         <div className={style.overview}>
           <div className={style.header}>
-            <h4>Overview</h4>
-            <Button onClick={AddExpenses}>Add expense</Button>
+            <h4><FormattedMessage id="event.overview" defaultMessage="Overview" /></h4>
+            <Button onClick={AddExpenses}><FormattedMessage id="btn.addExpense" defaultMessage="Add expense" /></Button>
           </div>
           <div className={style.overview_body}>
             {/* <NoExpensesYet /> */}
@@ -223,8 +224,8 @@ function Event() {
         </div>
         <div className={style.seen}>
           <div className={style.header}>
-            <h4>How has seen this event</h4>
-            <Button onClick={handleShow}>Add new member</Button>
+            <h4><FormattedMessage id="event.howSeen" defaultMessage="How has seen this event" /></h4>
+            <Button onClick={handleShow}><FormattedMessage id="btn.addNewMem" defaultMessage="Add new member" /></Button>
           </div>
           <div className={style.event_person_list}>
             {busy ? (
@@ -255,9 +256,7 @@ function Event() {
         body={<AddNewMember selected={selected} setSelected={setSelected} />}
         footer={
           <>
-            <Button variant="outline-dark" onClick={handleClose}>
-              Close
-            </Button>
+
 
             <Button
               onClick={() => {
@@ -271,8 +270,11 @@ function Event() {
               {adding ? (
                 <Icon fontSize={24} icon="eos-icons:loading" />
               ) : (
-                "Save"
+                <FormattedMessage id="btn.save" defaultMessage="Save" />
               )}
+            </Button>
+            <Button variant="outline-dark" onClick={handleClose}>
+              <FormattedMessage id="btn.close" defaultMessage="Close" />
             </Button>
           </>
         }

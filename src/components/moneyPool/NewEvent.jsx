@@ -14,6 +14,7 @@ import Jumbotron from "./partials/Jumbotron";
 import { getEventList } from "../../api";
 import CopyLinkButton from "./partials/CopyLinkButton";
 import moment from "moment";
+import { FormattedMessage } from "react-intl";
 
 function NewEvent() {
   const [key, setKey] = useState("createvent");
@@ -196,13 +197,13 @@ function NewEvent() {
           onSelect={(k) => setKey(k)}
           className={style.tab}
         >
-          <Tab eventKey="createvent" title="Create event">
+          <Tab eventKey="createvent" title={<FormattedMessage id="event.create" defaultMessage="Create event" />}>
             <Row>
               <Col lg={6}>
                 <Form>
                   <Col md={12}>
                     <Form.Group className="mb-3" controlId="eventName">
-                      <Form.Label>Event name </Form.Label>
+                      <Form.Label><FormattedMessage id="event.name" defaultMessage="Event name" /> </Form.Label>
                       <Form.Control
                         onChange={(e) => {
                           setEventName(e.target.value);
@@ -218,7 +219,7 @@ function NewEvent() {
                       className={style.select_input}
                       controlId="homeCurrency"
                     >
-                      <Form.Label>Home Currency</Form.Label>
+                      <Form.Label><FormattedMessage id="event.currency" defaultMessage="Home Currency" /></Form.Label>
                       <Form.Select
                         onChange={(e) => {
                           setCurrency(e.target.value);
@@ -240,23 +241,30 @@ function NewEvent() {
                   </Col>
                   {/* email */}
                   <div className={style.participant_section}>
-                    <h4>Participants</h4>
+                    <h4><FormattedMessage id="event.participants" defaultMessage="Participants" /></h4>
                     <Col md={12}>
                       {/* <AddNewMember eventName={eventName} currency={currency}/> */}
                       <div className={style.input_with_button}>
                         <Form.Group className="mb-3" controlId="person-1">
-                          <Form.Label>Email </Form.Label>
-                          <Form.Control
-                            type="email"
-                            value={email}
-                            autoComplete="false"
-                            aria-haspopup="false"
-                            autoFocus="false"
-                            placeholder="Email"
-                            onChange={(e) => {
-                              setEmail(e.target.value);
-                            }}
-                          />
+                          <Form.Label><FormattedMessage id="label.email" defaultMessage="Email" /> </Form.Label>
+                          <FormattedMessage
+                            id="label.email"
+                            defaultMessage="Email"
+                          >
+                            {(msg) => (
+                              <Form.Control
+                                type="email"
+                                value={email}
+                                autoComplete="false"
+                                aria-haspopup="false"
+                                autoFocus="false"
+                                placeholder={msg}
+                                onChange={(e) => {
+                                  setEmail(e.target.value);
+                                }}
+                              />
+                            )}
+                          </FormattedMessage>
                         </Form.Group>
                         <Button
                           type="button"
@@ -267,7 +275,7 @@ function NewEvent() {
                           {loading ? (
                             <Icon fontSize={24} icon="eos-icons:loading" />
                           ) : (
-                            "Add"
+                            <FormattedMessage id="btn.add" defaultMessage="Add" />
                           )}
                         </Button>
                       </div>
@@ -286,9 +294,9 @@ function NewEvent() {
                       <Table striped className="mb-0">
                         <thead>
                           <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Delete</th>
+                            <th><FormattedMessage id="label.name" defaultMessage="Name" /></th>
+                            <th><FormattedMessage id="label.email" defaultMessage="Email" /></th>
+                            <th><FormattedMessage id="label.delete" defaultMessage="Delete" /></th>
                           </tr>
                         </thead>
                         <tbody>
@@ -315,14 +323,21 @@ function NewEvent() {
                   <div className={style.comment}>
                     <div className={style.form_area}>
                       <Form.Group controlId="exampleForm.ControlTextarea1">
-                        <Form.Control
-                          as="textarea"
-                          rows={1}
-                          onChange={(e) => {
-                            setDesc(e.target.value);
-                          }}
-                          placeholder="Descraption(optional)"
-                        />
+                        <FormattedMessage
+                          id="place.descOp"
+                          defaultMessage="Description(optional)"
+                        >
+                          {(msg) => (
+                            <Form.Control
+                              as="textarea"
+                              rows={1}
+                              onChange={(e) => {
+                                setDesc(e.target.value);
+                              }}
+                              placeholder={msg}
+                            />
+                          )}
+                        </FormattedMessage>
                       </Form.Group>
                     </div>
                   </div>
@@ -337,54 +352,62 @@ function NewEvent() {
                     {createing ? (
                       <Icon fontSize={24} icon="eos-icons:loading" />
                     ) : (
-                      "Create Pool"
+                      <FormattedMessage id="btn.createPool" defaultMessage="Create Pool" />
                     )}
                   </Button>
                 </Form>
               </Col>
               <Col lg={6} className={style.right_site}>
                 <Jumbotron
-                  title="Good examples for Creating a Maney Pool"
+                  title={<FormattedMessage id="event.goodExample" defaultMessage="Good examples for Creating a Maney Pool" />}
                   content={
                     <p>
-                      Sed porttitor lectus nibh. Nulla quis lorem ut libero
+                      <FormattedMessage id="event.exampleText"
+                        defaultMessage="Sed porttitor lectus nibh. Nulla quis lorem ut libero
                       malesuada feugiat. Proin eget tortor risus. Vivamus magna
                       justo, lacinia eget consectetur sed, convallis at tellus.
                       Proin eget tortor risus. Vestibulum ante ipsum primis in
                       faucibus orci luctus et ultrices posuere cubilia Curae;
                       Donec velit neque, auctor sit amet aliquam vel,
                       ullamcorper sit amet ligula. Proin eget tortor risus.
-                      Donec rutrum congue leo eget malesuada.
+                      Donec rutrum congue leo eget malesuada." />
                     </p>
                   }
                 />
                 <div className={style.invite_form_area}>
                   <Form onSubmit={handleJoin}>
                     <Form.Group controlId="inviteCode">
-                      <Form.Control
-                        type="text"
-                        placeholder="Invite code"
-                        name="invite"
-                      />
+                      <FormattedMessage
+                        id="place.inviteCode"
+                        defaultMessage="Invite code"
+                      >
+                        {(msg) => (
+                          <Form.Control
+                            type="text"
+                            placeholder={msg}
+                            name="invite"
+                          />
+                        )}
+                      </FormattedMessage>
                     </Form.Group>
                     <Button type="submit">
-                      {busy ? <Icon icon="eos-icons:loading" /> : "Join"}
+                      {busy ? <Icon icon="eos-icons:loading" /> : <FormattedMessage id="btn.join" defaultMessage="Join" />}
                     </Button>
                   </Form>
                 </div>
               </Col>
             </Row>
           </Tab>
-          <Tab eventKey="existevent" title="Event list">
+          <Tab eventKey="existevent" title={<FormattedMessage id="event.list" defaultMessage="Event list" />}>
             <Table responsive hover size="sm" className={style.event_list}>
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Event Name</th>
-                  <th>Description</th>
-                  <th>Currency</th>
-                  <th>Create date</th>
-                  <th>Event Code</th>
+                  <th><FormattedMessage id="label.eventName" defaultMessage="Event Name" /></th>
+                  <th><FormattedMessage id="label.desc" defaultMessage="Description" /></th>
+                  <th><FormattedMessage id="label.currency" defaultMessage="Currency" /></th>
+                  <th><FormattedMessage id="label.crDate" defaultMessage="Create date" /></th>
+                  <th><FormattedMessage id="label.eventCode" defaultMessage="Event Code" /></th>
                 </tr>
               </thead>
               <tbody>
@@ -415,7 +438,7 @@ function NewEvent() {
                     </tr>
                   ))
                 ) : (
-                  <tr>No event</tr>
+                  <tr><FormattedMessage id="tb.noEvent" defaultMessage="No event" /></tr>
                 )}
               </tbody>
             </Table>
