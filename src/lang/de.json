@@ -28,6 +28,7 @@
   "label.20min": "Pro 25 Minuten 1 Stunde",
   "label.disTime": "Bildschirmzeit",
   "label.duTime": "Dauer",
+  "label.desc": "Beschreibung",
 
   "btn.close": "Schließen",
   "btn.crreateNextBreak": "Pause erstellen",
@@ -50,5 +51,8 @@
   "day.Thursday": "Donnerstag",
   "day.Friday": "Freitag",
   "day.Saturday": "Samstag",
-  "day.Sunday": "Sonntag"
+  "day.Sunday": "Sonntag",
+
+  "pro.projects": "Projekte",
+  "pro.createPro": "Projekt erstellen"
 }

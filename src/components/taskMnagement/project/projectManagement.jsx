@@ -22,7 +22,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import BeatLoader from "react-spinners/BeatLoader";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-
+import { FormattedMessage } from "react-intl";
 // paiman changes
 import { PROJECT_TYPE } from "../../data/types";
 
@@ -291,21 +291,21 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
   return (
     <>
       <Row className="creat-project-row">
-        <Col lg="6">projects</Col>
+        <Col lg="6"><FormattedMessage id="pro.projects" defaultMessage="Projects" /></Col>
         <Col lg="6" className="creat-project-col">
           <div className="creat-project-div">
             <span className="creat-project-plus">
               <Icon icon="bi:plus-lg" />
             </span>
             <span className="creat-project-btn" onClick={handleShowPModal}>
-              create project
+              <FormattedMessage id="pro.createPro" defaultMessage="Create Project" />
             </span>
           </div>
         </Col>
         <Modal
           show={showPModal}
           handleClose={handleClosePModal}
-          title="Create Project"
+          title={<FormattedMessage id="pro.createPro" defaultMessage="Create Project" />}
           className="create-project-modal"
           body={
             <Row>

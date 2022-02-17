@@ -153,7 +153,6 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
           <Col key={s.status} className={"col-wrapper secondary-dark"}>
             <div className={"col-header"}>
               <span><FormattedMessage defaultMessage={s.status} id={`day.${s.status}`} /></span>
-              {/* <span className={"col-header-time"}>2.14</span> */}
             </div>
             <hr />
             <DropWrapper onDrop={onDrop} status={s.status} idNumber={s.id} handleDrop={handleDrop}>
@@ -175,8 +174,7 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
                     ></Item>
                   )) : <Skeleton className="important-today-skeleton" count={1} />}
                 <div className="new-task-divimport FreelancerRegister from './../user/register/Freelancer';">
-                  <Form.Group className="mb-import { FormattedMessage } from 'react-intl';
-3" controlId="form-new-task">
+                  <Form.Group className="mb-3" controlId="form-new-task">
                     <input
                       type="text"
                       className="new_task_input"
