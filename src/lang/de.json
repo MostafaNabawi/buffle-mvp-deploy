@@ -54,5 +54,11 @@
   "day.Sunday": "Sonntag",
 
   "pro.projects": "Projekte",
-  "pro.createPro": "Projekt erstellen"
+  "pro.createPro": "Projekt erstellen",
+  "pro.updatePro": "Projekt updaten",
+  "pro.proName": "Projektname",
+  "pro.proDesc": "Projektbeschreibung",
+  "pro.proColor": "Farbe",
+
+  "place.projectName": "Projekt benennen"
 }
