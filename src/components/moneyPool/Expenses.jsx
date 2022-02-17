@@ -109,19 +109,19 @@ function Expenses() {
             onSelect={(k) => HandlesetKey(k)}
             className={style.tab}
           >
-            <Tab eventKey="expense" title="Expense">
+            <Tab eventKey="expense" title={<FormattedMessage id="event.expense" defaultMessage="Expense" />}>
               <Expense handleBack={handleBack} />
             </Tab>
-            <Tab eventKey="moneygiven" title="Money Given">
+            <Tab eventKey="moneygiven" title={<FormattedMessage id="event.giveMney" defaultMessage="Money Given" />}>
               <MoneyGiven handleBack={handleBack} />
             </Tab>
-            <Tab eventKey="income" title="Income">
+            <Tab eventKey="income" title={<FormattedMessage id="event.income" defaultMessage="Income" />}>
               <InCome handleBack={handleBack} />
             </Tab>
           </Tabs>
         </div>
       </CardBody>
-    </Card>
+    </Card >
   );
 }
 

@@ -100,13 +100,22 @@
   "event.howMuch": "Wie viel?",
   "event.amountIn": "Betrag in {currencyName}",
   "event.whatFor": "Wofür?",
-  "event.wehn": "Wann?",
+  "event.when": "Wann?",
   "event.idea": "Beispiele",
   "event.eventPass": "Wofür?",
   "event.ideaText": "Hakima hat die Tickets bezahlt.",
   "event.ideaText2": "Kilian hat Batterien vom Supermarket gekauft.",
+  "event.ideaText3": "Luca hat Geld für Aylin abgehoben.",
+  "event.ideaText4": "Achim hat das Mittagessen für Malina bezahlt.",
+  "event.ideaText5": "",
+  "event.ideaText6": "",
   "event.yourExpenseC": "Deine Ausgaben werden zwischen allen aufgeteilt.",
   "event.copied": "",
+  "event.giveMoneyToSom": "hat jemandem Geld gegeben.",
+  "event.toWho": "An wen?",
+  "event.recieved": "Hat Geld für etwas erhalten.",
+  "event.addNewMem": "Personen hinzufügen",
+  "event.userByThisEmail": "",
 
   "tb.noEvent": "Kein Ereignis"
 }
