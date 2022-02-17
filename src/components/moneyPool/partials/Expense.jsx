@@ -117,7 +117,7 @@ function Expense(props) {
       </Col>
       <Col lg={4}>
         <Jumbotron
-          title={<FormattedMessage id="event.idea" />}
+          title={<FormattedMessage id="event.idea" defaultMessage="Some ideas" />}
           content={
             <>
               <p><FormattedMessage id="event.ideaText" defaultMessage="Abbas paid for the rental car." /></p>

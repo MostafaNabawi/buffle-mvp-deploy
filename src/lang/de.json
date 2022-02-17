@@ -98,7 +98,7 @@
   "event.income": "Einnahme",
   "event.paidFor": "hat etwas bezahlt.",
   "event.howMuch": "Wie viel?",
-  "event.amountIn": "Betrag in",
+  "event.amountIn": "Betrag in {currencyName}",
   "event.whatFor": "Wofür?",
   "event.wehn": "Wann?",
   "event.idea": "Beispiele",
