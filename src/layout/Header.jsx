@@ -29,7 +29,6 @@ import {
   setDis_time,
   setUpdating,
 } from "../store/screenReminderSclice";
-import moment from "moment";
 import Swal from "sweetalert2";
 import { setAlert, setRun } from "../store/taskSlice";
 import boop from "./boop.mp3";
@@ -38,7 +37,7 @@ import TimerCustome from "./TimerCustome";
 import { Context } from "./Wrapper";
 import { FormattedMessage } from "react-intl";
 import RenderImage from "../components/cutomeImage/RenderImage";
-
+import DynamicInspiration from "../components/inspiration/DynamicInspiration";
 const Header = () => {
   const { alert } = useSelector((state) => state.task);
   //
@@ -514,7 +513,8 @@ const Header = () => {
 
       <Row className="mb-4">
         <Col className="col-6 text-secondary-dark header-thank mt-3">
-          Thank god it’s {moment(Date.now()).format("dddd")}!
+          {/* Thank god it’s {moment(Date.now()).format("dddd")}! */}
+          <DynamicInspiration />
         </Col>
         <Col className="col-6 header-col-left">
           <div className="header-icon navy-blue text-center pt-2">
