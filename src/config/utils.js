@@ -35,7 +35,6 @@ function nextBreakTimeValidation(start, end, status) {
   const totalSeconds = discharge.diff(admission, "seconds");
   // total seconds which passed
   const passedSeconds = now.diff(admission, "seconds");
-  console.log("Total && passedMinutes", totalSeconds, passedSeconds);
   // if break time passed from the range
   if (passedSeconds >= totalSeconds) {
     return {

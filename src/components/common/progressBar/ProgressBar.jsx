@@ -15,7 +15,6 @@ const PreogressBar = ({ range }) => {
   // actions
   const handlePlay = () => {
     if (data > 0 && play) {
-      console.log("set status to stop");
       setPlay(!play);
     }
     if (data > 0 && !play) {
@@ -29,7 +28,6 @@ const PreogressBar = ({ range }) => {
 
   useEffect(() => {
     if (range?.startDate) {
-      console.log("End", range?.endDate);
       // check type
       if (range?.type === 1) {
         const meta = getTotalSeconds(range?.startDate, range?.endDate);

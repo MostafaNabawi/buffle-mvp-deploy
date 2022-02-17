@@ -121,8 +121,6 @@ const UserProfile = () => {
           // tags.push(data);
         });
         setTags([...tags, ...data]);
-
-        console.log("Format", data);
       }
     });
   };
@@ -266,7 +264,6 @@ const UserProfile = () => {
     }).then(async (response) => {
       if (response.status === 200) {
         const { payload } = await response.json();
-        console.log(payload);
         let formatted = [];
         payload.map((tag) => {
           formatted.push({

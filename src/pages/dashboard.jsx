@@ -449,7 +449,6 @@ const Dashboard = () => {
   const getBreakPlan = async () => {
     const req = await getaAllBreackPlan();
     if (req.length > 0) {
-      console.log("req....", req);
       setBreakPlanData(req);
     } else {
       setBreakPlanData([]);
@@ -610,7 +609,12 @@ const Dashboard = () => {
                     setTaskManager(false);
                     setTaskManagerUpdate(false);
                     setSizeModal("md");
-                    setTitleModa(<FormattedMessage defaultMessage="When is your next break?" id="app.dashboard.nextBreakQ" />);
+                    setTitleModa(
+                      <FormattedMessage
+                        defaultMessage="When is your next break?"
+                        id="app.dashboard.nextBreakQ"
+                      />
+                    );
                   }}
                 >
                   <Icon icon="vaadin:plus" />
@@ -648,7 +652,12 @@ const Dashboard = () => {
                     setTaskManager(false);
                     setTaskManagerUpdate(false);
                     setSizeModal("md");
-                    setTitleModa(<FormattedMessage defaultMessage="Add New Vacation Time" id="app.newVTime" />);
+                    setTitleModa(
+                      <FormattedMessage
+                        defaultMessage="Add New Vacation Time"
+                        id="app.newVTime"
+                      />
+                    );
                   }}
                 >
                   <Icon icon="vaadin:plus" />
@@ -658,7 +667,12 @@ const Dashboard = () => {
             <div className="mt-3">
               <span className="vacation-day">
                 {vacationData === "noVacation" ? (
-                  <span className="vacation-until" ><FormattedMessage defaultMessage="Set your vacation time" id="app.setVTime" /></span>
+                  <span className="vacation-until">
+                    <FormattedMessage
+                      defaultMessage="Set your vacation time"
+                      id="app.setVTime"
+                    />
+                  </span>
                 ) : vacationData ? (
                   <Countdown
                     date={vacationData.date}
@@ -741,8 +755,9 @@ const Dashboard = () => {
               }
               subtitle={
                 <FormattedMessage
-                  defaultMessage={`${opan < 0 ? 0 : opan} open, ${start < 0 ? 0 : start
-                    } start.`}
+                  defaultMessage={`${opan < 0 ? 0 : opan} open, ${
+                    start < 0 ? 0 : start
+                  } start.`}
                   id="app.task.open"
                   values={{
                     num: opan < 0 ? 0 : opan,
@@ -914,25 +929,25 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                  id: data._id,
-                                  name: data.name,
-                                  time: data.time,
-                                })
+                                    id: data._id,
+                                    name: data.name,
+                                    time: data.time,
+                                  })
                                 : joinOrNewSuggestForm(
-                                  {
-                                    id: data.user[0]._id,
-                                    breackName: data.name,
-                                  },
-                                  {
-                                    fullName:
-                                      currentUser.first_name +
-                                      " " +
-                                      currentUser.last_name,
-                                    breakName: data.name,
-                                    breakOwnerId: data.user[0]._id,
-                                    breakId: data._id,
-                                  }
-                                );
+                                    {
+                                      id: data.user[0]._id,
+                                      breackName: data.name,
+                                    },
+                                    {
+                                      fullName:
+                                        currentUser.first_name +
+                                        " " +
+                                        currentUser.last_name,
+                                      breakName: data.name,
+                                      breakOwnerId: data.user[0]._id,
+                                      breakId: data._id,
+                                    }
+                                  );
                             }}
                             className="break-type"
                           >
@@ -944,20 +959,20 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                  id: data._id,
-                                  name: data.name,
-                                  time: data.time,
-                                })
+                                    id: data._id,
+                                    name: data.name,
+                                    time: data.time,
+                                  })
                                 : timeFormBreakplan({
-                                  time: "",
-                                  recevier: data.user[0]._id,
-                                  fullName:
-                                    currentUser.first_name +
-                                    "" +
-                                    currentUser.last_name,
-                                  breakName: data.name,
-                                  breakId: data._id,
-                                });
+                                    time: "",
+                                    recevier: data.user[0]._id,
+                                    fullName:
+                                      currentUser.first_name +
+                                      "" +
+                                      currentUser.last_name,
+                                    breakName: data.name,
+                                    breakId: data._id,
+                                  });
                             }}
                           >
                             {data.time}
@@ -1027,7 +1042,9 @@ const Dashboard = () => {
               <>
                 <Col md={6}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label><FormattedMessage defaultMessage="Date" id="label.date" /> </Form.Label>
+                    <Form.Label>
+                      <FormattedMessage defaultMessage="Date" id="label.date" />{" "}
+                    </Form.Label>
                     <Form.Control
                       name="data"
                       type="date"
@@ -1040,7 +1057,9 @@ const Dashboard = () => {
                 </Col>
                 <Col md={6}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label><FormattedMessage defaultMessage="Name" id="label.name" /> </Form.Label>
+                    <Form.Label>
+                      <FormattedMessage defaultMessage="Name" id="label.name" />{" "}
+                    </Form.Label>
                     <Form.Control
                       time="text"
                       type="name"
@@ -1058,7 +1077,9 @@ const Dashboard = () => {
               <>
                 <Col md={12}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label default><FormattedMessage defaultMessage="Time" id="label.time" /> </Form.Label>
+                    <Form.Label default>
+                      <FormattedMessage defaultMessage="Time" id="label.time" />{" "}
+                    </Form.Label>
                     <Form.Control
                       type="time"
                       name="data"
@@ -1098,7 +1119,12 @@ const Dashboard = () => {
                 </Col>
                 <Col md={12}>
                   <TimePicker2
-                    label={<FormattedMessage id="label.duTime" defaultMessage="duration time" />}
+                    label={
+                      <FormattedMessage
+                        id="label.duTime"
+                        defaultMessage="duration time"
+                      />
+                    }
                     value={durationTime}
                     setValue={setDurationTime}
                   />
@@ -1163,8 +1189,8 @@ const Dashboard = () => {
               <Button
                 disabled={
                   vacationNameInput === "" ||
-                    vacationDataInput === "" ||
-                    vacationLoader
+                  vacationDataInput === "" ||
+                  vacationLoader
                     ? true
                     : false
                 }
@@ -1177,7 +1203,10 @@ const Dashboard = () => {
                 {vacationLoader ? (
                   <Icon fontSize={30} icon="eos-icons:three-dots-loading" />
                 ) : (
-                  <FormattedMessage defaultMessage="Create Vacation" id="btn.createVoc" />
+                  <FormattedMessage
+                    defaultMessage="Create Vacation"
+                    id="btn.createVoc"
+                  />
                 )}
               </Button>
             )}
@@ -1193,7 +1222,10 @@ const Dashboard = () => {
                     type="button"
                     onClick={handleNextBreakOperation}
                   >
-                    <FormattedMessage defaultMessage="Create Next Break" id="btn.crreateNextBreak" />
+                    <FormattedMessage
+                      defaultMessage="Create Next Break"
+                      id="btn.crreateNextBreak"
+                    />
                   </Button>
                 )}
               </>

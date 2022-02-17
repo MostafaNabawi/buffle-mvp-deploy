@@ -1,6 +1,6 @@
 /** @format */
 
-import { useState, useEffect, useContext, useRef } from "react";
+import { useState, useEffect, useContext } from "react";
 import {
   Row,
   Col,
@@ -451,10 +451,10 @@ const Header = () => {
               localStorage.setItem(
                 "loackTime",
                 timeLock.getHours() +
-                ":" +
-                timeLock.getMinutes() +
-                ":" +
-                timeLock.getSeconds()
+                  ":" +
+                  timeLock.getMinutes() +
+                  ":" +
+                  timeLock.getSeconds()
               );
             }
           }}
@@ -466,8 +466,9 @@ const Header = () => {
 
       <div
         id="lockScreenHide"
-        className={`${localStorage.getItem("screen") === "on" ? "lockScreen" : ""
-          } text-center ${!start ? "" : "lockScreenHide"}`}
+        className={`${
+          localStorage.getItem("screen") === "on" ? "lockScreen" : ""
+        } text-center ${!start ? "" : "lockScreenHide"}`}
       >
         {localStorage.getItem("screen") === "on" && !start && (
           <div className="screenDiv">
@@ -484,9 +485,9 @@ const Header = () => {
                 }
                 handleDisplayTime(dis_time);
               }}
-            // renderer={() => {
-            //   return ""
-            // }}
+              // renderer={() => {
+              //   return ""
+              // }}
             />
           </div>
         )}
@@ -542,7 +543,10 @@ const Header = () => {
                   }}
                   className="clear-all text-center"
                 >
-                  <FormattedMessage defaultMessage="Clear all" id="noti.clear" />
+                  <FormattedMessage
+                    defaultMessage="Clear all"
+                    id="noti.clear"
+                  />
                 </a>
                 {loading ? (
                   <div className="text-center pt-4 pb-4">
@@ -628,7 +632,12 @@ const Header = () => {
                     )
                   )
                 ) : (
-                  <div className="text-center pt-2 pb-2"><FormattedMessage defaultMessage="No Notification" id="noti.noNotify" /></div>
+                  <div className="text-center pt-2 pb-2">
+                    <FormattedMessage
+                      defaultMessage="No Notification"
+                      id="noti.noNotify"
+                    />
+                  </div>
                 )}
               </div>
             </NavDropdown>
@@ -653,10 +662,7 @@ const Header = () => {
               className="navDropdomnIcon"
             >
               <Dropdown.Item as={Link} to="/dashboard/profile">
-                <FormattedMessage
-                  defaultMessage="Profile"
-                  id="prof.profile"
-                />
+                <FormattedMessage defaultMessage="Profile" id="prof.profile" />
               </Dropdown.Item>
               <DropdownButton
                 as={ButtonGroup}
@@ -754,10 +760,7 @@ const Header = () => {
                 </NavDropdown.Item>
               )}
               <NavDropdown.Item onClick={handleLogout}>
-                <FormattedMessage
-                  defaultMessage="Logout"
-                  id="prof.logout"
-                />
+                <FormattedMessage defaultMessage="Logout" id="prof.logout" />
               </NavDropdown.Item>
             </NavDropdown>
           </div>
@@ -780,11 +783,9 @@ const Header = () => {
                       type="search"
                       name="search-input"
                       placeholder={msg}
-
                     />
                   )}
                 </FormattedMessage>
-
               </Form.Group>
             </Form>
           </div>

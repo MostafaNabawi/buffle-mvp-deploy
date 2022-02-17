@@ -35,7 +35,6 @@ function Hashtag() {
         },
       });
       const res = await req.json();
-      console.log(res);
       setData(res.payload);
       setLoading(false);
     }
