@@ -430,7 +430,7 @@ function BreackplanFrom({
           ) : (
             <>
               <Card.Title className={style.tilte}>
-                {editData ? "Edit breack pland" : "New breack pland"}
+                {editData ? "Edit breack plan" : "New break plan"}
               </Card.Title>
               <Form
                 onSubmit={editData ? handleEditPlan : handleCreatePlan}

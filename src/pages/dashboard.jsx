@@ -449,7 +449,6 @@ const Dashboard = () => {
   const getBreakPlan = async () => {
     const req = await getaAllBreackPlan();
     if (req.length > 0) {
-      console.log(req);
       setBreakPlanData(req);
     } else {
       setBreakPlanData([]);

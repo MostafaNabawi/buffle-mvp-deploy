@@ -330,7 +330,7 @@ const FreelancerRegister = () => {
               <b>Note:</b> You have 2 houres to complete your registration!
             </h6>
             <h4 className="text-center mt-2">
-              Cleck open <a href="http://gmail.com/"> Email</a>
+              Click open <a href="http://gmail.com/"> Email</a>
             </h4>
           </Col>
         </Row>
