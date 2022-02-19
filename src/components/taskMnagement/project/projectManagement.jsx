@@ -46,7 +46,11 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
   const [inputTask, setInputTask] = useState({ name: "", day: '', p_id: "" });
   const [id, setId] = useState('');
   const [current, setCurrent] = useState('');
+  const [showSkleton, setShowSkleton] = useState(false);
+  const [showSkleton2, setShowSkleton2] = useState(false);
+
   async function request() {
+
     // get project and format
     const req = await getProject();
     const formatP = req?.data?.map((i, n) => {
@@ -60,8 +64,11 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
     });
 
     setProjects(formatP);
-
     //get tasks and format
+
+  }
+  async function getTaskSRequest() {
+    setShowSkleton2(true);
     const data = await getTask();
 
     const format = data?.data?.map((i, n) => {
@@ -80,6 +87,7 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
       };
     });
     setItems(format);
+    setShowSkleton2(false);
   }
 
   const handleChecked = (id) => {
@@ -90,16 +98,18 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
 
   useEffect(() => {
     request();
+    getTaskSRequest();
   }, []);
 
   useEffect(() => {
+    setShowSkleton(true);
     request();
     setNewProject(false);
   }, [newProject]);
   useEffect(() => {
 
     if (id || value || pDrope) {
-      request();
+      getTaskSRequest();
     }
   }, [id, value, pDrope,]);
   // insert task to database for project
@@ -357,7 +367,7 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
         />
       </Row>
       <Row className="projectManagement">
-        {projects.length > 0 ? projects.map((s) => {
+        {projects.length === 0 ? <Row><Col className="text-center">No Project</Col></Row> : projects.map((s) => {
           return (
             <Col key={s.id} className={"col-wrapper secondary-dark"}>
               <Row className={"col-header"}>
@@ -388,7 +398,7 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
                 handleDrop={handleDrop}
               >
                 <Col>
-                  {items.length === 0 ? <span>No Item</span> : items.length > 0 ? items
+                  {showSkleton2 ? <Skeleton className="important-today-skeleton" count={1} /> : items
                     .filter((i) => i.status === s.status)
                     .map((i, idx) => (
                       <Item
@@ -403,7 +413,7 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
                         handleGet={handleGet}
                         handleDelete={handleDelete}
                       ></Item>
-                    )) : <Skeleton className="important-today-skeleton" count={1} />}
+                    ))}
                   <div className="new-task-div">
                     <Form.Group className="mb-3" controlId="form-new-task">
                       <input
@@ -423,7 +433,7 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
               </DropWrapperProject>
             </Col>
           );
-        }) : <Row><Col className="text-center"><BeatLoader /></Col></Row>}
+        })}
         <Modal
           show={show}
           handleClose={handleClose}

@@ -75,7 +75,6 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
   }
   const handleKeyDownWeekDaysItem = async (event) => {
     if (event.key === "Enter") {
-      setShowSkleton(true);
       const createT = await createTask(inputTask, 0, 0, false, 'stop');
       if (createT.status === 200) {
         addToast("Created Susseccfully", {
@@ -84,14 +83,12 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
         });
         setNewItems(true);
         setInputTask({ name: '', p_id: '' });
-        setShowSkleton(false);
       } else {
         addToast("Error Please Try Again!", {
           autoDismiss: false,
           appearance: "error",
         });
         setInputTask({ name: '', p_id: '' });
-        setShowSkleton(false);
       }
     }
   };
@@ -160,7 +157,7 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
             <hr />
             <DropWrapper onDrop={onDrop} status={s.status} idNumber={s.id} handleDrop={handleDrop}>
               <Col>
-                {showSkleton ? <Skeleton className="important-today-skeleton" count={1} /> : items.length === 0 ? <span>No Itme</span> : items
+                {showSkleton ? <Skeleton className="important-today-skeleton" count={1} /> : items
                   .filter((i) => i.status === s.status)
                   .map((i, idx) => (
                     <Item
