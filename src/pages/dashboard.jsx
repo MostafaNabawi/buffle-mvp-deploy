@@ -449,6 +449,7 @@ const Dashboard = () => {
   const getBreakPlan = async () => {
     const req = await getaAllBreackPlan();
     if (req.length > 0) {
+      console.log(req);
       setBreakPlanData(req);
     } else {
       setBreakPlanData([]);
@@ -902,8 +903,8 @@ const Dashboard = () => {
                             code={data?.user[0]?.avatar?.key || ""}
                           />
                         </div>
-                        {data.joinNumber.length > 0 &&
-                          (data.joinNumber.length === 1 ? (
+                        {data?.joinNumber?.length > 0 &&
+                          (data?.joinNumber.length === 1 ? (
                             <div className="breakplan-icon jone-icon navy-blue text-center pt-2">
                               <RenderImage
                                 code={data?.joinPhotos[0]?.avatar?.key || ""}
@@ -915,7 +916,7 @@ const Dashboard = () => {
                             </div>
                           ) : (
                             <div className="breakplan-icon jone-icon navy-blue text-center pt-2">
-                              + {data.joinNumber.length}
+                              + {data?.joinNumber.length}
                             </div>
                           ))}
                       </Col>
