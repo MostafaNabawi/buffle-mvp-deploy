@@ -17,6 +17,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import Modal from "../../modal/modal";
 import { DotLoader } from "react-spinners";
+import { FormattedMessage } from "react-intl";
 const UserProfile = () => {
   const { addToast } = useToasts();
   const [loading, setLoading] = useState(false);
@@ -334,7 +335,10 @@ const UserProfile = () => {
   return (
     <>
       <Col className="card" xl={8}>
-        <h1 className={`${style.title} text-center`}>Your Account</h1>
+        <h1 className={`${style.title} text-center`}>
+          {" "}
+          <FormattedMessage defaultMessage="Your Account" id="acc.your" />{" "}
+        </h1>
         <Form onSubmit={handleEdite} encType="multipart/form-data">
           <Row>
             <Col xl={4}>
@@ -377,10 +381,16 @@ const UserProfile = () => {
                   <Skeleton height={50} count={1} />
                 ) : (
                   <>
-                    <Form.Label>First name *</Form.Label>
+                    <Form.Label>
+                      <FormattedMessage
+                        defaultMessage="First name"
+                        id="user.fname"
+                      />{" "}
+                      *
+                    </Form.Label>
                     <Form.Control
                       type="text"
-                      placeholder="First  name"
+                      placeholder="First Name"
                       value={firstName}
                       name="firstName"
                       onChange={(e) => {
@@ -397,7 +407,14 @@ const UserProfile = () => {
                   <Skeleton height={50} count={1} />
                 ) : (
                   <>
-                    <Form.Label>Last Name *</Form.Label>
+                    <Form.Label>
+                      {" "}
+                      <FormattedMessage
+                        defaultMessage="Last Name"
+                        id="user.lname"
+                      />
+                      *
+                    </Form.Label>
                     <Form.Control
                       type="text"
                       placeholder="Last Name"
@@ -419,7 +436,13 @@ const UserProfile = () => {
                   <Skeleton height={50} count={1} />
                 ) : (
                   <>
-                    <Form.Label>Email address *</Form.Label>
+                    <Form.Label>
+                      <FormattedMessage
+                        defaultMessage="Email address"
+                        id="user.email"
+                      />
+                      *
+                    </Form.Label>
                     <Form.Control
                       type="email"
                       placeholder="Enter email"
@@ -439,7 +462,12 @@ const UserProfile = () => {
                   <Skeleton height={50} count={1} />
                 ) : (
                   <>
-                    <Form.Label>Departure</Form.Label>
+                    <Form.Label>
+                      <FormattedMessage
+                        defaultMessage="Departure"
+                        id="user.departure"
+                      />
+                    </Form.Label>
                     <Form.Control
                       type="text"
                       placeholder="Departure"
@@ -481,7 +509,14 @@ const UserProfile = () => {
             </Col>
           </Row>
           <Button className={style.btnUpdate} type="submit">
-            {loading ? <Icon icon="eos-icons:loading" /> : "Update Profile"}
+            {loading ? (
+              <Icon icon="eos-icons:loading" />
+            ) : (
+              <FormattedMessage
+                defaultMessage="Update profile"
+                id="user.updateProfile"
+              />
+            )}
           </Button>
         </Form>
       </Col>
@@ -489,11 +524,18 @@ const UserProfile = () => {
         // size={"sm"}
         show={modalShow}
         handleClose={handleClose}
-        title={"Add new tag to your profile"}
+        title={
+          <FormattedMessage
+            defaultMessage="Add a new tag to your profile"
+            id="user.addNewTag"
+          />
+        }
         body={
           <Col md={12}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>New Tag </Form.Label>
+              <Form.Label>
+                <FormattedMessage defaultMessage="New Tag" id="user.newTag" />
+              </Form.Label>
               <Form.Control
                 name="tag"
                 type="text"
@@ -515,14 +557,18 @@ const UserProfile = () => {
               }}
               disabled={addLoading}
             >
-              {addLoading ? <DotLoader size={10} /> : "Add"}
+              {addLoading ? (
+                <DotLoader size={10} />
+              ) : (
+                <FormattedMessage defaultMessage="Add" id="btn.add" />
+              )}
             </Button>
             <Button
               variant="outline-dark"
               disabled={addLoading}
               onClick={handleClose}
             >
-              Close
+              <FormattedMessage defaultMessage="Close" id="btn.close" />
             </Button>
           </>
         }

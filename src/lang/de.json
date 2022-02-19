@@ -117,5 +117,15 @@
   "event.addNewMem": "Personen hinzufügen",
   "event.userByThisEmail": "",
 
-  "tb.noEvent": "Kein Ereignis"
+  "tb.noEvent": "Kein Ereignis",
+  "_comment": "paimanText",
+  "acc.your": "Dein Account",
+  "user.fname": "Vorname",
+  "user.lname": "Nachname",
+  "user.email": "E-Mail Adresse",
+  "user.departure": "Abfahrt",
+  "user.updateProfile": "Profil updaten",
+  "user.newTag": "Neues Tag",
+  "user.addNewTag": "Fügen Sie Ihrem Profil ein neues Tag hinzu",
+  "_comment2": "paimanEnd"
 }
