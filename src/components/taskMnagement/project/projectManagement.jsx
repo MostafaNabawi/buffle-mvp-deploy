@@ -286,8 +286,6 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
     setProjectIdEdit("");
     return true;
   }
-
-
   return (
     <>
       <Row className="creat-project-row">
@@ -390,7 +388,7 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
                 handleDrop={handleDrop}
               >
                 <Col>
-                  {items.length > 0 ? items
+                  {items.length === 0 ? <span>No Item</span> : items.length > 0 ? items
                     .filter((i) => i.status === s.status)
                     .map((i, idx) => (
                       <Item

@@ -26,6 +26,7 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
   const handleShow = () => setShow(true);
   const [showSkleton, setShowSkleton] = useState(false);
   async function request() {
+    setShowSkleton(true);
     const data = await getTask();
     const format = data?.data?.map((i, n) => {
       return {
@@ -42,7 +43,9 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
         color: i.project_tasks[0]?.color
       };
     });
+
     setItems(format);
+    setShowSkleton(false);
   }
   useEffect(() => {
     request();
@@ -157,7 +160,7 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
             <hr />
             <DropWrapper onDrop={onDrop} status={s.status} idNumber={s.id} handleDrop={handleDrop}>
               <Col>
-                {items.length > 0 ? items
+                {showSkleton ? <Skeleton className="important-today-skeleton" count={1} /> : items.length === 0 ? <span>No Itme</span> : items
                   .filter((i) => i.status === s.status)
                   .map((i, idx) => (
                     <Item
@@ -172,7 +175,7 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
                       handleChecked={handleChecked}
                       handleDelete={handleDelete}
                     ></Item>
-                  )) : <Skeleton className="important-today-skeleton" count={1} />}
+                  ))}
                 <div className="new-task-divimport FreelancerRegister from './../user/register/Freelancer';">
                   <Form.Group className="mb-3" controlId="form-new-task">
                     <input
