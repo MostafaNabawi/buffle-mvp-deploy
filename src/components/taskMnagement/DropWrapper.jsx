@@ -11,7 +11,6 @@ const DropWrapper = ({ onDrop, children, status, idNumber, handleDrop }) => {
     const mDate = moment(date); // Thursday Feb 2015
     const dayNum = mDate.day();
     const newDayNumber = dayNum - idNumber;
-
     let d = new Date(date);
     if (newDayNumber > 0) {
       var dayDate = d.setDate(d.getDate() - newDayNumber);

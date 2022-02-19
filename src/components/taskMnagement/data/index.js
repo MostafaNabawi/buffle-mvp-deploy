@@ -23,37 +23,37 @@ const data = [
 
 const statuses = [
   {
-    id: 0,
+    id: 1,
     status: "Monday",
     title: "New Project",
   },
   {
-    id: 1,
+    id: 2,
     status: "Tuesday",
     title: "Buffle Project",
   },
   {
-    id: 2,
+    id: 3,
     status: "Wednesday",
     title: "School Project",
   },
   {
-    id: 3,
+    id: 4,
     status: "Thursday",
     title: "Course Project",
   },
   {
-    id: 4,
+    id: 5,
     status: "Friday",
     title: "Last Project",
   },
   {
-    id: 5,
+    id: 6,
     status: "Saturday",
     title: "Mis Project",
   },
   {
-    id: 6,
+    id: 0,
     status: "Sunday",
     title: "Daily Reading",
   },
