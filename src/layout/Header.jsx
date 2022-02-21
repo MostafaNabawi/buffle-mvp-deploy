@@ -166,6 +166,7 @@ const Header = () => {
         to: from,
         notId: id,
         fullName: user.first_name + " " + user.last_name,
+        icon:userData?.avatar?.key
       }),
     }).then(async (res) => {
       if (res.status) {
@@ -209,6 +210,7 @@ const Header = () => {
         time: newTime,
         breakId: breakId,
         breakName: breakName,
+        icon:user?.avatar?.key
       }),
     }).then(async (res) => {
       if (res.status) {
