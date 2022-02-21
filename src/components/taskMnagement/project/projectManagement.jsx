@@ -18,7 +18,6 @@ import {
 } from "../../../api";
 import { useToasts } from "react-toast-notifications";
 import moment from "moment";
-import ClipLoader from "react-spinners/ClipLoader";
 import BeatLoader from "react-spinners/BeatLoader";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -302,10 +301,11 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
         <Col lg="6"><FormattedMessage id="pro.projects" defaultMessage="Projects" /></Col>
         <Col lg="6" className="creat-project-col">
           <div className="creat-project-div">
-            <span className="creat-project-plus">
-              <Icon icon="bi:plus-lg" />
-            </span>
+
             <span className="creat-project-btn" onClick={handleShowPModal}>
+              <span className="creat-project-plus">
+                <Icon icon="bi:plus-lg" />
+              </span>
               <FormattedMessage id="pro.createPro" defaultMessage="Create Project" />
             </span>
           </div>
@@ -351,7 +351,7 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
           }
           footer={
             <>
-              {loading && projectName.length > 0 ? (
+              {loading === true ? (
                 <Button variant="primary">
                   <BeatLoader />
                 </Button>
@@ -479,14 +479,14 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
                     </Form.Group>
                   </>
                 ) : (
-                  <ClipLoader />
+                  <Row><Col className="text-center" xl="12"><BeatLoader /></Col></Row>
                 )}
               </Col>
             </Row>
           }
           footer={
             <>
-              {loading && projectName.length > 0 ? (
+              {loading === true ? (
                 <Button variant="primary">
                   <BeatLoader />
                 </Button>

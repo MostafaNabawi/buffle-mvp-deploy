@@ -460,10 +460,10 @@ const Header = () => {
               localStorage.setItem(
                 "loackTime",
                 timeLock.getHours() +
-                  ":" +
-                  timeLock.getMinutes() +
-                  ":" +
-                  timeLock.getSeconds()
+                ":" +
+                timeLock.getMinutes() +
+                ":" +
+                timeLock.getSeconds()
               );
             }
           }}
@@ -475,9 +475,8 @@ const Header = () => {
 
       <div
         id="lockScreenHide"
-        className={`${
-          localStorage.getItem("screen") === "on" ? "lockScreen" : ""
-        } text-center ${!start ? "" : "lockScreenHide"}`}
+        className={`${localStorage.getItem("screen") === "on" ? "lockScreen" : ""
+          } text-center ${!start ? "" : "lockScreenHide"}`}
       >
         {localStorage.getItem("screen") === "on" && !start && (
           <div className="screenDiv">
@@ -494,9 +493,9 @@ const Header = () => {
                 }
                 handleDisplayTime(dis_time);
               }}
-              // renderer={() => {
-              //   return ""
-              // }}
+            // renderer={() => {
+            //   return ""
+            // }}
             />
           </div>
         )}
@@ -784,7 +783,7 @@ const Header = () => {
                 </i>
                 <FormattedMessage
                   id="app.searchTag"
-                  defaultMessage="Search tags..."
+                  defaultMessage="Search tags"
                 >
                   {(msg) => (
                     <Form.Control
