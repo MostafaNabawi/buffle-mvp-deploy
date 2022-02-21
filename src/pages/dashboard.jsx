@@ -321,9 +321,11 @@ const Dashboard = () => {
       setOpan(req.data.length);
       setTaskData(req.data);
       setShowSkleton(false);
+      setComplete("");
     } else {
       setTaskData([]);
       setShowSkleton(false);
+      setComplete("");
     }
   }
   const handleCheck = (e) => {
@@ -480,6 +482,8 @@ const Dashboard = () => {
     }
   };
   const handleComplete = (val) => {
+    const filtered = taskData.filter((t) => t._id !== val);
+    setTaskData(filtered);
     setComplete(val);
     setOpan(opan - 1);
     setStart(start - 1);
