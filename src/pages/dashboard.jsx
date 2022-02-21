@@ -527,7 +527,9 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
-    getTask();
+    if (taskReload || complete.length > 0 || move) {
+      getTask();
+    }
   }, [taskReload, complete, move]);
   useEffect(() => {
     const spotToken = localStorage.getItem("spotToken");
