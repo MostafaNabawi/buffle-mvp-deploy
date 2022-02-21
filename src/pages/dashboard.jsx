@@ -522,7 +522,7 @@ const Dashboard = () => {
 
     getBreakPlan();
     innerNextBreak();
-    // getTask();
+    getTask();
     getVacationTime();
   }, []);
 
