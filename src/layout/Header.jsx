@@ -65,7 +65,7 @@ const Header = () => {
   const [ownSpace, setOwnSpace] = useState("");
   const [current, setCurrent] = useState("");
   const [lang, setLang] = useState("");
-  console.log("userData,",userData)
+  console.log("userData,", userData);
   const handleLogout = async () => {
     Swal.fire({
       title: "Logout...",
@@ -126,7 +126,7 @@ const Header = () => {
       }).then(async (res) => {
         const { payload } = await res.json();
         if (payload.length > 0) {
-          console.log("notifacation",payload)
+          console.log("notifacation", payload);
           setNotificatiion(payload);
           setCount(0);
           setLoading(false);
@@ -166,7 +166,7 @@ const Header = () => {
         to: from,
         notId: id,
         fullName: user.first_name + " " + user.last_name,
-        icon:userData?.avatar?.key
+        icon: userData?.avatar?.key || "",
       }),
     }).then(async (res) => {
       if (res.status) {
@@ -210,7 +210,7 @@ const Header = () => {
         time: newTime,
         breakId: breakId,
         breakName: breakName,
-        icon:user?.avatar?.key
+        icon: user?.avatar?.key || "",
       }),
     }).then(async (res) => {
       if (res.status) {
@@ -465,10 +465,10 @@ const Header = () => {
               localStorage.setItem(
                 "loackTime",
                 timeLock.getHours() +
-                ":" +
-                timeLock.getMinutes() +
-                ":" +
-                timeLock.getSeconds()
+                  ":" +
+                  timeLock.getMinutes() +
+                  ":" +
+                  timeLock.getSeconds()
               );
             }
           }}
@@ -480,8 +480,9 @@ const Header = () => {
 
       <div
         id="lockScreenHide"
-        className={`${localStorage.getItem("screen") === "on" ? "lockScreen" : ""
-          } text-center ${!start ? "" : "lockScreenHide"}`}
+        className={`${
+          localStorage.getItem("screen") === "on" ? "lockScreen" : ""
+        } text-center ${!start ? "" : "lockScreenHide"}`}
       >
         {localStorage.getItem("screen") === "on" && !start && (
           <div className="screenDiv">
@@ -498,9 +499,9 @@ const Header = () => {
                 }
                 handleDisplayTime(dis_time);
               }}
-            // renderer={() => {
-            //   return ""
-            // }}
+              // renderer={() => {
+              //   return ""
+              // }}
             />
           </div>
         )}
@@ -569,7 +570,7 @@ const Header = () => {
                   notification.map((notify) =>
                     notify.type === "invite" ? (
                       <Notify
-                        imgUrl={''}
+                        imgUrl={""}
                         key={notify._id}
                         name={notify.firstName + " " + notify.lastName}
                         date={notify.date}
