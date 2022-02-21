@@ -8,7 +8,7 @@ function inviteNotify({ name, date, message, footer,icon }) {
     <>
       <Row className="p-2 pb-0">
         <Col xl="2" className="pt-0 pb-3">
-          <div className="breakplan-icon navy-blue text-center pt-2">
+          <div className="breakplan-icon navy-blue text-center">
             {icon && icon==="task" &&(
               <Image
               className="breakplan-img mb-2"

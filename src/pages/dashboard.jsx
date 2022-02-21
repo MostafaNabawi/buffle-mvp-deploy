@@ -909,7 +909,7 @@ const Dashboard = () => {
                   breacPlanData.map((data, n) => (
                     <Row key={n} className="mt-3">
                       <Col className="col-3 break-plan-image">
-                        <div className="breakplan-icon navy-blue text-center pt-2">
+                        <div className="breakplan-icon navy-blue text-center">
                           <RenderImage
                             code={data?.user[0]?.avatar?.key || ""}
                           />
