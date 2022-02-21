@@ -65,7 +65,7 @@ const Header = () => {
   const [ownSpace, setOwnSpace] = useState("");
   const [current, setCurrent] = useState("");
   const [lang, setLang] = useState("");
-  console.log("userData,", userData);
+  
   const handleLogout = async () => {
     Swal.fire({
       title: "Logout...",
@@ -601,14 +601,16 @@ const Header = () => {
                       />
                     ) : notify.type == "report" ? (
                       <Notify
+                        icon={notify.icon}
                         key={notify._id}
-                        name={notify.sender}
+                        name={notify.icon==="task" ?"Task":notify.icon==="water"?"Water":notify.sender}
                         date={notify.date}
                         message={notify.msg}
                         footer=""
                       />
                     ) : notify.type === "new-time" ? (
                       <Notify
+                        icon={notify.icon}
                         key={notify._id}
                         name={notify.sender}
                         date={notify.date}

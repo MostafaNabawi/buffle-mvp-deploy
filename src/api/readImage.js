@@ -1,10 +1,9 @@
 import { API_URL } from "../config";
 
 async function readImage(key) {
-  if (key.length === 0) {
+  if (key === "") {
     return "/icone/WB_Headshots-102-web 1.png";
   }
-  console.log("key", key);
   const req = await fetch(`${API_URL}/user/my-avatar?key=${key}`, {
     credentials: "include",
   });
