@@ -34,15 +34,18 @@ function AddNewMember({ selected, setSelected }) {
         if (result.payload) {
           setEmail("");
           setLoading(false);
-          result.email = email;
-          if (selected.length > 0) {
-            const exist = selected.filter((user) => user.uid === result.uid);
-            if (exist.length === 0) {
+          if (JSON.parse(localStorage.getItem("user"))._id != result.uid){
+            result.email = email;
+            if (selected.length > 0) {
+              const exist = selected.filter((user) => user.uid === result.uid);
+              if (exist.length === 0) {
+                setSelected([...selected, result]);
+              }
+            } else {
               setSelected([...selected, result]);
             }
-          } else {
-            setSelected([...selected, result]);
           }
+         
         } else {
           setNotFound(true);
           setLoading(false);

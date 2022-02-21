@@ -97,18 +97,19 @@ function NewEvent() {
         if (result.payload) {
           setEmail("");
           setLoading(false);
-          result.email = email;
-          if (selected.length > 0) {
-            const exist = selected.filter((user) => user.uid === result.uid);
-            if (exist.length === 0) {
+          if (JSON.parse(localStorage.getItem("user"))._id != result.uid) {
+            result.email = email;
+            if (selected.length > 0) {
+              const exist = selected.filter((user) => user.uid === result.uid);
+              if (exist.length === 0) {
+                setSelected([...selected, result]);
+              }
+            } else {
               setSelected([...selected, result]);
             }
-          } else {
-            setSelected([...selected, result]);
-          }
+          } 
         } else {
           setNotFound(true);
-          setLoading(false);
         }
       });
     } else {
@@ -197,13 +198,26 @@ function NewEvent() {
           onSelect={(k) => setKey(k)}
           className={style.tab}
         >
-          <Tab eventKey="createvent" title={<FormattedMessage id="event.create" defaultMessage="Create event" />}>
+          <Tab
+            eventKey="createvent"
+            title={
+              <FormattedMessage
+                id="event.create"
+                defaultMessage="Create event"
+              />
+            }
+          >
             <Row>
               <Col lg={6}>
                 <Form>
                   <Col md={12}>
                     <Form.Group className="mb-3" controlId="eventName">
-                      <Form.Label><FormattedMessage id="event.name" defaultMessage="Event name" /> </Form.Label>
+                      <Form.Label>
+                        <FormattedMessage
+                          id="event.name"
+                          defaultMessage="Event name"
+                        />{" "}
+                      </Form.Label>
                       <Form.Control
                         onChange={(e) => {
                           setEventName(e.target.value);
@@ -219,7 +233,12 @@ function NewEvent() {
                       className={style.select_input}
                       controlId="homeCurrency"
                     >
-                      <Form.Label><FormattedMessage id="event.currency" defaultMessage="Home Currency" /></Form.Label>
+                      <Form.Label>
+                        <FormattedMessage
+                          id="event.currency"
+                          defaultMessage="Home Currency"
+                        />
+                      </Form.Label>
                       <Form.Select
                         onChange={(e) => {
                           setCurrency(e.target.value);
@@ -241,12 +260,22 @@ function NewEvent() {
                   </Col>
                   {/* email */}
                   <div className={style.participant_section}>
-                    <h4><FormattedMessage id="event.participants" defaultMessage="Participants" /></h4>
+                    <h4>
+                      <FormattedMessage
+                        id="event.participants"
+                        defaultMessage="Participants"
+                      />
+                    </h4>
                     <Col md={12}>
                       {/* <AddNewMember eventName={eventName} currency={currency}/> */}
                       <div className={style.input_with_button}>
                         <Form.Group className="mb-3" controlId="person-1">
-                          <Form.Label><FormattedMessage id="label.email" defaultMessage="Email" /> </Form.Label>
+                          <Form.Label>
+                            <FormattedMessage
+                              id="label.email"
+                              defaultMessage="Email"
+                            />{" "}
+                          </Form.Label>
                           <FormattedMessage
                             id="label.email"
                             defaultMessage="Email"
@@ -275,7 +304,10 @@ function NewEvent() {
                           {loading ? (
                             <Icon fontSize={24} icon="eos-icons:loading" />
                           ) : (
-                            <FormattedMessage id="btn.add" defaultMessage="Add" />
+                            <FormattedMessage
+                              id="btn.add"
+                              defaultMessage="Add"
+                            />
                           )}
                         </Button>
                       </div>
@@ -294,9 +326,24 @@ function NewEvent() {
                       <Table striped className="mb-0">
                         <thead>
                           <tr>
-                            <th><FormattedMessage id="label.name" defaultMessage="Name" /></th>
-                            <th><FormattedMessage id="label.email" defaultMessage="Email" /></th>
-                            <th><FormattedMessage id="label.delete" defaultMessage="Delete" /></th>
+                            <th>
+                              <FormattedMessage
+                                id="label.name"
+                                defaultMessage="Name"
+                              />
+                            </th>
+                            <th>
+                              <FormattedMessage
+                                id="label.email"
+                                defaultMessage="Email"
+                              />
+                            </th>
+                            <th>
+                              <FormattedMessage
+                                id="label.delete"
+                                defaultMessage="Delete"
+                              />
+                            </th>
                           </tr>
                         </thead>
                         <tbody>
@@ -352,17 +399,26 @@ function NewEvent() {
                     {createing ? (
                       <Icon fontSize={24} icon="eos-icons:loading" />
                     ) : (
-                      <FormattedMessage id="btn.createPool" defaultMessage="Create Pool" />
+                      <FormattedMessage
+                        id="btn.createPool"
+                        defaultMessage="Create Pool"
+                      />
                     )}
                   </Button>
                 </Form>
               </Col>
               <Col lg={6} className={style.right_site}>
                 <Jumbotron
-                  title={<FormattedMessage id="event.goodExample" defaultMessage="Good examples for Creating a Maney Pool" />}
+                  title={
+                    <FormattedMessage
+                      id="event.goodExample"
+                      defaultMessage="Good examples for Creating a Maney Pool"
+                    />
+                  }
                   content={
                     <p>
-                      <FormattedMessage id="event.exampleText"
+                      <FormattedMessage
+                        id="event.exampleText"
                         defaultMessage="Sed porttitor lectus nibh. Nulla quis lorem ut libero
                       malesuada feugiat. Proin eget tortor risus. Vivamus magna
                       justo, lacinia eget consectetur sed, convallis at tellus.
@@ -370,7 +426,8 @@ function NewEvent() {
                       faucibus orci luctus et ultrices posuere cubilia Curae;
                       Donec velit neque, auctor sit amet aliquam vel,
                       ullamcorper sit amet ligula. Proin eget tortor risus.
-                      Donec rutrum congue leo eget malesuada." />
+                      Donec rutrum congue leo eget malesuada."
+                      />
                     </p>
                   }
                 />
@@ -391,23 +448,57 @@ function NewEvent() {
                       </FormattedMessage>
                     </Form.Group>
                     <Button type="submit">
-                      {busy ? <Icon icon="eos-icons:loading" /> : <FormattedMessage id="btn.join" defaultMessage="Join" />}
+                      {busy ? (
+                        <Icon icon="eos-icons:loading" />
+                      ) : (
+                        <FormattedMessage id="btn.join" defaultMessage="Join" />
+                      )}
                     </Button>
                   </Form>
                 </div>
               </Col>
             </Row>
           </Tab>
-          <Tab eventKey="existevent" title={<FormattedMessage id="event.list" defaultMessage="Event list" />}>
+          <Tab
+            eventKey="existevent"
+            title={
+              <FormattedMessage id="event.list" defaultMessage="Event list" />
+            }
+          >
             <Table responsive hover size="sm" className={style.event_list}>
               <thead>
                 <tr>
                   <th>#</th>
-                  <th><FormattedMessage id="label.eventName" defaultMessage="Event Name" /></th>
-                  <th><FormattedMessage id="label.desc" defaultMessage="Description" /></th>
-                  <th><FormattedMessage id="label.currency" defaultMessage="Currency" /></th>
-                  <th><FormattedMessage id="label.crDate" defaultMessage="Create date" /></th>
-                  <th><FormattedMessage id="label.eventCode" defaultMessage="Event Code" /></th>
+                  <th>
+                    <FormattedMessage
+                      id="label.eventName"
+                      defaultMessage="Event Name"
+                    />
+                  </th>
+                  <th>
+                    <FormattedMessage
+                      id="label.desc"
+                      defaultMessage="Description"
+                    />
+                  </th>
+                  <th>
+                    <FormattedMessage
+                      id="label.currency"
+                      defaultMessage="Currency"
+                    />
+                  </th>
+                  <th>
+                    <FormattedMessage
+                      id="label.crDate"
+                      defaultMessage="Create date"
+                    />
+                  </th>
+                  <th>
+                    <FormattedMessage
+                      id="label.eventCode"
+                      defaultMessage="Event Code"
+                    />
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -438,7 +529,12 @@ function NewEvent() {
                     </tr>
                   ))
                 ) : (
-                  <tr><FormattedMessage id="tb.noEvent" defaultMessage="No event" /></tr>
+                  <tr>
+                    <FormattedMessage
+                      id="tb.noEvent"
+                      defaultMessage="No event"
+                    />
+                  </tr>
                 )}
               </tbody>
             </Table>
