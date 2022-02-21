@@ -114,6 +114,8 @@ function HydrationReminderCard() {
       // dispatch(setNotificatiionTimer)
       ReminderNotifiction(req.data.reminder);
       calculteUsedPerPercent(req.data.daily_goal);
+    } else {
+      dispatch(setRender(false));
     }
   };
   const changeTimeFormat = (val) => {
@@ -242,12 +244,22 @@ function HydrationReminderCard() {
       <Modal
         show={show}
         handleClose={handleClose}
-        title={<FormattedMessage defaultMessage="Hydration Reminder" id="app.waterHydretion" />}
+        title={
+          <FormattedMessage
+            defaultMessage="Hydration Reminder"
+            id="app.waterHydretion"
+          />
+        }
         body={
           <Row>
             <Col md={12}>
               <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label><FormattedMessage defaultMessage="new daily goal(2L)" id="app.newDaily" /> </Form.Label>
+                <Form.Label>
+                  <FormattedMessage
+                    defaultMessage="new daily goal(2L)"
+                    id="app.newDaily"
+                  />{" "}
+                </Form.Label>
                 <Form.Control
                   type="number"
                   placeholder="2L"

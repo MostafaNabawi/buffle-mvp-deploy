@@ -195,7 +195,7 @@ function ImpotentToDayCard({ handleMove }) {
         }
         footer={
           <>
-            {loading && duration.length > 0 ? (
+            {loading === true ? (
               <Button variant="primary">
                 <BeatLoader />
               </Button>
