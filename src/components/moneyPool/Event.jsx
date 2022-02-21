@@ -141,6 +141,8 @@ function Event() {
         body: JSON.stringify({
           memberId: userId,
           eventId: id,
+          icon:currentUser?.avatar?.key || "",
+          fullName:currentUser.first_name + " " +currentUser.last_name 
         }),
       }).then(async (res) => {
         const payback = await res.json();
