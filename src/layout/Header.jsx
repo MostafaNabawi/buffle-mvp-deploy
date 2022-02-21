@@ -65,6 +65,7 @@ const Header = () => {
   const [ownSpace, setOwnSpace] = useState("");
   const [current, setCurrent] = useState("");
   const [lang, setLang] = useState("");
+  console.log("userData,",userData)
   const handleLogout = async () => {
     Swal.fire({
       title: "Logout...",
@@ -125,6 +126,7 @@ const Header = () => {
       }).then(async (res) => {
         const { payload } = await res.json();
         if (payload.length > 0) {
+          console.log("notifacation",payload)
           setNotificatiion(payload);
           setCount(0);
           setLoading(false);
@@ -430,6 +432,7 @@ const Header = () => {
       context.selectLanguage(lang);
     }
   }, [lang]);
+
   const handleSearchByTag = (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -564,6 +567,7 @@ const Header = () => {
                   notification.map((notify) =>
                     notify.type === "invite" ? (
                       <Notify
+                        imgUrl={''}
                         key={notify._id}
                         name={notify.firstName + " " + notify.lastName}
                         date={notify.date}
