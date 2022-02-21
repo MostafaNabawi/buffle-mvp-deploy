@@ -12,7 +12,7 @@ export default function RenderImage({ code, type = 2 }) {
       setUrl(result);
       setLoading(false);
     }
-    if (code !="") {
+    if (code != "") {
       readInnerImage();
     }
   }, [code]);
@@ -24,7 +24,7 @@ export default function RenderImage({ code, type = 2 }) {
       />
     );
   }
-  if (code ==="" && type === 1) {
+  if (code === "" && type === 1) {
     return (
       <Image
         src="/icone/WB_Headshots-102-web 1.png"
@@ -35,7 +35,7 @@ export default function RenderImage({ code, type = 2 }) {
   }
   if (loading && type === 2) {
     return (
-      <div style={{ marginTop: "-11px" }}>
+      <div style={{ marginTop: "-8px" }}>
         <Skeleton style={{ borderRadius: "48%" }} width={37} height={37} />
       </div>
     );
