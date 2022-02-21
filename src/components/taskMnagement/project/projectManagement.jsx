@@ -302,10 +302,11 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
         <Col lg="6"><FormattedMessage id="pro.projects" defaultMessage="Projects" /></Col>
         <Col lg="6" className="creat-project-col">
           <div className="creat-project-div">
-            <span className="creat-project-plus">
-              <Icon icon="bi:plus-lg" />
-            </span>
+
             <span className="creat-project-btn" onClick={handleShowPModal}>
+              <span className="creat-project-plus">
+                <Icon icon="bi:plus-lg" />
+              </span>
               <FormattedMessage id="pro.createPro" defaultMessage="Create Project" />
             </span>
           </div>
