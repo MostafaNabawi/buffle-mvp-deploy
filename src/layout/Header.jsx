@@ -424,11 +424,7 @@ const Header = () => {
 
   return (
     <>
-      {notificTimer !== "" && render && (
-        <>
-          <TimerCustome count={count} setCount={setCount} />
-        </>
-      )}
+      <TimerCustome count={count} setCount={setCount} />
       <Col className="col-12 header-name text-capitalize">
         Hi <span id="userFullName">{userData?.first_name}</span>
       </Col>

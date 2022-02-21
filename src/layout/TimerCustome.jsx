@@ -16,6 +16,12 @@ function TimerCustome({ count, setCount }) {
     (state) => state.hydration
   );
   useEffect(() => {
+    if (!render) {
+      return;
+    }
+    if (notificTimer === "") {
+      console.log("😒");
+    }
     if (notificTimer === 1000) {
       dispatch(setNotificatiionTimer(notificDelay + 1000));
       sendNotific();
