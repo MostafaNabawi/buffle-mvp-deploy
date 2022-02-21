@@ -144,6 +144,7 @@ function NewEvent() {
           desc: desc,
           memberIds: userId,
           fullName: userName,
+          icon:currentUser?.avatar?.key || ""
         }),
       }).then(async (res) => {
         if (res.status === 200) {
