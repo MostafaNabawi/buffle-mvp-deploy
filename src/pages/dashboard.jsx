@@ -1142,7 +1142,7 @@ const Dashboard = () => {
             )}
             {taskManagerUpdate &&
               (updateTaskLoader ? (
-                <BeatLoader />
+                <Col md={12} className="text-center"><BeatLoader /></Col>
               ) : (
                 <>
                   <Col md={12}>
@@ -1230,7 +1230,7 @@ const Dashboard = () => {
 
             {taskManager && (
               <Button variant="primary" onClick={handleCreateTask}>
-                {loading && duration.length > 0 ? (
+                {loading === true ? (
                   <BeatLoader />
                 ) : (
                   " Create New Task"
@@ -1239,7 +1239,7 @@ const Dashboard = () => {
             )}
             {taskManagerUpdate && (
               <Button variant="primary" onClick={updateSelectedTask}>
-                {loading && duration.length > 0 ? <BeatLoader /> : " Update"}
+                {loading === true ? <BeatLoader /> : " Update"}
               </Button>
             )}
             <Button variant="outline-dark" onClick={handleClose}>
