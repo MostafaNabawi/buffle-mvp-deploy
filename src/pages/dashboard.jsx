@@ -280,6 +280,11 @@ const Dashboard = () => {
 
         setloading(false);
         setModalShow(false);
+        setDurationTime({
+          hours: "00",
+          minutes: "25",
+          seconds: "00",
+        });
       } else {
         addToast("Error Please Try Again!", {
           autoDismiss: false,
@@ -288,6 +293,11 @@ const Dashboard = () => {
         setloading(false);
         setModalShow(false);
         setTaskReload(false);
+        setDurationTime({
+          hours: "00",
+          minutes: "25",
+          seconds: "00",
+        });
         return true;
       }
       setloading(false);
@@ -295,6 +305,11 @@ const Dashboard = () => {
       setTaskName("");
       setModalShow(false);
       setTaskReload(false);
+      setDurationTime({
+        hours: "00",
+        minutes: "25",
+        seconds: "00",
+      });
       return true;
     }
   };
@@ -329,7 +344,7 @@ const Dashboard = () => {
         showCancelButton: true,
         cancelButtonText: "No, cancel!",
         confirmButtonText: "Yes, delete it!",
-        reverseButtons: true,
+        reverseButtons: false,
       }).then(async (result) => {
         if (result.isConfirmed) {
           try {
