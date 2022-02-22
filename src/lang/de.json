@@ -128,5 +128,8 @@
   "user.updateProfile": "Profil updaten",
   "user.newTag": "Neues Tag",
   "user.addNewTag": "Neues Tag hinzufügen",
+  "login.spotify": "Mit Spotify einloggen",
+  "img.error": "Nur Bilddateien!",
+  "img.sizeError": "3MB beträgt die maximale Bildgröße",
   "_comment2": "paimanEnd"
 }
