@@ -162,8 +162,8 @@ function ImpotentToDayCard({ handleMove }) {
       <Modal
         show={show}
         handleClose={handleClose}
-        title="Move this item to task?"
-        subTitle="Set duration time to task."
+        title={<FormattedMessage id="task.move" defaultMessage="Move this item to task?" />}
+        subTitle={<FormattedMessage id="task.setTime" defaultMessage="Set duration time to task." />}
         body={
           <Row>
             <Col md={12}>
@@ -171,7 +171,7 @@ function ImpotentToDayCard({ handleMove }) {
                 <Row>
                   <Col xl="12">
                     <TimePicker2
-                      label={"duration time"}
+                      label={<FormattedMessage id="label.duTime" defaultMessage="Duration Time" />}
                       value={durationTime}
                       setValue={setDurationTime}
                     />
@@ -183,8 +183,8 @@ function ImpotentToDayCard({ handleMove }) {
                           type="checkbox"
                           onChange={(e) => setChecked(e.target.checked)}
                         />
-                        Do you want to have 5 minutes break after this task
-                        finished?
+                        <FormattedMessage id="task.5min" defaultMessage=" Do you want to have 5 minutes break after this task
+                      finished?" />
                       </Form.Label>
                     </Form.Group>
                   </Col>
@@ -195,17 +195,17 @@ function ImpotentToDayCard({ handleMove }) {
         }
         footer={
           <>
-            {loading && duration.length > 0 ? (
+            {loading === true ? (
               <Button variant="primary">
                 <BeatLoader />
               </Button>
             ) : (
               <Button variant="primary" onClick={handleSubmit}>
-                Move
+                <FormattedMessage id="btn.move" defaultMessage="Move" />
               </Button>
             )}
             <Button variant="outline-dark" onClick={handleClose}>
-              Cancel
+              <FormattedMessage id="btn.cancel" defaultMessage="Cancel" />
             </Button>
           </>
         }

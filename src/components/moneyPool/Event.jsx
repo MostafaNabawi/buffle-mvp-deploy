@@ -141,6 +141,8 @@ function Event() {
         body: JSON.stringify({
           memberId: userId,
           eventId: id,
+          icon:currentUser?.avatar?.key || "",
+          fullName:currentUser.first_name + " " +currentUser.last_name 
         }),
       }).then(async (res) => {
         const payback = await res.json();
@@ -252,7 +254,7 @@ function Event() {
       <Modal
         show={show}
         handleClose={handleClose}
-        title="Add new member"
+        title={<FormattedMessage id="btn.addNewMem" defaultMessage="Add new member" />}
         body={<AddNewMember selected={selected} setSelected={setSelected} />}
         footer={
           <>

@@ -6,6 +6,7 @@ import style from "../style.module.css";
 import { API_URL } from "../../../config";
 import { useToasts } from "react-toast-notifications";
 import PulseLoader from "react-spinners/PulseLoader";
+import { FormattedMessage } from "react-intl";
 
 const StepTwoRegister = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -24,31 +25,55 @@ const StepTwoRegister = () => {
     e.preventDefault();
     // check inputs
     if (inputs.password === "") {
-      addToast("Please Enter Password", {
-        appearance: "warning",
-        autoDismiss: 6000,
-      });
+      addToast(
+        <FormattedMessage
+          defaultMessage="Please Enter Password"
+          id="enterPass"
+        />,
+        {
+          appearance: "warning",
+          autoDismiss: 6000,
+        }
+      );
       return;
     }
     if (inputs.c_password === "") {
-      addToast("Please Enter Confirm Password", {
-        appearance: "warning",
-        autoDismiss: 6000,
-      });
+      addToast(
+        <FormattedMessage
+          defaultMessage="Please Enter Confirm Password"
+          id="enterPass2"
+        />,
+        {
+          appearance: "warning",
+          autoDismiss: 6000,
+        }
+      );
       return;
     }
     if (inputs.password !== inputs.c_password) {
-      addToast("Password not matched!", {
-        appearance: "warning",
-        autoDismiss: 6000,
-      });
+      addToast(
+        <FormattedMessage
+          defaultMessage="Password do not match!"
+          id="passNot"
+        />,
+        {
+          appearance: "warning",
+          autoDismiss: 6000,
+        }
+      );
       return;
     }
     if (inputs.password.length < 6) {
-      addToast("Password must be at least 6 chracters!", {
-        appearance: "warning",
-        autoDismiss: 6000,
-      });
+      addToast(
+        <FormattedMessage
+          defaultMessage="Password must be at least 6 chracters!"
+          id="passLimit"
+        />,
+        {
+          appearance: "warning",
+          autoDismiss: 6000,
+        }
+      );
       return;
     }
     setLoading(true);
@@ -167,7 +192,12 @@ const StepTwoRegister = () => {
       <div className={style.StepTowPage}>
         <Row className="p-0 m-0 row">
           <Col xl="8">
-            <h2>Registrtion has been expired!</h2>
+            <h2>
+              <FormattedMessage
+                defaultMessage="Registrtion has been expired!"
+                id="expired"
+              />
+            </h2>
           </Col>
         </Row>
       </div>
@@ -182,7 +212,10 @@ const StepTwoRegister = () => {
               <div className={style.floatLeft}>2/2</div>
               <Image src="/favicon.ico" />
               <div className={`${style.headerTitle} mt-3`}>
-                Set your Password
+                <FormattedMessage
+                  defaultMessage="Set your Password"
+                  id="setPassword"
+                />
               </div>
             </div>
             <div className={style.body}>
@@ -223,22 +256,33 @@ const StepTwoRegister = () => {
                 <Col xl="12">
                   <Form.Group className="mb-5" controlId="formBasicPassword">
                     <Form.Label className={style.lableForm}>
-                      Confirem Password *
+                      <FormattedMessage
+                        defaultMessage="Confirm password"
+                        id="confirmPass"
+                      />
+                      *
                     </Form.Label>
                     <div className="mb-4 input-group">
-                      <Form.Control
-                        className={style.formInput}
-                        type={`${showPassword ? "text" : "password"}`}
-                        placeholder="confirem Password"
-                        name="c_password"
-                        disabled={loading}
-                        onChange={(e) =>
-                          setInputs({
-                            ...inputs,
-                            [e.target.name]: e.target.value,
-                          })
-                        }
-                      />
+                      <FormattedMessage
+                        defaultMessage="Confirm password"
+                        id="confirmPass"
+                      >
+                        {(msg) => (
+                          <Form.Control
+                            className={style.formInput}
+                            type={`${showPassword ? "text" : "password"}`}
+                            placeholder={msg}
+                            name="c_password"
+                            disabled={loading}
+                            onChange={(e) =>
+                              setInputs({
+                                ...inputs,
+                                [e.target.name]: e.target.value,
+                              })
+                            }
+                          />
+                        )}
+                      </FormattedMessage>
                       <i
                         onClick={() => setShowPassword(!showPassword)}
                         className={`${style.formInput} ${style.passwordIcon} input-group-text`}
@@ -259,7 +303,14 @@ const StepTwoRegister = () => {
                   onClick={(e) => handleRegister(e)}
                   disabled={loading}
                 >
-                  {loading ? <PulseLoader size={10} /> : "REGISTER"}
+                  {loading ? (
+                    <PulseLoader size={10} />
+                  ) : (
+                    <FormattedMessage
+                      defaultMessage="REGISTER"
+                      id="btn.register"
+                    />
+                  )}
                 </Button>
               </Form>
             </div>

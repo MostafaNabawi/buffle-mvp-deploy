@@ -1,6 +1,7 @@
 import { Icon } from "@iconify/react";
 import { useEffect, useState } from "react";
 import { Form, Spinner, Button, Table } from "react-bootstrap";
+import { FormattedMessage } from "react-intl";
 import { API_URL } from "../../../config";
 import style from "./../style.module.css";
 
@@ -33,15 +34,18 @@ function AddNewMember({ selected, setSelected }) {
         if (result.payload) {
           setEmail("");
           setLoading(false);
-          result.email = email;
-          if (selected.length > 0) {
-            const exist = selected.filter((user) => user.uid === result.uid);
-            if (exist.length === 0) {
+          if (JSON.parse(localStorage.getItem("user"))._id != result.uid){
+            result.email = email;
+            if (selected.length > 0) {
+              const exist = selected.filter((user) => user.uid === result.uid);
+              if (exist.length === 0) {
+                setSelected([...selected, result]);
+              }
+            } else {
               setSelected([...selected, result]);
             }
-          }else{
-            setSelected([...selected, result]);
           }
+         
         } else {
           setNotFound(true);
           setLoading(false);
@@ -60,7 +64,7 @@ function AddNewMember({ selected, setSelected }) {
     <div className={style.participants_wrapper}>
       <div className={style.input_with_button}>
         <Form.Group className="mb-3" controlId="person-1">
-          <Form.Label>Email </Form.Label>
+          <Form.Label><FormattedMessage id="label.email" defaultMessage="Email" /> </Form.Label>
           <Form.Control
             type="email"
             value={email}
@@ -79,20 +83,20 @@ function AddNewMember({ selected, setSelected }) {
             searchEmail();
           }}
         >
-          {loading ? <Icon fontSize={24} icon="eos-icons:loading" /> : "Add"}
+          {loading ? <Icon fontSize={24} icon="eos-icons:loading" /> : <FormattedMessage id="btn.add" defaultMessage="Add" />}
         </Button>
       </div>
       {notFound && (
-        <div style={{ color: "red" }}> User by this email not found! </div>
+        <div style={{ color: "red" }}><FormattedMessage id="event.userByThisEmail" defaultMessage="User by this email not found!" /> </div>
       )}
       {selected.length > 0 && (
         <div className={style.participants}>
           <Table striped className="mb-0">
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Delete</th>
+                <th><FormattedMessage id="label.name" defaultMessage="Name" /></th>
+                <th><FormattedMessage id="label.email" defaultMessage="Email" /></th>
+                <th><FormattedMessage id="label.delete" defaultMessage="Delete" /></th>
               </tr>
             </thead>
             <tbody>

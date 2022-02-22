@@ -18,7 +18,6 @@ import {
 } from "../../../api";
 import { useToasts } from "react-toast-notifications";
 import moment from "moment";
-import ClipLoader from "react-spinners/ClipLoader";
 import BeatLoader from "react-spinners/BeatLoader";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -46,7 +45,11 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
   const [inputTask, setInputTask] = useState({ name: "", day: '', p_id: "" });
   const [id, setId] = useState('');
   const [current, setCurrent] = useState('');
+  const [showSkleton, setShowSkleton] = useState(false);
+  const [showSkleton2, setShowSkleton2] = useState(false);
+  const [createColor, setCreateColor] = useState('');
   async function request() {
+
     // get project and format
     const req = await getProject();
     const formatP = req?.data?.map((i, n) => {
@@ -60,8 +63,11 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
     });
 
     setProjects(formatP);
-
     //get tasks and format
+
+  }
+  async function getTaskSRequest() {
+    setShowSkleton2(true);
     const data = await getTask();
 
     const format = data?.data?.map((i, n) => {
@@ -80,6 +86,7 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
       };
     });
     setItems(format);
+    setShowSkleton2(false);
   }
 
   const handleChecked = (id) => {
@@ -90,16 +97,18 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
 
   useEffect(() => {
     request();
+    getTaskSRequest();
   }, []);
 
   useEffect(() => {
+    setShowSkleton(true);
     request();
     setNewProject(false);
   }, [newProject]);
   useEffect(() => {
 
     if (id || value || pDrope) {
-      request();
+      getTaskSRequest();
     }
   }, [id, value, pDrope,]);
   // insert task to database for project
@@ -142,12 +151,13 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
     } else {
       setError("");
       setloading(true);
-      const createP = await createProject(projectName, projectDesc, " rgb(247, 143, 179)");
+      const createP = await createProject(projectName, projectDesc, createColor);
       if (createP.status === 200) {
         addToast("Created Susseccfully", {
           autoDismiss: true,
           appearance: "success",
         });
+        setCreateColor('');
         setNewProject(true);
         setloading(false);
         setShowPModal(false);
@@ -158,10 +168,12 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
         });
         setloading(false);
         setProjectName("");
+        setCreateColor('');
         return true;
       }
       setloading(false);
       setProjectName("");
+      setCreateColor('');
       return true;
     }
   };
@@ -287,17 +299,22 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
     return true;
   }
 
-
+  const setColor = (value) => {
+    const color = value.split(':');
+    const color2 = color[1].slice(0, color[1].length - 1) + color[1].slice(color[1].length, color[1].length);
+    setCreateColor(color2);
+  }
   return (
     <>
       <Row className="creat-project-row">
         <Col lg="6"><FormattedMessage id="pro.projects" defaultMessage="Projects" /></Col>
         <Col lg="6" className="creat-project-col">
           <div className="creat-project-div">
-            <span className="creat-project-plus">
-              <Icon icon="bi:plus-lg" />
-            </span>
+
             <span className="creat-project-btn" onClick={handleShowPModal}>
+              <span className="creat-project-plus">
+                <Icon icon="bi:plus-lg" />
+              </span>
               <FormattedMessage id="pro.createPro" defaultMessage="Create Project" />
             </span>
           </div>
@@ -306,11 +323,11 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
           show={showPModal}
           handleClose={handleClosePModal}
           title={<FormattedMessage id="pro.createPro" defaultMessage="Create Project" />}
-          className="create-project-modal"
           body={
             <Row>
               <Col md={12}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <label><FormattedMessage id="pro.proName" defaultMessage="Project Name" /></label>
                   <FormattedMessage
                     id="place.projectName"
                     defaultMessage="Name your project"
@@ -331,19 +348,33 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
                     <div className="invalid-feedback d-block">{error}</div>
                   ) : null}
                 </Form.Group>
-                <Form.Group>
+                <Form.Group className="update-project-textarea">
+                  <label><FormattedMessage id="pro.proDesc" defaultMessage="Project Description" /></label>
                   <Form.Control
                     as="textarea"
-                    rows={5}
+                    rows={3}
                     onChange={(e) => setProjectDesc(e.target.value)}
                   />
+                </Form.Group>
+                <Form.Group>
+                  <label><FormattedMessage id="pro.proColor" defaultMessage="Color" /></label>
+                  <div className="bt_1rsx30z">
+                    <div className={`bt_1ln56ky ${createColor === " rgb(56, 103, 214)" ? 'current' : ''}`} style={{ background: "rgb(56, 103, 214)" }} onClick={(e) => setColor(e.target.getAttribute('style'))}></div>
+                    <div className={`bt_1ln56ky ${createColor === " rgb(136, 84, 208)" ? 'current' : ''}`} style={{ background: "rgb(136, 84, 208)" }} onClick={(e) => setColor(e.target.getAttribute('style'))}></div>
+                    <div className={`bt_1ln56ky ${createColor === " rgb(235, 59, 90)" ? 'current' : ''}`} style={{ background: "rgb(235, 59, 90)" }} onClick={(e) => setColor(e.target.getAttribute('style'))}></div>
+                    <div className={`bt_1ln56ky ${createColor === " rgb(250, 130, 49)" ? 'current' : ''}`} style={{ background: "rgb(250, 130, 49)" }} onClick={(e) => setColor(e.target.getAttribute('style'))}></div>
+                    <div className={`bt_1ln56ky ${createColor === " rgb(247, 183, 49)" ? 'current' : ''}`} style={{ background: "rgb(247, 183, 49)" }} onClick={(e) => setColor(e.target.getAttribute('style'))}></div>
+                    <div className={`bt_1ln56ky ${createColor === " rgb(32, 191, 107)" ? 'current' : ''}`} style={{ background: "rgb(32, 191, 107)" }} onClick={(e) => setColor(e.target.getAttribute('style'))}></div>
+                    <div className={`bt_1ln56ky ${createColor === " rgb(45, 152, 218)" ? 'current' : ''}`} style={{ background: "rgb(45, 152, 218)" }} onClick={(e) => setColor(e.target.getAttribute('style'))}></div>
+                    <div className={`bt_1ln56ky ${createColor === " rgb(247, 143, 179)" ? 'current' : ''}`} style={{ background: "rgb(247, 143, 179)" }} onClick={(e) => setColor(e.target.getAttribute('style'))}></div>
+                  </div>
                 </Form.Group>
               </Col>
             </Row>
           }
           footer={
             <>
-              {loading && projectName.length > 0 ? (
+              {loading === true ? (
                 <Button variant="primary">
                   <BeatLoader />
                 </Button>
@@ -359,7 +390,7 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
         />
       </Row>
       <Row className="projectManagement">
-        {projects.length > 0 ? projects.map((s) => {
+        {projects.length === 0 ? <Row><Col className="text-center">No Project</Col></Row> : projects.map((s) => {
           return (
             <Col key={s.id} className={"col-wrapper secondary-dark"}>
               <Row className={"col-header"}>
@@ -390,7 +421,7 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
                 handleDrop={handleDrop}
               >
                 <Col>
-                  {items.length > 0 ? items
+                  {showSkleton2 ? <Skeleton className="important-today-skeleton" count={1} /> : items
                     .filter((i) => i.status === s.status)
                     .map((i, idx) => (
                       <Item
@@ -405,27 +436,31 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
                         handleGet={handleGet}
                         handleDelete={handleDelete}
                       ></Item>
-                    )) : <Skeleton className="important-today-skeleton" count={1} />}
+                    ))}
                   <div className="new-task-div">
                     <Form.Group className="mb-3" controlId="form-new-task">
-                      <input
-                        type="text"
-                        className="new_task_input"
-                        placeholder="New Task"
-                        aria-label="New Task"
-                        onChange={(e) =>
-                          setInputTask({ name: e.target.value, day: moment(new Date(), "YYYY-MM-DD HH:mm:ss").format("dddd"), p_id: s.status })
-                        }
-                        onKeyDown={handleKeyDown}
-                        value={inputTask.name}
-                      />
+                      <FormattedMessage id="task.new" defaultMessage="New Task" >
+                        {(msg) => (
+                          <input
+                            type="text"
+                            className="new_task_input"
+                            placeholder={msg}
+                            aria-label="New Task"
+                            onChange={(e) =>
+                              setInputTask({ name: e.target.value, day: moment(new Date(), "YYYY-MM-DD HH:mm:ss").format("dddd"), p_id: s.status })
+                            }
+                            onKeyDown={handleKeyDown}
+                            value={inputTask.name}
+                          />
+                        )}
+                      </FormattedMessage>
                     </Form.Group>
                   </div>
                 </Col>
               </DropWrapperProject>
             </Col>
           );
-        }) : <Row><Col className="text-center"><BeatLoader /></Col></Row>}
+        })}
         <Modal
           show={show}
           handleClose={handleClose}
@@ -471,14 +506,14 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
                     </Form.Group>
                   </>
                 ) : (
-                  <ClipLoader />
+                  <Row><Col className="text-center" xl="12"><BeatLoader /></Col></Row>
                 )}
               </Col>
             </Row>
           }
           footer={
             <>
-              {loading && projectName.length > 0 ? (
+              {loading === true ? (
                 <Button variant="primary">
                   <BeatLoader />
                 </Button>

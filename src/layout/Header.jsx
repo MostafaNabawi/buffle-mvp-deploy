@@ -29,7 +29,6 @@ import {
   setDis_time,
   setUpdating,
 } from "../store/screenReminderSclice";
-import moment from "moment";
 import Swal from "sweetalert2";
 import { setAlert, setRun } from "../store/taskSlice";
 import boop from "./boop.mp3";
@@ -38,7 +37,7 @@ import TimerCustome from "./TimerCustome";
 import { Context } from "./Wrapper";
 import { FormattedMessage } from "react-intl";
 import RenderImage from "../components/cutomeImage/RenderImage";
-
+import DynamicInspiration from "../components/inspiration/DynamicInspiration";
 const Header = () => {
   const { alert } = useSelector((state) => state.task);
   //
@@ -66,7 +65,19 @@ const Header = () => {
   const [ownSpace, setOwnSpace] = useState("");
   const [current, setCurrent] = useState("");
   const [lang, setLang] = useState("");
+
   const handleLogout = async () => {
+    Swal.fire({
+      title: "Logout...",
+      allowEscapeKey: false,
+      allowOutsideClick: false,
+      allowEnterKey: false,
+      showConfirmButton: false,
+      html: `<div aria-busy="true" class="">
+          <svg width="40" height="40" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" aria-label="audio-loading"><defs><linearGradient x1="8.042%" y1="0%" x2="65.682%" y2="23.865%" id="a"><stop stop-color="green" stop-opacity="0" offset="0%"></stop><stop stop-color="green" stop-opacity=".631" offset="63.146%"></stop><stop stop-color="green" offset="100%"></stop></linearGradient></defs><g fill="none" fill-rule="evenodd"><g transform="translate(1 1)"><path d="M36 18c0-9.94-8.06-18-18-18" id="Oval-2" stroke="green" stroke-width="2"><animateTransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18" dur="0.9s" repeatCount="indefinite"></animateTransform></path><circle fill="#fff" cx="36" cy="18" r="1"><animateTransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18" dur="0.9s" repeatCount="indefinite"></animateTransform></circle></g></g></svg>
+          </div>`,
+      customClass: { container: "swal-google" },
+    });
     const req = await logout();
     if (req.status === 200) {
       localStorage.removeItem("user");
@@ -81,7 +92,10 @@ const Header = () => {
       localStorage.removeItem("duration_time");
       localStorage.removeItem("display_time");
       localStorage.removeItem("screen");
+      document.getElementsByClassName("swal-google")[0].remove();
       navigate("/");
+    } else {
+      document.getElementsByClassName("swal-google")[0].remove();
     }
   };
   const handleDurationTime = (val) => {
@@ -112,6 +126,7 @@ const Header = () => {
       }).then(async (res) => {
         const { payload } = await res.json();
         if (payload.length > 0) {
+          console.log("notifacation", payload);
           setNotificatiion(payload);
           setCount(0);
           setLoading(false);
@@ -151,6 +166,7 @@ const Header = () => {
         to: from,
         notId: id,
         fullName: user.first_name + " " + user.last_name,
+        icon: userData?.avatar?.key || "",
       }),
     }).then(async (res) => {
       if (res.status) {
@@ -194,6 +210,7 @@ const Header = () => {
         time: newTime,
         breakId: breakId,
         breakName: breakName,
+        icon: user?.avatar?.key || "",
       }),
     }).then(async (res) => {
       if (res.status) {
@@ -417,6 +434,7 @@ const Header = () => {
       context.selectLanguage(lang);
     }
   }, [lang]);
+
   const handleSearchByTag = (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -425,13 +443,26 @@ const Header = () => {
 
   return (
     <>
-      {notificTimer !== "" && render && (
-        <>
-          <TimerCustome count={count} setCount={setCount} />
-        </>
-      )}
+      <TimerCustome count={count} setCount={setCount} />
       <Col className="col-12 header-name text-capitalize">
         Hi <span id="userFullName">{userData?.first_name}</span>
+        {/* <div className="lan">
+          <DropdownButton
+            as={ButtonGroup}
+            id={`dropdown-button-drop-start`}
+            // drop="start"
+            className="subDropdown"
+            title={
+              <FormattedMessage
+                defaultMessage="Language"
+                id="app.header.language"
+              />
+            }
+          >
+            <Dropdown.Item onClick={() => setLang("de")}>Desutch</Dropdown.Item>
+            <Dropdown.Item onClick={() => setLang("en")}>English</Dropdown.Item>
+          </DropdownButton>
+        </div> */}
       </Col>
       {start && (
         <Countdown
@@ -514,9 +545,29 @@ const Header = () => {
 
       <Row className="mb-4">
         <Col className="col-6 text-secondary-dark header-thank mt-3">
-          Thank god it’s {moment(Date.now()).format("dddd")}!
+          <DynamicInspiration />
         </Col>
         <Col className="col-6 header-col-left">
+          <div className="header-icon navy-blue text-center pt-2">
+            <NavDropdown
+              title={
+                <Icon
+                  className="lan"
+                  color="blue"
+                  fontSize={35}
+                  icon="ant-design:global-outlined"
+                />
+              }
+              className="navDropdomnIcon"
+            >
+              <Dropdown.Item onClick={() => setLang("de")}>
+                Desutch
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => setLang("en")}>
+                English
+              </Dropdown.Item>
+            </NavDropdown>
+          </div>
           <div className="header-icon navy-blue text-center pt-2">
             <NavDropdown
               title={
@@ -556,6 +607,7 @@ const Header = () => {
                   notification.map((notify) =>
                     notify.type === "invite" ? (
                       <Notify
+                        imgUrl={""}
                         key={notify._id}
                         name={notify.firstName + " " + notify.lastName}
                         date={notify.date}
@@ -586,14 +638,22 @@ const Header = () => {
                       />
                     ) : notify.type == "report" ? (
                       <Notify
+                        icon={notify.icon}
                         key={notify._id}
-                        name={notify.sender}
+                        name={
+                          notify.icon === "task"
+                            ? "Task"
+                            : notify.icon === "water"
+                            ? "Water"
+                            : notify.sender
+                        }
                         date={notify.date}
                         message={notify.msg}
                         footer=""
                       />
                     ) : notify.type === "new-time" ? (
                       <Notify
+                        icon={notify.icon}
                         key={notify._id}
                         name={notify.sender}
                         date={notify.date}
@@ -646,25 +706,13 @@ const Header = () => {
             <NavDropdown
               title={
                 <RenderImage code={userData?.avatar?.key || ""} type={1} />
-                // <Image
-                //   className="sidebar-icon"
-                //   ref={imageRef}
-                //   id="header-img"
-                //   src="/icone/hcphotos-Headshots-1 1.png"
-                //   style={{
-                //     objectFit: "fill",
-                //     width: "120px",
-                //     height: "120px",
-                //     borderRadius: "50px",
-                //   }}
-                // />
               }
               className="navDropdomnIcon"
             >
               <Dropdown.Item as={Link} to="/dashboard/profile">
                 <FormattedMessage defaultMessage="Profile" id="prof.profile" />
               </Dropdown.Item>
-              <DropdownButton
+              {/* <DropdownButton
                 as={ButtonGroup}
                 id={`dropdown-button-drop-start`}
                 drop="start"
@@ -682,7 +730,7 @@ const Header = () => {
                 <Dropdown.Item onClick={() => setLang("en")}>
                   English
                 </Dropdown.Item>
-              </DropdownButton>
+              </DropdownButton> */}
               {workspace.length > 0 && (
                 <DropdownButton
                   as={ButtonGroup}
@@ -775,7 +823,7 @@ const Header = () => {
                 </i>
                 <FormattedMessage
                   id="app.searchTag"
-                  defaultMessage="Search tags..."
+                  defaultMessage="Search tags"
                 >
                   {(msg) => (
                     <Form.Control

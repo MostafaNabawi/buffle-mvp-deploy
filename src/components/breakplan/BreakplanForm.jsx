@@ -152,6 +152,7 @@ function BreackplanFrom({
             msg: newSuggestInput,
             recevier: suggestData.id,
             breakName: suggestData.breackName,
+            icon:currentUser?.avatar?.key || ""
           }),
         }).then((res) => {
           if (res.status == 200) {
@@ -187,6 +188,7 @@ function BreackplanFrom({
   const handleJoin = async (e) => {
     try {
       setloading(true);
+      const data={...joindata,['icon']:currentUser?.avatar?.key || "" }
       await fetch(`${API_URL}/breakPlan/join`, {
         method: "POST",
         credentials: "include",
@@ -194,7 +196,7 @@ function BreackplanFrom({
           "Content-Type": "application/json",
           "Access-Control-Allow-Credentials": true,
         },
-        body: JSON.stringify(joindata),
+        body: JSON.stringify(data),
       }).then((res) => {
         if (res.status == 200) {
           addToast("Request sended", {
@@ -223,7 +225,7 @@ function BreackplanFrom({
   // Suggest new time
   const handleSuggestNewTime = async (e) => {
     e.preventDefault();
-    const data = { ...timeData, ["time"]: newSuggestTime };
+    const data = { ...timeData, ["time"]: newSuggestTime,['icon']:currentUser?.avatar?.key || "" };
     if (newSuggestTime) {
       setSuggestTimeError(false);
       setloading(true);
@@ -274,6 +276,7 @@ function BreackplanFrom({
           fname: data.first_name,
           lname: data.last_name,
           email: email,
+          icon:data?.avatar?.key || ""
         }),
       }).then((res) => {
         if (res.status == 200) {
@@ -430,7 +433,7 @@ function BreackplanFrom({
           ) : (
             <>
               <Card.Title className={style.tilte}>
-                {editData ? "Edit breack pland" : "New breack pland"}
+                {editData ? "Edit breack plan" : "New break plan"}
               </Card.Title>
               <Form
                 onSubmit={editData ? handleEditPlan : handleCreatePlan}
