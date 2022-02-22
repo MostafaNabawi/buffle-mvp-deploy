@@ -175,15 +175,19 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
                   ))}
                 <div className="new-task-divimport FreelancerRegister from './../user/register/Freelancer';">
                   <Form.Group className="mb-3" controlId="form-new-task">
-                    <input
-                      type="text"
-                      className="new_task_input"
-                      placeholder="New Task"
-                      aria-label="New Task"
-                      onChange={(e) => setInputTask({ name: e.target.value, day: s.status })}
-                      onKeyDown={handleKeyDownWeekDaysItem}
-                      value={inputTask.name}
-                    />
+                    <FormattedMessage id="task.new" defaultMessage="New Task" >
+                      {(msg) => (
+                        <input
+                          type="text"
+                          className="new_task_input"
+                          placeholder={msg}
+                          aria-label="New Task"
+                          onChange={(e) => setInputTask({ name: e.target.value, day: s.status })}
+                          onKeyDown={handleKeyDownWeekDaysItem}
+                          value={inputTask.name}
+                        />
+                      )}
+                    </FormattedMessage>
                   </Form.Group>
                 </div>
               </Col>
