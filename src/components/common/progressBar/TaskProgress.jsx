@@ -13,7 +13,7 @@ import {
 import { useToasts } from "react-toast-notifications";
 import { useDispatch, useSelector } from "react-redux";
 import { setRun, setAlert } from "../../../store/taskSlice";
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 const Timer = (props) => {
   const { addToast } = useToasts();
   const dispatch = useDispatch();
@@ -104,13 +104,14 @@ const Timer = (props) => {
           parseInt(hour) * 3600 +
           parseInt(minute) * 60 +
           parseInt(second))) /
-      parseInt(duration)
+        parseInt(duration)
     );
+    console.log('current', currentTime)
     setCurrentTime(
       parseInt(day) * 86400 +
-      parseInt(hour) * 3600 +
-      parseInt(minute) * 60 +
-      parseInt(second)
+        parseInt(hour) * 3600 +
+        parseInt(minute) * 60 +
+        parseInt(second)
     );
     if (currentTime === duration) {
       setPlay(!play);
@@ -119,15 +120,22 @@ const Timer = (props) => {
         await updateTaskWhenCompleted(_id, sp_time, "completed");
         const notify = await createNotification(data._id, name);
         if (notify.status === 200) {
-          addToast(<FormattedMessage id="task.finished" defaultMessage="Task finished." />, {
-            autoDismiss: true,
-            appearance: "success",
-          });
+          addToast(
+            <FormattedMessage
+              id="task.finished"
+              defaultMessage="Task finished."
+            />,
+            {
+              autoDismiss: true,
+              appearance: "success",
+            }
+          );
           dispatch(setAlert(true));
+          // clearInterval(intervalId);
+          handleComplet(_id);
         }
       }
       request();
-      handleComplet(_id);
     }
     return () => clearInterval(intervalId);
   }, [play, counter]);
@@ -150,8 +158,8 @@ const Timer = (props) => {
     setMinute(time[2]);
     setHour(time[1]);
     setDay(time[0]);
-  }, [task_percent]);
 
+  }, [task_percent]);
 
   return (
     <div className="container">
@@ -170,15 +178,19 @@ const Timer = (props) => {
             label={
               <>
                 <span className={percent >= 28 ? "" : "showTimeTask"}>
-                  {`${parseInt(day) < 10 ? "0" + parseInt(day) : parseInt(day)
-                    }:${parseInt(hour) < 10 ? "0" + parseInt(hour) : parseInt(hour)
-                    }:${parseInt(minute) < 10
+                  {`${
+                    parseInt(day) < 10 ? "0" + parseInt(day) : parseInt(day)
+                  }:${
+                    parseInt(hour) < 10 ? "0" + parseInt(hour) : parseInt(hour)
+                  }:${
+                    parseInt(minute) < 10
                       ? "0" + parseInt(minute)
                       : parseInt(minute)
-                    }:${parseInt(second) < 10
+                  }:${
+                    parseInt(second) < 10
                       ? "0" + parseInt(second)
                       : parseInt(second)
-                    }`}
+                  }`}
                 </span>
               </>
             }
