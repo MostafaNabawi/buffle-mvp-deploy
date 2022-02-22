@@ -21,7 +21,6 @@ import {
 import { FormattedMessage } from "react-intl";
 
 function ScreenFreeReminderCard() {
-
   const dispatch = useDispatch();
   const { addToast } = useToasts();
   const [changeMute, setChangeMute] = useState(false);
@@ -215,10 +214,16 @@ function ScreenFreeReminderCard() {
       if (res.status != 200) {
         setChangeMute(false);
         getData();
-        addToast("Error Please Try Again!", {
-          autoDismiss: true,
-          appearance: "error",
-        });
+        addToast(
+          <FormattedMessage
+            defaultMessage="Error Please Try Again!"
+            id="breakPlan.Error"
+          />,
+          {
+            autoDismiss: false,
+            appearance: "error",
+          }
+        );;
         return false;
       } else {
         if (!isShow) {
@@ -306,7 +311,10 @@ function ScreenFreeReminderCard() {
           {getting ? (
             <Skeleton height="34px" count={1} />
           ) : data.length === 0 ? (
-            <FormattedMessage defaultMessage="Not set screen reminder" id="msg.noScreenR" />
+            <FormattedMessage
+              defaultMessage="Not set screen reminder"
+              id="msg.noScreenR"
+            />
           ) : (
             data && (
               <div className={style.wrapper}>
@@ -324,10 +332,20 @@ function ScreenFreeReminderCard() {
                       />
                     )}
                   </span>
-                  <h6>{data?.display} screen free time</h6>
+                  <h6>
+                    {data?.display}{" "}
+                    <FormattedMessage
+                      defaultMessage=" ScreenFree Reminder"
+                      id="app.screen"
+                    />
+                  </h6>
                 </div>
                 <p>
-                  last intermission{" "}
+                <FormattedMessage
+                      defaultMessage=" last intermission"
+                      id="screen.lastIntermission"
+                    />
+                  {" "}
                   {localStorage.getItem("loackTime")
                     ? localStorage.getItem("loackTime")
                     : "00:00:00"}
@@ -342,7 +360,12 @@ function ScreenFreeReminderCard() {
         size={sizeModal}
         show={modalShow}
         handleClose={handleClose}
-        title={<FormattedMessage id="app.screenR" defaultMessage="Set your screen free Reminder" />}
+        title={
+          <FormattedMessage
+            id="app.screenR"
+            defaultMessage="Set your screen free Reminder"
+          />
+        }
         body={
           <Tabs
             defaultActiveKey="default"
@@ -350,8 +373,16 @@ function ScreenFreeReminderCard() {
             id="noanim-tab-example"
             className="mb-3"
           >
-            <Tab eventKey="default" title={<FormattedMessage id="app.default" defaultMessage="Default" />} className="pt-3 pb-4">
-              <Form.Label><FormattedMessage defaultMessage="Options" id="app.options" /></Form.Label>
+            <Tab
+              eventKey="default"
+              title={
+                <FormattedMessage id="app.default" defaultMessage="Default" />
+              }
+              className="pt-3 pb-4"
+            >
+              <Form.Label>
+                <FormattedMessage defaultMessage="Options" id="app.options" />
+              </Form.Label>
               <Form.Check
                 onChange={(e) => {
                   setScreeanValue(e.target.value);
@@ -359,7 +390,12 @@ function ScreenFreeReminderCard() {
                 value="1"
                 name="screen"
                 type="radio"
-                label={<FormattedMessage id="label.5min" defaultMessage="In every hours 5 minut" />}
+                label={
+                  <FormattedMessage
+                    id="label.5min"
+                    defaultMessage="In every hours 5 minut"
+                  />
+                }
               />
               <Form.Check
                 onChange={(e) => {
@@ -368,21 +404,41 @@ function ScreenFreeReminderCard() {
                 value="2"
                 name="screen"
                 type="radio"
-                label={<FormattedMessage id="label.20min" defaultMessage="In every 20 minut one minut" />}
+                label={
+                  <FormattedMessage
+                    id="label.20min"
+                    defaultMessage="In every 20 minut one minut"
+                  />
+                }
               />
             </Tab>
-            <Tab eventKey="custome" title={<FormattedMessage defaultMessage="Custome" id="app.custome" />}>
+            <Tab
+              eventKey="custome"
+              title={
+                <FormattedMessage defaultMessage="Custome" id="app.custome" />
+              }
+            >
               <Row>
                 <Col md={12}>
                   <TimePicker2
-                    label={<FormattedMessage defaultMessage="duration time" id="label.duTime" />}
+                    label={
+                      <FormattedMessage
+                        defaultMessage="duration time"
+                        id="label.duTime"
+                      />
+                    }
                     value={durationTime}
                     setValue={setDurationTime}
                   />
                 </Col>
                 <Col md={12}>
                   <TimePicker2
-                    label={<FormattedMessage defaultMessage="Display Time" id="label.disTime" />}
+                    label={
+                      <FormattedMessage
+                        defaultMessage="Display Time"
+                        id="label.disTime"
+                      />
+                    }
                     value={displayTime}
                     setValue={setDisplayTime}
                   />
@@ -404,7 +460,11 @@ function ScreenFreeReminderCard() {
               variant="primary"
               type="button"
             >
-              {loading ? <Loader color="#fff" size={13} /> : <FormattedMessage defaultMessage="Save" id="btn.save" />}
+              {loading ? (
+                <Loader color="#fff" size={13} />
+              ) : (
+                <FormattedMessage defaultMessage="Save" id="btn.save" />
+              )}
             </Button>
             <Button variant="outline-dark" onClick={handleClose}>
               <FormattedMessage defaultMessage="Close" id="btn.close" />
