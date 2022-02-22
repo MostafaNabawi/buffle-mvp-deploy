@@ -244,7 +244,12 @@ const Dashboard = () => {
   };
   const validateTaskName = (value) => {
     if (!value) {
-      setTaskError(<FormattedMessage id="task.required" defaultMessage="Task name is required!" />);
+      setTaskError(
+        <FormattedMessage
+          id="task.required"
+          defaultMessage="Task name is required!"
+        />
+      );
       return false;
     } else {
       setTaskError("");
@@ -273,10 +278,16 @@ const Dashboard = () => {
       if (createT.status === 200) {
         setTaskReload(true);
         setChecked(false);
-        addToast(<FormattedMessage id="task.success" defaultMessage="Created successfully" />, {
-          autoDismiss: true,
-          appearance: "success",
-        });
+        addToast(
+          <FormattedMessage
+            id="task.success"
+            defaultMessage="Created successfully"
+          />,
+          {
+            autoDismiss: true,
+            appearance: "success",
+          }
+        );
 
         setloading(false);
         setModalShow(false);
@@ -286,10 +297,16 @@ const Dashboard = () => {
           seconds: "00",
         });
       } else {
-        addToast(<FormattedMessage id="task.error" defaultMessage="Error Please Try Again!" />, {
-          autoDismiss: false,
-          appearance: "error",
-        });
+        addToast(
+          <FormattedMessage
+            id="task.error"
+            defaultMessage="Error Please Try Again!"
+          />,
+          {
+            autoDismiss: false,
+            appearance: "error",
+          }
+        );
         setloading(false);
         setModalShow(false);
         setTaskReload(false);
@@ -340,12 +357,23 @@ const Dashboard = () => {
   const handleDelete = async () => {
     if (checkId.length > 0) {
       MySwal.fire({
-        title: <FormattedMessage id="delete.sure" defaultMessage="Are you sure?" />,
-        text: <FormattedMessage id="delete.notRevert" defaultMessage="You won't be able to revert this!" />,
+        title: (
+          <FormattedMessage id="delete.sure" defaultMessage="Are you sure?" />
+        ),
+        text: (
+          <FormattedMessage
+            id="delete.notRevert"
+            defaultMessage="You won't be able to revert this!"
+          />
+        ),
         icon: "warning",
         showCancelButton: true,
-        cancelButtonText: <FormattedMessage id="delete.no" defaultMessage="Cancel!" />,
-        confirmButtonText: <FormattedMessage id="delete.yes" defaultMessage="Yes" />,
+        cancelButtonText: (
+          <FormattedMessage id="delete.no" defaultMessage="Cancel!" />
+        ),
+        confirmButtonText: (
+          <FormattedMessage id="delete.yes" defaultMessage="Yes" />
+        ),
         reverseButtons: false,
       }).then(async (result) => {
         if (result.isConfirmed) {
@@ -353,31 +381,38 @@ const Dashboard = () => {
             const deleteT = await deleteMultiTask(checkId);
 
             if (deleteT.status === 200) {
-<<<<<<< HEAD
               // setTaskReload(true);
               const temp = taskData.filter((i) => !checkId.includes(i._id));
               setCheckedId([]);
               setTaskData(temp);
               Swal.fire("Deleted!", "Your file has been deleted.", "success");
-=======
-              setTaskReload(true);
-              Swal.fire(<FormattedMessage id="delete.success" defaultMessage="Deleted!,Your file has been deleted." />, "success");
->>>>>>> 2678894f3ad1490bed8faa5b1cfb8757450fb296
               handleClose();
               // setTaskReload(false);
             } else {
-              addToast(<FormattedMessage id="task.error" defaultMessage="Error: Please Try Again!." />, {
-                appearance: "error",
-                autoDismiss: true,
-              });
+              addToast(
+                <FormattedMessage
+                  id="task.error"
+                  defaultMessage="Error: Please Try Again!."
+                />,
+                {
+                  appearance: "error",
+                  autoDismiss: true,
+                }
+              );
               handleClose();
               setTaskReload(false);
             }
           } catch (error) {
-            addToast(<FormattedMessage id="task.error" defaultMessage="Error: Please Try Again!." />, {
-              appearance: "error",
-              autoDismiss: true,
-            });
+            addToast(
+              <FormattedMessage
+                id="task.error"
+                defaultMessage="Error: Please Try Again!."
+              />,
+              {
+                appearance: "error",
+                autoDismiss: true,
+              }
+            );
             handleClose();
             setTaskReload(false);
           }
@@ -390,7 +425,12 @@ const Dashboard = () => {
   // validate update form
   const validateTaskUpdateName = (value) => {
     if (!value) {
-      setTaskUpdatekError(<FormattedMessage id="task.required" defaultMessage="Task name is required!" />);
+      setTaskUpdatekError(
+        <FormattedMessage
+          id="task.required"
+          defaultMessage="Task name is required!"
+        />
+      );
       return false;
     } else {
       setTaskUpdatekError("");
@@ -416,17 +456,29 @@ const Dashboard = () => {
       if (updateTask.status === 200) {
         setTaskReload(true);
         setCheckedId([]);
-        addToast(<FormattedMessage id="task.update" defaultMessage="Updated susseccfully" />, {
-          autoDismiss: true,
-          appearance: "success",
-        });
+        addToast(
+          <FormattedMessage
+            id="task.update"
+            defaultMessage="Updated susseccfully"
+          />,
+          {
+            autoDismiss: true,
+            appearance: "success",
+          }
+        );
         setloading(false);
         setModalShow(false);
       } else {
-        addToast(<FormattedMessage id="task.error" defaultMessage="Error Please Try Again!" />, {
-          autoDismiss: false,
-          appearance: "error",
-        });
+        addToast(
+          <FormattedMessage
+            id="task.error"
+            defaultMessage="Error Please Try Again!"
+          />,
+          {
+            autoDismiss: false,
+            appearance: "error",
+          }
+        );
         setCheckedId([]);
         setloading(false);
         setModalShow(false);
@@ -464,7 +516,12 @@ const Dashboard = () => {
       setTaskManager(false);
       setTaskManagerUpdate(true);
       setSizeModal("md");
-      setTitleModa(<FormattedMessage id="task.updateSlected" defaultMessage="Update selected Task" />);
+      setTitleModa(
+        <FormattedMessage
+          id="task.updateSlected"
+          defaultMessage="Update selected Task"
+        />
+      );
     } else if (checkId.length > 1) {
       Swal.fire("You can not update more than one item at the same time!");
     } else {
@@ -719,7 +776,7 @@ const Dashboard = () => {
                               {props.days > 0 ? (
                                 <FormattedMessage
                                   values={{
-                                    houres: props.day
+                                    houres: props.day,
                                   }}
                                   defaultMessage={`${props.days + 1} Days`}
                                   id="app.dashboard.vacation.days"
@@ -727,7 +784,7 @@ const Dashboard = () => {
                               ) : (
                                 <FormattedMessage
                                   values={{
-                                    houres: props.hours
+                                    houres: props.hours,
                                   }}
                                   defaultMessage={`${props.hours} Houres`}
                                   id="app.dashboard.vacation.houres"
@@ -738,11 +795,12 @@ const Dashboard = () => {
                               {" "}
                               <FormattedMessage
                                 values={{
-                                  houres: props.hours
+                                  houres: props.hours,
                                 }}
                                 defaultMessage={`until`}
                                 id="app.dashboard.vacation.until"
-                              /> {vacationData.name}
+                              />{" "}
+                              {vacationData.name}
                             </span>
                           </>
                         )}
@@ -817,7 +875,12 @@ const Dashboard = () => {
               action={
                 <>
                   <i
-                    title={<FormattedMessage id="task.add" defaultMessage="Add New Task" />}
+                    title={
+                      <FormattedMessage
+                        id="task.add"
+                        defaultMessage="Add New Task"
+                      />
+                    }
                     onClick={() => {
                       setModalShow(true);
                       setNextBreak(false);
@@ -825,7 +888,12 @@ const Dashboard = () => {
                       setTaskManagerUpdate(false);
                       setTaskManager(true);
                       setSizeModal("md");
-                      setTitleModa(<FormattedMessage id="task.add" defaultMessage="Add New Task" />);
+                      setTitleModa(
+                        <FormattedMessage
+                          id="task.add"
+                          defaultMessage="Add New Task"
+                        />
+                      );
                     }}
                   >
                     <Icon icon="vaadin:plus" />
@@ -837,12 +905,17 @@ const Dashboard = () => {
                   >
                     <NavDropdown.Item className="reminderNavItem taskManagerNavItem">
                       <i className="delete" onClick={handleDelete}>
-                        <Icon icon="fluent:delete-24-filled" /> <FormattedMessage id="btn.delete" defaultMessage="Delete" />
+                        <Icon icon="fluent:delete-24-filled" />{" "}
+                        <FormattedMessage
+                          id="btn.delete"
+                          defaultMessage="Delete"
+                        />
                       </i>
                     </NavDropdown.Item>
                     <NavDropdown.Item className="reminderNavItem taskManagerNavItem">
                       <i className="edit" onClick={handleUpdateTask}>
-                        <Icon icon="ant-design:edit-filled" /> <FormattedMessage id="btn.edit" defaultMessage="Edit" />
+                        <Icon icon="ant-design:edit-filled" />{" "}
+                        <FormattedMessage id="btn.edit" defaultMessage="Edit" />
                       </i>
                     </NavDropdown.Item>
                   </NavDropdown>
@@ -1143,7 +1216,12 @@ const Dashboard = () => {
               <>
                 <Col md={12}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label><FormattedMessage id="task.taskName" defaultMessage="Task name " /></Form.Label>
+                    <Form.Label>
+                      <FormattedMessage
+                        id="task.taskName"
+                        defaultMessage="Task name "
+                      />
+                    </Form.Label>
                     <Form.Control
                       type="text"
                       className={
@@ -1182,8 +1260,11 @@ const Dashboard = () => {
                         type="checkbox"
                         onChange={(e) => setChecked(e.target.checked)}
                       />
-                      <FormattedMessage id="task.5min" defaultMessage=" Do you want to have 5 minutes break after this task
-                      finished?" />
+                      <FormattedMessage
+                        id="task.5min"
+                        defaultMessage=" Do you want to have 5 minutes break after this task
+                      finished?"
+                      />
                     </Form.Label>
                   </Form.Group>
                 </Col>
@@ -1198,7 +1279,12 @@ const Dashboard = () => {
                 <>
                   <Col md={12}>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                      <Form.Label><FormattedMessage id="task.taskName" defaultMessage="Task name" /> </Form.Label>
+                      <Form.Label>
+                        <FormattedMessage
+                          id="task.taskName"
+                          defaultMessage="Task name"
+                        />{" "}
+                      </Form.Label>
                       <Form.Control
                         type="text"
                         className={
@@ -1221,7 +1307,12 @@ const Dashboard = () => {
                   </Col>
                   <Col md={12}>
                     <TimePicker2
-                      label={<FormattedMessage id="label.duTime" defaultMessage="duration time" />}
+                      label={
+                        <FormattedMessage
+                          id="label.duTime"
+                          defaultMessage="duration time"
+                        />
+                      }
                       value={oldTaskInput}
                       setValue={setOldTaskInput}
                     />
@@ -1281,20 +1372,23 @@ const Dashboard = () => {
 
             {taskManager && (
               <Button variant="primary" onClick={handleCreateTask}>
-<<<<<<< HEAD
-                {loading === true ? <BeatLoader /> : " Create New Task"}
-=======
                 {loading === true ? (
                   <BeatLoader />
                 ) : (
-                  <FormattedMessage id="task.create" defaultMessage="Create New Task" />
+                  <FormattedMessage
+                    id="task.create"
+                    defaultMessage="Create New Task"
+                  />
                 )}
->>>>>>> 2678894f3ad1490bed8faa5b1cfb8757450fb296
               </Button>
             )}
             {taskManagerUpdate && (
               <Button variant="primary" onClick={updateSelectedTask}>
-                {loading === true ? <BeatLoader /> : <FormattedMessage id="btn.save" defaultMessage="Save" />}
+                {loading === true ? (
+                  <BeatLoader />
+                ) : (
+                  <FormattedMessage id="btn.save" defaultMessage="Save" />
+                )}
               </Button>
             )}
             <Button variant="outline-dark" onClick={handleClose}>
