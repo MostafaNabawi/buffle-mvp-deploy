@@ -446,23 +446,6 @@ const Header = () => {
       <TimerCustome count={count} setCount={setCount} />
       <Col className="col-12 header-name text-capitalize">
         Hi <span id="userFullName">{userData?.first_name}</span>
-        {/* <div className="lan">
-          <DropdownButton
-            as={ButtonGroup}
-            id={`dropdown-button-drop-start`}
-            // drop="start"
-            className="subDropdown"
-            title={
-              <FormattedMessage
-                defaultMessage="Language"
-                id="app.header.language"
-              />
-            }
-          >
-            <Dropdown.Item onClick={() => setLang("de")}>Desutch</Dropdown.Item>
-            <Dropdown.Item onClick={() => setLang("en")}>English</Dropdown.Item>
-          </DropdownButton>
-        </div> */}
       </Col>
       {start && (
         <Countdown
@@ -560,9 +543,11 @@ const Header = () => {
               className="navDropdomnIcon"
             >
               <Dropdown.Item onClick={() => setLang("de")}>
+               <span className="icon-flage"><Icon icon="flag:de-4x3" /></span>
                 Desutch
               </Dropdown.Item>
               <Dropdown.Item onClick={() => setLang("en")}>
+              <span  className="icon-flage"><Icon icon="flagpack:us" /></span>
                 English
               </Dropdown.Item>
             </NavDropdown>

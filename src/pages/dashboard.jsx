@@ -343,7 +343,8 @@ const Dashboard = () => {
   function updateSpendTasks(arrayData) {
     if (arrayData.length > 0) {
       arrayData.map((task) => {
-        updateTaskWhenCompleted(task, "00:00:00", "completed");
+        console.log("EXC => ", task);
+        updateTaskWhenCompleted(task?.id, "00:00:00", "completed");
       });
     }
   }
@@ -352,16 +353,18 @@ const Dashboard = () => {
     const req = await getDashboardTask();
     if (req.data.length > 0) {
       let passedIds = [];
+      let passedInfo = [];
       req.data.map((i, n) => {
         if (i?.start_time && i?.status === "running") {
           const def = getTotalSeconds(i?.start_time);
           const taskAlready = taskTimeDurationSecond(i?.task_duration);
           if (def?.passed > taskAlready) {
             passedIds.push(i?._id);
+            passedInfo.push({ id: i?._id, name: i?.name });
           }
         }
       });
-      updateSpendTasks(passedIds);
+      updateSpendTasks(passedInfo);
       let filtred = req.data.filter((i) => !passedIds.includes(i._id));
       setOpan(req.data.length);
       setTaskData(filtred);
@@ -384,22 +387,18 @@ const Dashboard = () => {
   // delete selected task or tasks
   const handleDelete = async () => {
     if (checkId.length > 0) {
-      const titleMsg = context.getCurrent() === 0
-        ? "Are you sure?"
-        : "Bist du dir sicher?";
+      const titleMsg =
+        context.getCurrent() === 0 ? "Are you sure?" : "Bist du dir sicher?";
       MySwal.fire({
         title: titleMsg,
-        text: context.getCurrent() === 0
-          ? "You won't be able to revert this."
-          : "Änderungen sind nicht mehr möglich.",
+        text:
+          context.getCurrent() === 0
+            ? "You won't be able to revert this."
+            : "Änderungen sind nicht mehr möglich.",
         icon: "warning",
         showCancelButton: true,
-        cancelButtonText: context.getCurrent() === 0
-          ? "Cancel"
-          : "Abbrechen",
-        confirmButtonText: context.getCurrent() === 0
-          ? "Yes"
-          : "Fortfahren",
+        cancelButtonText: context.getCurrent() === 0 ? "Cancel" : "Abbrechen",
+        confirmButtonText: context.getCurrent() === 0 ? "Yes" : "Fortfahren",
         reverseButtons: false,
       }).then(async (result) => {
         if (result.isConfirmed) {
@@ -411,13 +410,12 @@ const Dashboard = () => {
               const temp = taskData.filter((i) => !checkId.includes(i._id));
               setCheckedId([]);
               setTaskData(temp);
-              const msg = context.getCurrent() === 0
-                ? "Deleted"
-                : "gelöscht";
+              const msg = context.getCurrent() === 0 ? "Deleted" : "gelöscht";
 
-              const msg2 = context.getCurrent() === 0
-                ? "Your file has been deleted."
-                : "Gelöscht!,Ihre Datei wurde gelöscht.";
+              const msg2 =
+                context.getCurrent() === 0
+                  ? "Your file has been deleted."
+                  : "Gelöscht!,Ihre Datei wurde gelöscht.";
               Swal.fire(msg, msg2, "success");
 
               handleClose();
@@ -903,8 +901,9 @@ const Dashboard = () => {
               }
               subtitle={
                 <FormattedMessage
-                  defaultMessage={`${opan < 0 ? 0 : opan} open, ${start < 0 ? 0 : start
-                    } start.`}
+                  defaultMessage={`${opan < 0 ? 0 : opan} open, ${
+                    start < 0 ? 0 : start
+                  } start.`}
                   id="app.task.open"
                   values={{
                     num: opan < 0 ? 0 : opan,
@@ -1088,25 +1087,25 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                  id: data._id,
-                                  name: data.name,
-                                  time: data.time,
-                                })
+                                    id: data._id,
+                                    name: data.name,
+                                    time: data.time,
+                                  })
                                 : joinOrNewSuggestForm(
-                                  {
-                                    id: data.user[0]._id,
-                                    breackName: data.name,
-                                  },
-                                  {
-                                    fullName:
-                                      currentUser.first_name +
-                                      " " +
-                                      currentUser.last_name,
-                                    breakName: data.name,
-                                    breakOwnerId: data.user[0]._id,
-                                    breakId: data._id,
-                                  }
-                                );
+                                    {
+                                      id: data.user[0]._id,
+                                      breackName: data.name,
+                                    },
+                                    {
+                                      fullName:
+                                        currentUser.first_name +
+                                        " " +
+                                        currentUser.last_name,
+                                      breakName: data.name,
+                                      breakOwnerId: data.user[0]._id,
+                                      breakId: data._id,
+                                    }
+                                  );
                             }}
                             className="break-type"
                           >
@@ -1118,20 +1117,20 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                  id: data._id,
-                                  name: data.name,
-                                  time: data.time,
-                                })
+                                    id: data._id,
+                                    name: data.name,
+                                    time: data.time,
+                                  })
                                 : timeFormBreakplan({
-                                  time: "",
-                                  recevier: data.user[0]._id,
-                                  fullName:
-                                    currentUser.first_name +
-                                    "" +
-                                    currentUser.last_name,
-                                  breakName: data.name,
-                                  breakId: data._id,
-                                });
+                                    time: "",
+                                    recevier: data.user[0]._id,
+                                    fullName:
+                                      currentUser.first_name +
+                                      "" +
+                                      currentUser.last_name,
+                                    breakName: data.name,
+                                    breakId: data._id,
+                                  });
                             }}
                           >
                             {data.time}
@@ -1368,8 +1367,8 @@ const Dashboard = () => {
               <Button
                 disabled={
                   vacationNameInput === "" ||
-                    vacationDataInput === "" ||
-                    vacationLoader
+                  vacationDataInput === "" ||
+                  vacationLoader
                     ? true
                     : false
                 }
