@@ -12,7 +12,7 @@
   "app.dashboard.vacation.days":"{days} Tage",
   "app.dashboard.vacation.until":"noch bis",
   "app.dashboard.vacation.enjoy":"Genießen Sie Ihre Urlaubszeit",
-
+ 
   "app.breakPlan": "Pausenplaner",
   "breakPlan.join.sagest":"Treten Sie bei oder legen Sie einen neuen Vorschlag fest",
   "breakPlan.suggest":"Vorschlag",
@@ -42,6 +42,8 @@
   "app.options": "Options",
   "app.tagName":"Tag Name",
   "app.ping":"Ping",
+
+  "screen.lastIntermission":"Letzte Pause",
 
   "label.time": "Zeit",
   "label.date": "Datum",
