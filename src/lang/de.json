@@ -20,6 +20,13 @@
   "breakPlan.inviteToPlan":"Einladen",
   "breakPlan.inviteEmail":"Einladen via E-Mail",
   "breakPlan.planTitle":"Titel des Plans",
+  "breakPlan.creatSusseccfully":"Neuer Pausenplan Susseccfully erstellt",
+  "breakPlan.Error":"Fehler Bitte versuchen Sie es erneut",
+  "breakPlan.SendedInvite":"Einladunganfrage ist versendet worden.",
+  "breakPlan.RequestSended":"Anfrage verschickt",
+  "breakPlan.suggestSend":"Änderungsvorschlag versendet",
+  "breakPlan.Edit":"Pausenplan bearbeiten",
+  "breakPlan.Create":"Neuer Pausenplan",
   
   "app.invite": "Einladen",
   "app.imToday": "Tagespunkte",

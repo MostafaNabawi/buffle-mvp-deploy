@@ -385,13 +385,22 @@ const Dashboard = () => {
   // delete selected task or tasks
   const handleDelete = async () => {
     if (checkId.length > 0) {
+      const titleMsg = context.getCurrent() === 0
+        ? "Are you sure?"
+        : "Bist du dir sicher?";
       MySwal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
+        title: titleMsg,
+        text: context.getCurrent() === 0
+          ? "You won't be able to revert this."
+          : "Änderungen sind nicht mehr möglich.",
         icon: "warning",
         showCancelButton: true,
-        cancelButtonText: "Cancel!",
-        confirmButtonText: "Yes",
+        cancelButtonText: context.getCurrent() === 0
+          ? "Cancel"
+          : "Abbrechen",
+        confirmButtonText: context.getCurrent() === 0
+          ? "Yes"
+          : "Fortfahren",
         reverseButtons: false,
       }).then(async (result) => {
         if (result.isConfirmed) {
@@ -403,7 +412,15 @@ const Dashboard = () => {
               const temp = taskData.filter((i) => !checkId.includes(i._id));
               setCheckedId([]);
               setTaskData(temp);
-              Swal.fire("Deleted!", "Your file has been deleted.", "success");
+              const msg = context.getCurrent() === 0
+                ? "Deleted"
+                : "gelöscht";
+
+              const msg2 = context.getCurrent() === 0
+                ? "Your file has been deleted."
+                : "Gelöscht!,Ihre Datei wurde gelöscht.";
+              Swal.fire(msg, msg2, "success");
+
               handleClose();
               // setTaskReload(false);
             } else {
@@ -438,8 +455,8 @@ const Dashboard = () => {
       });
     } else {
       context.getCurrent() === 0
-        ? Swal.fire("Please select a file to delete.")
-        : Swal.fire("jskajdkjsakdskdj");
+        ? Swal.fire("please select an item to delete.")
+        : Swal.fire("Bitte wähle aus zum Löschen");
     }
   };
   // validate update form
@@ -543,9 +560,13 @@ const Dashboard = () => {
         />
       );
     } else if (checkId.length > 1) {
-      Swal.fire("You can not update more than one item at the same time!");
+      context.getCurrent() === 0
+        ? Swal.fire("You can not update more then one item in same time")
+        : Swal.fire("Bitte überprüfen. ");
     } else {
-      Swal.fire("Please select an item for edit!");
+      context.getCurrent() === 0
+        ? Swal.fire("Please select an item for edit!")
+        : Swal.fire("Bitte zum Bearbeiten auswählen");
     }
   };
   const getBreakPlan = async () => {
@@ -883,9 +904,8 @@ const Dashboard = () => {
               }
               subtitle={
                 <FormattedMessage
-                  defaultMessage={`${opan < 0 ? 0 : opan} open, ${
-                    start < 0 ? 0 : start
-                  } start.`}
+                  defaultMessage={`${opan < 0 ? 0 : opan} open, ${start < 0 ? 0 : start
+                    } start.`}
                   id="app.task.open"
                   values={{
                     num: opan < 0 ? 0 : opan,
@@ -1069,25 +1089,25 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                    id: data._id,
-                                    name: data.name,
-                                    time: data.time,
-                                  })
+                                  id: data._id,
+                                  name: data.name,
+                                  time: data.time,
+                                })
                                 : joinOrNewSuggestForm(
-                                    {
-                                      id: data.user[0]._id,
-                                      breackName: data.name,
-                                    },
-                                    {
-                                      fullName:
-                                        currentUser.first_name +
-                                        " " +
-                                        currentUser.last_name,
-                                      breakName: data.name,
-                                      breakOwnerId: data.user[0]._id,
-                                      breakId: data._id,
-                                    }
-                                  );
+                                  {
+                                    id: data.user[0]._id,
+                                    breackName: data.name,
+                                  },
+                                  {
+                                    fullName:
+                                      currentUser.first_name +
+                                      " " +
+                                      currentUser.last_name,
+                                    breakName: data.name,
+                                    breakOwnerId: data.user[0]._id,
+                                    breakId: data._id,
+                                  }
+                                );
                             }}
                             className="break-type"
                           >
@@ -1099,20 +1119,20 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                    id: data._id,
-                                    name: data.name,
-                                    time: data.time,
-                                  })
+                                  id: data._id,
+                                  name: data.name,
+                                  time: data.time,
+                                })
                                 : timeFormBreakplan({
-                                    time: "",
-                                    recevier: data.user[0]._id,
-                                    fullName:
-                                      currentUser.first_name +
-                                      "" +
-                                      currentUser.last_name,
-                                    breakName: data.name,
-                                    breakId: data._id,
-                                  });
+                                  time: "",
+                                  recevier: data.user[0]._id,
+                                  fullName:
+                                    currentUser.first_name +
+                                    "" +
+                                    currentUser.last_name,
+                                  breakName: data.name,
+                                  breakId: data._id,
+                                });
                             }}
                           >
                             {data.time}
@@ -1349,8 +1369,8 @@ const Dashboard = () => {
               <Button
                 disabled={
                   vacationNameInput === "" ||
-                  vacationDataInput === "" ||
-                  vacationLoader
+                    vacationDataInput === "" ||
+                    vacationLoader
                     ? true
                     : false
                 }
