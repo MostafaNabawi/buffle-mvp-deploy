@@ -47,7 +47,7 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
   const [current, setCurrent] = useState('');
   const [showSkleton, setShowSkleton] = useState(false);
   const [showSkleton2, setShowSkleton2] = useState(false);
-
+  const [createColor, setCreateColor] = useState('');
   async function request() {
 
     // get project and format
@@ -151,12 +151,13 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
     } else {
       setError("");
       setloading(true);
-      const createP = await createProject(projectName, projectDesc, " rgb(247, 143, 179)");
+      const createP = await createProject(projectName, projectDesc, createColor);
       if (createP.status === 200) {
         addToast("Created Susseccfully", {
           autoDismiss: true,
           appearance: "success",
         });
+        setCreateColor('');
         setNewProject(true);
         setloading(false);
         setShowPModal(false);
@@ -167,10 +168,12 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
         });
         setloading(false);
         setProjectName("");
+        setCreateColor('');
         return true;
       }
       setloading(false);
       setProjectName("");
+      setCreateColor('');
       return true;
     }
   };
@@ -295,6 +298,12 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
     setProjectIdEdit("");
     return true;
   }
+
+  const setColor = (value) => {
+    const color = value.split(':');
+    const color2 = color[1].slice(0, color[1].length - 1) + color[1].slice(color[1].length, color[1].length);
+    setCreateColor(color2);
+  }
   return (
     <>
       <Row className="creat-project-row">
@@ -314,11 +323,11 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
           show={showPModal}
           handleClose={handleClosePModal}
           title={<FormattedMessage id="pro.createPro" defaultMessage="Create Project" />}
-          className="create-project-modal"
           body={
             <Row>
               <Col md={12}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <label><FormattedMessage id="pro.proName" defaultMessage="Project Name" /></label>
                   <FormattedMessage
                     id="place.projectName"
                     defaultMessage="Name your project"
@@ -339,12 +348,26 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
                     <div className="invalid-feedback d-block">{error}</div>
                   ) : null}
                 </Form.Group>
-                <Form.Group>
+                <Form.Group className="update-project-textarea">
+                  <label><FormattedMessage id="pro.proDesc" defaultMessage="Project Description" /></label>
                   <Form.Control
                     as="textarea"
-                    rows={5}
+                    rows={3}
                     onChange={(e) => setProjectDesc(e.target.value)}
                   />
+                </Form.Group>
+                <Form.Group>
+                  <label><FormattedMessage id="pro.proColor" defaultMessage="Color" /></label>
+                  <div className="bt_1rsx30z">
+                    <div className={`bt_1ln56ky ${createColor === " rgb(56, 103, 214)" ? 'current' : ''}`} style={{ background: "rgb(56, 103, 214)" }} onClick={(e) => setColor(e.target.getAttribute('style'))}></div>
+                    <div className={`bt_1ln56ky ${createColor === " rgb(136, 84, 208)" ? 'current' : ''}`} style={{ background: "rgb(136, 84, 208)" }} onClick={(e) => setColor(e.target.getAttribute('style'))}></div>
+                    <div className={`bt_1ln56ky ${createColor === " rgb(235, 59, 90)" ? 'current' : ''}`} style={{ background: "rgb(235, 59, 90)" }} onClick={(e) => setColor(e.target.getAttribute('style'))}></div>
+                    <div className={`bt_1ln56ky ${createColor === " rgb(250, 130, 49)" ? 'current' : ''}`} style={{ background: "rgb(250, 130, 49)" }} onClick={(e) => setColor(e.target.getAttribute('style'))}></div>
+                    <div className={`bt_1ln56ky ${createColor === " rgb(247, 183, 49)" ? 'current' : ''}`} style={{ background: "rgb(247, 183, 49)" }} onClick={(e) => setColor(e.target.getAttribute('style'))}></div>
+                    <div className={`bt_1ln56ky ${createColor === " rgb(32, 191, 107)" ? 'current' : ''}`} style={{ background: "rgb(32, 191, 107)" }} onClick={(e) => setColor(e.target.getAttribute('style'))}></div>
+                    <div className={`bt_1ln56ky ${createColor === " rgb(45, 152, 218)" ? 'current' : ''}`} style={{ background: "rgb(45, 152, 218)" }} onClick={(e) => setColor(e.target.getAttribute('style'))}></div>
+                    <div className={`bt_1ln56ky ${createColor === " rgb(247, 143, 179)" ? 'current' : ''}`} style={{ background: "rgb(247, 143, 179)" }} onClick={(e) => setColor(e.target.getAttribute('style'))}></div>
+                  </div>
                 </Form.Group>
               </Col>
             </Row>
