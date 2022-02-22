@@ -536,8 +536,7 @@ const Dashboard = () => {
     }
   };
   const handleComplete = (val) => {
-    const filtered = taskData.filter((t) => t._id !== val);
-    setTaskData(filtered);
+
     setComplete(val);
     setOpan(opan - 1);
     setStart(start - 1);
@@ -584,7 +583,7 @@ const Dashboard = () => {
     if (taskReload || complete.length > 0 || move) {
       getTask();
     }
-  }, [taskReload, move]);
+  }, [taskReload, complete, move]);
   useEffect(() => {
     const spotToken = localStorage.getItem("spotToken");
     const spotRefresh = localStorage.getItem("spotRefresh");
