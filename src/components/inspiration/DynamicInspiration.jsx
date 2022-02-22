@@ -8,7 +8,6 @@ export default function DynamicInspiration() {
   useEffect(() => {
     const currentType = context.getCurrent();
     const today = moment(Date.now()).format("dddd");
-    console.log("Today ", today);
     if (currentType === 1) {
       switch (today.toLowerCase()) {
         case "saturday":
