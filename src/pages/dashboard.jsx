@@ -29,6 +29,7 @@ import {
   getTaskById,
   deleteMultiTask,
   updateTaskWhenCompleted,
+  createNotification,
 } from "../api";
 import { getaAllBreackPlan } from "../api/breackPlan";
 import { PulseLoader } from "react-spinners";
@@ -36,7 +37,7 @@ import { useToasts } from "react-toast-notifications";
 import Felling from "../components/feel/Felling";
 import BeatLoader from "react-spinners/BeatLoader";
 import { API_URL } from "../config";
-import Countdown, { calcTimeDelta } from "react-countdown";
+import Countdown from "react-countdown";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import Timer from "./../components/common/progressBar/TaskProgress";
@@ -45,10 +46,12 @@ import SpotifyLogin from "../components/spotify/Login";
 import TimePicker2 from "../components/common/timePicker/TimePicker2";
 import { FormattedMessage } from "react-intl";
 import RenderImage from "../components/cutomeImage/RenderImage";
+import { setPassAlert } from "../store/taskSlice";
 import { Context } from "../layout/Wrapper";
+import { useDispatch } from "react-redux";
 const Dashboard = () => {
   const context = useContext(Context);
-
+  const dispatch = useDispatch();
   const [code, setCode] = useState(
     new URLSearchParams(window.location.search).get("code")
   );
@@ -343,8 +346,12 @@ const Dashboard = () => {
   function updateSpendTasks(arrayData) {
     if (arrayData.length > 0) {
       arrayData.map((task) => {
-        console.log("EXC => ", task);
-        updateTaskWhenCompleted(task?.id, "00:00:00", "completed");
+        updateTaskWhenCompleted(task?.id, "00:00:00", "completed").then(() => {
+          createNotification(task?.id, task?.name).then(() => {
+            // count
+            dispatch(setPassAlert(true));
+          });
+        });
       });
     }
   }
