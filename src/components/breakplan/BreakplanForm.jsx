@@ -5,6 +5,7 @@ import { CreateNewPlan } from "../../api/breackPlan";
 import style from "./style.module.css";
 import { useToasts } from "react-toast-notifications";
 import Loader from "react-spinners/BeatLoader";
+import { FormattedMessage } from "react-intl";
 import { API_URL } from "../../config";
 
 function BreackplanFrom({
@@ -152,7 +153,7 @@ function BreackplanFrom({
             msg: newSuggestInput,
             recevier: suggestData.id,
             breakName: suggestData.breackName,
-            icon:currentUser?.avatar?.key || ""
+            icon: currentUser?.avatar?.key || "",
           }),
         }).then((res) => {
           if (res.status == 200) {
@@ -188,7 +189,7 @@ function BreackplanFrom({
   const handleJoin = async (e) => {
     try {
       setloading(true);
-      const data={...joindata,['icon']:currentUser?.avatar?.key || "" }
+      const data = { ...joindata, ["icon"]: currentUser?.avatar?.key || "" };
       await fetch(`${API_URL}/breakPlan/join`, {
         method: "POST",
         credentials: "include",
@@ -225,7 +226,11 @@ function BreackplanFrom({
   // Suggest new time
   const handleSuggestNewTime = async (e) => {
     e.preventDefault();
-    const data = { ...timeData, ["time"]: newSuggestTime,['icon']:currentUser?.avatar?.key || "" };
+    const data = {
+      ...timeData,
+      ["time"]: newSuggestTime,
+      ["icon"]: currentUser?.avatar?.key || "",
+    };
     if (newSuggestTime) {
       setSuggestTimeError(false);
       setloading(true);
@@ -276,7 +281,7 @@ function BreackplanFrom({
           fname: data.first_name,
           lname: data.last_name,
           email: email,
-          icon:data?.avatar?.key || ""
+          icon: data?.avatar?.key || "",
         }),
       }).then((res) => {
         if (res.status == 200) {
@@ -320,7 +325,10 @@ function BreackplanFrom({
           {joinOrSagest ? (
             <>
               <Card.Title className={style.tilte}>
-                Join Or Set new Sagest
+                <FormattedMessage
+                  defaultMessage="Join Or Set new Sugest"
+                  id="breakPlan.join.sagest"
+                />
               </Card.Title>
               <Card.Text className="text-center pt-3">
                 <Button
@@ -340,7 +348,10 @@ function BreackplanFrom({
                   }}
                   className={style.customBtn}
                 >
-                  Suggestion
+                  <FormattedMessage
+                    defaultMessage="Suggestion"
+                    id="breakPlan.suggest"
+                  />
                 </Button>
                 {newSaggestion ? (
                   <Form className="mt-3" onSubmit={handleNewSuggest}>
@@ -374,7 +385,12 @@ function BreackplanFrom({
             </>
           ) : newTime ? (
             <>
-              <Card.Title className={style.tilte}>Suggest new time</Card.Title>
+              <Card.Title className={style.tilte}>
+                <FormattedMessage
+                  defaultMessage="Suggest new time"
+                  id="breakPlan.SuggestNewTime"
+                />
+              </Card.Title>
               <Card.Text className="text-center">
                 <Form className="mt-3" onSubmit={handleSuggestNewTime}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -401,23 +417,33 @@ function BreackplanFrom({
           ) : invateForm ? (
             <>
               <Card.Title className={style.tilte}>
-                Invite to your break plan
+                <FormattedMessage
+                  defaultMessage="Invite to your break plan"
+                  id="breakPlan.inviteToPlan"
+                />
               </Card.Title>
               <Form onSubmit={handleInvit} className="mt-3">
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Control
-                    autoFocus
-                    required
-                    type="email"
-                    name="email"
-                    className={emailError === "" ? "" : "red-border-input"}
-                    placeholder="Invaite Email"
-                    value={email}
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                      // checkEmail(e.target.value)
-                    }}
-                  />
+                  <FormattedMessage
+                    defaultMessage="Invite Email"
+                    id="breakPlan.inviteEmail"
+                  >
+                    {(msg) => (
+                      <Form.Control
+                        autoFocus
+                        required
+                        type="email"
+                        name="email"
+                        className={emailError === "" ? "" : "red-border-input"}
+                        placeholder={msg}
+                        value={email}
+                        onChange={(e) => {
+                          setEmail(e.target.value);
+                          // checkEmail(e.target.value)
+                        }}
+                      />
+                    )}
+                  </FormattedMessage>
                 </Form.Group>
 
                 <Button
@@ -426,7 +452,11 @@ function BreackplanFrom({
                   variant="primary"
                   type="submit"
                 >
-                  {loading ? <Loader color="#fff" size={15} /> : "Invite"}
+                  {loading ? (
+                    <Loader color="#fff" size={15} />
+                  ) : (
+                    <FormattedMessage defaultMessage="Invite" id="app.invite" />
+                  )}
                 </Button>
               </Form>
             </>
@@ -440,26 +470,32 @@ function BreackplanFrom({
                 className="mt-3"
               >
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Control
-                    autoFocus
-                    required
-                    type="text"
-                    name="title"
-                    placeholder="Plan Title"
-                    value={newBreak.title}
-                    onChange={(e) =>
-                      setNewBreak({
-                        ...newBreak,
-                        [e.target.name]: e.target.value,
-                      })
-                    }
-                  />
+                  <FormattedMessage
+                    defaultMessage="Plan Title"
+                    id="breakPlan.planTitle"
+                  >
+                    {(msg) => (
+                      <Form.Control
+                        autoFocus
+                        required
+                        type="text"
+                        name="title"
+                        placeholder={msg}
+                        value={newBreak.title}
+                        onChange={(e) =>
+                          setNewBreak({
+                            ...newBreak,
+                            [e.target.name]: e.target.value,
+                          })
+                        }
+                      />
+                    )}
+                  </FormattedMessage>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Control
                     required
                     type="time"
-                    placeholder="Time"
                     name="createIime"
                     value={newBreak.createIime}
                     onChange={(e) =>
@@ -479,9 +515,15 @@ function BreackplanFrom({
                   {loading ? (
                     <Loader color="#fff" size={15} />
                   ) : editData ? (
-                    "Edit"
+                    <FormattedMessage
+                    defaultMessage="Edit"
+                    id="btn.edit"
+                  />
                   ) : (
-                    "Create New Plan"
+                    <FormattedMessage
+                    defaultMessage= "Create New Plan"
+                    id="btn.CreateNewPlan"
+                  />
                   )}
                 </Button>
               </Form>

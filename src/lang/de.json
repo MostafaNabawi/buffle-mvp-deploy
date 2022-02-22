@@ -12,7 +12,15 @@
   "app.dashboard.vacation.days":"{days} Tage",
   "app.dashboard.vacation.until":"noch bis",
   "app.dashboard.vacation.enjoy":"Genießen Sie Ihre Urlaubszeit",
+
   "app.breakPlan": "Pausenplaner",
+  "breakPlan.join.sagest":"Treten Sie bei oder legen Sie einen neuen Vorschlag fest",
+  "breakPlan.suggest":"Vorschlag",
+  "breakPlan.SuggestNewTime":"Neue Zeit vorschlagen",
+  "breakPlan.inviteToPlan":"Einladen",
+  "breakPlan.inviteEmail":"Einladen via E-Mail",
+  "breakPlan.planTitle":"Titel des Plans",
+  
   "app.invite": "Einladen",
   "app.imToday": "Tagespunkte",
   "app.breakPlan.qs": "Was ist dein Pausenplan?",
@@ -54,6 +62,8 @@
   "btn.addExpense": "Ausgabe hinzufügen",
   "btn.addNewMem": "Personen hinzufügen",
   "btn.back": "Zurück",
+  "btn.edit":"Editieren",
+  "btn.CreateNewPlan":"Neuen Pausenplan anlegen",
 
   "msg.noScreenR": "Bildschirmfreie Zeit ausstellen",
   "msg.noImportantToday": "Keine Tagespunkte",
