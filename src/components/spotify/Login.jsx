@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { SPOTIFY_CLIENT } from "../../config";
 import { Icon } from "@iconify/react";
+import { FormattedMessage } from "react-intl";
 export default function SpotifyLogin() {
   const [url, setUrl] = useState("");
   useEffect(() => {
@@ -30,7 +31,10 @@ export default function SpotifyLogin() {
         style={{ marginRight: "8px", color: "#fff" }}
       />
       <a style={{ color: "#fff" }} href={url}>
-        Login with Spotify to access your music inside buffle 😊.
+        <FormattedMessage
+          defaultMessage=" Login with Spotify."
+          id="login.spotify"
+        />
       </a>
     </div>
   );

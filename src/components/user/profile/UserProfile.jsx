@@ -298,14 +298,24 @@ const UserProfile = () => {
     const length = Math.ceil(files[0].size / 1024);
     const type = files[0].type;
     if (!type.includes("image")) {
-      setImgError("Only image file must upload!");
+      setImgError(
+        <FormattedMessage
+          defaultMessage="Only image files must upload!"
+          id="img.error"
+        />
+      );
       return;
     } else {
       setImgError("");
     }
     // max file size 3MB
     if (length > 3072) {
-      setImgError("Maximum image size is 3MB!");
+      setImgError(
+        <FormattedMessage
+          defaultMessage="Maximum image size is 3MB!"
+          id="img.sizeError"
+        />
+      );
       return;
     } else {
       setImgError("");

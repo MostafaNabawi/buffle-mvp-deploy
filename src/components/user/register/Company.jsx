@@ -8,6 +8,7 @@ import { API_URL } from "../../../config";
 import { useToasts } from "react-toast-notifications";
 import { checkEmail } from "../../../config/utils";
 import PulseLoader from "react-spinners/PulseLoader";
+import { FormattedMessage } from "react-intl";
 const CompanyRegister = () => {
   const allCountry = getCountry();
   const [state, setState] = useState("");
@@ -132,7 +133,11 @@ const CompanyRegister = () => {
                     <Col xl="3">
                       <Form.Group className="mb-4" controlId="formBasicEmail">
                         <Form.Label className={style.lableForm}>
-                          First Name *
+                          <FormattedMessage
+                            defaultMessage="First Name"
+                            id="fname"
+                          />{" "}
+                          *
                         </Form.Label>
                         <Form.Control
                           className={style.formInput}
@@ -152,7 +157,11 @@ const CompanyRegister = () => {
                     <Col xl="3">
                       <Form.Group className="mb-4" controlId="formBasicEmail">
                         <Form.Label className={style.lableForm}>
-                          last Name *
+                          <FormattedMessage
+                            defaultMessage="Last Name"
+                            id="lname"
+                          />{" "}
+                          *
                         </Form.Label>
                         <Form.Control
                           className={style.formInput}
@@ -193,7 +202,11 @@ const CompanyRegister = () => {
                     <Col xl="6">
                       <Form.Group className="mb-4" controlId="formBasicEmail">
                         <Form.Label className={style.lableForm}>
-                          Company Name *
+                          <FormattedMessage
+                            defaultMessage="Company Name"
+                            id="cname"
+                          />{" "}
+                          *
                         </Form.Label>
                         <Form.Control
                           className={style.formInput}
@@ -213,7 +226,11 @@ const CompanyRegister = () => {
                     <Col xl="3">
                       <Form.Group className="mb-4">
                         <Form.Label className={style.lableForm}>
-                          Company Size*
+                          <FormattedMessage
+                            defaultMessage="Company Size"
+                            id="csize"
+                          />{" "}
+                          *
                         </Form.Label>
                         <Form.Select
                           className={style.formInput}
@@ -244,7 +261,11 @@ const CompanyRegister = () => {
                     <Col xl="3">
                       <Form.Group className="mb-4">
                         <Form.Label className={style.lableForm}>
-                          Tax ID *
+                          <FormattedMessage
+                            defaultMessage="Tax ID"
+                            id="taxid"
+                          />{" "}
+                          *
                         </Form.Label>
                         <Form.Control
                           className={style.formInput}
@@ -264,7 +285,11 @@ const CompanyRegister = () => {
                     <Col xl="6">
                       <Form.Group className="mb-4" controlId="formBasicEmail">
                         <Form.Label className={style.lableForm}>
-                          Web Site *
+                          <FormattedMessage
+                            defaultMessage="Web Site"
+                            id="website"
+                          />{" "}
+                          *
                         </Form.Label>
                         <Form.Control
                           className={style.formInput}
@@ -284,7 +309,10 @@ const CompanyRegister = () => {
                     <Col xl="6">
                       <Form.Group className="mb-4" controlId="formBasicEmail">
                         <Form.Label className={style.lableForm}>
-                          Head Office
+                          <FormattedMessage
+                            defaultMessage="Head Office"
+                            id="headOffice"
+                          />{" "}
                         </Form.Label>
                         <Form.Control
                           className={style.formInput}
@@ -304,7 +332,11 @@ const CompanyRegister = () => {
                     <Col xl="6">
                       <Form.Group className="mb-4">
                         <Form.Label className={style.lableForm}>
-                          Country *
+                          <FormattedMessage
+                            defaultMessage="Country"
+                            id="country"
+                          />{" "}
+                          *
                         </Form.Label>
                         <Form.Select
                           name="country"
@@ -319,7 +351,12 @@ const CompanyRegister = () => {
                           className={style.formInput}
                           aria-label="Default select example"
                         >
-                          <option value="">Country</option>
+                          <FormattedMessage
+                            defaultMessage="Country"
+                            id="country"
+                          >
+                            {(msg) => <option value="">{msg}</option>}
+                          </FormattedMessage>
                           {allCountry &&
                             allCountry.map((country) => (
                               <option key={country.name} value={country.code}>
@@ -336,7 +373,7 @@ const CompanyRegister = () => {
                     <Col xl="3">
                       <Form.Group className="mb-4">
                         <Form.Label className={style.lableForm}>
-                          City *
+                          <FormattedMessage defaultMessage="City" id="city" /> *
                         </Form.Label>
                         <Form.Select
                           className={style.formInput}
@@ -350,7 +387,9 @@ const CompanyRegister = () => {
                             })
                           }
                         >
-                          <option>City</option>
+                          <FormattedMessage defaultMessage="City" id="city">
+                            {(msg) => <option value="">{msg}</option>}
+                          </FormattedMessage>
                           {state &&
                             state.map((s) => (
                               <option key={s} value={s}>
@@ -367,7 +406,8 @@ const CompanyRegister = () => {
                     <Col xl="3">
                       <Form.Group className="mb-4">
                         <Form.Label className={style.lableForm}>
-                          State *
+                          <FormattedMessage defaultMessage="State" id="state" />{" "}
+                          *
                         </Form.Label>
                         <Form.Select
                           className={style.formInput}
@@ -381,7 +421,9 @@ const CompanyRegister = () => {
                             })
                           }
                         >
-                          <option>State</option>
+                          <FormattedMessage defaultMessage="State" id="state">
+                            {(msg) => <option value="">{msg}</option>}
+                          </FormattedMessage>
                           {state &&
                             state.map((s) => (
                               <option key={s} value={s}>
@@ -398,7 +440,11 @@ const CompanyRegister = () => {
                     <Col xl="6">
                       <Form.Group className="mb-4">
                         <Form.Label className={style.lableForm}>
-                          Street *
+                          <FormattedMessage
+                            defaultMessage="Street"
+                            id="street"
+                          />{" "}
+                          *
                         </Form.Label>
                         <Form.Control
                           className={style.formInput}
@@ -418,7 +464,11 @@ const CompanyRegister = () => {
                     <Col xl="6">
                       <Form.Group className="mb-4">
                         <Form.Label className={style.lableForm}>
-                          Postal code *
+                          <FormattedMessage
+                            defaultMessage="Postal code"
+                            id="postal"
+                          />{" "}
+                          *
                         </Form.Label>
                         <Form.Control
                           className={style.formInput}
@@ -445,7 +495,14 @@ const CompanyRegister = () => {
                             handleRegister(e);
                           }}
                         >
-                          {loading ? <PulseLoader size={10} /> : "REGISTER"}
+                          {loading ? (
+                            <PulseLoader size={10} />
+                          ) : (
+                            <FormattedMessage
+                              defaultMessage="REGISTER"
+                              id="btn.register"
+                            />
+                          )}
                         </Button>
                       </Col>
                     </Row>
@@ -454,9 +511,12 @@ const CompanyRegister = () => {
               </div>
             </div>
             <div className={style.footer}>
-              Do have account yet?{" "}
+              <FormattedMessage
+                defaultMessage="Already have an account?"
+                id="haveAccount"
+              />
               <Link className={style.registerLink} to="/">
-                Login now
+                <FormattedMessage defaultMessage="Login now" id="loginNow" />
               </Link>
             </div>
           </Col>
