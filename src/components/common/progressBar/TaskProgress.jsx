@@ -13,6 +13,7 @@ import {
 import { useToasts } from "react-toast-notifications";
 import { useDispatch, useSelector } from "react-redux";
 import { setRun, setAlert } from "../../../store/taskSlice";
+import { FormattedMessage } from 'react-intl';
 const Timer = (props) => {
   const { addToast } = useToasts();
   const dispatch = useDispatch();
@@ -118,7 +119,7 @@ const Timer = (props) => {
         await updateTaskWhenCompleted(_id, sp_time, "completed");
         const notify = await createNotification(data._id, name);
         if (notify.status === 200) {
-          addToast("Task finished.", {
+          addToast(<FormattedMessage id="task.finished" defaultMessage="Task finished." />, {
             autoDismiss: true,
             appearance: "success",
           });
@@ -150,6 +151,7 @@ const Timer = (props) => {
     setHour(time[1]);
     setDay(time[0]);
   }, [task_percent]);
+
 
   return (
     <div className="container">

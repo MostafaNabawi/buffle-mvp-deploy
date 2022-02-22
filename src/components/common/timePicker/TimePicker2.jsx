@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Col, Form, Row } from "react-bootstrap";
+import { FormattedMessage } from 'react-intl';
 
 function TimePicker({ label, value, setValue }) {
   const [houreValue, setHoursValue] = useState("");
@@ -63,7 +64,7 @@ function TimePicker({ label, value, setValue }) {
       <Form.Label>{label}</Form.Label>
       <Row>
         <Col>
-          <label>Hour</label>
+          <label><FormattedMessage id="time.hour" defaultMessage="Hour" /></label>
           <Form.Control
             type="number"
             placeholder="hr"
@@ -78,7 +79,7 @@ function TimePicker({ label, value, setValue }) {
         </Col>
 
         <Col>
-          <label>Minute</label>
+          <label><FormattedMessage id="time.minute" defaultMessage="Minute" /></label>
           <Form.Control
             type="number"
             placeholder="min"
@@ -92,7 +93,7 @@ function TimePicker({ label, value, setValue }) {
           />
         </Col>
         <Col>
-          <label>Seconds</label>
+          <label><FormattedMessage id="time.second" defaultMessage="Second" /></label>
           <Form.Control
             type="number"
             placeholder="sec"
