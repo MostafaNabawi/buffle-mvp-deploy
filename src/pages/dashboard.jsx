@@ -340,12 +340,12 @@ const Dashboard = () => {
   const handleDelete = async () => {
     if (checkId.length > 0) {
       MySwal.fire({
-        title: <FormattedMessage id="delete.sure" defaultMessage="Are you sure?" />,
-        text: <FormattedMessage id="delete.notRevert" defaultMessage="You won't be able to revert this!" />,
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
         icon: "warning",
         showCancelButton: true,
-        cancelButtonText: <FormattedMessage id="delete.no" defaultMessage="Cancel!" />,
-        confirmButtonText: <FormattedMessage id="delete.yes" defaultMessage="Yes" />,
+        cancelButtonText: "Cancel!",
+        confirmButtonText: "Yes",
         reverseButtons: false,
       }).then(async (result) => {
         if (result.isConfirmed) {
@@ -353,10 +353,17 @@ const Dashboard = () => {
             const deleteT = await deleteMultiTask(checkId);
 
             if (deleteT.status === 200) {
-              setTaskReload(true);
-              Swal.fire(<FormattedMessage id="delete.success" defaultMessage="Deleted!,Your file has been deleted." />, "success");
+              let fil = [];
+              checkId.map(i => {
+                const f = taskData.filter(j => j._id !== i);
+                fil.push(...f)
+              })
+              console.log(fil);
+              console.log('id', checkId);
+              setTaskData(fil)
+              Swal.fire("Deleted!,Your file has been deleted.", "success");
               handleClose();
-              setTaskReload(false);
+
             } else {
               addToast(<FormattedMessage id="task.error" defaultMessage="Error: Please Try Again!." />, {
                 appearance: "error",
@@ -530,7 +537,7 @@ const Dashboard = () => {
     if (taskReload || complete.length > 0 || move) {
       getTask();
     }
-  }, [taskReload, complete, move]);
+  }, [taskReload, move]);
   useEffect(() => {
     const spotToken = localStorage.getItem("spotToken");
     const spotRefresh = localStorage.getItem("spotRefresh");
@@ -868,6 +875,7 @@ const Dashboard = () => {
                         <Col xl="5">
                           <Timer
                             {...t}
+
                             handleCheckOpenClose={handleCheckOpenClose}
                             handleComplet={handleComplete}
                           />

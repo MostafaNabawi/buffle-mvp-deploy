@@ -152,6 +152,7 @@ const Timer = (props) => {
     setDay(time[0]);
   }, [task_percent]);
 
+
   return (
     <div className="container">
       <Row>
