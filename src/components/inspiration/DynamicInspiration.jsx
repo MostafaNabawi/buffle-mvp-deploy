@@ -8,6 +8,7 @@ export default function DynamicInspiration() {
   useEffect(() => {
     const currentType = context.getCurrent();
     const today = moment(Date.now()).format("dddd");
+    console.log("Today ", today);
     if (currentType === 1) {
       switch (today.toLowerCase()) {
         case "saturday":
@@ -19,7 +20,7 @@ export default function DynamicInspiration() {
         case "monday":
           setText("Der letzte Montag für diese Woche!");
           return;
-        case "Tuesday":
+        case "tuesday":
           setText("Das war echt eine harte Woche!");
           return;
         case "wednesday":
@@ -45,7 +46,7 @@ export default function DynamicInspiration() {
         case "monday":
           setText("Hope you had a great weekend!");
           return;
-        case "Tuesday":
+        case "tuesday":
           setText("Tuesdays are for fresh Starts!");
           return;
         case "wednesday":
@@ -62,5 +63,5 @@ export default function DynamicInspiration() {
       }
     }
   }, [context]);
-  return <>{text}</>;
+  return <p className="text-secondary-dark header-thank">{text}</p>;
 }
