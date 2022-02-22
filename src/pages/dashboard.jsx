@@ -708,13 +708,33 @@ const Dashboard = () => {
                             {" "}
                             <span>
                               {" "}
-                              {props.days > 0
-                                ? `${props.days + 1} Days`
-                                : `${props.hours} Houres`}{" "}
+                              {props.days > 0 ? (
+                                <FormattedMessage
+                                  values={{
+                                    houres: props.day
+                                  }}
+                                  defaultMessage={`${props.days + 1} Days`}
+                                  id="app.dashboard.vacation.days"
+                                />
+                              ) : (
+                                <FormattedMessage
+                                  values={{
+                                    houres: props.hours
+                                  }}
+                                  defaultMessage={`${props.hours} Houres`}
+                                  id="app.dashboard.vacation.houres"
+                                />
+                              )}
                             </span>
                             <span className="vacation-until">
                               {" "}
-                              until {vacationData.name}
+                              <FormattedMessage
+                                values={{
+                                  houres: props.hours
+                                }}
+                                defaultMessage={`until`}
+                                id="app.dashboard.vacation.until"
+                              /> {vacationData.name}
                             </span>
                           </>
                         )}
@@ -785,7 +805,6 @@ const Dashboard = () => {
                   }}
                 />
               }
-
               action={
                 <>
                   <i
@@ -1163,7 +1182,9 @@ const Dashboard = () => {
             )}
             {taskManagerUpdate &&
               (updateTaskLoader ? (
-                <Col md={12} className="text-center"><BeatLoader /></Col>
+                <Col md={12} className="text-center">
+                  <BeatLoader />
+                </Col>
               ) : (
                 <>
                   <Col md={12}>

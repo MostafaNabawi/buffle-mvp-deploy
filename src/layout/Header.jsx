@@ -65,7 +65,7 @@ const Header = () => {
   const [ownSpace, setOwnSpace] = useState("");
   const [current, setCurrent] = useState("");
   const [lang, setLang] = useState("");
-  
+
   const handleLogout = async () => {
     Swal.fire({
       title: "Logout...",
@@ -446,6 +446,23 @@ const Header = () => {
       <TimerCustome count={count} setCount={setCount} />
       <Col className="col-12 header-name text-capitalize">
         Hi <span id="userFullName">{userData?.first_name}</span>
+        {/* <div className="lan">
+          <DropdownButton
+            as={ButtonGroup}
+            id={`dropdown-button-drop-start`}
+            // drop="start"
+            className="subDropdown"
+            title={
+              <FormattedMessage
+                defaultMessage="Language"
+                id="app.header.language"
+              />
+            }
+          >
+            <Dropdown.Item onClick={() => setLang("de")}>Desutch</Dropdown.Item>
+            <Dropdown.Item onClick={() => setLang("en")}>English</Dropdown.Item>
+          </DropdownButton>
+        </div> */}
       </Col>
       {start && (
         <Countdown
@@ -534,6 +551,26 @@ const Header = () => {
           <div className="header-icon navy-blue text-center pt-2">
             <NavDropdown
               title={
+                <Icon
+                  className="lan"
+                  color="blue"
+                  fontSize={35}
+                  icon="ant-design:global-outlined"
+                />
+              }
+              className="navDropdomnIcon"
+            >
+              <Dropdown.Item onClick={() => setLang("de")}>
+                Desutch
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => setLang("en")}>
+                English
+              </Dropdown.Item>
+            </NavDropdown>
+          </div>
+          <div className="header-icon navy-blue text-center pt-2">
+            <NavDropdown
+              title={
                 <>
                   <Badge className="notify-badge" pill bg="danger">
                     {count}
@@ -603,7 +640,13 @@ const Header = () => {
                       <Notify
                         icon={notify.icon}
                         key={notify._id}
-                        name={notify.icon==="task" ?"Task":notify.icon==="water"?"Water":notify.sender}
+                        name={
+                          notify.icon === "task"
+                            ? "Task"
+                            : notify.icon === "water"
+                            ? "Water"
+                            : notify.sender
+                        }
                         date={notify.date}
                         message={notify.msg}
                         footer=""
@@ -663,25 +706,13 @@ const Header = () => {
             <NavDropdown
               title={
                 <RenderImage code={userData?.avatar?.key || ""} type={1} />
-                // <Image
-                //   className="sidebar-icon"
-                //   ref={imageRef}
-                //   id="header-img"
-                //   src="/icone/hcphotos-Headshots-1 1.png"
-                //   style={{
-                //     objectFit: "fill",
-                //     width: "120px",
-                //     height: "120px",
-                //     borderRadius: "50px",
-                //   }}
-                // />
               }
               className="navDropdomnIcon"
             >
               <Dropdown.Item as={Link} to="/dashboard/profile">
                 <FormattedMessage defaultMessage="Profile" id="prof.profile" />
               </Dropdown.Item>
-              <DropdownButton
+              {/* <DropdownButton
                 as={ButtonGroup}
                 id={`dropdown-button-drop-start`}
                 drop="start"
@@ -699,7 +730,7 @@ const Header = () => {
                 <Dropdown.Item onClick={() => setLang("en")}>
                   English
                 </Dropdown.Item>
-              </DropdownButton>
+              </DropdownButton> */}
               {workspace.length > 0 && (
                 <DropdownButton
                   as={ButtonGroup}
