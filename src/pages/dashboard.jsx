@@ -701,7 +701,10 @@ const Dashboard = () => {
                       <>
                         {props.days === 0 && props.hours === 0 ? (
                           <span className="vacation-until">
-                            Injoy your vacation time
+                            <FormattedMessage
+                              defaultMessage="Injoy your vacation time"
+                              id="app.dashboard.vacation.enjoy"
+                            />
                           </span>
                         ) : (
                           <>
@@ -710,16 +713,16 @@ const Dashboard = () => {
                               {" "}
                               {props.days > 0 ? (
                                 <FormattedMessage
-                                values={{
-                                  houres:props.day
-                                }}
-                                defaultMessage={`${props.days + 1} Days`}
-                                id="app.dashboard.vacation.days"
-                              />
+                                  values={{
+                                    houres: props.day,
+                                  }}
+                                  defaultMessage={`${props.days + 1} Days`}
+                                  id="app.dashboard.vacation.days"
+                                />
                               ) : (
                                 <FormattedMessage
                                   values={{
-                                    houres:props.hours
+                                    houres: props.hours,
                                   }}
                                   defaultMessage={`${props.hours} Houres`}
                                   id="app.dashboard.vacation.houres"
@@ -729,12 +732,13 @@ const Dashboard = () => {
                             <span className="vacation-until">
                               {" "}
                               <FormattedMessage
-                                  values={{
-                                    houres:props.hours
-                                  }}
-                                  defaultMessage={`until`}
-                                  id="app.dashboard.vacation.until"
-                                /> {vacationData.name}
+                                values={{
+                                  houres: props.hours,
+                                }}
+                                defaultMessage={`until`}
+                                id="app.dashboard.vacation.until"
+                              />{" "}
+                              {vacationData.name}
                             </span>
                           </>
                         )}
