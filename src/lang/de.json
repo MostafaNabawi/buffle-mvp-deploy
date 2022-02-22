@@ -33,6 +33,8 @@
   "app.default": "Standard",
   "app.custome": "Individuell",
   "app.options": "Options",
+  "app.tagName":"Tag Name",
+  "app.ping":"Ping",
 
   "label.time": "Zeit",
   "label.date": "Datum",
@@ -139,6 +141,7 @@
   "acc.your": "Dein Account",
   "user.fname": "Vorname",
   "user.lname": "Nachname",
+  "user.fullName":"Vollständiger Name",
   "user.email": "E-Mail Adresse",
   "user.departure": "Abfahrt",
   "user.updateProfile": "Profil updaten",

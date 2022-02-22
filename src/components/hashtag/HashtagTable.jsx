@@ -3,8 +3,10 @@ import { useState } from "react";
 import { Card, Table } from "react-bootstrap";
 import { API_URL } from "../../config";
 import RenderImage from "../cutomeImage/RenderImage";
+import { FormattedMessage } from "react-intl";
 
 function HashtagTable({ data }) {
+  const currentUser = JSON.parse(localStorage.getItem("user"));
   const [working, setWorking] = useState(false);
   console.log("dd", data);
   const pingUser = (e, id, name, tr) => {
@@ -30,14 +32,30 @@ function HashtagTable({ data }) {
       });
     }
   };
+
   return (
     <Card>
       <Table responsive>
         <thead>
           <tr>
-            <th>full Name</th>
-            <th>Tag Name</th>
-            <th>Ping</th>
+            <th>
+            <FormattedMessage
+                  defaultMessage="full Name"
+                  id="user.fullName"
+                />
+              </th>
+            <th>
+            <FormattedMessage
+                  defaultMessage=" Tag Name"
+                  id="app.tagName"
+                />
+             </th>
+            <th>
+            <FormattedMessage
+                  defaultMessage="Ping"
+                  id="app.ping"
+                />
+              </th>
           </tr>
         </thead>
         <tbody>
@@ -47,25 +65,30 @@ function HashtagTable({ data }) {
                 <tr key={`t-${index}-u-${n}`}>
                   <td className="d-flex p-2 align-items-center">
                     <RenderImage code={user?.avatar?.key || ""} />
-                    <p className="ml-2">
+                    <span className="tagUserName">
                       {user?.first_name + " " + user?.last_name}
-                    </p>
+                    </span>
                   </td>
                   <td> {item?.name} </td>
                   <td id={`item-${index}-u-${n}`}>
                     {" "}
-                    <Icon
-                      icon="si-glyph:ping-pong-racket"
-                      style={{ cursor: "pointer" }}
-                      onClick={(e) =>
-                        pingUser(
-                          e,
-                          user?._id,
-                          item?.name,
-                          `item-${index}-u-${n}`
-                        )
-                      }
-                    />{" "}
+                    {user?._id === currentUser._id ? (
+                      ""
+                    ) : (
+                        <Icon
+                          icon="si-glyph:ping-pong-racket"
+                          style={{ cursor: "pointer" }}
+                          onClick={(e) =>
+                            pingUser(
+                              e,
+                              user?._id,
+                              item?.name,
+                              `item-${index}-u-${n}`
+                            )
+                          }
+                        />
+                    )}
+                    {" "}
                   </td>
                 </tr>
               );
