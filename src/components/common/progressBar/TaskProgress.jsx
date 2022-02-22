@@ -104,14 +104,14 @@ const Timer = (props) => {
           parseInt(hour) * 3600 +
           parseInt(minute) * 60 +
           parseInt(second))) /
-        parseInt(duration)
+      parseInt(duration)
     );
     console.log('current', currentTime)
     setCurrentTime(
       parseInt(day) * 86400 +
-        parseInt(hour) * 3600 +
-        parseInt(minute) * 60 +
-        parseInt(second)
+      parseInt(hour) * 3600 +
+      parseInt(minute) * 60 +
+      parseInt(second)
     );
     if (currentTime === duration) {
       setPlay(!play);
@@ -178,19 +178,15 @@ const Timer = (props) => {
             label={
               <>
                 <span className={percent >= 28 ? "" : "showTimeTask"}>
-                  {`${
-                    parseInt(day) < 10 ? "0" + parseInt(day) : parseInt(day)
-                  }:${
-                    parseInt(hour) < 10 ? "0" + parseInt(hour) : parseInt(hour)
-                  }:${
-                    parseInt(minute) < 10
+                  {`${parseInt(day) < 10 ? "0" + parseInt(day) : parseInt(day)
+                    }:${parseInt(hour) < 10 ? "0" + parseInt(hour) : parseInt(hour)
+                    }:${parseInt(minute) < 10
                       ? "0" + parseInt(minute)
                       : parseInt(minute)
-                  }:${
-                    parseInt(second) < 10
+                    }:${parseInt(second) < 10
                       ? "0" + parseInt(second)
                       : parseInt(second)
-                  }`}
+                    }`}
                 </span>
               </>
             }

@@ -357,7 +357,6 @@ const Dashboard = () => {
           const def = getTotalSeconds(i?.start_time);
           const taskAlready = taskTimeDurationSecond(i?.task_duration);
           if (def?.passed > taskAlready) {
-            // console.log("Def =>", def, "main", taskAlready);
             passedIds.push(i?._id);
           }
         }
