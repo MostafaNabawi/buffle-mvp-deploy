@@ -548,19 +548,24 @@ const Header = () => {
           <DynamicInspiration />
         </Col>
         <Col className="col-6 header-col-left">
-        <div className="header-icon navy-blue text-center pt-2">
+          <div className="header-icon navy-blue text-center pt-2">
             <NavDropdown
               title={
-                <Icon className="lan" color="blue" fontSize={35} icon="ant-design:global-outlined" />
+                <Icon
+                  className="lan"
+                  color="blue"
+                  fontSize={35}
+                  icon="ant-design:global-outlined"
+                />
               }
               className="navDropdomnIcon"
-            > 
-                <Dropdown.Item onClick={() => setLang("de")}>
-                  Desutch
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => setLang("en")}>
-                  English
-                </Dropdown.Item>
+            >
+              <Dropdown.Item onClick={() => setLang("de")}>
+                Desutch
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => setLang("en")}>
+                English
+              </Dropdown.Item>
             </NavDropdown>
           </div>
           <div className="header-icon navy-blue text-center pt-2">
