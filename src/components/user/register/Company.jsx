@@ -351,7 +351,12 @@ const CompanyRegister = () => {
                           className={style.formInput}
                           aria-label="Default select example"
                         >
-                          <option value="">Country</option>
+                          <FormattedMessage
+                            defaultMessage="Country"
+                            id="country"
+                          >
+                            {(msg) => <option value="">{msg}</option>}
+                          </FormattedMessage>
                           {allCountry &&
                             allCountry.map((country) => (
                               <option key={country.name} value={country.code}>
@@ -382,7 +387,9 @@ const CompanyRegister = () => {
                             })
                           }
                         >
-                          <option>City</option>
+                          <FormattedMessage defaultMessage="City" id="city">
+                            {(msg) => <option value="">{msg}</option>}
+                          </FormattedMessage>
                           {state &&
                             state.map((s) => (
                               <option key={s} value={s}>
@@ -414,7 +421,9 @@ const CompanyRegister = () => {
                             })
                           }
                         >
-                          <option>State</option>
+                          <FormattedMessage defaultMessage="State" id="state">
+                            {(msg) => <option value="">{msg}</option>}
+                          </FormattedMessage>
                           {state &&
                             state.map((s) => (
                               <option key={s} value={s}>

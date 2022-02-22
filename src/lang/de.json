@@ -153,5 +153,9 @@
   "enterPass2": "Bitte Passwort bestätigen",
   "passNot": "Passwörter stimmen nicht überein. Bitte überprüfen",
   "passLimit": "Passwort muss mindestens 6 Zeichen lang sein.",
+  "profession": "Beruf",
+  "how": "Wie hast du von Buffle gehört?",
+  "un": "Universität",
+  "study": "Studienfach",
   "_comment2": "paimanEnd"
 }

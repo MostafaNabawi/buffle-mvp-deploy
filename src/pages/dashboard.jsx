@@ -353,10 +353,13 @@ const Dashboard = () => {
             const deleteT = await deleteMultiTask(checkId);
 
             if (deleteT.status === 200) {
-              setTaskReload(true);
+              // setTaskReload(true);
+              const temp = taskData.filter((i) => !checkId.includes(i._id));
+              setCheckedId([]);
+              setTaskData(temp);
               Swal.fire("Deleted!", "Your file has been deleted.", "success");
               handleClose();
-              setTaskReload(false);
+              // setTaskReload(false);
             } else {
               addToast("Error: Please Try Again!.", {
                 appearance: "error",
