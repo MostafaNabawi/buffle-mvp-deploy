@@ -66,19 +66,31 @@ function BreackplanFrom({
       const { status } = await CreateNewPlan(newBreak);
       if (status === 200) {
         getBreakPlan();
-        addToast("New breack plan created Susseccfully", {
-          autoDismiss: true,
-          appearance: "success",
-        });
+        addToast(
+          <FormattedMessage
+            defaultMessage="New breack plan created Susseccfully"
+            id="breakPlan.creatSusseccfully"
+          />,
+          {
+            autoDismiss: true,
+            appearance: "success",
+          }
+        );
         setNewBreak({ ...newBreak, ["title"]: "", ["createIime"]: "" });
         setShow(false);
         setClose(true);
         setloading(false);
       } else {
-        addToast("Error Please Try Again!", {
-          autoDismiss: false,
-          appearance: "error",
-        });
+        addToast(
+          <FormattedMessage
+            defaultMessage="Error Please Try Again!"
+            id="breakPlan.Error"
+          />,
+          {
+            autoDismiss: false,
+            appearance: "error",
+          }
+        );
         setloading(false);
       }
     }
@@ -118,10 +130,16 @@ function BreackplanFrom({
             setClose(true);
             setloading(false);
           } else {
-            addToast("Error Please Try Again!", {
-              autoDismiss: false,
-              appearance: "error",
-            });
+            addToast(
+              <FormattedMessage
+                defaultMessage="Error Please Try Again!"
+                id="breakPlan.Error"
+              />,
+              {
+                autoDismiss: false,
+                appearance: "error",
+              }
+            );
             setloading(false);
           }
         });
@@ -157,27 +175,45 @@ function BreackplanFrom({
           }),
         }).then((res) => {
           if (res.status == 200) {
-            addToast("Your suggest sended", {
-              autoDismiss: true,
-              appearance: "success",
-            });
+            addToast(
+              <FormattedMessage
+                defaultMessage="Your suggest sended"
+                id="breakPlan.suggestSend"
+              />,
+              {
+                autoDismiss: true,
+                appearance: "success",
+              }
+            );
             setNewSuggestInput("");
             setShow(false);
             setClose(true);
             setloading(false);
           } else {
-            addToast("Error Please Try Again!", {
-              autoDismiss: true,
-              appearance: "error",
-            });
+            addToast(
+              <FormattedMessage
+                defaultMessage="Error Please Try Again!"
+                id="breakPlan.Error"
+              />,
+              {
+                autoDismiss: false,
+                appearance: "error",
+              }
+            );
             setloading(false);
           }
         });
       } catch {
-        addToast("Server Error Please Try Again!", {
-          autoDismiss: true,
-          appearance: "error",
-        });
+        addToast(
+          <FormattedMessage
+            defaultMessage="Error Please Try Again!"
+            id="breakPlan.Error"
+          />,
+          {
+            autoDismiss: false,
+            appearance: "error",
+          }
+        );
         setloading(false);
       }
     } else {
@@ -200,26 +236,44 @@ function BreackplanFrom({
         body: JSON.stringify(data),
       }).then((res) => {
         if (res.status == 200) {
-          addToast("Request sended", {
-            autoDismiss: true,
-            appearance: "success",
-          });
+          addToast(
+            <FormattedMessage
+              defaultMessage="Request sended"
+              id="breakPlan.suggestSend"
+            />,
+            {
+              autoDismiss: true,
+              appearance: "success",
+            }
+          );
           setShow(false);
           setClose(true);
           setloading(false);
         } else {
-          addToast("Error Please Try Again!", {
-            autoDismiss: true,
-            appearance: "error",
-          });
+          addToast(
+            <FormattedMessage
+              defaultMessage="Error Please Try Again!"
+              id="breakPlan.Error"
+            />,
+            {
+              autoDismiss: false,
+              appearance: "error",
+            }
+          );
           setloading(false);
         }
       });
     } catch {
-      addToast("Server Error Please Try Again!", {
-        autoDismiss: true,
-        appearance: "error",
-      });
+      addToast(
+        <FormattedMessage
+          defaultMessage="Error Please Try Again!"
+          id="breakPlan.Error"
+        />,
+        {
+          autoDismiss: false,
+          appearance: "error",
+        }
+      );
       setloading(false);
     }
   };
@@ -244,19 +298,31 @@ function BreackplanFrom({
         body: JSON.stringify(data),
       }).then((res) => {
         if (res.status == 200) {
-          addToast("Request sended", {
-            autoDismiss: true,
-            appearance: "success",
-          });
+          addToast(
+            <FormattedMessage
+              defaultMessage="Request sended"
+              id="breakPlan.RequestSended"
+            />,
+            {
+              autoDismiss: true,
+              appearance: "success",
+            }
+          );
           setEmail("");
           setShow(false);
           setClose(true);
           setloading(false);
         } else {
-          addToast("Errror Please Try Again!", {
-            autoDismiss: true,
-            appearance: "error",
-          });
+          addToast(
+            <FormattedMessage
+              defaultMessage="Error Please Try Again!"
+              id="breakPlan.Error"
+            />,
+            {
+              autoDismiss: false,
+              appearance: "error",
+            }
+          );
           setloading(false);
         }
       });
@@ -285,19 +351,31 @@ function BreackplanFrom({
         }),
       }).then((res) => {
         if (res.status == 200) {
-          addToast("Sended invited request", {
-            autoDismiss: true,
-            appearance: "success",
-          });
+          addToast(
+            <FormattedMessage
+              defaultMessage="Sended invited request"
+              id="breakPlan.SendedInvite"
+            />,
+            {
+              autoDismiss: true,
+              appearance: "success",
+            }
+          );
           setEmail("");
           setShow(false);
           setClose(true);
           setloading(false);
         } else {
-          addToast("User by this email not found !", {
-            autoDismiss: true,
-            appearance: "error",
-          });
+          addToast(
+            <FormattedMessage
+              defaultMessage="Error Please Try Again!"
+              id="breakPlan.Error"
+            />,
+            {
+              autoDismiss: false,
+              appearance: "error",
+            }
+          );
           setloading(false);
         }
       });
@@ -463,7 +541,19 @@ function BreackplanFrom({
           ) : (
             <>
               <Card.Title className={style.tilte}>
-                {editData ? "Edit breack plan" : "New break plan"}
+                {editData ? (
+                  <>
+                    <FormattedMessage
+                      defaultMessage="Edit breack plan"
+                      id="breakPlan.Edit"
+                    />
+                  </>
+                ) : (
+                  <FormattedMessage
+                  defaultMessage="New break plan"
+                  id="breakPlan.Create"
+                />
+                )}
               </Card.Title>
               <Form
                 onSubmit={editData ? handleEditPlan : handleCreatePlan}
@@ -515,15 +605,12 @@ function BreackplanFrom({
                   {loading ? (
                     <Loader color="#fff" size={15} />
                   ) : editData ? (
-                    <FormattedMessage
-                    defaultMessage="Edit"
-                    id="btn.edit"
-                  />
+                    <FormattedMessage defaultMessage="Edit" id="btn.edit" />
                   ) : (
                     <FormattedMessage
-                    defaultMessage= "Create New Plan"
-                    id="btn.CreateNewPlan"
-                  />
+                      defaultMessage="Create New Plan"
+                      id="btn.CreateNewPlan"
+                    />
                   )}
                 </Button>
               </Form>
