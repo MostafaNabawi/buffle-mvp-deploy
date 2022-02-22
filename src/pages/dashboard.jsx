@@ -13,7 +13,12 @@ import EventCalender from "./../components/eventCalender/EventCalender";
 import ImpotentToDayCard from "./../components/impotentToDay/ImpotentToDayCard";
 import BreakplanFrom from "../components/breakplan/BreakplanForm";
 import Modal from "../components/modal/modal";
-import { nextBreakTimeValidation, timeDifference } from "../config/utils";
+import {
+  getTotalSeconds,
+  nextBreakTimeValidation,
+  timeDifference,
+  taskTimeDurationSecond,
+} from "../config/utils";
 import {
   addNextBreak,
   createTask,
@@ -23,6 +28,7 @@ import {
   updateDhashboardTask,
   getTaskById,
   deleteMultiTask,
+  updateTaskWhenCompleted,
 } from "../api";
 import { getaAllBreackPlan } from "../api/breackPlan";
 import { PulseLoader } from "react-spinners";
@@ -30,7 +36,7 @@ import { useToasts } from "react-toast-notifications";
 import Felling from "../components/feel/Felling";
 import BeatLoader from "react-spinners/BeatLoader";
 import { API_URL } from "../config";
-import Countdown from "react-countdown";
+import Countdown, { calcTimeDelta } from "react-countdown";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import Timer from "./../components/common/progressBar/TaskProgress";
@@ -334,12 +340,32 @@ const Dashboard = () => {
     }
   };
   // get tasks
+  function updateSpendTasks(arrayData) {
+    if (arrayData.length > 0) {
+      arrayData.map((task) => {
+        updateTaskWhenCompleted(task, "00:00:00", "completed");
+      });
+    }
+  }
   async function getTask() {
     setShowSkleton(true);
     const req = await getDashboardTask();
     if (req.data.length > 0) {
+      let passedIds = [];
+      req.data.map((i, n) => {
+        if (i?.start_time && i?.status === "running") {
+          const def = getTotalSeconds(i?.start_time);
+          const taskAlready = taskTimeDurationSecond(i?.task_duration);
+          if (def?.passed > taskAlready) {
+            // console.log("Def =>", def, "main", taskAlready);
+            passedIds.push(i?._id);
+          }
+        }
+      });
+      updateSpendTasks(passedIds);
+      let filtred = req.data.filter((i) => !passedIds.includes(i._id));
       setOpan(req.data.length);
-      setTaskData(req.data);
+      setTaskData(filtred);
       setShowSkleton(false);
       setComplete("");
     } else {

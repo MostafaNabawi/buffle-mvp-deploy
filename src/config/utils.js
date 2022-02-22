@@ -63,6 +63,18 @@ function checkEmail(value) {
     return true;
   }
 }
-
+function taskTimeDurationSecond(value) {
+  const seprated = value.split(":");
+  const hr = Number(seprated[0]) * 3600;
+  const min = Number(seprated[1]) * 60;
+  const s = Number(seprated[2]);
+  return hr + min + s;
+}
 // ---------------------------- Other Utils ------------------------------------
-export { timeDifference, nextBreakTimeValidation, getTotalSeconds, checkEmail };
+export {
+  timeDifference,
+  nextBreakTimeValidation,
+  getTotalSeconds,
+  checkEmail,
+  taskTimeDurationSecond,
+};
