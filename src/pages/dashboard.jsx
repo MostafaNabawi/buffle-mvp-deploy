@@ -758,7 +758,10 @@ const Dashboard = () => {
                       <>
                         {props.days === 0 && props.hours === 0 ? (
                           <span className="vacation-until">
-                            Injoy your vacation time
+                            <FormattedMessage
+                              defaultMessage="Injoy your vacation time"
+                              id="app.dashboard.vacation.enjoy"
+                            />
                           </span>
                         ) : (
                           <>
