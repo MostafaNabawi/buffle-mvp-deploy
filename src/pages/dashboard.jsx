@@ -1,4 +1,4 @@
-import { useEffect, useState, Fragment, useMemo } from "react";
+import { useEffect, useState, Fragment, useMemo, useContext } from "react";
 import { Row, Col, Image, Form, Button, NavDropdown } from "react-bootstrap";
 import { Link, useSearchParams } from "react-router-dom";
 import { Icon } from "@iconify/react";
@@ -37,9 +37,12 @@ import Timer from "./../components/common/progressBar/TaskProgress";
 import Player from "../components/spotify/Player";
 import SpotifyLogin from "../components/spotify/Login";
 import TimePicker2 from "../components/common/timePicker/TimePicker2";
-import { FormattedMessage, defineMessage } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import RenderImage from "../components/cutomeImage/RenderImage";
+import { Context } from "../layout/Wrapper";
 const Dashboard = () => {
+  const context = useContext(Context);
+
   const [code, setCode] = useState(
     new URLSearchParams(window.location.search).get("code")
   );
@@ -356,13 +359,22 @@ const Dashboard = () => {
   // delete selected task or tasks
   const handleDelete = async () => {
     if (checkId.length > 0) {
+      const titleMsg = context.getCurrent() === 0
+        ? "Are you sure?"
+        : "Bist du dir sicher?";
       MySwal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
+        title: titleMsg,
+        text: context.getCurrent() === 0
+          ? "You won't be able to revert this."
+          : "Änderungen sind nicht mehr möglich.",
         icon: "warning",
         showCancelButton: true,
-        cancelButtonText: "Cancel!",
-        confirmButtonText: "Yes",
+        cancelButtonText: context.getCurrent() === 0
+          ? "Cancel"
+          : "Abbrechen",
+        confirmButtonText: context.getCurrent() === 0
+          ? "Yes"
+          : "Fortfahren",
         reverseButtons: false,
       }).then(async (result) => {
         if (result.isConfirmed) {
@@ -374,7 +386,15 @@ const Dashboard = () => {
               const temp = taskData.filter((i) => !checkId.includes(i._id));
               setCheckedId([]);
               setTaskData(temp);
-              Swal.fire("Deleted!", "Your file has been deleted.", "success");
+              const msg = context.getCurrent() === 0
+                ? "Deleted"
+                : "gelöscht";
+
+              const msg2 = context.getCurrent() === 0
+                ? "Your file has been deleted."
+                : "Gelöscht!,Ihre Datei wurde gelöscht.";
+              Swal.fire(msg, msg2, "success");
+
               handleClose();
               // setTaskReload(false);
             } else {
@@ -408,7 +428,9 @@ const Dashboard = () => {
         }
       });
     } else {
-      Swal.fire("Please select an item to delete!");
+      context.getCurrent() === 0
+        ? Swal.fire("please select an item to delete.")
+        : Swal.fire("Bitte wähle aus zum Löschen");
     }
   };
   // validate update form
@@ -512,9 +534,13 @@ const Dashboard = () => {
         />
       );
     } else if (checkId.length > 1) {
-      Swal.fire("You can not update more than one item at the same time!");
+      context.getCurrent() === 0
+        ? Swal.fire("You can not update more then one item in same time")
+        : Swal.fire("Bitte überprüfen. ");
     } else {
-      Swal.fire("Please select an item for edit!");
+      context.getCurrent() === 0
+        ? Swal.fire("Please select an item for edit!")
+        : Swal.fire("Bitte zum Bearbeiten auswählen");
     }
   };
   const getBreakPlan = async () => {
@@ -536,7 +562,6 @@ const Dashboard = () => {
     }
   };
   const handleComplete = (val) => {
-
     setComplete(val);
     setOpan(opan - 1);
     setStart(start - 1);
@@ -754,7 +779,10 @@ const Dashboard = () => {
                       <>
                         {props.days === 0 && props.hours === 0 ? (
                           <span className="vacation-until">
-                            Injoy your vacation time
+                            <FormattedMessage
+                              defaultMessage="Injoy your vacation time"
+                              id="app.dashboard.vacation.enjoy"
+                            />
                           </span>
                         ) : (
                           <>
@@ -937,7 +965,6 @@ const Dashboard = () => {
                         <Col xl="5">
                           <Timer
                             {...t}
-
                             handleCheckOpenClose={handleCheckOpenClose}
                             handleComplet={handleComplete}
                           />
