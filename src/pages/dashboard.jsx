@@ -1015,7 +1015,12 @@ const Dashboard = () => {
                     </div>
                   ))
                 ) : (
-                  <span>No task for today</span>
+                  <span>
+                     <FormattedMessage
+                          id="task.noTask"
+                          defaultMessage="No task for today"
+                        />
+                    </span>
                 )}
               </Row>
             </div>
