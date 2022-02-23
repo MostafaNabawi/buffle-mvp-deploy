@@ -618,6 +618,7 @@ const Header = () => {
                   notification.map((notify) =>
                     notify.type === "invite" ? (
                       <Notify
+                        type={notify.type}
                         imgUrl={""}
                         key={notify._id}
                         name={notify.firstName + " " + notify.lastName}
@@ -655,6 +656,7 @@ const Header = () => {
                       />
                     ) : notify.type == "report" ? (
                       <Notify
+                        type={notify.type}
                         icon={notify.icon}
                         key={notify._id}
                         name={
@@ -675,6 +677,7 @@ const Header = () => {
                       />
                     ) : notify.type === "new-time" ? (
                       <Notify
+                        type={notify.type}
                         icon={notify.icon}
                         key={notify._id}
                         name={notify.sender}
