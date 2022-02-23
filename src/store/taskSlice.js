@@ -5,6 +5,7 @@ export const taskSlice = createSlice({
   initialState: {
     run: false,
     alert: false,
+    passAaler: false,
   },
   reducers: {
     setRun: (state, action) => {
@@ -13,9 +14,12 @@ export const taskSlice = createSlice({
     setAlert: (state, action) => {
       state.alert = action.payload;
     },
+    setPassAlert: (state, action) => {
+      state.passAaler = action.payload;
+    },
   },
 });
 
-export const { setRun, setAlert } = taskSlice.actions;
+export const { setRun, setAlert, setPassAlert } = taskSlice.actions;
 
 export default taskSlice.reducer;

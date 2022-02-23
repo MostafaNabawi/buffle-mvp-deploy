@@ -30,7 +30,7 @@ import {
   setUpdating,
 } from "../store/screenReminderSclice";
 import Swal from "sweetalert2";
-import { setAlert, setRun } from "../store/taskSlice";
+import { setAlert, setPassAlert, setRun } from "../store/taskSlice";
 import boop from "./boop.mp3";
 import UIFx from "uifx";
 import TimerCustome from "./TimerCustome";
@@ -39,13 +39,9 @@ import { FormattedMessage } from "react-intl";
 import RenderImage from "../components/cutomeImage/RenderImage";
 import DynamicInspiration from "../components/inspiration/DynamicInspiration";
 const Header = () => {
-  const { alert } = useSelector((state) => state.task);
+  const { alert, passAaler } = useSelector((state) => state.task);
   //
   const { du_time, dis_time, updating } = useSelector((state) => state.screen);
-  const { notificTimer, precent, render } = useSelector(
-    (state) => state.hydration
-  );
-  //
   const beep = new UIFx(boop, {
     volume: 0.8,
   });
@@ -427,7 +423,12 @@ const Header = () => {
       setCount(count + 1);
       dispatch(setRun(false));
     }
-  }, [alert]);
+    if (passAaler) {
+      beep.play();
+      dispatch(setPassAlert(false));
+      setCount(count + 1);
+    }
+  }, [alert, passAaler]);
 
   useEffect(() => {
     if (lang !== "") {
@@ -465,10 +466,10 @@ const Header = () => {
               localStorage.setItem(
                 "loackTime",
                 timeLock.getHours() +
-                ":" +
-                timeLock.getMinutes() +
-                ":" +
-                timeLock.getSeconds()
+                  ":" +
+                  timeLock.getMinutes() +
+                  ":" +
+                  timeLock.getSeconds()
               );
             }
           }}
@@ -480,8 +481,9 @@ const Header = () => {
 
       <div
         id="lockScreenHide"
-        className={`${localStorage.getItem("screen") === "on" ? "lockScreen" : ""
-          } text-center ${!start ? "" : "lockScreenHide"}`}
+        className={`${
+          localStorage.getItem("screen") === "on" ? "lockScreen" : ""
+        } text-center ${!start ? "" : "lockScreenHide"}`}
       >
         {localStorage.getItem("screen") === "on" && !start && (
           <div className="screenDiv">
@@ -498,9 +500,9 @@ const Header = () => {
                 }
                 handleDisplayTime(dis_time);
               }}
-            // renderer={() => {
-            //   return ""
-            // }}
+              // renderer={() => {
+              //   return ""
+              // }}
             />
           </div>
         )}
@@ -543,11 +545,15 @@ const Header = () => {
               className="navDropdomnIcon"
             >
               <Dropdown.Item onClick={() => setLang("de")}>
-               <span className="icon-flage"><Icon icon="flag:de-4x3" /></span>
+                <span className="icon-flage">
+                  <Icon icon="flag:de-4x3" />
+                </span>
                 Desutch
               </Dropdown.Item>
               <Dropdown.Item onClick={() => setLang("en")}>
-              <span  className="icon-flage"><Icon icon="flagpack:us" /></span>
+                <span className="icon-flage">
+                  <Icon icon="flagpack:us" />
+                </span>
                 English
               </Dropdown.Item>
             </NavDropdown>
@@ -628,8 +634,8 @@ const Header = () => {
                           notify.icon === "task"
                             ? "Task"
                             : notify.icon === "water"
-                              ? "Water"
-                              : notify.sender
+                            ? "Water"
+                            : notify.sender
                         }
                         date={notify.date}
                         message={notify.msg}

@@ -29,6 +29,7 @@ import {
   getTaskById,
   deleteMultiTask,
   updateTaskWhenCompleted,
+  createNotification,
 } from "../api";
 import { getaAllBreackPlan } from "../api/breackPlan";
 import { PulseLoader } from "react-spinners";
@@ -36,7 +37,7 @@ import { useToasts } from "react-toast-notifications";
 import Felling from "../components/feel/Felling";
 import BeatLoader from "react-spinners/BeatLoader";
 import { API_URL } from "../config";
-import Countdown, { calcTimeDelta } from "react-countdown";
+import Countdown from "react-countdown";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import Timer from "./../components/common/progressBar/TaskProgress";
@@ -45,10 +46,12 @@ import SpotifyLogin from "../components/spotify/Login";
 import TimePicker2 from "../components/common/timePicker/TimePicker2";
 import { FormattedMessage } from "react-intl";
 import RenderImage from "../components/cutomeImage/RenderImage";
+import { setPassAlert, setRun } from "../store/taskSlice";
 import { Context } from "../layout/Wrapper";
+import { useDispatch } from "react-redux";
 const Dashboard = () => {
   const context = useContext(Context);
-
+  const dispatch = useDispatch();
   const [code, setCode] = useState(
     new URLSearchParams(window.location.search).get("code")
   );
@@ -343,8 +346,23 @@ const Dashboard = () => {
   function updateSpendTasks(arrayData) {
     if (arrayData.length > 0) {
       arrayData.map((task) => {
-        console.log("EXC => ", task);
-        updateTaskWhenCompleted(task?.id, "00:00:00", "completed");
+        updateTaskWhenCompleted(task?.id, "00:00:00", "completed").then(() => {
+          createNotification(task?.id, task?.name).then(() => {
+            // count
+            addToast(
+              <FormattedMessage
+                id="task.finished"
+                defaultMessage="Task finished."
+              />,
+              {
+                autoDismiss: true,
+                appearance: "success",
+              }
+            );
+            dispatch(setPassAlert(true));
+            dispatch(setRun(false));
+          });
+        });
       });
     }
   }
@@ -901,9 +919,8 @@ const Dashboard = () => {
               }
               subtitle={
                 <FormattedMessage
-                  defaultMessage={`${opan < 0 ? 0 : opan} open, ${
-                    start < 0 ? 0 : start
-                  } start.`}
+                  defaultMessage={`${opan < 0 ? 0 : opan} open, ${start < 0 ? 0 : start
+                    } start.`}
                   id="app.task.open"
                   values={{
                     num: opan < 0 ? 0 : opan,
@@ -1087,25 +1104,25 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                    id: data._id,
-                                    name: data.name,
-                                    time: data.time,
-                                  })
+                                  id: data._id,
+                                  name: data.name,
+                                  time: data.time,
+                                })
                                 : joinOrNewSuggestForm(
-                                    {
-                                      id: data.user[0]._id,
-                                      breackName: data.name,
-                                    },
-                                    {
-                                      fullName:
-                                        currentUser.first_name +
-                                        " " +
-                                        currentUser.last_name,
-                                      breakName: data.name,
-                                      breakOwnerId: data.user[0]._id,
-                                      breakId: data._id,
-                                    }
-                                  );
+                                  {
+                                    id: data.user[0]._id,
+                                    breackName: data.name,
+                                  },
+                                  {
+                                    fullName:
+                                      currentUser.first_name +
+                                      " " +
+                                      currentUser.last_name,
+                                    breakName: data.name,
+                                    breakOwnerId: data.user[0]._id,
+                                    breakId: data._id,
+                                  }
+                                );
                             }}
                             className="break-type"
                           >
@@ -1117,20 +1134,20 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                    id: data._id,
-                                    name: data.name,
-                                    time: data.time,
-                                  })
+                                  id: data._id,
+                                  name: data.name,
+                                  time: data.time,
+                                })
                                 : timeFormBreakplan({
-                                    time: "",
-                                    recevier: data.user[0]._id,
-                                    fullName:
-                                      currentUser.first_name +
-                                      "" +
-                                      currentUser.last_name,
-                                    breakName: data.name,
-                                    breakId: data._id,
-                                  });
+                                  time: "",
+                                  recevier: data.user[0]._id,
+                                  fullName:
+                                    currentUser.first_name +
+                                    "" +
+                                    currentUser.last_name,
+                                  breakName: data.name,
+                                  breakId: data._id,
+                                });
                             }}
                           >
                             {data.time}
@@ -1367,8 +1384,8 @@ const Dashboard = () => {
               <Button
                 disabled={
                   vacationNameInput === "" ||
-                  vacationDataInput === "" ||
-                  vacationLoader
+                    vacationDataInput === "" ||
+                    vacationLoader
                     ? true
                     : false
                 }
@@ -1410,7 +1427,7 @@ const Dashboard = () => {
             )}
 
             {taskManager && (
-              <Button variant="primary" onClick={handleCreateTask}>
+              <Button variant="primary" disabled={`${loading === true ? 'disabled' : ''}`} onClick={handleCreateTask}>
                 {loading === true ? (
                   <BeatLoader />
                 ) : (
