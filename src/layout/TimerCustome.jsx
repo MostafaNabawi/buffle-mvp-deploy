@@ -12,6 +12,19 @@ function TimerCustome({ count, setCount }) {
   const beep = new UIFx(boop, {
     volume: 0.8,
   });
+  const sendNotific = () => {
+    if (render && !isMute && notificTimer > 0) {
+      fetch(`${API_URL}/user/water-notify`, {
+        method: "POST",
+        credentials: "include",
+      }).then((res) => {
+        if (res.status === 200) {
+          beep.play();
+          setCount(count + 1);
+        }
+      });
+    }
+  };
   const { notificDelay, notificTimer, render, isMute } = useSelector(
     (state) => state.hydration
   );
@@ -33,19 +46,6 @@ function TimerCustome({ count, setCount }) {
     }
   }, [notificTimer]);
 
-  const sendNotific = () => {
-    if (render && !isMute) {
-      fetch(`${API_URL}/user/water-notify`, {
-        method: "POST",
-        credentials: "include",
-      }).then((res) => {
-        if (res.status === 200) {
-          beep.play();
-          setCount(count + 1);
-        }
-      });
-    }
-  };
   return "";
 }
 
