@@ -4,6 +4,8 @@
   "app.login.your": "Deine E-Mail Adresse",
   "app.login.google": "Login mit Google Konto",
   "app.password": "Passwort",
+  "app.hi": " Hallo",
+  "app.screenLock": "Bildschirmsperre für",
   "app.header.language": "Sprache",
   "app.waterHydretion": "Trink!",
   "app.noAccount": "Wenn du noch keinen Account hast?",
@@ -45,6 +47,7 @@
   "breakPlan.suggestSend": "Änderungsvorschlag versendet",
   "breakPlan.Edit": "Pausenplan bearbeiten",
   "breakPlan.Create": "Neuer Pausenplan",
+  "breakPlan.newSuggeation": "Neuer Vorschlag",
 
   "app.invite": "Einladen",
   "app.imToday": "Tagespunkte",
@@ -95,12 +98,17 @@
   "btn.CreateNewPlan": "Neuen Pausenplan anlegen",
   "btn.register": "Registrieren",
   "btn.move": "Bewegen",
+  "btn.send": "Senden",
+  "btn.accept": "Annehmen",
+  "btn.reject": "Ablehnen",
 
   "msg.noScreenR": "Bildschirmfreie Zeit ausstellen",
   "msg.noImportantToday": "Keine Tagespunkte",
 
   "noti.clear": "Entfernen",
   "noti.noNotify": "Keine alten Mitteilungen",
+  "noti.alerClear": "Gelöscht",
+  "noti.water": "Wasser",
 
   "prof.profile": "Profil",
   "prof.logout": "Auslogge",
