@@ -27,6 +27,7 @@
   "breakPlan.suggestSend":"Änderungsvorschlag versendet",
   "breakPlan.Edit":"Pausenplan bearbeiten",
   "breakPlan.Create":"Neuer Pausenplan",
+  "breakPlan.newSuggeation":"Neuer Vorschlag",
   
   "app.invite": "Einladen",
   "app.imToday": "Tagespunkte",
@@ -77,6 +78,7 @@
   "btn.CreateNewPlan":"Neuen Pausenplan anlegen",
   "btn.register": "Registrieren",
   "btn.move": "Bewegen",
+  "btn.send":"Senden",
 
   "msg.noScreenR": "Bildschirmfreie Zeit ausstellen",
   "msg.noImportantToday": "Keine Tagespunkte",

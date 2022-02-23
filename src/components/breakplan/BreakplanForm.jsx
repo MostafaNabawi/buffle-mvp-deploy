@@ -417,7 +417,8 @@ function BreackplanFrom({
                   }}
                   className={style.customBtn}
                 >
-                  {loading ? <Loader color="#fff" size={15} /> : "Join"}
+                  {loading ? <Loader color="#fff" size={15} /> : 
+                  <FormattedMessage defaultMessage="Join" id="btn.join" />}
                 </Button>
                 <Button
                   variant="outline-primary"
@@ -434,18 +435,22 @@ function BreackplanFrom({
                 {newSaggestion ? (
                   <Form className="mt-3" onSubmit={handleNewSuggest}>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                      <Form.Control
-                        autoFocus
-                        required
-                        value={newSuggestInput}
-                        as="textarea"
-                        type="email"
-                        placeholder="New Saggestion"
-                        className={
-                          newSuggestInputError ? "red-border-input" : ""
-                        }
-                        onChange={(e) => setNewSuggestInput(e.target.value)}
-                      />
+                      <FormattedMessage defaultMessage="New Saggestion" id="breakPlan.newSuggeation">
+                        {(msg) => (
+                          <Form.Control
+                            autoFocus
+                            required
+                            value={newSuggestInput}
+                            as="textarea"
+                            type="email"
+                            placeholder={msg}
+                            className={
+                              newSuggestInputError ? "red-border-input" : ""
+                            }
+                            onChange={(e) => setNewSuggestInput(e.target.value)}
+                          />
+                        )}
+                      </FormattedMessage>
                     </Form.Group>
                     <Button
                       disabled={loading}
@@ -453,7 +458,11 @@ function BreackplanFrom({
                       variant="primary"
                       type="submit"
                     >
-                      {loading ? <Loader color="#fff" size={15} /> : "Send"}
+                      {loading ? (
+                        <Loader color="#fff" size={15} />
+                      ) : (
+                        <FormattedMessage defaultMessage="Send" id="btn.send" />
+                      )}
                     </Button>
                   </Form>
                 ) : (
@@ -477,7 +486,6 @@ function BreackplanFrom({
                       value={newSuggestTime}
                       className={SuggestTimeError ? "red-border-input" : ""}
                       type="time"
-                      placeholder="Saggest new time"
                       onChange={(e) => setNewSuggestTime(e.target.value)}
                     />
                   </Form.Group>
@@ -487,7 +495,11 @@ function BreackplanFrom({
                     variant="primary"
                     type="submit"
                   >
-                    {loading ? <Loader color="#fff" size={15} /> : "Send"}
+                    {loading ? (
+                      <Loader color="#fff" size={15} />
+                    ) : (
+                      <FormattedMessage defaultMessage="Send" id="btn.send" />
+                    )}
                   </Button>
                 </Form>
               </Card.Text>
@@ -550,9 +562,9 @@ function BreackplanFrom({
                   </>
                 ) : (
                   <FormattedMessage
-                  defaultMessage="New break plan"
-                  id="breakPlan.Create"
-                />
+                    defaultMessage="New break plan"
+                    id="breakPlan.Create"
+                  />
                 )}
               </Card.Title>
               <Form
