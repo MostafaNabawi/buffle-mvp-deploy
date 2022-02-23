@@ -70,7 +70,6 @@ function inviteNotify({ type, name, date, message, footer, icon }) {
       );
     }
     if (message.includes("money poll")) {
-      console.log("😜", message.split("("));
       return (
         <FormattedMessage
           defaultMessage={message}
@@ -98,7 +97,7 @@ function inviteNotify({ type, name, date, message, footer, icon }) {
         />
       );
     }
-    console.log("Type | msg", type, " ", message);
+    // console.log("Type | msg", type, " ", message);
   };
 
   return (
