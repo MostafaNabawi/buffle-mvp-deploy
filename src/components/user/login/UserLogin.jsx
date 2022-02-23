@@ -76,7 +76,7 @@ const UserLogin = () => {
           emailError: (
             <FormattedMessage
               defaultMessage="Email is required!"
-              id="app.login.emailError"
+              id="email.required"
             />
           ),
           passwordError: "",
@@ -91,7 +91,7 @@ const UserLogin = () => {
           passwordError: (
             <FormattedMessage
               defaultMessage="Password is required!"
-              id="app.login.passError"
+              id="pass.required"
             />
           ),
           emailError: "",
@@ -106,7 +106,7 @@ const UserLogin = () => {
           emailError: (
             <FormattedMessage
               defaultMessage="Email is invalid!"
-              id="app.login.invalidEmail"
+              id="email.invalid"
             />
           ),
           passwordError: "",
