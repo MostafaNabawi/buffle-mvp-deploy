@@ -81,6 +81,8 @@
   "btn.register": "Registrieren",
   "btn.move": "Bewegen",
   "btn.send":"Senden",
+  "btn.accept":"Annehmen",
+  "btn.reject":"Ablehnen",
 
   "msg.noScreenR": "Bildschirmfreie Zeit ausstellen",
   "msg.noImportantToday": "Keine Tagespunkte",
@@ -88,6 +90,7 @@
   "noti.clear": "Entfernen",
   "noti.noNotify": "Keine alten Mitteilungen",
   "noti.alerClear":"Gelöscht",
+  "noti.water":"Wasser",
 
   "prof.profile": "Profil",
   "prof.logout": "Auslogge",

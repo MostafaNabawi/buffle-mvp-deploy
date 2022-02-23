@@ -229,7 +229,10 @@ const Header = () => {
           },
         }).then((res) => {
           if (res.status == 200) {
-            addToast(<FormattedMessage defaultMessage="Cleared" id="noti.alerClear" />, { autoDismiss: true, appearance: "success" });
+            addToast(
+              <FormattedMessage defaultMessage="Cleared" id="noti.alerClear" />,
+              { autoDismiss: true, appearance: "success" }
+            );
             setNotificatiion([]);
             setLoading(false);
           } else {
@@ -502,7 +505,7 @@ const Header = () => {
           <div className="screenDiv">
             <h1>
               <FormattedMessage
-                defaultMessage="  Screen Lock For"
+                defaultMessage="Screen Lock For"
                 id="app.screenLock"
               />
             </h1>
@@ -630,7 +633,10 @@ const Header = () => {
                               variant="outline-success"
                               className={`btn-notify`}
                             >
-                              Accept
+                              <FormattedMessage
+                                defaultMessage="Accept"
+                                id="btn.accept"
+                              />
                             </Button>
                             <Button
                               onClick={() => {
@@ -639,7 +645,10 @@ const Header = () => {
                               variant="outline-secondary"
                               className={`btn-notify`}
                             >
-                              Reject
+                              <FormattedMessage
+                                defaultMessage="Reject"
+                                id="btn.reject"
+                              />
                             </Button>
                           </>
                         }
@@ -649,11 +658,16 @@ const Header = () => {
                         icon={notify.icon}
                         key={notify._id}
                         name={
-                          notify.icon === "task"
-                            ? "Task"
-                            : notify.icon === "water"
-                            ? "Water"
-                            : notify.sender
+                          notify.icon === "task" ? (
+                            "Task Manager"
+                          ) : notify.icon === "water" ? (
+                            <FormattedMessage
+                              defaultMessage="Hydration Reminder"
+                              id="app.waterHydretion"
+                            />
+                          ) : (
+                            notify.sender
+                          )
                         }
                         date={notify.date}
                         message={notify.msg}
@@ -681,7 +695,10 @@ const Header = () => {
                               variant="outline-success"
                               className={`btn-notify`}
                             >
-                              Accept
+                              <FormattedMessage
+                                defaultMessage="Accept"
+                                id="btn.accept"
+                              />
                             </Button>
                             <Button
                               onClick={() => {
@@ -690,7 +707,10 @@ const Header = () => {
                               variant="outline-secondary"
                               className={`btn-notify`}
                             >
-                              Reject
+                              <FormattedMessage
+                                defaultMessage="Reject"
+                                id="btn.reject"
+                              />
                             </Button>
                           </>
                         }
@@ -720,25 +740,6 @@ const Header = () => {
               <Dropdown.Item as={Link} to="/dashboard/profile">
                 <FormattedMessage defaultMessage="Profile" id="prof.profile" />
               </Dropdown.Item>
-              {/* <DropdownButton
-                as={ButtonGroup}
-                id={`dropdown-button-drop-start`}
-                drop="start"
-                className="subDropdown"
-                title={
-                  <FormattedMessage
-                    defaultMessage="Language"
-                    id="app.header.language"
-                  />
-                }
-              >
-                <Dropdown.Item onClick={() => setLang("de")}>
-                  Desutch
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => setLang("en")}>
-                  English
-                </Dropdown.Item>
-              </DropdownButton> */}
               {workspace.length > 0 && (
                 <DropdownButton
                   as={ButtonGroup}

@@ -1079,7 +1079,7 @@ const Dashboard = () => {
                         </div>
                         {data?.joinNumber?.length > 0 &&
                           (data?.joinNumber.length === 1 ? (
-                            <div className="breakplan-icon jone-icon navy-blue text-center pt-2">
+                            <div className="breakplan-icon jone-icon navy-blue text-center pt-1">
                               <RenderImage
                                 code={data?.joinPhotos[0]?.avatar?.key || ""}
                               />
@@ -1089,7 +1089,7 @@ const Dashboard = () => {
                               /> */}
                             </div>
                           ) : (
-                            <div className="breakplan-icon jone-icon navy-blue text-center pt-2">
+                            <div className="breakplan-icon jone-icon navy-blue text-center pt-1">
                               + {data?.joinNumber.length}
                             </div>
                           ))}
