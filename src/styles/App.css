@@ -818,6 +818,7 @@ div.check-box > input {
   overflow-x: hidden !important;
   overflow-y: auto;
   padding: 10px !important;
+  scrollbar-width: thin !important;
 }
 .important-today-card-body {
   height: 288px !important ;
@@ -825,12 +826,14 @@ div.check-box > input {
   overflow-y: auto;
   padding: 10px !important;
   margin-bottom: 13px !important;
+  scrollbar-width: thin !important;
 }
 /* width */
 .break-plan-card::-webkit-scrollbar,
 .important-today-card-body::-webkit-scrollbar,
 .dashboard-task-manager-row::-webkit-scrollbar {
   width: 6px;
+  /* scrollbar-width: 6px !important; */
 }
 
 /* Track */
@@ -855,6 +858,7 @@ div.check-box > input {
 .dashboard-task-manager-row::-webkit-scrollbar-thumb {
   background: #a8a5a5;
   border-radius: 10px;
+  scrollbar-width: 6px !important;
 }
 .modal-sub-title {
   font-size: 16px;
@@ -872,6 +876,7 @@ div.check-box > input {
   height: 233px !important;
   overflow-y: auto;
   overflow-x: hidden;
+  scrollbar-width: thin !important;
 }
 .notifyTime {
   color: #707eae !important;
