@@ -229,22 +229,34 @@ const Header = () => {
           },
         }).then((res) => {
           if (res.status == 200) {
-            addToast("Cleared", { autoDismiss: true, appearance: "success" });
+            addToast(<FormattedMessage defaultMessage="Cleared" id="noti.alerClear" />, { autoDismiss: true, appearance: "success" });
             setNotificatiion([]);
             setLoading(false);
           } else {
-            addToast("Error Please Try Again!", {
-              autoDismiss: true,
-              appearance: "error",
-            });
+            addToast(
+              <FormattedMessage
+                defaultMessage="Error Please Try Again!"
+                id="breakPlan.Error"
+              />,
+              {
+                autoDismiss: false,
+                appearance: "error",
+              }
+            );
             setLoading(false);
           }
         });
       } catch {
-        addToast("server Error Please Try Again!", {
-          autoDismiss: true,
-          appearance: "error",
-        });
+        addToast(
+          <FormattedMessage
+            defaultMessage="Error Please Try Again!"
+            id="breakPlan.Error"
+          />,
+          {
+            autoDismiss: false,
+            appearance: "error",
+          }
+        );
       }
     }
   };
@@ -446,7 +458,8 @@ const Header = () => {
     <>
       <TimerCustome count={count} setCount={setCount} />
       <Col className="col-12 header-name text-capitalize">
-        Hi <span id="userFullName">{userData?.first_name}</span>
+        <FormattedMessage defaultMessage=" Hi" id="app.hi" />{" "}
+        <span id="userFullName">{userData?.first_name}</span>
       </Col>
       {start && (
         <Countdown
@@ -487,7 +500,12 @@ const Header = () => {
       >
         {localStorage.getItem("screen") === "on" && !start && (
           <div className="screenDiv">
-            <h1>Screen Lock For</h1>
+            <h1>
+              <FormattedMessage
+                defaultMessage="  Screen Lock For"
+                id="app.screenLock"
+              />
+            </h1>
             <Countdown
               key={`c-5`}
               date={Date.now() + +localStorage.getItem("display_time")}

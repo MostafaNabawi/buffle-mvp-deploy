@@ -1,4 +1,6 @@
 {
+  "app.hi":" Hallo",
+  "app.screenLock":"Bildschirmsperre für",
   "app.task.open": "{num} offen. {start} Anfang",
   "app.header.language": "Sprache",
   "app.waterHydretion": "Trink!",
@@ -85,6 +87,7 @@
 
   "noti.clear": "Entfernen",
   "noti.noNotify": "Keine alten Mitteilungen",
+  "noti.alerClear":"Gelöscht",
 
   "prof.profile": "Profil",
   "prof.logout": "Auslogge",
