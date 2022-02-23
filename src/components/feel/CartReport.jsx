@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import style from "./style.module.css";
 import { Icon } from "@iconify/react";
 import {
@@ -14,6 +14,8 @@ import {
 import { Line } from "react-chartjs-2";
 import { Card, Row, Col, Form } from "react-bootstrap";
 import { API_URL } from "../../config";
+import { FormattedMessage } from "react-intl";
+import { Context } from "../../layout/Wrapper";
 
 ChartJS.register(
   CategoryScale,
@@ -50,7 +52,7 @@ export const options = {
       display: true,
       title: {
         display: true,
-        text: "Percentage",
+        text: "%",
       },
       suggestedMin: 0,
       suggestedMax: 100,
@@ -58,9 +60,9 @@ export const options = {
   },
 };
 
-const labels = ["", "First week", "Second week", "Third week", "Forth week"];
-
 const CharReport = () => {
+  const context = useContext(Context);
+  const currentType = context.getCurrent();
   const [basy, setBasy] = useState(false);
   const [currentMonth, setCurrentMonth] = useState("");
   //
@@ -69,12 +71,26 @@ const CharReport = () => {
   const [normal, setNormal] = useState([]);
   const [sad, setSad] = useState([]);
   const [cry, setCry] = useState([]);
+  // lable
+  const [labels, setLabels] = useState([
+    "",
+    "First week",
+    "Second week",
+    "Third week",
+    "Forth week",
+  ]);
+  const [happyLable, setHappyLable] = useState("Happy");
+  const [smilingLable, setSmilingLable] = useState("Smiling");
+  const [normalLable, setNormalLable] = useState("Normal");
+  const [sadLable, setSadLable] = useState("Sad");
+  const [cryLable, setCryLable] = useState("Cry");
+
   // data
   const data = {
     labels,
     datasets: [
       {
-        label: "Happy",
+        label: happyLable,
         data: happy,
         borderColor: "rgb(235,129,115)",
         backgroundColor: "rgba(235,129,115, 0.5)",
@@ -83,7 +99,7 @@ const CharReport = () => {
         tension: 0.6,
       },
       {
-        label: "Smiling",
+        label: smilingLable,
         data: smiling,
         borderColor: "rgb(238,180,21)",
         backgroundColor: "rgba(238,180,21, 0.5)",
@@ -92,7 +108,7 @@ const CharReport = () => {
         tension: 0.9,
       },
       {
-        label: "Normal",
+        label: normalLable,
         data: normal,
         borderColor: "rgb(122,252,67)",
         backgroundColor: "rgba(122,252,67, 0.5)",
@@ -101,7 +117,7 @@ const CharReport = () => {
         tension: 0.8,
       },
       {
-        label: "Sad",
+        label: sadLable,
         data: sad,
         borderColor: "rgb(52,109,139)",
         backgroundColor: "rgba(52,109,139, 0.5)",
@@ -110,7 +126,7 @@ const CharReport = () => {
         tension: 0.7,
       },
       {
-        label: "Crying",
+        label: cryLable,
         data: cry,
         borderColor: "rgb(25,55,105)",
         backgroundColor: "rgba(25,55,105, 0.5)",
@@ -184,6 +200,30 @@ const CharReport = () => {
     getFeeling(d.getMonth() + 1);
   }, []);
 
+  useEffect(() => {
+    if (currentType === 1) {
+      setLabels([
+        "",
+        "Erste Woche",
+        "Zweite Woche",
+        "Dritte Woche",
+        "Vierte Woche",
+      ]);
+      setHappyLable("Glücklich");
+      setSmilingLable("Lächelnd");
+      setNormalLable("Normal");
+      setSadLable("Traurig");
+      setCryLable("Weinen");
+    } else {
+      setLabels(["", "First week", "Second week", "Third week", "Forth week"]);
+      setHappyLable("Happy");
+      setSmilingLable("Smiling");
+      setNormalLable("Normal");
+      setSadLable("Sad");
+      setCryLable("Cry");
+    }
+  }, [context]);
+
   return (
     <Row className={`p-0 m-0`}>
       <Card className={`${style.cardReport}`}>
@@ -202,46 +242,135 @@ const CharReport = () => {
               }}
               aria-label="Default select example"
             >
-              <option value="1" selected={currentMonth === 1 ? true : false}>
-                January
-              </option>
-              <option value="2" selected={currentMonth === 2 ? true : false}>
-                February
-              </option>
-              <option value="3" selected={currentMonth === 3 ? true : false}>
-                March
-              </option>
-              <option value="4" selected={currentMonth === 4 ? true : false}>
-                April
-              </option>
-              <option value="5" selected={currentMonth === 5 ? true : false}>
-                May
-              </option>
-              <option value="6" selected={currentMonth === 6 ? true : false}>
-                June
-              </option>
-              <option value="7" selected={currentMonth === 7 ? true : false}>
-                July
-              </option>
-              <option value="8" selected={currentMonth === 8 ? true : false}>
-                August
-              </option>
-              <option value="0" selected={currentMonth === 0 ? true : false}>
-                Sebtember
-              </option>
-              <option value="10" selected={currentMonth === 10 ? true : false}>
-                October
-              </option>
-              <option value="11" selected={currentMonth === 11 ? true : false}>
-                November
-              </option>
-              <option value="12" selected={currentMonth === 12 ? true : false}>
-                December
-              </option>
+              <FormattedMessage defaultMessage="January" id="month.January">
+                {(msg) => (
+                  <option
+                    value="1"
+                    selected={currentMonth === 1 ? true : false}
+                  >
+                    {msg}
+                  </option>
+                )}
+              </FormattedMessage>
+              <FormattedMessage defaultMessage="February" id="month.February">
+                {(msg) => (
+                  <option
+                    value="2"
+                    selected={currentMonth === 2 ? true : false}
+                  >
+                    {msg}
+                  </option>
+                )}
+              </FormattedMessage>
+              <FormattedMessage defaultMessage="March" id="month.March">
+                {(msg) => (
+                  <option
+                    value="3"
+                    selected={currentMonth === 3 ? true : false}
+                  >
+                    {msg}
+                  </option>
+                )}
+              </FormattedMessage>
+              <FormattedMessage defaultMessage="April" id="month.April">
+                {(msg) => (
+                  <option
+                    value="4"
+                    selected={currentMonth === 4 ? true : false}
+                  >
+                    {msg}
+                  </option>
+                )}
+              </FormattedMessage>
+              <FormattedMessage defaultMessage="May" id="month.May">
+                {(msg) => (
+                  <option
+                    value="5"
+                    selected={currentMonth === 5 ? true : false}
+                  >
+                    {msg}
+                  </option>
+                )}
+              </FormattedMessage>
+              <FormattedMessage defaultMessage="June" id="month.June">
+                {(msg) => (
+                  <option
+                    value="6"
+                    selected={currentMonth === 6 ? true : false}
+                  >
+                    {msg}
+                  </option>
+                )}
+              </FormattedMessage>
+              <FormattedMessage defaultMessage="July" id="month.July">
+                {(mag) => (
+                  <option
+                    value="7"
+                    selected={currentMonth === 7 ? true : false}
+                  >
+                    {mag}
+                  </option>
+                )}
+              </FormattedMessage>
+              <FormattedMessage defaultMessage="August" id="month.August">
+                {(msg) => (
+                  <option
+                    value="8"
+                    selected={currentMonth === 8 ? true : false}
+                  >
+                    {msg}
+                  </option>
+                )}
+              </FormattedMessage>
+              <FormattedMessage defaultMessage="Sebtember" id="month.Sebtember">
+                {(msg) => (
+                  <option
+                    value="0"
+                    selected={currentMonth === 0 ? true : false}
+                  >
+                    {msg}
+                  </option>
+                )}
+              </FormattedMessage>
+              <FormattedMessage defaultMessage="October" id="month.October">
+                {(msg) => (
+                  <option
+                    value="10"
+                    selected={currentMonth === 10 ? true : false}
+                  >
+                    {msg}
+                  </option>
+                )}
+              </FormattedMessage>
+              <FormattedMessage defaultMessage="November" id="month.November">
+                {(msg) => (
+                  <option
+                    value="11"
+                    selected={currentMonth === 11 ? true : false}
+                  >
+                    {msg}
+                  </option>
+                )}
+              </FormattedMessage>
+              <FormattedMessage defaultMessage="December" id="month.December">
+                {(msg) => (
+                  <option
+                    value="12"
+                    selected={currentMonth === 12 ? true : false}
+                  >
+                    {msg}
+                  </option>
+                )}
+              </FormattedMessage>
             </Form.Select>
           </Col>
           <Col>
-            <h2 className={`${style.chartTitle}`}>Monthly (How to feel) Report</h2>
+            <h2 className={`${style.chartTitle}`}>
+              <FormattedMessage
+                defaultMessage="Monthly (How to feel) Report"
+                id="chart.title"
+              />
+            </h2>
           </Col>
         </Row>
         {basy ? (
