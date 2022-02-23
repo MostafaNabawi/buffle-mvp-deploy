@@ -808,12 +808,12 @@ const Header = () => {
               {/*  */}
               {showUserRoute && (
                 <NavDropdown.Item as={Link} to="/dashboard/user-management">
-                  User management
+                  User Management
                 </NavDropdown.Item>
               )}
               {showUserRoute && (
                 <NavDropdown.Item as={Link} to="/dashboard/setting">
-                  Settings
+                  <FormattedMessage defaultMessage="Settings" id="settings" />
                 </NavDropdown.Item>
               )}
               <NavDropdown.Item onClick={handleLogout}>

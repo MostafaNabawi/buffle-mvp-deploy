@@ -1,4 +1,5 @@
 import { Row, Col, Image } from "react-bootstrap";
+import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 import style from "../style.module.css";
 const IndexRegister = () => {
@@ -25,12 +26,14 @@ const IndexRegister = () => {
           </p>
         </Col>
         <Col xl="8" className={`text-center pt-2`}>
-          <strong>Register as:</strong>
+          <strong>
+            <FormattedMessage defaultMessage="Register as:" id="register.as" />
+          </strong>
           <Link className={`${style.registerBtnLink}`} to="company">
-            Company
+            <FormattedMessage defaultMessage="Company" id="company" />
           </Link>
           <Link className={`${style.registerBtnLink}`} to="student">
-            Student
+            <FormattedMessage defaultMessage="Student" id="student" />
           </Link>
           <Link className={`${style.registerBtnLink}`} to="freelancer">
             Freelancer
