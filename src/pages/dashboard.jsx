@@ -349,6 +349,16 @@ const Dashboard = () => {
         updateTaskWhenCompleted(task?.id, "00:00:00", "completed").then(() => {
           createNotification(task?.id, task?.name).then(() => {
             // count
+            addToast(
+              <FormattedMessage
+                id="task.finished"
+                defaultMessage="Task finished."
+              />,
+              {
+                autoDismiss: true,
+                appearance: "success",
+              }
+            );
             dispatch(setPassAlert(true));
             dispatch(setRun(false));
           });
