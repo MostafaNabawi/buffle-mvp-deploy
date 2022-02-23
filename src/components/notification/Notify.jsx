@@ -47,7 +47,6 @@ function inviteNotify({ type, name, date, message, footer, icon }) {
     }
 
     if (message.includes("accept your time suggestion for break plan")) {
-      console.log("😍", message.split("break plan"));
       return (
         <FormattedMessage
           defaultMessage={message}
@@ -60,13 +59,24 @@ function inviteNotify({ type, name, date, message, footer, icon }) {
     }
 
     if (message.includes("has new suggestion")) {
-      console.log("😍", message.split("("));
       return (
         <FormattedMessage
           defaultMessage={message}
           id="notify.newSuggest"
           values={{
             msg: message.split("(")[1],
+          }}
+        />
+      );
+    }
+    if (message.includes("money poll")) {
+      console.log("😜", message.split("("));
+      return (
+        <FormattedMessage
+          defaultMessage={message}
+          id="notify.money"
+          values={{
+            name: message.split("(")[1],
           }}
         />
       );

@@ -223,6 +223,7 @@
   "notify.suggestNewTime": "Neue Zeit vorschlagen für Pausenplan {name} at {time}",
   "notify.acceptBreakSuggest": "akzeptiere deinen Zeitvorschlag für Pausenplan {name}",
   "notify.newSuggest": " hat neue Vorschläge für({msg}",
+  "notify.money": "hat Sie in Moneypoll({name} hinzugefügt",
   "_comment2": "paimanEnd",
 
   "__comment": "Zia---------",
