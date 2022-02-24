@@ -17,12 +17,9 @@ function TimerCustome({ count, setCount }) {
       fetch(`${API_URL}/user/water-notify`, {
         method: "POST",
         credentials: "include",
-      }).then((res) => {
-        if (res.status === 200) {
-          beep.play();
-          setCount(count + 1);
-        }
       });
+      beep.play();
+      setCount(count + 1);
     }
   };
   const { notificDelay, notificTimer, render, isMute } = useSelector(
