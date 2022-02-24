@@ -919,8 +919,9 @@ const Dashboard = () => {
               }
               subtitle={
                 <FormattedMessage
-                  defaultMessage={`${opan < 0 ? 0 : opan} open, ${start < 0 ? 0 : start
-                    } start.`}
+                  defaultMessage={`${opan < 0 ? 0 : opan} open, ${
+                    start < 0 ? 0 : start
+                  } start.`}
                   id="app.task.open"
                   values={{
                     num: opan < 0 ? 0 : opan,
@@ -1016,11 +1017,11 @@ const Dashboard = () => {
                   ))
                 ) : (
                   <span>
-                     <FormattedMessage
-                          id="task.noTask"
-                          defaultMessage="No task for today"
-                        />
-                    </span>
+                    <FormattedMessage
+                      id="task.noTask"
+                      defaultMessage="No task for today"
+                    />
+                  </span>
                 )}
               </Row>
             </div>
@@ -1088,10 +1089,6 @@ const Dashboard = () => {
                               <RenderImage
                                 code={data?.joinPhotos[0]?.avatar?.key || ""}
                               />
-                              {/* <Image
-                                className="breakplan-img"
-                                src="/icone/WB_Headshots-102-web 1.png"
-                              /> */}
                             </div>
                           ) : (
                             <div className="breakplan-icon jone-icon navy-blue text-center pt-1">
@@ -1100,8 +1097,8 @@ const Dashboard = () => {
                           ))}
                       </Col>
                       <Col className="col-9">
-                        <div className="break-user-name2">
-                          {data.user[0].first_name} {data.user[0].last_name}
+                        <div className="break-user-name2 text-capitalize">
+                          {data?.user[0]?.first_name} {data?.user[0]?.last_name}
                         </div>{" "}
                         <div>
                           <span
@@ -1109,25 +1106,25 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                  id: data._id,
-                                  name: data.name,
-                                  time: data.time,
-                                })
+                                    id: data._id,
+                                    name: data.name,
+                                    time: data.time,
+                                  })
                                 : joinOrNewSuggestForm(
-                                  {
-                                    id: data.user[0]._id,
-                                    breackName: data.name,
-                                  },
-                                  {
-                                    fullName:
-                                      currentUser.first_name +
-                                      " " +
-                                      currentUser.last_name,
-                                    breakName: data.name,
-                                    breakOwnerId: data.user[0]._id,
-                                    breakId: data._id,
-                                  }
-                                );
+                                    {
+                                      id: data.user[0]._id,
+                                      breackName: data.name,
+                                    },
+                                    {
+                                      fullName:
+                                        currentUser.first_name +
+                                        " " +
+                                        currentUser.last_name,
+                                      breakName: data.name,
+                                      breakOwnerId: data.user[0]._id,
+                                      breakId: data._id,
+                                    }
+                                  );
                             }}
                             className="break-type"
                           >
@@ -1139,20 +1136,20 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                  id: data._id,
-                                  name: data.name,
-                                  time: data.time,
-                                })
+                                    id: data._id,
+                                    name: data.name,
+                                    time: data.time,
+                                  })
                                 : timeFormBreakplan({
-                                  time: "",
-                                  recevier: data.user[0]._id,
-                                  fullName:
-                                    currentUser.first_name +
-                                    "" +
-                                    currentUser.last_name,
-                                  breakName: data.name,
-                                  breakId: data._id,
-                                });
+                                    time: "",
+                                    recevier: data.user[0]._id,
+                                    fullName:
+                                      currentUser.first_name +
+                                      "" +
+                                      currentUser.last_name,
+                                    breakName: data.name,
+                                    breakId: data._id,
+                                  });
                             }}
                           >
                             {data.time}
@@ -1389,8 +1386,8 @@ const Dashboard = () => {
               <Button
                 disabled={
                   vacationNameInput === "" ||
-                    vacationDataInput === "" ||
-                    vacationLoader
+                  vacationDataInput === "" ||
+                  vacationLoader
                     ? true
                     : false
                 }
@@ -1432,7 +1429,11 @@ const Dashboard = () => {
             )}
 
             {taskManager && (
-              <Button variant="primary" disabled={`${loading === true ? 'disabled' : ''}`} onClick={handleCreateTask}>
+              <Button
+                variant="primary"
+                disabled={`${loading === true ? "disabled" : ""}`}
+                onClick={handleCreateTask}
+              >
                 {loading === true ? (
                   <BeatLoader />
                 ) : (

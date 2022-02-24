@@ -39,23 +39,14 @@ function HashtagTable({ data }) {
         <thead>
           <tr>
             <th>
-            <FormattedMessage
-                  defaultMessage="full Name"
-                  id="user.fullName"
-                />
-              </th>
+              <FormattedMessage defaultMessage="full Name" id="user.fullName" />
+            </th>
             <th>
-            <FormattedMessage
-                  defaultMessage=" Tag Name"
-                  id="app.tagName"
-                />
-             </th>
+              <FormattedMessage defaultMessage=" Tag Name" id="app.tagName" />
+            </th>
             <th>
-            <FormattedMessage
-                  defaultMessage="Ping"
-                  id="app.ping"
-                />
-              </th>
+              <FormattedMessage defaultMessage="Ping" id="app.ping" />
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -65,7 +56,7 @@ function HashtagTable({ data }) {
                 <tr key={`t-${index}-u-${n}`}>
                   <td className="d-flex p-2 align-items-center">
                     <RenderImage code={user?.avatar?.key || ""} />
-                    <span className="tagUserName">
+                    <span className="tagUserName text-capitalize">
                       {user?.first_name + " " + user?.last_name}
                     </span>
                   </td>
@@ -75,20 +66,19 @@ function HashtagTable({ data }) {
                     {user?._id === currentUser._id ? (
                       ""
                     ) : (
-                        <Icon
-                          icon="si-glyph:ping-pong-racket"
-                          style={{ cursor: "pointer" }}
-                          onClick={(e) =>
-                            pingUser(
-                              e,
-                              user?._id,
-                              item?.name,
-                              `item-${index}-u-${n}`
-                            )
-                          }
-                        />
-                    )}
-                    {" "}
+                      <Icon
+                        icon="si-glyph:ping-pong-racket"
+                        style={{ cursor: "pointer" }}
+                        onClick={(e) =>
+                          pingUser(
+                            e,
+                            user?._id,
+                            item?.name,
+                            `item-${index}-u-${n}`
+                          )
+                        }
+                      />
+                    )}{" "}
                   </td>
                 </tr>
               );

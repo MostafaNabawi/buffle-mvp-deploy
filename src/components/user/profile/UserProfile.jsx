@@ -55,6 +55,9 @@ const UserProfile = () => {
           setBusy(true);
         }
       });
+      if (file) {
+        handleHeaderRefresh();
+      }
     } catch {}
   };
   const getUser = () => {
@@ -288,10 +291,22 @@ const UserProfile = () => {
         handleClose();
       }
     });
-    // const tagOption = [{ value: "", label: newTag }];
-    // tags.push(tagOption[0]);
-    // setNewTag("");
     handleClose();
+  };
+  const handleHeaderRefresh = (e) => {
+    // FileReader support
+    if (FileReader) {
+      var fr = new FileReader();
+      fr.onload = function () {
+        preview.current.src = fr.result;
+        document.getElementById("header-img").setAttribute("src", fr.result);
+        document.getElementById("header-img").style.borderRadius = "50%";
+        document.getElementById("header-img").style.objectFit = "contains";
+      };
+      fr.readAsDataURL(file);
+    } else {
+      alert("Image upadted please refresh ✔");
+    }
   };
   const handlePreview = (e) => {
     let files = e.target.files;
