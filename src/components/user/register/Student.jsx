@@ -51,7 +51,7 @@ const StudentRegister = () => {
     });
     const res = await req.json();
     if (res.payload) {
-      addToast("Email Already Taken!", {
+      addToast(<FormattedMessage id="email.token" defaultMessage="Email Already Taken." />, {
         appearance: "error",
       });
       setEmailAlreadyExist(true);
@@ -70,7 +70,7 @@ const StudentRegister = () => {
       }
     }
     if (errors > 0) {
-      addToast("Please Fill all Form!", {
+      addToast("Please Fill all Form.", {
         appearance: "warning",
         autoDismiss: 4000,
       });
@@ -79,14 +79,14 @@ const StudentRegister = () => {
     }
     // emailExist Error
     if (emailAlreadyExist) {
-      addToast("Email Already Taken!", {
+      addToast(<FormattedMessage id="email.token" defaultMessage="Email Already Taken." />, {
         appearance: "error",
       });
       return;
     }
     // check semester 1 - 8
     if (Number(inputs.semester) < 1 || Number(inputs.semester) > 8) {
-      addToast("Semester must be between 1 to 8!", {
+      addToast("Semester must be between 1 to 8.", {
         appearance: "warning",
         autoDismiss: 4000,
       });
@@ -94,7 +94,7 @@ const StudentRegister = () => {
     }
     // check email
     if (!checkEmail(inputs.email)) {
-      addToast("Invalid Email Address!", {
+      addToast(<FormattedMessage id="email.invalid" defaultMessage="Invalid email address." />, {
         appearance: "warning",
         autoDismiss: 4000,
       });
@@ -113,7 +113,10 @@ const StudentRegister = () => {
       setSendEmail(true);
     } else {
       setLoading(false);
-      addToast("Error While Registring!!", {
+      addToast(<FormattedMessage
+        defaultMessage="Error Please Try Again."
+        id="breakPlan.Error"
+      />, {
         appearance: "error",
         autoDismiss: 8000,
       });
@@ -144,19 +147,24 @@ const StudentRegister = () => {
                           />{" "}
                           *
                         </Form.Label>
-                        <Form.Control
-                          className={style.formInput}
-                          type="text"
-                          placeholder="First Name"
-                          name="f_name"
-                          disabled={loading}
-                          onChange={(e) =>
-                            setInputs({
-                              ...inputs,
-                              [e.target.name]: e.target.value,
-                            })
-                          }
-                        />
+                        <FormattedMessage defaultMessage="First Name"
+                          id="fname">
+                          {(msg) => (
+                            <Form.Control
+                              className={style.formInput}
+                              type="text"
+                              placeholder={msg}
+                              name="f_name"
+                              disabled={loading}
+                              onChange={(e) =>
+                                setInputs({
+                                  ...inputs,
+                                  [e.target.name]: e.target.value,
+                                })
+                              }
+                            />
+                          )}
+                        </FormattedMessage>
                       </Form.Group>
                     </Col>
                     <Col xl="6">
@@ -168,19 +176,24 @@ const StudentRegister = () => {
                           />{" "}
                           *
                         </Form.Label>
-                        <Form.Control
-                          className={style.formInput}
-                          type="text"
-                          placeholder="Last name"
-                          name="l_name"
-                          disabled={loading}
-                          onChange={(e) =>
-                            setInputs({
-                              ...inputs,
-                              [e.target.name]: e.target.value,
-                            })
-                          }
-                        />
+                        <FormattedMessage defaultMessage="Last Name"
+                          id="lname">
+                          {(msg) => (
+                            <Form.Control
+                              className={style.formInput}
+                              type="text"
+                              placeholder={msg}
+                              name="l_name"
+                              disabled={loading}
+                              onChange={(e) =>
+                                setInputs({
+                                  ...inputs,
+                                  [e.target.name]: e.target.value,
+                                })
+                              }
+                            />
+                          )}
+                        </FormattedMessage>
                       </Form.Group>
                     </Col>
                   </Row>
@@ -192,7 +205,7 @@ const StudentRegister = () => {
                       <Form.Control
                         className={style.formInput}
                         type="text"
-                        placeholder="Enter email"
+                        placeholder="E-mail"
                         name="email"
                         disabled={loading}
                         onChange={(e) =>
@@ -215,19 +228,24 @@ const StudentRegister = () => {
                           />{" "}
                           *
                         </Form.Label>
-                        <Form.Control
-                          className={style.formInput}
-                          type="text"
-                          placeholder="University"
-                          name="university"
-                          disabled={loading}
-                          onChange={(e) =>
-                            setInputs({
-                              ...inputs,
-                              [e.target.name]: e.target.value,
-                            })
-                          }
-                        />
+                        <FormattedMessage defaultMessage="University"
+                          id="un">
+                          {(msg) => (
+                            <Form.Control
+                              className={style.formInput}
+                              type="text"
+                              placeholder={msg}
+                              name="university"
+                              disabled={loading}
+                              onChange={(e) =>
+                                setInputs({
+                                  ...inputs,
+                                  [e.target.name]: e.target.value,
+                                })
+                              }
+                            />
+                          )}
+                        </FormattedMessage>
                       </Form.Group>
                     </Col>
                     <Col xl="6">
@@ -257,19 +275,23 @@ const StudentRegister = () => {
                         <FormattedMessage defaultMessage="Studies" id="study" />{" "}
                         *
                       </Form.Label>
-                      <Form.Control
-                        className={style.formInput}
-                        type="text"
-                        placeholder="studies"
-                        name="studies"
-                        disabled={loading}
-                        onChange={(e) =>
-                          setInputs({
-                            ...inputs,
-                            [e.target.name]: e.target.value,
-                          })
-                        }
-                      />
+                      <FormattedMessage defaultMessage="Studies" id="study">
+                        {(msg) => (
+                          <Form.Control
+                            className={style.formInput}
+                            type="text"
+                            placeholder={msg}
+                            name="studies"
+                            disabled={loading}
+                            onChange={(e) =>
+                              setInputs({
+                                ...inputs,
+                                [e.target.name]: e.target.value,
+                              })
+                            }
+                          />
+                        )}
+                      </FormattedMessage>
                     </Form.Group>
                   </Col>
                   <Row>
@@ -410,16 +432,16 @@ const StudentRegister = () => {
               <Icon icon="emojione:white-heavy-check-mark" />
             </div>
             <h2 className="text-center mt-2">
-              Message sent successfully to your email
+              <FormattedMessage id="reg.sentEmail" defaultMessage="Message sent successfully to your email" />
             </h2>
             <h2 className="text-center mt-2">
-              Please check your email and continue registering from here.
+              <FormattedMessage id="reg.continue" defaultMessage="Please check your email and continue from there" />
             </h2>
             <h6 className="text-center mt-2">
               <b>Note:</b> You have 2 houres to complete your registration!
             </h6>
             <h4 className="text-center mt-2">
-              Click open <a href="http://gmail.com/"> Email</a>
+              Click open <a href="http://gmail.com/"> <FormattedMessage id="label.email" defaultMessage="Email" /></a>
             </h4>
           </Col>
         </Row>

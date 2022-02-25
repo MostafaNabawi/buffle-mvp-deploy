@@ -19,7 +19,7 @@ function Hashtag() {
     if (data.length === 0) {
       return (
         <div>
-          <Alert variant="info">Tag Not Found!</Alert>
+          <Alert variant="info">Tag Not Found.</Alert>
         </div>
       );
     }

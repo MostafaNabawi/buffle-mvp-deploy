@@ -25,7 +25,7 @@ const ForgetPassword = () => {
           ...previousState,
           emailError: (
             <FormattedMessage
-              defaultMessage="Email is required!"
+              defaultMessage="Email is required."
               id="email.required"
             />
           ),
@@ -39,7 +39,7 @@ const ForgetPassword = () => {
           ...previousState,
           emailError: (
             <FormattedMessage
-              defaultMessage="Email is invalid!"
+              defaultMessage="Email is invalid."
               id="email.invalid"
             />
           ),
@@ -76,7 +76,7 @@ const ForgetPassword = () => {
               ...previousState,
               serverError: (
                 <FormattedMessage
-                  defaultMessage="User by this email not found!"
+                  defaultMessage="User by this email not found."
                   id="acc.err"
                 />
               ),
@@ -197,7 +197,7 @@ const ForgetPassword = () => {
               Please check your email and continue reset password from there.
             </h2>
             <h6 className="text-center mt-2">
-              <b>Note:</b> You have 20 minutes to complete your reset password!
+              <b>Note:</b> You have 20 minutes to complete your reset password
             </h6>
             <h4 className="text-center mt-2">
               Click open <a href="http://gmail.com/"> Email</a>

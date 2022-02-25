@@ -3,6 +3,7 @@ import { setProjectToItem } from "../../../api";
 import Select from 'react-select';
 import { useToasts } from 'react-toast-notifications';
 import PulseLoader from "react-spinners/PulseLoader";
+import { FormattedMessage } from "react-intl";
 
 function Project(props) {
   const { handleClick, value, project, handleSetProjct } = props;
@@ -13,10 +14,14 @@ function Project(props) {
     handleSetProjct(val.label)
     const update = await setProjectToItem(itemId, val.value);
     if (update.status === 200) {
-      addToast("Project set successfully", { autoDismiss: true, appearance: 'success' });
+      addToast(<FormattedMessage id="project.set" defaultMessage="Project set successfully" />, { autoDismiss: true, appearance: 'success' });
     }
     else {
-      addToast("Error! Please Try Again!", { autoDismiss: false, appearance: 'error' });
+      addToast
+        (<FormattedMessage
+          defaultMessage="Error Please Try Again."
+          id="breakPlan.Error"
+        />, { autoDismiss: false, appearance: 'error' });
     }
   }
   return (

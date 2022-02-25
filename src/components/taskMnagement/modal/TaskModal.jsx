@@ -92,7 +92,7 @@ function TaskModal(props) {
     };
     const updateT = await updateTask(data);
     if (updateT.status === 200) {
-      addToast("Item susseccfully updated", {
+      addToast(<FormattedMessage id="item.update" defaultMessage="Item updated successfully" />, {
         autoDismiss: true,
         appearance: "success",
       });
@@ -101,7 +101,11 @@ function TaskModal(props) {
       handleCheck('');
 
     } else {
-      addToast("Error! Please Try Again!", {
+      addToast(
+        <FormattedMessage
+          defaultMessage="Error Please Try Again."
+          id="breakPlan.Error"
+        />, {
         autoDismiss: false,
         appearance: "error",
       });
