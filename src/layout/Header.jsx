@@ -764,7 +764,7 @@ const Header = () => {
                   <span className="icon-flage">
                     <Icon icon="flag:de-4x3" />
                   </span>
-                  Destuch
+                  Deutsch
                 </Dropdown.Item>
               </DropdownButton>
               {workspace.length > 0 && (
