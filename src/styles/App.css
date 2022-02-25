@@ -462,10 +462,12 @@ ul.sidebar-list-scroll > li {
   padding-top: 5px;
 }
 .sidebar-icon {
+  margin-top: 2px !important;
   width: 45px !important;
   height: 43px !important;
 }
 .sidebar-icon2 {
+  margin-top: 2px !important;
   width: 35px !important;
   height: 35px !important;
 }
@@ -814,10 +816,11 @@ div.check-box > input {
   z-index: 100 !important;
 }
 .break-plan-card {
-  height: 170px !important ;
+  height: 163px !important ;
   overflow-x: hidden !important;
   overflow-y: auto;
   padding: 10px !important;
+  padding-top: 0px !important;
   scrollbar-width: thin !important;
 }
 .important-today-card-body {
@@ -1018,3 +1021,4 @@ div.check-box > input {
 .bt_1ln56ky:hover {
   transform: translateY(-5px);
 }
+

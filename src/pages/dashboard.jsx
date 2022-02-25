@@ -716,12 +716,20 @@ const Dashboard = () => {
                 />
               }
               action={
-                <Link to={"feel-report"}>
-                  <Icon color="#2a3464" icon="iconoir:reports" />
-                </Link>
+                <NavDropdown
+                  className="reminderNav"
+                  title={<Icon color="black" icon="vaadin:ellipsis-dots-v" />}
+                  id="basic-nav-dropdown"
+                >
+                  <NavDropdown.Item>
+                    <Link to={"feel-report"} className="customLink">
+                      <Icon color="#2a3464" icon="iconoir:reports" /> Report
+                    </Link>
+                  </NavDropdown.Item>
+                </NavDropdown>
               }
             />
-            <div className="pt-3 pb-0 mb-0 card-feel-icon ">
+            <div className="pt-1 pb-0 mb-0 card-feel-icon ">
               <Felling />
             </div>
           </Card>
@@ -836,7 +844,7 @@ const Dashboard = () => {
                               {props.days > 0 ? (
                                 <FormattedMessage
                                   values={{
-                                    houres: props.day,
+                                    days: props.day,
                                   }}
                                   defaultMessage={`${props.days + 1} Days`}
                                   id="app.dashboard.vacation.days"
@@ -922,8 +930,9 @@ const Dashboard = () => {
               }
               subtitle={
                 <FormattedMessage
-                  defaultMessage={`${opan < 0 ? 0 : opan} open, ${start < 0 ? 0 : start
-                    } start.`}
+                  defaultMessage={`${opan < 0 ? 0 : opan} open, ${
+                    start < 0 ? 0 : start
+                  } start.`}
                   id="app.task.open"
                   values={{
                     num: opan < 0 ? 0 : opan,
@@ -1040,19 +1049,30 @@ const Dashboard = () => {
                 />
               }
               action={
-                <i
-                  onClick={() => {
-                    setEditData("");
-                    setBreakPlanFrom(true);
-                    setBreakJoinOrSagest(false);
-                    setBreakNewTime(false);
-                    setInvateForm(true);
-                  }}
-                  className="invaleIcone"
+                <NavDropdown
+                  className="reminderNav"
+                  title={<Icon color="black" icon="vaadin:ellipsis-dots-v" />}
+                  id="basic-nav-dropdown"
                 >
-                  <Icon icon="flat-color-icons:invite" />{" "}
-                  <FormattedMessage defaultMessage="Invite" id="app.invite" />
-                </i>
+                  <NavDropdown.Item>
+                    <i
+                      onClick={() => {
+                        setEditData("");
+                        setBreakPlanFrom(true);
+                        setBreakJoinOrSagest(false);
+                        setBreakNewTime(false);
+                        setInvateForm(true);
+                      }}
+                      className="invaleIcone"
+                    >
+                      <Icon icon="flat-color-icons:invite" />{" "}
+                      <FormattedMessage
+                        defaultMessage="Invite"
+                        id="app.invite"
+                      />
+                    </i>
+                  </NavDropdown.Item>
+                </NavDropdown>
               }
             />
             <div>
@@ -1108,25 +1128,25 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                  id: data._id,
-                                  name: data.name,
-                                  time: data.time,
-                                })
+                                    id: data._id,
+                                    name: data.name,
+                                    time: data.time,
+                                  })
                                 : joinOrNewSuggestForm(
-                                  {
-                                    id: data.user[0]._id,
-                                    breackName: data.name,
-                                  },
-                                  {
-                                    fullName:
-                                      currentUser.first_name +
-                                      " " +
-                                      currentUser.last_name,
-                                    breakName: data.name,
-                                    breakOwnerId: data.user[0]._id,
-                                    breakId: data._id,
-                                  }
-                                );
+                                    {
+                                      id: data.user[0]._id,
+                                      breackName: data.name,
+                                    },
+                                    {
+                                      fullName:
+                                        currentUser.first_name +
+                                        " " +
+                                        currentUser.last_name,
+                                      breakName: data.name,
+                                      breakOwnerId: data.user[0]._id,
+                                      breakId: data._id,
+                                    }
+                                  );
                             }}
                             className="break-type"
                           >
@@ -1138,20 +1158,20 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                  id: data._id,
-                                  name: data.name,
-                                  time: data.time,
-                                })
+                                    id: data._id,
+                                    name: data.name,
+                                    time: data.time,
+                                  })
                                 : timeFormBreakplan({
-                                  time: "",
-                                  recevier: data.user[0]._id,
-                                  fullName:
-                                    currentUser.first_name +
-                                    "" +
-                                    currentUser.last_name,
-                                  breakName: data.name,
-                                  breakId: data._id,
-                                });
+                                    time: "",
+                                    recevier: data.user[0]._id,
+                                    fullName:
+                                      currentUser.first_name +
+                                      "" +
+                                      currentUser.last_name,
+                                    breakName: data.name,
+                                    breakId: data._id,
+                                  });
                             }}
                           >
                             {data.time}
@@ -1222,21 +1242,6 @@ const Dashboard = () => {
                 <Col md={6}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>
-                      <FormattedMessage defaultMessage="Date" id="label.date" />{" "}
-                    </Form.Label>
-                    <Form.Control
-                      name="data"
-                      type="date"
-                      value={vacationDataInput}
-                      onChange={(e) => {
-                        setVacationDataInput(e.target.value);
-                      }}
-                    />
-                  </Form.Group>
-                </Col>
-                <Col md={6}>
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>
                       <FormattedMessage defaultMessage="Name" id="label.name" />{" "}
                     </Form.Label>
                     <Form.Control
@@ -1245,6 +1250,21 @@ const Dashboard = () => {
                       value={vacationNameInput}
                       onChange={(e) => {
                         setVacationNameInput(e.target.value);
+                      }}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col md={6}>
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>
+                      <FormattedMessage defaultMessage="Date" id="label.date" />{" "}
+                    </Form.Label>
+                    <Form.Control
+                      name="data"
+                      type="date"
+                      value={vacationDataInput}
+                      onChange={(e) => {
+                        setVacationDataInput(e.target.value);
                       }}
                     />
                   </Form.Group>
@@ -1388,8 +1408,8 @@ const Dashboard = () => {
               <Button
                 disabled={
                   vacationNameInput === "" ||
-                    vacationDataInput === "" ||
-                    vacationLoader
+                  vacationDataInput === "" ||
+                  vacationLoader
                     ? true
                     : false
                 }
