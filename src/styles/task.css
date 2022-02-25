@@ -175,7 +175,7 @@ div.task-check-box > input {
 .col-header-time,
 .project-setting-icon {
   float: right !important;
-  color: rgb(158, 155, 155);
+  color: rgb(116, 116, 116);
   transition: 0.5s;
 }
 .project-setting-icon:hover {
