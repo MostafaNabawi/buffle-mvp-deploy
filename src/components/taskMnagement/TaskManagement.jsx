@@ -12,7 +12,6 @@ import withReactContent from "sweetalert2-react-content";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { FormattedMessage } from "react-intl";
-import moment from 'moment';
 
 const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
   const { addToast } = useToasts();
@@ -147,7 +146,6 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
       }
     });
   };
-
   return (
     <Row>
       {statuses.map((s) => {
@@ -155,7 +153,6 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
           <Col key={s.status} className={"col-wrapper secondary-dark"}>
             <div className={"col-header"}>
               <span><FormattedMessage defaultMessage={s.status} id={`day.${s.status}`} /></span>
-              <span className="important-today-week-date">25.02</span>
             </div>
             <hr />
             <DropWrapper onDrop={onDrop} status={s.status} idNumber={s.id} handleDrop={handleDrop}>
