@@ -21,7 +21,7 @@ const SideBar = () => {
           <Link to="/dashboard">
             <Image
               className="sidebar-icon"
-              src="/icone/countdown to break 3.png"
+              src="/icone/countdown to break 3.svg"
             />
           </Link>
         </li>
@@ -40,35 +40,35 @@ const SideBar = () => {
             <Link to="">
               <Image
                 className="sidebar-icon"
-                src="/icone/countdown to break 1.png"
+                src="/icone/countdown to break 1.svg"
               />
             </Link>
           </li>
           <li className="mt-3">
             <Link to="money-pool">
-              <Image className="sidebar-icon" src="/icone/kittysplit 1.png" />
+              <Image className="sidebar-icon" src="/icone/kittysplit 1.svg" />
             </Link>
           </li>
           <li className="mt-3">
             <Link to="/dashboard/taskmanagement">
-              <Image className="sidebar-icon" src="/icone/task manager 1.png" />
+              <Image className="sidebar-icon" src="/icone/task manager 1.svg" />
             </Link>
           </li>
           <li className="mt-3">
             <Link to="">
-              <Image className="sidebar-icon2" src="/icone/Vector2.png" />
+              <Image className="sidebar-icon2" src="/icone/Vector.svg" />
             </Link>
           </li>
           <li className="mt-3">
             <Link to="">
-              <Image className="sidebar-icon" src="/icone/eye 1.png" />
+              <Image className="sidebar-icon" src="/icone/eye 1.svg" />
             </Link>
           </li>
           <li className="mt-3">
             <Link to="">
               <Image
                 className="sidebar-icon"
-                src="/icone/exclamation-mark 7.png"
+                src="/icone/exclamation-mark 7.svg"
               />
             </Link>
           </li>
@@ -76,7 +76,7 @@ const SideBar = () => {
             <Link to="">
               <Image
                 className="sidebar-icon"
-                src="/icone/exclamation-mark 3.png"
+                src="/icone/exclamation-mark 3.svg"
               />
             </Link>
           </li>
@@ -84,7 +84,7 @@ const SideBar = () => {
             <Link to="">
               <Image
                 className="sidebar-icon"
-                src="/icone/exclamation-mark 4.png"
+                src="/icone/exclamation-mark 4.svg"
               />
             </Link>
           </li>
@@ -92,7 +92,7 @@ const SideBar = () => {
             <Link to="">
               <Image
                 className="sidebar-icon"
-                src="/icone/exclamation-mark 5.png"
+                src="/icone/exclamation-mark 5.svg"
               />
             </Link>
           </li>
@@ -100,7 +100,7 @@ const SideBar = () => {
             <Link to="">
               <Image
                 className="sidebar-icon"
-                src="/icone/exclamation-mark 6.png"
+                src="/icone/exclamation-mark 6.svg"
               />
             </Link>
           </li>
@@ -118,7 +118,7 @@ const SideBar = () => {
       <ul className="m-0 sidebar-list">
         <li className="mt-3">
           <Link to="/dashboard/setting">
-            <Image className="sidebar-icon" src="/icone/blue-book 1.png" />
+            <Image className="sidebar-icon" src="/icone/blue-book 1.svg" />
           </Link>
         </li>
       </ul>
