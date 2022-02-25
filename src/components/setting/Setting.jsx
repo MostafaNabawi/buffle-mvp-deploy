@@ -1,36 +1,73 @@
-import { React, useState } from "react";
-import { Col, Card, ListGroup, Button, Form } from "react-bootstrap";
+import { Fragment, useEffect, useState, useMemo } from "react";
+import { Col, Card, ListGroup, Button, Form, Row } from "react-bootstrap";
 import { Icon } from "@iconify/react";
 import style from "./style.module.css";
 import { API_URL } from "../../config/index";
 import { checkEmail } from "../../config/utils";
 import PulseLoader from "react-spinners/PulseLoader";
 import { useToasts } from "react-toast-notifications";
+import CurrencyList from "currency-list";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
 const Setting = () => {
   const { addToast } = useToasts();
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+  const [loadingTwo, setLoadingTwo] = useState(false);
   const [loadingRege, setLoadingReg] = useState(false);
   const [copyValue, setCopyValue] = useState("");
   const [copied, setCopied] = useState(false);
+  const [currencyData, setCurrencyData] = useState(null);
+  const [defaultPrefrence, setDefaultPrefrence] = useState(null);
+  useEffect(() => {
+    setCurrencyData(Object.values(CurrencyList.getAll("en_US")));
+    async function getSettings() {
+      const req = await fetch(`${API_URL}/user/settings`, {
+        credentials: "include",
+      });
+      const res = await req.json();
+      if (res?.data) {
+        setDefaultPrefrence({
+          lang: res?.data?.language,
+          currency: res?.data?.currency,
+        });
+      } else {
+        setDefaultPrefrence({
+          lang: "en",
+          currency: "USD",
+        });
+      }
+    }
+    getSettings();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (email === "") {
-      addToast(<FormattedMessage id="email.required" defaultMessage="Email is required.  👀" />, {
-        appearance: "warning",
-        autoDismiss: 4000,
-      });
+      addToast(
+        <FormattedMessage
+          id="email.required"
+          defaultMessage="Email is required.  👀"
+        />,
+        {
+          appearance: "warning",
+          autoDismiss: 4000,
+        }
+      );
       return;
     }
     if (!checkEmail(email)) {
-      addToast(<FormattedMessage id="email.invalid" defaultMessage="Email is invalid" />, {
-        appearance: "warning",
-        autoDismiss: 4000,
-      });
+      addToast(
+        <FormattedMessage
+          id="email.invalid"
+          defaultMessage="Email is invalid"
+        />,
+        {
+          appearance: "warning",
+          autoDismiss: 4000,
+        }
+      );
       return;
     }
     try {
@@ -48,10 +85,16 @@ const Setting = () => {
       }).then((res) => {
         if (res.status === 200) {
           setLoading(false);
-          addToast(<FormattedMessage id="setting.invite" defaultMessage="Invitation email send." />, {
-            appearance: "success",
-            autoDismiss: 4000,
-          });
+          addToast(
+            <FormattedMessage
+              id="setting.invite"
+              defaultMessage="Invitation email send."
+            />,
+            {
+              appearance: "success",
+              autoDismiss: 4000,
+            }
+          );
           setEmail("");
         } else {
           addToast("This email was not register in buffle. please try again.", {
@@ -81,13 +124,16 @@ const Setting = () => {
           setLoadingReg(false);
           setCopyValue(link);
         } else {
-          addToast(<FormattedMessage
-            defaultMessage="Error Please Try Again."
-            id="breakPlan.Error"
-          />, {
-            appearance: "error",
-            autoDismiss: 4000,
-          });
+          addToast(
+            <FormattedMessage
+              defaultMessage="Error Please Try Again."
+              id="breakPlan.Error"
+            />,
+            {
+              appearance: "error",
+              autoDismiss: 4000,
+            }
+          );
           setLoadingReg(false);
         }
       });
@@ -95,6 +141,120 @@ const Setting = () => {
       setLoadingReg(false);
     }
   };
+  const handlePrefrence = async (e) => {
+    e.preventDefault();
+    setLoadingTwo(true);
+    console.log("Hahaha", defaultPrefrence);
+    fetch(`${API_URL}/user/settings`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        lang: defaultPrefrence.lang,
+        currency: defaultPrefrence.currency,
+      }),
+    }).then((res) => {
+      if (res.status === 200) {
+        addToast("Prefrence updated.", {
+          autoDismiss: 6000,
+          appearance: "success",
+        });
+        setLoadingTwo(false);
+      } else {
+        addToast("Error while updating.", {
+          autoDismiss: 6000,
+          appearance: "error",
+        });
+        setLoadingTwo(false);
+      }
+    });
+  };
+  const dynamic = useMemo(() => {
+    if (defaultPrefrence) {
+      return (
+        <Card>
+          <ListGroup variant="flush">
+            <ListGroup.Item className="pb-3">
+              <h4>
+                <FormattedMessage defaultMessage="Preference" id="prefrence" />
+              </h4>
+            </ListGroup.Item>
+            <Form onSubmit={handlePrefrence}>
+              <Row>
+                <Col xl={6}>
+                  <Form.Group className="mt-3">
+                    <Form.Label>
+                      <FormattedMessage
+                        defaultMessage="Language"
+                        id="app.header.language"
+                      />
+                    </Form.Label>
+                    <Form.Select
+                      className={style.hide}
+                      name="lang"
+                      disabled={loadingTwo}
+                      defaultValue={defaultPrefrence.lang}
+                      onChange={(e) => {
+                        setDefaultPrefrence((prev) => {
+                          return { ...prev, lang: e.target.value };
+                        });
+                      }}
+                    >
+                      <option value="en">English</option>
+                      <option value="de">Deutsch</option>
+                    </Form.Select>
+                  </Form.Group>
+                </Col>
+                <Col xl={6} className="mt-3">
+                  <Form.Label>
+                    <FormattedMessage
+                      defaultMessage="Currency"
+                      id="app.header.currency"
+                    />
+                  </Form.Label>
+                  <Form.Select
+                    className={style.hide}
+                    name="image"
+                    disabled={loadingTwo}
+                    defaultValue={defaultPrefrence.currency}
+                    onChange={(e) => {
+                      setDefaultPrefrence((prev) => {
+                        return { ...prev, currency: e.target.value };
+                      });
+                    }}
+                  >
+                    {currencyData &&
+                      currencyData.map((currency, i) => (
+                        <Fragment key={`${i}-currency`}>
+                          <option
+                            value={currency?.code}
+                            // selected={
+                            //   currency?.code === defaultPrefrence.currency
+                            // }
+                          >
+                            {currency?.name} ({currency?.code})
+                          </option>
+                        </Fragment>
+                      ))}
+                  </Form.Select>
+                </Col>
+              </Row>
+              <Button
+                disabled={loadingTwo}
+                className="mt-2"
+                variant="primary"
+                type="submit"
+              >
+                {loadingTwo ? <PulseLoader size={10} /> : "Send"}
+              </Button>
+            </Form>
+          </ListGroup>
+        </Card>
+      );
+    }
+  }, [defaultPrefrence]);
   return (
     <Col xl="8" className="pt-5">
       <Card>
@@ -136,7 +296,12 @@ const Setting = () => {
       <Card>
         <ListGroup variant="flush">
           <ListGroup.Item className="pb-3">
-            <h4><FormattedMessage id="breakPlan.inviteEmail" defaultMessage="Invite Email" /></h4>
+            <h4>
+              <FormattedMessage
+                id="breakPlan.inviteEmail"
+                defaultMessage="Invite Email"
+              />
+            </h4>
           </ListGroup.Item>
           <ListGroup.Item className="pb-3">
             <Form onSubmit={handleSubmit}>
@@ -160,6 +325,84 @@ const Setting = () => {
           </ListGroup.Item>
         </ListGroup>
       </Card>
+      {dynamic}
+      {/* <Card>
+        <ListGroup variant="flush">
+          <ListGroup.Item className="pb-3">
+            <h4>
+              <FormattedMessage defaultMessage="Preference" id="prefrence" />
+            </h4>
+          </ListGroup.Item>
+          <Form onSubmit={handlePrefrence}>
+            <Row>
+              <Col xl={6}>
+                <Form.Group className="mt-3">
+                  <Form.Label>
+                    <FormattedMessage
+                      defaultMessage="Language"
+                      id="app.header.language"
+                    />
+                  </Form.Label>
+                  <Form.Select
+                    className={style.hide}
+                    name="lang"
+                    disabled={loadingTwo}
+                    defaultValue={defaultPrefrence.lang}
+                    onChange={(e) => {
+                      setDefaultPrefrence((prev) => {
+                        return { ...prev, lang: e.target.value };
+                      });
+                    }}
+                  >
+                    <option value="en">English</option>
+                    <option value="de">Deutsch</option>
+                  </Form.Select>
+                </Form.Group>
+              </Col>
+              <Col xl={6} className="mt-3">
+                <Form.Label>
+                  <FormattedMessage
+                    defaultMessage="Currency"
+                    id="app.header.currency"
+                  />
+                </Form.Label>
+                <Form.Select
+                  className={style.hide}
+                  name="image"
+                  disabled={loadingTwo}
+                  onChange={(e) => {
+                    setDefaultPrefrence((prev) => {
+                      return { ...prev, currency: e.target.value };
+                    });
+                  }}
+                >
+                  {currencyData &&
+                    currencyData.map((currency, i) => (
+                      <Fragment key={`${i}-currency`}>
+                        <option
+                          value={currency?.code}
+                          selected={
+                            currency?.code === defaultPrefrence.currency
+                          }
+                        >
+                          {currency?.name} ({currency?.code})
+                        </option>
+                      </Fragment>
+                    ))}
+                </Form.Select>
+              </Col>
+            </Row>
+            <Button
+              disabled={loadingTwo}
+              className="mt-2"
+              variant="primary"
+              type="submit"
+            >
+              {loadingTwo ? <PulseLoader size={10} /> : "Send"}
+            </Button>
+          </Form>
+        </ListGroup>
+      </Card> */}
     </Col>
   );
 };

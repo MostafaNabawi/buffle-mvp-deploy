@@ -9,6 +9,7 @@
   "app.hi": " Hallo",
   "app.screenLock": "Bildschirmsperre für",
   "app.header.language": "Sprache",
+  "app.header.currency": "Währung",
   "app.requiredAll": "Bitte alle erforderlichen Felder ausfüllen.",
   "app.waterHydretion": "Trink!",
   "app.noAccount": "Wenn du noch keinen Account hast?",
@@ -275,5 +276,6 @@
   "item.color": "Farbset erfolgreich",
   "tag.added": "Tag hinzugefügt",
   "reg.sentEmail": "Die E-Mail ist erfoglreich versendet worden.",
-  "reg.continue": "Please check your email and continue from there"
+  "reg.continue": "Please check your email and continue from there",
+  "prefrence": "Präferenz"
 }
