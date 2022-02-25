@@ -1012,3 +1012,9 @@ div.check-box > input {
 .icon-flage {
   margin-right: 5px !important;
 }
+.bt_1t4hv5t {
+  transition: transform 300ms;
+}
+.bt_1ln56ky:hover {
+  transform: translateY(-5px);
+}
