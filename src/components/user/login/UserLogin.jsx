@@ -422,7 +422,7 @@ const UserLogin = () => {
                     label={
                       <FormattedMessage
                         id="app.login.checkout"
-                        defaultMessage="check me out"
+                        defaultMessage="Remember me."
                       />
                     }
                     disabled={loading}
