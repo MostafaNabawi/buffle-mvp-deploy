@@ -547,32 +547,6 @@ const Header = () => {
           />
         )}
       </div>
-      {/* 
-            <NavDropdown
-              title={
-                <Icon
-                  className="lan"
-                  color="blue"
-                  fontSize={35}
-                  icon="ant-design:global-outlined"
-                />
-              }
-              className="navDropdomnIcon"
-            >
-              <Dropdown.Item onClick={() => setLang("de")}>
-                <span className="icon-flage">
-                  <Icon icon="flag:de-4x3" />
-                </span>
-                Destch
-              </Dropdown.Item>
-              <Dropdown.Item onClick={() => setLang("en")}>
-                <span className="icon-flage">
-                  <Icon icon="flagpack:us" />
-                </span>
-                English
-              </Dropdown.Item>
-            </NavDropdown>
-*/}
       <Row className="mb-4">
         <Col className="col-6 text-secondary-dark header-thank mt-3">
           <DynamicInspiration />
@@ -760,7 +734,7 @@ const Header = () => {
                   </span>
                   English
                 </Dropdown.Item>
-                <Dropdown.Item key={`lang-1`} onClick={() => setLang("de")}>
+                <Dropdown.Item key={`lang-2`} onClick={() => setLang("de")}>
                   <span className="icon-flage">
                     <Icon icon="flag:de-4x3" />
                   </span>
@@ -838,11 +812,9 @@ const Header = () => {
                   User Management
                 </NavDropdown.Item>
               )}
-              {showUserRoute && (
-                <NavDropdown.Item as={Link} to="/dashboard/setting">
-                  <FormattedMessage defaultMessage="Settings" id="settings" />
-                </NavDropdown.Item>
-              )}
+              <NavDropdown.Item as={Link} to="/dashboard/setting">
+                <FormattedMessage defaultMessage="Settings" id="settings" />
+              </NavDropdown.Item>
               <NavDropdown.Item onClick={handleLogout}>
                 <FormattedMessage defaultMessage="Logout" id="prof.logout" />
               </NavDropdown.Item>

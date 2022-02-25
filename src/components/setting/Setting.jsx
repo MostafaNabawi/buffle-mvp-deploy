@@ -20,6 +20,8 @@ const Setting = () => {
   const [copied, setCopied] = useState(false);
   const [currencyData, setCurrencyData] = useState(null);
   const [defaultPrefrence, setDefaultPrefrence] = useState(null);
+  const space = localStorage.getItem("space");
+
   useEffect(() => {
     setCurrencyData(Object.values(CurrencyList.getAll("en_US")));
     async function getSettings() {
@@ -257,152 +259,83 @@ const Setting = () => {
   }, [defaultPrefrence]);
   return (
     <Col xl="8" className="pt-5">
-      <Card>
-        <ListGroup variant="flush">
-          <ListGroup.Item className="pb-3">
-            <h4>Invite Link</h4>
-            {copyValue ? (
-              <i>{copyValue}</i>
-            ) : (
-              <p className="mt-2">
-                Click to regeneration button for generate invite link
-              </p>
-            )}
-          </ListGroup.Item>
-          <ListGroup.Item>
-            <CopyToClipboard
-              text={copyValue}
-              onCopy={() => {
-                setCopied(true);
-              }}
-            >
-              <Button disabled={copyValue ? false : true} className={style.btn}>
-                <Icon icon="akar-icons:copy" />
-                {copied ? ` Copied` : "Copy to clipboard"}
-              </Button>
-            </CopyToClipboard>
-            <Button
-              disabled={loadingRege}
-              onClick={() => {
-                handleRegeneration();
-              }}
-              className={style.btn}
-            >
-              {loadingRege ? <PulseLoader size={10} /> : " Regeneration"}
-            </Button>
-          </ListGroup.Item>
-        </ListGroup>
-      </Card>
-      <Card>
-        <ListGroup variant="flush">
-          <ListGroup.Item className="pb-3">
-            <h4>
-              <FormattedMessage
-                id="breakPlan.inviteEmail"
-                defaultMessage="Invite Email"
-              />
-            </h4>
-          </ListGroup.Item>
-          <ListGroup.Item className="pb-3">
-            <Form onSubmit={handleSubmit}>
-              <Form.Group
-                className="input-group mb-3 mt-3"
-                controlId="formBasicEmail"
-              >
-                <Form.Control
-                  disabled={loading}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                  }}
-                  type="email"
-                  placeholder="Enter email"
-                />
-                <Button disabled={loading} variant="primary" type="submit">
-                  {loading ? <PulseLoader size={10} /> : "Send"}
-                </Button>
-              </Form.Group>
-            </Form>
-          </ListGroup.Item>
-        </ListGroup>
-      </Card>
-      {dynamic}
-      {/* <Card>
-        <ListGroup variant="flush">
-          <ListGroup.Item className="pb-3">
-            <h4>
-              <FormattedMessage defaultMessage="Preference" id="prefrence" />
-            </h4>
-          </ListGroup.Item>
-          <Form onSubmit={handlePrefrence}>
-            <Row>
-              <Col xl={6}>
-                <Form.Group className="mt-3">
-                  <Form.Label>
-                    <FormattedMessage
-                      defaultMessage="Language"
-                      id="app.header.language"
-                    />
-                  </Form.Label>
-                  <Form.Select
-                    className={style.hide}
-                    name="lang"
-                    disabled={loadingTwo}
-                    defaultValue={defaultPrefrence.lang}
-                    onChange={(e) => {
-                      setDefaultPrefrence((prev) => {
-                        return { ...prev, lang: e.target.value };
-                      });
-                    }}
-                  >
-                    <option value="en">English</option>
-                    <option value="de">Deutsch</option>
-                  </Form.Select>
-                </Form.Group>
-              </Col>
-              <Col xl={6} className="mt-3">
-                <Form.Label>
-                  <FormattedMessage
-                    defaultMessage="Currency"
-                    id="app.header.currency"
-                  />
-                </Form.Label>
-                <Form.Select
-                  className={style.hide}
-                  name="image"
-                  disabled={loadingTwo}
-                  onChange={(e) => {
-                    setDefaultPrefrence((prev) => {
-                      return { ...prev, currency: e.target.value };
-                    });
+      {space === "c" || space === "a" ? (
+        <>
+          <Card>
+            <ListGroup variant="flush">
+              <ListGroup.Item className="pb-3">
+                <h4>Invite Link</h4>
+                {copyValue ? (
+                  <i>{copyValue}</i>
+                ) : (
+                  <p className="mt-2">
+                    Click to regeneration button for generate invite link
+                  </p>
+                )}
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <CopyToClipboard
+                  text={copyValue}
+                  onCopy={() => {
+                    setCopied(true);
                   }}
                 >
-                  {currencyData &&
-                    currencyData.map((currency, i) => (
-                      <Fragment key={`${i}-currency`}>
-                        <option
-                          value={currency?.code}
-                          selected={
-                            currency?.code === defaultPrefrence.currency
-                          }
-                        >
-                          {currency?.name} ({currency?.code})
-                        </option>
-                      </Fragment>
-                    ))}
-                </Form.Select>
-              </Col>
-            </Row>
-            <Button
-              disabled={loadingTwo}
-              className="mt-2"
-              variant="primary"
-              type="submit"
-            >
-              {loadingTwo ? <PulseLoader size={10} /> : "Send"}
-            </Button>
-          </Form>
-        </ListGroup>
-      </Card> */}
+                  <Button
+                    disabled={copyValue ? false : true}
+                    className={style.btn}
+                  >
+                    <Icon icon="akar-icons:copy" />
+                    {copied ? ` Copied` : "Copy to clipboard"}
+                  </Button>
+                </CopyToClipboard>
+                <Button
+                  disabled={loadingRege}
+                  onClick={() => {
+                    handleRegeneration();
+                  }}
+                  className={style.btn}
+                >
+                  {loadingRege ? <PulseLoader size={10} /> : " Regeneration"}
+                </Button>
+              </ListGroup.Item>
+            </ListGroup>
+          </Card>
+          <Card>
+            <ListGroup variant="flush">
+              <ListGroup.Item className="pb-3">
+                <h4>
+                  <FormattedMessage
+                    id="breakPlan.inviteEmail"
+                    defaultMessage="Invite Email"
+                  />
+                </h4>
+              </ListGroup.Item>
+              <ListGroup.Item className="pb-3">
+                <Form onSubmit={handleSubmit}>
+                  <Form.Group
+                    className="input-group mb-3 mt-3"
+                    controlId="formBasicEmail"
+                  >
+                    <Form.Control
+                      disabled={loading}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                      }}
+                      type="email"
+                      placeholder="Enter email"
+                    />
+                    <Button disabled={loading} variant="primary" type="submit">
+                      {loading ? <PulseLoader size={10} /> : "Send"}
+                    </Button>
+                  </Form.Group>
+                </Form>
+              </ListGroup.Item>
+            </ListGroup>
+          </Card>
+        </>
+      ) : null}
+
+      {dynamic}
     </Col>
   );
 };
