@@ -16,7 +16,9 @@ function WaterRepository(props) {
             <div className={style.reminder}>
               <span className={style.reminder_percent}>{precent}%</span>
               <span className={style.reminder_detail}>
-                {` ${Math.round(reminder)} of ${liter} `}
+                {` ${
+                  reminder === liter ? liter : Number(reminder).toFixed(2)
+                } of ${liter} `}
               </span>
             </div>
 

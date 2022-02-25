@@ -25,7 +25,7 @@ const ForgetPassword = () => {
           ...previousState,
           emailError: (
             <FormattedMessage
-              defaultMessage="Email is required!"
+              defaultMessage="Email is required."
               id="email.required"
             />
           ),
@@ -39,7 +39,7 @@ const ForgetPassword = () => {
           ...previousState,
           emailError: (
             <FormattedMessage
-              defaultMessage="Email is invalid!"
+              defaultMessage="Email is invalid."
               id="email.invalid"
             />
           ),
@@ -76,7 +76,7 @@ const ForgetPassword = () => {
               ...previousState,
               serverError: (
                 <FormattedMessage
-                  defaultMessage="User by this email not found!"
+                  defaultMessage="User by this email not found."
                   id="acc.err"
                 />
               ),
@@ -175,8 +175,9 @@ const ForgetPassword = () => {
               <div className={style.footer}>
                 <FormattedMessage
                   id="pass.remember"
-                  defaultMessage="Do you remember the password ?"
+                  defaultMessage="Do you remember the old password?"
                 />
+                <span style={{ marginLeft: "2px" }}></span>
                 <Link className={style.registerLink} to="/">
                   <FormattedMessage id="loginNow" defaultMessage="Login now" />
                 </Link>

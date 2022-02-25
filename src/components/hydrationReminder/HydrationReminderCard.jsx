@@ -256,7 +256,7 @@ function HydrationReminderCard() {
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>
                   <FormattedMessage
-                    defaultMessage="new daily goal(2L)"
+                    defaultMessage="new daily goal"
                     id="app.newDaily"
                   />{" "}
                 </Form.Label>

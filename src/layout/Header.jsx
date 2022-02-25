@@ -547,13 +547,7 @@ const Header = () => {
           />
         )}
       </div>
-
-      <Row className="mb-4">
-        <Col className="col-6 text-secondary-dark header-thank mt-3">
-          <DynamicInspiration />
-        </Col>
-        <Col className="col-6 header-col-left">
-          <div className="header-icon navy-blue text-center pt-2">
+      {/* 
             <NavDropdown
               title={
                 <Icon
@@ -569,7 +563,7 @@ const Header = () => {
                 <span className="icon-flage">
                   <Icon icon="flag:de-4x3" />
                 </span>
-                Desutch
+                Destch
               </Dropdown.Item>
               <Dropdown.Item onClick={() => setLang("en")}>
                 <span className="icon-flage">
@@ -578,7 +572,12 @@ const Header = () => {
                 English
               </Dropdown.Item>
             </NavDropdown>
-          </div>
+*/}
+      <Row className="mb-4">
+        <Col className="col-6 text-secondary-dark header-thank mt-3">
+          <DynamicInspiration />
+        </Col>
+        <Col className="col-6 header-col-left">
           <div className="header-icon navy-blue text-center pt-2">
             <NavDropdown
               title={
@@ -743,6 +742,31 @@ const Header = () => {
               <Dropdown.Item as={Link} to="/dashboard/profile">
                 <FormattedMessage defaultMessage="Profile" id="prof.profile" />
               </Dropdown.Item>
+              <DropdownButton
+                as={ButtonGroup}
+                id={`dropdown-button-drop-start`}
+                drop="start"
+                className="subDropdown"
+                title={
+                  <FormattedMessage
+                    defaultMessage="Language"
+                    id="app.header.workspace"
+                  />
+                }
+              >
+                <Dropdown.Item key={`lang-1`} onClick={() => setLang("en")}>
+                  <span className="icon-flage">
+                    <Icon icon="flagpack:us" />
+                  </span>
+                  English
+                </Dropdown.Item>
+                <Dropdown.Item key={`lang-1`} onClick={() => setLang("de")}>
+                  <span className="icon-flage">
+                    <Icon icon="flag:de-4x3" />
+                  </span>
+                  Destuch
+                </Dropdown.Item>
+              </DropdownButton>
               {workspace.length > 0 && (
                 <DropdownButton
                   as={ButtonGroup}
