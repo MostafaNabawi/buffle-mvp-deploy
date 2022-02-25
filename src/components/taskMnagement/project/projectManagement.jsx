@@ -379,11 +379,11 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
                   <BeatLoader />
                 </Button>
               ) : (
-                <Button variant="primary" onClick={handleSubmitProject}>
+                <Button variant="primary" title="" onClick={handleSubmitProject}>
                   <FormattedMessage id="btn.save" defaultMessage="Save" />
                 </Button>
               )}
-              <Button variant="outline-dark" onClick={handleClosePModal}><FormattedMessage id="btn.close" defaultMessage="Close" /></Button>
+              <Button variant="outline-dark" title="" onClick={handleClosePModal}><FormattedMessage id="btn.close" defaultMessage="Close" /></Button>
 
             </>
           }
@@ -518,11 +518,11 @@ const ProjectManagement = ({ value, handleGet, colorChange, handleDrop, pDrope, 
                   <BeatLoader />
                 </Button>
               ) : (
-                <Button variant="primary" onClick={handleSubmit}>
+                <Button variant="primary" title="" onClick={handleSubmit}>
                   <FormattedMessage id="btn.save" defaultMessage="Save" />
                 </Button>
               )}
-              <Button variant="outline-dark" onClick={handleClose}><FormattedMessage id="btn.close" defaultMessage="Close" /></Button>
+              <Button variant="outline-dark" title="" onClick={handleClose}><FormattedMessage id="btn.close" defaultMessage="Close" /></Button>
             </>
           }
         />

@@ -1391,6 +1391,7 @@ const Dashboard = () => {
                 }
                 variant="primary"
                 type="button"
+                title=""
                 onClick={() => {
                   creatVacationTime();
                 }}
@@ -1412,6 +1413,7 @@ const Dashboard = () => {
                   <PulseLoader size={12} color="#32cd32" />
                 ) : (
                   <Button
+                    title=""
                     disabled={nextBreakDateInput.length === 0 ? true : false}
                     variant="primary"
                     type="button"
@@ -1427,7 +1429,7 @@ const Dashboard = () => {
             )}
 
             {taskManager && (
-              <Button variant="primary" disabled={`${loading === true ? 'disabled' : ''}`} onClick={handleCreateTask}>
+              <Button variant="primary" title="" disabled={`${loading === true ? 'disabled' : ''}`} onClick={handleCreateTask}>
                 {loading === true ? (
                   <BeatLoader />
                 ) : (
@@ -1439,7 +1441,7 @@ const Dashboard = () => {
               </Button>
             )}
             {taskManagerUpdate && (
-              <Button variant="primary" onClick={updateSelectedTask}>
+              <Button variant="primary" title="" onClick={updateSelectedTask}>
                 {loading === true ? (
                   <BeatLoader />
                 ) : (
@@ -1447,7 +1449,7 @@ const Dashboard = () => {
                 )}
               </Button>
             )}
-            <Button variant="outline-dark" onClick={handleClose}>
+            <Button variant="outline-dark" title="" onClick={handleClose}>
               <FormattedMessage defaultMessage="Close" id="btn.close" />
             </Button>
           </>

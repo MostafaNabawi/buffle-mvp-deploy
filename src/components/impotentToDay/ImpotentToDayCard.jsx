@@ -200,11 +200,11 @@ function ImpotentToDayCard({ handleMove }) {
                 <BeatLoader />
               </Button>
             ) : (
-              <Button variant="primary" onClick={handleSubmit}>
+              <Button variant="primary" title="" onClick={handleSubmit}>
                 <FormattedMessage id="btn.move" defaultMessage="Move" />
               </Button>
             )}
-            <Button variant="outline-dark" onClick={handleClose}>
+            <Button variant="outline-dark" title="" onClick={handleClose}>
               <FormattedMessage id="btn.cancel" defaultMessage="Cancel" />
             </Button>
           </>

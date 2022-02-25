@@ -200,7 +200,7 @@ function TaskModal(props) {
           </Modal.Body>
 
           <Modal.Footer className="important-today-modal-footer">
-            <Button variant="primary" type="button" onClick={handleKeyDownTask}>
+            <Button variant="primary" title="" type="button" onClick={handleKeyDownTask}>
               <FormattedMessage id="btn.save" defaultMessage="Save" />
             </Button>
           </Modal.Footer>
