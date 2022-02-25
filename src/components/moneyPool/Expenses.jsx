@@ -74,14 +74,22 @@ function Expenses() {
           dispatch(setCurrencyName(CurrencyList.get(currency).name));
           dispatch(setCurrencyCode(currency));
         } else {
-          addToast("Error Please Try Again!", {
+          addToast(
+            <FormattedMessage
+              defaultMessage="Error Please Try Again."
+              id="breakPlan.Error"
+            />, {
             autoDismiss: false,
             appearance: "error",
           });
         }
       });
     } catch (err) {
-      addToast("Error Please Try Again!", {
+      addToast(
+        <FormattedMessage
+          defaultMessage="Error Please Try Again."
+          id="breakPlan.Error"
+        />, {
         autoDismiss: false,
         appearance: "error",
       });

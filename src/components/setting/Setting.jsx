@@ -7,6 +7,7 @@ import { checkEmail } from "../../config/utils";
 import PulseLoader from "react-spinners/PulseLoader";
 import { useToasts } from "react-toast-notifications";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { FormattedMessage } from 'react-intl';
 
 const Setting = () => {
   const { addToast } = useToasts();
@@ -19,14 +20,14 @@ const Setting = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (email === "") {
-      addToast("Email is required!  👀", {
+      addToast(<FormattedMessage id="email.required" defaultMessage="Email is required.  👀" />, {
         appearance: "warning",
         autoDismiss: 4000,
       });
       return;
     }
     if (!checkEmail(email)) {
-      addToast("Invalid Email!", {
+      addToast(<FormattedMessage id="email.invalid" defaultMessage="Email is invalid" />, {
         appearance: "warning",
         autoDismiss: 4000,
       });

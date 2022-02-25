@@ -1,5 +1,5 @@
 {
-  "app.task.open": "{num} Öffnen, {start} Start",
+  "app.task.open": "{num} offen, {start} gestartet",
   "app.login.header": "E-Mail Adresse und Passwort eingeben.",
   "app.login.your": "Deine E-Mail Adresse",
   "app.login.google": "Login mit Google Konto",
@@ -185,6 +185,7 @@
   "event.recieved": "Hat Geld für etwas erhalten.",
   "event.addNewMem": "Personen hinzufügen",
   "event.userByThisEmail": "",
+  "event.addedSuc": "Erfolgreich hinzugefügt",
 
   "tb.noEvent": "Kein Ereignis",
   "_comment": "paimanText",

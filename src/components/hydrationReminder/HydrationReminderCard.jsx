@@ -196,7 +196,10 @@ function HydrationReminderCard() {
         dispatch(setIsChanged(true));
         setIsSubmit(!isSubmit);
       } else {
-        addToast("Error Please Try Again!", {
+        addToast(<FormattedMessage
+          defaultMessage="Error Please Try Again."
+          id="breakPlan.Error"
+        />, {
           autoDismiss: false,
           appearance: "error",
         });
@@ -256,7 +259,7 @@ function HydrationReminderCard() {
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>
                   <FormattedMessage
-                    defaultMessage="new daily goal(2L)"
+                    defaultMessage="new daily goal"
                     id="app.newDaily"
                   />{" "}
                 </Form.Label>

@@ -83,7 +83,7 @@ function BreackplanFrom({
       } else {
         addToast(
           <FormattedMessage
-            defaultMessage="Error Please Try Again!"
+            defaultMessage="Error Please Try Again."
             id="breakPlan.Error"
           />,
           {
@@ -132,7 +132,7 @@ function BreackplanFrom({
           } else {
             addToast(
               <FormattedMessage
-                defaultMessage="Error Please Try Again!"
+                defaultMessage="Error Please Try Again."
                 id="breakPlan.Error"
               />,
               {
@@ -144,7 +144,7 @@ function BreackplanFrom({
           }
         });
       } catch (err) {
-        addToast("Server Error Please Try Again!", {
+        addToast("Server Error Please Try Again.", {
           autoDismiss: false,
           appearance: "error",
         });
@@ -192,7 +192,7 @@ function BreackplanFrom({
           } else {
             addToast(
               <FormattedMessage
-                defaultMessage="Error Please Try Again!"
+                defaultMessage="Error Please Try Again."
                 id="breakPlan.Error"
               />,
               {
@@ -206,7 +206,7 @@ function BreackplanFrom({
       } catch {
         addToast(
           <FormattedMessage
-            defaultMessage="Error Please Try Again!"
+            defaultMessage="Error Please Try Again."
             id="breakPlan.Error"
           />,
           {
@@ -252,7 +252,7 @@ function BreackplanFrom({
         } else {
           addToast(
             <FormattedMessage
-              defaultMessage="Error Please Try Again!"
+              defaultMessage="Error Please Try Again."
               id="breakPlan.Error"
             />,
             {
@@ -266,7 +266,7 @@ function BreackplanFrom({
     } catch {
       addToast(
         <FormattedMessage
-          defaultMessage="Error Please Try Again!"
+          defaultMessage="Error Please Try Again."
           id="breakPlan.Error"
         />,
         {
@@ -315,7 +315,7 @@ function BreackplanFrom({
         } else {
           addToast(
             <FormattedMessage
-              defaultMessage="Error Please Try Again!"
+              defaultMessage="Error Please Try Again."
               id="breakPlan.Error"
             />,
             {
@@ -368,7 +368,7 @@ function BreackplanFrom({
         } else {
           addToast(
             <FormattedMessage
-              defaultMessage="Error Please Try Again!"
+              defaultMessage="Error Please Try Again."
               id="breakPlan.Error"
             />,
             {
@@ -417,8 +417,8 @@ function BreackplanFrom({
                   }}
                   className={style.customBtn}
                 >
-                  {loading ? <Loader color="#fff" size={15} /> : 
-                  <FormattedMessage defaultMessage="Join" id="btn.join" />}
+                  {loading ? <Loader color="#fff" size={15} /> :
+                    <FormattedMessage defaultMessage="Join" id="btn.join" />}
                 </Button>
                 <Button
                   variant="outline-primary"

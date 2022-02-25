@@ -43,7 +43,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import Timer from "./../components/common/progressBar/TaskProgress";
 import Player from "../components/spotify/Player";
 import SpotifyLogin from "../components/spotify/Login";
-import TimePicker2 from "../components/common/timePicker/TimePicker2";
+import TimePicker from "../components/common/timePicker/TimePicker";
 import { FormattedMessage } from "react-intl";
 import RenderImage from "../components/cutomeImage/RenderImage";
 import { setPassAlert, setRun } from "../store/taskSlice";
@@ -162,7 +162,10 @@ const Dashboard = () => {
       setModalShow(false);
       setNextBreakLoading(false);
     } else {
-      addToast("Error while adding Next Break!", {
+      addToast(<FormattedMessage
+        defaultMessage="Error Please Try Again."
+        id="breakPlan.Error"
+      />, {
         appearance: "error",
         autoDismiss: 5000,
       });
@@ -259,7 +262,7 @@ const Dashboard = () => {
       setTaskError(
         <FormattedMessage
           id="task.required"
-          defaultMessage="Task name is required!"
+          defaultMessage="Task name is required."
         />
       );
       return false;
@@ -312,7 +315,7 @@ const Dashboard = () => {
         addToast(
           <FormattedMessage
             id="task.error"
-            defaultMessage="Error Please Try Again!"
+            defaultMessage="Error Please Try Again."
           />,
           {
             autoDismiss: false,
@@ -433,7 +436,7 @@ const Dashboard = () => {
               const msg2 =
                 context.getCurrent() === 0
                   ? "Your file has been deleted."
-                  : "Gelöscht!,Ihre Datei wurde gelöscht.";
+                  : "Gelöscht,Ihre Datei wurde gelöscht.";
               Swal.fire(msg, msg2, "success");
 
               handleClose();
@@ -442,7 +445,7 @@ const Dashboard = () => {
               addToast(
                 <FormattedMessage
                   id="task.error"
-                  defaultMessage="Error: Please Try Again!."
+                  defaultMessage="Error: Please Try Again."
                 />,
                 {
                   appearance: "error",
@@ -456,7 +459,7 @@ const Dashboard = () => {
             addToast(
               <FormattedMessage
                 id="task.error"
-                defaultMessage="Error: Please Try Again!."
+                defaultMessage="Error: Please Try Again."
               />,
               {
                 appearance: "error",
@@ -480,7 +483,7 @@ const Dashboard = () => {
       setTaskUpdatekError(
         <FormattedMessage
           id="task.required"
-          defaultMessage="Task name is required!"
+          defaultMessage="Task name is required."
         />
       );
       return false;
@@ -511,7 +514,7 @@ const Dashboard = () => {
         addToast(
           <FormattedMessage
             id="task.update"
-            defaultMessage="Updated susseccfully"
+            defaultMessage="Updated successfully"
           />,
           {
             autoDismiss: true,
@@ -524,7 +527,7 @@ const Dashboard = () => {
         addToast(
           <FormattedMessage
             id="task.error"
-            defaultMessage="Error Please Try Again!"
+            defaultMessage="Error Please Try Again."
           />,
           {
             autoDismiss: false,
@@ -580,7 +583,7 @@ const Dashboard = () => {
         : Swal.fire("Bitte überprüfen. ");
     } else {
       context.getCurrent() === 0
-        ? Swal.fire("Please select an item for edit!")
+        ? Swal.fire("Please select an item for edit.")
         : Swal.fire("Bitte zum Bearbeiten auswählen");
     }
   };
@@ -1299,7 +1302,7 @@ const Dashboard = () => {
                   </Form.Group>
                 </Col>
                 <Col md={12}>
-                  <TimePicker2
+                  <TimePicker
                     label={
                       <FormattedMessage
                         id="label.duTime"
@@ -1363,7 +1366,7 @@ const Dashboard = () => {
                     </Form.Group>
                   </Col>
                   <Col md={12}>
-                    <TimePicker2
+                    <TimePicker
                       label={
                         <FormattedMessage
                           id="label.duTime"

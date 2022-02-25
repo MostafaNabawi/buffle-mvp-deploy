@@ -12,7 +12,7 @@ import { Image, Row, Col, Button, Form } from "react-bootstrap";
 import Modal from "../modal/modal";
 import { getImportantToday, updateTaskImportant } from "../../api";
 import BeatLoader from "react-spinners/BeatLoader";
-import TimePicker2 from "../common/timePicker/TimePicker2";
+import TimePicker from "../common/timePicker/TimePicker";
 import { FormattedMessage } from "react-intl";
 
 function ImpotentToDayCard({ handleMove }) {
@@ -65,7 +65,7 @@ function ImpotentToDayCard({ handleMove }) {
   };
   const handleSubmit = async () => {
     if (duration.length < 0) {
-      setError("Duration time is required!");
+      setError("Duration time is required.");
       return false;
     } else {
       const duration =
@@ -94,7 +94,7 @@ function ImpotentToDayCard({ handleMove }) {
         setShow(false);
         setTimeFormat(false);
       } else {
-        addToast("Error Please Try Again!", {
+        addToast("Error Please Try Again.", {
           autoDismiss: false,
           appearance: "error",
         });
@@ -170,7 +170,7 @@ function ImpotentToDayCard({ handleMove }) {
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Row>
                   <Col xl="12">
-                    <TimePicker2
+                    <TimePicker
                       label={<FormattedMessage id="label.duTime" defaultMessage="Duration Time" />}
                       value={durationTime}
                       setValue={setDurationTime}

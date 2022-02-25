@@ -34,7 +34,7 @@ function AddNewMember({ selected, setSelected }) {
         if (result.payload) {
           setEmail("");
           setLoading(false);
-          if (JSON.parse(localStorage.getItem("user"))._id != result.uid){
+          if (JSON.parse(localStorage.getItem("user"))._id != result.uid) {
             result.email = email;
             if (selected.length > 0) {
               const exist = selected.filter((user) => user.uid === result.uid);
@@ -45,7 +45,7 @@ function AddNewMember({ selected, setSelected }) {
               setSelected([...selected, result]);
             }
           }
-         
+
         } else {
           setNotFound(true);
           setLoading(false);
@@ -87,7 +87,7 @@ function AddNewMember({ selected, setSelected }) {
         </Button>
       </div>
       {notFound && (
-        <div style={{ color: "red" }}><FormattedMessage id="event.userByThisEmail" defaultMessage="User by this email not found!" /> </div>
+        <div style={{ color: "red" }}><FormattedMessage id="event.userByThisEmail" defaultMessage="User by this email not found." /> </div>
       )}
       {selected.length > 0 && (
         <div className={style.participants}>
