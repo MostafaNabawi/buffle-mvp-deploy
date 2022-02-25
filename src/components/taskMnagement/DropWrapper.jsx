@@ -19,13 +19,14 @@ const DropWrapper = ({ onDrop, children, status, idNumber, handleDrop }) => {
     } else {
       var dayDate = d.setDate(d.getDate());
     }
-    const update = await updateTaskDate(id, new Date(dayDate).toISOString(), status);
-    if (update.status === 200) {
-      addToast("Droped successfully", { autoDismiss: true, appearance: 'success' });
-    }
-    else {
-      addToast("Error! Please Try Again!", { autoDismiss: false, appearance: 'error' });
-    }
+    // const update =s
+    await updateTaskDate(id, new Date(dayDate).toISOString(), status);
+    // if (update.status === 200) {
+    //   addToast("Droped successfully", { autoDismiss: true, appearance: 'success' });
+    // }
+    // else {
+    //   addToast("Error! Please Try Again!", { autoDismiss: false, appearance: 'error' });
+    // }
   }
   const [{ isOver }, drop] = useDrop({
     accept: ITEM_TYPE,

@@ -229,22 +229,37 @@ const Header = () => {
           },
         }).then((res) => {
           if (res.status == 200) {
-            addToast("Cleared", { autoDismiss: true, appearance: "success" });
+            addToast(
+              <FormattedMessage defaultMessage="Cleared" id="noti.alerClear" />,
+              { autoDismiss: true, appearance: "success" }
+            );
             setNotificatiion([]);
             setLoading(false);
           } else {
-            addToast("Error Please Try Again!", {
-              autoDismiss: true,
-              appearance: "error",
-            });
+            addToast(
+              <FormattedMessage
+                defaultMessage="Error Please Try Again!"
+                id="breakPlan.Error"
+              />,
+              {
+                autoDismiss: false,
+                appearance: "error",
+              }
+            );
             setLoading(false);
           }
         });
       } catch {
-        addToast("server Error Please Try Again!", {
-          autoDismiss: true,
-          appearance: "error",
-        });
+        addToast(
+          <FormattedMessage
+            defaultMessage="Error Please Try Again!"
+            id="breakPlan.Error"
+          />,
+          {
+            autoDismiss: false,
+            appearance: "error",
+          }
+        );
       }
     }
   };
@@ -446,7 +461,8 @@ const Header = () => {
     <>
       <TimerCustome count={count} setCount={setCount} />
       <Col className="col-12 header-name text-capitalize">
-        Hi <span id="userFullName">{userData?.first_name}</span>
+        <FormattedMessage defaultMessage=" Hi" id="app.hi" />{" "}
+        <span id="userFullName">{userData?.first_name}</span>
       </Col>
       {start && (
         <Countdown
@@ -487,7 +503,12 @@ const Header = () => {
       >
         {localStorage.getItem("screen") === "on" && !start && (
           <div className="screenDiv">
-            <h1>Screen Lock For</h1>
+            <h1>
+              <FormattedMessage
+                defaultMessage="Screen Lock For"
+                id="app.screenLock"
+              />
+            </h1>
             <Countdown
               key={`c-5`}
               date={Date.now() + +localStorage.getItem("display_time")}
@@ -597,6 +618,7 @@ const Header = () => {
                   notification.map((notify) =>
                     notify.type === "invite" ? (
                       <Notify
+                        type={notify.type}
                         imgUrl={""}
                         key={notify._id}
                         name={notify.firstName + " " + notify.lastName}
@@ -612,7 +634,10 @@ const Header = () => {
                               variant="outline-success"
                               className={`btn-notify`}
                             >
-                              Accept
+                              <FormattedMessage
+                                defaultMessage="Accept"
+                                id="btn.accept"
+                              />
                             </Button>
                             <Button
                               onClick={() => {
@@ -621,21 +646,30 @@ const Header = () => {
                               variant="outline-secondary"
                               className={`btn-notify`}
                             >
-                              Reject
+                              <FormattedMessage
+                                defaultMessage="Reject"
+                                id="btn.reject"
+                              />
                             </Button>
                           </>
                         }
                       />
                     ) : notify.type == "report" ? (
                       <Notify
+                        type={notify.type}
                         icon={notify.icon}
                         key={notify._id}
                         name={
-                          notify.icon === "task"
-                            ? "Task"
-                            : notify.icon === "water"
-                            ? "Water"
-                            : notify.sender
+                          notify.icon === "task" ? (
+                            "Task Manager"
+                          ) : notify.icon === "water" ? (
+                            <FormattedMessage
+                              defaultMessage="Hydration Reminder"
+                              id="app.waterHydretion"
+                            />
+                          ) : (
+                            notify.sender
+                          )
                         }
                         date={notify.date}
                         message={notify.msg}
@@ -643,6 +677,7 @@ const Header = () => {
                       />
                     ) : notify.type === "new-time" ? (
                       <Notify
+                        type={notify.type}
                         icon={notify.icon}
                         key={notify._id}
                         name={notify.sender}
@@ -663,7 +698,10 @@ const Header = () => {
                               variant="outline-success"
                               className={`btn-notify`}
                             >
-                              Accept
+                              <FormattedMessage
+                                defaultMessage="Accept"
+                                id="btn.accept"
+                              />
                             </Button>
                             <Button
                               onClick={() => {
@@ -672,7 +710,10 @@ const Header = () => {
                               variant="outline-secondary"
                               className={`btn-notify`}
                             >
-                              Reject
+                              <FormattedMessage
+                                defaultMessage="Reject"
+                                id="btn.reject"
+                              />
                             </Button>
                           </>
                         }
@@ -702,25 +743,6 @@ const Header = () => {
               <Dropdown.Item as={Link} to="/dashboard/profile">
                 <FormattedMessage defaultMessage="Profile" id="prof.profile" />
               </Dropdown.Item>
-              {/* <DropdownButton
-                as={ButtonGroup}
-                id={`dropdown-button-drop-start`}
-                drop="start"
-                className="subDropdown"
-                title={
-                  <FormattedMessage
-                    defaultMessage="Language"
-                    id="app.header.language"
-                  />
-                }
-              >
-                <Dropdown.Item onClick={() => setLang("de")}>
-                  Desutch
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => setLang("en")}>
-                  English
-                </Dropdown.Item>
-              </DropdownButton> */}
               {workspace.length > 0 && (
                 <DropdownButton
                   as={ButtonGroup}
@@ -789,12 +811,12 @@ const Header = () => {
               {/*  */}
               {showUserRoute && (
                 <NavDropdown.Item as={Link} to="/dashboard/user-management">
-                  User management
+                  User Management
                 </NavDropdown.Item>
               )}
               {showUserRoute && (
                 <NavDropdown.Item as={Link} to="/dashboard/setting">
-                  Settings
+                  <FormattedMessage defaultMessage="Settings" id="settings" />
                 </NavDropdown.Item>
               )}
               <NavDropdown.Item onClick={handleLogout}>

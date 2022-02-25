@@ -76,7 +76,7 @@ const UserLogin = () => {
           emailError: (
             <FormattedMessage
               defaultMessage="Email is required!"
-              id="app.login.emailError"
+              id="email.required"
             />
           ),
           passwordError: "",
@@ -91,7 +91,7 @@ const UserLogin = () => {
           passwordError: (
             <FormattedMessage
               defaultMessage="Password is required!"
-              id="app.login.passError"
+              id="pass.required"
             />
           ),
           emailError: "",
@@ -106,7 +106,7 @@ const UserLogin = () => {
           emailError: (
             <FormattedMessage
               defaultMessage="Email is invalid!"
-              id="app.login.invalidEmail"
+              id="email.invalid"
             />
           ),
           passwordError: "",
@@ -126,7 +126,12 @@ const UserLogin = () => {
       setErrors((previousState) => {
         return {
           ...previousState,
-          serverError: "⛔ Email or Password is incorrect!",
+          serverError: (
+            <FormattedMessage
+              defaultMessage="⛔ Email or Password is incorrect!"
+              id="login.invalid"
+            />
+          ),
         };
       });
       setLoading(false);
@@ -207,9 +212,16 @@ const UserLogin = () => {
       }
     } else {
       document.getElementsByClassName("swal-google")[0].remove();
-      addToast("Error While signin with google", {
-        appearance: "error",
-        autoDismiss: 5000,
+      setErrors((previousState) => {
+        return {
+          ...previousState,
+          serverError: (
+            <FormattedMessage
+              defaultMessage="Error while signin with Google"
+              id="app.login.err.google"
+            />
+          ),
+        };
       });
     }
     // if (req.status === 200) {
@@ -239,6 +251,17 @@ const UserLogin = () => {
   };
   const responseGoogleFailur = (response) => {
     document.getElementsByClassName("swal-google")[0].remove();
+    setErrors((previousState) => {
+      return {
+        ...previousState,
+        serverError: (
+          <FormattedMessage
+            defaultMessage="Error while signin with Google"
+            id="app.login.err.google"
+          />
+        ),
+      };
+    });
     addToast("Error While signin with google", {
       appearance: "error",
       autoDismiss: 5000,
@@ -301,7 +324,7 @@ const UserLogin = () => {
                     />
                   </Form.Label>
                   <FormattedMessage
-                    id="app.screen"
+                    id="app.enterEmail"
                     defaultMessage="Enter Email"
                   >
                     {(msg) => (
@@ -340,25 +363,32 @@ const UserLogin = () => {
                     />
                   </Form.Label>
                   <div className="mb-4 input-group">
-                    <Form.Control
-                      className={style.formInput}
-                      type={`${showPassword ? "text" : "password"}`}
-                      placeholder="Password"
-                      name="password"
-                      isInvalid={errors.passwordError !== ""}
-                      disabled={loading}
-                      onChange={(e) => {
-                        if (e.target.value) {
-                          setErrors((previous) => {
-                            return { ...previous, passwordError: "" };
-                          });
-                        }
-                        setInputs({
-                          ...inputs,
-                          [e.target.name]: e.target.value,
-                        });
-                      }}
-                    />
+                    <FormattedMessage
+                      id="app.password"
+                      defaultMessage="Password"
+                    >
+                      {(msg) => (
+                        <Form.Control
+                          className={style.formInput}
+                          type={`${showPassword ? "text" : "password"}`}
+                          placeholder={msg}
+                          name="password"
+                          isInvalid={errors.passwordError !== ""}
+                          disabled={loading}
+                          onChange={(e) => {
+                            if (e.target.value) {
+                              setErrors((previous) => {
+                                return { ...previous, passwordError: "" };
+                              });
+                            }
+                            setInputs({
+                              ...inputs,
+                              [e.target.name]: e.target.value,
+                            });
+                          }}
+                        />
+                      )}
+                    </FormattedMessage>
                     {errors.passwordError !== "" && (
                       <Form.Control.Feedback type="invalid">
                         {errors.passwordError}
@@ -403,7 +433,7 @@ const UserLogin = () => {
                   >
                     <FormattedMessage
                       id="app.login.forget"
-                      defaultMessage="Forgot password?"
+                      defaultMessage="Forget password?"
                     />
                   </Link>
                 </Form.Group>
@@ -459,12 +489,12 @@ const UserLogin = () => {
           </div>
           <div className={style.footer}>
             <FormattedMessage
-              id="app.login.qs"
+              id="app.noAccount"
               defaultMessage="Don’t have account yet?"
             />
             <Link className={style.registerLink} to="/register">
               <FormattedMessage
-                id="app.login.register"
+                id="app.signupHere"
                 defaultMessage="Register now"
               />
             </Link>

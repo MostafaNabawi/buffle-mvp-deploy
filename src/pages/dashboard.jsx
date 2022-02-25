@@ -1015,7 +1015,12 @@ const Dashboard = () => {
                     </div>
                   ))
                 ) : (
-                  <span>No task for today</span>
+                  <span>
+                    <FormattedMessage
+                      id="task.noTask"
+                      defaultMessage="No task for today"
+                    />
+                  </span>
                 )}
               </Row>
             </div>
@@ -1079,24 +1084,20 @@ const Dashboard = () => {
                         </div>
                         {data?.joinNumber?.length > 0 &&
                           (data?.joinNumber.length === 1 ? (
-                            <div className="breakplan-icon jone-icon navy-blue text-center pt-2">
+                            <div className="breakplan-icon jone-icon navy-blue text-center pt-1">
                               <RenderImage
                                 code={data?.joinPhotos[0]?.avatar?.key || ""}
                               />
-                              {/* <Image
-                                className="breakplan-img"
-                                src="/icone/WB_Headshots-102-web 1.png"
-                              /> */}
                             </div>
                           ) : (
-                            <div className="breakplan-icon jone-icon navy-blue text-center pt-2">
+                            <div className="breakplan-icon jone-icon navy-blue text-center pt-1">
                               + {data?.joinNumber.length}
                             </div>
                           ))}
                       </Col>
                       <Col className="col-9">
-                        <div className="break-user-name2">
-                          {data.user[0].first_name} {data.user[0].last_name}
+                        <div className="break-user-name2 text-capitalize">
+                          {data?.user[0]?.first_name} {data?.user[0]?.last_name}
                         </div>{" "}
                         <div>
                           <span
@@ -1429,7 +1430,11 @@ const Dashboard = () => {
             )}
 
             {taskManager && (
-              <Button variant="primary" title="" disabled={`${loading === true ? 'disabled' : ''}`} onClick={handleCreateTask}>
+              <Button
+                variant="primary"
+                disabled={`${loading === true ? "disabled" : ""}`}
+                onClick={handleCreateTask}
+              >
                 {loading === true ? (
                   <BeatLoader />
                 ) : (
