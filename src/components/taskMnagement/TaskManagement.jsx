@@ -148,14 +148,22 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
             setItems(d);
             handleGet(id);
           } else {
-            addToast("Error: Please Try Again!.", {
+            addToast(
+              <FormattedMessage
+                defaultMessage="Error Please Try Again."
+                id="breakPlan.Error"
+              />, {
               appearance: "error",
               autoDismiss: true,
             });
             handleClose();
           }
         } catch (error) {
-          addToast("Error: Please Try Again!.", {
+          addToast(
+            <FormattedMessage
+              defaultMessage="Error Please Try Again."
+              id="breakPlan.Error"
+            />, {
             appearance: "error",
             autoDismiss: true,
           });
