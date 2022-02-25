@@ -35,7 +35,7 @@ const UserLogin = () => {
     const req = await signin({ email: email, password: pass });
     if (req.status === 400) {
       setLoading(false);
-      addToast("Email or Password  is invalid!", {
+      addToast("Email or Password  is invalid.", {
         appearance: "error",
         autoDismiss: 4000,
       });
@@ -75,7 +75,7 @@ const UserLogin = () => {
           ...previousState,
           emailError: (
             <FormattedMessage
-              defaultMessage="Email is required!"
+              defaultMessage="Email is required."
               id="email.required"
             />
           ),
@@ -90,7 +90,7 @@ const UserLogin = () => {
           ...previousState,
           passwordError: (
             <FormattedMessage
-              defaultMessage="Password is required!"
+              defaultMessage="Password is required."
               id="pass.required"
             />
           ),
@@ -105,7 +105,7 @@ const UserLogin = () => {
           ...previousState,
           emailError: (
             <FormattedMessage
-              defaultMessage="Email is invalid!"
+              defaultMessage="Email is invalid."
               id="email.invalid"
             />
           ),
@@ -128,7 +128,7 @@ const UserLogin = () => {
           ...previousState,
           serverError: (
             <FormattedMessage
-              defaultMessage="⛔ Email or Password is incorrect!"
+              defaultMessage="⛔ Email or Password is incorrect."
               id="login.invalid"
             />
           ),
@@ -262,7 +262,10 @@ const UserLogin = () => {
         ),
       };
     });
-    addToast("Error While signin with google", {
+    addToast(<FormattedMessage
+      defaultMessage="Error while signin with Google"
+      id="app.login.err.google"
+    />, {
       appearance: "error",
       autoDismiss: 5000,
     });
@@ -289,7 +292,7 @@ const UserLogin = () => {
     }
     if (searchParams.get("company") === "true") {
       addToast(
-        "Your company registered when your company approved by Buffle we will send you email!",
+        "Your company registered when your company approved by Buffle, we will send you and email.",
         {
           appearance: "success",
         }

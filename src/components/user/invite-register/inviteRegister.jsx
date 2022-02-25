@@ -7,6 +7,7 @@ import style from "../style.module.css";
 import PulseLoader from "react-spinners/PulseLoader";
 import { API_URL } from "../../../config";
 import { checkEmail } from "../../../config/utils";
+import { FormattedMessage } from "react-intl";
 
 const InviteRegister = () => {
   const { addToast } = useToasts();
@@ -38,10 +39,12 @@ const InviteRegister = () => {
       return;
     }
     if (!checkEmail(inputs.email)) {
-      addToast("Invalid Email!", {
-        appearance: "warning",
-        autoDismiss: 4000,
-      });
+      addToast(
+        <FormattedMessage id="email.invalid" defaultMessage="Invalid email" />
+        , {
+          appearance: "warning",
+          autoDismiss: 4000,
+        });
       return;
     }
     if (inputs.password < 5) {
@@ -66,7 +69,10 @@ const InviteRegister = () => {
           localStorage.setItem("pp", inputs.password);
           navigate(`/?new=true&email=${inputs.email}`);
         } else {
-          addToast("Error Please try again!", {
+          addToast(<FormattedMessage
+            defaultMessage="Error Please Try Again."
+            id="breakPlan.Error"
+          />, {
             appearance: "error",
             autoDismiss: 4000,
           });

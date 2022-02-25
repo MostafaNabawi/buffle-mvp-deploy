@@ -48,13 +48,13 @@ const Setting = () => {
       }).then((res) => {
         if (res.status === 200) {
           setLoading(false);
-          addToast("Invitation email send!", {
+          addToast(<FormattedMessage id="setting.invite" defaultMessage="Invitation email send." />, {
             appearance: "success",
             autoDismiss: 4000,
           });
           setEmail("");
         } else {
-          addToast("This email was not register in buffle. please tru again!", {
+          addToast("This email was not register in buffle. please try again.", {
             appearance: "error",
             autoDismiss: 4000,
           });
@@ -81,7 +81,10 @@ const Setting = () => {
           setLoadingReg(false);
           setCopyValue(link);
         } else {
-          addToast("Error please try Again!", {
+          addToast(<FormattedMessage
+            defaultMessage="Error Please Try Again."
+            id="breakPlan.Error"
+          />, {
             appearance: "error",
             autoDismiss: 4000,
           });
@@ -133,7 +136,7 @@ const Setting = () => {
       <Card>
         <ListGroup variant="flush">
           <ListGroup.Item className="pb-3">
-            <h4>Invite Email</h4>
+            <h4><FormattedMessage id="breakPlan.inviteEmail" defaultMessage="Invite Email" /></h4>
           </ListGroup.Item>
           <ListGroup.Item className="pb-3">
             <Form onSubmit={handleSubmit}>

@@ -1,11 +1,12 @@
-import { React, useState} from "react";
+import { React, useState } from "react";
 import { Row, Col, Image, Form, Button } from "react-bootstrap";
 import { Icon } from "@iconify/react";
-import { Link,useParams, useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
 import style from "../style.module.css";
 import PulseLoader from "react-spinners/PulseLoader";
 import { API_URL } from "../../../config";
+import { FormattedMessage } from 'react-intl';
 const RestPassword = () => {
     const { addToast } = useToasts();
     const navigate = useNavigate();
@@ -16,10 +17,10 @@ const RestPassword = () => {
         confirmPass: "",
         password: "",
     });
-    const handleRestPass= async (event) => {
+    const handleRestPass = async (event) => {
         event.preventDefault();
         if (inputs.confirmPass === "" || inputs.password === "") {
-            addToast("Password and Confirm password are required!", {
+            addToast("Password and Confirm password are required.", {
                 appearance: "warning",
                 autoDismiss: 4000,
             });
@@ -33,7 +34,7 @@ const RestPassword = () => {
             return;
         }
         if (inputs.password != inputs.confirmPass) {
-            addToast("Confirm password not match! ", {
+            addToast("Confirm password not match ", {
                 appearance: "error",
                 autoDismiss: 4000,
             });
@@ -49,22 +50,25 @@ const RestPassword = () => {
                     "Access-Control-Allow-Credentials": true,
                 },
                 body: JSON.stringify({
-                    password :inputs.password,
-                    token:token
+                    password: inputs.password,
+                    token: token
                 }),
-            }).then(async(res) => {
+            }).then(async (res) => {
                 if (res.status === 200) {
-                    const {payload}=await res.json()
+                    const { payload } = await res.json()
                     localStorage.setItem("pp", inputs.password);
                     navigate(`/?new=true&email=${payload.value.email}`);
                 } else {
-                    addToast("error Please Try Again!", {
+                    addToast(<FormattedMessage
+                        defaultMessage="Error Please Try Again."
+                        id="breakPlan.Error"
+                    />, {
                         appearance: "error",
                         autoDismiss: 4000,
                     });
                     setLoading(false)
                     navigate("/forget-password")
-                   
+
                 }
             })
         } catch {
@@ -81,13 +85,13 @@ const RestPassword = () => {
                         <div className={`${style.header}  text-center pt-4`}>
                             <Image src="/favicon.ico" />
                             <div className={`${style.headerTitle} mt-3`}>
-                                Enter new password.
+                                <FormattedMessage id="app.enterPassNew" defaultMessage="Enter new password." />
                             </div>
                         </div>
                         <div className={style.body}>
                             <Form onSubmit={handleRestPass}>
                                 <Form.Group className="mb-5" controlId="formBasicPassword">
-                                    <Form.Label className={style.lableForm}>Password</Form.Label>
+                                    <Form.Label className={style.lableForm}><FormattedMessage id="app.password" defaultMessage="Password" /></Form.Label>
                                     <div className="mb-4 input-group">
                                         <Form.Control
                                             className={style.formInput}
@@ -116,7 +120,7 @@ const RestPassword = () => {
                                     </div>
                                 </Form.Group>
                                 <Form.Group className="mb-5" controlId="formBasicPassword">
-                                    <Form.Label className={style.lableForm}>Confirm password</Form.Label>
+                                    <Form.Label className={style.lableForm}><FormattedMessage id="confirmPass" defaultMessage="Confirm password" /></Form.Label>
                                     <div className="mb-4 input-group">
                                         <Form.Control
                                             className={style.formInput}
@@ -155,9 +159,9 @@ const RestPassword = () => {
                         </div>
                     </div>
                     <div className={style.footer}>
-                        Have you remember password ?{" "}
+                        Do you remember password ?{" "}
                         <Link className={style.registerLink} to="/">
-                            Login now
+                            <FormattedMessage id="loginNow" defaultMessage="Login now" />
                         </Link>
                     </div>
                 </Col>

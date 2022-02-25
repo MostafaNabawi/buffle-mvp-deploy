@@ -58,7 +58,7 @@ const UserProfile = () => {
       if (file) {
         handleHeaderRefresh();
       }
-    } catch {}
+    } catch { }
   };
   const getUser = () => {
     try {
@@ -151,7 +151,10 @@ const UserProfile = () => {
           }),
         });
         if (res.status !== 200) {
-          addToast("Error Please Try Again!", {
+          addToast(<FormattedMessage
+            defaultMessage="Error Please Try Again."
+            id="breakPlan.Error"
+          />, {
             appearance: "warning",
             autoDismiss: 4000,
           });
@@ -203,7 +206,10 @@ const UserProfile = () => {
             }),
           });
           if (res.status !== 200) {
-            addToast("Error Please Try Again!", {
+            addToast(<FormattedMessage
+              defaultMessage="Error Please Try Again."
+              id="breakPlan.Error"
+            />, {
               appearance: "warning",
               autoDismiss: 4000,
             });
@@ -246,7 +252,7 @@ const UserProfile = () => {
         setLoading(false);
       }
     } else {
-      addToast("Please fill all required field (*)!", {
+      addToast(<FormattedMessage id="app.requiredAll" defaultMessage="Please fill all required field (*)." />, {
         appearance: "warning",
         autoDismiss: 4000,
       });
@@ -277,14 +283,17 @@ const UserProfile = () => {
         });
         setOptions([...options, ...formatted]);
         setAddLoading(false);
-        addToast("Tag added to list", {
+        addToast(<FormattedMessage id="tag.added" defaultMessage="Tag added to list" />, {
           appearance: "success",
           autoDismiss: 5000,
         });
         handleClose();
       } else {
         setAddLoading(false);
-        addToast("Error while adding tag", {
+        addToast(<FormattedMessage
+          defaultMessage="Error Please Try Again."
+          id="breakPlan.Error"
+        />, {
           appearance: "error",
           autoDismiss: 5000,
         });
@@ -315,7 +324,7 @@ const UserProfile = () => {
     if (!type.includes("image")) {
       setImgError(
         <FormattedMessage
-          defaultMessage="Only image files must upload!"
+          defaultMessage="Only image files must upload."
           id="img.error"
         />
       );
@@ -327,7 +336,7 @@ const UserProfile = () => {
     if (length > 3072) {
       setImgError(
         <FormattedMessage
-          defaultMessage="Maximum image size is 3MB!"
+          defaultMessage="Maximum image size is 3MB."
           id="img.sizeError"
         />
       );
