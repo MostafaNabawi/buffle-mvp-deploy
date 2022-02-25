@@ -238,7 +238,7 @@ const Header = () => {
           } else {
             addToast(
               <FormattedMessage
-                defaultMessage="Error Please Try Again!"
+                defaultMessage="Error Please Try Again."
                 id="breakPlan.Error"
               />,
               {
@@ -252,7 +252,7 @@ const Header = () => {
       } catch {
         addToast(
           <FormattedMessage
-            defaultMessage="Error Please Try Again!"
+            defaultMessage="Error Please Try Again."
             id="breakPlan.Error"
           />,
           {
@@ -482,10 +482,10 @@ const Header = () => {
               localStorage.setItem(
                 "loackTime",
                 timeLock.getHours() +
-                  ":" +
-                  timeLock.getMinutes() +
-                  ":" +
-                  timeLock.getSeconds()
+                ":" +
+                timeLock.getMinutes() +
+                ":" +
+                timeLock.getSeconds()
               );
             }
           }}
@@ -497,9 +497,8 @@ const Header = () => {
 
       <div
         id="lockScreenHide"
-        className={`${
-          localStorage.getItem("screen") === "on" ? "lockScreen" : ""
-        } text-center ${!start ? "" : "lockScreenHide"}`}
+        className={`${localStorage.getItem("screen") === "on" ? "lockScreen" : ""
+          } text-center ${!start ? "" : "lockScreenHide"}`}
       >
         {localStorage.getItem("screen") === "on" && !start && (
           <div className="screenDiv">
@@ -521,9 +520,9 @@ const Header = () => {
                 }
                 handleDisplayTime(dis_time);
               }}
-              // renderer={() => {
-              //   return ""
-              // }}
+            // renderer={() => {
+            //   return ""
+            // }}
             />
           </div>
         )}

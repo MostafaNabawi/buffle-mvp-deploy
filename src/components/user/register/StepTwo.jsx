@@ -53,7 +53,7 @@ const StepTwoRegister = () => {
     if (inputs.password !== inputs.c_password) {
       addToast(
         <FormattedMessage
-          defaultMessage="Password do not match!"
+          defaultMessage="Password do not match."
           id="passNot"
         />,
         {
@@ -66,7 +66,7 @@ const StepTwoRegister = () => {
     if (inputs.password.length < 6) {
       addToast(
         <FormattedMessage
-          defaultMessage="Password must be at least 6 chracters!"
+          defaultMessage="Password must be at least 6 chracters."
           id="passLimit"
         />,
         {
@@ -194,7 +194,7 @@ const StepTwoRegister = () => {
           <Col xl="8">
             <h2>
               <FormattedMessage
-                defaultMessage="Registrtion has been expired!"
+                defaultMessage="Registrtion has been expired."
                 id="expired"
               />
             </h2>

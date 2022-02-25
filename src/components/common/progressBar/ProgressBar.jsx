@@ -82,7 +82,7 @@ const PreogressBar = ({ range }) => {
                     </span>
                   )}
                   onComplete={async () => {
-                    addToast("Next Break Finished!", {
+                    addToast("Next Break Finished.", {
                       appearance: "success",
                     });
                     await deleteNextBreak();

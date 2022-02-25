@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useContext } from "react";
 import Item from "../item";
 import DropWrapperProject from "./DropWrapperProject";
 import { Button, Col, Form } from "react-bootstrap";
@@ -23,6 +23,7 @@ import BeatLoader from "react-spinners/BeatLoader";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { FormattedMessage } from "react-intl";
+import { Context } from "../../../layout/Wrapper";
 // paiman changes
 import { PROJECT_TYPE } from "../../data/types";
 
@@ -35,6 +36,7 @@ const ProjectManagement = ({
   dateChanged,
 }) => {
   const { addToast } = useToasts();
+  const context = useContext(Context);
   const MySwal = withReactContent(Swal);
   const [items, setItems] = useState([]);
   const [projects, setProjects] = useState([]);
@@ -120,16 +122,19 @@ const ProjectManagement = ({
     if (event.key === "Enter") {
       const createT = await createTask(inputTask, 0, 0, false, "stop");
       if (createT.status === 200) {
-        handleGet(inputTask.name);
-        addToast("Created Susseccfully", {
-          autoDismiss: true,
-          appearance: "success",
-        });
+        // handleGet(inputTask.name);
+        // addToast("Created Susseccfully", {
+        //   autoDismiss: true,
+        //   appearance: "success",
+        // });
 
         setNewProject(true);
         setInputTask({ name: "", p_id: "" });
       } else {
-        addToast("Error Please Try Again!", {
+        addToast(<FormattedMessage
+          defaultMessage="Error Please Try Again."
+          id="breakPlan.Error"
+        />, {
           autoDismiss: false,
           appearance: "error",
         });
@@ -150,7 +155,7 @@ const ProjectManagement = ({
   };
   const handleSubmitProject = async () => {
     if (!projectName) {
-      setError("Project name is required!");
+      setError(<FormattedMessage id="project.required" defaultMessage="Project name is required." />);
       return false;
     } else {
       setError("");
@@ -170,7 +175,10 @@ const ProjectManagement = ({
         setloading(false);
         setShowPModal(false);
       } else {
-        addToast("Error Please Try Again!", {
+        addToast(<FormattedMessage
+          defaultMessage="Error Please Try Again."
+          id="breakPlan.Error"
+        />, {
           autoDismiss: false,
           appearance: "error",
         });
@@ -187,7 +195,7 @@ const ProjectManagement = ({
   };
   const handleSubmit = async () => {
     if (!projectName) {
-      setError("Project name is required!");
+      setError(<FormattedMessage id="project.required" defaultMessage="Project name is required." />);
       return false;
     } else {
       setError("");
@@ -206,7 +214,10 @@ const ProjectManagement = ({
         setloading(false);
         setShow(false);
       } else {
-        addToast("Error! Please Try Again!", {
+        addToast(<FormattedMessage
+          defaultMessage="Error Please Try Again."
+          id="breakPlan.Error"
+        />, {
           autoDismiss: false,
           appearance: "error",
         });
@@ -237,34 +248,51 @@ const ProjectManagement = ({
   };
 
   const handleDelete = async (id) => {
+    const titleMsg =
+      context.getCurrent() === 0 ? "Are you sure?" : "Bist du dir sicher?";
     MySwal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      title: titleMsg,
+      text:
+        context.getCurrent() === 0
+          ? "You won't be able to revert this."
+          : "Änderungen sind nicht mehr möglich.",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonText: "Yes, delete it!",
-      cancelButtonText: "No, cancel!",
-      reverseButtons: true,
+      cancelButtonText: context.getCurrent() === 0 ? "Cancel" : "Abbrechen",
+      confirmButtonText: context.getCurrent() === 0 ? "Yes" : "Fortfahren",
+      reverseButtons: false,
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
           const deleteT = await deleteTask(id);
 
           if (deleteT.status === 200) {
-            Swal.fire("Deleted!", "Your file has been deleted.", "success");
+            const msg = context.getCurrent() === 0 ? "Deleted" : "gelöscht";
+
+            const msg2 =
+              context.getCurrent() === 0
+                ? "Your file has been deleted."
+                : "Gelöscht,Ihre Datei wurde gelöscht.";
+            Swal.fire(msg, msg2, "success");
             handleClose();
             const d = items.filter((i) => i.tb_id !== id);
             setItems(d);
             handleGet(id);
           } else {
-            addToast("Error: Please Try Again!.", {
+            addToast(<FormattedMessage
+              defaultMessage="Error Please Try Again."
+              id="breakPlan.Error"
+            />, {
               appearance: "error",
               autoDismiss: true,
             });
             handleClose();
           }
         } catch (error) {
-          addToast("Error: Please Try Again!.", {
+          addToast(<FormattedMessage
+            defaultMessage="Error Please Try Again."
+            id="breakPlan.Error"
+          />, {
             appearance: "error",
             autoDismiss: true,
           });
@@ -289,7 +317,7 @@ const ProjectManagement = ({
       color[1].slice(color[1].length, color[1].length);
     const setColor = await setColorToProject(projectIdEdit, color2);
     if (setColor.status === 200) {
-      addToast("Color set Susseccfully", {
+      addToast(<FormattedMessage id="item.color" defaultMessage="Color set Susseccfully" />, {
         autoDismiss: true,
         appearance: "success",
       });
@@ -299,7 +327,11 @@ const ProjectManagement = ({
       setShow(false);
       setProjectIdEdit();
     } else {
-      addToast("Error! Please Try Again!", {
+      addToast(
+        <FormattedMessage
+          defaultMessage="Error Please Try Again."
+          id="breakPlan.Error"
+        />, {
         autoDismiss: false,
         appearance: "error",
       });
@@ -364,11 +396,10 @@ const ProjectManagement = ({
                     {(msg) => (
                       <Form.Control
                         type="text"
-                        className={`${
-                          error.length > 0
-                            ? "red-border-input"
-                            : "no-border-input"
-                        }`}
+                        className={`${error.length > 0
+                          ? "red-border-input"
+                          : "no-border-input"
+                          }`}
                         onChange={(e) => setProjectName(e.target.value)}
                         placeholder={msg}
                       />
@@ -401,58 +432,50 @@ const ProjectManagement = ({
                   </label>
                   <div className="bt_1rsx30z">
                     <div
-                      className={`bt_1ln56ky ${
-                        createColor === " rgb(56, 103, 214)" ? "current" : ""
-                      }`}
+                      className={`bt_1ln56ky ${createColor === " rgb(56, 103, 214)" ? "current" : ""
+                        }`}
                       style={{ background: "rgb(56, 103, 214)" }}
                       onClick={(e) => setColor(e.target.getAttribute("style"))}
                     ></div>
                     <div
-                      className={`bt_1ln56ky ${
-                        createColor === " rgb(136, 84, 208)" ? "current" : ""
-                      }`}
+                      className={`bt_1ln56ky ${createColor === " rgb(136, 84, 208)" ? "current" : ""
+                        }`}
                       style={{ background: "rgb(136, 84, 208)" }}
                       onClick={(e) => setColor(e.target.getAttribute("style"))}
                     ></div>
                     <div
-                      className={`bt_1ln56ky ${
-                        createColor === " rgb(235, 59, 90)" ? "current" : ""
-                      }`}
+                      className={`bt_1ln56ky ${createColor === " rgb(235, 59, 90)" ? "current" : ""
+                        }`}
                       style={{ background: "rgb(235, 59, 90)" }}
                       onClick={(e) => setColor(e.target.getAttribute("style"))}
                     ></div>
                     <div
-                      className={`bt_1ln56ky ${
-                        createColor === " rgb(250, 130, 49)" ? "current" : ""
-                      }`}
+                      className={`bt_1ln56ky ${createColor === " rgb(250, 130, 49)" ? "current" : ""
+                        }`}
                       style={{ background: "rgb(250, 130, 49)" }}
                       onClick={(e) => setColor(e.target.getAttribute("style"))}
                     ></div>
                     <div
-                      className={`bt_1ln56ky ${
-                        createColor === " rgb(247, 183, 49)" ? "current" : ""
-                      }`}
+                      className={`bt_1ln56ky ${createColor === " rgb(247, 183, 49)" ? "current" : ""
+                        }`}
                       style={{ background: "rgb(247, 183, 49)" }}
                       onClick={(e) => setColor(e.target.getAttribute("style"))}
                     ></div>
                     <div
-                      className={`bt_1ln56ky ${
-                        createColor === " rgb(32, 191, 107)" ? "current" : ""
-                      }`}
+                      className={`bt_1ln56ky ${createColor === " rgb(32, 191, 107)" ? "current" : ""
+                        }`}
                       style={{ background: "rgb(32, 191, 107)" }}
                       onClick={(e) => setColor(e.target.getAttribute("style"))}
                     ></div>
                     <div
-                      className={`bt_1ln56ky ${
-                        createColor === " rgb(45, 152, 218)" ? "current" : ""
-                      }`}
+                      className={`bt_1ln56ky ${createColor === " rgb(45, 152, 218)" ? "current" : ""
+                        }`}
                       style={{ background: "rgb(45, 152, 218)" }}
                       onClick={(e) => setColor(e.target.getAttribute("style"))}
                     ></div>
                     <div
-                      className={`bt_1ln56ky ${
-                        createColor === " rgb(247, 143, 179)" ? "current" : ""
-                      }`}
+                      className={`bt_1ln56ky ${createColor === " rgb(247, 143, 179)" ? "current" : ""
+                        }`}
                       style={{ background: "rgb(247, 143, 179)" }}
                       onClick={(e) => setColor(e.target.getAttribute("style"))}
                     ></div>
@@ -468,7 +491,7 @@ const ProjectManagement = ({
                   <BeatLoader />
                 </Button>
               ) : (
-                <Button variant="primary" onClick={handleSubmitProject}>
+                <Button variant="primary" title="" onClick={handleSubmitProject}>
                   <FormattedMessage id="btn.save" defaultMessage="Save" />
                 </Button>
               )}
@@ -629,72 +652,64 @@ const ProjectManagement = ({
                       </label>
                       <div className="bt_1rsx30z">
                         <div
-                          className={`bt_1ln56ky ${
-                            current === " rgb(56, 103, 214)" ? "current" : ""
-                          }`}
+                          className={`bt_1ln56ky ${current === " rgb(56, 103, 214)" ? "current" : ""
+                            }`}
                           style={{ background: "rgb(56, 103, 214)" }}
                           onClick={(e) =>
                             handleColor(e.target.getAttribute("style"))
                           }
                         ></div>
                         <div
-                          className={`bt_1ln56ky ${
-                            current === " rgb(136, 84, 208)" ? "current" : ""
-                          }`}
+                          className={`bt_1ln56ky ${current === " rgb(136, 84, 208)" ? "current" : ""
+                            }`}
                           style={{ background: "rgb(136, 84, 208)" }}
                           onClick={(e) =>
                             handleColor(e.target.getAttribute("style"))
                           }
                         ></div>
                         <div
-                          className={`bt_1ln56ky ${
-                            current === " rgb(235, 59, 90)" ? "current" : ""
-                          }`}
+                          className={`bt_1ln56ky ${current === " rgb(235, 59, 90)" ? "current" : ""
+                            }`}
                           style={{ background: "rgb(235, 59, 90)" }}
                           onClick={(e) =>
                             handleColor(e.target.getAttribute("style"))
                           }
                         ></div>
                         <div
-                          className={`bt_1ln56ky ${
-                            current === " rgb(250, 130, 49)" ? "current" : ""
-                          }`}
+                          className={`bt_1ln56ky ${current === " rgb(250, 130, 49)" ? "current" : ""
+                            }`}
                           style={{ background: "rgb(250, 130, 49)" }}
                           onClick={(e) =>
                             handleColor(e.target.getAttribute("style"))
                           }
                         ></div>
                         <div
-                          className={`bt_1ln56ky ${
-                            current === " rgb(247, 183, 49)" ? "current" : ""
-                          }`}
+                          className={`bt_1ln56ky ${current === " rgb(247, 183, 49)" ? "current" : ""
+                            }`}
                           style={{ background: "rgb(247, 183, 49)" }}
                           onClick={(e) =>
                             handleColor(e.target.getAttribute("style"))
                           }
                         ></div>
                         <div
-                          className={`bt_1ln56ky ${
-                            current === " rgb(32, 191, 107)" ? "current" : ""
-                          }`}
+                          className={`bt_1ln56ky ${current === " rgb(32, 191, 107)" ? "current" : ""
+                            }`}
                           style={{ background: "rgb(32, 191, 107)" }}
                           onClick={(e) =>
                             handleColor(e.target.getAttribute("style"))
                           }
                         ></div>
                         <div
-                          className={`bt_1ln56ky ${
-                            current === " rgb(45, 152, 218)" ? "current" : ""
-                          }`}
+                          className={`bt_1ln56ky ${current === " rgb(45, 152, 218)" ? "current" : ""
+                            }`}
                           style={{ background: "rgb(45, 152, 218)" }}
                           onClick={(e) =>
                             handleColor(e.target.getAttribute("style"))
                           }
                         ></div>
                         <div
-                          className={`bt_1ln56ky ${
-                            current === " rgb(247, 143, 179)" ? "current" : ""
-                          }`}
+                          className={`bt_1ln56ky ${current === " rgb(247, 143, 179)" ? "current" : ""
+                            }`}
                           style={{ background: "rgb(247, 143, 179)" }}
                           onClick={(e) =>
                             handleColor(e.target.getAttribute("style"))
@@ -720,7 +735,7 @@ const ProjectManagement = ({
                   <BeatLoader />
                 </Button>
               ) : (
-                <Button variant="primary" onClick={handleSubmit}>
+                <Button variant="primary" title="" onClick={handleSubmit}>
                   <FormattedMessage id="btn.save" defaultMessage="Save" />
                 </Button>
               )}

@@ -9,16 +9,15 @@ import { setProjectValue } from "../../../store/projectSlice";
 const DropWrapperProject = ({ onDrop, children, status, statuses, handleDrop }) => {
   const dispatch = useDispatch();
   async function ProjectChange(id, p_id) {
-    const update = await updateTaskProject(id, p_id);
+    await updateTaskProject(id, p_id);
 
-    if (update.status === 200) {
-      addToast("Droped successfully", { autoDismiss: true, appearance: 'success' });
-    }
-    else {
-      addToast("Error! Please Try Again!", { autoDismiss: false, appearance: 'error' });
-    }
+    // if (update.status === 200) {
+    //   addToast("Droped successfully", { autoDismiss: true, appearance: 'success' });
+    // }
+    // else {
+    //   addToast("Error! Please Try Again!", { autoDismiss: false, appearance: 'error' });
+    // }
   };
-  const { addToast } = useToasts();
   const [{ isOver }, drop] = useDrop({
     accept: PROJECT_ITEM,
     canDrop: (item, monitor) => {

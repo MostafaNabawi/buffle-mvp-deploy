@@ -1,13 +1,15 @@
 {
-  "app.task.open": "{num} Öffnen, {start} Start",
+  "app.task.open": "{num} offen, {start} gestartet",
   "app.login.header": "E-Mail Adresse und Passwort eingeben.",
   "app.login.your": "Deine E-Mail Adresse",
   "app.login.google": "Login mit Google Konto",
   "app.login": "Login",
   "app.password": "Passwort",
+  "app.enterPassNew": "Neues Passwort eingeben",
   "app.hi": " Hallo",
   "app.screenLock": "Bildschirmsperre für",
   "app.header.language": "Sprache",
+  "app.requiredAll": "Bitte alle erforderlichen Felder ausfüllen.",
   "app.waterHydretion": "Trink!",
   "app.noAccount": "Wenn du noch keinen Account hast?",
   "app.signupHere": "kannst du dich hier anmelden.",
@@ -21,6 +23,8 @@
   "login.invalid": "⛔ E-Mail oder Passwort ist ungültig. Bitte überprüfen!",
   "email.invalid": "E-Mail Adresse ist ungültig.",
   "email.required": "E-Mail Adresse ist erforderlich.",
+  "email.token": "E-Mail Adresse ist bereits vergeben.",
+  "company.registerError": "Fehler beim Registrieren",
   "acc.err": "Keinen User gefunden mit dieser E-Mail Adresse!",
   "pass.required": "Passwort ist erforderlich.",
   "app.newDaily": "Neues Tagesziel(2L)",
@@ -185,6 +189,7 @@
   "event.recieved": "Hat Geld für etwas erhalten.",
   "event.addNewMem": "Personen hinzufügen",
   "event.userByThisEmail": "",
+  "event.addedSuc": "Erfolgreich hinzugefügt",
 
   "tb.noEvent": "Kein Ereignis",
   "_comment": "paimanText",
@@ -263,5 +268,12 @@
   "task.setTime": "Legen Sie die Dauer der Aufgabe fest.",
   "task.finished": "Task beendet",
   "task.new": "Neue Task",
-  "task.noTask": "Keine Aufgabe für heute"
+  "task.noTask": "Keine Aufgabe für heute",
+  "setting.invite": "Einladungsmail ist versendet worden.",
+  "project.set": "Projekt erfolgreich eingestellt",
+  "item.update": "Aufgabe erfolgreich aktualisiert",
+  "item.color": "Farbset erfolgreich",
+  "tag.added": "Tag hinzugefügt",
+  "reg.sentEmail": "Die E-Mail ist erfoglreich versendet worden.",
+  "reg.continue": "Please check your email and continue from there"
 }

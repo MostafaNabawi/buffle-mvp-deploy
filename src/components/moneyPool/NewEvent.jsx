@@ -47,7 +47,7 @@ function NewEvent() {
     const form = new FormData(e.currentTarget);
     const code = form.get("invite");
     if (code === "") {
-      addToast("Code is required!", {
+      addToast("Code is required.", {
         appearance: "warning",
         autoDismiss: 4000,
       });
@@ -107,7 +107,7 @@ function NewEvent() {
             } else {
               setSelected([...selected, result]);
             }
-          } 
+          }
         } else {
           setNotFound(true);
         }
@@ -144,7 +144,7 @@ function NewEvent() {
           desc: desc,
           memberIds: userId,
           fullName: userName,
-          icon:currentUser?.avatar?.key || ""
+          icon: currentUser?.avatar?.key || ""
         }),
       }).then(async (res) => {
         if (res.status === 200) {
@@ -153,7 +153,11 @@ function NewEvent() {
           addToast("Created", { autoDismiss: true, appearance: "success" });
           navigate(`/dashboard/money-pool/event/${result.eventId}`);
         } else {
-          addToast("Error Please Try Again", {
+          addToast(
+            <FormattedMessage
+              defaultMessage="Error Please Try Again."
+              id="breakPlan.Error"
+            />, {
             autoDismiss: true,
             appearance: "Error",
           });
@@ -181,12 +185,7 @@ function NewEvent() {
   }
   useEffect(() => {
     setCurrencyData(Object.values(CurrencyList.getAll("en_US")));
-    // fetch(`${API_URL}/money-poll/currency`, {
-    //   credentials: "include",
-    // }).then((res) => {
-    //   console.log(res.status);
-    // });
-    //get event list data
+
     request();
   }, []);
   return (
@@ -318,7 +317,7 @@ function NewEvent() {
                   {notFound && (
                     <div style={{ color: "red" }}>
                       {" "}
-                      User by this email not found!{" "}
+                      User by this email not found.{" "}
                     </div>
                   )}
                   {/* selected user */}

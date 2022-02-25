@@ -122,7 +122,7 @@ function Event() {
   };
   const handleAddMember = async () => {
     if (selected.length === 0) {
-      addToast("Please add user!", { autoDismiss: true, appearance: "error" });
+      addToast("Please add user.", { autoDismiss: true, appearance: "error" });
       return "";
     }
     try {
@@ -141,13 +141,13 @@ function Event() {
         body: JSON.stringify({
           memberId: userId,
           eventId: id,
-          icon:currentUser?.avatar?.key || "",
-          fullName:currentUser.first_name + " " +currentUser.last_name 
+          icon: currentUser?.avatar?.key || "",
+          fullName: currentUser.first_name + " " + currentUser.last_name
         }),
       }).then(async (res) => {
         const payback = await res.json();
         if (res.status === 200) {
-          addToast("Added!", { autoDismiss: true, appearance: "success" });
+          addToast("Added.", { autoDismiss: true, appearance: "success" });
           getData();
           setAdding(false);
           handleClose();

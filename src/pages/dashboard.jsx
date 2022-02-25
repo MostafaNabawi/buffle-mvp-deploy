@@ -43,7 +43,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import Timer from "./../components/common/progressBar/TaskProgress";
 import Player from "../components/spotify/Player";
 import SpotifyLogin from "../components/spotify/Login";
-import TimePicker2 from "../components/common/timePicker/TimePicker2";
+import TimePicker from "../components/common/timePicker/TimePicker";
 import { FormattedMessage } from "react-intl";
 import RenderImage from "../components/cutomeImage/RenderImage";
 import { setPassAlert, setRun } from "../store/taskSlice";
@@ -162,7 +162,10 @@ const Dashboard = () => {
       setModalShow(false);
       setNextBreakLoading(false);
     } else {
-      addToast("Error while adding Next Break!", {
+      addToast(<FormattedMessage
+        defaultMessage="Error Please Try Again."
+        id="breakPlan.Error"
+      />, {
         appearance: "error",
         autoDismiss: 5000,
       });
@@ -259,7 +262,7 @@ const Dashboard = () => {
       setTaskError(
         <FormattedMessage
           id="task.required"
-          defaultMessage="Task name is required!"
+          defaultMessage="Task name is required."
         />
       );
       return false;
@@ -312,7 +315,7 @@ const Dashboard = () => {
         addToast(
           <FormattedMessage
             id="task.error"
-            defaultMessage="Error Please Try Again!"
+            defaultMessage="Error Please Try Again."
           />,
           {
             autoDismiss: false,
@@ -433,7 +436,7 @@ const Dashboard = () => {
               const msg2 =
                 context.getCurrent() === 0
                   ? "Your file has been deleted."
-                  : "Gelöscht!,Ihre Datei wurde gelöscht.";
+                  : "Gelöscht,Ihre Datei wurde gelöscht.";
               Swal.fire(msg, msg2, "success");
 
               handleClose();
@@ -442,7 +445,7 @@ const Dashboard = () => {
               addToast(
                 <FormattedMessage
                   id="task.error"
-                  defaultMessage="Error: Please Try Again!."
+                  defaultMessage="Error: Please Try Again."
                 />,
                 {
                   appearance: "error",
@@ -456,7 +459,7 @@ const Dashboard = () => {
             addToast(
               <FormattedMessage
                 id="task.error"
-                defaultMessage="Error: Please Try Again!."
+                defaultMessage="Error: Please Try Again."
               />,
               {
                 appearance: "error",
@@ -480,7 +483,7 @@ const Dashboard = () => {
       setTaskUpdatekError(
         <FormattedMessage
           id="task.required"
-          defaultMessage="Task name is required!"
+          defaultMessage="Task name is required."
         />
       );
       return false;
@@ -511,7 +514,7 @@ const Dashboard = () => {
         addToast(
           <FormattedMessage
             id="task.update"
-            defaultMessage="Updated susseccfully"
+            defaultMessage="Updated successfully"
           />,
           {
             autoDismiss: true,
@@ -524,7 +527,7 @@ const Dashboard = () => {
         addToast(
           <FormattedMessage
             id="task.error"
-            defaultMessage="Error Please Try Again!"
+            defaultMessage="Error Please Try Again."
           />,
           {
             autoDismiss: false,
@@ -580,7 +583,7 @@ const Dashboard = () => {
         : Swal.fire("Bitte überprüfen. ");
     } else {
       context.getCurrent() === 0
-        ? Swal.fire("Please select an item for edit!")
+        ? Swal.fire("Please select an item for edit.")
         : Swal.fire("Bitte zum Bearbeiten auswählen");
     }
   };
@@ -713,12 +716,20 @@ const Dashboard = () => {
                 />
               }
               action={
-                <Link to={"feel-report"}>
-                  <Icon color="#2a3464" icon="iconoir:reports" />
-                </Link>
+                <NavDropdown
+                  className="reminderNav"
+                  title={<Icon color="black" icon="vaadin:ellipsis-dots-v" />}
+                  id="basic-nav-dropdown"
+                >
+                  <NavDropdown.Item>
+                    <Link to={"feel-report"} className="customLink">
+                      <Icon color="#2a3464" icon="iconoir:reports" /> Report
+                    </Link>
+                  </NavDropdown.Item>
+                </NavDropdown>
               }
             />
-            <div className="pt-3 pb-0 mb-0 card-feel-icon ">
+            <div className="pt-1 pb-0 mb-0 card-feel-icon ">
               <Felling />
             </div>
           </Card>
@@ -833,7 +844,7 @@ const Dashboard = () => {
                               {props.days > 0 ? (
                                 <FormattedMessage
                                   values={{
-                                    houres: props.day,
+                                    days: props.day,
                                   }}
                                   defaultMessage={`${props.days + 1} Days`}
                                   id="app.dashboard.vacation.days"
@@ -1038,19 +1049,30 @@ const Dashboard = () => {
                 />
               }
               action={
-                <i
-                  onClick={() => {
-                    setEditData("");
-                    setBreakPlanFrom(true);
-                    setBreakJoinOrSagest(false);
-                    setBreakNewTime(false);
-                    setInvateForm(true);
-                  }}
-                  className="invaleIcone"
+                <NavDropdown
+                  className="reminderNav"
+                  title={<Icon color="black" icon="vaadin:ellipsis-dots-v" />}
+                  id="basic-nav-dropdown"
                 >
-                  <Icon icon="flat-color-icons:invite" />{" "}
-                  <FormattedMessage defaultMessage="Invite" id="app.invite" />
-                </i>
+                  <NavDropdown.Item>
+                    <i
+                      onClick={() => {
+                        setEditData("");
+                        setBreakPlanFrom(true);
+                        setBreakJoinOrSagest(false);
+                        setBreakNewTime(false);
+                        setInvateForm(true);
+                      }}
+                      className="invaleIcone"
+                    >
+                      <Icon icon="flat-color-icons:invite" />{" "}
+                      <FormattedMessage
+                        defaultMessage="Invite"
+                        id="app.invite"
+                      />
+                    </i>
+                  </NavDropdown.Item>
+                </NavDropdown>
               }
             />
             <div>
@@ -1220,21 +1242,6 @@ const Dashboard = () => {
                 <Col md={6}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>
-                      <FormattedMessage defaultMessage="Date" id="label.date" />{" "}
-                    </Form.Label>
-                    <Form.Control
-                      name="data"
-                      type="date"
-                      value={vacationDataInput}
-                      onChange={(e) => {
-                        setVacationDataInput(e.target.value);
-                      }}
-                    />
-                  </Form.Group>
-                </Col>
-                <Col md={6}>
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>
                       <FormattedMessage defaultMessage="Name" id="label.name" />{" "}
                     </Form.Label>
                     <Form.Control
@@ -1243,6 +1250,21 @@ const Dashboard = () => {
                       value={vacationNameInput}
                       onChange={(e) => {
                         setVacationNameInput(e.target.value);
+                      }}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col md={6}>
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>
+                      <FormattedMessage defaultMessage="Date" id="label.date" />{" "}
+                    </Form.Label>
+                    <Form.Control
+                      name="data"
+                      type="date"
+                      value={vacationDataInput}
+                      onChange={(e) => {
+                        setVacationDataInput(e.target.value);
                       }}
                     />
                   </Form.Group>
@@ -1300,7 +1322,7 @@ const Dashboard = () => {
                   </Form.Group>
                 </Col>
                 <Col md={12}>
-                  <TimePicker2
+                  <TimePicker
                     label={
                       <FormattedMessage
                         id="label.duTime"
@@ -1364,7 +1386,7 @@ const Dashboard = () => {
                     </Form.Group>
                   </Col>
                   <Col md={12}>
-                    <TimePicker2
+                    <TimePicker
                       label={
                         <FormattedMessage
                           id="label.duTime"
@@ -1393,6 +1415,7 @@ const Dashboard = () => {
                 }
                 variant="primary"
                 type="button"
+                title=""
                 onClick={() => {
                   creatVacationTime();
                 }}
@@ -1414,6 +1437,7 @@ const Dashboard = () => {
                   <PulseLoader size={12} color="#32cd32" />
                 ) : (
                   <Button
+                    title=""
                     disabled={nextBreakDateInput.length === 0 ? true : false}
                     variant="primary"
                     type="button"
@@ -1445,7 +1469,7 @@ const Dashboard = () => {
               </Button>
             )}
             {taskManagerUpdate && (
-              <Button variant="primary" onClick={updateSelectedTask}>
+              <Button variant="primary" title="" onClick={updateSelectedTask}>
                 {loading === true ? (
                   <BeatLoader />
                 ) : (
@@ -1453,7 +1477,7 @@ const Dashboard = () => {
                 )}
               </Button>
             )}
-            <Button variant="outline-dark" onClick={handleClose}>
+            <Button variant="outline-dark" title="" onClick={handleClose}>
               <FormattedMessage defaultMessage="Close" id="btn.close" />
             </Button>
           </>

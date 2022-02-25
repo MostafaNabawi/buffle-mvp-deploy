@@ -170,12 +170,12 @@ div.task-check-box > input {
   font-size: 17px;
   font-weight: 600;
   margin-top: 0;
-  padding: 10px 15px;
+  padding: 10px 8px;
 }
 .col-header-time,
 .project-setting-icon {
   float: right !important;
-  color: rgb(158, 155, 155);
+  color: rgb(116, 116, 116);
   transition: 0.5s;
 }
 .project-setting-icon:hover {
@@ -361,4 +361,8 @@ div.task-check-box > input {
 }
 .react-datepicker-wrapper {
   width: 10% !important;
+}
+.important-today-week-date {
+  float: right !important;
+  color: rgb(136, 133, 133);
 }

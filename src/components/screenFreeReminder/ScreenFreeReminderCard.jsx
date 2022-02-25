@@ -184,14 +184,20 @@ function ScreenFreeReminderCard() {
         setDisplayTime({ hours: "", minutes: "", seconds: "" });
         setModalShow(false);
         getData();
-        addToast("Added Susseccfully", {
-          autoDismiss: true,
-          appearance: "success",
-        });
+        addToast(
+          <FormattedMessage id="event.addedSuc" defaultMessage="Added Successfuly." />
+          , {
+            autoDismiss: true,
+            appearance: "success",
+          });
       } else {
         setLoading(false);
         setModalShow(false);
-        addToast("Error Please Try Again!", {
+        addToast(
+          <FormattedMessage
+            defaultMessage="Error Please Try Again."
+            id="breakPlan.Error"
+          />, {
           autoDismiss: false,
           appearance: "error",
         });
@@ -216,7 +222,7 @@ function ScreenFreeReminderCard() {
         getData();
         addToast(
           <FormattedMessage
-            defaultMessage="Error Please Try Again!"
+            defaultMessage="Error Please Try Again."
             id="breakPlan.Error"
           />,
           {
@@ -341,10 +347,10 @@ function ScreenFreeReminderCard() {
                   </h6>
                 </div>
                 <p>
-                <FormattedMessage
-                      defaultMessage=" last intermission"
-                      id="screen.lastIntermission"
-                    />
+                  <FormattedMessage
+                    defaultMessage=" last intermission"
+                    id="screen.lastIntermission"
+                  />
                   {" "}
                   {localStorage.getItem("loackTime")
                     ? localStorage.getItem("loackTime")

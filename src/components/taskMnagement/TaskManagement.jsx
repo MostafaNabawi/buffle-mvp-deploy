@@ -1,5 +1,5 @@
 
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useContext } from "react";
 import Item from "./item";
 import DropWrapper from "./DropWrapper";
 import { statuses } from "./data";
@@ -12,8 +12,11 @@ import withReactContent from "sweetalert2-react-content";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { FormattedMessage } from "react-intl";
+import moment from 'moment';
+import { Context } from "../../layout/Wrapper";
 
 const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
+  const context = useContext(Context);
   const { addToast } = useToasts();
   const MySwal = withReactContent(Swal);
   const [items, setItems] = useState([]);
@@ -77,14 +80,18 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
     if (event.key === "Enter") {
       const createT = await createTask(inputTask, 0, 0, false, 'stop');
       if (createT.status === 200) {
-        addToast("Created Susseccfully", {
-          autoDismiss: true,
-          appearance: "success",
-        });
+        // addToast("Created Susseccfully", {
+        //   autoDismiss: true,
+        //   appearance: "success",
+        // });
         setNewItems(true);
         setInputTask({ name: '', p_id: '' });
       } else {
-        addToast("Error Please Try Again!", {
+        addToast(
+          <FormattedMessage
+            defaultMessage="Error Please Try Again."
+            id="breakPlan.Error"
+          />, {
           autoDismiss: false,
           appearance: "error",
         });
@@ -110,34 +117,53 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
     });
   };
   const handleDelete = async (id) => {
+    const titleMsg =
+      context.getCurrent() === 0 ? "Are you sure?" : "Bist du dir sicher?";
     MySwal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      title: titleMsg,
+      text:
+        context.getCurrent() === 0
+          ? "You won't be able to revert this."
+          : "Änderungen sind nicht mehr möglich.",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonText: "Yes, delete it!",
-      cancelButtonText: "No, cancel!",
-      reverseButtons: true,
+      cancelButtonText: context.getCurrent() === 0 ? "Cancel" : "Abbrechen",
+      confirmButtonText: context.getCurrent() === 0 ? "Yes" : "Fortfahren",
+      reverseButtons: false,
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
           const deleteT = await deleteTask(id);
 
           if (deleteT.status === 200) {
-            Swal.fire("Deleted!", "Your file has been deleted.", "success");
+            const msg = context.getCurrent() === 0 ? "Deleted" : "gelöscht";
+
+            const msg2 =
+              context.getCurrent() === 0
+                ? "Your file has been deleted."
+                : "Gelöscht,Ihre Datei wurde gelöscht.";
+            Swal.fire(msg, msg2, "success");
             handleClose();
             const d = items.filter(i => i.tb_id !== id);
             setItems(d);
             handleGet(id);
           } else {
-            addToast("Error: Please Try Again!.", {
+            addToast(
+              <FormattedMessage
+                defaultMessage="Error Please Try Again."
+                id="breakPlan.Error"
+              />, {
               appearance: "error",
               autoDismiss: true,
             });
             handleClose();
           }
         } catch (error) {
-          addToast("Error: Please Try Again!.", {
+          addToast(
+            <FormattedMessage
+              defaultMessage="Error Please Try Again."
+              id="breakPlan.Error"
+            />, {
             appearance: "error",
             autoDismiss: true,
           });
@@ -153,6 +179,7 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
           <Col key={s.status} className={"col-wrapper secondary-dark"}>
             <div className={"col-header"}>
               <span><FormattedMessage defaultMessage={s.status} id={`day.${s.status}`} /></span>
+              <span className="important-today-week-date">{moment().day(s.id).format('DD.MM')}</span>
             </div>
             <hr />
             <DropWrapper onDrop={onDrop} status={s.status} idNumber={s.id} handleDrop={handleDrop}>

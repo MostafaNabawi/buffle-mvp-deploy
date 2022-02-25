@@ -54,7 +54,7 @@ const CompanyRegister = () => {
     });
     const res = await req.json();
     if (res.payload) {
-      addToast("Email Already Taken!", {
+      addToast(<FormattedMessage id="email.token" defaultMessage="Email Already Taken." />, {
         appearance: "error",
       });
       setEmailAlreadyExist(true);
@@ -73,7 +73,7 @@ const CompanyRegister = () => {
       }
     }
     if (errors > 0) {
-      addToast("Please Fill all Form!", {
+      addToast("Please Fill all Form.", {
         appearance: "warning",
         autoDismiss: 4000,
       });
@@ -81,13 +81,13 @@ const CompanyRegister = () => {
     }
     // emailExist Error
     if (emailAlreadyExist) {
-      addToast("Email Already Taken!", {
+      addToast(<FormattedMessage id="email.token" defaultMessage="Email Already Taken." />, {
         appearance: "error",
       });
       return;
     }
     if (!checkEmail(inputs.email)) {
-      addToast("Invalid Email Address!", {
+      addToast(<FormattedMessage id="email.invalid" defaultMessage="Invalid email address." />, {
         appearance: "warning",
         autoDismiss: 4000,
       });
@@ -107,7 +107,7 @@ const CompanyRegister = () => {
       setSendEmail(true);
     } else {
       setLoading(false);
-      addToast("Error While Registring!!", {
+      addToast(<FormattedMessage id="company.registerError" defaultMessage="Error While Registring." />, {
         appearance: "error",
         autoDismiss: 8000,
       });
@@ -139,19 +139,25 @@ const CompanyRegister = () => {
                           />{" "}
                           *
                         </Form.Label>
-                        <Form.Control
-                          className={style.formInput}
-                          type="text"
-                          placeholder="First Name"
-                          name="f_name"
-                          disabled={loading}
-                          onChange={(e) =>
-                            setInputs({
-                              ...inputs,
-                              [e.target.name]: e.target.value,
-                            })
-                          }
-                        />
+                        <FormattedMessage
+                          defaultMessage="First Name"
+                          id="fname">
+                          {(msg) => (
+                            <Form.Control
+                              className={style.formInput}
+                              type="text"
+                              placeholder={msg}
+                              name="f_name"
+                              disabled={loading}
+                              onChange={(e) =>
+                                setInputs({
+                                  ...inputs,
+                                  [e.target.name]: e.target.value,
+                                })
+                              }
+                            />
+                          )}
+                        </FormattedMessage>
                       </Form.Group>
                     </Col>
                     <Col xl="3">
@@ -163,19 +169,26 @@ const CompanyRegister = () => {
                           />{" "}
                           *
                         </Form.Label>
-                        <Form.Control
-                          className={style.formInput}
-                          type="text"
-                          placeholder="Last name"
-                          name="l_name"
-                          disabled={loading}
-                          onChange={(e) =>
-                            setInputs({
-                              ...inputs,
-                              [e.target.name]: e.target.value,
-                            })
-                          }
-                        />
+                        <FormattedMessage
+                          defaultMessage="Last Name"
+                          id="lname"
+                        >
+                          {(msg) => (
+                            <Form.Control
+                              className={style.formInput}
+                              type="text"
+                              placeholder={msg}
+                              name="l_name"
+                              disabled={loading}
+                              onChange={(e) =>
+                                setInputs({
+                                  ...inputs,
+                                  [e.target.name]: e.target.value,
+                                })
+                              }
+                            />
+                          )}
+                        </FormattedMessage>
                       </Form.Group>
                     </Col>
                     <Col xl="6">
@@ -186,7 +199,7 @@ const CompanyRegister = () => {
                         <Form.Control
                           className={style.formInput}
                           type="email"
-                          placeholder="Enter email"
+                          placeholder="E-mail"
                           name="email"
                           disabled={loading}
                           onChange={(e) =>
@@ -208,19 +221,24 @@ const CompanyRegister = () => {
                           />{" "}
                           *
                         </Form.Label>
-                        <Form.Control
-                          className={style.formInput}
-                          type="text"
-                          disabled={loading}
-                          placeholder="Company Name"
-                          name="c_name"
-                          onChange={(e) =>
-                            setInputs({
-                              ...inputs,
-                              [e.target.name]: e.target.value,
-                            })
-                          }
-                        />
+                        <FormattedMessage defaultMessage="Company Name"
+                          id="cname">
+                          {(msg) => (
+                            <Form.Control
+                              className={style.formInput}
+                              type="text"
+                              disabled={loading}
+                              placeholder={msg}
+                              name="c_name"
+                              onChange={(e) =>
+                                setInputs({
+                                  ...inputs,
+                                  [e.target.name]: e.target.value,
+                                })
+                              }
+                            />
+                          )}
+                        </FormattedMessage>
                       </Form.Group>
                     </Col>
                     <Col xl="3">
@@ -267,19 +285,24 @@ const CompanyRegister = () => {
                           />{" "}
                           *
                         </Form.Label>
-                        <Form.Control
-                          className={style.formInput}
-                          type="number"
-                          placeholder="Tax ID"
-                          name="tax_id"
-                          disabled={loading}
-                          onChange={(e) =>
-                            setInputs({
-                              ...inputs,
-                              [e.target.name]: e.target.value,
-                            })
-                          }
-                        />
+                        <FormattedMessage defaultMessage="Tax ID"
+                          id="taxid">
+                          {(msg) => (
+                            <Form.Control
+                              className={style.formInput}
+                              type="number"
+                              placeholder={msg}
+                              name="tax_id"
+                              disabled={loading}
+                              onChange={(e) =>
+                                setInputs({
+                                  ...inputs,
+                                  [e.target.name]: e.target.value,
+                                })
+                              }
+                            />
+                          )}
+                        </FormattedMessage>
                       </Form.Group>
                     </Col>
                     <Col xl="6">
@@ -291,19 +314,25 @@ const CompanyRegister = () => {
                           />{" "}
                           *
                         </Form.Label>
-                        <Form.Control
-                          className={style.formInput}
-                          type="text"
-                          placeholder="Web Site"
-                          name="website"
-                          disabled={loading}
-                          onChange={(e) =>
-                            setInputs({
-                              ...inputs,
-                              [e.target.name]: e.target.value,
-                            })
-                          }
-                        />
+                        <FormattedMessage
+                          defaultMessage="Web Site"
+                          id="website">
+                          {(msg) => (
+                            <Form.Control
+                              className={style.formInput}
+                              type="text"
+                              placeholder={msg}
+                              name="website"
+                              disabled={loading}
+                              onChange={(e) =>
+                                setInputs({
+                                  ...inputs,
+                                  [e.target.name]: e.target.value,
+                                })
+                              }
+                            />
+                          )}
+                        </FormattedMessage>
                       </Form.Group>
                     </Col>
                     <Col xl="6">
@@ -314,19 +343,24 @@ const CompanyRegister = () => {
                             id="headOffice"
                           />{" "}
                         </Form.Label>
-                        <Form.Control
-                          className={style.formInput}
-                          type="text"
-                          placeholder="Head Office"
-                          name="head_office"
-                          disabled={loading}
-                          onChange={(e) =>
-                            setInputs({
-                              ...inputs,
-                              [e.target.name]: e.target.value,
-                            })
-                          }
-                        />
+                        <FormattedMessage defaultMessage="Head Office"
+                          id="headOffice">
+                          {(msg) => (
+                            <Form.Control
+                              className={style.formInput}
+                              type="text"
+                              placeholder={msg}
+                              name="head_office"
+                              disabled={loading}
+                              onChange={(e) =>
+                                setInputs({
+                                  ...inputs,
+                                  [e.target.name]: e.target.value,
+                                })
+                              }
+                            />
+                          )}
+                        </FormattedMessage>
                       </Form.Group>
                     </Col>
                     <Col xl="6">
@@ -446,19 +480,24 @@ const CompanyRegister = () => {
                           />{" "}
                           *
                         </Form.Label>
-                        <Form.Control
-                          className={style.formInput}
-                          type="text"
-                          placeholder="Street ,Number"
-                          name="street"
-                          disabled={loading}
-                          onChange={(e) =>
-                            setInputs({
-                              ...inputs,
-                              [e.target.name]: e.target.value,
-                            })
-                          }
-                        />
+                        <FormattedMessage defaultMessage="Street"
+                          id="street">
+                          {(msg) => (
+                            <Form.Control
+                              className={style.formInput}
+                              type="text"
+                              placeholder={msg}
+                              name="street"
+                              disabled={loading}
+                              onChange={(e) =>
+                                setInputs({
+                                  ...inputs,
+                                  [e.target.name]: e.target.value,
+                                })
+                              }
+                            />
+                          )}
+                        </FormattedMessage>
                       </Form.Group>
                     </Col>
                     <Col xl="6">
@@ -470,19 +509,24 @@ const CompanyRegister = () => {
                           />{" "}
                           *
                         </Form.Label>
-                        <Form.Control
-                          className={style.formInput}
-                          type="number"
-                          placeholder="Postal code"
-                          name="postal"
-                          disabled={loading}
-                          onChange={(e) =>
-                            setInputs({
-                              ...inputs,
-                              [e.target.name]: e.target.value,
-                            })
-                          }
-                        />
+                        <FormattedMessage defaultMessage="Postal code"
+                          id="postal">
+                          {(msg) => (
+                            <Form.Control
+                              className={style.formInput}
+                              type="number"
+                              placeholder={msg}
+                              name="postal"
+                              disabled={loading}
+                              onChange={(e) =>
+                                setInputs({
+                                  ...inputs,
+                                  [e.target.name]: e.target.value,
+                                })
+                              }
+                            />
+                          )}
+                        </FormattedMessage>
                       </Form.Group>
                     </Col>
                     <Row className="justify-content-center">
@@ -528,16 +572,16 @@ const CompanyRegister = () => {
               <Icon icon="emojione:white-heavy-check-mark" />
             </div>
             <h2 className="text-center mt-2">
-              Message sent successfully to your email
+              <FormattedMessage id="reg.sentEmail" defaultMessage="Message sent successfully to your email" />
             </h2>
             <h2 className="text-center mt-2">
-              Please check your email and continue registering from here.
+              <FormattedMessage id="reg.continue" defaultMessage="Please check your email and continue from there" />
             </h2>
             <h6 className="text-center mt-2">
-              <b>Note:</b> You have 2 houres to complete your registration!
+              <b>Note:</b> You have 2 houres to complete your registration.
             </h6>
             <h4 className="text-center mt-2">
-              Click open <a href="http://gmail.com/"> Email</a>
+              Click open <a href="http://gmail.com/"> <FormattedMessage id="label.email" defaultMessage="Email" /></a>
             </h4>
           </Col>
         </Row>

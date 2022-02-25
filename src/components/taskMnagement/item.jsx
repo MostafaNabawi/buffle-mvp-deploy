@@ -4,6 +4,7 @@ import { Form } from "react-bootstrap";
 import TaskModal from "./modal/TaskModal";
 import { completeTask } from "../../api";
 import { useToasts } from "react-toast-notifications";
+import { FormattedMessage } from "react-intl";
 
 const Item = (props) => {
   const { addToast } = useToasts();
@@ -56,33 +57,13 @@ const Item = (props) => {
     if (e.target.checked) {
 
       handleChecked(e.target.id)
-      const updateT = await completeTask(e.target.id, 'completed');
-      if (updateT.status === 200) {
-        addToast("Updated Susseccfully", {
-          autoDismiss: true,
-          appearance: "success",
-        });
-      } else {
-        addToast("Error! Please Try Again!", {
-          autoDismiss: false,
-          appearance: "error",
-        });
-      }
+      await completeTask(e.target.id, 'completed');
+
     }
     else {
       handleChecked(e.target.id + 't')
-      const updateT = await completeTask(e.target.id, null);
-      if (updateT.status === 200) {
-        addToast("Updated Susseccfully", {
-          autoDismiss: true,
-          appearance: "success",
-        });
-      } else {
-        addToast("Error! Please Try Again!", {
-          autoDismiss: false,
-          appearance: "error",
-        });
-      }
+      await completeTask(e.target.id, null);
+
     }
 
   }

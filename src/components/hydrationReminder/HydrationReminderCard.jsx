@@ -196,7 +196,10 @@ function HydrationReminderCard() {
         dispatch(setIsChanged(true));
         setIsSubmit(!isSubmit);
       } else {
-        addToast("Error Please Try Again!", {
+        addToast(<FormattedMessage
+          defaultMessage="Error Please Try Again."
+          id="breakPlan.Error"
+        />, {
           autoDismiss: false,
           appearance: "error",
         });
