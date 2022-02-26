@@ -44,10 +44,16 @@ function NewEvent() {
     const form = new FormData(e.currentTarget);
     const code = form.get("invite");
     if (code === "") {
-      addToast(<FormattedMessage id="codeRequired" defaultMessage="Code is required." />, {
-        appearance: "warning",
-        autoDismiss: 4000,
-      });
+      addToast(
+        <FormattedMessage
+          id="codeRequired"
+          defaultMessage="Code is required."
+        />,
+        {
+          appearance: "warning",
+          autoDismiss: 4000,
+        }
+      );
       return;
     }
     setBusy(true);
@@ -124,23 +130,16 @@ function NewEvent() {
     }
     const userName = currentUser.first_name + " " + currentUser.last_name;
     if (eventName === "") {
-<<<<<<< HEAD
       addToast(
         <FormattedMessage
-          defaultMessage="Event name is required."
-          id="event.name.req"
+          id="requiredAll"
+          defaultMessage="All field is required."
         />,
         {
           autoDismiss: true,
           appearance: "error",
         }
       );
-=======
-      addToast(<FormattedMessage id="requiredAll" defaultMessage="All field is required." />, {
-        autoDismiss: true,
-        appearance: "error",
-      });
->>>>>>> 1029b32bffe345e84a524a59496a82e549aceea4
       return "";
     }
     var userId = [];
@@ -333,7 +332,10 @@ function NewEvent() {
                   {notFound && (
                     <div style={{ color: "red" }}>
                       {" "}
-                      <FormattedMessage id="acc.err" defaultMessage="User by this email not found." /> {" "}
+                      <FormattedMessage
+                        id="acc.err"
+                        defaultMessage="User by this email not found."
+                      />{" "}
                     </div>
                   )}
                   {/* selected user */}
