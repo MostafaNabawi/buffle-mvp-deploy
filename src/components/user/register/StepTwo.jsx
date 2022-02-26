@@ -106,6 +106,9 @@ const StepTwoRegister = () => {
       const res = await req.json();
       if (req.status === 200) {
         navigate("/?company=true");
+      } else {
+        setLoading(false);
+        setExpired(true);
       }
     }
     // #2- register for freelancer
@@ -133,6 +136,9 @@ const StepTwoRegister = () => {
         setLoading(false);
         localStorage.setItem("pp", inputs.password);
         navigate(`/?new=true&email=${already.email}`);
+      } else {
+        setLoading(false);
+        setExpired(true);
       }
     }
     // #3- register for student
@@ -160,6 +166,9 @@ const StepTwoRegister = () => {
         setLoading(false);
         localStorage.setItem("pp", inputs.password);
         navigate(`/?new=true&email=${already.email}`);
+      } else {
+        setLoading(false);
+        setExpired(true);
       }
     }
   };
