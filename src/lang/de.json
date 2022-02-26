@@ -54,6 +54,7 @@
   "breakPlan.Edit": "Pausenplan bearbeiten",
   "breakPlan.Create": "Neuer Pausenplan",
   "breakPlan.newSuggeation": "Neuer Vorschlag",
+  "breakPlan.dellte":"Erfolgreich gelöscht",
 
   "app.invite": "Einladen",
   "app.imToday": "Tagespunkte",
@@ -233,6 +234,7 @@
   "study": "Studienfach",
   "settings": "Einstellungen",
   "register.as": "Registrieren als:",
+  "register.dis":"Registrieren Sie sich bei Buffle",
   "company": "Unternehmen",
   "student": "Student:in",
   "notify.water": "Es ist Zeit, Wasser zu trinken!",
