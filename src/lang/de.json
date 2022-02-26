@@ -55,6 +55,7 @@
   "breakPlan.Create": "Neuer Pausenplan",
   "breakPlan.newSuggeation": "Neuer Vorschlag",
   "breakPlan.dellte": "Erfolgreich gelöscht",
+  "msg.editSuccess": "Erfolgreich bearbeitet",
 
   "notFound":"Kein Benutzer gefunden",
   "personalData":"Persönliche Daten",
@@ -172,7 +173,8 @@
 
   "event.create": "Event erstellen",
   "event.list": "Event Liste",
-  "event.name": "Eventname",
+  "event.name": "Event Name",
+  "event.name.req": "Event Name ist erforderlich.",
   "event.currency": "Währung",
   "event.participants": "Teilnehmer:innen",
   "event.goodExample": "Beispiele für einen Moneypool",
@@ -263,6 +265,7 @@
   "notify.acceptBreakSuggest": "akzeptiere deinen Zeitvorschlag für Pausenplan {name}",
   "notify.newSuggest": " hat neue Vorschläge für({msg}",
   "notify.money": "hat Sie in Moneypoll({name} hinzugefügt",
+  "code.required": "Code ist erforderlich.",
   "_comment2": "paimanEnd",
 
   "__comment": "Zia---------",
@@ -290,7 +293,7 @@
   "task.new": "Neue Task",
   "task.noTask": "Keine Aufgabe für heute",
   "setting.invite": "Einladungsmail ist versendet worden.",
-  "project.set": "Projekt erfolgreich eingestellt",
+  "project.set": "Projekt erfolgreich ausgewählt",
   "item.update": "Aufgabe erfolgreich aktualisiert",
   "item.color": "Farbset erfolgreich",
   "tag.added": "Tag hinzugefügt",
@@ -328,5 +331,13 @@
   "resetPass.time": "Die Registrierung ist für die nächsten 20 minute freigeschaltet.",
   "durationTime.req": "Dauer Zeit ist erforderlich",
   "prefrence": "Präferenz",
-  "pref.update": "Präferenz updaten"
+  "pref.update": "Präferenz updaten",
+  "copy.clip": "In die Zwischenablage kopieren",
+  "Copied": "Kopiert",
+  "codeRequired": "Code ist erforderlich.",
+  "timeNotSelected": "Zeit ist nicht ausgewählt",
+  "tagResult": "Resultat für",
+  "blocked": "Sie haben blockiert",
+  "successfully": "erfolgreich",
+  "noUser": "Kein Benutzer gefunden."
 }

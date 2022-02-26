@@ -2,12 +2,10 @@
 
 import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
-import style from "./../style.module.css";
 import Skeleton from "react-loading-skeleton";
 import { FormattedMessage } from "react-intl";
 function OverView({ data }) {
   const [innerData, setInnerData] = useState(null);
-  console.log(data);
   useEffect(() => {
     setInnerData(data);
   }, [data]);
@@ -17,10 +15,10 @@ function OverView({ data }) {
       return (
         <>
           {innerData.report.map((i, n) => (
-            <div key={`over-${n}`}>{i?.msg}</div>
+            <div key={`r-${n}`}>{i?.msg}</div>
           ))}
           {innerData.owedReport.map((i, n) => (
-            <div key={`over-${n}`}>{i?.msg}</div>
+            <div key={`owed-${n}`}>{i?.msg}</div>
           ))}
         </>
       );
@@ -29,10 +27,10 @@ function OverView({ data }) {
       return (
         <>
           {innerData.owedReport.map((i, n) => (
-            <div key={`over-${n}`}>{i?.msg}</div>
+            <div key={`owe-${n}`}>{i?.msg}</div>
           ))}
           {innerData.owedReport.map((i, n) => (
-            <div key={`over-${n}`}>{i?.msg}</div>
+            <div key={`o-${n}`}>{i?.msg}</div>
           ))}
         </>
       );

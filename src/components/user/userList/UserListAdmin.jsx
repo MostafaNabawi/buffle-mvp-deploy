@@ -26,6 +26,10 @@ const UserListAdmin = () => {
       }
     }
     pageData();
+    return () => {
+      setData([]);
+      setLoading(true);
+    };
   }, []);
   useEffect(() => {
     if (typeFilter === 0) {

@@ -7,14 +7,20 @@ export default function RenderImage({ code, type = 2 }) {
   const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(true);
   useEffect(() => {
+    let mount = true;
     async function readInnerImage() {
       const result = await readImage(code);
-      setUrl(result);
-      setLoading(false);
+      if (mount) {
+        setUrl(result);
+        setLoading(false);
+      }
     }
     if (code != "") {
       readInnerImage();
     }
+    return () => {
+      mount = false;
+    };
   }, [code]);
   if (code === "" && type === 2) {
     return (
