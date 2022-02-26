@@ -175,6 +175,9 @@ const TableAdmin = ({
         html: context.getCurrent() === 0
           ? `Do you want to <strong style="color : red">block</strong> workspace <b>${space}</b>?<br />😮`
           : `Möchten Sie <strong style="color : red">block</strong> Arbeitsplatz<b>${space}</b>?<br />😮`,
+        cancelButtonText: context.getCurrent() === 0 ? "Cancel" : "Abbrechen",
+        confirmButtonText: context.getCurrent() === 0 ? "Ok" : "OK",
+        reverseButtons: false,
         showCancelButton: true,
       }).then((res) => {
         if (res.isConfirmed) {
@@ -212,6 +215,9 @@ const TableAdmin = ({
         html: context.getCurrent() === 0
           ? `Do you want to <strong style="color : green">Active</strong> workspace <b>${space}</b>?<br />🧐`
           : `Möchten Sie <strong style="color : green">Aktiv</strong> Arbeitsplatz <b>${space}</b>?<br />🧐`,
+        cancelButtonText: context.getCurrent() === 0 ? "Cancel" : "Abbrechen",
+        confirmButtonText: context.getCurrent() === 0 ? "Ok" : "OK",
+        reverseButtons: false,
         showCancelButton: true,
       }).then((res) => {
         if (res.isConfirmed) {
