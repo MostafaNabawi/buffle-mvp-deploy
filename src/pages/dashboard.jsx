@@ -844,7 +844,7 @@ const Dashboard = () => {
                               {props.days > 0 ? (
                                 <FormattedMessage
                                   values={{
-                                    days: props.day,
+                                    days: props.days + 1,
                                   }}
                                   defaultMessage={`${props.days + 1} Days`}
                                   id="app.dashboard.vacation.days"
