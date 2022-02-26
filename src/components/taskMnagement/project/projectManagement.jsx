@@ -122,7 +122,7 @@ const ProjectManagement = ({
     if (event.key === "Enter") {
       const createT = await createTask(inputTask, 0, 0, false, "stop");
       if (createT.status === 200) {
-        // handleGet(inputTask.name);
+        handleGet(inputTask.name);
         // addToast("Created Susseccfully", {
         //   autoDismiss: true,
         //   appearance: "success",
@@ -495,7 +495,7 @@ const ProjectManagement = ({
                   <FormattedMessage id="btn.save" defaultMessage="Save" />
                 </Button>
               )}
-              <Button variant="outline-dark" onClick={handleClosePModal}>
+              <Button variant="outline-dark" title="" onClick={handleClosePModal}>
                 <FormattedMessage id="btn.close" defaultMessage="Close" />
               </Button>
             </>
@@ -739,7 +739,7 @@ const ProjectManagement = ({
                   <FormattedMessage id="btn.save" defaultMessage="Save" />
                 </Button>
               )}
-              <Button variant="outline-dark" onClick={handleClose}>
+              <Button variant="outline-dark" title="" onClick={handleClose}>
                 <FormattedMessage id="btn.close" defaultMessage="Close" />
               </Button>
             </>
