@@ -7,7 +7,6 @@ import style from "./style.module.css";
 import { useNavigate } from "react-router-dom";
 import Card from "./../card/Card";
 import CardBody from "./../card/CardBody";
-import CurrencyList from "currency-list";
 import { useToasts } from "react-toast-notifications";
 import { API_URL } from "../../config";
 import Jumbotron from "./partials/Jumbotron";
@@ -19,7 +18,6 @@ import { FormattedMessage } from "react-intl";
 function NewEvent() {
   const [key, setKey] = useState("createvent");
   const [personNum, setPersonNum] = useState([2]);
-  const [currencyData, setCurrencyData] = useState(null);
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [loading2, setLoading2] = useState(false);
@@ -32,7 +30,6 @@ function NewEvent() {
   const [eventList, setEventList] = useState([]);
   //
   const [eventName, setEventName] = useState("");
-  const [currency, setCurrency] = useState("");
   const navigate = useNavigate();
   // naviget to event when click on event list row
   const handleRowClick = (id) => {
@@ -117,10 +114,17 @@ function NewEvent() {
     }
   }
   const handleCreatePool = async () => {
+    let currency = "";
     const currentUser = JSON.parse(localStorage.getItem("user"));
+    const prefData = JSON.parse(localStorage.getItem("prefrence") || "{}");
+    if (prefData) {
+      currency = prefData?.currency;
+    } else {
+      currency = "USD";
+    }
     const userName = currentUser.first_name + " " + currentUser.last_name;
-    if (eventName === "" || currency === "") {
-      addToast("All faild is required", {
+    if (eventName === "") {
+      addToast("Event name is required!", {
         autoDismiss: true,
         appearance: "error",
       });
@@ -130,7 +134,6 @@ function NewEvent() {
     selected.length > 0 && selected.map((user) => userId.push(user.uid));
     userId = userId.join(",");
     try {
-      setCreateing(true);
       await fetch(`${API_URL}/money-poll/new `, {
         method: "POST",
         credentials: "include",
@@ -144,7 +147,7 @@ function NewEvent() {
           desc: desc,
           memberIds: userId,
           fullName: userName,
-          icon: currentUser?.avatar?.key || ""
+          icon: currentUser?.avatar?.key || "",
         }),
       }).then(async (res) => {
         if (res.status === 200) {
@@ -157,10 +160,12 @@ function NewEvent() {
             <FormattedMessage
               defaultMessage="Error Please Try Again."
               id="breakPlan.Error"
-            />, {
-            autoDismiss: true,
-            appearance: "Error",
-          });
+            />,
+            {
+              autoDismiss: true,
+              appearance: "Error",
+            }
+          );
         }
       });
     } catch (err) {
@@ -184,8 +189,6 @@ function NewEvent() {
     }
   }
   useEffect(() => {
-    setCurrencyData(Object.values(CurrencyList.getAll("en_US")));
-
     request();
   }, []);
   return (
@@ -228,7 +231,7 @@ function NewEvent() {
                       />
                     </Form.Group>
                   </Col>
-                  <Col md={12} className={style.select_col}>
+                  {/* <Col md={12} className={style.select_col}>
                     <Form.Group
                       className={style.select_input}
                       controlId="homeCurrency"
@@ -257,7 +260,7 @@ function NewEvent() {
                           ))}
                       </Form.Select>
                     </Form.Group>
-                  </Col>
+                  </Col> */}
                   {/* email */}
                   <div className={style.participant_section}>
                     <h4>
