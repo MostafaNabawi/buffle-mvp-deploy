@@ -179,8 +179,8 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
         return (
           <Col key={s.status} className={"col-wrapper secondary-dark"}>
             <div className={"col-header"}>
-              <span><FormattedMessage defaultMessage={s.status} id={`day.${s.status}`} /></span>
-              <span className="important-today-week-date">{moment().day(s.id).format('DD.MM')}</span>
+              <span ><FormattedMessage defaultMessage={s.status} id={`day.${s.status}`} /></span>
+              <span className="important-today-week-date">{moment().day(s.day).format('DD.MM')}</span>
             </div>
             <hr />
             <DropWrapper onDrop={onDrop} status={s.status} idNumber={s.id} handleDrop={handleDrop}>

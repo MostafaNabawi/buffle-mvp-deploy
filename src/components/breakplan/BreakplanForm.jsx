@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Card, Button, Form } from "react-bootstrap";
 import { Icon } from "@iconify/react";
 import { CreateNewPlan } from "../../api/breackPlan";
@@ -7,6 +7,9 @@ import { useToasts } from "react-toast-notifications";
 import Loader from "react-spinners/BeatLoader";
 import { FormattedMessage } from "react-intl";
 import { API_URL } from "../../config";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import { Context } from "../../layout/Wrapper";
 
 function BreackplanFrom({
   show,
@@ -22,6 +25,8 @@ function BreackplanFrom({
   joindata,
   getBreakPlan,
 }) {
+  const context = useContext(Context);
+  const MySwal = withReactContent(Swal);
   const currentUser = JSON.parse(localStorage.getItem("user"));
   const { addToast } = useToasts();
   const [loading, setloading] = useState(false);
@@ -145,10 +150,7 @@ function BreackplanFrom({
           }
         });
       } catch (err) {
-        addToast(<FormattedMessage
-          defaultMessage="Error Please Try Again."
-          id="breakPlan.Error"
-        />, {
+        addToast("Server Error Please Try Again.", {
           autoDismiss: false,
           appearance: "error",
         });
@@ -387,49 +389,111 @@ function BreackplanFrom({
   };
   // delete break plan
   const handleDelete = async (id) => {
-    try {
-      setDeleting(true);
-      await fetch(`${API_URL}/breakPlan/delete?breakPlanId=${id}`, {
-        method: "DELETE",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Credentials": true,
-        },
-      }).then((res) => {
-        if (res.status === 200) {
-          getBreakPlan();
-          addToast(
-            <FormattedMessage
-              defaultMessage="Deleted Successfully."
-              id="breakPlan.dellte"
-            />,
-            {
-              autoDismiss: true,
-              appearance: "success",
+
+    const titleMsg =
+      context.getCurrent() === 0 ? "Are you sure?" : "Bist du dir sicher?";
+    MySwal.fire({
+      title: titleMsg,
+      text:
+        context.getCurrent() === 0
+          ? "You won't be able to revert this."
+          : "Änderungen sind nicht mehr möglich.",
+      icon: "warning",
+      showCancelButton: true,
+      cancelButtonText: context.getCurrent() === 0 ? "Cancel" : "Abbrechen",
+      confirmButtonText: context.getCurrent() === 0 ? "Yes" : "Fortfahren",
+      reverseButtons: false,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          setDeleting(true);
+          await fetch(`${API_URL}/breakPlan/delete?breakPlanId=${id}`, {
+            method: "DELETE",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Credentials": true,
+            },
+          }).then((res) => {
+            if (res.status === 200) {
+              getBreakPlan();
+              const msg = context.getCurrent() === 0 ? "Deleted" : "gelöscht";
+
+              const msg2 =
+                context.getCurrent() === 0
+                  ? "Your file has been deleted."
+                  : "Gelöscht,Ihre Datei wurde gelöscht.";
+              Swal.fire(msg, msg2, "success");
+              setShow(false);
+              setClose(true);
+              setDeleting(false);
+            } else {
+              addToast(
+                <FormattedMessage
+                  defaultMessage="Error Please Try Again."
+                  id="breakPlan.Error"
+                />,
+                {
+                  autoDismiss: false,
+                  appearance: "error",
+                }
+              );
+              setDeleting(false);
             }
-          );
-          setShow(false);
-          setClose(true);
-          setDeleting(false);
-        } else {
-          addToast(
-            <FormattedMessage
-              defaultMessage="Error Please Try Again."
-              id="breakPlan.Error"
-            />,
-            {
-              autoDismiss: false,
-              appearance: "error",
-            }
-          );
+          });
+        }
+        catch (err) {
           setDeleting(false);
         }
-      });
-    } catch (err) {
-      setDeleting(false);
-    }
-  };
+
+
+      };
+    });
+  }
+  // const handleDelete = async (id) => {
+  //   try {
+  //     setDeleting(true);
+  //     await fetch(`${API_URL}/breakPlan/delete?breakPlanId=${id}`, {
+  //       method: "DELETE",
+  //       credentials: "include",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         "Access-Control-Allow-Credentials": true,
+  //       },
+  //     }).then((res) => {
+  //       if (res.status === 200) {
+  //         getBreakPlan();
+  //         addToast(
+  //           <FormattedMessage
+  //             defaultMessage="Deleted Successfully."
+  //             id="breakPlan.dellte"
+  //           />,
+  //           {
+  //             autoDismiss: true,
+  //             appearance: "success",
+  //           }
+  //         );
+  //         setShow(false);
+  //         setClose(true);
+  //         setDeleting(false);
+  //       } else {
+  //         addToast(
+  //           <FormattedMessage
+  //             defaultMessage="Error Please Try Again."
+  //             id="breakPlan.Error"
+  //           />,
+  //           {
+  //             autoDismiss: false,
+  //             appearance: "error",
+  //           }
+  //         );
+  //         setDeleting(false);
+  //       }
+  //     });
+  //   } catch (err) {
+  //     setDeleting(false);
+  //   }
+  // };
 
   return (
     <div className={`${style.manCard} ${close ? style.hide : style.show}`}>

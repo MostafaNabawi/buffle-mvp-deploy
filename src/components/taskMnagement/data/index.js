@@ -24,7 +24,7 @@ const data = [
 const statuses = [
   {
     id: 1,
-    day: 0,
+    day: 1,
     status: "Monday",
     title: "New Project",
   },
@@ -60,7 +60,7 @@ const statuses = [
   },
   {
     id: 0,
-    day: 1,
+    day: 7,
     status: "Sunday",
     title: "Daily Reading",
   },
