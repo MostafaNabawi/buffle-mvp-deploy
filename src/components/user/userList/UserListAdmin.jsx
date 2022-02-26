@@ -134,7 +134,6 @@ const UserListAdmin = () => {
                 <FormattedMessage id="freelancer" defaultMessage="Freelancer">
                   {(msg) => <option value="3">{msg}</option>}
                 </FormattedMessage>
-                
               </Form.Select>
             </Form.Group>
           </Col>
@@ -143,7 +142,7 @@ const UserListAdmin = () => {
               <Form.Select
                 onChange={(e) => setStatusFilter(Number(e.target.value))}
               >
-                   <FormattedMessage id="all" defaultMessage="All">
+                <FormattedMessage id="all" defaultMessage="All">
                   {(msg) => <option value="0">{msg}</option>}
                 </FormattedMessage>
                 <FormattedMessage id="block" defaultMessage="Block">
@@ -163,18 +162,23 @@ const UserListAdmin = () => {
               <Form.Group
                 className="mb-3 input-group"
                 controlId="formBasicPassword"
-              > 
-              <FormattedMessage id="searchEx" defaultMessage="Search eg(Name , Email)">
-                  {(msg) =>  <Form.Control
-                  type="search"
-                  placeholder={msg}
-                  value={searchInput}
-                  onChange={(e) => {
-                    setSearchInput(e.target.value);
-                  }}
-                />}
+              >
+                <FormattedMessage
+                  id="searchEx"
+                  defaultMessage="Search eg(Name , Email)"
+                >
+                  {(msg) => (
+                    <Form.Control
+                      type="search"
+                      placeholder={msg}
+                      value={searchInput}
+                      onChange={(e) => {
+                        setSearchInput(e.target.value);
+                      }}
+                    />
+                  )}
                 </FormattedMessage>
-               
+
                 <Button variant="primary" type="submit">
                   <Icon icon="bi:search" />
                 </Button>
@@ -184,12 +188,15 @@ const UserListAdmin = () => {
           <Col xl={12}>
             <TableAdmin
               tableHeader={[
-                "First Name",
-                "Last Name",
-                "Email",
-                "Country",
-                "Type",
-                "action",
+                <FormattedMessage
+                  defaultMessage="First Name"
+                  id="user.fname"
+                />,
+                <FormattedMessage defaultMessage="Last Name" id="user.lname" />,
+                <FormattedMessage defaultMessage="Email" id="label.email" />,
+                <FormattedMessage defaultMessage="Country" id="country" />,
+                <FormattedMessage defaultMessage="Type" id="type" />,
+                <FormattedMessage defaultMessage="Action" id="action" />,
               ]}
               tableBody={
                 filteredData.length > 0 || searchInput !== ""

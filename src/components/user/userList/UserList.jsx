@@ -5,6 +5,7 @@ import Table from "../../table/Table";
 import style from "../../table/style.module.css";
 import { PulseLoader } from "react-spinners";
 import { getCompanySpaceData } from "../../../api";
+import { FormattedMessage } from "react-intl";
 
 const UserList = () => {
   const [loading, setLoading] = useState(true);
@@ -125,11 +126,14 @@ const UserList = () => {
           <Col xl={12}>
             <Table
               tableHeader={[
-                "First Name",
-                "Last Name",
-                "Email",
-                "Type",
-                "action",
+                <FormattedMessage
+                  defaultMessage="First Name"
+                  id="user.fname"
+                />,
+                <FormattedMessage defaultMessage="Last Name" id="user.lname" />,
+                <FormattedMessage defaultMessage="Email" id="label.email" />,
+                <FormattedMessage defaultMessage="Type" id="type" />,
+                <FormattedMessage defaultMessage="Action" id="action" />,
               ]}
               tableBody={isFilter ? statusFilterData : data}
               isPagination={true}
