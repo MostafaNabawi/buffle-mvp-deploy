@@ -281,7 +281,7 @@ function ScreenFreeReminderCard() {
     <>
       <Card className={style.card}>
         <CardHeader
-          icon={<Image src="/icone/eye 1.png" alt="eye icon" />}
+          icon={<Image src="/icone/eye 1.svg" alt="eye icon" />}
           title={
             <FormattedMessage
               defaultMessage="ScreenFree Reminder"

@@ -465,6 +465,9 @@ ul.sidebar-list-scroll > li {
   text-align: center !important;
   padding-top: 5px;
 }
+ul.sidebar-list > li:hover,ul.sidebar-list-scroll > li:hover{
+  background: rgba(212, 224, 246, 0.9) !important ;
+}
 .sidebar-icon {
   margin-top: 2px !important;
   width: 45px !important;
@@ -1038,3 +1041,24 @@ div.check-box > input {
   color: black !important;
   cursor: pointer !important;
 }
+.custom-tooltip{
+  z-index: 9999999 !important ;
+  margin-left: 7px !important;
+}
+.tooltip-inner{
+  background: radial-gradient(
+    103.73% 715% at 100% 100%,
+    var(--primary-color) 0%,
+    var(--low-vein-blue) 100%
+  );
+color: white !important;
+}
+
+.tooltip-inner::before{
+  background: radial-gradient(
+    103.73% 715% at 100% 100%,
+    var(--primary-color) 0%,
+    var(--low-vein-blue) 100%
+  );
+}
+

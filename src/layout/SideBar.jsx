@@ -1,4 +1,4 @@
-import { Image } from "react-bootstrap";
+import { Image, Tooltip, OverlayTrigger } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
 
@@ -17,14 +17,24 @@ const SideBar = () => {
   return (
     <section className="h-sidebar sidebar-container ">
       <ul className="m-0 sidebar-list">
-        <li className="mt-3">
-          <Link to="/dashboard">
-            <Image
-              className="sidebar-icon"
-              src="/icone/countdown to break 3.svg"
-            />
-          </Link>
-        </li>
+        <OverlayTrigger
+          key="right"
+          placement="right"
+          overlay={
+            <Tooltip className="custom-tooltip" id={`tooltip-right`}>
+              Dashboard
+            </Tooltip>
+          }
+        >
+          <li className="mt-3">
+            <Link to="/dashboard">
+              <Image
+                className="sidebar-icon"
+                src="/icone/countdown to break 3.svg"
+              />
+            </Link>
+          </li>
+        </OverlayTrigger>
       </ul>
       <div className="pt-3 container-list">
         <i
@@ -44,16 +54,37 @@ const SideBar = () => {
               />
             </Link>
           </li>
-          <li className="mt-3">
-            <Link to="money-pool">
-              <Image className="sidebar-icon" src="/icone/kittysplit 1.svg" />
-            </Link>
-          </li>
-          <li className="mt-3">
+          <OverlayTrigger
+            key="right"
+            placement="right"
+            overlay={
+              <Tooltip className="custom-tooltip" id={`tooltip-right`}>
+                Moneypool
+              </Tooltip>
+            }
+          >
+            <li className="mt-3">
+              <Link to="money-pool">
+                <Image className="sidebar-icon" src="/icone/kittysplit 1.svg" />
+              </Link>
+            </li>
+          </OverlayTrigger>
+          <OverlayTrigger
+            key="right"
+            placement="right"
+            overlay={
+              <Tooltip className="custom-tooltip" id={`tooltip-right`}>
+                Task Management
+              </Tooltip>
+            }
+          >
+             <li className="mt-3">
             <Link to="/dashboard/taskmanagement">
               <Image className="sidebar-icon" src="/icone/task manager 1.svg" />
             </Link>
           </li>
+          </OverlayTrigger>
+         
           <li className="mt-3">
             <Link to="">
               <Image className="sidebar-icon2" src="/icone/Vector.svg" />
@@ -116,11 +147,21 @@ const SideBar = () => {
         </i>
       </div>
       <ul className="m-0 sidebar-list">
-        <li className="mt-3">
+      <OverlayTrigger
+            key="right"
+            placement="right"
+            overlay={
+              <Tooltip className="custom-tooltip" id={`tooltip-right`}>
+                Setting
+              </Tooltip>
+            }
+          >
+            <li className="mt-3">
           <Link to="/dashboard/setting">
             <Image className="sidebar-icon" src="/icone/blue-book 1.svg" />
           </Link>
         </li>
+          </OverlayTrigger>
       </ul>
     </section>
   );
