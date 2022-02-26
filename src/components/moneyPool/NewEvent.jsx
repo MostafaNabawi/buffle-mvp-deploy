@@ -47,7 +47,7 @@ function NewEvent() {
     const form = new FormData(e.currentTarget);
     const code = form.get("invite");
     if (code === "") {
-      addToast("Code is required.", {
+      addToast(<FormattedMessage id="codeRequired" defaultMessage="Code is required." />, {
         appearance: "warning",
         autoDismiss: 4000,
       });
@@ -120,7 +120,7 @@ function NewEvent() {
     const currentUser = JSON.parse(localStorage.getItem("user"));
     const userName = currentUser.first_name + " " + currentUser.last_name;
     if (eventName === "" || currency === "") {
-      addToast("All faild is required", {
+      addToast(<FormattedMessage id="requiredAll" defaultMessage="All field is required." />, {
         autoDismiss: true,
         appearance: "error",
       });
@@ -317,7 +317,7 @@ function NewEvent() {
                   {notFound && (
                     <div style={{ color: "red" }}>
                       {" "}
-                      User by this email not found.{" "}
+                      <FormattedMessage id="acc.err" defaultMessage="User by this email not found." /> {" "}
                     </div>
                   )}
                   {/* selected user */}

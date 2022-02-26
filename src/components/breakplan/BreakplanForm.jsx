@@ -122,7 +122,7 @@ function BreackplanFrom({
           if (res.status === 200) {
             break_name_el.innerHTML = newBreak.title;
             break_time_el.innerHTML = newBreak.createIime;
-            addToast("Edited Susseccfully", {
+            addToast(<FormattedMessage id="msg.editSuccess" defaultMessage="Edited Successfully" />, {
               autoDismiss: true,
               appearance: "success",
             });
@@ -145,7 +145,10 @@ function BreackplanFrom({
           }
         });
       } catch (err) {
-        addToast("Server Error Please Try Again.", {
+        addToast(<FormattedMessage
+          defaultMessage="Error Please Try Again."
+          id="breakPlan.Error"
+        />, {
           autoDismiss: false,
           appearance: "error",
         });
@@ -427,7 +430,7 @@ function BreackplanFrom({
       setDeleting(false);
     }
   };
- 
+
   return (
     <div className={`${style.manCard} ${close ? style.hide : style.show}`}>
       <Card className={`${style.customCard} pb-1`}>

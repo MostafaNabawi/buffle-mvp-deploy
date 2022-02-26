@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { API_URL } from "../config";
 import HashtagTable from "../components/hashtag/HashtagTable";
 import { DotLoader } from "react-spinners";
+import { FormattedMessage } from "react-intl";
 function Hashtag() {
   const { tag } = useParams();
   const [data, setData] = useState([]);
@@ -19,7 +20,7 @@ function Hashtag() {
     if (data.length === 0) {
       return (
         <div>
-          <Alert variant="info">Tag Not Found.</Alert>
+          <Alert variant="info"><FormattedMessage id="tag.notFount" defaultMessage="Tag Not Found." /></Alert>
         </div>
       );
     }
@@ -43,7 +44,7 @@ function Hashtag() {
   }, [tag]);
   return (
     <>
-      <h3 className="text-center mb-2">Result For (#{tag})</h3>
+      <h3 className="text-center mb-2"><FormattedMessage id="tagResult" defaultMessage="Result For" /> (#{tag})</h3>
       <Row>
         <Col md={12}>{DynamicTable}</Col>
       </Row>

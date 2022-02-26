@@ -55,6 +55,7 @@
   "breakPlan.Create": "Neuer Pausenplan",
   "breakPlan.newSuggeation": "Neuer Vorschlag",
   "breakPlan.dellte": "Erfolgreich gelöscht",
+  "msg.editSuccess": "Erfolgreich bearbeitet",
 
   "app.invite": "Einladen",
   "app.imToday": "Tagespunkte",
@@ -274,7 +275,7 @@
   "task.new": "Neue Task",
   "task.noTask": "Keine Aufgabe für heute",
   "setting.invite": "Einladungsmail ist versendet worden.",
-  "project.set": "Projekt erfolgreich eingestellt",
+  "project.set": "Projekt erfolgreich ausgewählt",
   "item.update": "Aufgabe erfolgreich aktualisiert",
   "item.color": "Farbset erfolgreich",
   "tag.added": "Tag hinzugefügt",
@@ -312,5 +313,10 @@
   "resetPass.time": "Die Registrierung ist für die nächsten 20 minute freigeschaltet.",
   "durationTime.req": "Dauer Zeit ist erforderlich",
   "prefrence": "Präferenz",
-  "pref.update": "Präferenz updaten"
+  "pref.update": "Präferenz updaten",
+  "copy.clip": "In die Zwischenablage kopieren",
+  "Copied": "Kopiert",
+  "codeRequired": "Code ist erforderlich.",
+  "timeNotSelected": "Zeit ist nicht ausgewählt",
+  "tagResult": "Resultat für"
 }

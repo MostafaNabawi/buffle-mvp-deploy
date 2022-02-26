@@ -101,7 +101,7 @@ const Setting = () => {
           );
           setEmail("");
         } else {
-          addToast("This email was not register in buffle. please try again.", {
+          addToast(<FormattedMessage id="emailNotFound" defaultMessage="Can't find this email. Please try another one." />, {
             appearance: "error",
             autoDismiss: 4000,
           });
@@ -284,12 +284,12 @@ const Setting = () => {
           <Card>
             <ListGroup variant="flush">
               <ListGroup.Item className="pb-3">
-                <h4>Invite Link</h4>
+                <h4><FormattedMessage id="inviteLink" defaultMessage="Invite Link" /></h4>
                 {copyValue ? (
                   <i>{copyValue}</i>
                 ) : (
                   <p className="mt-2">
-                    Click to regeneration button for generate invite link
+                    <FormattedMessage id="generateLink" defaultMessage="Click to regeneration button for generate invite link" />
                   </p>
                 )}
               </ListGroup.Item>
@@ -305,7 +305,7 @@ const Setting = () => {
                     className={style.btn}
                   >
                     <Icon icon="akar-icons:copy" />
-                    {copied ? ` Copied` : "Copy to clipboard"}
+                    {copied ? <FormattedMessage id="Copied" defaultMessage="Copied" /> : <FormattedMessage id="copy.clip" defaultMessage="Copy to clipboard" />}
                   </Button>
                 </CopyToClipboard>
                 <Button
@@ -336,16 +336,20 @@ const Setting = () => {
                     className="input-group mb-3 mt-3"
                     controlId="formBasicEmail"
                   >
-                    <Form.Control
-                      disabled={loading}
-                      onChange={(e) => {
-                        setEmail(e.target.value);
-                      }}
-                      type="email"
-                      placeholder="Enter email"
-                    />
+                    <FormattedMessage id="label.email" defaultMessage="Email">
+                      {(msg) => (
+                        <Form.Control
+                          disabled={loading}
+                          onChange={(e) => {
+                            setEmail(e.target.value);
+                          }}
+                          type="email"
+                          placeholder={msg}
+                        />
+                      )}
+                    </FormattedMessage>
                     <Button disabled={loading} variant="primary" type="submit">
-                      {loading ? <PulseLoader size={10} /> : "Send"}
+                      {loading ? <PulseLoader size={10} /> : <FormattedMessage id="btn.send" defaultMessage="Send" />}
                     </Button>
                   </Form.Group>
                 </Form>
