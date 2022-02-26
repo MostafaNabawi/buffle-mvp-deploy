@@ -34,7 +34,6 @@ import { setAlert, setPassAlert, setRun } from "../store/taskSlice";
 import boop from "./boop.mp3";
 import UIFx from "uifx";
 import TimerCustome from "./TimerCustome";
-import { Context } from "./Wrapper";
 import { FormattedMessage } from "react-intl";
 import RenderImage from "../components/cutomeImage/RenderImage";
 import DynamicInspiration from "../components/inspiration/DynamicInspiration";
@@ -45,7 +44,6 @@ const Header = () => {
   const beep = new UIFx(boop, {
     volume: 0.8,
   });
-  const context = useContext(Context);
   const { addToast } = useToasts();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -60,7 +58,7 @@ const Header = () => {
   const [workspace, setWorkSpaces] = useState([]);
   const [ownSpace, setOwnSpace] = useState("");
   const [current, setCurrent] = useState("");
-  const [lang, setLang] = useState("");
+  // const [lang, setLang] = useState("");
 
   const handleLogout = async () => {
     Swal.fire({
@@ -88,8 +86,9 @@ const Header = () => {
       localStorage.removeItem("duration_time");
       localStorage.removeItem("display_time");
       localStorage.removeItem("screen");
+      localStorage.removeItem("prefrence");
       document.getElementsByClassName("swal-google")[0].remove();
-      navigate("/");
+      window.location.href = "/";
     } else {
       document.getElementsByClassName("swal-google")[0].remove();
     }
@@ -445,11 +444,11 @@ const Header = () => {
     }
   }, [alert, passAaler]);
 
-  useEffect(() => {
-    if (lang !== "") {
-      context.selectLanguage(lang);
-    }
-  }, [lang]);
+  // useEffect(() => {
+  //   if (lang !== "") {
+  //     context.selectLanguage(lang);
+  //   }
+  // }, [lang]);
 
   const handleSearchByTag = (e) => {
     e.preventDefault();
@@ -482,10 +481,10 @@ const Header = () => {
               localStorage.setItem(
                 "loackTime",
                 timeLock.getHours() +
-                ":" +
-                timeLock.getMinutes() +
-                ":" +
-                timeLock.getSeconds()
+                  ":" +
+                  timeLock.getMinutes() +
+                  ":" +
+                  timeLock.getSeconds()
               );
             }
           }}
@@ -497,8 +496,9 @@ const Header = () => {
 
       <div
         id="lockScreenHide"
-        className={`${localStorage.getItem("screen") === "on" ? "lockScreen" : ""
-          } text-center ${!start ? "" : "lockScreenHide"}`}
+        className={`${
+          localStorage.getItem("screen") === "on" ? "lockScreen" : ""
+        } text-center ${!start ? "" : "lockScreenHide"}`}
       >
         {localStorage.getItem("screen") === "on" && !start && (
           <div className="screenDiv">
@@ -520,9 +520,9 @@ const Header = () => {
                 }
                 handleDisplayTime(dis_time);
               }}
-            // renderer={() => {
-            //   return ""
-            // }}
+              // renderer={() => {
+              //   return ""
+              // }}
             />
           </div>
         )}
@@ -546,38 +546,11 @@ const Header = () => {
           />
         )}
       </div>
-
       <Row className="mb-4">
         <Col className="col-6 text-secondary-dark header-thank mt-3">
           <DynamicInspiration />
         </Col>
         <Col className="col-6 header-col-left">
-          <div className="header-icon navy-blue text-center pt-2">
-            <NavDropdown
-              title={
-                <Icon
-                  className="lan"
-                  color="blue"
-                  fontSize={35}
-                  icon="ant-design:global-outlined"
-                />
-              }
-              className="navDropdomnIcon"
-            >
-              <Dropdown.Item onClick={() => setLang("de")}>
-                <span className="icon-flage">
-                  <Icon icon="flag:de-4x3" />
-                </span>
-                Desutch
-              </Dropdown.Item>
-              <Dropdown.Item onClick={() => setLang("en")}>
-                <span className="icon-flage">
-                  <Icon icon="flagpack:us" />
-                </span>
-                English
-              </Dropdown.Item>
-            </NavDropdown>
-          </div>
           <div className="header-icon navy-blue text-center pt-2">
             <NavDropdown
               title={
@@ -742,6 +715,31 @@ const Header = () => {
               <Dropdown.Item as={Link} to="/dashboard/profile">
                 <FormattedMessage defaultMessage="Profile" id="prof.profile" />
               </Dropdown.Item>
+              {/* <DropdownButton
+                as={ButtonGroup}
+                id={`dropdown-button-drop-start`}
+                drop="start"
+                className="subDropdown"
+                title={
+                  <FormattedMessage
+                    defaultMessage="Language"
+                    id="app.header.workspace"
+                  />
+                }
+              >
+                <Dropdown.Item key={`lang-1`} onClick={() => setLang("en")}>
+                  <span className="icon-flage">
+                    <Icon icon="flagpack:us" />
+                  </span>
+                  English
+                </Dropdown.Item>
+                <Dropdown.Item key={`lang-2`} onClick={() => setLang("de")}>
+                  <span className="icon-flage">
+                    <Icon icon="flag:de-4x3" />
+                  </span>
+                  Deutsch
+                </Dropdown.Item>
+              </DropdownButton> */}
               {workspace.length > 0 && (
                 <DropdownButton
                   as={ButtonGroup}
@@ -813,11 +811,9 @@ const Header = () => {
                   User Management
                 </NavDropdown.Item>
               )}
-              {showUserRoute && (
-                <NavDropdown.Item as={Link} to="/dashboard/setting">
-                  <FormattedMessage defaultMessage="Settings" id="settings" />
-                </NavDropdown.Item>
-              )}
+              <NavDropdown.Item as={Link} to="/dashboard/setting">
+                <FormattedMessage defaultMessage="Settings" id="settings" />
+              </NavDropdown.Item>
               <NavDropdown.Item onClick={handleLogout}>
                 <FormattedMessage defaultMessage="Logout" id="prof.logout" />
               </NavDropdown.Item>

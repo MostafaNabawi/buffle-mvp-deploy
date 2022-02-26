@@ -310,7 +310,7 @@ const UserProfile = () => {
         preview.current.src = fr.result;
         document.getElementById("header-img").setAttribute("src", fr.result);
         document.getElementById("header-img").style.borderRadius = "50%";
-        document.getElementById("header-img").style.objectFit = "contains";
+        document.getElementById("header-img").style.objectFit = "cover";
       };
       fr.readAsDataURL(file);
     } else {

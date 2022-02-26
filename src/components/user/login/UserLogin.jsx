@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useContext } from "react";
 import { Row, Col, Image, Form, Button, Alert } from "react-bootstrap";
 import { Icon } from "@iconify/react";
 import { Link, useNavigate } from "react-router-dom";
@@ -11,9 +11,11 @@ import { API_URL, GOOGLE_CLIENT_ID } from "../../../config";
 import { checkEmail } from "../../../config/utils";
 import Swal from "sweetalert2";
 import { useSearchParams } from "react-router-dom";
-import { FormattedMessage, injectIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
+import { Context } from "../../../layout/Wrapper";
 const UserLogin = () => {
   const { addToast } = useToasts();
+  const context = useContext(Context);
   const [showPassword, setShowPassword] = useState(false);
   const [inputs, setInputs] = useState({
     email: "",
@@ -138,6 +140,14 @@ const UserLogin = () => {
       return;
     }
     if (req.status === 200) {
+      const prefrence = await fetch(`${API_URL}/user/settings`, {
+        credentials: "include",
+      });
+      const prefrenceData = await prefrence.json();
+      if (prefrenceData?.data) {
+        localStorage.setItem("prefrence", JSON.stringify(prefrenceData?.data));
+        context.selectLanguage(prefrenceData?.language);
+      }
       if (req.data.type === 0) {
         setErrors((previousState) => {
           return {
@@ -196,7 +206,14 @@ const UserLogin = () => {
         setLoading(false);
         return;
       }
-
+      const prefrence = await fetch(`${API_URL}/user/settings`, {
+        credentials: "include",
+      });
+      const prefrenceData = await prefrence.json();
+      if (prefrenceData?.data) {
+        localStorage.setItem("prefrence", JSON.stringify(prefrenceData?.data));
+        context.selectLanguage(prefrenceData?.language);
+      }
       if (res.type === 1) {
         localStorage.setItem("user", JSON.stringify(res.user));
         localStorage.setItem("space", res.stype);

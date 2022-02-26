@@ -172,7 +172,6 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
       }
     });
   };
-
   return (
     <Row>
       {statuses.map((s) => {

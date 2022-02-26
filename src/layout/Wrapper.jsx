@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IntlProvider } from "react-intl";
 import English from "../lang/en.json";
 import German from "../lang/de.json";
+import { API_URL } from "../config";
 export const Context = React.createContext();
 
 const local = navigator.language;
@@ -36,9 +37,22 @@ const Wrapper = (props) => {
   function getCurrent() {
     return current;
   }
+  const customHandler = () => {
+    const url = window.location.href;
+    if (url?.includes("localhost")) {
+      console.error("Missing translition words.");
+    }
+  };
+  useEffect(() => {
+    let prefrence = localStorage.getItem("prefrence");
+    if (prefrence) {
+      prefrence = JSON.parse(prefrence);
+      selectLanguage(prefrence?.language);
+    }
+  }, []);
   return (
     <Context.Provider value={{ locale, selectLanguage, getCurrent }}>
-      <IntlProvider messages={messages} locale={locale}>
+      <IntlProvider messages={messages} locale={locale} onError={customHandler}>
         {props.children}
       </IntlProvider>
     </Context.Provider>

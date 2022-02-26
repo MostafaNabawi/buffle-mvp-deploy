@@ -2,18 +2,19 @@ import { Row, Col, Image } from "react-bootstrap";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 import style from "../style.module.css";
+
 const IndexRegister = () => {
   return (
     <div>
-      <Row className="p-0 m-0 row mt-5 pt-5">
+      <Row className="p-0 m-0 row">
         <Col xl="8" className={`text-center pb-3`}>
           <Image src="/favicon.ico" />
         </Col>
         <Col xl="8">
           <h3 className={`text-center pb-2`}>
-            Discription about Buffle registertion
+            <FormattedMessage defaultMessage="Register into Buffle" id="register.dis" />
           </h3>
-          <p className={`${style.simpleDiscription}`}>
+          {/* <p className={`${style.simpleDiscription}`}>
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s, when an unknown printer took a galley of type
@@ -23,7 +24,7 @@ const IndexRegister = () => {
             with the release of Letraset sheets containing Lorem Ipsum passages,
             and more recently with desktop publishing software like Aldus
             PageMaker including versions of Lorem Ipsum.
-          </p>
+          </p> */}
         </Col>
         <Col xl="8" className={`text-center pt-2`}>
           <strong>

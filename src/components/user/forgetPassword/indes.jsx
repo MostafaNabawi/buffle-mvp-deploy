@@ -175,8 +175,9 @@ const ForgetPassword = () => {
               <div className={style.footer}>
                 <FormattedMessage
                   id="pass.remember"
-                  defaultMessage="Do you remember the password?"
+                  defaultMessage="Do you remember the old password?"
                 />
+                <span style={{ marginLeft: "2px" }}></span>
                 <Link className={style.registerLink} to="/">
                   <FormattedMessage id="loginNow" defaultMessage="Login now" />
                 </Link>

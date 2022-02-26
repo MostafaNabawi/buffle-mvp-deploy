@@ -9,6 +9,7 @@
   "app.hi": " Hallo",
   "app.screenLock": "Bildschirmsperre für",
   "app.header.language": "Sprache",
+  "app.header.currency": "Währung",
   "app.requiredAll": "Bitte alle erforderlichen Felder ausfüllen.",
   "app.waterHydretion": "Trink!",
   "app.noAccount": "Wenn du noch keinen Account hast?",
@@ -16,7 +17,7 @@
   "app.enterEmail": "E-Mail Adresse eingeben",
   "app.eventCalendar": "Kalender",
   "pass.change": "Passwort ändern",
-  "pass.remember": "Erinnern Sie sich an das Passwort ?",
+  "pass.remember": "Erinnern Sie sich an das Passwort?",
   "app.login.forget": "Haben Sie Ihr Passwort vergessen?",
   "app.login.checkout": "Erinnere dich an mich",
   "app.login.err.google": "Leider hat das Einloggen über Google nicht geklappt.",
@@ -53,6 +54,7 @@
   "breakPlan.Edit": "Pausenplan bearbeiten",
   "breakPlan.Create": "Neuer Pausenplan",
   "breakPlan.newSuggeation": "Neuer Vorschlag",
+  "breakPlan.dellte": "Erfolgreich gelöscht",
 
   "app.invite": "Einladen",
   "app.imToday": "Tagespunkte",
@@ -233,6 +235,7 @@
   "study": "Studienfach",
   "settings": "Einstellungen",
   "register.as": "Registrieren als:",
+  "register.dis": "Registrieren Sie sich bei Buffle",
   "company": "Unternehmen",
   "student": "Student:in",
   "notify.water": "Es ist Zeit, Wasser zu trinken!",
@@ -307,5 +310,7 @@
   "freelancer": "Freiberufler",
   "registerIn": "Registrieren in",
   "resetPass.time": "Die Registrierung ist für die nächsten 20 minute freigeschaltet.",
-  "durationTime.req": "Dauer Zeit ist erforderlich"
+  "durationTime.req": "Dauer Zeit ist erforderlich",
+  "prefrence": "Präferenz",
+  "pref.update": "Präferenz updaten"
 }

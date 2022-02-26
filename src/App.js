@@ -74,9 +74,8 @@ function App() {
             <Route path="event/expenses/:id" element={<Expenses />} />
           </Route>
           <Route path="profile" element={<Profile />} />
-          {addUserManagment.render && (
-            <Route path="setting" element={<Setting />} />
-          )}
+          <Route path="setting" element={<Setting />} />
+
           {addUserManagment.render && (
             <Route
               path="user-management"
