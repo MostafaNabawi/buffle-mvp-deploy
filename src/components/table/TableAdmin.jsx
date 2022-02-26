@@ -87,10 +87,7 @@ const TableAdmin = ({
         return (
           <>
             <th>
-              <FormattedMessage
-                id="profession"
-                defaultMessage="Profession"
-              />
+              <FormattedMessage id="profession" defaultMessage="Profession" />
             </th>
             <th>
               <FormattedMessage id="app.heard" defaultMessage="Heard" />
@@ -101,22 +98,43 @@ const TableAdmin = ({
       if (selectedUser?.space[0]?.type === "s") {
         return (
           <>
-            <th><FormattedMessage id="app.university" defaultMessage="University" /></th>
+            <th>
+              <FormattedMessage
+                id="app.university"
+                defaultMessage="University"
+              />
+            </th>
             <th>Studies </th>
-            <th><FormattedMessage id="app.semester" defaultMessage="Semester" /></th>
-            <th><FormattedMessage id="app.heard" defaultMessage="Heard" /></th>
+            <th>
+              <FormattedMessage id="app.semester" defaultMessage="Semester" />
+            </th>
+            <th>
+              <FormattedMessage id="app.heard" defaultMessage="Heard" />
+            </th>
           </>
         );
       }
       if (selectedUser?.space[0]?.type === "c") {
         return (
           <>
-            <th><FormattedMessage id="website" defaultMessage="Website" /></th>
-            <th><FormattedMessage id="csize" defaultMessage="Size" /></th>
-            <th><FormattedMessage id="headOffice" defaultMessage="Head Office" /></th>
-            <th><FormattedMessage id="taxid" defaultMessage="TaxId" /></th>
-            <th><FormattedMessage id="postal" defaultMessage="postal Code" /></th>
-            <th><FormattedMessage id="street" defaultMessage="street" /></th>
+            <th>
+              <FormattedMessage id="website" defaultMessage="Website" />
+            </th>
+            <th>
+              <FormattedMessage id="csize" defaultMessage="Size" />
+            </th>
+            <th>
+              <FormattedMessage id="headOffice" defaultMessage="Head Office" />
+            </th>
+            <th>
+              <FormattedMessage id="taxid" defaultMessage="TaxId" />
+            </th>
+            <th>
+              <FormattedMessage id="postal" defaultMessage="postal Code" />
+            </th>
+            <th>
+              <FormattedMessage id="street" defaultMessage="street" />
+            </th>
           </>
         );
       }
@@ -364,7 +382,12 @@ const TableAdmin = ({
               ))
             ) : (
               <tr>
-                <td>No user Found!</td>
+                <td>
+                  <FormattedMessage
+                    id="notFound"
+                    defaultMessage="No user Found!"
+                  />
+                </td>
               </tr>
             )}
           </tbody>
@@ -412,18 +435,45 @@ const TableAdmin = ({
         size="lg"
         show={showModal}
         handleClose={() => setShowModal(false)}
-        title="More Details"
+        title={
+          <FormattedMessage id="moreDetails" defaultMessage="More Details" />
+        }
+        
         body={
           <>
             <Row>
-              <p>👤 Personal Data:</p>
+              <p>
+                {" "}
+                <FormattedMessage
+                  id="personalData"
+                  defaultMessage="👤 Personal Data:"
+                />
+              </p>
               <Table responsive>
                 <thead className={headClass}>
                   <tr>
-                    <th>Full Name</th>
-                    <th>Country</th>
-                    <th>City</th>
-                    <th>Space Name</th>
+                    <th>
+                      {" "}
+                      <FormattedMessage
+                        id="user.fullName"
+                        defaultMessage="Full Name"
+                      />
+                    </th>
+                    <th>
+                      {" "}
+                      <FormattedMessage id="country" defaultMessage="Country" />
+                    </th>
+                    <th>
+                      {" "}
+                      <FormattedMessage id="city" defaultMessage=" City" />
+                    </th>
+                    <th>
+                      {" "}
+                      <FormattedMessage
+                        id="namespace"
+                        defaultMessage="Space Name"
+                      />
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -442,7 +492,12 @@ const TableAdmin = ({
               </Table>
             </Row>
             <Row>
-              <p>🔅Other Data:</p>
+              <p>
+                <FormattedMessage
+                  id="otherData"
+                  defaultMessage="🔅Other Data:"
+                />
+              </p>
               <Table responsive>
                 <thead className={headClass}>
                   <tr>

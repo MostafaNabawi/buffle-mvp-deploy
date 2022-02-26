@@ -22,6 +22,10 @@ const UserList = () => {
       }
     }
     pageData();
+    return () => {
+      setData([]);
+      setLoading(true);
+    };
   }, []);
 
   useEffect(() => {

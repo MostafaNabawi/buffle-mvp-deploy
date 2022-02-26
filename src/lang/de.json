@@ -57,6 +57,9 @@
   "breakPlan.dellte": "Erfolgreich gelöscht",
   "msg.editSuccess": "Erfolgreich bearbeitet",
 
+  "notFound":"Kein Benutzer gefunden",
+  "personalData":"Persönliche Daten",
+
   "app.invite": "Einladen",
   "app.imToday": "Tagespunkte",
   "app.breakPlan.qs": "Was ist dein Pausenplan?",
@@ -72,10 +75,18 @@
   "app.tagName": "Tag Name",
   "app.ping": "Ping",
 
-  "app.member": "Memebr",
-  "app.heard": "Gehört",
-  "app.university": "Universität",
-  "app.semester": "Semester",
+  "app.member":"Memebr",
+  "app.heard":"Gehört",
+  "app.university":"Universität",
+  "app.semester":"Semester",
+  "namespace":"Bereichsname",
+  "otherData":"Andere Daten",
+  "moreDetails":"Mehr Details",
+  "all":"Alle",
+  "active":"Aktiv",
+  "block":"Block",
+  "pending":"Ausstehend",
+  "searchEx":"Suche z. B. (Name, E-Mail)",
 
   "screen.lastIntermission": "Letzte Pause",
 
@@ -162,7 +173,8 @@
 
   "event.create": "Event erstellen",
   "event.list": "Event Liste",
-  "event.name": "Eventname",
+  "event.name": "Event Name",
+  "event.name.req": "Event Name ist erforderlich.",
   "event.currency": "Währung",
   "event.participants": "Teilnehmer:innen",
   "event.goodExample": "Beispiele für einen Moneypool",
@@ -253,6 +265,7 @@
   "notify.acceptBreakSuggest": "akzeptiere deinen Zeitvorschlag für Pausenplan {name}",
   "notify.newSuggest": " hat neue Vorschläge für({msg}",
   "notify.money": "hat Sie in Moneypoll({name} hinzugefügt",
+  "code.required": "Code ist erforderlich.",
   "_comment2": "paimanEnd",
 
   "__comment": "Zia---------",

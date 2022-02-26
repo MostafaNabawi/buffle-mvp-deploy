@@ -77,6 +77,7 @@ const Header = () => {
       localStorage.removeItem("user");
       localStorage.removeItem("search");
       localStorage.removeItem("others");
+      localStorage.removeItem("space");
       localStorage.removeItem("own");
       localStorage.removeItem("current");
       // delte spotify data
