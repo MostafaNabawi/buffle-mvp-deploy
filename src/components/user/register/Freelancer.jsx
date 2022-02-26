@@ -68,7 +68,7 @@ const FreelancerRegister = () => {
       }
     }
     if (errors > 0) {
-      addToast("Please Fill all Form.", {
+      addToast(<FormattedMessage id="fillAllForm" defaultMessage="Please Fill all Form." />, {
         appearance: "warning",
         autoDismiss: 4000,
       });
@@ -383,10 +383,10 @@ const FreelancerRegister = () => {
               <FormattedMessage id="reg.continue" defaultMessage="Please check your email and continue from there" />
             </h2>
             <h6 className="text-center mt-2">
-              <b>Note:</b> You have 2 houres to complete your registration!
+              <b><FormattedMessage id="app.note" defaultMessage="Note" />:</b> <FormattedMessage id="reg.time" defaultMessage="You have 2 hours to complete your registration." />
             </h6>
             <h4 className="text-center mt-2">
-              Click open <a href="http://gmail.com/"> <FormattedMessage id="label.email" defaultMessage="Email" /></a>
+              <FormattedMessage id="link.clikc" defaultMessage="Click to open" /> <a href="http://gmail.com/"> <FormattedMessage id="label.email" defaultMessage="Email" /></a>
             </h4>
           </Col>
         </Row>

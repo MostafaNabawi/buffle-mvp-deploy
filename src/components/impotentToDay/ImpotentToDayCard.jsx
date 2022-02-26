@@ -65,7 +65,7 @@ function ImpotentToDayCard({ handleMove }) {
   };
   const handleSubmit = async () => {
     if (duration.length < 0) {
-      setError("Duration time is required.");
+      setError(<FormattedMessage id="durationTime.req" defaultMessage="Duration time is required." />);
       return false;
     } else {
       const duration =
@@ -84,7 +84,7 @@ function ImpotentToDayCard({ handleMove }) {
         checked
       );
       if (updateImportant.status === 200) {
-        addToast("Moved to task susseccfully", {
+        addToast(<FormattedMessage id="task.moved" defaultMessage="Moved to task susseccfully" />, {
           autoDismiss: true,
           appearance: "success",
         });
@@ -94,7 +94,7 @@ function ImpotentToDayCard({ handleMove }) {
         setShow(false);
         setTimeFormat(false);
       } else {
-        addToast("Error Please Try Again.", {
+        addToast(<FormattedMessage id="task.error" defaultMessage="Error Please Try Again." />, {
           autoDismiss: false,
           appearance: "error",
         });

@@ -175,7 +175,7 @@ const ForgetPassword = () => {
               <div className={style.footer}>
                 <FormattedMessage
                   id="pass.remember"
-                  defaultMessage="Do you remember the password ?"
+                  defaultMessage="Do you remember the password?"
                 />
                 <Link className={style.registerLink} to="/">
                   <FormattedMessage id="loginNow" defaultMessage="Login now" />
@@ -190,17 +190,18 @@ const ForgetPassword = () => {
             <div className={style.iconCheck}>
               <Icon icon="emojione:white-heavy-check-mark" />
             </div>
+
             <h2 className="text-center mt-2">
-              Email sent successfully to your email
+              <FormattedMessage id="reg.sentEmail" defaultMessage=" Email sent successfully to your email" />
             </h2>
             <h2 className="text-center mt-2">
-              Please check your email and continue reset password from there.
+              <FormattedMessage id="reg.continue" defaultMessage="Please check your email and continue reset password from there." />
             </h2>
             <h6 className="text-center mt-2">
-              <b>Note:</b> You have 20 minutes to complete your reset password
+              <b><FormattedMessage id="app.note" defaultMessage="Note" />:</b> <FormattedMessage id="resetPass.time" defaultMessage="You have 20 minutes to complete your reset password" />
             </h6>
             <h4 className="text-center mt-2">
-              Click open <a href="http://gmail.com/"> Email</a>
+              <FormattedMessage id="link.clikc" defaultMessage="Click to open" /> <a href="http://gmail.com/"> <FormattedMessage id="label.email" defaultMessage="Email" /></a>
             </h4>
           </Col>
         </Row>

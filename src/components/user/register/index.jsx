@@ -36,7 +36,7 @@ const IndexRegister = () => {
             <FormattedMessage defaultMessage="Student" id="student" />
           </Link>
           <Link className={`${style.registerBtnLink}`} to="freelancer">
-            Freelancer
+            <FormattedMessage defaultMessage="freelancer" id="Freelancer" />
           </Link>
         </Col>
       </Row>
