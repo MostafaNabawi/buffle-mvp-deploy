@@ -6,12 +6,14 @@ const Register = () => {
   return (
     <>
       {/* <Outlet /> */}
-      <Container className="secondary-color register-container d-flex  justify-content-center align-items-center" fluid>
+      {/* d-flex  justify-content-center align-items-center */}
+      <Container className="secondary-color register-container " fluid>
         <Row className="justify-content-center ">
-          <Col xl='5' className="pt-4 text-center">
-            <Image src='/img/register.png' />
+          <Col xl='5' className="p-0">
+            {/* <Image src='/img/register.png' /> */}
+            <Image className="register_img" src='/img/register.jpg' />
           </Col>
-          <Col xl="7">
+          <Col xl="7" className="d-flex  justify-content-center align-items-center ">
             <Outlet />
           </Col>
         </Row>

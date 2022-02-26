@@ -4,6 +4,9 @@
   font-family: "Proxima Soft";
   src: url("../fonts/ProximaSoft-Medium.ttf");
 }
+body{
+  padding: 0px !important;
+}
 :root {
   --primary-gradient: gradient(
     100% 682.41% at 4.04% 0%,
@@ -1026,5 +1029,8 @@ div.check-box > input {
   float: right !important;
   margin-right:5px !important;
 }
-
+.register_img{
+  width: 100% !important;
+  height: 100vh !important;
+}
 
