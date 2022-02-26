@@ -4,7 +4,7 @@
   font-family: "Proxima Soft";
   src: url("../fonts/ProximaSoft-Medium.ttf");
 }
-body{
+body {
   padding: 0px !important;
 }
 :root {
@@ -1025,12 +1025,16 @@ div.check-box > input {
 .bt_1ln56ky:hover {
   transform: translateY(-5px);
 }
-.btn-breakPaln{
+.btn-breakPaln {
   float: right !important;
-  margin-right:5px !important;
+  margin-right: 5px !important;
 }
-.register_img{
+.register_img {
   width: 100% !important;
   height: 100vh !important;
 }
 
+.project-setting-icon {
+  color: black !important;
+  cursor: pointer !important;
+}
