@@ -37,6 +37,7 @@ import TimerCustome from "./TimerCustome";
 import { FormattedMessage } from "react-intl";
 import RenderImage from "../components/cutomeImage/RenderImage";
 import DynamicInspiration from "../components/inspiration/DynamicInspiration";
+import { Context } from "./Wrapper";
 const Header = () => {
   const { alert, passAaler } = useSelector((state) => state.task);
   //
@@ -58,11 +59,13 @@ const Header = () => {
   const [workspace, setWorkSpaces] = useState([]);
   const [ownSpace, setOwnSpace] = useState("");
   const [current, setCurrent] = useState("");
+  const context = useContext(Context);
   // const [lang, setLang] = useState("");
 
   const handleLogout = async () => {
+    const text = context.getCurrent() === 0 ? "Logout..." : "Auslogge";
     Swal.fire({
-      title: "Logout...",
+      title: text,
       allowEscapeKey: false,
       allowOutsideClick: false,
       allowEnterKey: false,
@@ -88,7 +91,6 @@ const Header = () => {
       localStorage.removeItem("display_time");
       localStorage.removeItem("screen");
       localStorage.removeItem("prefrence");
-      document.getElementsByClassName("swal-google")[0].remove();
       window.location.href = "/";
     } else {
       document.getElementsByClassName("swal-google")[0].remove();

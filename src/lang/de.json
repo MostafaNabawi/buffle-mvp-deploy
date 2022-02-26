@@ -28,7 +28,7 @@
   "company.registerError": "Fehler beim Registrieren",
   "acc.err": "Keinen User gefunden mit dieser E-Mail Adresse!",
   "pass.required": "Passwort ist erforderlich.",
-  "app.newDaily": "Neues Tagesziel(2L)",
+  "app.newDaily": "Neues Tagesziel",
   "app.dashboard.nextBreak": "Pausenwecker",
   "app.dashboard.nextBreakQ": "Wann ist deine nächste Pause?",
   "app.dashboard.feel": "Wie gehts?",
