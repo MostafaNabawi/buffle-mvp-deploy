@@ -72,10 +72,10 @@
   "app.tagName": "Tag Name",
   "app.ping": "Ping",
 
-  "app.member":"Memebr",
-  "app.heard":"Gehört",
-  "app.university":"Universität",
-  "app.semester":"Semester",
+  "app.member": "Memebr",
+  "app.heard": "Gehört",
+  "app.university": "Universität",
+  "app.semester": "Semester",
 
   "screen.lastIntermission": "Letzte Pause",
 
@@ -323,5 +323,8 @@
   "Copied": "Kopiert",
   "codeRequired": "Code ist erforderlich.",
   "timeNotSelected": "Zeit ist nicht ausgewählt",
-  "tagResult": "Resultat für"
+  "tagResult": "Resultat für",
+  "blocked": "Sie haben blockiert",
+  "successfully": "erfolgreich",
+  "noUser": "Kein Benutzer gefunden."
 }

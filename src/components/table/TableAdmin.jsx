@@ -1,8 +1,9 @@
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useState, useContext } from "react";
 import { Table, Card, Pagination } from "react-bootstrap";
 import { Icon } from "@iconify/react";
 import style from "./style.module.css";
 import Swal from "sweetalert2";
+import { Context } from "../../layout/Wrapper";
 import Modal from "../modal/modal";
 import { API_URL } from "../../config/index";
 import { Row } from "react-bootstrap";
@@ -57,6 +58,7 @@ const TableAdmin = ({
   // data
   const [showModal, setShowModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
+  const context = useContext(Context);
 
   useEffect(() => {
     if (current > 1) {
@@ -166,9 +168,13 @@ const TableAdmin = ({
   // actions
   const handleBlock = (uid, space) => {
     if (uid) {
+      const titleMsg =
+        context.getCurrent() === 0 ? "Are you sure?" : "Bist du dir sicher?";
       Swal.fire({
-        title: "Are you sure?",
-        html: `Do you want to <strong style="color : red">block</strong> space <b>${space}</b>?<br />😮`,
+        title: titleMsg,
+        html: context.getCurrent() === 0
+          ? `Do you want to <strong style="color : red">block</strong> workspace <b>${space}</b>?<br />😮`
+          : `Möchten Sie <strong style="color : red">block</strong> Arbeitsplatz<b>${space}</b>?<br />😮`,
         showCancelButton: true,
       }).then((res) => {
         if (res.isConfirmed) {
@@ -184,11 +190,13 @@ const TableAdmin = ({
           }).then((res) => {
             if (res.status === 200) {
               refresh();
-              Swal.fire(
-                "Success",
-                `You have blocked <b>${space}</b> successfully.`,
-                "success"
-              );
+              const msg = context.getCurrent() === 0 ? "Success" : "Erfolg";
+
+              const msg2 =
+                context.getCurrent() === 0
+                  ? `You have blocked <b>${space}</b> successfully.`
+                  : `Sie haben blockiert <b>${space}</b> erfolgreich.`
+              Swal.fire(msg, msg2, "success");
             }
           });
         }
@@ -201,7 +209,9 @@ const TableAdmin = ({
     if (uid) {
       Swal.fire({
         title: "Are you sure?",
-        html: `Do you want to <strong style="color : green">Active</strong> space <b>${space}</b>?<br />🧐`,
+        html: context.getCurrent() === 0
+          ? `Do you want to <strong style="color : green">Active</strong> workspace <b>${space}</b>?<br />🧐`
+          : `Möchten Sie <strong style="color : green">Aktiv</strong> Arbeitsplatz <b>${space}</b>?<br />🧐`,
         showCancelButton: true,
       }).then((res) => {
         if (res.isConfirmed) {
@@ -221,19 +231,24 @@ const TableAdmin = ({
             if (res.status === 200) {
               if (payload.type === 2) {
                 refresh();
-                Swal.fire(
-                  "Success",
-                  `You have activated <b>${space}</b> successfully.`,
-                  "success"
-                );
+                const msg = context.getCurrent() === 0 ? "Success" : "Erfolg";
+
+                const msg2 =
+                  context.getCurrent() === 0
+                    ? `You have activated <b>${space}</b> successfully.`
+                    : `Sie haben aktiviert <b>${space}</b> erfolgreich.`
+                Swal.fire(msg, msg2, "success");
               }
               if (payload.type === 1) {
                 refresh();
-                Swal.fire(
-                  "Success",
-                  `You have activated <b>${space}</b> ${payload?.msg}`,
-                  "success"
-                );
+                const msg = context.getCurrent() === 0 ? "Success" : "Erfolg";
+
+                const msg2 =
+                  context.getCurrent() === 0
+                    ? `You have activated <b>${space}</b> ${payload?.msg} successfully.`
+                    : `Sie haben aktiviert <b>${space}</b> ${payload?.msg} erfolgreich.`
+                Swal.fire(msg, msg2, "success");
+
               }
             }
           });
