@@ -6,25 +6,42 @@ import Swal from "sweetalert2";
 import Modal from "../modal/modal";
 import { API_URL } from "../../config/index";
 import { Row } from "react-bootstrap";
+import { FormattedMessage } from "react-intl";
 const country = require("country-state-picker");
 
 const RenderType = (space) => {
   if (space?.length > 0) {
     if (space[0]?.type === "f") {
-      return <span style={{ color: "GrayText" }}>Freelancer</span>;
+      return (
+        <span style={{ color: "GrayText" }}>
+          <FormattedMessage id="freelancer" defaultMessage="Freelancer" />
+        </span>
+      );
     }
     if (space[0]?.type === "s") {
-      return <span style={{ color: "cornflowerblue" }}> Student </span>;
+      return (
+        <span style={{ color: "cornflowerblue" }}>
+          <FormattedMessage id="student" defaultMessage="Student" />
+        </span>
+      );
     }
 
     if (space[0]?.type === "c") {
-      return <span style={{ color: "hotpink" }}> Company </span>;
+      return (
+        <span style={{ color: "hotpink" }}>
+          <FormattedMessage id="company" defaultMessage="Company" />{" "}
+        </span>
+      );
     }
     if (space[0]?.type === "a") {
       return "Websit Admin";
     }
   }
-  return <span style={{ color: "lightcoral" }}> Member </span>;
+  return (
+    <span style={{ color: "lightcoral" }}>
+      <FormattedMessage id="app.member" defaultMessage=" Member" />{" "}
+    </span>
+  );
 };
 const TableAdmin = ({
   tableHeader,
@@ -54,6 +71,7 @@ const TableAdmin = ({
     setCurrent(1);
     setTotal(tableBody.length);
   }, [tableBody]);
+
   const getCountry = (code) => {
     if (!code) {
       return "";
@@ -66,30 +84,37 @@ const TableAdmin = ({
       if (selectedUser?.space[0]?.type === "f") {
         return (
           <>
-            <th>Profession</th>
-            <th> Heard </th>
+            <th>
+              <FormattedMessage
+                id="profession"
+                defaultMessage="Profession"
+              />
+            </th>
+            <th>
+              <FormattedMessage id="app.heard" defaultMessage="Heard" />
+            </th>
           </>
         );
       }
       if (selectedUser?.space[0]?.type === "s") {
         return (
           <>
-            <th>University</th>
-            <th> Studies</th>
-            <th>Semester</th>
-            <th>Heard</th>
+            <th><FormattedMessage id="app.university" defaultMessage="University" /></th>
+            <th>Studies </th>
+            <th><FormattedMessage id="app.semester" defaultMessage="Semester" /></th>
+            <th><FormattedMessage id="app.heard" defaultMessage="Heard" /></th>
           </>
         );
       }
       if (selectedUser?.space[0]?.type === "c") {
         return (
           <>
-            <th>Website</th>
-            <th> Size</th>
-            <th>Head Office</th>
-            <th>TaxId</th>
-            <th>postal Code</th>
-            <th>street</th>
+            <th><FormattedMessage id="website" defaultMessage="Website" /></th>
+            <th><FormattedMessage id="csize" defaultMessage="Size" /></th>
+            <th><FormattedMessage id="headOffice" defaultMessage="Head Office" /></th>
+            <th><FormattedMessage id="taxid" defaultMessage="TaxId" /></th>
+            <th><FormattedMessage id="postal" defaultMessage="postal Code" /></th>
+            <th><FormattedMessage id="street" defaultMessage="street" /></th>
           </>
         );
       }

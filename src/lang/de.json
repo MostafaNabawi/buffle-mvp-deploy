@@ -71,6 +71,11 @@
   "app.tagName": "Tag Name",
   "app.ping": "Ping",
 
+  "app.member":"Memebr",
+  "app.heard":"Gehört",
+  "app.university":"Universität",
+  "app.semester":"Semester",
+
   "screen.lastIntermission": "Letzte Pause",
 
   "label.time": "Zeit",
