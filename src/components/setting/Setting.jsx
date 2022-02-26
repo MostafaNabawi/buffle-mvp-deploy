@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState, useMemo } from "react";
+import { Fragment, useEffect, useState, useMemo, useContext } from "react";
 import { Col, Card, ListGroup, Button, Form, Row } from "react-bootstrap";
 import { Icon } from "@iconify/react";
 import style from "./style.module.css";
@@ -9,9 +9,11 @@ import { useToasts } from "react-toast-notifications";
 import CurrencyList from "currency-list";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { FormattedMessage } from "react-intl";
+import { Context } from "../../layout/Wrapper";
 
 const Setting = () => {
   const { addToast } = useToasts();
+  const context = useContext(Context);
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [loadingTwo, setLoadingTwo] = useState(false);
@@ -159,6 +161,14 @@ const Setting = () => {
       }),
     }).then((res) => {
       if (res.status === 200) {
+        context.selectLanguage(defaultPrefrence?.lang);
+        localStorage.setItem(
+          "prefrence",
+          JSON.stringify({
+            language: defaultPrefrence?.lang,
+            currency: defaultPrefrence?.currency,
+          })
+        );
         addToast("Prefrence updated.", {
           autoDismiss: 6000,
           appearance: "success",
@@ -249,7 +259,11 @@ const Setting = () => {
                 variant="primary"
                 type="submit"
               >
-                {loadingTwo ? <PulseLoader size={10} /> : "Send"}
+                {loadingTwo ? (
+                  <PulseLoader size={10} />
+                ) : (
+                  <FormattedMessage defaultMessage="Save" id="btn.save" />
+                )}
               </Button>
             </Form>
           </ListGroup>

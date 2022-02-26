@@ -34,7 +34,6 @@ import { setAlert, setPassAlert, setRun } from "../store/taskSlice";
 import boop from "./boop.mp3";
 import UIFx from "uifx";
 import TimerCustome from "./TimerCustome";
-import { Context } from "./Wrapper";
 import { FormattedMessage } from "react-intl";
 import RenderImage from "../components/cutomeImage/RenderImage";
 import DynamicInspiration from "../components/inspiration/DynamicInspiration";
@@ -45,7 +44,6 @@ const Header = () => {
   const beep = new UIFx(boop, {
     volume: 0.8,
   });
-  const context = useContext(Context);
   const { addToast } = useToasts();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -60,7 +58,7 @@ const Header = () => {
   const [workspace, setWorkSpaces] = useState([]);
   const [ownSpace, setOwnSpace] = useState("");
   const [current, setCurrent] = useState("");
-  const [lang, setLang] = useState("");
+  // const [lang, setLang] = useState("");
 
   const handleLogout = async () => {
     Swal.fire({
@@ -88,6 +86,7 @@ const Header = () => {
       localStorage.removeItem("duration_time");
       localStorage.removeItem("display_time");
       localStorage.removeItem("screen");
+      localStorage.removeItem("prefrence");
       document.getElementsByClassName("swal-google")[0].remove();
       window.location.href = "/";
     } else {
@@ -445,11 +444,11 @@ const Header = () => {
     }
   }, [alert, passAaler]);
 
-  useEffect(() => {
-    if (lang !== "") {
-      context.selectLanguage(lang);
-    }
-  }, [lang]);
+  // useEffect(() => {
+  //   if (lang !== "") {
+  //     context.selectLanguage(lang);
+  //   }
+  // }, [lang]);
 
   const handleSearchByTag = (e) => {
     e.preventDefault();
@@ -716,7 +715,7 @@ const Header = () => {
               <Dropdown.Item as={Link} to="/dashboard/profile">
                 <FormattedMessage defaultMessage="Profile" id="prof.profile" />
               </Dropdown.Item>
-              <DropdownButton
+              {/* <DropdownButton
                 as={ButtonGroup}
                 id={`dropdown-button-drop-start`}
                 drop="start"
@@ -740,7 +739,7 @@ const Header = () => {
                   </span>
                   Deutsch
                 </Dropdown.Item>
-              </DropdownButton>
+              </DropdownButton> */}
               {workspace.length > 0 && (
                 <DropdownButton
                   as={ButtonGroup}
