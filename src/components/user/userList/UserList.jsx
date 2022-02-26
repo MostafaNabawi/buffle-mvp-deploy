@@ -6,7 +6,7 @@ import style from "../../table/style.module.css";
 import { PulseLoader } from "react-spinners";
 import { getCompanySpaceData } from "../../../api";
 
-const UserList = (props) => {
+const UserList = () => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [statusFilterData, setStatusFilterData] = useState([]);
