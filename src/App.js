@@ -35,13 +35,11 @@ function App() {
     type: "",
   });
   useEffect(() => {
-    if (space) {
-      const space = localStorage.getItem("space");
-      if (space === "c" || space === "a") {
-        setAddUserManagment((prev) => {
-          return { ...prev, render: true, type: space };
-        });
-      }
+    const space = localStorage.getItem("space");
+    if (space === "c" || space === "a") {
+      setAddUserManagment((prev) => {
+        return { ...prev, render: true, type: space };
+      });
     }
   }, [space]);
 
