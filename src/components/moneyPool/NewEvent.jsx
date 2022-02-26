@@ -44,10 +44,16 @@ function NewEvent() {
     const form = new FormData(e.currentTarget);
     const code = form.get("invite");
     if (code === "") {
-      addToast("Code is required.", {
-        appearance: "warning",
-        autoDismiss: 4000,
-      });
+      addToast(
+        <FormattedMessage
+          defaultMessage="Code is required!"
+          id="code.required"
+        />,
+        {
+          appearance: "warning",
+          autoDismiss: 4000,
+        }
+      );
       return;
     }
     setBusy(true);
@@ -124,10 +130,16 @@ function NewEvent() {
     }
     const userName = currentUser.first_name + " " + currentUser.last_name;
     if (eventName === "") {
-      addToast("Event name is required!", {
-        autoDismiss: true,
-        appearance: "error",
-      });
+      addToast(
+        <FormattedMessage
+          defaultMessage="Event name is required."
+          id="event.name.req"
+        />,
+        {
+          autoDismiss: true,
+          appearance: "error",
+        }
+      );
       return "";
     }
     var userId = [];

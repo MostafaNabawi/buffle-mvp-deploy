@@ -27,22 +27,23 @@ import { useEffect, useState } from "react";
 import UserListAdmin from "./components/user/userList/UserListAdmin";
 import SpotifyLogin from "./components/spotify/Login";
 import Hashtag from "./pages/hashtag";
+import { useSelector } from "react-redux";
 function App() {
-  //
-  //
+  const { space } = useSelector((state) => state.user);
   const [addUserManagment, setAddUserManagment] = useState({
     render: false,
     type: "",
   });
   useEffect(() => {
-    const space = localStorage.getItem("space");
-    if (space === "c" || space === "a") {
-      setAddUserManagment({
-        render: true,
-        type: space,
-      });
+    if (space) {
+      const space = localStorage.getItem("space");
+      if (space === "c" || space === "a") {
+        setAddUserManagment((prev) => {
+          return { ...prev, render: true, type: space };
+        });
+      }
     }
-  }, []);
+  }, [space]);
 
   return (
     <div className="App">

@@ -13,8 +13,12 @@ import Swal from "sweetalert2";
 import { useSearchParams } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 import { Context } from "../../../layout/Wrapper";
+import { useDispatch } from "react-redux";
+import { setSpace } from "../../../store/userSlice";
+
 const UserLogin = () => {
   const { addToast } = useToasts();
+  const dispatch = useDispatch();
   const context = useContext(Context);
   const [showPassword, setShowPassword] = useState(false);
   const [inputs, setInputs] = useState({
@@ -37,10 +41,16 @@ const UserLogin = () => {
     const req = await signin({ email: email, password: pass });
     if (req.status === 400) {
       setLoading(false);
-      addToast(<FormattedMessage id="invalidEmailAndPassword" defaultMessage="Email or Password  is invalid." />, {
-        appearance: "error",
-        autoDismiss: 4000,
-      });
+      addToast(
+        <FormattedMessage
+          id="invalidEmailAndPassword"
+          defaultMessage="Email or Password  is invalid."
+        />,
+        {
+          appearance: "error",
+          autoDismiss: 4000,
+        }
+      );
       return;
     }
     if (req.status === 200) {
@@ -56,6 +66,7 @@ const UserLogin = () => {
         localStorage.setItem("space", req?.data?.stype);
         localStorage.setItem("others", JSON.stringify(req?.data?.others));
         localStorage.removeItem("pp");
+        dispatch(setSpace(true));
         navigate("/dashboard");
       }
       if (req.data.type === 2) {
@@ -64,6 +75,7 @@ const UserLogin = () => {
         localStorage.setItem("others", JSON.stringify(req?.data?.others));
         localStorage.setItem("current", req?.data?.current);
         localStorage.removeItem("pp");
+        dispatch(setSpace(true));
         navigate("/dashboard");
       }
     }
@@ -163,6 +175,7 @@ const UserLogin = () => {
         localStorage.setItem("user", JSON.stringify(req.data.user));
         localStorage.setItem("space", req?.data?.stype);
         localStorage.setItem("others", JSON.stringify(req?.data?.others));
+        dispatch(setSpace(true));
         navigate("/dashboard");
       }
       if (req.data.type === 2) {
@@ -170,6 +183,7 @@ const UserLogin = () => {
         localStorage.setItem("space", req?.data?.stype);
         localStorage.setItem("others", JSON.stringify(req?.data?.others));
         localStorage.setItem("current", req?.data?.current);
+        dispatch(setSpace(true));
         navigate("/dashboard");
       }
     }
@@ -218,6 +232,7 @@ const UserLogin = () => {
         localStorage.setItem("user", JSON.stringify(res.user));
         localStorage.setItem("space", res.stype);
         localStorage.setItem("others", JSON.stringify(res.others));
+        dispatch(setSpace(true));
         window.location.href = `${window.location.href}dashboard`;
       }
       if (res.type === 2) {
@@ -225,6 +240,7 @@ const UserLogin = () => {
         localStorage.setItem("space", res?.stype);
         localStorage.setItem("others", JSON.stringify(res?.others));
         localStorage.setItem("current", res?.current);
+        dispatch(setSpace(true));
         window.location.href = `${window.location.href}dashboard`;
       }
     } else {
@@ -279,13 +295,16 @@ const UserLogin = () => {
         ),
       };
     });
-    addToast(<FormattedMessage
-      defaultMessage="Error while signin with Google"
-      id="login.googleError"
-    />, {
-      appearance: "error",
-      autoDismiss: 5000,
-    });
+    addToast(
+      <FormattedMessage
+        defaultMessage="Error while signin with Google"
+        id="login.googleError"
+      />,
+      {
+        appearance: "error",
+        autoDismiss: 5000,
+      }
+    );
   };
   useEffect(() => {
     let mount = true;
@@ -309,7 +328,10 @@ const UserLogin = () => {
     }
     if (searchParams.get("company") === "true") {
       addToast(
-        <FormattedMessage id="company.reigisterMsg" defaultMessage="Your company is registered. We will let you know, once we approved your company." />,
+        <FormattedMessage
+          id="company.reigisterMsg"
+          defaultMessage="Your company is registered. We will let you know, once we approved your company."
+        />,
         {
           appearance: "success",
         }

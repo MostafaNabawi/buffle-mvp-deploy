@@ -6,7 +6,7 @@ import style from "../../table/style.module.css";
 import { PulseLoader } from "react-spinners";
 import { getCompanySpaceData } from "../../../api";
 
-const UserList = () => {
+const UserList = (props) => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [statusFilterData, setStatusFilterData] = useState([]);
@@ -22,6 +22,10 @@ const UserList = () => {
       }
     }
     pageData();
+    return () => {
+      setData([]);
+      setLoading(true);
+    };
   }, []);
 
   useEffect(() => {

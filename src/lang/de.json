@@ -156,7 +156,8 @@
 
   "event.create": "Event erstellen",
   "event.list": "Event Liste",
-  "event.name": "Eventname",
+  "event.name": "Event Name",
+  "event.name.req": "Event Name ist erforderlich.",
   "event.currency": "Währung",
   "event.participants": "Teilnehmer:innen",
   "event.goodExample": "Beispiele für einen Moneypool",
@@ -247,6 +248,7 @@
   "notify.acceptBreakSuggest": "akzeptiere deinen Zeitvorschlag für Pausenplan {name}",
   "notify.newSuggest": " hat neue Vorschläge für({msg}",
   "notify.money": "hat Sie in Moneypoll({name} hinzugefügt",
+  "code.required": "Code ist erforderlich.",
   "_comment2": "paimanEnd",
 
   "__comment": "Zia---------",
