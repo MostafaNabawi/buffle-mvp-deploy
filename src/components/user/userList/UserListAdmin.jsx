@@ -5,6 +5,7 @@ import TableAdmin from "../../table/TableAdmin";
 import style from "../../table/style.module.css";
 import { PulseLoader } from "react-spinners";
 import { getAllUsers } from "../../../api/admin";
+import { FormattedMessage } from "react-intl";
 
 const UserListAdmin = () => {
   const [loading, setLoading] = useState(true);
@@ -120,10 +121,20 @@ const UserListAdmin = () => {
                   setTypeFilter(Number(e.target.value));
                 }}
               >
-                <option value="0">All</option>
-                <option value="1">Company</option>
-                <option value="2">Student</option>
-                <option value="3">Freelancer</option>
+                <FormattedMessage id="all" defaultMessage="All">
+                  {(msg) => <option value="0">{msg}</option>}
+                </FormattedMessage>
+
+                <FormattedMessage id="company" defaultMessage="Company">
+                  {(msg) => <option value="1">{msg}</option>}
+                </FormattedMessage>
+                <FormattedMessage id="student" defaultMessage="Student">
+                  {(msg) => <option value="2">{msg}</option>}
+                </FormattedMessage>
+                <FormattedMessage id="freelancer" defaultMessage="Freelancer">
+                  {(msg) => <option value="3">{msg}</option>}
+                </FormattedMessage>
+                
               </Form.Select>
             </Form.Group>
           </Col>
@@ -132,10 +143,18 @@ const UserListAdmin = () => {
               <Form.Select
                 onChange={(e) => setStatusFilter(Number(e.target.value))}
               >
-                <option value="0">All</option>
-                <option value="1">Block</option>
-                <option value="2">Active</option>
-                <option value="3">Pending</option>
+                   <FormattedMessage id="all" defaultMessage="All">
+                  {(msg) => <option value="0">{msg}</option>}
+                </FormattedMessage>
+                <FormattedMessage id="block" defaultMessage="Block">
+                  {(msg) => <option value="1">{msg}</option>}
+                </FormattedMessage>
+                <FormattedMessage id="active" defaultMessage="Active">
+                  {(msg) => <option value="2">{msg}</option>}
+                </FormattedMessage>
+                <FormattedMessage id="pending" defaultMessage="Pending">
+                  {(msg) => <option value="3">{msg}</option>}
+                </FormattedMessage>
               </Form.Select>
             </Form.Group>
           </Col>
@@ -144,15 +163,18 @@ const UserListAdmin = () => {
               <Form.Group
                 className="mb-3 input-group"
                 controlId="formBasicPassword"
-              >
-                <Form.Control
+              > 
+              <FormattedMessage id="searchEx" defaultMessage="Search eg(Name , Email)">
+                  {(msg) =>  <Form.Control
                   type="search"
-                  placeholder="Search eg(Name , Email)"
+                  placeholder={msg}
                   value={searchInput}
                   onChange={(e) => {
                     setSearchInput(e.target.value);
                   }}
-                />
+                />}
+                </FormattedMessage>
+               
                 <Button variant="primary" type="submit">
                   <Icon icon="bi:search" />
                 </Button>
