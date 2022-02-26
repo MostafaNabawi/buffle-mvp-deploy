@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Table, Card, Pagination } from "react-bootstrap";
 import { Icon } from "@iconify/react";
 import style from "./style.module.css";
 import Swal from "sweetalert2";
 import { API_URL } from "../../config";
-
+import { Context } from "../../layout/Wrapper";
+import { FormattedMessage } from "react-intl";
 const TableList = ({
   tableHeader,
   tableBody,
@@ -13,6 +14,7 @@ const TableList = ({
   isPagination,
   refresh,
 }) => {
+  const context = useContext(Context);
   const [current, setCurrent] = useState(1);
   const [innerData, setInnerData] = useState(tableBody);
   const [total, setTotal] = useState(tableBody.length);
@@ -32,9 +34,13 @@ const TableList = ({
   // actions
   const handleBlock = (uid, space) => {
     if (uid) {
+      const titleMsg =
+        context.getCurrent() === 0 ? "Are you sure?" : "Bist du dir sicher?";
       Swal.fire({
-        title: "Are you sure?",
-        html: `Do you want to <strong style="color : red">block</strong> space <b>${space}</b>?<br />😮`,
+        title: titleMsg,
+        html: context.getCurrent() === 0
+          ? `Do you want to <strong style="color : red">block</strong> workspace <b>${space}</b>?<br />😮`
+          : `Möchten Sie <strong style="color : red">block</strong> Arbeitsplatz<b>${space}</b>?<br />😮`,
         showCancelButton: true,
       }).then((res) => {
         if (res.isConfirmed) {
@@ -50,11 +56,14 @@ const TableList = ({
           }).then((res) => {
             if (res.status === 200) {
               refresh();
-              Swal.fire(
-                "Success",
-                `You have blocked <b>${space}</b> successfully.`,
-                "success"
-              );
+              const msg = context.getCurrent() === 0 ? "Success" : "Erfolg";
+
+              const msg2 =
+                context.getCurrent() === 0
+                  ? `You have blocked <b>${space}</b> successfully.`
+                  : `Sie haben blockiert <b>${space}</b> erfolgreich.`
+              Swal.fire(msg, msg2, "success");
+
             }
           });
         }
@@ -64,9 +73,13 @@ const TableList = ({
 
   const handleActive = (uid, space) => {
     if (uid) {
+      const titleMsg =
+        context.getCurrent() === 0 ? "Are you sure?" : "Bist du dir sicher?";
       Swal.fire({
-        title: "Are you sure?",
-        html: `Do you want to <strong style="color : green">Active</strong> space <b>${space}</b>?<br />🧐`,
+        title: titleMsg,
+        html: context.getCurrent() === 0
+          ? `Do you want to <strong style="color : green">Active</strong> workspace <b>${space}</b>?<br />🧐`
+          : `Möchten Sie <strong style="color : green">Aktiv</strong> Arbeitsplatz <b>${space}</b>?<br />🧐`,
         showCancelButton: true,
       }).then((res) => {
         if (res.isConfirmed) {
@@ -82,11 +95,14 @@ const TableList = ({
           }).then((res) => {
             if (res.status === 200) {
               refresh();
-              Swal.fire(
-                "Success",
-                `You have activated <b>${space}</b> successfully.`,
-                "success"
-              );
+              const msg = context.getCurrent() === 0 ? "Success" : "Erfolg";
+
+              const msg2 =
+                context.getCurrent() === 0
+                  ? `You have activated <b>${space}</b> successfully.`
+                  : `Sie haben aktiviert <b>${space}</b> erfolgreich.`
+              Swal.fire(msg, msg2, "success");
+
             }
           });
         }
@@ -152,7 +168,7 @@ const TableList = ({
               ))
             ) : (
               <tr>
-                <td>No user Found.</td>
+                <td><FormattedMessage id="noUser" defaultMessage="No user found." /></td>
               </tr>
             )}
           </tbody>

@@ -1,30 +1,48 @@
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useState, useContext } from "react";
 import { Table, Card, Pagination } from "react-bootstrap";
 import { Icon } from "@iconify/react";
 import style from "./style.module.css";
 import Swal from "sweetalert2";
+import { Context } from "../../layout/Wrapper";
 import Modal from "../modal/modal";
 import { API_URL } from "../../config/index";
 import { Row } from "react-bootstrap";
+import { FormattedMessage } from "react-intl";
 const country = require("country-state-picker");
 
 const RenderType = (space) => {
   if (space?.length > 0) {
     if (space[0]?.type === "f") {
-      return <span style={{ color: "GrayText" }}>Freelancer</span>;
+      return (
+        <span style={{ color: "GrayText" }}>
+          <FormattedMessage id="freelancer" defaultMessage="Freelancer" />
+        </span>
+      );
     }
     if (space[0]?.type === "s") {
-      return <span style={{ color: "cornflowerblue" }}> Student </span>;
+      return (
+        <span style={{ color: "cornflowerblue" }}>
+          <FormattedMessage id="student" defaultMessage="Student" />
+        </span>
+      );
     }
 
     if (space[0]?.type === "c") {
-      return <span style={{ color: "hotpink" }}> Company </span>;
+      return (
+        <span style={{ color: "hotpink" }}>
+          <FormattedMessage id="company" defaultMessage="Company" />{" "}
+        </span>
+      );
     }
     if (space[0]?.type === "a") {
       return "Websit Admin";
     }
   }
-  return <span style={{ color: "lightcoral" }}> Member </span>;
+  return (
+    <span style={{ color: "lightcoral" }}>
+      <FormattedMessage id="app.member" defaultMessage=" Member" />{" "}
+    </span>
+  );
 };
 const TableAdmin = ({
   tableHeader,
@@ -40,6 +58,7 @@ const TableAdmin = ({
   // data
   const [showModal, setShowModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
+  const context = useContext(Context);
 
   useEffect(() => {
     if (current > 1) {
@@ -54,6 +73,7 @@ const TableAdmin = ({
     setCurrent(1);
     setTotal(tableBody.length);
   }, [tableBody]);
+
   const getCountry = (code) => {
     if (!code) {
       return "";
@@ -66,30 +86,37 @@ const TableAdmin = ({
       if (selectedUser?.space[0]?.type === "f") {
         return (
           <>
-            <th>Profession</th>
-            <th> Heard </th>
+            <th>
+              <FormattedMessage
+                id="profession"
+                defaultMessage="Profession"
+              />
+            </th>
+            <th>
+              <FormattedMessage id="app.heard" defaultMessage="Heard" />
+            </th>
           </>
         );
       }
       if (selectedUser?.space[0]?.type === "s") {
         return (
           <>
-            <th>University</th>
-            <th> Studies</th>
-            <th>Semester</th>
-            <th>Heard</th>
+            <th><FormattedMessage id="app.university" defaultMessage="University" /></th>
+            <th>Studies </th>
+            <th><FormattedMessage id="app.semester" defaultMessage="Semester" /></th>
+            <th><FormattedMessage id="app.heard" defaultMessage="Heard" /></th>
           </>
         );
       }
       if (selectedUser?.space[0]?.type === "c") {
         return (
           <>
-            <th>Website</th>
-            <th> Size</th>
-            <th>Head Office</th>
-            <th>TaxId</th>
-            <th>postal Code</th>
-            <th>street</th>
+            <th><FormattedMessage id="website" defaultMessage="Website" /></th>
+            <th><FormattedMessage id="csize" defaultMessage="Size" /></th>
+            <th><FormattedMessage id="headOffice" defaultMessage="Head Office" /></th>
+            <th><FormattedMessage id="taxid" defaultMessage="TaxId" /></th>
+            <th><FormattedMessage id="postal" defaultMessage="postal Code" /></th>
+            <th><FormattedMessage id="street" defaultMessage="street" /></th>
           </>
         );
       }
@@ -141,9 +168,13 @@ const TableAdmin = ({
   // actions
   const handleBlock = (uid, space) => {
     if (uid) {
+      const titleMsg =
+        context.getCurrent() === 0 ? "Are you sure?" : "Bist du dir sicher?";
       Swal.fire({
-        title: "Are you sure?",
-        html: `Do you want to <strong style="color : red">block</strong> space <b>${space}</b>?<br />😮`,
+        title: titleMsg,
+        html: context.getCurrent() === 0
+          ? `Do you want to <strong style="color : red">block</strong> workspace <b>${space}</b>?<br />😮`
+          : `Möchten Sie <strong style="color : red">block</strong> Arbeitsplatz<b>${space}</b>?<br />😮`,
         showCancelButton: true,
       }).then((res) => {
         if (res.isConfirmed) {
@@ -159,11 +190,13 @@ const TableAdmin = ({
           }).then((res) => {
             if (res.status === 200) {
               refresh();
-              Swal.fire(
-                "Success",
-                `You have blocked <b>${space}</b> successfully.`,
-                "success"
-              );
+              const msg = context.getCurrent() === 0 ? "Success" : "Erfolg";
+
+              const msg2 =
+                context.getCurrent() === 0
+                  ? `You have blocked <b>${space}</b> successfully.`
+                  : `Sie haben blockiert <b>${space}</b> erfolgreich.`
+              Swal.fire(msg, msg2, "success");
             }
           });
         }
@@ -176,7 +209,9 @@ const TableAdmin = ({
     if (uid) {
       Swal.fire({
         title: "Are you sure?",
-        html: `Do you want to <strong style="color : green">Active</strong> space <b>${space}</b>?<br />🧐`,
+        html: context.getCurrent() === 0
+          ? `Do you want to <strong style="color : green">Active</strong> workspace <b>${space}</b>?<br />🧐`
+          : `Möchten Sie <strong style="color : green">Aktiv</strong> Arbeitsplatz <b>${space}</b>?<br />🧐`,
         showCancelButton: true,
       }).then((res) => {
         if (res.isConfirmed) {
@@ -196,19 +231,24 @@ const TableAdmin = ({
             if (res.status === 200) {
               if (payload.type === 2) {
                 refresh();
-                Swal.fire(
-                  "Success",
-                  `You have activated <b>${space}</b> successfully.`,
-                  "success"
-                );
+                const msg = context.getCurrent() === 0 ? "Success" : "Erfolg";
+
+                const msg2 =
+                  context.getCurrent() === 0
+                    ? `You have activated <b>${space}</b> successfully.`
+                    : `Sie haben aktiviert <b>${space}</b> erfolgreich.`
+                Swal.fire(msg, msg2, "success");
               }
               if (payload.type === 1) {
                 refresh();
-                Swal.fire(
-                  "Success",
-                  `You have activated <b>${space}</b> ${payload?.msg}`,
-                  "success"
-                );
+                const msg = context.getCurrent() === 0 ? "Success" : "Erfolg";
+
+                const msg2 =
+                  context.getCurrent() === 0
+                    ? `You have activated <b>${space}</b> ${payload?.msg} successfully.`
+                    : `Sie haben aktiviert <b>${space}</b> ${payload?.msg} erfolgreich.`
+                Swal.fire(msg, msg2, "success");
+
               }
             }
           });
