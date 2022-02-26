@@ -56,6 +56,9 @@
   "breakPlan.newSuggeation": "Neuer Vorschlag",
   "breakPlan.dellte": "Erfolgreich gelöscht",
 
+  "notFound":"Kein Benutzer gefunden",
+  "personalData":"Persönliche Daten",
+
   "app.invite": "Einladen",
   "app.imToday": "Tagespunkte",
   "app.breakPlan.qs": "Was ist dein Pausenplan?",
@@ -75,6 +78,14 @@
   "app.heard":"Gehört",
   "app.university":"Universität",
   "app.semester":"Semester",
+  "namespace":"Bereichsname",
+  "otherData":"Andere Daten",
+  "moreDetails":"Mehr Details",
+  "all":"Alle",
+  "active":"Aktiv",
+  "block":"Block",
+  "pending":"Ausstehend",
+  "searchEx":"Suche z. B. (Name, E-Mail)",
 
   "screen.lastIntermission": "Letzte Pause",
 
