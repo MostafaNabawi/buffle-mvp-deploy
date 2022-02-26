@@ -211,7 +211,7 @@ function HydrationReminderCard() {
     <>
       <Card>
         <CardHeader
-          icon={<Image src="/icone/Vector.png" alt="water drop icon" />}
+          icon={<Image src="/icone/Vector.svg" alt="water drop icon" />}
           title={
             <FormattedMessage
               defaultMessage="Hydration Reminder"
