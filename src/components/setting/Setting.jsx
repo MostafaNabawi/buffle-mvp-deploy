@@ -148,7 +148,6 @@ const Setting = () => {
   const handlePrefrence = async (e) => {
     e.preventDefault();
     setLoadingTwo(true);
-    console.log("Hahaha", defaultPrefrence);
     fetch(`${API_URL}/user/settings`, {
       method: "POST",
       credentials: "include",
@@ -169,16 +168,28 @@ const Setting = () => {
             currency: defaultPrefrence?.currency,
           })
         );
-        addToast("Prefrence updated.", {
-          autoDismiss: 6000,
-          appearance: "success",
-        });
+        addToast(
+          <FormattedMessage
+            defaultMessage="Prefrence updated."
+            id="pref.update"
+          />,
+          {
+            autoDismiss: 6000,
+            appearance: "success",
+          }
+        );
         setLoadingTwo(false);
       } else {
-        addToast("Error while updating.", {
-          autoDismiss: 6000,
-          appearance: "error",
-        });
+        addToast(
+          <FormattedMessage
+            defaultMessage="Server Error."
+            id="app.serverError"
+          />,
+          {
+            autoDismiss: 6000,
+            appearance: "error",
+          }
+        );
         setLoadingTwo(false);
       }
     });
@@ -240,12 +251,7 @@ const Setting = () => {
                     {currencyData &&
                       currencyData.map((currency, i) => (
                         <Fragment key={`${i}-currency`}>
-                          <option
-                            value={currency?.code}
-                            // selected={
-                            //   currency?.code === defaultPrefrence.currency
-                            // }
-                          >
+                          <option value={currency?.code}>
                             {currency?.name} ({currency?.code})
                           </option>
                         </Fragment>

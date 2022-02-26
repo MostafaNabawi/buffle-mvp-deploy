@@ -206,7 +206,14 @@ const UserLogin = () => {
         setLoading(false);
         return;
       }
-
+      const prefrence = await fetch(`${API_URL}/user/settings`, {
+        credentials: "include",
+      });
+      const prefrenceData = await prefrence.json();
+      if (prefrenceData?.data) {
+        localStorage.setItem("prefrence", JSON.stringify(prefrenceData?.data));
+        context.selectLanguage(prefrenceData?.language);
+      }
       if (res.type === 1) {
         localStorage.setItem("user", JSON.stringify(res.user));
         localStorage.setItem("space", res.stype);

@@ -54,7 +54,7 @@
   "breakPlan.Edit": "Pausenplan bearbeiten",
   "breakPlan.Create": "Neuer Pausenplan",
   "breakPlan.newSuggeation": "Neuer Vorschlag",
-  "breakPlan.dellte":"Erfolgreich gelöscht",
+  "breakPlan.dellte": "Erfolgreich gelöscht",
 
   "app.invite": "Einladen",
   "app.imToday": "Tagespunkte",
@@ -234,7 +234,7 @@
   "study": "Studienfach",
   "settings": "Einstellungen",
   "register.as": "Registrieren als:",
-  "register.dis":"Registrieren Sie sich bei Buffle",
+  "register.dis": "Registrieren Sie sich bei Buffle",
   "company": "Unternehmen",
   "student": "Student:in",
   "notify.water": "Es ist Zeit, Wasser zu trinken!",
@@ -279,5 +279,6 @@
   "tag.added": "Tag hinzugefügt",
   "reg.sentEmail": "Die E-Mail ist erfoglreich versendet worden.",
   "reg.continue": "Please check your email and continue from there",
-  "prefrence": "Präferenz"
+  "prefrence": "Präferenz",
+  "pref.update": "Präferenz updaten"
 }
