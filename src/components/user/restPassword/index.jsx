@@ -20,21 +20,21 @@ const RestPassword = () => {
     const handleRestPass = async (event) => {
         event.preventDefault();
         if (inputs.confirmPass === "" || inputs.password === "") {
-            addToast("Password and Confirm password are required.", {
+            addToast(<FormattedMessage id="passwords.req" defaultMessage="Password and Confirm password are required." />, {
                 appearance: "warning",
                 autoDismiss: 4000,
             });
             return;
         }
         if (inputs.password.length < 5) {
-            addToast("Password must be atlest 5 charcaters ", {
+            addToast(<FormattedMessage id="pass.validate" defaultMessage="Password must be atlest more than 5 charcaters " />, {
                 appearance: "error",
                 autoDismiss: 4000,
             });
             return;
         }
         if (inputs.password != inputs.confirmPass) {
-            addToast("Confirm password not match ", {
+            addToast(<FormattedMessage id="pass.notMatch" defaultMessage="Passwords are not matching" />, {
                 appearance: "error",
                 autoDismiss: 4000,
             });
@@ -159,7 +159,7 @@ const RestPassword = () => {
                         </div>
                     </div>
                     <div className={style.footer}>
-                        Do you remember password ?{" "}
+                        <FormattedMessage id="password.remember" defaultMessage="Do you remember password?" />{" "}
                         <Link className={style.registerLink} to="/">
                             <FormattedMessage id="loginNow" defaultMessage="Login now" />
                         </Link>

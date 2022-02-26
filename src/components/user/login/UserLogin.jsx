@@ -37,7 +37,7 @@ const UserLogin = () => {
     const req = await signin({ email: email, password: pass });
     if (req.status === 400) {
       setLoading(false);
-      addToast("Email or Password  is invalid.", {
+      addToast(<FormattedMessage id="invalidEmailAndPassword" defaultMessage="Email or Password  is invalid." />, {
         appearance: "error",
         autoDismiss: 4000,
       });
@@ -131,7 +131,7 @@ const UserLogin = () => {
           serverError: (
             <FormattedMessage
               defaultMessage="⛔ Email or Password is incorrect."
-              id="login.invalid"
+              id="invalidEmailAndPassword"
             />
           ),
         };
@@ -235,7 +235,7 @@ const UserLogin = () => {
           serverError: (
             <FormattedMessage
               defaultMessage="Error while signin with Google"
-              id="app.login.err.google"
+              id="login.googleError"
             />
           ),
         };
@@ -274,21 +274,18 @@ const UserLogin = () => {
         serverError: (
           <FormattedMessage
             defaultMessage="Error while signin with Google"
-            id="app.login.err.google"
+            id="login.googleError"
           />
         ),
       };
     });
-    addToast(
-      <FormattedMessage
-        defaultMessage="Error while signin with Google"
-        id="app.login.err.google"
-      />,
-      {
-        appearance: "error",
-        autoDismiss: 5000,
-      }
-    );
+    addToast(<FormattedMessage
+      defaultMessage="Error while signin with Google"
+      id="login.googleError"
+    />, {
+      appearance: "error",
+      autoDismiss: 5000,
+    });
   };
   useEffect(() => {
     let mount = true;
@@ -312,7 +309,7 @@ const UserLogin = () => {
     }
     if (searchParams.get("company") === "true") {
       addToast(
-        "Your company registered when your company approved by Buffle, we will send you and email.",
+        <FormattedMessage id="company.reigisterMsg" defaultMessage="Your company is registered. We will let you know, once we approved your company." />,
         {
           appearance: "success",
         }
@@ -444,7 +441,7 @@ const UserLogin = () => {
                     className={`${style.lableForm} mt-2`}
                     label={
                       <FormattedMessage
-                        id="app.login.checkout"
+                        id="rememberMe"
                         defaultMessage="Remember me."
                       />
                     }

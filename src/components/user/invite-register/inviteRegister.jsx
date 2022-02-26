@@ -32,7 +32,7 @@ const InviteRegister = () => {
       inputs.first_name === "" ||
       inputs.last_name === ""
     ) {
-      addToast("All field is reqrequir 👀 ", {
+      addToast(<FormattedMessage id="requiredAll" defaultMessage="All field is reqrequired." />, {
         appearance: "warning",
         autoDismiss: 4000,
       });
@@ -48,7 +48,7 @@ const InviteRegister = () => {
       return;
     }
     if (inputs.password < 5) {
-      addToast("Password must be at least more than 5 character", {
+      addToast(<FormattedMessage id="pass.validate" defaultMessage="Password must be at least more than 5 character" />, {
         appearance: "warning",
         autoDismiss: 4000,
       });
@@ -92,70 +92,88 @@ const InviteRegister = () => {
             <div className={`${style.header}  text-center pt-4`}>
               <Image src="/favicon.ico" />
               <div className={`${style.headerTitle} mt-3`}>
-                Register in <i>{campanyName} </i>campany
+                <FormattedMessage id="registerIn" defaultMessage="Register in" /> <i>{campanyName} </i><FormattedMessage id="company" defaultMessage="company" />
               </div>
             </div>
             <div className={style.body}>
               <Form onSubmit={handleLogin}>
                 <Form.Group className="mb-4" controlId="formBasicEmail">
                   <Form.Label className={style.lableForm}>
-                    First Name
+                    <FormattedMessage id="user.fname" defaultMessage="First Name" />
                   </Form.Label>
-                  <Form.Control
-                    className={style.formInput}
-                    type="text"
-                    placeholder="First Name"
-                    name="first_name"
-                    disabled={loading}
-                    onChange={(e) =>
-                      setInputs({ ...inputs, [e.target.name]: e.target.value })
-                    }
-                  />
+                  <FormattedMessage id="user.fname" defaultMessage="First Name">
+                    {(msg) => (
+                      <Form.Control
+                        className={style.formInput}
+                        type="text"
+                        placeholder={msg}
+                        name="first_name"
+                        disabled={loading}
+                        onChange={(e) =>
+                          setInputs({ ...inputs, [e.target.name]: e.target.value })
+                        }
+                      />
+                    )}
+                  </FormattedMessage>
                 </Form.Group>
                 <Form.Group className="mb-4" controlId="formBasicEmail">
-                  <Form.Label className={style.lableForm}>Last Name</Form.Label>
-                  <Form.Control
-                    className={style.formInput}
-                    type="text"
-                    placeholder="Last Name"
-                    name="last_name"
-                    disabled={loading}
-                    onChange={(e) =>
-                      setInputs({ ...inputs, [e.target.name]: e.target.value })
-                    }
-                  />
+                  <Form.Label className={style.lableForm}> <FormattedMessage id="user.lname" defaultMessage="Last Name" /></Form.Label>
+                  <FormattedMessage id="user.lname" defaultMessage="Last Name">
+                    {(msg) => (
+                      <Form.Control
+                        className={style.formInput}
+                        type="text"
+                        placeholder={msg}
+                        name="last_name"
+                        disabled={loading}
+                        onChange={(e) =>
+                          setInputs({ ...inputs, [e.target.name]: e.target.value })
+                        }
+                      />
+                    )}
+                  </FormattedMessage>
                 </Form.Group>
                 <Form.Group className="mb-4" controlId="formBasicEmail">
                   <Form.Label className={style.lableForm}>
-                    Your Email
+                    <FormattedMessage id="label.email" defaultMessage="Email" />
                   </Form.Label>
-                  <Form.Control
-                    className={style.formInput}
-                    type="text"
-                    placeholder="Enter email"
-                    name="email"
-                    disabled={loading}
-                    onChange={(e) =>
-                      setInputs({ ...inputs, [e.target.name]: e.target.value })
-                    }
-                  />
+                  <FormattedMessage id="label.email" defaultMessage="Email" >
+                    {(msg) => (
+                      <Form.Control
+                        className={style.formInput}
+                        type="text"
+                        placeholder={msg}
+                        name="email"
+                        disabled={loading}
+                        onChange={(e) =>
+                          setInputs({ ...inputs, [e.target.name]: e.target.value })
+                        }
+                      />
+                    )}
+                  </FormattedMessage>
                 </Form.Group>
                 <Form.Group className="mb-5" controlId="formBasicPassword">
-                  <Form.Label className={style.lableForm}>Password</Form.Label>
+                  <Form.Label className={style.lableForm}><FormattedMessage id="label.password" defaultMessage="Password" /></Form.Label>
                   <div className="mb-4 input-group">
-                    <Form.Control
-                      className={style.formInput}
-                      type={`${showPassword ? "text" : "password"}`}
-                      placeholder="Password"
-                      name="password"
-                      disabled={loading}
-                      onChange={(e) =>
-                        setInputs({
-                          ...inputs,
-                          [e.target.name]: e.target.value,
-                        })
-                      }
-                    />
+                    <FormattedMessage
+                      id="label.password" defaultMessage="Password"
+                    >
+                      {(msg) => (
+                        <Form.Control
+                          className={style.formInput}
+                          type={`${showPassword ? "text" : "password"}`}
+                          placeholder={msg}
+                          name="password"
+                          disabled={loading}
+                          onChange={(e) =>
+                            setInputs({
+                              ...inputs,
+                              [e.target.name]: e.target.value,
+                            })
+                          }
+                        />
+                      )}
+                    </FormattedMessage>
                     <i
                       onClick={() => setShowPassword(!showPassword)}
                       className={`${style.formInput} ${style.passwordIcon} input-group-text`}
@@ -174,7 +192,7 @@ const InviteRegister = () => {
                   type="submit"
                   disabled={loading}
                 >
-                  {loading ? <PulseLoader size={10} /> : "REGISTER"}
+                  {loading ? <PulseLoader size={10} /> : <FormattedMessage id="btn.register" defaultMessage="REGISTER" />}
                 </Button>
               </Form>
             </div>
