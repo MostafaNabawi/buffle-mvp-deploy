@@ -1054,11 +1054,11 @@ div.check-box > input {
 color: white !important;
 }
 
-.tooltip-inner::before{
-  background: radial-gradient(
-    103.73% 715% at 100% 100%,
-    var(--primary-color) 0%,
-    var(--low-vein-blue) 100%
-  );
+
+.tooltip.bs-tooltip-end .tooltip-arrow::before {
+  border-right-color: #8286ff; 
 }
+
+
+
 
