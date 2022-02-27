@@ -152,7 +152,7 @@ const SideBar = () => {
             placement="right"
             overlay={
               <Tooltip className="custom-tooltip" id={`tooltip-right`}>
-                Setting
+                Settings
               </Tooltip>
             }
           >
