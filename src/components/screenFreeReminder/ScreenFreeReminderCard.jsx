@@ -284,7 +284,7 @@ function ScreenFreeReminderCard() {
           icon={<Image src="/icone/eye 1.svg" alt="eye icon" />}
           title={
             <FormattedMessage
-              defaultMessage="ScreenFree Reminder"
+              defaultMessage="Screenlife"
               id="app.screen"
             />
           }

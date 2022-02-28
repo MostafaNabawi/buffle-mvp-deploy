@@ -121,7 +121,7 @@ function ImpotentToDayCard({ handleMove }) {
           }
           title={
             <FormattedMessage
-              defaultMessage="Important Today"
+              defaultMessage="Daypoints"
               id="app.imToday"
             />
           }
