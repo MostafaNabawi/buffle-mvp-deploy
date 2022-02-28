@@ -214,7 +214,7 @@ function HydrationReminderCard() {
           icon={<Image src="/icone/Vector.svg" alt="water drop icon" />}
           title={
             <FormattedMessage
-              defaultMessage="Hydration Reminder"
+              defaultMessage="Waterday"
               id="app.waterHydretion"
             />
           }

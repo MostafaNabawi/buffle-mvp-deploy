@@ -727,7 +727,7 @@ const Dashboard = () => {
               icon={<Image src="/icone/brain 1.png" alt="vector image" />}
               title={
                 <FormattedMessage
-                  defaultMessage="How you feel today"
+                  defaultMessage="Workmood"
                   id="app.dashboard.feel"
                 />
               }
@@ -762,7 +762,7 @@ const Dashboard = () => {
               }
               title={
                 <FormattedMessage
-                  defaultMessage="Next Break"
+                  defaultMessage="Breaktime"
                   id="app.dashboard.nextBreak"
                 />
               }
@@ -805,7 +805,7 @@ const Dashboard = () => {
               }
               title={
                 <FormattedMessage
-                  defaultMessage="Vacation Time"
+                  defaultMessage="Placeforce"
                   id="app.dashboard.vacationTime"
                 />
               }
@@ -915,7 +915,7 @@ const Dashboard = () => {
               }
               title={
                 <FormattedMessage
-                  defaultMessage="Worktunes"
+                  defaultMessage="Focustunes"
                   id="app.dashboard.music"
                 />
               }
@@ -940,7 +940,7 @@ const Dashboard = () => {
               }
               title={
                 <FormattedMessage
-                  defaultMessage="Task Manager"
+                  defaultMessage="Taskshop"
                   id="app.dashboard.task"
                 />
               }
@@ -1059,7 +1059,7 @@ const Dashboard = () => {
               icon={<Image src="/icone/direct-hit 1.png" alt="vector image" />}
               title={
                 <FormattedMessage
-                  defaultMessage="Breakplan"
+                  defaultMessage="Lunchway"
                   id="app.breakPlan"
                 />
               }
