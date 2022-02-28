@@ -159,7 +159,10 @@ const SideBar = () => {
           placement="right"
           overlay={
             <Tooltip className="custom-tooltip" id={`tooltip-right`}>
-              Settings
+               <FormattedMessage
+                  defaultMessage="Settings"
+                  id="settings"
+                />
             </Tooltip>
           }
         >
