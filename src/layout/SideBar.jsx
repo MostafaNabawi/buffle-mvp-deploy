@@ -1,6 +1,7 @@
 import { Image, Tooltip, OverlayTrigger } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
+import {FormattedMessage} from 'react-intl'
 
 const SideBar = () => {
   const scrollUp = () => {
@@ -74,17 +75,23 @@ const SideBar = () => {
             placement="right"
             overlay={
               <Tooltip className="custom-tooltip" id={`tooltip-right`}>
-                Task Management
+                <FormattedMessage
+                  defaultMessage="Important Today"
+                  id="app.imToday"
+                />
               </Tooltip>
             }
           >
-             <li className="mt-3">
-            <Link to="/dashboard/taskmanagement">
-              <Image className="sidebar-icon" src="/icone/task manager 1.svg" />
-            </Link>
-          </li>
+            <li className="mt-3">
+              <Link to="/dashboard/taskmanagement">
+                <Image
+                  className="sidebar-icon"
+                  src="/icone/exclamation-mark.svg"
+                />
+              </Link>
+            </li>
           </OverlayTrigger>
-         
+
           <li className="mt-3">
             <Link to="">
               <Image className="sidebar-icon2" src="/icone/Vector.svg" />
@@ -147,21 +154,24 @@ const SideBar = () => {
         </i>
       </div>
       <ul className="m-0 sidebar-list">
-      <OverlayTrigger
-            key="right"
-            placement="right"
-            overlay={
-              <Tooltip className="custom-tooltip" id={`tooltip-right`}>
-                Settings
-              </Tooltip>
-            }
-          >
-            <li className="mt-3">
-          <Link to="/dashboard/setting">
-            <Image className="sidebar-icon" src="/icone/blue-book 1.svg" />
-          </Link>
-        </li>
-          </OverlayTrigger>
+        <OverlayTrigger
+          key="right"
+          placement="right"
+          overlay={
+            <Tooltip className="custom-tooltip" id={`tooltip-right`}>
+               <FormattedMessage
+                  defaultMessage="Settings"
+                  id="settings"
+                />
+            </Tooltip>
+          }
+        >
+          <li className="mt-3">
+            <Link to="/dashboard/setting">
+              <Image className="sidebar-icon" src="/icone/blue-book 1.svg" />
+            </Link>
+          </li>
+        </OverlayTrigger>
       </ul>
     </section>
   );
