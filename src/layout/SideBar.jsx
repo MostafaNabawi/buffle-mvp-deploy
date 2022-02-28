@@ -80,7 +80,7 @@ const SideBar = () => {
           >
              <li className="mt-3">
             <Link to="/dashboard/taskmanagement">
-              <Image className="sidebar-icon" src="/icone/task manager 1.svg" />
+              <Image className="sidebar-icon" src="/icone/exclamation-mark.svg" />
             </Link>
           </li>
           </OverlayTrigger>
