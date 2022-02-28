@@ -170,7 +170,7 @@ const Setting = () => {
         );
         addToast(
           <FormattedMessage
-            defaultMessage="Prefrence updated."
+            defaultMessage="Preference updated."
             id="pref.update"
           />,
           {

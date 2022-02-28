@@ -17,9 +17,9 @@ function TimePicker({ label, value, setValue }) {
 
   const validatHours = (e) => {
     const value = e.target.value;
-    // const hours = value < 12 ? value : 12;
+    const hours = value < 24 ? value : 24;
     setValue({
-      hours: value,
+      hours: hours,
       minutes: minuteValue === "" ? "00" : minuteValue,
       seconds: secondValue === "" ? "00" : secondValue,
     });

@@ -178,8 +178,7 @@ const Timer = (props) => {
             label={
               <>
                 <span className={percent >= 28 ? "" : "showTimeTask"}>
-                  {`${parseInt(day) < 10 ? "0" + parseInt(day) : parseInt(day)
-                    }:${parseInt(hour) < 10 ? "0" + parseInt(hour) : parseInt(hour)
+                  {`${parseInt(hour) < 10 ? "0" + parseInt(hour) : parseInt(hour)
                     }:${parseInt(minute) < 10
                       ? "0" + parseInt(minute)
                       : parseInt(minute)

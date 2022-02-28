@@ -155,7 +155,7 @@ function ImpotentToDayCard({ handleMove }) {
               />
             ))
           ) : (
-            <span><FormattedMessage defaultMessage="No important for today" id="msg.noImportantToday" /></span>
+            <span><FormattedMessage defaultMessage="Nothing important for today" id="msg.noImportantToday" /></span>
           )}
         </CardBody>
       </Card>

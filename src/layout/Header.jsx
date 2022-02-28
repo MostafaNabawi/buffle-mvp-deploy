@@ -45,14 +45,14 @@ const Header = () => {
   //
   const { du_time, dis_time, updating } = useSelector((state) => state.screen);
   const beep = new UIFx(boop, {
-    volume: 0.8,
+    volume: 0.5,
   });
   const taskBeeb = new UIFx(taskSound, {
-    volume: 0.8,
+    volume: 0.5,
   })
 
   const breakPlan = new UIFx(breakPlanSound, {
-    volume: 0.8,
+    volume: 0.5,
   })
   const { addToast } = useToasts();
   const dispatch = useDispatch();

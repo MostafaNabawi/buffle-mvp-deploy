@@ -475,7 +475,7 @@ const UserLogin = () => {
                   >
                     <FormattedMessage
                       id="app.login.forget"
-                      defaultMessage="Forget password?"
+                      defaultMessage="Forgot password?"
                     />
                   </Link>
                 </Form.Group>

@@ -10,7 +10,7 @@ import UIFx from "uifx";
 function TimerCustome({ count, setCount }) {
   const dispatch = useDispatch();
   const beep = new UIFx(boop, {
-    volume: 0.8,
+    volume: 0.5,
   });
   const sendNotific = () => {
     if (render && !isMute && notificTimer > 0) {

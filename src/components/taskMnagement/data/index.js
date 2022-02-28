@@ -60,7 +60,7 @@ const statuses = [
   },
   {
     id: 0,
-    day: 0,
+    day: 7,
     status: "Sunday",
     title: "Daily Reading",
   },
