@@ -6,11 +6,13 @@ import Countdown from "react-countdown";
 import { getTotalSeconds } from "../../../config/utils";
 import { deleteNextBreak } from "../../../api";
 import { useToasts } from "react-toast-notifications";
+import { FormattedMessage } from "react-intl";
 const PreogressBar = ({ range }) => {
   const [total, setTotal] = useState(range / 1000);
   const [play, setPlay] = useState(false);
   const [data, setData] = useState(0);
   const [percentUI, setPercentUI] = useState(0);
+  const [refresh, setRefresh] = useState(false);
   const { addToast } = useToasts();
   // actions
   const handlePlay = () => {
@@ -46,6 +48,16 @@ const PreogressBar = ({ range }) => {
     }
   }, [range]);
   useEffect(() => {
+    if (refresh) {
+      console.log("Refresh the states!");
+      setTotal(range / 1000);
+      setPlay(false);
+      setData(0);
+      setPercentUI(0);
+      setRefresh(false);
+    }
+  }, [refresh]);
+  useEffect(() => {
     if (data > 0) {
       const per = 100 / total;
       setPercentUI(percentUI + per);
@@ -68,6 +80,7 @@ const PreogressBar = ({ range }) => {
                 <Countdown
                   key={`c-1`}
                   date={new Date(range?.endDate)}
+                  autoStart={play}
                   onTick={(time) => {
                     setData(time.total);
                   }}
@@ -82,9 +95,18 @@ const PreogressBar = ({ range }) => {
                     </span>
                   )}
                   onComplete={async () => {
-                    addToast("Next Break Finished.", {
-                      appearance: "success",
-                    });
+                    setRefresh(true);
+                    setPercentUI(100);
+                    addToast(
+                      <FormattedMessage
+                        defaultMessage="Next Break Finished."
+                        id="break.finished"
+                      />,
+                      {
+                        appearance: "success",
+                        autoDismiss: 12000,
+                      }
+                    );
                     await deleteNextBreak();
                   }}
                 />
