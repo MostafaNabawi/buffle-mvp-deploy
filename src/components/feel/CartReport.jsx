@@ -367,7 +367,7 @@ const CharReport = () => {
           <Col>
             <h2 className={`${style.chartTitle}`}>
               <FormattedMessage
-                defaultMessage="Monthly (How to feel) Report"
+                defaultMessage="Monthly Report"
                 id="chart.title"
               />
             </h2>
