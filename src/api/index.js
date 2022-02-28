@@ -200,7 +200,6 @@ async function updateProject(id, name, desc) {
 
 // ----------------------tasks--------------
 async function createTask(task, type, duration, moved, status, checked) {
-  console.log("true", checked);
   const req = await fetch(`${API_URL}/task/new`, {
     method: "POST",
     credentials: "include",
@@ -510,7 +509,6 @@ async function getImportantToday() {
   return { status: req.status, data: res.payload };
 }
 async function updateTaskImportant(id, name, duration, status, checked) {
-  console.log("checked", checked);
   const req = await fetch(`${API_URL}/task/update-important`, {
     method: "PUT",
     credentials: "include",

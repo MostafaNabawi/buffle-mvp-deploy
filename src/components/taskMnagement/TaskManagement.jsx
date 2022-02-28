@@ -50,6 +50,7 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
     setItems(format);
     setShowSkleton(false);
   }
+  console.log(items, checkDrop);
   useEffect(() => {
     request();
   }, []);
@@ -64,8 +65,9 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
   useEffect(() => {
 
 
-    if (id || val || checkDrop || colChange || projectDroped) {
+    if (id || val || checkDrop.length > 0 || colChange || projectDroped) {
       request();
+      setCheckDrop("");
     }
   }, [id, val, checkDrop, colChange, projectDroped]);
 
@@ -76,6 +78,7 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
   const handleDrop = (val) => {
     setCheckDrop(val)
   }
+
   const handleKeyDownWeekDaysItem = async (event) => {
     if (event.key === "Enter") {
       const createT = await createTask(inputTask, 0, 0, false, 'stop');
