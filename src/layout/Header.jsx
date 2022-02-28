@@ -32,6 +32,8 @@ import {
 import Swal from "sweetalert2";
 import { setAlert, setPassAlert, setRun } from "../store/taskSlice";
 import boop from "./boop.mp3";
+import taskSound from "./taskdone.mp3";
+import breakPlanSound from "./break.mp3";
 import UIFx from "uifx";
 import TimerCustome from "./TimerCustome";
 import { FormattedMessage } from "react-intl";
@@ -45,6 +47,13 @@ const Header = () => {
   const beep = new UIFx(boop, {
     volume: 0.8,
   });
+  const taskBeeb = new UIFx(taskSound, {
+    volume: 0.8,
+  })
+
+  const breakPlan = new UIFx(breakPlanSound, {
+    volume: 0.8,
+  })
   const { addToast } = useToasts();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -344,7 +353,7 @@ const Header = () => {
       if (String(webData) === String(checkup)) {
         //notification related to this user
         setCount(count + 1);
-        beep.play();
+        breakPlan.play();
         setWebData("");
       }
     }
@@ -435,13 +444,13 @@ const Header = () => {
 
   useEffect(() => {
     if (alert) {
-      beep.play();
+      taskBeeb.play();
       dispatch(setAlert(false));
       setCount(count + 1);
       dispatch(setRun(false));
     }
     if (passAaler) {
-      beep.play();
+      taskBeeb.play();
       dispatch(setPassAlert(false));
       setCount(count + 1);
     }
@@ -484,10 +493,10 @@ const Header = () => {
               localStorage.setItem(
                 "loackTime",
                 timeLock.getHours() +
-                  ":" +
-                  timeLock.getMinutes() +
-                  ":" +
-                  timeLock.getSeconds()
+                ":" +
+                timeLock.getMinutes() +
+                ":" +
+                timeLock.getSeconds()
               );
             }
           }}
@@ -499,9 +508,8 @@ const Header = () => {
 
       <div
         id="lockScreenHide"
-        className={`${
-          localStorage.getItem("screen") === "on" ? "lockScreen" : ""
-        } text-center ${!start ? "" : "lockScreenHide"}`}
+        className={`${localStorage.getItem("screen") === "on" ? "lockScreen" : ""
+          } text-center ${!start ? "" : "lockScreenHide"}`}
       >
         {localStorage.getItem("screen") === "on" && !start && (
           <div className="screenDiv">
@@ -523,9 +531,9 @@ const Header = () => {
                 }
                 handleDisplayTime(dis_time);
               }}
-              // renderer={() => {
-              //   return ""
-              // }}
+            // renderer={() => {
+            //   return ""
+            // }}
             />
           </div>
         )}

@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setNotificatiionTimer, setTimeOutID } from "../store/hydrationSclice";
 import { API_URL } from "../config/index";
-import boop from "./boop.mp3";
+import boop from "./water.mp3";
 import UIFx from "uifx";
 
 function TimerCustome({ count, setCount }) {

@@ -210,10 +210,10 @@ const CharReport = () => {
         "Vierte Woche",
       ]);
       setHappyLable("Glücklich");
-      setSmilingLable("Lächelnd");
+      setSmilingLable("gut");
       setNormalLable("Normal");
-      setSadLable("Traurig");
-      setCryLable("Weinen");
+      setSadLable("nicht gut");
+      setCryLable("traurig");
     } else {
       setLabels(["", "First week", "Second week", "Third week", "Forth week"]);
       setHappyLable("Happy");
@@ -367,7 +367,7 @@ const CharReport = () => {
           <Col>
             <h2 className={`${style.chartTitle}`}>
               <FormattedMessage
-                defaultMessage="Monthly (How to feel) Report"
+                defaultMessage="Monthly Report"
                 id="chart.title"
               />
             </h2>
