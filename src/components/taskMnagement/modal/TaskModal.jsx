@@ -130,23 +130,26 @@ function TaskModal(props) {
             <DatePicker
               selected={startDate}
               onChange={(date) => setStartDate(date)}
+              title=""
             />
             <Project
+              title=""
               {...props}
               handleClick={handleClick}
               value={pName != null ? pName : oldValue}
               project={projects}
               handleSetProjct={handleCheck}
+
             />
             {/* <RepeatTask /> */}
-            <button type="button" onClick={() => { handleDelete(item.tb_id) }}>
+            <button type="button" title="" onClick={() => { handleDelete(item.tb_id) }}>
               <Icon icon="akar-icons:trash-can" />
             </button>
-            <button type="button" onClick={handleClose}>
+            <button type="button" title="" onClick={handleClose}>
               <Icon icon="ep:close-bold" />
             </button>
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body title="">
             <div className={`${style.label_area} mb-3`}>
               <label>
                 <input type="checkbox" className="form-check-input" />

@@ -14,15 +14,15 @@ function CustomModal(props) {
     >
       <Container>
         <Form>
-          <Modal.Header closeButton>
+          <Modal.Header title="" closeButton>
             <Modal.Title id="contained-modal-title-vcenter">
               {title}
               <br />
               <span className="modal-sub-title">{subTitle}</span>
             </Modal.Title>
           </Modal.Header>
-          <Modal.Body>{body}</Modal.Body>
-          <Modal.Footer>{footer}</Modal.Footer>
+          <Modal.Body title="">{body}</Modal.Body>
+          <Modal.Footer title="">{footer}</Modal.Footer>
         </Form>
       </Container>
     </Modal>
