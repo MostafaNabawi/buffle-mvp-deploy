@@ -644,10 +644,10 @@ const Header = () => {
                         key={notify._id}
                         name={
                           notify.icon === "task" ? (
-                            "Task Manager"
+                            "Taskshop"
                           ) : notify.icon === "water" ? (
                             <FormattedMessage
-                              defaultMessage="Hydration Reminder"
+                              defaultMessage="Waterday"
                               id="app.waterHydretion"
                             />
                           ) : (
