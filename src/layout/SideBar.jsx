@@ -1,7 +1,7 @@
 import { Image, Tooltip, OverlayTrigger } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
-import {FormattedMessage} from 'react-intl'
+import { FormattedMessage } from 'react-intl'
 
 const SideBar = () => {
   const scrollUp = () => {
@@ -76,7 +76,7 @@ const SideBar = () => {
             overlay={
               <Tooltip className="custom-tooltip" id={`tooltip-right`}>
                 <FormattedMessage
-                  defaultMessage="Important Today"
+                  defaultMessage="Daypoints"
                   id="app.imToday"
                 />
               </Tooltip>
@@ -159,10 +159,10 @@ const SideBar = () => {
           placement="right"
           overlay={
             <Tooltip className="custom-tooltip" id={`tooltip-right`}>
-               <FormattedMessage
-                  defaultMessage="Settings"
-                  id="settings"
-                />
+              <FormattedMessage
+                defaultMessage="Settings"
+                id="settings"
+              />
             </Tooltip>
           }
         >
