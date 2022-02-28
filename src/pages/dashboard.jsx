@@ -639,7 +639,8 @@ const Dashboard = () => {
       }
       const checkup = nextBreakTimeValidation(
         result?.payload?.start,
-        result?.payload?.end
+        result?.payload?.end,
+        context.getCurrent()
       );
       if (checkup.type === 0) {
         addToast(checkup?.msg, {
@@ -946,8 +947,9 @@ const Dashboard = () => {
               }
               subtitle={
                 <FormattedMessage
-                  defaultMessage={`${opan < 0 ? 0 : opan} open, ${start < 0 ? 0 : start
-                    } start.`}
+                  defaultMessage={`${opan < 0 ? 0 : opan} open, ${
+                    start < 0 ? 0 : start
+                  } start.`}
                   id="app.task.open"
                   values={{
                     num: opan < 0 ? 0 : opan,
@@ -1143,25 +1145,25 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                  id: data._id,
-                                  name: data.name,
-                                  time: data.time,
-                                })
+                                    id: data._id,
+                                    name: data.name,
+                                    time: data.time,
+                                  })
                                 : joinOrNewSuggestForm(
-                                  {
-                                    id: data.user[0]._id,
-                                    breackName: data.name,
-                                  },
-                                  {
-                                    fullName:
-                                      currentUser.first_name +
-                                      " " +
-                                      currentUser.last_name,
-                                    breakName: data.name,
-                                    breakOwnerId: data.user[0]._id,
-                                    breakId: data._id,
-                                  }
-                                );
+                                    {
+                                      id: data.user[0]._id,
+                                      breackName: data.name,
+                                    },
+                                    {
+                                      fullName:
+                                        currentUser.first_name +
+                                        " " +
+                                        currentUser.last_name,
+                                      breakName: data.name,
+                                      breakOwnerId: data.user[0]._id,
+                                      breakId: data._id,
+                                    }
+                                  );
                             }}
                             className="break-type"
                           >
@@ -1173,20 +1175,20 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                  id: data._id,
-                                  name: data.name,
-                                  time: data.time,
-                                })
+                                    id: data._id,
+                                    name: data.name,
+                                    time: data.time,
+                                  })
                                 : timeFormBreakplan({
-                                  time: "",
-                                  recevier: data.user[0]._id,
-                                  fullName:
-                                    currentUser.first_name +
-                                    "" +
-                                    currentUser.last_name,
-                                  breakName: data.name,
-                                  breakId: data._id,
-                                });
+                                    time: "",
+                                    recevier: data.user[0]._id,
+                                    fullName:
+                                      currentUser.first_name +
+                                      "" +
+                                      currentUser.last_name,
+                                    breakName: data.name,
+                                    breakId: data._id,
+                                  });
                             }}
                           >
                             {data.time}
@@ -1423,8 +1425,8 @@ const Dashboard = () => {
               <Button
                 disabled={
                   vacationNameInput === "" ||
-                    vacationDataInput === "" ||
-                    vacationLoader
+                  vacationDataInput === "" ||
+                  vacationLoader
                     ? true
                     : false
                 }
