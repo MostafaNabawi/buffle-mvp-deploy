@@ -24,7 +24,7 @@ function getTotalSeconds(startDate, endDate) {
   const passedSeconds = now.diff(admission, "seconds");
   return { total: totalSeconds, passed: passedSeconds };
 }
-function nextBreakTimeValidation(start, end, status) {
+function nextBreakTimeValidation(start, end, localType) {
   // start time
   let admission = moment(start, "DD-MM-YYYY HH:mm:ss");
   // end time
@@ -36,11 +36,14 @@ function nextBreakTimeValidation(start, end, status) {
   // total seconds which passed
   const passedSeconds = now.diff(admission, "seconds");
   // if break time passed from the range
+  const localMessage =
+    localType === 0 ? "You had a next break on" : "Du hattest einen Pause am";
+  const localAt = localType === 0 ? "at" : "bei";
   if (passedSeconds >= totalSeconds) {
     return {
       type: 0,
-      msg: `You had a next break on ${moment(end).format(
-        "DD-MM-YYYY [at] hh:mm a"
+      msg: `${localMessage} ${moment(end).format(
+        `DD-MM-YYYY [${localAt}] hh:mm a`
       )}`,
     };
   }
