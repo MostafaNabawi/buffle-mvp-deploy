@@ -10,11 +10,16 @@ import {
   updateTaskWhenCompleted,
   createNotification,
 } from "../../../api";
+import UIFx from "uifx";
+import taskStart from './taskstart.mp3'
 import { useToasts } from "react-toast-notifications";
 import { useDispatch, useSelector } from "react-redux";
 import { setRun, setAlert } from "../../../store/taskSlice";
 import { FormattedMessage } from "react-intl";
 const Timer = (props) => {
+  const taskStartSound = new UIFx(taskStart, {
+    volume: 0.5,
+  });
   const { addToast } = useToasts();
   const dispatch = useDispatch();
   const { run } = useSelector((state) => state.task);
@@ -46,6 +51,7 @@ const Timer = (props) => {
   const data = JSON.parse(localStorage.getItem("user"));
   const handlePlay = async () => {
     if (!play && !run) {
+      taskStartSound.play();
       dispatch(setRun(true));
       handleCheckOpenClose(1);
       setPlay(!play);
