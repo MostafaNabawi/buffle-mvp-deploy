@@ -1059,3 +1059,36 @@ div.check-box > input {
 .tooltip.bs-tooltip-end .tooltip-arrow::before {
   border-right-color: #8286ff;
 }
+.form-check-input:checked {
+  background-color: #4922ff !important;
+  border-color: #4922ff !important;
+}
+.no-task-today {
+  margin: auto !important;
+  color: #a3aed0;
+  position: absolute;
+  top: 40%;
+}
+.no-important {
+  margin: auto !important;
+  color: #a3aed0;
+  position: absolute;
+  top: 50%;
+  width: 87%;
+}
+.break-plan-card .join-suggest-select {
+  margin: auto !important;
+  color: #a3aed0;
+  position: absolute;
+  top: 40%;
+  width: 87%;
+}
+.no-screen {
+  color: #a3aed0;
+}
+.no-water-reminder {
+  position: absolute;
+  margin-top: 45%;
+  color: #a3aed0;
+  left: 20px;
+}

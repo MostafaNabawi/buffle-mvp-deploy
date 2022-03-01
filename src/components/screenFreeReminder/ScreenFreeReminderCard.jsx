@@ -317,10 +317,12 @@ function ScreenFreeReminderCard() {
           {getting ? (
             <Skeleton height="34px" count={1} />
           ) : data.length === 0 ? (
-            <FormattedMessage
-              defaultMessage="Not set screen reminder"
-              id="msg.noScreenR"
-            />
+            <span className="no-screen">
+              <FormattedMessage
+                defaultMessage="Click + to add your reminder"
+                id="msg.noScreenR"
+              />
+            </span>
           ) : (
             data && (
               <div className={style.wrapper}>

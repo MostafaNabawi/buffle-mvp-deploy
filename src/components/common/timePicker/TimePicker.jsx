@@ -79,7 +79,7 @@ function TimePicker({ label, value, setValue }) {
         </Col>
 
         <Col>
-          <label><FormattedMessage id="time.minute" defaultMessage="Minute" /></label>
+          <label><FormattedMessage id="time.Minute" defaultMessage="Minute" /></label>
           <Form.Control
             type="number"
             placeholder="min"

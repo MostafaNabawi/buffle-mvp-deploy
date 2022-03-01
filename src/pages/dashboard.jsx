@@ -834,7 +834,7 @@ const Dashboard = () => {
                 {vacationData === "noVacation" ? (
                   <span className="vacation-until">
                     <FormattedMessage
-                      defaultMessage="Set your vacation time"
+                      defaultMessage="Click + to add your vacation"
                       id="app.setVTime"
                     />
                   </span>
@@ -1035,10 +1035,20 @@ const Dashboard = () => {
                     </div>
                   ))
                 ) : (
-                  <span>
+                  <span className="text-center no-task-today">
                     <FormattedMessage
                       id="task.noTask"
-                      defaultMessage="No task for today"
+                      defaultMessage="Click + to add your tasks"
+                    />
+                    <br />
+                    <FormattedMessage
+                      id="task.or"
+                      defaultMessage="or"
+                    />
+                    <br />
+                    <FormattedMessage
+                      id="task.daypoint"
+                      defaultMessage="Select your Daypoint"
                     />
                   </span>
                 )}
@@ -1102,7 +1112,9 @@ const Dashboard = () => {
                 {breacPlanData === "" ? (
                   <Skeleton count={6} />
                 ) : breacPlanData.length === 0 ? (
-                  "No Break Plan"
+                  <span className="text-center join-suggest-select">
+                    <FormattedMessage id="app.noLunchway" defaultMessage="join, suggest or select a breakplan" />
+                  </span>
                 ) : (
                   breacPlanData &&
                   breacPlanData.map((data, n) => (
