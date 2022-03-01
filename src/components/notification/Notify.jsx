@@ -1,10 +1,16 @@
-import React from "react";
+import { useContext } from "react";
 import { Image, Row, Col } from "react-bootstrap";
 import { FormattedMessage } from "react-intl";
+import { Context } from "../../layout/Wrapper";
 import TimeAgo from "react-timeago";
+import germanStrings from "react-timeago/lib/language-strings/de";
+import buildFormatter from "react-timeago/lib/formatters/buildFormatter";
 import RenderImage from "../cutomeImage/RenderImage";
 
-function inviteNotify({ type, name, date, message, footer, icon }) {
+function InviteNotify({ type, name, date, message, footer, icon }) {
+  const context = useContext(Context);
+  const currennt = context.getCurrent();
+  const formatter = buildFormatter(germanStrings);
   const formatMsg = () => {
     if (!message || !type) {
       return "";
@@ -121,7 +127,11 @@ function inviteNotify({ type, name, date, message, footer, icon }) {
           <div className="break-user-name">
             {name}{" "}
             <span className="float-right notifyTime">
-              <TimeAgo date={date} />
+              {currennt === 0 ? (
+                <TimeAgo date={date} />
+              ) : (
+                <TimeAgo date={date} formatter={formatter} />
+              )}
             </span>
           </div>
           <p>{formatMsg()}</p>
@@ -132,4 +142,4 @@ function inviteNotify({ type, name, date, message, footer, icon }) {
     </>
   );
 }
-export default inviteNotify;
+export default InviteNotify;

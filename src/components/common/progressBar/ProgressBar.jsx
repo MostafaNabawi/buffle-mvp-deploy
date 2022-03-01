@@ -7,12 +7,18 @@ import { getTotalSeconds } from "../../../config/utils";
 import { deleteNextBreak } from "../../../api";
 import { useToasts } from "react-toast-notifications";
 import { FormattedMessage } from "react-intl";
+import UIFx from "uifx";
+import nextBreak from "./nextBreak.mp3";
+
 const PreogressBar = ({ range }) => {
   const [total, setTotal] = useState(range / 1000);
   const [play, setPlay] = useState(false);
   const [data, setData] = useState(0);
   const [percentUI, setPercentUI] = useState(0);
   const [refresh, setRefresh] = useState(false);
+  const nextBreakSound = new UIFx(nextBreak, {
+    volume: 0.5,
+  });
   const { addToast } = useToasts();
   // actions
   const handlePlay = () => {
@@ -97,9 +103,10 @@ const PreogressBar = ({ range }) => {
                   onComplete={async () => {
                     setRefresh(true);
                     setPercentUI(100);
+
                     addToast(
                       <FormattedMessage
-                        defaultMessage="Next Break Finished."
+                        defaultMessage="Start your break now!"
                         id="break.finished"
                       />,
                       {
@@ -107,6 +114,7 @@ const PreogressBar = ({ range }) => {
                         autoDismiss: 12000,
                       }
                     );
+                    nextBreakSound.play();
                     await deleteNextBreak();
                   }}
                 />
