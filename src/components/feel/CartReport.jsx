@@ -322,7 +322,7 @@ const CharReport = () => {
                   </option>
                 )}
               </FormattedMessage>
-              <FormattedMessage defaultMessage="Sebtember" id="month.Sebtember">
+              <FormattedMessage defaultMessage="September" id="month.Sebtember">
                 {(msg) => (
                   <option
                     value="0"
