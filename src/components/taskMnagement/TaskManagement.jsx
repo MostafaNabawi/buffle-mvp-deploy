@@ -50,7 +50,6 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
     setItems(format);
     setShowSkleton(false);
   }
-  console.log(items, checkDrop);
   useEffect(() => {
     request();
   }, []);
@@ -65,17 +64,17 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
   useEffect(() => {
 
 
-    if (id || val || checkDrop.length > 0 || colChange || projectDroped) {
+    if (id || val || colChange || projectDroped) {
       request();
-      setCheckDrop("");
     }
-  }, [id, val, checkDrop, colChange, projectDroped]);
+  }, [id, val, colChange, projectDroped]);
 
   const handleChecked = (id) => {
     handleGet(id);
     setId(id);
   }
-  const handleDrop = (val) => {
+  const handleDrop = (id) => {
+
     setCheckDrop(val)
   }
 
@@ -202,6 +201,7 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
                       handleGet={handleGet}
                       handleChecked={handleChecked}
                       handleDelete={handleDelete}
+
                     ></Item>
                   ))}
                 <div className="new-task-divimport FreelancerRegister from './../user/register/Freelancer';">

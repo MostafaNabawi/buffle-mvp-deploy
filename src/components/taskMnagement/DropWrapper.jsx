@@ -3,10 +3,11 @@ import { useDrop } from "react-dnd";
 import { ITEM_TYPE } from "./data/types";
 import { statuses } from "./data";
 import { updateTaskDate } from "../../api";
-import { useToasts } from "react-toast-notifications";
 import moment from "moment";
+import { useDispatch } from "react-redux";
+import { setDate } from "../../store/projectSlice";
 const DropWrapper = ({ onDrop, children, status, idNumber, handleDrop }) => {
-  const { addToast } = useToasts();
+  const dispatch = useDispatch();
   async function ProjectChange(id, date) {
     const mDate = moment(date); // Thursday Feb 2015
     const dayNum = mDate.day();
@@ -39,7 +40,8 @@ const DropWrapper = ({ onDrop, children, status, idNumber, handleDrop }) => {
     drop: (item, monitor) => {
       onDrop(item, monitor, status);
       ProjectChange(item.tb_id, item.date, status);
-      handleDrop(status);
+      handleDrop(item.tb_id);
+      dispatch(setDate(status));
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),

@@ -7,7 +7,7 @@ import style from "./style.module.css";
 import { Icon } from "@iconify/react";
 import {
   updateTask,
-
+  getTaskById,
   getProject,
   getProjectById,
 } from "../../../api";
@@ -25,11 +25,11 @@ function TaskModal(props) {
   const [projects, setProjects] = useState({ label: "", value: "" });
   const [taskDesc, setTaskDesc] = useState(item.description);
   const [newTime, setNewTime] = useState({ createIime: item.start_time });
-  const [startDate, setStartDate] = useState(new Date(item.date));
+  const [startDate, setStartDate] = useState();
   const [projectId, setProjectId] = useState(item.p_id);
   const [oldValue, setOldValue] = useState();
   const [pName, setPaName] = useState();
-  const { value } = useSelector((state) => state.projectName);
+  const { value, date } = useSelector((state) => state.projectName);
   async function request() {
     // get project and format
     const req = await getProject();
@@ -40,8 +40,15 @@ function TaskModal(props) {
       };
     });
     setProjects(formatP);
-    const getP = await getProjectById(projectId);
+    const getT = await getTaskById(props.item.tb_id);
 
+    if (getT.data !== null) {
+      setStartDate(new Date(getT.data.date))
+    }
+    else {
+      setStartDate(new Date(item.date))
+    }
+    const getP = await getProjectById(projectId);
 
     if (getP.data !== null) {
       const selected = { value: getP.data._id, label: getP.data.name };
@@ -65,6 +72,7 @@ function TaskModal(props) {
     }
   }, [projectId, projectChange]);
   async function getNewData() {
+
     const getP = await getProjectById(value);
     if (getP.data !== null) {
       const selected = { value: getP.data._id, label: getP.data.name };
@@ -74,12 +82,27 @@ function TaskModal(props) {
       setPaName(selected);
     }
   }
+  async function getNewTask() {
+    const getT = await getTaskById(props.item.tb_id);
+
+    if (getT.data !== null) {
+      setStartDate(new Date(getT.data.date))
+    }
+    else {
+      setStartDate(new Date(item.date))
+    }
+  }
   useEffect(() => {
     if (value) {
 
       getNewData();
     }
   }, [value]);
+  useEffect(() => {
+    if (date) {
+      getNewTask()
+    }
+  }, [date])
   const handleKeyDownTask = async () => {
     const data = {
       id: item.tb_id,
@@ -88,7 +111,8 @@ function TaskModal(props) {
       date: startDate,
       description: taskDesc,
       taskTime: newTime.createIime,
-      day_of_week: moment(startDate).format('dddd')
+      day_of_week: moment(startDate).format('dddd'),
+      projectId: projectId
     };
     const updateT = await updateTask(data);
     if (updateT.status === 200) {
@@ -112,9 +136,11 @@ function TaskModal(props) {
       handleClose();
     }
   };
-  const handleClick = (value) => {
-    setProjectId(value.value);
+  const handleChangeProject = (value) => {
+    setProjectId(value.value)
+    setPaName({ value: value.value, label: value.label });
   };
+
   return (
     <Modal
       {...props}
@@ -135,11 +161,9 @@ function TaskModal(props) {
             <Project
               title=""
               {...props}
-              handleClick={handleClick}
+              handleChangeProject={handleChangeProject}
               value={pName != null ? pName : oldValue}
               project={projects}
-              handleSetProjct={handleCheck}
-
             />
             {/* <RepeatTask /> */}
             <button type="button" title="" onClick={() => { handleDelete(item.tb_id) }}>

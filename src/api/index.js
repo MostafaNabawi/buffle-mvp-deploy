@@ -287,6 +287,7 @@ async function updateTask(data) {
       description: data.description,
       startTime: data.taskTime,
       day_of_week: data.day_of_week,
+      projectId: data.projectId,
     }),
   });
   return { status: req.status };
