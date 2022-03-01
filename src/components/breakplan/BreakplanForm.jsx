@@ -127,10 +127,16 @@ function BreackplanFrom({
           if (res.status === 200) {
             break_name_el.innerHTML = newBreak.title;
             break_time_el.innerHTML = newBreak.createIime;
-            addToast(<FormattedMessage id="msg.editSuccess" defaultMessage="Edited Successfully" />, {
-              autoDismiss: true,
-              appearance: "success",
-            });
+            addToast(
+              <FormattedMessage
+                id="msg.editSuccess"
+                defaultMessage="Edited Successfully"
+              />,
+              {
+                autoDismiss: true,
+                appearance: "success",
+              }
+            );
             setNewBreak({ ...newBreak, ["title"]: "", ["createIime"]: "" });
             setShow(false);
             setClose(true);
@@ -389,7 +395,6 @@ function BreackplanFrom({
   };
   // delete break plan
   const handleDelete = async (id) => {
-
     const titleMsg =
       context.getCurrent() === 0 ? "Are you sure?" : "Bist du dir sicher?";
     MySwal.fire({
@@ -418,12 +423,10 @@ function BreackplanFrom({
             if (res.status === 200) {
               getBreakPlan();
               const msg = context.getCurrent() === 0 ? "Deleted" : "gelöscht";
-
-              const msg2 =
-                context.getCurrent() === 0
-                  ? "Your file has been deleted."
-                  : "Gelöscht,Ihre Datei wurde gelöscht.";
-              Swal.fire(msg, msg2, "success");
+              Swal.fire({
+                title: msg,
+                icon: "success",
+              });
               setShow(false);
               setClose(true);
               setDeleting(false);
@@ -441,16 +444,13 @@ function BreackplanFrom({
               setDeleting(false);
             }
           });
-        }
-        catch (err) {
+        } catch (err) {
           setDeleting(false);
         }
-
-
-      };
+      }
     });
-  }
-  
+  };
+
   return (
     <div className={`${style.manCard} ${close ? style.hide : style.show}`}>
       <Card className={`${style.customCard} pb-1`}>
@@ -490,7 +490,7 @@ function BreackplanFrom({
                   {loading ? (
                     <Loader color="black" size={15} />
                   ) : (
-                    <FormattedMessage  defaultMessage="Join" id="btn.join" />
+                    <FormattedMessage defaultMessage="Join" id="btn.join" />
                   )}
                 </Button>
                 <Button
