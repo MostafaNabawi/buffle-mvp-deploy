@@ -450,51 +450,7 @@ function BreackplanFrom({
       };
     });
   }
-  // const handleDelete = async (id) => {
-  //   try {
-  //     setDeleting(true);
-  //     await fetch(`${API_URL}/breakPlan/delete?breakPlanId=${id}`, {
-  //       method: "DELETE",
-  //       credentials: "include",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         "Access-Control-Allow-Credentials": true,
-  //       },
-  //     }).then((res) => {
-  //       if (res.status === 200) {
-  //         getBreakPlan();
-  //         addToast(
-  //           <FormattedMessage
-  //             defaultMessage="Deleted Successfully."
-  //             id="breakPlan.dellte"
-  //           />,
-  //           {
-  //             autoDismiss: true,
-  //             appearance: "success",
-  //           }
-  //         );
-  //         setShow(false);
-  //         setClose(true);
-  //         setDeleting(false);
-  //       } else {
-  //         addToast(
-  //           <FormattedMessage
-  //             defaultMessage="Error Please Try Again."
-  //             id="breakPlan.Error"
-  //           />,
-  //           {
-  //             autoDismiss: false,
-  //             appearance: "error",
-  //           }
-  //         );
-  //         setDeleting(false);
-  //       }
-  //     });
-  //   } catch (err) {
-  //     setDeleting(false);
-  //   }
-  // };
-
+  
   return (
     <div className={`${style.manCard} ${close ? style.hide : style.show}`}>
       <Card className={`${style.customCard} pb-1`}>
@@ -516,13 +472,13 @@ function BreackplanFrom({
         <Card.Body>
           {joinOrSagest ? (
             <>
-              <Card.Title className={style.tilte}>
+              {/* <Card.Title className={style.tilte}>
                 <FormattedMessage
                   defaultMessage="Join Or Set new Sugest"
                   id="breakPlan.join.sagest"
                 />
-              </Card.Title>
-              <Card.Text className="text-center pt-3">
+              </Card.Title> */}
+              <Card.Text className="text-center pt-0">
                 <Button
                   variant="outline-primary"
                   onClick={() => {
@@ -532,9 +488,9 @@ function BreackplanFrom({
                   className={style.customBtn}
                 >
                   {loading ? (
-                    <Loader color="#fff" size={15} />
+                    <Loader color="black" size={15} />
                   ) : (
-                    <FormattedMessage defaultMessage="Join" id="btn.join" />
+                    <FormattedMessage  defaultMessage="Join" id="btn.join" />
                   )}
                 </Button>
                 <Button

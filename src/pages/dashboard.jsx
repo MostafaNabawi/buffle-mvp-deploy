@@ -1439,7 +1439,7 @@ const Dashboard = () => {
                   <Icon fontSize={30} icon="eos-icons:three-dots-loading" />
                 ) : (
                   <FormattedMessage
-                    defaultMessage="Create Vacation"
+                    defaultMessage="Create"
                     id="btn.createVoc"
                   />
                 )}
