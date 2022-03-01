@@ -215,7 +215,7 @@ const StepTwoRegister = () => {
   return (
     <div className={style.StepTowPage}>
       <Row className="p-0 m-0 row mt-5 pt-5">
-        <Col xl="8">
+        <Col xl="12">
           <div className={style.registerCard}>
             <div className={`${style.header}  text-center pt-4`}>
               <div className={style.floatLeft}>2/2</div>

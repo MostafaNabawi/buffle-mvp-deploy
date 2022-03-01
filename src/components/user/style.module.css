@@ -1,42 +1,42 @@
-.headerTitle
-.lableForm
-.formInput
-.forgetPassLink
-.btnGoogle
-.footer,
+.headerTitle .lableForm .formInput .forgetPassLink .btnGoogle .footer,
 .registerLink {
   font-family: DM Sans !important;
   font-style: normal !important;
   font-weight: normal !important;
 }
-.loginPage{
+.StepTowPage {
+  width: 50% !important;
+}
+.loginPage {
   padding-top: 5%;
   height: 100vh;
   background: var(--secondary-color);
 }
-.floatLeft{
-  padding:10px ;
-  padding-left:15px;
+.floatLeft {
+  padding: 10px;
+  padding-left: 15px;
   float: left !important;
 }
 /* .registerPage {
   height: 100%;
 } */
 
-.card,.registerCard,.loginCard{
+.card,
+.registerCard,
+.loginCard {
   background: #ffffff;
   box-shadow: 5px 5px 22px rgba(0, 0, 0, 0.03);
   border-radius: 20px;
   margin: auto;
   padding-bottom: 15px !important;
 }
-.registerCard{
+.registerCard {
   align-items: center !important;
 }
-.iconCheck{
-  text-align:center;
+.iconCheck {
+  text-align: center;
 }
-.iconCheck >svg{
+.iconCheck > svg {
   font-size: 70px !important;
 }
 .headerTitle {
@@ -69,7 +69,7 @@
   box-sizing: border-box !important;
   border-radius: 8px !important;
 }
-.formTextarea{
+.formTextarea {
   font-family: DM Sans !important;
   font-size: 16px !important;
   line-height: 16px !important;
@@ -79,7 +79,8 @@
   box-sizing: border-box !important;
   border-radius: 8px !important;
 }
-.formInput:focus ,.formTextarea:focus {
+.formInput:focus,
+.formTextarea:focus {
   background: #ffffff !important;
   border: 1px solid var(--low-vein-blue) !important;
   box-shadow: none !important;
@@ -89,11 +90,11 @@
   right: 0px;
   cursor: pointer !important;
 }
-.arrowSelect{
+.arrowSelect {
   position: relative;
   float: right;
   margin-top: -31px;
-  margin-right:10px ;
+  margin-right: 10px;
   font-size: small !important;
 }
 .forgetPassLink {
@@ -148,10 +149,10 @@
 .registerLink {
   color: var(--secondary-dark-gray);
 }
-.registerBtnLink{
-  padding-left:20px !important ;
+.registerBtnLink {
+  padding-left: 20px !important ;
   text-decoration: none !important;
 }
-.simpleDiscription{
-font-size:17px
+.simpleDiscription {
+  font-size: 17px;
 }
