@@ -523,7 +523,7 @@ async function updateTaskImportant(id, name, duration, status, checked) {
       name: name,
       moved: true,
       duration: duration,
-      type: 1,
+      type: 0,
       status: status,
       checked: checked,
     }),
