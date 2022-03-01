@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import SpotifyPlayer from "react-spotify-web-playback";
 import SpotifyWebApi from "spotify-web-api-node";
-import { API_URL, SPOTIFY_CLIENT } from "../../config";
+import { SPOTIFY_CLIENT } from "../../config";
 import PulseLoader from "react-spinners/PulseLoader";
-import Login from "./Login";
 
 const Player = ({ code }) => {
   const [play, setPlay] = useState(false);
@@ -24,7 +23,6 @@ const Player = ({ code }) => {
         );
         setData([data.body.items[rndInt - 1].album.artists[0].uri]);
         setLoading(false);
-        setPlay(true);
       });
       // spotifyApi.getAlbum({ offset: 1, limit: 5 }).then((data) => {
       //   console.log("user play list", data.body);

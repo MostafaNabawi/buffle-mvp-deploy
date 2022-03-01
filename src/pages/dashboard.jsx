@@ -448,13 +448,10 @@ const Dashboard = () => {
               setCheckedId([]);
               setTaskData(temp);
               const msg = context.getCurrent() === 0 ? "Deleted" : "gelöscht";
-
-              const msg2 =
-                context.getCurrent() === 0
-                  ? "Your file has been deleted."
-                  : "Gelöscht,Ihre Datei wurde gelöscht.";
-              Swal.fire(msg, msg2, "success");
-
+              Swal.fire({
+                title: msg,
+                icon: "success",
+              });
               handleClose();
               // setTaskReload(false);
             } else {
@@ -1433,7 +1430,7 @@ const Dashboard = () => {
                   <Icon fontSize={30} icon="eos-icons:three-dots-loading" />
                 ) : (
                   <FormattedMessage
-                    defaultMessage="Create Vacation"
+                    defaultMessage="Create"
                     id="btn.createVoc"
                   />
                 )}
