@@ -47,7 +47,7 @@ function ImpotentToDayCard({ handleMove }) {
     const format = getData?.data?.map((i, n) => {
       return {
         icon: <Icon icon="bi:clock-fill" color={`#4922ff`} />,
-        time: i.start_time,
+        time: i.start_hour,
         content: i.name,
         id: i._id,
       };
