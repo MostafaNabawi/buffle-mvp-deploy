@@ -291,7 +291,7 @@
   "time.Minute": "Minuten",
   "time.minute": "Minuten",
   "time.second": "Sekunden",
-  "task.move": "Dieses Element in die Aufgabe verschieben?",
+  "task.move": "Diesen Daypoint in den Taskshop verschieben?",
   "task.setTime": "Legen Sie die Dauer der Aufgabe fest.",
   "task.finished": "Task beendet",
   "task.new": "Neue Task",

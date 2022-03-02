@@ -162,7 +162,7 @@ function ImpotentToDayCard({ handleMove }) {
       <Modal
         show={show}
         handleClose={handleClose}
-        title={<FormattedMessage id="task.move" defaultMessage="Move this item to task?" />}
+        title={<FormattedMessage id="task.move" defaultMessage="Move this item to taskshop?" />}
         subTitle={<FormattedMessage id="task.setTime" defaultMessage="Set duration time to task." />}
         body={
           <Row>
