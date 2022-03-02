@@ -1443,7 +1443,7 @@ const Dashboard = () => {
                 ) : (
                   <FormattedMessage
                     defaultMessage="Create"
-                    id="btn.createVoc"
+                    id="btn.create"
                   />
                 )}
               </Button>
@@ -1480,8 +1480,8 @@ const Dashboard = () => {
                   <BeatLoader />
                 ) : (
                   <FormattedMessage
-                    id="task.create"
-                    defaultMessage="Create New Task"
+                    id="btn.create"
+                    defaultMessage="Create"
                   />
                 )}
               </Button>
