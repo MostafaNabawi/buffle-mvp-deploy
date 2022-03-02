@@ -277,14 +277,14 @@ function HydrationReminderCard() {
             </Col>
             <Col md={12}>
               <TimePicker2
-                label="How long do you work"
+                label={<FormattedMessage id="work.time" defaultMessage="How long do you work?" />}
                 value={howLongTime}
                 setValue={setHowLongTime}
               />
             </Col>
             <Col md={12}>
               <TimePicker2
-                label="Set reminder"
+                label={<FormattedMessage id="work.setReminder" defaultMessage="Set reminder" />}
                 value={reminderTime}
                 setValue={setReminderTime}
               />
