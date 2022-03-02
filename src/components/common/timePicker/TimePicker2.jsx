@@ -64,7 +64,7 @@ function TimePicker({ label, value, setValue }) {
       <Form.Label>{label}</Form.Label>
       <Row>
         <Col>
-          <label><FormattedMessage id="time.hour" defaultMessage="Hour" /></label>
+          <label><FormattedMessage id="time.hour" defaultMessage="Hours" /></label>
           <Form.Control
             type="number"
             placeholder="hr"
@@ -79,7 +79,7 @@ function TimePicker({ label, value, setValue }) {
         </Col>
 
         <Col>
-          <label><FormattedMessage id="time.minute" defaultMessage="Minute" /></label>
+          <label><FormattedMessage id="time.minute" defaultMessage="Minutes" /></label>
           <Form.Control
             type="number"
             placeholder="min"
@@ -93,7 +93,7 @@ function TimePicker({ label, value, setValue }) {
           />
         </Col>
         <Col>
-          <label><FormattedMessage id="time.second" defaultMessage="Second" /></label>
+          <label><FormattedMessage id="time.second" defaultMessage="Seconds" /></label>
           <Form.Control
             type="number"
             placeholder="sec"

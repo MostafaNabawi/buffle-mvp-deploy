@@ -266,8 +266,8 @@ function ScreenFreeReminderCard() {
       });
       setDisplayTime({
         hours: "00",
-        minutes: "01",
-        seconds: "00",
+        minutes: "00",
+        seconds: "20",
       });
     }
   };
@@ -291,7 +291,7 @@ function ScreenFreeReminderCard() {
           action={
             <>
               <i
-                title="Set your screen free Reminder"
+                title="Set your screen free reminder"
                 onClick={() => {
                   // getUpdataData ()
                   setModalShow(true);
@@ -301,11 +301,11 @@ function ScreenFreeReminderCard() {
                 <Icon icon="vaadin:plus" />
               </i>
               <i
-                onClick={() => {
-                  // getUpdataData ()
-                  setModalShow(true);
-                  setSizeModal("md");
-                }}
+              // onClick={() => {
+              //   // getUpdataData ()
+              //   setModalShow(true);
+              //   setSizeModal("md");
+              // }}
               >
                 <Icon icon="vaadin:ellipsis-dots-v" />
               </i>
@@ -371,7 +371,7 @@ function ScreenFreeReminderCard() {
         title={
           <FormattedMessage
             id="app.screenR"
-            defaultMessage="Set your screen free Reminder"
+            defaultMessage="Set your screen free reminder"
           />
         }
         body={
@@ -401,7 +401,7 @@ function ScreenFreeReminderCard() {
                 label={
                   <FormattedMessage
                     id="label.5min"
-                    defaultMessage="In every hours 5 minut"
+                    defaultMessage="5 minutes after every hour"
                   />
                 }
               />
@@ -415,7 +415,8 @@ function ScreenFreeReminderCard() {
                 label={
                   <FormattedMessage
                     id="label.20min"
-                    defaultMessage="In every 20 minut one minut"
+                    defaultMessage="20 seconds after 20 minutes
+"
                   />
                 }
               />
@@ -423,7 +424,7 @@ function ScreenFreeReminderCard() {
             <Tab
               eventKey="custome"
               title={
-                <FormattedMessage defaultMessage="Custome" id="app.custome" />
+                <FormattedMessage defaultMessage="Custom" id="app.custome" />
               }
             >
               <Row>
