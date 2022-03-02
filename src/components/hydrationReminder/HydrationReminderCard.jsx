@@ -188,7 +188,11 @@ function HydrationReminderCard() {
     if (dailyGoal > 0 && timer_1 !== "" && timer_2 !== "") {
       const req = await createWaterHydration(data);
       if (req.status === 200) {
-        addToast("Created Susseccfully", {
+        addToast(
+          <FormattedMessage
+            id="task.success"
+            defaultMessage="Created successfully"
+          />, {
           autoDismiss: true,
           appearance: "success",
         });

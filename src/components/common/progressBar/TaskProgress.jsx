@@ -182,7 +182,13 @@ const Timer = (props) => {
         </Col>
         <Col xl="10" className="pl-0 taskManaterProgress">
           <ProgressBar
-            label={
+            label={parseInt(second) === 0 && parseInt(minute) === 0 && parseInt(hour) === 0 ?
+              <>
+                <span className={percent >= 28 ? "" : "showTimeTask"}>
+                  {task_duration}
+                </span>
+              </>
+              :
               <>
                 <span className={percent >= 28 ? "" : "showTimeTask"}>
                   {`${parseInt(hour) < 10 ? "0" + parseInt(hour) : parseInt(hour)
