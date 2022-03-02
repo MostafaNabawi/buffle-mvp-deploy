@@ -477,12 +477,12 @@ function NewEvent() {
                       defaultMessage="Description"
                     />
                   </th>
-                  <th>
+                  {/* <th>
                     <FormattedMessage
                       id="label.currency"
                       defaultMessage="Currency"
                     />
-                  </th>
+                  </th> */}
                   <th>
                     <FormattedMessage
                       id="label.crDate"
@@ -517,7 +517,7 @@ function NewEvent() {
                         {list.event}
                       </td>
                       <td>{list.description}</td>
-                      <td>{list.currency}</td>
+                      {/* <td>{list.currency}</td> */}
                       <td>{moment(list.created_at).format("MMMM DD, YYYY")}</td>
                       <td>
                         <CopyLinkButton copyValue={list.uuid} />
