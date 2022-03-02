@@ -600,10 +600,45 @@ const Dashboard = () => {
         : Swal.fire("Bitte zum Bearbeiten auswählen");
     }
   };
+  const  daleteBreakPlan =async(arr) =>{
+
+
+    try{
+      const req = await fetch(`${API_URL}/breakPlan/delete-many`, {
+        method: "DElETE",
+        credentials: "include",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": true,
+        },
+        body:JSON.stringify({
+          ids:arr
+        })
+      });
+    }catch(err){
+      console.log(err)
+    }
+  }
   const getBreakPlan = async () => {
     const req = await getaAllBreackPlan();
     if (req.length > 0) {
-      setBreakPlanData(req);
+      const arrDelete = [];
+      const data = [];
+      const d = new Date();
+      const format = d.getHours() + ":" + d.getMinutes();
+      req.map((item) => {
+        if (format > item.time) {
+          arrDelete.push(item._id);
+        } else {
+          data.push(item);
+        }
+      });
+
+      setBreakPlanData(data);
+      if(arrDelete.length >0){
+        daleteBreakPlan(arrDelete)
+      }
     } else {
       setBreakPlanData([]);
     }
@@ -944,8 +979,9 @@ const Dashboard = () => {
               }
               subtitle={
                 <FormattedMessage
-                  defaultMessage={`${opan < 0 ? 0 : opan} open, ${start < 0 ? 0 : start
-                    } start.`}
+                  defaultMessage={`${opan < 0 ? 0 : opan} open, ${
+                    start < 0 ? 0 : start
+                  } start.`}
                   id="app.task.open"
                   values={{
                     num: opan < 0 ? 0 : opan,
@@ -1041,10 +1077,7 @@ const Dashboard = () => {
                       defaultMessage="Click + to add your tasks"
                     />
                     <br />
-                    <FormattedMessage
-                      id="task.or"
-                      defaultMessage="or"
-                    />
+                    <FormattedMessage id="task.or" defaultMessage="or" />
                     <br />
                     <FormattedMessage
                       id="task.daypoint"
@@ -1113,7 +1146,10 @@ const Dashboard = () => {
                   <Skeleton count={6} />
                 ) : breacPlanData.length === 0 ? (
                   <span className="text-center join-suggest-select">
-                    <FormattedMessage id="app.noLunchway" defaultMessage="join, suggest or select a breakplan" />
+                    <FormattedMessage
+                      id="app.noLunchway"
+                      defaultMessage="join, suggest or select a breakplan"
+                    />
                   </span>
                 ) : (
                   breacPlanData &&
@@ -1148,25 +1184,25 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                  id: data._id,
-                                  name: data.name,
-                                  time: data.time,
-                                })
+                                    id: data._id,
+                                    name: data.name,
+                                    time: data.time,
+                                  })
                                 : joinOrNewSuggestForm(
-                                  {
-                                    id: data.user[0]._id,
-                                    breackName: data.name,
-                                  },
-                                  {
-                                    fullName:
-                                      currentUser.first_name +
-                                      " " +
-                                      currentUser.last_name,
-                                    breakName: data.name,
-                                    breakOwnerId: data.user[0]._id,
-                                    breakId: data._id,
-                                  }
-                                );
+                                    {
+                                      id: data.user[0]._id,
+                                      breackName: data.name,
+                                    },
+                                    {
+                                      fullName:
+                                        currentUser.first_name +
+                                        " " +
+                                        currentUser.last_name,
+                                      breakName: data.name,
+                                      breakOwnerId: data.user[0]._id,
+                                      breakId: data._id,
+                                    }
+                                  );
                             }}
                             className="break-type"
                           >
@@ -1178,20 +1214,20 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                  id: data._id,
-                                  name: data.name,
-                                  time: data.time,
-                                })
+                                    id: data._id,
+                                    name: data.name,
+                                    time: data.time,
+                                  })
                                 : timeFormBreakplan({
-                                  time: "",
-                                  recevier: data.user[0]._id,
-                                  fullName:
-                                    currentUser.first_name +
-                                    "" +
-                                    currentUser.last_name,
-                                  breakName: data.name,
-                                  breakId: data._id,
-                                });
+                                    time: "",
+                                    recevier: data.user[0]._id,
+                                    fullName:
+                                      currentUser.first_name +
+                                      "" +
+                                      currentUser.last_name,
+                                    breakName: data.name,
+                                    breakId: data._id,
+                                  });
                             }}
                           >
                             {data.time}
@@ -1428,8 +1464,8 @@ const Dashboard = () => {
               <Button
                 disabled={
                   vacationNameInput === "" ||
-                    vacationDataInput === "" ||
-                    vacationLoader
+                  vacationDataInput === "" ||
+                  vacationLoader
                     ? true
                     : false
                 }
@@ -1501,7 +1537,7 @@ const Dashboard = () => {
           </>
         }
       />
-    </section >
+    </section>
   );
 };
 
