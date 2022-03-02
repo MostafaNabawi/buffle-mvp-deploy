@@ -185,7 +185,7 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
               <span className="important-today-week-date">{moment().day(s.day).format('DD.MM')}</span>
             </div>
             <hr />
-            <DropWrapper onDrop={onDrop} status={s.status} idNumber={s.id} handleDrop={handleDrop}>
+            <DropWrapper onDrop={onDrop} status={s.status} idNumber={s.day} handleDrop={handleDrop}>
               <Col>
                 {showSkleton ? <Skeleton className="important-today-skeleton" count={1} /> : items
                   .filter((i) => i.status === s.status)
