@@ -85,7 +85,7 @@ export default function Felling() {
             onClick={() => setFeel("normal")}
           />
           <Image
-            title="Said"
+            title="Sad"
             className={`feel-icon ${data[0]?.feel === "said" ? style.selectFeel : ""
               }`}
             src="/icone/4.png"
