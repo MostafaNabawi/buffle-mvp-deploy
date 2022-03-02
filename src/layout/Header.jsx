@@ -133,7 +133,6 @@ const Header = () => {
       }).then(async (res) => {
         const { payload } = await res.json();
         if (payload.length > 0) {
-          console.log("notifacation", payload);
           setNotificatiion(payload);
           setCount(0);
           setLoading(false);
