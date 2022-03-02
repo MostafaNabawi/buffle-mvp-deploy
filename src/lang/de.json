@@ -108,10 +108,9 @@
   "label.password": "Passwort",
 
   "btn.close": "Schließen",
-  "btn.crreateNextBreak": "Pause erstellen",
+  "btn.create": "Erstellen",
   "btn.save": "Speichern",
   "btn.cancel": "Abbrechen",
-  "btn.createVoc": "Erstellen",
   "btn.add": "Hinzufügen",
   "btn.join": "Beitreten",
   "btn.createPool": "Pool erstellen",

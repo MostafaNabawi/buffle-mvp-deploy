@@ -52,6 +52,12 @@ const Timer = (props) => {
   const handlePlay = async () => {
     if (!play && !run) {
       taskStartSound.play();
+      taskStartSound.onended = function () {
+        this.currentSrc = '';
+        this.src = "";
+        this.srcObject = '';
+        this.remove();
+      };
       dispatch(setRun(true));
       handleCheckOpenClose(1);
       setPlay(!play);
@@ -60,9 +66,7 @@ const Timer = (props) => {
         "running",
         new Date().toISOString()
       );
-      if (update.status === 200) {
-        console.log("started");
-      }
+
     }
     if (play) {
       dispatch(setRun(false));
@@ -70,9 +74,7 @@ const Timer = (props) => {
       setPlay(!play);
       const sp_time = `${day}:${hour}:${minute}:${second}`;
       const update = await updateTaskSpendTime(_id, sp_time, percent, "stop");
-      if (update.status === 200) {
-        console.log("updated");
-      }
+
     }
   };
   useEffect(() => {
@@ -112,7 +114,6 @@ const Timer = (props) => {
           parseInt(second))) /
       parseInt(duration)
     );
-    console.log('current', currentTime)
     setCurrentTime(
       parseInt(day) * 86400 +
       parseInt(hour) * 3600 +
