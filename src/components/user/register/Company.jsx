@@ -580,9 +580,9 @@ const CompanyRegister = () => {
             <h6 className="text-center mt-2">
               <b><FormattedMessage id="app.note" defaultMessage="Note" />:</b> <FormattedMessage id="reg.time" defaultMessage="You have 2 hours to complete your registration." />
             </h6>
-            <h4 className="text-center mt-2">
+            {/* <h4 className="text-center mt-2">
               <FormattedMessage id="link.clikc" defaultMessage="Click to open" /> <a href="http://gmail.com/"> <FormattedMessage id="label.email" defaultMessage="Email" /></a>
-            </h4>
+            </h4> */}
           </Col>
         </Row>
       )}
