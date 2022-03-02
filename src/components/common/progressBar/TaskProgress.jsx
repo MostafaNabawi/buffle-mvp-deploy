@@ -112,7 +112,6 @@ const Timer = (props) => {
           parseInt(second))) /
       parseInt(duration)
     );
-    console.log('current', currentTime)
     setCurrentTime(
       parseInt(day) * 86400 +
       parseInt(hour) * 3600 +
