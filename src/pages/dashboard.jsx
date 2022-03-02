@@ -1462,8 +1462,8 @@ const Dashboard = () => {
                     onClick={handleNextBreakOperation}
                   >
                     <FormattedMessage
-                      defaultMessage="Create Next Break"
-                      id="btn.crreateNextBreak"
+                      defaultMessage="Create"
+                      id="btn.create"
                     />
                   </Button>
                 )}

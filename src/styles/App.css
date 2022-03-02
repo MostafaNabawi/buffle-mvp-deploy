@@ -1092,3 +1092,6 @@ div.check-box > input {
   color: #a3aed0;
   left: 20px;
 }
+.today-col .col-header > span {
+  color: #ffbb29;
+}
