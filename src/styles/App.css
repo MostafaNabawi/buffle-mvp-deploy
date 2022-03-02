@@ -1099,9 +1099,10 @@ div.check-box > input {
 }
 .no-water-reminder {
   position: absolute;
-  margin-top: 45%;
+  bottom: 44%;
   color: #a3aed0;
-  left: 20px;
+  left: 18px;
+  width: 85% !important;
 }
 .today-col .col-header > span {
   color: #ffbb29;
