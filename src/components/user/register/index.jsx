@@ -10,11 +10,11 @@ const IndexRegister = () => {
         <Col xl="8" className={`text-center pb-3`}>
           <Image src="/favicon.ico" />
         </Col>
-        <Col xl="8">
+        {/* <Col xl="8">
           <h3 className={`text-center pb-2`}>
             <FormattedMessage defaultMessage="Register into Buffle" id="register.dis" />
           </h3>
-          {/* <p className={`${style.simpleDiscription}`}>
+          <p className={`${style.simpleDiscription}`}>
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s, when an unknown printer took a galley of type
@@ -24,8 +24,8 @@ const IndexRegister = () => {
             with the release of Letraset sheets containing Lorem Ipsum passages,
             and more recently with desktop publishing software like Aldus
             PageMaker including versions of Lorem Ipsum.
-          </p> */}
-        </Col>
+          </p>
+        </Col> */}
         <Col xl="8" className={`text-center pt-2`}>
           <strong>
             <FormattedMessage defaultMessage="Register as:" id="register.as" />
@@ -37,7 +37,7 @@ const IndexRegister = () => {
             <FormattedMessage defaultMessage="Student" id="student" />
           </Link>
           <Link className={`${style.registerBtnLink}`} to="freelancer">
-            <FormattedMessage defaultMessage="freelancer" id="Freelancer" />
+            <FormattedMessage defaultMessage="Freelancer" id="Freelancer" />
           </Link>
         </Col>
       </Row>
