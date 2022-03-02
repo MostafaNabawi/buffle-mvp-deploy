@@ -117,12 +117,7 @@ button {
 }
 
 button.btn-primary {
-  background: radial-gradient(
-    100% 682.41% at 4.04% 0%,
-    #8286ff 0%,
-    #4922ff 100%
-  );
-  transition: all 0.5s !important;
+  background: #4922ff;
 }
 .lockScreen {
   padding-top: 20% !important;
@@ -253,22 +248,12 @@ width: 80% !important;
   color: #4922ff !important;
 }
 .button.btn-primary:hover {
-  background: radial-gradient(
-    103.73% 715% at 100% 100%,
-    #8286ff 0%,
-    #4922ff 100%
-  );
+  background: #767afd;
   border: none !important;
-  outline: 0 !important;
 }
 .btn.btn-primary:hover {
-  background: radial-gradient(
-    103.73% 715% at 100% 100%,
-    #8286ff 0%,
-    #4922ff 100%
-  ) !important;
+  background: #767afd;
   border: none !important;
-  outline: 0 !important;
 }
 .reminderNav {
   color: black !important;

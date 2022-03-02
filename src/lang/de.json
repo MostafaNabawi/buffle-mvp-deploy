@@ -18,7 +18,7 @@
   "app.eventCalendar": "Kalender",
   "pass.change": "Passwort ändern",
   "pass.remember": "Erinnern Sie sich an das Passwort?",
-  "app.login.forget": "Haben Sie Ihr Passwort vergessen?",
+  "app.login.forget": "Passwort vergessen?",
   "app.login.checkout": "Erinnere dich an mich",
   "app.login.err.google": "Leider hat das Einloggen über Google nicht geklappt.",
   "login.invalid": "⛔ E-Mail oder Passwort ist ungültig. Bitte überprüfen!",
