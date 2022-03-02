@@ -426,29 +426,7 @@ function NewEvent() {
                 </Form>
               </Col>
               <Col lg={6} className={style.right_site}>
-                <Jumbotron
-                  title={
-                    <FormattedMessage
-                      id="event.goodExample"
-                      defaultMessage="Good examples for Creating a Maney Pool"
-                    />
-                  }
-                  content={
-                    <p>
-                      <FormattedMessage
-                        id="event.exampleText"
-                        defaultMessage="Sed porttitor lectus nibh. Nulla quis lorem ut libero
-                      malesuada feugiat. Proin eget tortor risus. Vivamus magna
-                      justo, lacinia eget consectetur sed, convallis at tellus.
-                      Proin eget tortor risus. Vestibulum ante ipsum primis in
-                      faucibus orci luctus et ultrices posuere cubilia Curae;
-                      Donec velit neque, auctor sit amet aliquam vel,
-                      ullamcorper sit amet ligula. Proin eget tortor risus.
-                      Donec rutrum congue leo eget malesuada."
-                      />
-                    </p>
-                  }
-                />
+
                 <div className={style.invite_form_area}>
                   <Form onSubmit={handleJoin}>
                     <Form.Group controlId="inviteCode">
