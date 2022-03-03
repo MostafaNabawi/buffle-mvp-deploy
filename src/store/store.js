@@ -5,7 +5,7 @@ import taskSlice from "./taskSlice";
 import moneyPoolSlice from "./moneyPoolSlice";
 import projectSlice from "./projectSlice";
 import userSlice from "./userSlice";
-
+import notifySlice from "./notifySlice";
 export default configureStore({
   reducer: {
     hydration: hydrationSclice,
@@ -14,5 +14,6 @@ export default configureStore({
     moneyPool: moneyPoolSlice,
     projectName: projectSlice,
     user: userSlice,
+    notify: notifySlice,
   },
 });

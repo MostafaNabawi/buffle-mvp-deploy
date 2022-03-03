@@ -1,4 +1,4 @@
-import { useEffect, useState, Fragment, useMemo, useContext } from "react";
+import { useEffect, useState, useMemo, useContext } from "react";
 import { Row, Col, Image, Form, Button, NavDropdown } from "react-bootstrap";
 import { Link, useSearchParams } from "react-router-dom";
 import { Icon } from "@iconify/react";
@@ -601,8 +601,6 @@ const Dashboard = () => {
     }
   };
   const daleteBreakPlan = async (arr) => {
-
-
     try {
       const req = await fetch(`${API_URL}/breakPlan/delete-many`, {
         method: "DElETE",
@@ -613,13 +611,13 @@ const Dashboard = () => {
           "Access-Control-Allow-Credentials": true,
         },
         body: JSON.stringify({
-          ids: arr
-        })
+          ids: arr,
+        }),
       });
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
   const getBreakPlan = async () => {
     const req = await getaAllBreackPlan();
     if (req.length > 0) {
@@ -637,7 +635,7 @@ const Dashboard = () => {
 
       setBreakPlanData(data);
       if (arrDelete.length > 0) {
-        daleteBreakPlan(arrDelete)
+        daleteBreakPlan(arrDelete);
       }
     } else {
       setBreakPlanData([]);
@@ -979,8 +977,9 @@ const Dashboard = () => {
               }
               subtitle={
                 <FormattedMessage
-                  defaultMessage={`${opan < 0 ? 0 : opan} open, ${start < 0 ? 0 : start
-                    } start.`}
+                  defaultMessage={`${opan < 0 ? 0 : opan} open, ${
+                    start < 0 ? 0 : start
+                  } start.`}
                   id="app.task.open"
                   values={{
                     num: opan < 0 ? 0 : opan,
@@ -1183,25 +1182,25 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                  id: data._id,
-                                  name: data.name,
-                                  time: data.time,
-                                })
+                                    id: data._id,
+                                    name: data.name,
+                                    time: data.time,
+                                  })
                                 : joinOrNewSuggestForm(
-                                  {
-                                    id: data.user[0]._id,
-                                    breackName: data.name,
-                                  },
-                                  {
-                                    fullName:
-                                      currentUser.first_name +
-                                      " " +
-                                      currentUser.last_name,
-                                    breakName: data.name,
-                                    breakOwnerId: data.user[0]._id,
-                                    breakId: data._id,
-                                  }
-                                );
+                                    {
+                                      id: data.user[0]._id,
+                                      breackName: data.name,
+                                    },
+                                    {
+                                      fullName:
+                                        currentUser.first_name +
+                                        " " +
+                                        currentUser.last_name,
+                                      breakName: data.name,
+                                      breakOwnerId: data.user[0]._id,
+                                      breakId: data._id,
+                                    }
+                                  );
                             }}
                             className="break-type"
                           >
@@ -1213,20 +1212,20 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                  id: data._id,
-                                  name: data.name,
-                                  time: data.time,
-                                })
+                                    id: data._id,
+                                    name: data.name,
+                                    time: data.time,
+                                  })
                                 : timeFormBreakplan({
-                                  time: "",
-                                  recevier: data.user[0]._id,
-                                  fullName:
-                                    currentUser.first_name +
-                                    "" +
-                                    currentUser.last_name,
-                                  breakName: data.name,
-                                  breakId: data._id,
-                                });
+                                    time: "",
+                                    recevier: data.user[0]._id,
+                                    fullName:
+                                      currentUser.first_name +
+                                      "" +
+                                      currentUser.last_name,
+                                    breakName: data.name,
+                                    breakId: data._id,
+                                  });
                             }}
                           >
                             {data.time}
@@ -1463,8 +1462,8 @@ const Dashboard = () => {
               <Button
                 disabled={
                   vacationNameInput === "" ||
-                    vacationDataInput === "" ||
-                    vacationLoader
+                  vacationDataInput === "" ||
+                  vacationLoader
                     ? true
                     : false
                 }
@@ -1476,10 +1475,7 @@ const Dashboard = () => {
                 {vacationLoader ? (
                   <Icon fontSize={30} icon="eos-icons:three-dots-loading" />
                 ) : (
-                  <FormattedMessage
-                    defaultMessage="Create"
-                    id="btn.create"
-                  />
+                  <FormattedMessage defaultMessage="Create" id="btn.create" />
                 )}
               </Button>
             )}
@@ -1496,10 +1492,7 @@ const Dashboard = () => {
                     type="button"
                     onClick={handleNextBreakOperation}
                   >
-                    <FormattedMessage
-                      defaultMessage="Create"
-                      id="btn.create"
-                    />
+                    <FormattedMessage defaultMessage="Create" id="btn.create" />
                   </Button>
                 )}
               </>
@@ -1514,10 +1507,7 @@ const Dashboard = () => {
                 {loading === true ? (
                   <BeatLoader />
                 ) : (
-                  <FormattedMessage
-                    id="btn.create"
-                    defaultMessage="Create"
-                  />
+                  <FormattedMessage id="btn.create" defaultMessage="Create" />
                 )}
               </Button>
             )}
