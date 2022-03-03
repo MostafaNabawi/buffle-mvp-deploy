@@ -224,8 +224,7 @@ width: 80% !important;
 } */
 .register-container {
   margin: auto !important;
-  height: 100vh !important;
-  margin: auto;
+  min-height: 100vh !important;
 }
 .taskManagerTime > div {
   border: none !important;
@@ -1031,7 +1030,7 @@ div.check-box > input {
 }
 .register_img {
   width: 100% !important;
-  height: 100vh !important;
+  min-height: 100vh !important;
   object-fit: cover !important;
 }
 

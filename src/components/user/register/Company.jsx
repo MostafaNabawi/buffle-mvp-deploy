@@ -130,7 +130,7 @@ const CompanyRegister = () => {
               <div className={style.body}>
                 <Form>
                   <Row>
-                    <Col xl="3">
+                    <Col xl="6">
                       <Form.Group className="mb-4" controlId="formBasicEmail">
                         <Form.Label className={style.lableForm}>
                           <FormattedMessage
@@ -160,7 +160,7 @@ const CompanyRegister = () => {
                         </FormattedMessage>
                       </Form.Group>
                     </Col>
-                    <Col xl="3">
+                    <Col xl="6">
                       <Form.Group className="mb-4" controlId="formBasicEmail">
                         <Form.Label className={style.lableForm}>
                           <FormattedMessage
@@ -241,7 +241,7 @@ const CompanyRegister = () => {
                         </FormattedMessage>
                       </Form.Group>
                     </Col>
-                    <Col xl="3">
+                    <Col xl="6">
                       <Form.Group className="mb-4">
                         <Form.Label className={style.lableForm}>
                           <FormattedMessage
@@ -276,7 +276,7 @@ const CompanyRegister = () => {
                         />
                       </Form.Group>
                     </Col>
-                    <Col xl="3">
+                    <Col xl="6">
                       <Form.Group className="mb-4">
                         <Form.Label className={style.lableForm}>
                           <FormattedMessage
@@ -554,16 +554,17 @@ const CompanyRegister = () => {
                   </Row>
                 </Form>
               </div>
+              <div className={style.footer}>
+                <FormattedMessage
+                  defaultMessage="Already have an account?"
+                  id="haveAccount"
+                />
+                <Link className={style.registerLink} to="/">
+                  <FormattedMessage defaultMessage="Login now" id="loginNow" />
+                </Link>
+              </div>
             </div>
-            <div className={style.footer}>
-              <FormattedMessage
-                defaultMessage="Already have an account?"
-                id="haveAccount"
-              />
-              <Link className={style.registerLink} to="/">
-                <FormattedMessage defaultMessage="Login now" id="loginNow" />
-              </Link>
-            </div>
+
           </Col>
         </Row>
       ) : (

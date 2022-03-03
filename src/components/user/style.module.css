@@ -49,7 +49,7 @@
   color: var(--secondary-dark-gray);
 }
 .body {
-  padding: 15px 25px;
+  padding: 0 25px;
 }
 .lableForm {
   height: 12px;
@@ -140,12 +140,14 @@
 .footer,
 .registerLink {
   padding-top: 15px;
+  padding-bottom: 20px;
   text-align: center;
   height: 18px;
   font-size: 14px;
   line-height: 18px;
   color: var(--low-vein-blue);
 }
+
 .registerLink {
   color: var(--secondary-dark-gray);
 }
