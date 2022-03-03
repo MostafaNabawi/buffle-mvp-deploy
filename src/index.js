@@ -8,13 +8,14 @@ import { ToastProvider } from "react-toast-notifications";
 import store from "./store/store";
 import { Provider } from "react-redux";
 import Wrapper from "./layout/Wrapper";
-
+import Sound from "./components/sound";
 ReactDOM.render(
   <Provider store={store}>
     <Wrapper>
       <ToastProvider>
         <BrowserRouter>
           <App />
+          <Sound />
         </BrowserRouter>
       </ToastProvider>
     </Wrapper>

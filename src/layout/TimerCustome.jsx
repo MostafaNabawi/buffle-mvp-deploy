@@ -3,22 +3,18 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setNotificatiionTimer, setTimeOutID } from "../store/hydrationSclice";
+import { setToggle } from "../store/notifySlice";
 import { API_URL } from "../config/index";
-import boop from "./water.mp3";
-import UIFx from "uifx";
 
 function TimerCustome({ count, setCount }) {
   const dispatch = useDispatch();
-  const beep = new UIFx(boop, {
-    volume: 0.5,
-  });
   const sendNotific = () => {
     if (render && !isMute && notificTimer > 0) {
       fetch(`${API_URL}/user/water-notify`, {
         method: "POST",
         credentials: "include",
       });
-      beep.play();
+      dispatch(setToggle({ type: 2, play: true }));
       setCount(count + 1);
     }
   };

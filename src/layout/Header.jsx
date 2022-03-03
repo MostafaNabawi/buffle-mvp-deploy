@@ -30,30 +30,18 @@ import {
   setUpdating,
 } from "../store/screenReminderSclice";
 import Swal from "sweetalert2";
-import { setAlert, setPassAlert, setRun } from "../store/taskSlice";
-import boop from "./boop.mp3";
-import taskSound from "./taskdone.mp3";
-import breakPlanSound from "./break.mp3";
-import UIFx from "uifx";
+import { setPassAlert, setRun, setAlert } from "../store/taskSlice";
 import TimerCustome from "./TimerCustome";
 import { FormattedMessage } from "react-intl";
 import RenderImage from "../components/cutomeImage/RenderImage";
 import DynamicInspiration from "../components/inspiration/DynamicInspiration";
 import { Context } from "./Wrapper";
+import { setToggle } from "../store/notifySlice";
 const Header = () => {
-  const { alert, passAaler } = useSelector((state) => state.task);
+  const { passAaler, alert } = useSelector((state) => state.task);
   //
   const { du_time, dis_time, updating } = useSelector((state) => state.screen);
-  const beep = new UIFx(boop, {
-    volume: 0.5,
-  });
-  const taskBeeb = new UIFx(taskSound, {
-    volume: 0.5,
-  })
 
-  const breakPlan = new UIFx(breakPlanSound, {
-    volume: 0.5,
-  })
   const { addToast } = useToasts();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -152,8 +140,7 @@ const Header = () => {
     }).then(async (res) => {
       const { payload } = await res.json();
       if (payload > 0) {
-        // emitSound().play();
-        beep.play();
+        dispatch(setToggle({ type: 1, play: true }));
       }
       setCount(payload);
     });
@@ -352,7 +339,6 @@ const Header = () => {
       if (String(webData) === String(checkup)) {
         //notification related to this user
         setCount(count + 1);
-        breakPlan.play();
         setWebData("");
       }
     }
@@ -443,18 +429,16 @@ const Header = () => {
 
   useEffect(() => {
     if (alert) {
-      taskBeeb.play();
       dispatch(setAlert(false));
       setCount(count + 1);
       dispatch(setRun(false));
     }
     if (passAaler) {
-      taskBeeb.play();
+      dispatch(setToggle({ type: 3, play: true }));
       dispatch(setPassAlert(false));
       setCount(count + 1);
     }
   }, [alert, passAaler]);
-
   // useEffect(() => {
   //   if (lang !== "") {
   //     context.selectLanguage(lang);
@@ -492,10 +476,10 @@ const Header = () => {
               localStorage.setItem(
                 "loackTime",
                 timeLock.getHours() +
-                ":" +
-                timeLock.getMinutes() +
-                ":" +
-                timeLock.getSeconds()
+                  ":" +
+                  timeLock.getMinutes() +
+                  ":" +
+                  timeLock.getSeconds()
               );
             }
           }}
@@ -507,8 +491,9 @@ const Header = () => {
 
       <div
         id="lockScreenHide"
-        className={`${localStorage.getItem("screen") === "on" ? "lockScreen" : ""
-          } text-center ${!start ? "" : "lockScreenHide"}`}
+        className={`${
+          localStorage.getItem("screen") === "on" ? "lockScreen" : ""
+        } text-center ${!start ? "" : "lockScreenHide"}`}
       >
         {localStorage.getItem("screen") === "on" && !start && (
           <div className="screenDiv">
@@ -530,9 +515,9 @@ const Header = () => {
                 }
                 handleDisplayTime(dis_time);
               }}
-            // renderer={() => {
-            //   return ""
-            // }}
+              // renderer={() => {
+              //   return ""
+              // }}
             />
           </div>
         )}

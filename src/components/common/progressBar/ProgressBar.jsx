@@ -7,8 +7,8 @@ import { getTotalSeconds } from "../../../config/utils";
 import { deleteNextBreak } from "../../../api";
 import { useToasts } from "react-toast-notifications";
 import { FormattedMessage } from "react-intl";
-import UIFx from "uifx";
-import nextBreak from "./nextBreak.mp3";
+import { setToggle } from "../../../store/notifySlice";
+import { useDispatch } from "react-redux";
 
 const PreogressBar = ({ range }) => {
   const [total, setTotal] = useState(range / 1000);
@@ -16,10 +16,8 @@ const PreogressBar = ({ range }) => {
   const [data, setData] = useState(0);
   const [percentUI, setPercentUI] = useState(0);
   const [refresh, setRefresh] = useState(false);
-  const nextBreakSound = new UIFx(nextBreak, {
-    volume: 0.5,
-  });
   const { addToast } = useToasts();
+  const dispatch = useDispatch();
   // actions
   const handlePlay = () => {
     if (data > 0 && play) {
@@ -114,7 +112,7 @@ const PreogressBar = ({ range }) => {
                         autoDismiss: 12000,
                       }
                     );
-                    nextBreakSound.play();
+                    dispatch(setToggle({ type: 5, play: true }));
                     await deleteNextBreak();
                   }}
                 />

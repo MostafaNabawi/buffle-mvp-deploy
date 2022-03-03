@@ -10,16 +10,12 @@ import {
   updateTaskWhenCompleted,
   createNotification,
 } from "../../../api";
-import UIFx from "uifx";
-import taskStart from './taskstart.mp3'
 import { useToasts } from "react-toast-notifications";
 import { useDispatch, useSelector } from "react-redux";
 import { setRun, setAlert } from "../../../store/taskSlice";
+import { setToggle } from "../../../store/notifySlice";
 import { FormattedMessage } from "react-intl";
 const Timer = (props) => {
-  const taskStartSound = new UIFx(taskStart, {
-    volume: 0.5,
-  });
   const { addToast } = useToasts();
   const dispatch = useDispatch();
   const { run } = useSelector((state) => state.task);
@@ -51,13 +47,8 @@ const Timer = (props) => {
   const data = JSON.parse(localStorage.getItem("user"));
   const handlePlay = async () => {
     if (!play && !run) {
-      taskStartSound.play();
-      taskStartSound.onended = function () {
-        this.currentSrc = '';
-        this.src = "";
-        this.srcObject = '';
-        this.remove();
-      };
+      dispatch(setToggle({ type: 4, play: true }));
+
       dispatch(setRun(true));
       handleCheckOpenClose(1);
       setPlay(!play);
@@ -66,7 +57,6 @@ const Timer = (props) => {
         "running",
         new Date().toISOString()
       );
-
     }
     if (play) {
       dispatch(setRun(false));
@@ -74,7 +64,6 @@ const Timer = (props) => {
       setPlay(!play);
       const sp_time = `${day}:${hour}:${minute}:${second}`;
       const update = await updateTaskSpendTime(_id, sp_time, percent, "stop");
-
     }
   };
   useEffect(() => {
@@ -112,13 +101,13 @@ const Timer = (props) => {
           parseInt(hour) * 3600 +
           parseInt(minute) * 60 +
           parseInt(second))) /
-      parseInt(duration)
+        parseInt(duration)
     );
     setCurrentTime(
       parseInt(day) * 86400 +
-      parseInt(hour) * 3600 +
-      parseInt(minute) * 60 +
-      parseInt(second)
+        parseInt(hour) * 3600 +
+        parseInt(minute) * 60 +
+        parseInt(second)
     );
     if (currentTime === duration) {
       setPlay(!play);
@@ -138,6 +127,8 @@ const Timer = (props) => {
             }
           );
           dispatch(setAlert(true));
+          dispatch(setToggle({ type: 3, play: true }));
+
           // clearInterval(intervalId);
           handleComplet(_id);
         }
@@ -165,7 +156,6 @@ const Timer = (props) => {
     setMinute(time[2]);
     setHour(time[1]);
     setDay(time[0]);
-
   }, [task_percent]);
 
   return (
@@ -182,25 +172,34 @@ const Timer = (props) => {
         </Col>
         <Col xl="10" className="pl-0 taskManaterProgress">
           <ProgressBar
-            label={parseInt(second) === 0 && parseInt(minute) === 0 && parseInt(hour) === 0 ?
-              <>
-                <span className={percent >= 28 ? "" : "showTimeTask"}>
-                  {task_duration}
-                </span>
-              </>
-              :
-              <>
-                <span className={percent >= 28 ? "" : "showTimeTask"}>
-                  {`${parseInt(hour) < 10 ? "0" + parseInt(hour) : parseInt(hour)
-                    }:${parseInt(minute) < 10
-                      ? "0" + parseInt(minute)
-                      : parseInt(minute)
-                    }:${parseInt(second) < 10
-                      ? "0" + parseInt(second)
-                      : parseInt(second)
+            label={
+              parseInt(second) === 0 &&
+              parseInt(minute) === 0 &&
+              parseInt(hour) === 0 ? (
+                <>
+                  <span className={percent >= 28 ? "" : "showTimeTask"}>
+                    {task_duration}
+                  </span>
+                </>
+              ) : (
+                <>
+                  <span className={percent >= 28 ? "" : "showTimeTask"}>
+                    {`${
+                      parseInt(hour) < 10
+                        ? "0" + parseInt(hour)
+                        : parseInt(hour)
+                    }:${
+                      parseInt(minute) < 10
+                        ? "0" + parseInt(minute)
+                        : parseInt(minute)
+                    }:${
+                      parseInt(second) < 10
+                        ? "0" + parseInt(second)
+                        : parseInt(second)
                     }`}
-                </span>
-              </>
+                  </span>
+                </>
+              )
             }
             now={status === "completed" ? 100 : percent}
             className={`${style.progress}`}
