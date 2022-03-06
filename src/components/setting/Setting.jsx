@@ -313,7 +313,7 @@ const Setting = () => {
                   onClick={() => {
                     handleRegeneration();
                   }}
-                  className={style.btn}
+                  className={`${style.btn} btn-primary`}
                 >
                   {loadingRege ? <PulseLoader size={10} /> : " Regeneration"}
                 </Button>

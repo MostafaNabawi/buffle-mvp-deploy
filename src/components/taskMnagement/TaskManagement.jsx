@@ -82,7 +82,7 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
     if (event.key === "Enter") {
       const createT = await createTask(inputTask, 0, 0, false, 'stop');
       if (createT.status === 200) {
-        // addToast("Created Susseccfully", {
+        // addToast("Created Successfully", {
         //   autoDismiss: true,
         //   appearance: "success",
         // });
@@ -182,10 +182,10 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
           <Col key={s.status} className={`col-wrapper secondary-dark ${moment(new Date()).format('dddd') === s.status ? 'today-col' : ''}`}>
             <div className={"col-header"}>
               <span ><FormattedMessage defaultMessage={s.status} id={`day.${s.status}`} /></span>
-              <span className="important-today-week-date">{moment().day(s.day).format('DD.MM')}</span>
+              <span className="important-today-week-date">{moment().day(s.day - 6).format('DD.MM')}</span>
             </div>
             <hr />
-            <DropWrapper onDrop={onDrop} status={s.status} idNumber={s.day} handleDrop={handleDrop}>
+            <DropWrapper onDrop={onDrop} status={s.status} idNumber={s.day - 6} handleDrop={handleDrop}>
               <Col>
                 {showSkleton ? <Skeleton className="important-today-skeleton" count={1} /> : items
                   .filter((i) => i.status === s.status)
