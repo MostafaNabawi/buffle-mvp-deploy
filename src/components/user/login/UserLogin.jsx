@@ -532,12 +532,12 @@ const UserLogin = () => {
           <div className={style.footer}>
             <FormattedMessage
               id="app.noAccount"
-              defaultMessage="If you don't have an account yet,"
+              defaultMessage="If you don't have any account yet, "
             />
             <Link className={style.registerLink} to="/register">
               <FormattedMessage
                 id="app.signupHere"
-                defaultMessage="sign up."
+                defaultMessage="sign up here."
               />
             </Link>
           </div>
