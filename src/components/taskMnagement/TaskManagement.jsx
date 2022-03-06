@@ -82,7 +82,7 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
     if (event.key === "Enter") {
       const createT = await createTask(inputTask, 0, 0, false, 'stop');
       if (createT.status === 200) {
-        // addToast("Created Susseccfully", {
+        // addToast("Created Successfully", {
         //   autoDismiss: true,
         //   appearance: "success",
         // });
