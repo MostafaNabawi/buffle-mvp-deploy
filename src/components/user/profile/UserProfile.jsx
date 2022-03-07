@@ -58,7 +58,7 @@ const UserProfile = () => {
       if (file) {
         handleHeaderRefresh();
       }
-    } catch { }
+    } catch {}
   };
   const getUser = () => {
     try {
@@ -151,13 +151,16 @@ const UserProfile = () => {
           }),
         });
         if (res.status !== 200) {
-          addToast(<FormattedMessage
-            defaultMessage="Error Please Try Again."
-            id="breakPlan.Error"
-          />, {
-            appearance: "warning",
-            autoDismiss: 4000,
-          });
+          addToast(
+            <FormattedMessage
+              defaultMessage="Error Please Try Again."
+              id="breakPlan.Error"
+            />,
+            {
+              appearance: "warning",
+              autoDismiss: 4000,
+            }
+          );
           setLoading(false);
           return false;
         }
@@ -206,13 +209,16 @@ const UserProfile = () => {
             }),
           });
           if (res.status !== 200) {
-            addToast(<FormattedMessage
-              defaultMessage="Error Please Try Again."
-              id="breakPlan.Error"
-            />, {
-              appearance: "warning",
-              autoDismiss: 4000,
-            });
+            addToast(
+              <FormattedMessage
+                defaultMessage="Error Please Try Again."
+                id="breakPlan.Error"
+              />,
+              {
+                appearance: "warning",
+                autoDismiss: 4000,
+              }
+            );
             setLoading(false);
             return false;
           }
@@ -252,10 +258,16 @@ const UserProfile = () => {
         setLoading(false);
       }
     } else {
-      addToast(<FormattedMessage id="app.requiredAll" defaultMessage="Please fill all required field (*)." />, {
-        appearance: "warning",
-        autoDismiss: 4000,
-      });
+      addToast(
+        <FormattedMessage
+          id="app.requiredAll"
+          defaultMessage="Please fill all required field (*)."
+        />,
+        {
+          appearance: "warning",
+          autoDismiss: 4000,
+        }
+      );
       return "";
     }
   };
@@ -283,20 +295,29 @@ const UserProfile = () => {
         });
         setOptions([...options, ...formatted]);
         setAddLoading(false);
-        addToast(<FormattedMessage id="tag.added" defaultMessage="Tag added to list" />, {
-          appearance: "success",
-          autoDismiss: 5000,
-        });
+        addToast(
+          <FormattedMessage
+            id="tag.added"
+            defaultMessage="Tag added to list"
+          />,
+          {
+            appearance: "success",
+            autoDismiss: 5000,
+          }
+        );
         handleClose();
       } else {
         setAddLoading(false);
-        addToast(<FormattedMessage
-          defaultMessage="Error Please Try Again."
-          id="breakPlan.Error"
-        />, {
-          appearance: "error",
-          autoDismiss: 5000,
-        });
+        addToast(
+          <FormattedMessage
+            defaultMessage="Error Please Try Again."
+            id="breakPlan.Error"
+          />,
+          {
+            appearance: "error",
+            autoDismiss: 5000,
+          }
+        );
         handleClose();
       }
     });
@@ -357,8 +378,8 @@ const UserProfile = () => {
     }
   };
   useEffect(() => {
-    const element = document.getElementById("header-img").getAttribute("src");
-    if (element.includes("blob")) {
+    const element = document.getElementById("header-img")?.getAttribute("src");
+    if (element?.includes("blob")) {
       preview.current.src = element;
     }
     getUser();
