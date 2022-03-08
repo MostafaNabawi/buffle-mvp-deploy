@@ -54,9 +54,15 @@ const CompanyRegister = () => {
     });
     const res = await req.json();
     if (res.payload) {
-      addToast(<FormattedMessage id="email.token" defaultMessage="Email Already Taken." />, {
-        appearance: "error",
-      });
+      addToast(
+        <FormattedMessage
+          id="email.token"
+          defaultMessage="Email Already Taken."
+        />,
+        {
+          appearance: "error",
+        }
+      );
       setEmailAlreadyExist(true);
     } else {
       setEmailAlreadyExist(false);
@@ -73,24 +79,42 @@ const CompanyRegister = () => {
       }
     }
     if (errors > 0) {
-      addToast(<FormattedMessage id="fillAllForm" defaultMessage="Please Fill all Form." />, {
-        appearance: "warning",
-        autoDismiss: 4000,
-      });
+      addToast(
+        <FormattedMessage
+          id="fillAllForm"
+          defaultMessage="Please Fill all Form."
+        />,
+        {
+          appearance: "warning",
+          autoDismiss: 4000,
+        }
+      );
       return;
     }
     // emailExist Error
     if (emailAlreadyExist) {
-      addToast(<FormattedMessage id="email.token" defaultMessage="Email Already Taken." />, {
-        appearance: "error",
-      });
+      addToast(
+        <FormattedMessage
+          id="email.token"
+          defaultMessage="Email Already Taken."
+        />,
+        {
+          appearance: "error",
+        }
+      );
       return;
     }
     if (!checkEmail(inputs.email)) {
-      addToast(<FormattedMessage id="email.invalid" defaultMessage="Invalid email address." />, {
-        appearance: "warning",
-        autoDismiss: 4000,
-      });
+      addToast(
+        <FormattedMessage
+          id="email.invalid"
+          defaultMessage="Invalid email address."
+        />,
+        {
+          appearance: "warning",
+          autoDismiss: 4000,
+        }
+      );
       return;
     }
     setLoading(true);
@@ -107,10 +131,16 @@ const CompanyRegister = () => {
       setSendEmail(true);
     } else {
       setLoading(false);
-      addToast(<FormattedMessage id="company.registerError" defaultMessage="Error While Registring." />, {
-        appearance: "error",
-        autoDismiss: 8000,
-      });
+      addToast(
+        <FormattedMessage
+          id="company.registerError"
+          defaultMessage="Error While Registring."
+        />,
+        {
+          appearance: "error",
+          autoDismiss: 8000,
+        }
+      );
     }
   };
 
@@ -124,7 +154,10 @@ const CompanyRegister = () => {
                 <div className={style.floatLeft}>1/2</div>
                 <Image src="/favicon.ico" />
                 <div className={`${style.headerTitle} mt-3`}>
-                  <FormattedMessage id="personalAndCompanyInfo" defaultMessage="Enter your personal and campany info" />
+                  <FormattedMessage
+                    id="personalAndCompanyInfo"
+                    defaultMessage="Enter your personal and campany info"
+                  />
                 </div>
               </div>
               <div className={style.body}>
@@ -141,7 +174,8 @@ const CompanyRegister = () => {
                         </Form.Label>
                         <FormattedMessage
                           defaultMessage="First Name"
-                          id="fname">
+                          id="fname"
+                        >
                           {(msg) => (
                             <Form.Control
                               className={style.formInput}
@@ -169,10 +203,7 @@ const CompanyRegister = () => {
                           />{" "}
                           *
                         </Form.Label>
-                        <FormattedMessage
-                          defaultMessage="Last Name"
-                          id="lname"
-                        >
+                        <FormattedMessage defaultMessage="Last Name" id="lname">
                           {(msg) => (
                             <Form.Control
                               className={style.formInput}
@@ -221,8 +252,10 @@ const CompanyRegister = () => {
                           />{" "}
                           *
                         </Form.Label>
-                        <FormattedMessage defaultMessage="Company Name"
-                          id="cname">
+                        <FormattedMessage
+                          defaultMessage="Company Name"
+                          id="cname"
+                        >
                           {(msg) => (
                             <Form.Control
                               className={style.formInput}
@@ -285,8 +318,7 @@ const CompanyRegister = () => {
                           />{" "}
                           *
                         </Form.Label>
-                        <FormattedMessage defaultMessage="Tax ID"
-                          id="taxid">
+                        <FormattedMessage defaultMessage="Tax ID" id="taxid">
                           {(msg) => (
                             <Form.Control
                               className={style.formInput}
@@ -316,7 +348,8 @@ const CompanyRegister = () => {
                         </Form.Label>
                         <FormattedMessage
                           defaultMessage="Web Site"
-                          id="website">
+                          id="website"
+                        >
                           {(msg) => (
                             <Form.Control
                               className={style.formInput}
@@ -343,8 +376,10 @@ const CompanyRegister = () => {
                             id="headOffice"
                           />{" "}
                         </Form.Label>
-                        <FormattedMessage defaultMessage="Head Office"
-                          id="headOffice">
+                        <FormattedMessage
+                          defaultMessage="Head Office"
+                          id="headOffice"
+                        >
                           {(msg) => (
                             <Form.Control
                               className={style.formInput}
@@ -392,11 +427,18 @@ const CompanyRegister = () => {
                             {(msg) => <option value="">{msg}</option>}
                           </FormattedMessage>
                           {allCountry &&
-                            allCountry.map((country) => (
-                              <option key={country.name} value={country.code}>
-                                {country.name}
-                              </option>
-                            ))}
+                            allCountry.map((country) => {
+                              if (country.name !== "NULL") {
+                                return (
+                                  <option
+                                    key={country.name}
+                                    value={country.code}
+                                  >
+                                    {country.name}
+                                  </option>
+                                );
+                              }
+                            })}
                         </Form.Select>
                         <Icon
                           className={style.arrowSelect}
@@ -481,8 +523,7 @@ const CompanyRegister = () => {
                           />{" "}
                           *
                         </Form.Label>
-                        <FormattedMessage defaultMessage="Street"
-                          id="street">
+                        <FormattedMessage defaultMessage="Street" id="street">
                           {(msg) => (
                             <Form.Control
                               className={style.formInput}
@@ -510,8 +551,10 @@ const CompanyRegister = () => {
                           />{" "}
                           *
                         </Form.Label>
-                        <FormattedMessage defaultMessage="Postal code"
-                          id="postal">
+                        <FormattedMessage
+                          defaultMessage="Postal code"
+                          id="postal"
+                        >
                           {(msg) => (
                             <Form.Control
                               className={style.formInput}
@@ -564,7 +607,6 @@ const CompanyRegister = () => {
                 </Link>
               </div>
             </div>
-
           </Col>
         </Row>
       ) : (
@@ -574,13 +616,25 @@ const CompanyRegister = () => {
               <Icon icon="emojione:white-heavy-check-mark" />
             </div>
             <h2 className="text-center mt-2">
-              <FormattedMessage id="reg.sentEmail" defaultMessage="Message sent successfully to your email" />
+              <FormattedMessage
+                id="reg.sentEmail"
+                defaultMessage="Message sent successfully to your email"
+              />
             </h2>
             <h2 className="text-center mt-2">
-              <FormattedMessage id="reg.continue" defaultMessage="Please check your email and continue from there" />
+              <FormattedMessage
+                id="reg.continue"
+                defaultMessage="Please check your email and continue from there"
+              />
             </h2>
             <h6 className="text-center mt-2">
-              <b><FormattedMessage id="app.note" defaultMessage="Note" />:</b> <FormattedMessage id="reg.time" defaultMessage="You have 2 hours to complete your registration." />
+              <b>
+                <FormattedMessage id="app.note" defaultMessage="Note" />:
+              </b>{" "}
+              <FormattedMessage
+                id="reg.time"
+                defaultMessage="You have 2 hours to complete your registration."
+              />
             </h6>
             {/* <h4 className="text-center mt-2">
               <FormattedMessage id="link.clikc" defaultMessage="Click to open" /> <a href="http://gmail.com/"> <FormattedMessage id="label.email" defaultMessage="Email" /></a>
