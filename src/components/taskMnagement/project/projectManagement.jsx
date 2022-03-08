@@ -88,6 +88,7 @@ const ProjectManagement = ({
         date: i.date,
         p_id: i.projectId,
         start_time: i.start_time,
+        start_hour: i.start_hour,
         completed: i.status,
         day_of_week: i.day_of_week,
         color: i.project_tasks[0]?.color,
