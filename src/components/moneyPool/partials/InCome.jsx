@@ -36,7 +36,11 @@ function InCome(props) {
     };
     const req = await createIncome(data);
     if (req.status === 200) {
-      addToast("Created Susseccfully", {
+      addToast(
+        <FormattedMessage
+          id="task.success"
+          defaultMessage="Created successfully"
+        />, {
         autoDismiss: true,
         appearance: "success",
       });

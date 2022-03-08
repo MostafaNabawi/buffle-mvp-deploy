@@ -358,16 +358,17 @@ const FreelancerRegister = () => {
                   </Button>
                 </Form>
               </div>
+              <div className={style.footer}>
+                <FormattedMessage
+                  defaultMessage="Already have an account?"
+                  id="haveAccount"
+                />
+                <Link className={style.registerLink} to="/">
+                  <FormattedMessage defaultMessage="Login now" id="loginNow" />
+                </Link>
+              </div>
             </div>
-            <div className={style.footer}>
-              <FormattedMessage
-                defaultMessage="Already have an account?"
-                id="haveAccount"
-              />
-              <Link className={style.registerLink} to="/">
-                <FormattedMessage defaultMessage="Login now" id="loginNow" />
-              </Link>
-            </div>
+
           </Col>
         </Row>
       ) : (

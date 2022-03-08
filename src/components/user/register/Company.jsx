@@ -130,7 +130,7 @@ const CompanyRegister = () => {
               <div className={style.body}>
                 <Form>
                   <Row>
-                    <Col xl="3">
+                    <Col xl="6">
                       <Form.Group className="mb-4" controlId="formBasicEmail">
                         <Form.Label className={style.lableForm}>
                           <FormattedMessage
@@ -160,7 +160,7 @@ const CompanyRegister = () => {
                         </FormattedMessage>
                       </Form.Group>
                     </Col>
-                    <Col xl="3">
+                    <Col xl="6">
                       <Form.Group className="mb-4" controlId="formBasicEmail">
                         <Form.Label className={style.lableForm}>
                           <FormattedMessage
@@ -241,7 +241,7 @@ const CompanyRegister = () => {
                         </FormattedMessage>
                       </Form.Group>
                     </Col>
-                    <Col xl="3">
+                    <Col xl="6">
                       <Form.Group className="mb-4">
                         <Form.Label className={style.lableForm}>
                           <FormattedMessage
@@ -276,7 +276,7 @@ const CompanyRegister = () => {
                         />
                       </Form.Group>
                     </Col>
-                    <Col xl="3">
+                    <Col xl="6">
                       <Form.Group className="mb-4">
                         <Form.Label className={style.lableForm}>
                           <FormattedMessage
@@ -407,39 +407,6 @@ const CompanyRegister = () => {
                     <Col xl="3">
                       <Form.Group className="mb-4">
                         <Form.Label className={style.lableForm}>
-                          <FormattedMessage defaultMessage="City" id="city" /> *
-                        </Form.Label>
-                        <Form.Select
-                          className={style.formInput}
-                          aria-label="Default select example"
-                          name="city"
-                          disabled={loading}
-                          onChange={(e) =>
-                            setInputs({
-                              ...inputs,
-                              [e.target.name]: e.target.value,
-                            })
-                          }
-                        >
-                          <FormattedMessage defaultMessage="City" id="city">
-                            {(msg) => <option value="">{msg}</option>}
-                          </FormattedMessage>
-                          {state &&
-                            state.map((s) => (
-                              <option key={s} value={s}>
-                                {s}
-                              </option>
-                            ))}
-                        </Form.Select>
-                        <Icon
-                          className={style.arrowSelect}
-                          icon="ep:arrow-down-bold"
-                        />
-                      </Form.Group>
-                    </Col>
-                    <Col xl="3">
-                      <Form.Group className="mb-4">
-                        <Form.Label className={style.lableForm}>
                           <FormattedMessage defaultMessage="State" id="state" />{" "}
                           *
                         </Form.Label>
@@ -471,6 +438,40 @@ const CompanyRegister = () => {
                         />
                       </Form.Group>
                     </Col>
+                    <Col xl="3">
+                      <Form.Group className="mb-4">
+                        <Form.Label className={style.lableForm}>
+                          <FormattedMessage defaultMessage="City" id="city" /> *
+                        </Form.Label>
+                        <Form.Select
+                          className={style.formInput}
+                          aria-label="Default select example"
+                          name="city"
+                          disabled={loading}
+                          onChange={(e) =>
+                            setInputs({
+                              ...inputs,
+                              [e.target.name]: e.target.value,
+                            })
+                          }
+                        >
+                          <FormattedMessage defaultMessage="City" id="city">
+                            {(msg) => <option value="">{msg}</option>}
+                          </FormattedMessage>
+                          {state &&
+                            state.map((s) => (
+                              <option key={s} value={s}>
+                                {s}
+                              </option>
+                            ))}
+                        </Form.Select>
+                        <Icon
+                          className={style.arrowSelect}
+                          icon="ep:arrow-down-bold"
+                        />
+                      </Form.Group>
+                    </Col>
+
                     <Col xl="6">
                       <Form.Group className="mb-4">
                         <Form.Label className={style.lableForm}>
@@ -553,16 +554,17 @@ const CompanyRegister = () => {
                   </Row>
                 </Form>
               </div>
+              <div className={style.footer}>
+                <FormattedMessage
+                  defaultMessage="Already have an account?"
+                  id="haveAccount"
+                />
+                <Link className={style.registerLink} to="/">
+                  <FormattedMessage defaultMessage="Login now" id="loginNow" />
+                </Link>
+              </div>
             </div>
-            <div className={style.footer}>
-              <FormattedMessage
-                defaultMessage="Already have an account?"
-                id="haveAccount"
-              />
-              <Link className={style.registerLink} to="/">
-                <FormattedMessage defaultMessage="Login now" id="loginNow" />
-              </Link>
-            </div>
+
           </Col>
         </Row>
       ) : (

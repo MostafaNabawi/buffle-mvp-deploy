@@ -563,9 +563,9 @@ const UserProfile = () => {
               </InputGroup>
             </Col>
           </Row>
-          <Button className={style.btnUpdate} type="submit">
+          <Button className='btn-primary' type="submit">
             {loading ? (
-              <Icon icon="eos-icons:loading" />
+              <Icon color="blaco" fontSize={24} icon="eos-icons:loading" />
             ) : (
               <FormattedMessage
                 defaultMessage="Update profile"
@@ -613,7 +613,7 @@ const UserProfile = () => {
               disabled={addLoading}
             >
               {addLoading ? (
-                <DotLoader size={10} />
+                <DotLoader  size={10} />
               ) : (
                 <FormattedMessage defaultMessage="Add" id="btn.add" />
               )}

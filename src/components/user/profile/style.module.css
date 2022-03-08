@@ -13,8 +13,9 @@
     width: 160px !important;
 }
 .btnUpdate:hover{
-    background: none !important;
+    background: rgb(141, 139, 139) !important;
     color: black !important;
+    border: 1px solid black !important;
 }
 .hide{
     display: none !important;

@@ -138,7 +138,7 @@
   "noti.water": "Waterday",
 
   "prof.profile": "Profil",
-  "prof.logout": "Auslogge",
+  "prof.logout": "Ausloggen",
 
   "day.Monday": "Montag",
   "day.Tuesday": "Dienstag",
@@ -238,7 +238,7 @@
   "headOffice": "Hauptsitz",
   "country": "Land",
   "city": "Stadt",
-  "state": "Bundesstaat",
+  "state": "Bundesland",
   "street": "Straße",
   "postal": "Postleitzahl",
   "haveAccount": "Account bereits vorhanden?",

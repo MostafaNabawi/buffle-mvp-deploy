@@ -224,8 +224,7 @@ width: 80% !important;
 } */
 .register-container {
   margin: auto !important;
-  height: 100vh !important;
-  margin: auto;
+  min-height: 100vh !important;
 }
 .taskManagerTime > div {
   border: none !important;
@@ -654,7 +653,7 @@ ul.sidebar-list-scroll::-webkit-scrollbar {
   font-family: DM Sans;
   font-style: normal;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 10px;
   color: #a3aed0;
 }
@@ -1031,7 +1030,7 @@ div.check-box > input {
 }
 .register_img {
   width: 100% !important;
-  height: 100vh !important;
+  min-height: 100vh !important;
   object-fit: cover !important;
 }
 
