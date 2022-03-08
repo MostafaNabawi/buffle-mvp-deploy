@@ -49,9 +49,15 @@ const FreelancerRegister = () => {
     });
     const res = await req.json();
     if (res.payload) {
-      addToast(<FormattedMessage id="email.token" defaultMessage="Email Already Taken." />, {
-        appearance: "error",
-      });
+      addToast(
+        <FormattedMessage
+          id="email.token"
+          defaultMessage="Email Already Taken."
+        />,
+        {
+          appearance: "error",
+        }
+      );
       setEmailAlreadyExist(true);
     } else {
       setEmailAlreadyExist(false);
@@ -68,25 +74,43 @@ const FreelancerRegister = () => {
       }
     }
     if (errors > 0) {
-      addToast(<FormattedMessage id="fillAllForm" defaultMessage="Please Fill all Form." />, {
-        appearance: "warning",
-        autoDismiss: 4000,
-      });
+      addToast(
+        <FormattedMessage
+          id="fillAllForm"
+          defaultMessage="Please Fill all Form."
+        />,
+        {
+          appearance: "warning",
+          autoDismiss: 4000,
+        }
+      );
       return;
     }
     // emailExist Error
     if (emailAlreadyExist) {
-      addToast(<FormattedMessage id="email.token" defaultMessage="Email Already Taken." />, {
-        appearance: "error",
-      });
+      addToast(
+        <FormattedMessage
+          id="email.token"
+          defaultMessage="Email Already Taken."
+        />,
+        {
+          appearance: "error",
+        }
+      );
       return;
     }
     // check email
     if (!checkEmail(inputs.email)) {
-      addToast(<FormattedMessage id="email.invalid" defaultMessage="Invalid email address." />, {
-        appearance: "warning",
-        autoDismiss: 4000,
-      });
+      addToast(
+        <FormattedMessage
+          id="email.invalid"
+          defaultMessage="Invalid email address."
+        />,
+        {
+          appearance: "warning",
+          autoDismiss: 4000,
+        }
+      );
       return;
     }
     setLoading(true);
@@ -103,13 +127,16 @@ const FreelancerRegister = () => {
       setSendEmail(true);
     } else {
       setLoading(false);
-      addToast(<FormattedMessage
-        defaultMessage="Error Please Try Again."
-        id="breakPlan.Error"
-      />, {
-        appearance: "error",
-        autoDismiss: 8000,
-      });
+      addToast(
+        <FormattedMessage
+          defaultMessage="Error Please Try Again."
+          id="breakPlan.Error"
+        />,
+        {
+          appearance: "error",
+          autoDismiss: 8000,
+        }
+      );
     }
   };
 
@@ -138,8 +165,10 @@ const FreelancerRegister = () => {
                           />{" "}
                           *
                         </Form.Label>
-                        <FormattedMessage defaultMessage="First Name"
-                          id="fname" >
+                        <FormattedMessage
+                          defaultMessage="First Name"
+                          id="fname"
+                        >
                           {(msg) => (
                             <Form.Control
                               className={style.formInput}
@@ -167,8 +196,7 @@ const FreelancerRegister = () => {
                           />{" "}
                           *
                         </Form.Label>
-                        <FormattedMessage defaultMessage="Last Name"
-                          id="lname">
+                        <FormattedMessage defaultMessage="Last Name" id="lname">
                           {(msg) => (
                             <Form.Control
                               className={style.formInput}
@@ -220,7 +248,8 @@ const FreelancerRegister = () => {
                       </Form.Label>
                       <FormattedMessage
                         defaultMessage="Profession"
-                        id="profession">
+                        id="profession"
+                      >
                         {(msg) => (
                           <Form.Control
                             className={style.formInput}
@@ -268,12 +297,15 @@ const FreelancerRegister = () => {
                           >
                             {(msg) => <option value="">{msg}</option>}
                           </FormattedMessage>
-                          {allCountry &&
-                            allCountry.map((country) => (
-                              <option key={country.name} value={country.code}>
-                                {country.name}
-                              </option>
-                            ))}
+                          {allCountry.map((country) => {
+                            if (country.name !== "NULL") {
+                              return (
+                                <option key={country.name} value={country.code}>
+                                  {country.name}
+                                </option>
+                              );
+                            }
+                          })}
                         </Form.Select>
                         <Icon
                           className={style.arrowSelect}
@@ -368,7 +400,6 @@ const FreelancerRegister = () => {
                 </Link>
               </div>
             </div>
-
           </Col>
         </Row>
       ) : (
@@ -378,13 +409,25 @@ const FreelancerRegister = () => {
               <Icon icon="emojione:white-heavy-check-mark" />
             </div>
             <h2 className="text-center mt-2">
-              <FormattedMessage id="reg.sentEmail" defaultMessage="Message sent successfully to your email" />
+              <FormattedMessage
+                id="reg.sentEmail"
+                defaultMessage="Message sent successfully to your email"
+              />
             </h2>
             <h2 className="text-center mt-2">
-              <FormattedMessage id="reg.continue" defaultMessage="Please check your email and continue from there" />
+              <FormattedMessage
+                id="reg.continue"
+                defaultMessage="Please check your email and continue from there"
+              />
             </h2>
             <h6 className="text-center mt-2">
-              <b><FormattedMessage id="app.note" defaultMessage="Note" />:</b> <FormattedMessage id="reg.time" defaultMessage="You have 2 hours to complete your registration." />
+              <b>
+                <FormattedMessage id="app.note" defaultMessage="Note" />:
+              </b>{" "}
+              <FormattedMessage
+                id="reg.time"
+                defaultMessage="You have 2 hours to complete your registration."
+              />
             </h6>
             {/* <h4 className="text-center mt-2">
               <FormattedMessage id="link.clikc" defaultMessage="Click to open" /> <a href="http://gmail.com/"> <FormattedMessage id="label.email" defaultMessage="Email" /></a>
