@@ -48,8 +48,8 @@ const ProjectManagement = ({
   const [newProject, setNewProject] = useState(false);
   const [show, setShow] = useState(false);
   const [showPModal, setShowPModal] = useState(false);
-  const handleClosePModal = () => setShowPModal(false);
-  const handleClose = () => setShow(false);
+  const handleClosePModal = () => { setShowPModal(false); setCreateColor('') };
+  const handleClose = () => { setShow(false); setCreateColor('') }
   const handleShow = () => setShow(true);
   const handleShowPModal = () => setShowPModal(true);
   const [inputTask, setInputTask] = useState({ name: "", day: "", p_id: "" });
@@ -206,14 +206,19 @@ const ProjectManagement = ({
         projectName,
         projectDesc
       );
+      await setColorToProject(projectIdEdit, current);
       if (updateP.status === 200) {
         // addToast("Updated Susseccfully", {
         //   autoDismiss: true,
         //   appearance: "success",
         // });
         request();
+        getTaskSRequest();
+        colorChange(current);
         setloading(false);
         setShow(false);
+        setCreateColor('');
+        setProjectIdEdit('');
       } else {
         addToast(<FormattedMessage
           defaultMessage="Error Please Try Again."
@@ -224,10 +229,14 @@ const ProjectManagement = ({
         });
         setloading(false);
         setProjectName("");
+        setCreateColor('');
+        setProjectIdEdit('');
         return true;
       }
       setloading(false);
       setProjectName("");
+      setCreateColor('');
+      setProjectIdEdit('');
       return true;
     }
   };
@@ -311,39 +320,7 @@ const ProjectManagement = ({
       </Row>
     );
   }
-  const handleColor = async (value) => {
-    const color = value.split(":");
-    const color2 =
-      color[1].slice(0, color[1].length - 1) +
-      color[1].slice(color[1].length, color[1].length);
-    const setColor = await setColorToProject(projectIdEdit, color2);
-    if (setColor.status === 200) {
-      addToast(<FormattedMessage id="item.color" defaultMessage="Color set Susseccfully" />, {
-        autoDismiss: true,
-        appearance: "success",
-      });
-      colorChange(color2);
-      request();
-      setloading(false);
-      setShow(false);
-      setProjectIdEdit();
-    } else {
-      addToast(
-        <FormattedMessage
-          defaultMessage="Error Please Try Again."
-          id="breakPlan.Error"
-        />, {
-        autoDismiss: false,
-        appearance: "error",
-      });
-      setloading(false);
-      setProjectIdEdit("");
-      return true;
-    }
-    setloading(false);
-    setProjectIdEdit("");
-    return true;
-  };
+
 
   const setColor = (value) => {
     const color = value.split(":");
@@ -351,6 +328,13 @@ const ProjectManagement = ({
       color[1].slice(0, color[1].length - 1) +
       color[1].slice(color[1].length, color[1].length);
     setCreateColor(color2);
+  };
+  const setUpdateColor = (value) => {
+    const color = value.split(":");
+    const color2 =
+      color[1].slice(0, color[1].length - 1) +
+      color[1].slice(color[1].length, color[1].length);
+    setCurrent(color2);
   };
   return (
     <>
@@ -653,67 +637,66 @@ const ProjectManagement = ({
                       </label>
                       <div className="bt_1rsx30z">
                         <div
-                          className={`bt_1ln56ky ${current === " rgb(56, 103, 214)" ? "current" : ""
-                            }`}
+                          className={`bt_1ln56ky ${current === " rgb(56, 103, 214)" ? "current" : ''}`}
                           style={{ background: "rgb(56, 103, 214)" }}
                           onClick={(e) =>
-                            handleColor(e.target.getAttribute("style"))
+                            setUpdateColor(e.target.getAttribute("style"))
                           }
                         ></div>
                         <div
-                          className={`bt_1ln56ky ${current === " rgb(136, 84, 208)" ? "current" : ""
+                          className={`bt_1ln56ky ${current === " rgb(136, 84, 208)" ? "current" : ''
                             }`}
                           style={{ background: "rgb(136, 84, 208)" }}
                           onClick={(e) =>
-                            handleColor(e.target.getAttribute("style"))
+                            setUpdateColor(e.target.getAttribute("style"))
                           }
                         ></div>
                         <div
-                          className={`bt_1ln56ky ${current === " rgb(235, 59, 90)" ? "current" : ""
+                          className={`bt_1ln56ky ${current === " rgb(235, 59, 90)" ? "current" : ''
                             }`}
                           style={{ background: "rgb(235, 59, 90)" }}
                           onClick={(e) =>
-                            handleColor(e.target.getAttribute("style"))
+                            setUpdateColor(e.target.getAttribute("style"))
                           }
                         ></div>
                         <div
-                          className={`bt_1ln56ky ${current === " rgb(250, 130, 49)" ? "current" : ""
+                          className={`bt_1ln56ky ${current === " rgb(250, 130, 49)" ? "current" : ''
                             }`}
                           style={{ background: "rgb(250, 130, 49)" }}
                           onClick={(e) =>
-                            handleColor(e.target.getAttribute("style"))
+                            setUpdateColor(e.target.getAttribute("style"))
                           }
                         ></div>
                         <div
-                          className={`bt_1ln56ky ${current === " rgb(247, 183, 49)" ? "current" : ""
+                          className={`bt_1ln56ky ${current === " rgb(247, 183, 49)" ? "current" : ''
                             }`}
                           style={{ background: "rgb(247, 183, 49)" }}
                           onClick={(e) =>
-                            handleColor(e.target.getAttribute("style"))
+                            setUpdateColor(e.target.getAttribute("style"))
                           }
                         ></div>
                         <div
-                          className={`bt_1ln56ky ${current === " rgb(32, 191, 107)" ? "current" : ""
+                          className={`bt_1ln56ky ${current === " rgb(32, 191, 107)" ? "current" : ''
                             }`}
                           style={{ background: "rgb(32, 191, 107)" }}
                           onClick={(e) =>
-                            handleColor(e.target.getAttribute("style"))
+                            setUpdateColor(e.target.getAttribute("style"))
                           }
                         ></div>
                         <div
-                          className={`bt_1ln56ky ${current === " rgb(45, 152, 218)" ? "current" : ""
+                          className={`bt_1ln56ky ${current === " rgb(45, 152, 218)" ? "current" : ''
                             }`}
                           style={{ background: "rgb(45, 152, 218)" }}
                           onClick={(e) =>
-                            handleColor(e.target.getAttribute("style"))
+                            setUpdateColor(e.target.getAttribute("style"))
                           }
                         ></div>
                         <div
-                          className={`bt_1ln56ky ${current === " rgb(247, 143, 179)" ? "current" : ""
+                          className={`bt_1ln56ky ${current === " rgb(247, 143, 179)" ? "current" : ''
                             }`}
                           style={{ background: "rgb(247, 143, 179)" }}
                           onClick={(e) =>
-                            handleColor(e.target.getAttribute("style"))
+                            setUpdateColor(e.target.getAttribute("style"))
                           }
                         ></div>
                       </div>
