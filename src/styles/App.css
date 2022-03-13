@@ -195,26 +195,29 @@ button.btn-primary {
   border-bottom: 0;
   border-left: 0px !important;
 }
-.showTime {
+/* .showTime {
   position: absolute !important;
   z-index: 100 !important;
   color: black !important;
   margin-left: 6% !important;
-}
-.showTimeTask2 {
+} */
+/* .showTimeTask2 {
   position: absolute !important;
   z-index: 100 !important;
   color: #4922ff !important;
   margin-left: 20% !important;
-}
-.showTimeTask {
+} */
+.showTime {
   position: absolute !important;
   z-index: 100 !important;
-  color: #fff !important;
-  margin-left: 20% !important;
+  color: #4922ff !important;
+  margin-left: 40% !important;
 }
 .showTimeReverse {
   color: white;
+  position: absolute !important;
+  z-index: 100 !important;
+  margin-left: 15% !important;
 }
 .taskManaterProgress {
   position: relative !important ;
@@ -1102,4 +1105,7 @@ div.check-box > input {
 }
 .today-col .col-header > span {
   color: #ffbb29;
+}
+.pro-icon {
+  padding-top: 6px !important;
 }
