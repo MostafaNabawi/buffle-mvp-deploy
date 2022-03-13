@@ -211,13 +211,13 @@ button.btn-primary {
   position: absolute !important;
   z-index: 100 !important;
   color: #4922ff !important;
-  margin-left: 50% !important;
+  margin-left: 40% !important;
 }
 .showTimeReverse {
   color: white;
   position: absolute !important;
   z-index: 100 !important;
-  margin-left: 20% !important;
+  margin-left: 10% !important;
 }
 .taskManaterProgress {
   position: relative !important ;

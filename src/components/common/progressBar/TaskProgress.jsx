@@ -177,13 +177,13 @@ const Timer = (props) => {
                 parseInt(minute) === 0 &&
                 parseInt(hour) === 0 ? (
                 <>
-                  <span className={percent >= 50 ? "showTimeReverse" : "showTime"}>
+                  <span className={percent >= 40 ? "showTimeReverse" : "showTime"}>
                     {task_duration}
                   </span>
                 </>
               ) : (
                 <>
-                  <span className={percent >= 50 ? "showTimeReverse" : "showTime"}>
+                  <span className={percent >= 40 ? "showTimeReverse" : "showTime"}>
                     {`${parseInt(hour) < 10
                       ? "0" + parseInt(hour)
                       : parseInt(hour)
