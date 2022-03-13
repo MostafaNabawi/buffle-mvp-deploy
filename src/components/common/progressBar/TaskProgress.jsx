@@ -157,7 +157,7 @@ const Timer = (props) => {
     setHour(time[1]);
     setDay(time[0]);
   }, [task_percent]);
-  console.log(parseInt(percent))
+
   return (
     <div className="container">
       <Row>
@@ -177,32 +177,23 @@ const Timer = (props) => {
                 parseInt(minute) === 0 &&
                 parseInt(hour) === 0 ? (
                 <>
-                  <span className={percent >= 37 ? "showTimeReverse" : "showTime"}>
+                  <span className={percent >= 40 ? "showTimeReverse" : "showTime"}>
                     {task_duration}
                   </span>
                 </>
               ) : (
                 <>
-                  <span className="flex-task-progress">
-                    <span className={parseInt(percent) >= 20 ? "showHourReverse" : "showHourTime"}>
-                      {`${parseInt(hour) < 10
-                        ? "0" + parseInt(hour)
-                        : parseInt(hour)
-                        }:`}
-                    </span>
-
-                    <span className={parseInt(percent) >= 40 ? "showMinuteReverse" : "showMinTime"}>
-                      {`${parseInt(minute) < 10
+                  <span className={percent >= 40 ? "showTimeReverse" : "showTime"}>
+                    {`${parseInt(hour) < 10
+                      ? "0" + parseInt(hour)
+                      : parseInt(hour)
+                      }:${parseInt(minute) < 10
                         ? "0" + parseInt(minute)
                         : parseInt(minute)
-                        }:`}
-                    </span>
-
-                    <span className={parseInt(percent) >= 60 ? "showSecondReverse" : "showSecTime"}>
-                      {`${parseInt(second) < 10
+                      }:${parseInt(second) < 10
                         ? "0" + parseInt(second)
                         : parseInt(second)
-                        }`}</span>
+                      }`}
                   </span>
                 </>
               )
@@ -226,7 +217,7 @@ const Timer = (props) => {
           </div>
         </Col>
       </Row>
-    </div >
+    </div>
   );
 };
 export default Timer;
