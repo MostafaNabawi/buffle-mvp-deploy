@@ -41,6 +41,7 @@ function EditMoney() {
       });
     }
   }, [id]);
+
   const handleEdit = (e) => {
     e.preventDefault();
     if (eventName === "") {
@@ -79,6 +80,7 @@ function EditMoney() {
               autoDismiss: 4000,
             }
           );
+          navigate("/money-pool");
         }
       })
       .catch((err) => {
@@ -97,18 +99,24 @@ function EditMoney() {
   };
   if (fetching) {
     return (
-      <Card className="event_card">
-        <CardBody className={style.new_event}>
-          <Row>
-            <Icon fontSize={24} icon="eos-icons:loading" />
-          </Row>
-        </CardBody>
-      </Card>
+      <Row>
+        <Col className="col-6">
+          <Card className="event_card">
+            <CardBody className={style.new_event}>
+              <Row>
+                <Icon fontSize={24} icon="eos-icons:loading" />
+              </Row>
+            </CardBody>
+          </Card>
+        </Col>
+      </Row>
     );
   }
   if (error) {
     return (
-      <Card className="event_card">
+     <Row>
+       <Col className="col-6">
+       <Card className="event_card">
         <CardBody className={style.new_event}>
           <Row>
             <FormattedMessage
@@ -118,76 +126,82 @@ function EditMoney() {
           </Row>
         </CardBody>
       </Card>
+       </Col>
+     </Row>
     );
   }
   return (
-    <Card className="event_card">
-      <CardBody className={style.new_event}>
-        <Row>
-          <Col lg={6}>
-            <Form onSubmit={handleEdit}>
-              <Col md={12}>
-                <Form.Group className="mb-3" controlId="eventName">
-                  <Form.Label>
-                    <FormattedMessage
-                      id="event.name"
-                      defaultMessage="Event name"
-                    />{" "}
-                  </Form.Label>
-                  <Form.Control
-                    onChange={(e) => {
-                      setEventName(e.target.value);
-                    }}
-                    value={eventName}
-                    type="text"
-                    placeholder="Birthday"
-                    disabled={pending}
-                  />
-                </Form.Group>
-              </Col>
-
-              <Col>
-                <Form.Group controlId="exampleForm.ControlTextarea1">
-                  <Form.Label>
-                    <FormattedMessage
-                      id="label.desc"
-                      defaultMessage="Description"
-                    />{" "}
-                  </Form.Label>
-                  <FormattedMessage
-                    id="place.descOp"
-                    defaultMessage="Description(optional)"
-                  >
-                    {(msg) => (
+    <Row>
+      <Col className="col-6">
+        <Card className="event_card">
+          <CardBody className={style.new_event}>
+            <Row>
+              <Col lg={6}>
+                <Form onSubmit={handleEdit}>
+                  <Col md={12}>
+                    <Form.Group className="mb-3" controlId="eventName">
+                      <Form.Label>
+                        <FormattedMessage
+                          id="event.name"
+                          defaultMessage="Event name"
+                        />{" "}
+                      </Form.Label>
                       <Form.Control
-                        as="textarea"
-                        rows={1}
-                        value={desc || ""}
                         onChange={(e) => {
-                          setDesc(e.target.value);
+                          setEventName(e.target.value);
                         }}
-                        placeholder={msg}
+                        value={eventName}
+                        type="text"
+                        placeholder="Birthday"
                         disabled={pending}
                       />
+                    </Form.Group>
+                  </Col>
+
+                  <Col>
+                    <Form.Group controlId="exampleForm.ControlTextarea1">
+                      <Form.Label>
+                        <FormattedMessage
+                          id="label.desc"
+                          defaultMessage="Description"
+                        />{" "}
+                      </Form.Label>
+                      <FormattedMessage
+                        id="place.descOp"
+                        defaultMessage="Description(optional)"
+                      >
+                        {(msg) => (
+                          <Form.Control
+                            as="textarea"
+                            rows={1}
+                            value={desc || ""}
+                            onChange={(e) => {
+                              setDesc(e.target.value);
+                            }}
+                            placeholder={msg}
+                            disabled={pending}
+                          />
+                        )}
+                      </FormattedMessage>
+                    </Form.Group>
+                  </Col>
+                  <Button className="mt-3" type="submit" disabled={pending}>
+                    {pending ? (
+                      <Icon fontSize={24} icon="eos-icons:loading" />
+                    ) : (
+                      <FormattedMessage
+                        id="event.update"
+                        defaultMessage="Update Event"
+                      />
                     )}
-                  </FormattedMessage>
-                </Form.Group>
+                  </Button>
+                </Form>
               </Col>
-              <Button className="mt-3" type="submit" disabled={pending}>
-                {pending ? (
-                  <Icon fontSize={24} icon="eos-icons:loading" />
-                ) : (
-                  <FormattedMessage
-                    id="event.update"
-                    defaultMessage="Update Event"
-                  />
-                )}
-              </Button>
-            </Form>
-          </Col>
-        </Row>
-      </CardBody>
-    </Card>
+            </Row>
+          </CardBody>
+        </Card>
+      </Col>
+    </Row>
   );
 }
 
