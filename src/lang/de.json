@@ -176,6 +176,7 @@
 
   "event.create": "Event erstellen",
   "event.list": "Event Liste",
+  "event.update": "Event updaten",
   "event.name": "Event Name",
   "event.name.req": "Event Name ist erforderlich.",
   "event.currency": "Währung",

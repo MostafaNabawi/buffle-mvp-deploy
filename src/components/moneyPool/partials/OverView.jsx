@@ -77,7 +77,7 @@ function OverView({ data }) {
                 <td>
                   <FormattedMessage
                     id="event.youPaid"
-                    defaultMessage="You've paid"
+                    defaultMessage="You have paid"
                   />
                 </td>
                 <th>{data.paied}</th>
@@ -98,7 +98,7 @@ function OverView({ data }) {
                   <td>
                     <FormattedMessage
                       id="event.youhOwed"
-                      defaultMessage="You've owe"
+                      defaultMessage="You have owe"
                     />
                   </td>
                   <th>{data.creditor}</th>

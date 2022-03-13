@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Row, Form, Col, Button, Tabs, Tab, Table } from "react-bootstrap";
 import { Icon } from "@iconify/react";
 import style from "./style.module.css";
@@ -9,11 +9,12 @@ import Card from "./../card/Card";
 import CardBody from "./../card/CardBody";
 import { useToasts } from "react-toast-notifications";
 import { API_URL } from "../../config";
-import Jumbotron from "./partials/Jumbotron";
 import { getEventList } from "../../api";
 import CopyLinkButton from "./partials/CopyLinkButton";
 import moment from "moment";
 import { FormattedMessage } from "react-intl";
+import { Context } from "../../layout/Wrapper";
+import Swal from "sweetalert2";
 
 function NewEvent() {
   const [key, setKey] = useState("createvent");
@@ -31,9 +32,13 @@ function NewEvent() {
   //
   const [eventName, setEventName] = useState("");
   const navigate = useNavigate();
+  const context = useContext(Context);
   // naviget to event when click on event list row
   const handleRowClick = (id) => {
     navigate(`event/${id}`);
+  };
+  const handleEditNavigate = (id) => {
+    navigate(`edit/${id}`);
   };
   const addPerson = () => {
     setPersonNum([...personNum, personNum.length + 2]);
@@ -200,6 +205,43 @@ function NewEvent() {
       setLoading2(false);
     }
   }
+  const handleDeleteEvent = (eventId) => {
+    const titleMsg =
+      context.getCurrent() === 0 ? "Are you sure?" : "Bist du dir sicher?";
+    Swal.fire({
+      title: titleMsg,
+      text:
+        context.getCurrent() === 0
+          ? "You won't be able to revert this."
+          : "Änderungen sind nicht mehr möglich.",
+      icon: "warning",
+      showCancelButton: true,
+      cancelButtonText: context.getCurrent() === 0 ? "Cancel" : "Abbrechen",
+      confirmButtonText: context.getCurrent() === 0 ? "Yes" : "Fortfahren",
+      reverseButtons: false,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        fetch(`${API_URL}/money-poll/delete?id=${eventId}`, {
+          method: "DELETE",
+          credentials: "include",
+        })
+          .then((res) => {
+            if (res.status === 200) {
+              const filtred = eventList.filter((item) => item._id !== eventId);
+              setEventList(filtred);
+              const msg = context.getCurrent() === 0 ? "Deleted" : "gelöscht";
+              Swal.fire({
+                title: msg,
+                icon: "success",
+              });
+            }
+          })
+          .catch((err) => {
+            console.error("Error");
+          });
+      }
+    });
+  };
   useEffect(() => {
     request();
   }, []);
@@ -426,7 +468,6 @@ function NewEvent() {
                 </Form>
               </Col>
               <Col lg={6} className={style.right_site}>
-
                 <div className={style.invite_form_area}>
                   <Form onSubmit={handleJoin}>
                     <Form.Group controlId="inviteCode">
@@ -477,12 +518,7 @@ function NewEvent() {
                       defaultMessage="Description"
                     />
                   </th>
-                  {/* <th>
-                    <FormattedMessage
-                      id="label.currency"
-                      defaultMessage="Currency"
-                    />
-                  </th> */}
+
                   <th>
                     <FormattedMessage
                       id="label.crDate"
@@ -490,10 +526,7 @@ function NewEvent() {
                     />
                   </th>
                   <th>
-                    <FormattedMessage
-                      id="label.eventCode"
-                      defaultMessage="Event Code"
-                    />
+                    <FormattedMessage id="action" defaultMessage="Actions" />
                   </th>
                 </tr>
               </thead>
@@ -511,16 +544,32 @@ function NewEvent() {
                   </tr>
                 ) : eventList.length > 0 ? (
                   eventList.map((list, i) => (
-                    <tr style={{ verticalAlign: "middle" }} key={list.i}>
+                    <tr
+                      style={{ verticalAlign: "middle" }}
+                      key={`ev-list-${i}`}
+                    >
                       <th scope="row">{++i}</th>
                       <td onClick={() => handleRowClick(list._id)}>
                         {list.event}
                       </td>
-                      <td>{list.description}</td>
+                      <td>{list.description || "N/A"}</td>
                       {/* <td>{list.currency}</td> */}
                       <td>{moment(list.created_at).format("MMMM DD, YYYY")}</td>
                       <td>
                         <CopyLinkButton copyValue={list.uuid} />
+                        <Button
+                          variant="info"
+                          onClick={() => handleEditNavigate(list._id)}
+                          className="mx-2"
+                        >
+                          <Icon icon="akar-icons:edit" />
+                        </Button>
+                        <Button
+                          variant="danger"
+                          onClick={() => handleDeleteEvent(list._id)}
+                        >
+                          <Icon icon="bx:bx-trash" />
+                        </Button>
                       </td>
                     </tr>
                   ))
