@@ -343,7 +343,7 @@ function ScreenFreeReminderCard() {
                   <h6>
                     {data?.display}{" "}
                     <FormattedMessage
-                      defaultMessage=" ScreenFree Reminder"
+                      defaultMessage="Screenlife"
                       id="app.screen"
                     />
                   </h6>
