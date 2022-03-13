@@ -563,7 +563,7 @@ const UserProfile = () => {
               </InputGroup>
             </Col>
           </Row>
-          <Button className='btn-primary' type="submit">
+          <Button  type="submit">
             {loading ? (
               <Icon color="blaco" fontSize={24} icon="eos-icons:loading" />
             ) : (
