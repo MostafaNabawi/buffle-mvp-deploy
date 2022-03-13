@@ -79,8 +79,7 @@ const CompanyRegister = () => {
         break;
       }
     }
-    console.log("Form submited❤❤", errors);
-    return;
+
     if (errors > 0) {
       addToast(
         <FormattedMessage
