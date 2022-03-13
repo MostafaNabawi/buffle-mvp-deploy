@@ -246,13 +246,13 @@ width: 80% !important;
 .taskManagerNavItem > i:hover {
   color: #4922ff !important;
 }
-.button.btn-primary:hover {
+button.btn-primary:hover {
   background: #8286ff;
-  border: none !important;
+  border-color: #0a58ca !important;
 }
 .btn.btn-primary:hover {
   background: #8286ff;
-  border: none !important;
+  border-color: #8286ff !important;
 }
 .reminderNav {
   color: black !important;
@@ -609,6 +609,12 @@ ul.sidebar-list-scroll::-webkit-scrollbar {
   cursor: pointer !important;
   width: 35px !important;
   height: 35px !important;
+}
+.feel-icon:hover{
+  margin-top: -2px !important;
+  width: 42px !important;
+  height: 42px !important;
+  transform:scale(1.1)
 }
 .card-feel-icon {
   display: inline-flex;
