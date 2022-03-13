@@ -15,6 +15,7 @@ import moment from "moment";
 import { FormattedMessage } from "react-intl";
 import { Context } from "../../layout/Wrapper";
 import Swal from "sweetalert2";
+import Modal from "../modal/modal";
 
 function NewEvent() {
   const [key, setKey] = useState("createvent");
@@ -29,6 +30,10 @@ function NewEvent() {
   const [desc, setDesc] = useState("");
   const [createing, setCreateing] = useState(false);
   const [eventList, setEventList] = useState([]);
+  // Modal
+  const [modalShow, setModalShow] = useState(false);
+  const [id, setId] = useState("");
+  const [pending, setPending] = useState(false);
   //
   const [eventName, setEventName] = useState("");
   const navigate = useNavigate();
@@ -242,50 +247,115 @@ function NewEvent() {
       }
     });
   };
+  //
+  const handleClose = () => {
+    setModalShow(false);
+  };
+  const handleEdit = () => {
+    if (eventName === "") {
+      addToast(
+        <FormattedMessage
+          defaultMessage="Event name is required!"
+          id="event.name.req"
+        />
+      );
+      return;
+    }
+    setPending(true);
+    fetch(`${API_URL}/money-poll/update?id=${id}`, {
+      method: "PUT",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Credentials": true,
+      },
+      body: JSON.stringify({
+        name: eventName,
+        desc: desc,
+      }),
+    })
+      .then((res) => {
+        setPending(false);
+        if (res.status === 200) {
+          document.getElementById(id).innerHTML=eventName
+          if(desc!=""){
+            document.getElementById("des"+id).innerHTML=desc
+          }
+          addToast(
+            <FormattedMessage
+              defaultMessage="Event updated"
+              id="event.update"
+            />,
+            {
+              appearance: "success",
+              autoDismiss: 4000,
+            }
+          );
+          handleClose()
+        }
+      })
+      .catch((err) => {
+        setPending(false);
+        addToast(
+          <FormattedMessage
+            defaultMessage="Server Error."
+            id="app.serverError"
+          />,
+          {
+            appearance: "warning",
+            autoDismiss: 4000,
+          }
+        );
+      });
+  };
+  //
+
   useEffect(() => {
     request();
   }, []);
+
   return (
-    <Card className="event_card">
-      <CardBody className={style.new_event}>
-        <Tabs
-          defaultActiveKey="profile"
-          id="uncontrolled-tab-example"
-          activeKey={key}
-          onSelect={(k) => setKey(k)}
-          className={style.tab}
-        >
-          <Tab
-            eventKey="createvent"
-            title={
-              <FormattedMessage
-                id="event.create"
-                defaultMessage="Create event"
-              />
-            }
+    <>
+      <Card className="event_card">
+        <CardBody className={style.new_event}>
+          <Tabs
+            defaultActiveKey="profile"
+            id="uncontrolled-tab-example"
+            activeKey={key}
+            onSelect={(k) => setKey(k)}
+            className={style.tab}
           >
-            <Row>
-              <Col lg={6}>
-                <Form>
-                  <Col md={12}>
-                    <Form.Group className="mb-3" controlId="eventName">
-                      <Form.Label>
-                        <FormattedMessage
-                          id="event.name"
-                          defaultMessage="Event name"
-                        />{" "}
-                      </Form.Label>
-                      <Form.Control
-                        onChange={(e) => {
-                          setEventName(e.target.value);
-                        }}
-                        value={eventName}
-                        type="text"
-                        placeholder="Birthday"
-                      />
-                    </Form.Group>
-                  </Col>
-                  {/* <Col md={12} className={style.select_col}>
+            <Tab
+              eventKey="createvent"
+              title={
+                <FormattedMessage
+                  id="event.create"
+                  defaultMessage="Create event"
+                />
+              }
+            >
+              <Row>
+                <Col lg={6}>
+                  <Form>
+                    <Col md={12}>
+                      <Form.Group className="mb-3" controlId="eventName">
+                        <Form.Label>
+                          <FormattedMessage
+                            id="event.name"
+                            defaultMessage="Event name"
+                          />{" "}
+                        </Form.Label>
+                        <Form.Control
+                          onChange={(e) => {
+                            setEventName(e.target.value);
+                          }}
+                          value={eventName}
+                          type="text"
+                          placeholder="Birthday"
+                        />
+                      </Form.Group>
+                    </Col>
+                    {/* <Col md={12} className={style.select_col}>
                     <Form.Group
                       className={style.select_input}
                       controlId="homeCurrency"
@@ -315,278 +385,367 @@ function NewEvent() {
                       </Form.Select>
                     </Form.Group>
                   </Col> */}
-                  {/* email */}
-                  <div className={style.participant_section}>
-                    <h4>
-                      <FormattedMessage
-                        id="event.participants"
-                        defaultMessage="Participants"
-                      />
-                    </h4>
-                    <Col md={12}>
-                      {/* <AddNewMember eventName={eventName} currency={currency}/> */}
-                      <div className={style.input_with_button}>
-                        <Form.Group className="mb-3" controlId="person-1">
-                          <Form.Label>
+                    {/* email */}
+                    <div className={style.participant_section}>
+                      <h4>
+                        <FormattedMessage
+                          id="event.participants"
+                          defaultMessage="Participants"
+                        />
+                      </h4>
+                      <Col md={12}>
+                        {/* <AddNewMember eventName={eventName} currency={currency}/> */}
+                        <div className={style.input_with_button}>
+                          <Form.Group className="mb-3" controlId="person-1">
+                            <Form.Label>
+                              <FormattedMessage
+                                id="label.email"
+                                defaultMessage="Email"
+                              />{" "}
+                            </Form.Label>
                             <FormattedMessage
                               id="label.email"
                               defaultMessage="Email"
-                            />{" "}
-                          </Form.Label>
+                            >
+                              {(msg) => (
+                                <Form.Control
+                                  type="email"
+                                  value={email}
+                                  autoComplete="false"
+                                  aria-haspopup="false"
+                                  autoFocus="false"
+                                  placeholder={msg}
+                                  onChange={(e) => {
+                                    setEmail(e.target.value);
+                                  }}
+                                />
+                              )}
+                            </FormattedMessage>
+                          </Form.Group>
+                          <Button
+                            type="button"
+                            onClick={() => {
+                              searchEmail();
+                            }}
+                          >
+                            {loading ? (
+                              <Icon fontSize={24} icon="eos-icons:loading" />
+                            ) : (
+                              <FormattedMessage
+                                id="btn.add"
+                                defaultMessage="Add"
+                              />
+                            )}
+                          </Button>
+                        </div>
+                      </Col>
+                    </div>
+                    {/* not fount user */}
+                    {notFound && (
+                      <div style={{ color: "red" }}>
+                        {" "}
+                        <FormattedMessage
+                          id="acc.err"
+                          defaultMessage="User by this email not found."
+                        />{" "}
+                      </div>
+                    )}
+                    {/* selected user */}
+                    {selected.length > 0 && (
+                      <div className={style.participants}>
+                        <Table striped className="mb-0">
+                          <thead>
+                            <tr>
+                              <th>
+                                <FormattedMessage
+                                  id="label.name"
+                                  defaultMessage="Name"
+                                />
+                              </th>
+                              <th>
+                                <FormattedMessage
+                                  id="label.email"
+                                  defaultMessage="Email"
+                                />
+                              </th>
+                              <th>
+                                <FormattedMessage
+                                  id="label.delete"
+                                  defaultMessage="Delete"
+                                />
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {selected.map((item) => (
+                              <tr>
+                                <td>{item.fullName}</td>
+                                <td>{item.email}</td>
+                                <th>
+                                  <i
+                                    onClick={() => {
+                                      handleDelete(item.uid);
+                                    }}
+                                  >
+                                    <Icon icon="bx:bx-trash" />
+                                  </i>
+                                </th>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </Table>
+                      </div>
+                    )}
+                    {/* desc */}
+                    <div className={style.comment}>
+                      <div className={style.form_area}>
+                        <Form.Group controlId="exampleForm.ControlTextarea1">
                           <FormattedMessage
-                            id="label.email"
-                            defaultMessage="Email"
+                            id="place.descOp"
+                            defaultMessage="Description(optional)"
                           >
                             {(msg) => (
                               <Form.Control
-                                type="email"
-                                value={email}
-                                autoComplete="false"
-                                aria-haspopup="false"
-                                autoFocus="false"
-                                placeholder={msg}
+                                as="textarea"
+                                rows={1}
                                 onChange={(e) => {
-                                  setEmail(e.target.value);
+                                  setDesc(e.target.value);
                                 }}
+                                placeholder={msg}
                               />
                             )}
                           </FormattedMessage>
                         </Form.Group>
-                        <Button
-                          type="button"
-                          onClick={() => {
-                            searchEmail();
-                          }}
-                        >
-                          {loading ? (
-                            <Icon fontSize={24} icon="eos-icons:loading" />
-                          ) : (
-                            <FormattedMessage
-                              id="btn.add"
-                              defaultMessage="Add"
-                            />
-                          )}
-                        </Button>
                       </div>
-                    </Col>
-                  </div>
-                  {/* not fount user */}
-                  {notFound && (
-                    <div style={{ color: "red" }}>
-                      {" "}
-                      <FormattedMessage
-                        id="acc.err"
-                        defaultMessage="User by this email not found."
-                      />{" "}
                     </div>
-                  )}
-                  {/* selected user */}
-                  {selected.length > 0 && (
-                    <div className={style.participants}>
-                      <Table striped className="mb-0">
-                        <thead>
-                          <tr>
-                            <th>
-                              <FormattedMessage
-                                id="label.name"
-                                defaultMessage="Name"
-                              />
-                            </th>
-                            <th>
-                              <FormattedMessage
-                                id="label.email"
-                                defaultMessage="Email"
-                              />
-                            </th>
-                            <th>
-                              <FormattedMessage
-                                id="label.delete"
-                                defaultMessage="Delete"
-                              />
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {selected.map((item) => (
-                            <tr>
-                              <td>{item.fullName}</td>
-                              <td>{item.email}</td>
-                              <th>
-                                <i
-                                  onClick={() => {
-                                    handleDelete(item.uid);
-                                  }}
-                                >
-                                  <Icon icon="bx:bx-trash" />
-                                </i>
-                              </th>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </Table>
-                    </div>
-                  )}
-                  {/* desc */}
-                  <div className={style.comment}>
-                    <div className={style.form_area}>
-                      <Form.Group controlId="exampleForm.ControlTextarea1">
+                    <Button
+                      onClick={() => {
+                        handleCreatePool();
+                      }}
+                      className="mt-3"
+                      type="button"
+                      disabled={createing}
+                    >
+                      {createing ? (
+                        <Icon fontSize={24} icon="eos-icons:loading" />
+                      ) : (
                         <FormattedMessage
-                          id="place.descOp"
-                          defaultMessage="Description(optional)"
+                          id="btn.createPool"
+                          defaultMessage="Create Pool"
+                        />
+                      )}
+                    </Button>
+                  </Form>
+                </Col>
+                <Col lg={6} className={style.right_site}>
+                  <div className={style.invite_form_area}>
+                    <Form onSubmit={handleJoin}>
+                      <Form.Group controlId="inviteCode">
+                        <FormattedMessage
+                          id="place.inviteCode"
+                          defaultMessage="Invite code"
                         >
                           {(msg) => (
                             <Form.Control
-                              as="textarea"
-                              rows={1}
-                              onChange={(e) => {
-                                setDesc(e.target.value);
-                              }}
+                              type="text"
                               placeholder={msg}
+                              name="invite"
                             />
                           )}
                         </FormattedMessage>
                       </Form.Group>
-                    </div>
-                  </div>
-                  <Button
-                    onClick={() => {
-                      handleCreatePool();
-                    }}
-                    className="mt-3"
-                    type="button"
-                    disabled={createing}
-                  >
-                    {createing ? (
-                      <Icon fontSize={24} icon="eos-icons:loading" />
-                    ) : (
-                      <FormattedMessage
-                        id="btn.createPool"
-                        defaultMessage="Create Pool"
-                      />
-                    )}
-                  </Button>
-                </Form>
-              </Col>
-              <Col lg={6} className={style.right_site}>
-                <div className={style.invite_form_area}>
-                  <Form onSubmit={handleJoin}>
-                    <Form.Group controlId="inviteCode">
-                      <FormattedMessage
-                        id="place.inviteCode"
-                        defaultMessage="Invite code"
-                      >
-                        {(msg) => (
-                          <Form.Control
-                            type="text"
-                            placeholder={msg}
-                            name="invite"
+                      <Button type="submit">
+                        {busy ? (
+                          <Icon icon="eos-icons:loading" />
+                        ) : (
+                          <FormattedMessage
+                            id="btn.join"
+                            defaultMessage="Join"
                           />
                         )}
-                      </FormattedMessage>
-                    </Form.Group>
-                    <Button type="submit">
-                      {busy ? (
-                        <Icon icon="eos-icons:loading" />
-                      ) : (
-                        <FormattedMessage id="btn.join" defaultMessage="Join" />
-                      )}
-                    </Button>
-                  </Form>
-                </div>
-              </Col>
-            </Row>
-          </Tab>
-          <Tab
-            eventKey="existevent"
-            title={
-              <FormattedMessage id="event.list" defaultMessage="Event list" />
-            }
-          >
-            <Table responsive hover size="sm" className={style.event_list}>
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>
+                      </Button>
+                    </Form>
+                  </div>
+                </Col>
+              </Row>
+            </Tab>
+            <Tab
+              eventKey="existevent"
+              title={
+                <FormattedMessage id="event.list" defaultMessage="Event list" />
+              }
+            >
+              <Table responsive hover size="sm" className={style.event_list}>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>
+                      <FormattedMessage
+                        id="label.eventName"
+                        defaultMessage="Event Name"
+                      />
+                    </th>
+                    <th>
+                      <FormattedMessage
+                        id="label.desc"
+                        defaultMessage="Description"
+                      />
+                    </th>
+
+                    <th>
+                      <FormattedMessage
+                        id="label.crDate"
+                        defaultMessage="Create date"
+                      />
+                    </th>
+                    <th>
+                      <FormattedMessage id="action" defaultMessage="Actions" />
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {loading2 ? (
+                    <tr className="text-center">
+                      <td colSpan={6}>
+                        {
+                          <Icon
+                            fontSize={80}
+                            icon="eos-icons:three-dots-loading"
+                          />
+                        }
+                      </td>
+                    </tr>
+                  ) : eventList.length > 0 ? (
+                    eventList.map((list, i) => (
+                      <tr
+                        style={{ verticalAlign: "middle" }}
+                        key={`ev-list-${i}`}
+                      >
+                        <th scope="row">{++i}</th>
+                        <td id={list._id} onClick={() => handleRowClick(list._id)}>
+                          {list.event}
+                        </td>
+                        <td id={`des${list._id}`}>{list.description || "N/A"}</td>
+                        {/* <td>{list.currency}</td> */}
+                        <td>
+                          {moment(list.created_at).format("MMMM DD, YYYY")}
+                        </td>
+                        <td>
+                          <CopyLinkButton copyValue={list.uuid} />
+                          <Button
+                            variant="info"
+                            // onClick={() => handleEditNavigate(list._id)}
+                            onClick={() => {
+                              setEventName(list.event);
+                              setDesc(list.description);
+                              setId(list._id);
+                              setModalShow(true);
+                            }}
+                            className="mx-2"
+                          >
+                            <Icon icon="akar-icons:edit" />
+                          </Button>
+                          <Button
+                            variant="danger"
+                            onClick={() => handleDeleteEvent(list._id)}
+                          >
+                            <Icon icon="bx:bx-trash" />
+                          </Button>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <FormattedMessage
+                        id="tb.noEvent"
+                        defaultMessage="No event"
+                      />
+                    </tr>
+                  )}
+                </tbody>
+              </Table>
+            </Tab>
+          </Tabs>
+        </CardBody>
+      </Card>
+      {/* Modal */}
+      <Modal
+        size="md"
+        show={modalShow}
+        handleClose={handleClose}
+        title="Edit"
+        body={
+          <>
+            <Form>
+              <Col md={12}>
+                <Form.Group className="mb-3" controlId="eventName">
+                  <Form.Label>
                     <FormattedMessage
-                      id="label.eventName"
-                      defaultMessage="Event Name"
-                    />
-                  </th>
-                  <th>
+                      id="event.name"
+                      defaultMessage="Event name"
+                    />{" "}
+                  </Form.Label>
+                  <Form.Control
+                    onChange={(e) => {
+                      setEventName(e.target.value);
+                    }}
+                    value={eventName}
+                    type="text"
+                    placeholder="Birthday"
+                    disabled={pending}
+                  />
+                </Form.Group>
+              </Col>
+
+              <Col>
+                <Form.Group controlId="exampleForm.ControlTextarea1">
+                  <Form.Label>
                     <FormattedMessage
                       id="label.desc"
                       defaultMessage="Description"
-                    />
-                  </th>
-
-                  <th>
-                    <FormattedMessage
-                      id="label.crDate"
-                      defaultMessage="Create date"
-                    />
-                  </th>
-                  <th>
-                    <FormattedMessage id="action" defaultMessage="Actions" />
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {loading2 ? (
-                  <tr className="text-center">
-                    <td colSpan={6}>
-                      {
-                        <Icon
-                          fontSize={80}
-                          icon="eos-icons:three-dots-loading"
-                        />
-                      }
-                    </td>
-                  </tr>
-                ) : eventList.length > 0 ? (
-                  eventList.map((list, i) => (
-                    <tr
-                      style={{ verticalAlign: "middle" }}
-                      key={`ev-list-${i}`}
-                    >
-                      <th scope="row">{++i}</th>
-                      <td onClick={() => handleRowClick(list._id)}>
-                        {list.event}
-                      </td>
-                      <td>{list.description || "N/A"}</td>
-                      {/* <td>{list.currency}</td> */}
-                      <td>{moment(list.created_at).format("MMMM DD, YYYY")}</td>
-                      <td>
-                        <CopyLinkButton copyValue={list.uuid} />
-                        <Button
-                          variant="info"
-                          onClick={() => handleEditNavigate(list._id)}
-                          className="mx-2"
-                        >
-                          <Icon icon="akar-icons:edit" />
-                        </Button>
-                        <Button
-                          variant="danger"
-                          onClick={() => handleDeleteEvent(list._id)}
-                        >
-                          <Icon icon="bx:bx-trash" />
-                        </Button>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <FormattedMessage
-                      id="tb.noEvent"
-                      defaultMessage="No event"
-                    />
-                  </tr>
-                )}
-              </tbody>
-            </Table>
-          </Tab>
-        </Tabs>
-      </CardBody>
-    </Card>
+                    />{" "}
+                  </Form.Label>
+                  <FormattedMessage
+                    id="place.descOp"
+                    defaultMessage="Description(optional)"
+                  >
+                    {(msg) => (
+                      <Form.Control
+                        as="textarea"
+                        rows={1}
+                        value={desc || ""}
+                        onChange={(e) => {
+                          setDesc(e.target.value);
+                        }}
+                        placeholder={msg}
+                        disabled={pending}
+                      />
+                    )}
+                  </FormattedMessage>
+                </Form.Group>
+              </Col>
+            </Form>
+          </>
+        }
+        footer={
+          <>
+            <Button onClick={()=>{handleEdit()}}  type="submit" disabled={pending}>
+              {pending ? (
+                <Icon fontSize={24} icon="eos-icons:loading" />
+              ) : (
+                <FormattedMessage
+                  id="event.update"
+                  defaultMessage="Update Event"
+                />
+              )}
+            </Button>
+            <Button variant="outline-dark" title="" onClick={handleClose}>
+              <FormattedMessage defaultMessage="Close" id="btn.close" />
+            </Button>
+          </>
+        }
+      />
+    </>
   );
 }
 
