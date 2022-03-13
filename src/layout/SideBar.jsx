@@ -12,7 +12,7 @@ const SideBar = () => {
     const scrollPosition = document.getElementById("scroll").scrollTop;
     document
       .getElementById("scroll")
-      .scrollTo(scrollPosition, scrollPosition + 100);
+      .scrollTo(0, scrollPosition + 100);
   };
 
   return (

@@ -24,12 +24,13 @@ function TaskModal(props) {
   const [taskTitle, setTaskTitle] = useState(item.content);
   const [projects, setProjects] = useState({ label: "", value: "" });
   const [taskDesc, setTaskDesc] = useState(item.description);
-  const [newTime, setNewTime] = useState({ createIime: item.start_time });
+  const [newTime, setNewTime] = useState({ createIime: item?.start_hour });
   const [startDate, setStartDate] = useState();
   const [projectId, setProjectId] = useState(item.p_id);
   const [oldValue, setOldValue] = useState();
   const [pName, setPaName] = useState();
   const { value, date } = useSelector((state) => state.projectName);
+  console.log(newTime.createIime)
   async function request() {
     // get project and format
     const req = await getProject();
@@ -60,7 +61,7 @@ function TaskModal(props) {
   }
   useEffect(() => {
     setStartDate(new Date(item?.date))
-    setNewTime({ createIime: item?.start_time })
+    setNewTime({ createIime: item?.start_hour })
   }, [item])
   useEffect(() => {
     request();
@@ -178,6 +179,7 @@ function TaskModal(props) {
               <label>
                 <input type="checkbox" className="form-check-input" />
                 <input
+                  className={style.daypoint_input}
                   tyle="text"
                   defaultValue={title}
                   onChange={(e) => setTaskTitle(e.target.value)}

@@ -253,7 +253,7 @@ function HydrationReminderCard() {
         handleClose={handleClose}
         title={
           <FormattedMessage
-            defaultMessage="Hydration Reminder"
+            defaultMessage="Waterday"
             id="app.waterHydretion"
           />
         }
