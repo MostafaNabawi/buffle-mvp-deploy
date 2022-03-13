@@ -217,7 +217,7 @@ button.btn-primary {
   color: white;
   position: absolute !important;
   z-index: 100 !important;
-  margin-left: 10% !important;
+  margin-left: 15% !important;
 }
 .taskManaterProgress {
   position: relative !important ;
