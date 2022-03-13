@@ -74,7 +74,7 @@ function BreackplanFrom({
         getBreakPlan();
         addToast(
           <FormattedMessage
-            defaultMessage="New breack plan created Susseccfully"
+            defaultMessage="Lunchway created Susseccfully"
             id="breakPlan.creatSusseccfully"
           />,
           {
@@ -393,7 +393,7 @@ function BreackplanFrom({
       });
     }
   };
-  // delete break plan
+  // delete lunchway
   const handleDelete = async (id) => {
     const titleMsg =
       context.getCurrent() === 0 ? "Are you sure?" : "Bist du dir sicher?";
@@ -584,7 +584,7 @@ function BreackplanFrom({
             <>
               <Card.Title className={style.tilte}>
                 <FormattedMessage
-                  defaultMessage="Invite to your break plan"
+                  defaultMessage="Invite to your lunchway"
                   id="breakPlan.inviteToPlan"
                 />
               </Card.Title>
@@ -638,7 +638,7 @@ function BreackplanFrom({
                   </>
                 ) : (
                   <FormattedMessage
-                    defaultMessage="New break plan"
+                    defaultMessage="New lunchway"
                     id="breakPlan.Create"
                   />
                 )}
