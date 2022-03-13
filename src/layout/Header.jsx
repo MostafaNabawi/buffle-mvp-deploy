@@ -147,6 +147,7 @@ const Header = () => {
   };
   // accept Joni
   const handleAccept = async (id, from) => {
+    setNotificatiion(notification.filter(noti=>noti._id != id))
     const user = JSON.parse(localStorage.getItem("user"));
     await fetch(`${API_URL}/breakPlan/accept`, {
       method: "POST",
@@ -161,14 +162,11 @@ const Header = () => {
         fullName: user.first_name + " " + user.last_name,
         icon: userData?.avatar?.key || "",
       }),
-    }).then(async (res) => {
-      if (res.status) {
-        getNotification(true);
-      }
     });
   };
   // Rejeact
   const handleReject = async (id) => {
+    setNotificatiion(notification.filter(noti=>noti._id != id))
     await fetch(`${API_URL}/breakPlan/reject`, {
       method: "DELETE",
       credentials: "include",
@@ -179,11 +177,7 @@ const Header = () => {
       body: JSON.stringify({
         notId: id,
       }),
-    }).then(async (res) => {
-      if (res.status === 200) {
-        getNotification(true);
-      }
-    });
+    })
   };
   //
   const handleAcceptTime = async (id, userId, newTime, breakId, breakName) => {
@@ -364,7 +358,6 @@ const Header = () => {
         localStorage.removeItem("current");
         navigate("/");
       }
-      // console.log("current status => ", req.current);
     }
     async function getScrrenRemainder() {
       const req = await fetch(`${API_URL}/screen_reminder/get`, {
