@@ -348,10 +348,15 @@ const FreelancerRegister = () => {
                     </Col>
                   </Row>
                   <Col xl="12">
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                      <Form.Label className={style.lableForm}>
+                    <Form.Group className="mb-3">
+                      <Form.Label
+                        className={style.lableForm}
+                        style={{
+                          textTransform: "none",
+                        }}
+                      >
                         <FormattedMessage
-                          defaultMessage="How did you hear about buffle?"
+                          defaultMessage="How do you know about Buffle?"
                           id="how"
                         />
                       </Form.Label>
