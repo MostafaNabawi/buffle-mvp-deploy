@@ -80,7 +80,6 @@ function EditMoney() {
               autoDismiss: 4000,
             }
           );
-          navigate("/money-pool");
         }
       })
       .catch((err) => {
