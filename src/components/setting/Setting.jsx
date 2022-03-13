@@ -101,10 +101,16 @@ const Setting = () => {
           );
           setEmail("");
         } else {
-          addToast(<FormattedMessage id="emailNotFound" defaultMessage="Can't find this email. Please try another one." />, {
-            appearance: "error",
-            autoDismiss: 4000,
-          });
+          addToast(
+            <FormattedMessage
+              id="emailNotFound"
+              defaultMessage="Can't find this email. Please try another one."
+            />,
+            {
+              appearance: "error",
+              autoDismiss: 4000,
+            }
+          );
           setLoading(false);
         }
       });
@@ -170,7 +176,7 @@ const Setting = () => {
         );
         addToast(
           <FormattedMessage
-            defaultMessage="Preference updated."
+            defaultMessage="Settings updated."
             id="pref.update"
           />,
           {
@@ -201,7 +207,7 @@ const Setting = () => {
           <ListGroup variant="flush">
             <ListGroup.Item className="pb-3">
               <h4>
-                <FormattedMessage defaultMessage="Preference" id="prefrence" />
+                <FormattedMessage defaultMessage="Settings" id="settings" />
               </h4>
             </ListGroup.Item>
             <Form onSubmit={handlePrefrence}>
@@ -284,12 +290,20 @@ const Setting = () => {
           <Card>
             <ListGroup variant="flush">
               <ListGroup.Item className="pb-3">
-                <h4><FormattedMessage id="inviteLink" defaultMessage="Invite Link" /></h4>
+                <h4>
+                  <FormattedMessage
+                    id="inviteLink"
+                    defaultMessage="Invite Link"
+                  />
+                </h4>
                 {copyValue ? (
                   <i>{copyValue}</i>
                 ) : (
                   <p className="mt-2">
-                    <FormattedMessage id="generateLink" defaultMessage="Click to regeneration button for generate invite link" />
+                    <FormattedMessage
+                      id="generateLink"
+                      defaultMessage="Click to regeneration button for generate invite link"
+                    />
                   </p>
                 )}
               </ListGroup.Item>
@@ -305,7 +319,14 @@ const Setting = () => {
                     className={style.btn}
                   >
                     <Icon icon="akar-icons:copy" />
-                    {copied ? <FormattedMessage id="Copied" defaultMessage="Copied" /> : <FormattedMessage id="copy.clip" defaultMessage="Copy to clipboard" />}
+                    {copied ? (
+                      <FormattedMessage id="Copied" defaultMessage="Copied" />
+                    ) : (
+                      <FormattedMessage
+                        id="copy.clip"
+                        defaultMessage="Copy to clipboard"
+                      />
+                    )}
                   </Button>
                 </CopyToClipboard>
                 <Button
@@ -349,7 +370,11 @@ const Setting = () => {
                       )}
                     </FormattedMessage>
                     <Button disabled={loading} variant="primary" type="submit">
-                      {loading ? <PulseLoader size={10} /> : <FormattedMessage id="btn.send" defaultMessage="Send" />}
+                      {loading ? (
+                        <PulseLoader size={10} />
+                      ) : (
+                        <FormattedMessage id="btn.send" defaultMessage="Send" />
+                      )}
                     </Button>
                   </Form.Group>
                 </Form>

@@ -390,10 +390,6 @@ const UserProfile = () => {
   return (
     <>
       <Col className="card" xl={8}>
-        <h1 className={`${style.title} text-center`}>
-          {" "}
-          <FormattedMessage defaultMessage="Your Account" id="acc.your" />{" "}
-        </h1>
         <Form onSubmit={handleEdite} encType="multipart/form-data">
           <Row>
             <Col xl={4}>
@@ -563,7 +559,7 @@ const UserProfile = () => {
               </InputGroup>
             </Col>
           </Row>
-          <Button  type="submit">
+          <Button type="submit">
             {loading ? (
               <Icon color="blaco" fontSize={24} icon="eos-icons:loading" />
             ) : (
@@ -613,7 +609,7 @@ const UserProfile = () => {
               disabled={addLoading}
             >
               {addLoading ? (
-                <DotLoader  size={10} />
+                <DotLoader size={10} />
               ) : (
                 <FormattedMessage defaultMessage="Add" id="btn.add" />
               )}
