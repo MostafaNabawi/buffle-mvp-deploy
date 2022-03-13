@@ -693,7 +693,7 @@ const Header = () => {
               </div>
             </NavDropdown>
           </div>
-          <div className="header-icon navy-blue text-center pt-2">
+          <div className="header-icon navy-blue text-center pro-icon">
             <NavDropdown
               title={
                 <RenderImage code={userData?.avatar?.key || ""} type={1} />

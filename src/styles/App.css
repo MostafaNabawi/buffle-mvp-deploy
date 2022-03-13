@@ -1106,3 +1106,6 @@ div.check-box > input {
 .today-col .col-header > span {
   color: #ffbb29;
 }
+.pro-icon{
+  padding-top: 6px !important;
+}
