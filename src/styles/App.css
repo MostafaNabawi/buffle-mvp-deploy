@@ -207,17 +207,56 @@ button.btn-primary {
   color: #4922ff !important;
   margin-left: 20% !important;
 } */
-.showTime{
+.showTime {
   position: absolute !important;
   z-index: 100 !important;
   color: #4922ff !important;
-  margin-left: 40% !important;
+  margin-left: 15% !important;
+}
+.showHourTime {
+  position: absolute !important;
+  z-index: 100 !important;
+  color: #4922ff !important;
+  margin-left: 15% !important;
+}
+.showMinTime {
+  position: absolute !important;
+  z-index: 100 !important;
+  color: #4922ff !important;
+  margin-left: 12.5% !important;
+}
+.showSecTime {
+  position: absolute !important;
+  z-index: 100 !important;
+  color: #4922ff !important;
+  margin-left: 0% !important;
 }
 .showTimeReverse {
   color: white;
   position: absolute !important;
   z-index: 100 !important;
   margin-left: 15% !important;
+}
+.showHourReverse {
+  color: white;
+  position: absolute !important;
+  z-index: 100 !important;
+  margin-left: 5% !important;
+}
+.showMinuteReverse {
+  color: white !important;
+  position: absolute !important;
+  z-index: 100 !important;
+  margin-left: 12.5% !important;
+}
+.showSecondReverse {
+  color: white !important;
+  position: absolute !important;
+  z-index: 100 !important;
+  margin-left: 20% !important;
+}
+.flex-task-progress {
+  margin-top: -15px !important;
 }
 .taskManaterProgress {
   position: relative !important ;
