@@ -277,10 +277,12 @@ function NewEvent() {
       .then((res) => {
         setPending(false);
         if (res.status === 200) {
-          document.getElementById(id).innerHTML=eventName
-          if(desc!=""){
-            document.getElementById("des"+id).innerHTML=desc
-          }
+          request();
+          // document.getElementById(id).innerHTML=eventName
+          // if(desc != ""){
+          //   document.getElementById("des"+id).innerHTML=desc
+          // }
+          //
           addToast(
             <FormattedMessage
               defaultMessage="Event updated"
@@ -291,7 +293,7 @@ function NewEvent() {
               autoDismiss: 4000,
             }
           );
-          handleClose()
+          handleClose();
         }
       })
       .catch((err) => {
@@ -622,10 +624,15 @@ function NewEvent() {
                         key={`ev-list-${i}`}
                       >
                         <th scope="row">{++i}</th>
-                        <td id={list._id} onClick={() => handleRowClick(list._id)}>
+                        <td
+                          id={list._id}
+                          onClick={() => handleRowClick(list._id)}
+                        >
                           {list.event}
                         </td>
-                        <td id={`des${list._id}`}>{list.description || "N/A"}</td>
+                        <td id={`des${list._id}`}>
+                          {list.description || "N/A"}
+                        </td>
                         {/* <td>{list.currency}</td> */}
                         <td>
                           {moment(list.created_at).format("MMMM DD, YYYY")}
@@ -729,7 +736,13 @@ function NewEvent() {
         }
         footer={
           <>
-            <Button onClick={()=>{handleEdit()}}  type="submit" disabled={pending}>
+            <Button
+              onClick={() => {
+                handleEdit();
+              }}
+              type="submit"
+              disabled={pending}
+            >
               {pending ? (
                 <Icon fontSize={24} icon="eos-icons:loading" />
               ) : (

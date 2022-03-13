@@ -28,7 +28,6 @@ import UserListAdmin from "./components/user/userList/UserListAdmin";
 import SpotifyLogin from "./components/spotify/Login";
 import Hashtag from "./pages/hashtag";
 import { useSelector } from "react-redux";
-import EditMoney from "./components/moneyPool/EditMoney";
 function App() {
   const { space } = useSelector((state) => state.user);
   const [addUserManagment, setAddUserManagment] = useState({
@@ -72,7 +71,6 @@ function App() {
             <Route index element={<NewEvent />} />
             <Route path="event/:id" element={<Event />} />
             <Route path="event/expenses/:id" element={<Expenses />} />
-            <Route path="edit/:id" element={<EditMoney />} />
           </Route>
           <Route path="profile" element={<Profile />} />
           <Route path="setting" element={<Setting />} />
