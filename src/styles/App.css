@@ -201,17 +201,17 @@ button.btn-primary {
   color: black !important;
   margin-left: 6% !important;
 }
-.showTimeTask2 {
+/* .showTimeTask2 {
   position: absolute !important;
   z-index: 100 !important;
   color: #4922ff !important;
   margin-left: 20% !important;
-}
+} */
 .showTimeTask {
   position: absolute !important;
   z-index: 100 !important;
-  color: #fff !important;
-  margin-left: 20% !important;
+  color: #4922ff !important;
+  margin-left: 40% !important;
 }
 .showTimeReverse {
   color: white;
@@ -615,12 +615,12 @@ ul.sidebar-list-scroll::-webkit-scrollbar {
   cursor: pointer !important;
   width: 35px !important;
   height: 35px !important;
-  transition: all 0.15s ease-in;
 }
 .feel-icon:hover {
   margin-top: -2px !important;
   width: 42px !important;
   height: 42px !important;
+  transform: scale(1.1);
 }
 .card-feel-icon {
   display: inline-flex;
