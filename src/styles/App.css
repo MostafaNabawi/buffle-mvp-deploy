@@ -610,11 +610,11 @@ ul.sidebar-list-scroll::-webkit-scrollbar {
   width: 35px !important;
   height: 35px !important;
 }
-.feel-icon:hover{
+.feel-icon:hover {
   margin-top: -2px !important;
   width: 42px !important;
   height: 42px !important;
-  transform:scale(1.1)
+  transform: scale(1.1);
 }
 .card-feel-icon {
   display: inline-flex;
@@ -914,7 +914,7 @@ div.check-box > input {
 }
 .selectTags {
   width: 90% !important;
-  color: green;
+  color: #4922ff;
 }
 .btnAdd {
   color: green;
