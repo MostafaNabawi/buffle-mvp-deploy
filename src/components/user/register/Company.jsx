@@ -18,7 +18,6 @@ const CompanyRegister = () => {
     l_name: "",
     email: "",
     c_name: "",
-    c_size: "",
     tax_id: "",
     website: "",
     head_office: "",
@@ -28,6 +27,7 @@ const CompanyRegister = () => {
     street: "",
     postal: "",
     type: 1,
+    hnumber: "",
   });
   const [loading, setLoading] = useState(false);
   const [emailAlreadyExist, setEmailAlreadyExist] = useState(false);
@@ -73,11 +73,14 @@ const CompanyRegister = () => {
     // validate
     let errors = 0;
     for (const key in inputs) {
-      if (!inputs[key]) {
+      console.log("Keys", key);
+      if (key !== "tax_id" && key !== "website" && !inputs[key]) {
         errors += 1;
         break;
       }
     }
+    console.log("Form submited❤❤", errors);
+    return;
     if (errors > 0) {
       addToast(
         <FormattedMessage
@@ -156,7 +159,7 @@ const CompanyRegister = () => {
                 <div className={`${style.headerTitle} mt-3`}>
                   <FormattedMessage
                     id="personalAndCompanyInfo"
-                    defaultMessage="Enter your personal and campany info"
+                    defaultMessage="Enter your personal and company info"
                   />
                 </div>
               </div>
@@ -274,8 +277,8 @@ const CompanyRegister = () => {
                         </FormattedMessage>
                       </Form.Group>
                     </Col>
-                    <Col xl="6">
-                      <Form.Group className="mb-4">
+                    {/* <Col xl="6"> */}
+                    {/* <Form.Group className="mb-4">
                         <Form.Label className={style.lableForm}>
                           <FormattedMessage
                             defaultMessage="Company Size"
@@ -307,8 +310,8 @@ const CompanyRegister = () => {
                           className={style.arrowSelect}
                           icon="ep:arrow-down-bold"
                         />
-                      </Form.Group>
-                    </Col>
+                      </Form.Group> */}
+                    {/* </Col> */}
                     <Col xl="6">
                       <Form.Group className="mb-4">
                         <Form.Label className={style.lableForm}>
@@ -316,13 +319,12 @@ const CompanyRegister = () => {
                             defaultMessage="Tax ID"
                             id="taxid"
                           />{" "}
-                          *
                         </Form.Label>
                         <FormattedMessage defaultMessage="Tax ID" id="taxid">
                           {(msg) => (
                             <Form.Control
                               className={style.formInput}
-                              type="number"
+                              type="text"
                               placeholder={msg}
                               name="tax_id"
                               disabled={loading}
@@ -341,15 +343,11 @@ const CompanyRegister = () => {
                       <Form.Group className="mb-4" controlId="formBasicEmail">
                         <Form.Label className={style.lableForm}>
                           <FormattedMessage
-                            defaultMessage="Web Site"
+                            defaultMessage="Website"
                             id="website"
                           />{" "}
-                          *
                         </Form.Label>
-                        <FormattedMessage
-                          defaultMessage="Web Site"
-                          id="website"
-                        >
+                        <FormattedMessage defaultMessage="Website" id="website">
                           {(msg) => (
                             <Form.Control
                               className={style.formInput}
@@ -374,7 +372,8 @@ const CompanyRegister = () => {
                           <FormattedMessage
                             defaultMessage="Head Office"
                             id="headOffice"
-                          />{" "}
+                          />
+                          *
                         </Form.Label>
                         <FormattedMessage
                           defaultMessage="Head Office"
@@ -446,7 +445,7 @@ const CompanyRegister = () => {
                         />
                       </Form.Group>
                     </Col>
-                    <Col xl="3">
+                    <Col xl="6">
                       <Form.Group className="mb-4">
                         <Form.Label className={style.lableForm}>
                           <FormattedMessage defaultMessage="State" id="state" />{" "}
@@ -480,14 +479,14 @@ const CompanyRegister = () => {
                         />
                       </Form.Group>
                     </Col>
-                    <Col xl="3">
+                    <Col xl="6">
                       <Form.Group className="mb-4">
                         <Form.Label className={style.lableForm}>
                           <FormattedMessage defaultMessage="City" id="city" /> *
                         </Form.Label>
-                        <Form.Select
+                        <Form.Control
                           className={style.formInput}
-                          aria-label="Default select example"
+                          type="text"
                           name="city"
                           disabled={loading}
                           onChange={(e) =>
@@ -496,25 +495,42 @@ const CompanyRegister = () => {
                               [e.target.name]: e.target.value,
                             })
                           }
-                        >
-                          <FormattedMessage defaultMessage="City" id="city">
-                            {(msg) => <option value="">{msg}</option>}
-                          </FormattedMessage>
-                          {state &&
-                            state.map((s) => (
-                              <option key={s} value={s}>
-                                {s}
-                              </option>
-                            ))}
-                        </Form.Select>
-                        <Icon
-                          className={style.arrowSelect}
-                          icon="ep:arrow-down-bold"
                         />
                       </Form.Group>
                     </Col>
 
-                    <Col xl="6">
+                    <Col xl="4">
+                      <Form.Group className="mb-4">
+                        <Form.Label className={style.lableForm}>
+                          <FormattedMessage
+                            defaultMessage="Postal code"
+                            id="postal"
+                          />{" "}
+                          *
+                        </Form.Label>
+                        <FormattedMessage
+                          defaultMessage="Postal code"
+                          id="postal"
+                        >
+                          {(msg) => (
+                            <Form.Control
+                              className={style.formInput}
+                              type="text"
+                              placeholder={msg}
+                              name="postal"
+                              disabled={loading}
+                              onChange={(e) =>
+                                setInputs({
+                                  ...inputs,
+                                  [e.target.name]: e.target.value,
+                                })
+                              }
+                            />
+                          )}
+                        </FormattedMessage>
+                      </Form.Group>
+                    </Col>
+                    <Col xl="4">
                       <Form.Group className="mb-4">
                         <Form.Label className={style.lableForm}>
                           <FormattedMessage
@@ -542,25 +558,25 @@ const CompanyRegister = () => {
                         </FormattedMessage>
                       </Form.Group>
                     </Col>
-                    <Col xl="6">
+                    <Col xl="4">
                       <Form.Group className="mb-4">
                         <Form.Label className={style.lableForm}>
                           <FormattedMessage
-                            defaultMessage="Postal code"
-                            id="postal"
+                            defaultMessage="HouseNumber"
+                            id="hnumber"
                           />{" "}
                           *
                         </Form.Label>
                         <FormattedMessage
-                          defaultMessage="Postal code"
-                          id="postal"
+                          defaultMessage="House Number"
+                          id="hnumber"
                         >
                           {(msg) => (
                             <Form.Control
                               className={style.formInput}
-                              type="number"
+                              type="text"
                               placeholder={msg}
-                              name="postal"
+                              name="hnumber"
                               disabled={loading}
                               onChange={(e) =>
                                 setInputs({

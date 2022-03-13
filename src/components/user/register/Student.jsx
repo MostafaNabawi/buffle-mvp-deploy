@@ -291,7 +291,7 @@ const StudentRegister = () => {
                         </Form.Label>
                         <Form.Control
                           className={style.formInput}
-                          type="number"
+                          type="text"
                           placeholder="Semester"
                           name="semester"
                           disabled={loading}
