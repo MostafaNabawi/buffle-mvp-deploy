@@ -610,6 +610,12 @@ ul.sidebar-list-scroll::-webkit-scrollbar {
   width: 35px !important;
   height: 35px !important;
 }
+.feel-icon:hover{
+  margin-top: -2px !important;
+  width: 42px !important;
+  height: 42px !important;
+  transform:scale(1.1)
+}
 .card-feel-icon {
   display: inline-flex;
   justify-content: space-between;
