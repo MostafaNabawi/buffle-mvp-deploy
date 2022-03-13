@@ -714,8 +714,8 @@ function BreackplanFrom({
                     <FormattedMessage defaultMessage="Edit" id="btn.edit" />
                   ) : (
                     <FormattedMessage
-                      defaultMessage="Create New Plan"
-                      id="btn.CreateNewPlan"
+                      defaultMessage="Save"
+                      id="btn.save"
                     />
                   )}
                 </Button>
