@@ -51,7 +51,7 @@ export default function Felling() {
           }
         }
       });
-    } catch { }
+    } catch {}
   };
   useEffect(() => {
     getFeel();
@@ -61,41 +61,41 @@ export default function Felling() {
       {data && isToday ? (
         <>
           <Image
-            title="Smiling"
-            className={`feel-icon ${data[0]?.feel === "smiling" ? style.selectFeel : ""
-              }`}
+            className={`feel-icon ${
+              data[0]?.feel === "smiling" ? style.selectFeel : ""
+            }`}
             src="/icone/1.png"
             alt="vector image"
             onClick={() => setFeel("smiling")}
           />
           <Image
-            title="Happy"
-            className={`feel-icon ${data[0]?.feel === "happy" ? style.selectFeel : ""
-              }`}
+            className={`feel-icon ${
+              data[0]?.feel === "happy" ? style.selectFeel : ""
+            }`}
             src="/icone/2.png"
             alt="vector image"
             onClick={() => setFeel("happy")}
           />
           <Image
-            title="Normal"
-            className={`feel-icon ${data[0]?.feel === "normal" ? style.selectFeel : ""
-              }`}
+            className={`feel-icon ${
+              data[0]?.feel === "normal" ? style.selectFeel : ""
+            }`}
             src="/icone/3.png"
             alt="vector image"
             onClick={() => setFeel("normal")}
           />
           <Image
-            title="Sad"
-            className={`feel-icon ${data[0]?.feel === "said" ? style.selectFeel : ""
-              }`}
+            className={`feel-icon ${
+              data[0]?.feel === "said" ? style.selectFeel : ""
+            }`}
             src="/icone/4.png"
             alt="vector image"
             onClick={() => setFeel("sad")}
           />
           <Image
-            title="Crying"
-            className={`feel-icon ${data[0]?.feel === "crying" ? style.selectFeel : ""
-              }`}
+            className={`feel-icon ${
+              data[0]?.feel === "crying" ? style.selectFeel : ""
+            }`}
             src="/icone/5.png"
             alt="vector image"
             onClick={() => setFeel("crying")}
@@ -104,35 +104,30 @@ export default function Felling() {
       ) : (
         <>
           <Image
-            title="Smiling"
             className={`feel-icon`}
             src="/icone/1.png"
             alt="vector image"
             onClick={() => setFeel("smiling")}
           />
           <Image
-            title="Happy"
             className={`feel-icon`}
             src="/icone/2.png"
             alt="vector image"
             onClick={() => setFeel("happy")}
           />
           <Image
-            title="Normal"
             className={`feel-icon`}
             src="/icone/3.png"
             alt="vector image"
             onClick={() => setFeel("normal")}
           />
           <Image
-            title="Said"
             className={`feel-icon`}
             src="/icone/4.png"
             alt="vector image"
             onClick={() => setFeel("said")}
           />
           <Image
-            title="Crying"
             className={`feel-icon`}
             src="/icone/5.png"
             alt="vector image"
