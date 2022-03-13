@@ -199,13 +199,19 @@ button.btn-primary {
   position: absolute !important;
   z-index: 100 !important;
   color: black !important;
+  margin-left: 6% !important;
+}
+.showTimeTask2 {
+  position: absolute !important;
+  z-index: 100 !important;
+  color: #4922ff !important;
   margin-left: 20% !important;
 }
 .showTimeTask {
   position: absolute !important;
   z-index: 100 !important;
-  color: black !important;
-  margin-left: 30% !important;
+  color: #fff !important;
+  margin-left: 20% !important;
 }
 .showTimeReverse {
   color: white;
