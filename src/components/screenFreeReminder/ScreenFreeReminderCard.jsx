@@ -291,7 +291,7 @@ function ScreenFreeReminderCard() {
           action={
             <>
               <i
-                title="Set your screen free reminder"
+                title="Set your screenlife"
                 onClick={() => {
                   // getUpdataData ()
                   setModalShow(true);
@@ -370,8 +370,8 @@ function ScreenFreeReminderCard() {
         handleClose={handleClose}
         title={
           <FormattedMessage
-            id="app.screenR"
-            defaultMessage="Set your screen free reminder"
+            id="app.screen"
+            defaultMessage="Set your screenlife"
           />
         }
         body={
