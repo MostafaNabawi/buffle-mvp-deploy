@@ -195,26 +195,29 @@ button.btn-primary {
   border-bottom: 0;
   border-left: 0px !important;
 }
-.showTime {
+/* .showTime {
   position: absolute !important;
   z-index: 100 !important;
   color: black !important;
   margin-left: 6% !important;
-}
+} */
 /* .showTimeTask2 {
   position: absolute !important;
   z-index: 100 !important;
   color: #4922ff !important;
   margin-left: 20% !important;
 } */
-.showTimeTask {
+.showTime{
   position: absolute !important;
   z-index: 100 !important;
   color: #4922ff !important;
-  margin-left: 40% !important;
+  margin-left: 30% !important;
 }
 .showTimeReverse {
   color: white;
+  position: absolute !important;
+  z-index: 100 !important;
+  margin-left: 30% !important;
 }
 .taskManaterProgress {
   position: relative !important ;
