@@ -164,7 +164,7 @@ const StudentRegister = () => {
               <div className={`${style.header}  text-center pt-4`}>
                 <div className={style.floatLeft}>1/2</div>
                 <Image src="/favicon.ico" />
-                <div className={`${style.headerTitle} mt-3`}>
+                <div className={`${style.headerTitle} my-3`}>
                   <FormattedMessage
                     id="enterInfo"
                     defaultMessage="Enter your info"

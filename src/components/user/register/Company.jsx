@@ -155,7 +155,7 @@ const CompanyRegister = () => {
               <div className={`${style.header}  text-center`}>
                 <div className={style.floatLeft}>1/2</div>
                 <Image src="/favicon.ico" />
-                <div className={`${style.headerTitle} mt-3`}>
+                <div className={`${style.headerTitle} my-3`}>
                   <FormattedMessage
                     id="personalAndCompanyInfo"
                     defaultMessage="Enter your personal and company info"

@@ -39,6 +39,7 @@ const UserProfile = () => {
   const [addLoading, setAddLoading] = useState(false);
   const [imgError, setImgError] = useState("");
   const preview = useRef();
+  const photoRef = useRef();
   const [file, setFile] = useState(null);
   const setUsetLocalStorage = () => {
     try {
@@ -403,17 +404,20 @@ const UserProfile = () => {
                     width: "150px",
                     height: "150px",
                     objectFit: "contain",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    photoRef.current.click();
                   }}
                 />
-                <Form.Label className={style.lablePhoto} htmlFor="photoUser">
-                  <Icon icon="uil:image-upload" />
-                </Form.Label>
+
                 <Form.Control
                   className={style.hide}
                   id="photoUser"
                   type="file"
                   accept="image/jpg , image/png , image/jpeg"
                   name="image"
+                  ref={photoRef}
                   onChange={handlePreview}
                 />
               </Form.Group>

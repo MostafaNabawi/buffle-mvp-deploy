@@ -57,7 +57,7 @@ function OverView({ data }) {
                   {" "}
                   <FormattedMessage
                     id="event.groupCost"
-                    defaultMessage="This event cost the group"
+                    defaultMessage="This event costs the group"
                   />
                 </td>
                 <th>{data.groupCost}</th>
@@ -68,7 +68,7 @@ function OverView({ data }) {
                 <td>
                   <FormattedMessage
                     id="event.costYou"
-                    defaultMessage="It cost you"
+                    defaultMessage="It costs you"
                   />
                 </td>
                 <th>{data.costYou}</th>
