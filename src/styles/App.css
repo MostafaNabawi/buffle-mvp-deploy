@@ -642,7 +642,7 @@ ul.sidebar-list-scroll::-webkit-scrollbar {
   display: flex;
   align-items: center;
   letter-spacing: -0.02em;
-  color: #a3aed0;
+  color: var(--secondary-dark-gray);
 }
 .card_subtitle {
   padding-left: 40px !important;
