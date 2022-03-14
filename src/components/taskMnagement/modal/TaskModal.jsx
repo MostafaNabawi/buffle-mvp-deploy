@@ -30,7 +30,6 @@ function TaskModal(props) {
   const [oldValue, setOldValue] = useState();
   const [pName, setPaName] = useState();
   const { value, date } = useSelector((state) => state.projectName);
-  console.log(newTime.createIime)
   async function request() {
     // get project and format
     const req = await getProject();

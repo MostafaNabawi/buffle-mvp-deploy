@@ -175,7 +175,15 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
       }
     });
   };
+  let curr = new Date
+  let week = []
 
+  for (let i = 1; i <= 7; i++) {
+    let first = curr.getDate() - curr.getDay() + i
+    let day = new Date(curr.setDate(first)).toISOString().slice(0, 10)
+    week.push(day)
+
+  }
   return (
     <Row>
       {statuses.map((s) => {
@@ -183,7 +191,7 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
           <Col key={s.status} className={`col-wrapper secondary-dark ${moment(new Date()).format('dddd') === s.status ? 'today-col' : ''}`}>
             <div className={"col-header"}>
               <span ><FormattedMessage defaultMessage={s.status} id={`day.${s.status}`} /></span>
-              <span className="important-today-week-date">{moment().day(s.id).format('DD.MM')}</span>
+              <span className="important-today-week-date">{moment(week[s.day]).format('DD.MM')}</span>
             </div>
             <hr />
             <DropWrapper onDrop={onDrop} status={s.status} idNumber={s.id} handleDrop={handleDrop}>
@@ -227,7 +235,7 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
           </Col>
         );
       })}
-    </Row>
+    </Row >
   );
 };
 export default TaskManagement;
