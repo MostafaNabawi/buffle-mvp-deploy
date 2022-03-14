@@ -100,7 +100,7 @@ const StepTwoRegister = () => {
           postal: already.postal,
           street: already.street,
           houseNumber: already?.hnumber,
-          office: already.head_office,
+          companySize: already.c_size,
         }),
       });
       const res = await req.json();
