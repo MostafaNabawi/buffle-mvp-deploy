@@ -166,8 +166,8 @@ const StudentRegister = () => {
                 <Image src="/favicon.ico" />
                 <div className={`${style.headerTitle} my-3`}>
                   <FormattedMessage
-                    id="enterInfo"
-                    defaultMessage="Enter your info"
+                    id="personalAndCompanyInfo"
+                    defaultMessage="Fields with an * are required"
                   />
                 </div>
               </div>
@@ -184,8 +184,8 @@ const StudentRegister = () => {
                           *
                         </Form.Label>
                         <FormattedMessage
-                          defaultMessage="First Name"
-                          id="fname"
+                          defaultMessage="Hi, my name is..."
+                          id="fname.plc"
                         >
                           {(msg) => (
                             <Form.Control
@@ -214,7 +214,10 @@ const StudentRegister = () => {
                           />{" "}
                           *
                         </Form.Label>
-                        <FormattedMessage defaultMessage="Last Name" id="lname">
+                        <FormattedMessage
+                          defaultMessage="My last name is"
+                          id="lname.plc"
+                        >
                           {(msg) => (
                             <Form.Control
                               className={style.formInput}
@@ -239,20 +242,27 @@ const StudentRegister = () => {
                       <Form.Label className={style.lableForm}>
                         E-mail *
                       </Form.Label>
-                      <Form.Control
-                        className={style.formInput}
-                        type="text"
-                        placeholder="E-mail"
-                        name="email"
-                        disabled={loading}
-                        onChange={(e) =>
-                          setInputs({
-                            ...inputs,
-                            [e.target.name]: e.target.value,
-                          })
-                        }
-                        onBlur={(e) => emailExist(e.target.value)}
-                      />
+                      <FormattedMessage
+                        defaultMessage="Your E-Mail address"
+                        id="email.stu.plc"
+                      >
+                        {(msg) => (
+                          <Form.Control
+                            className={style.formInput}
+                            type="text"
+                            placeholder={msg}
+                            name="email"
+                            disabled={loading}
+                            onChange={(e) =>
+                              setInputs({
+                                ...inputs,
+                                [e.target.name]: e.target.value,
+                              })
+                            }
+                            onBlur={(e) => emailExist(e.target.value)}
+                          />
+                        )}
+                      </FormattedMessage>
                     </Form.Group>
                   </Col>
                   <Row>
@@ -265,7 +275,10 @@ const StudentRegister = () => {
                           />{" "}
                           *
                         </Form.Label>
-                        <FormattedMessage defaultMessage="University" id="un">
+                        <FormattedMessage
+                          defaultMessage="Which university?"
+                          id="un.plc"
+                        >
                           {(msg) => (
                             <Form.Control
                               className={style.formInput}
@@ -289,19 +302,26 @@ const StudentRegister = () => {
                         <Form.Label className={style.lableForm}>
                           Semester *
                         </Form.Label>
-                        <Form.Control
-                          className={style.formInput}
-                          type="text"
-                          placeholder="Semester"
-                          name="semester"
-                          disabled={loading}
-                          onChange={(e) =>
-                            setInputs({
-                              ...inputs,
-                              [e.target.name]: e.target.value,
-                            })
-                          }
-                        />
+                        <FormattedMessage
+                          defaultMessage="Which semester?"
+                          id="sem.plc"
+                        >
+                          {(msg) => (
+                            <Form.Control
+                              className={style.formInput}
+                              type="text"
+                              placeholder={msg}
+                              name="semester"
+                              disabled={loading}
+                              onChange={(e) =>
+                                setInputs({
+                                  ...inputs,
+                                  [e.target.name]: e.target.value,
+                                })
+                              }
+                            />
+                          )}
+                        </FormattedMessage>
                       </Form.Group>
                     </Col>
                   </Row>
@@ -311,7 +331,10 @@ const StudentRegister = () => {
                         <FormattedMessage defaultMessage="Studies" id="study" />{" "}
                         *
                       </Form.Label>
-                      <FormattedMessage defaultMessage="Studies" id="study">
+                      <FormattedMessage
+                        defaultMessage="What do you study?"
+                        id="study.plc"
+                      >
                         {(msg) => (
                           <Form.Control
                             className={style.formInput}
@@ -354,10 +377,14 @@ const StudentRegister = () => {
                           aria-label="Default select example"
                         >
                           <FormattedMessage
-                            defaultMessage="Country"
-                            id="country"
+                            defaultMessage="List in english"
+                            id="country.plc"
                           >
-                            {(msg) => <option value="">{msg}</option>}
+                            {(msg) => (
+                              <option value="" selected disabled>
+                                {msg}
+                              </option>
+                            )}
                           </FormattedMessage>
                           {allCountry.map((country) => {
                             if (country.name !== "NULL") {
@@ -392,8 +419,15 @@ const StudentRegister = () => {
                             })
                           }
                         >
-                          <FormattedMessage defaultMessage="City" id="city">
-                            {(msg) => <option value="">{msg}</option>}
+                          <FormattedMessage
+                            defaultMessage="the list is also in english"
+                            id="state.plc"
+                          >
+                            {(msg) => (
+                              <option value="" selected disabled>
+                                {msg}
+                              </option>
+                            )}
                           </FormattedMessage>{" "}
                           {state &&
                             state.map((s) => (
@@ -425,6 +459,7 @@ const StudentRegister = () => {
                       <Form.Control
                         as="textarea"
                         rows="3"
+                        placeholder="Google, LinkedIn, Friends…"
                         className={style.formTextarea}
                         type="text"
                         name="heard"
