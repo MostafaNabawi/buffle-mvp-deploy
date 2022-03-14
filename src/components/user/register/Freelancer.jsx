@@ -166,8 +166,8 @@ const FreelancerRegister = () => {
                           *
                         </Form.Label>
                         <FormattedMessage
-                          defaultMessage="First Name"
-                          id="fname"
+                          defaultMessage="Hi, my name is..."
+                          id="fname.plc"
                         >
                           {(msg) => (
                             <Form.Control
@@ -196,7 +196,10 @@ const FreelancerRegister = () => {
                           />{" "}
                           *
                         </Form.Label>
-                        <FormattedMessage defaultMessage="Last Name" id="lname">
+                        <FormattedMessage
+                          defaultMessage="My last name is"
+                          id="lname.plc"
+                        >
                           {(msg) => (
                             <Form.Control
                               className={style.formInput}
@@ -221,20 +224,27 @@ const FreelancerRegister = () => {
                       <Form.Label className={style.lableForm}>
                         E-mail *
                       </Form.Label>
-                      <Form.Control
-                        className={style.formInput}
-                        type="text"
-                        placeholder="E-mail"
-                        name="email"
-                        disabled={loading}
-                        onChange={(e) =>
-                          setInputs({
-                            ...inputs,
-                            [e.target.name]: e.target.value,
-                          })
-                        }
-                        onBlur={(e) => emailExist(e.target.value)}
-                      />
+                      <FormattedMessage
+                        defaultMessage="Your E-Mail address"
+                        id="email.stu.plc"
+                      >
+                        {(msg) => (
+                          <Form.Control
+                            className={style.formInput}
+                            type="text"
+                            placeholder={msg}
+                            name="email"
+                            disabled={loading}
+                            onChange={(e) =>
+                              setInputs({
+                                ...inputs,
+                                [e.target.name]: e.target.value,
+                              })
+                            }
+                            onBlur={(e) => emailExist(e.target.value)}
+                          />
+                        )}
+                      </FormattedMessage>
                     </Form.Group>
                   </Col>
                   <Col xl="12">
@@ -247,8 +257,8 @@ const FreelancerRegister = () => {
                         *
                       </Form.Label>
                       <FormattedMessage
-                        defaultMessage="Profession"
-                        id="profession"
+                        defaultMessage="What are you the best at?"
+                        id="profession.plc"
                       >
                         {(msg) => (
                           <Form.Control
@@ -292,10 +302,14 @@ const FreelancerRegister = () => {
                           aria-label="Default select example"
                         >
                           <FormattedMessage
-                            defaultMessage="Country"
-                            id="country"
+                            defaultMessage="List in english"
+                            id="country.plc"
                           >
-                            {(msg) => <option value="">{msg}</option>}
+                            {(msg) => (
+                              <option value="" selected disabled>
+                                {msg}
+                              </option>
+                            )}
                           </FormattedMessage>
                           {allCountry.map((country) => {
                             if (country.name !== "NULL") {
@@ -330,8 +344,15 @@ const FreelancerRegister = () => {
                             })
                           }
                         >
-                          <FormattedMessage defaultMessage="City" id="city">
-                            {(msg) => <option value="">{msg}</option>}
+                          <FormattedMessage
+                            defaultMessage="the list is also in english"
+                            id="state.plc"
+                          >
+                            {(msg) => (
+                              <option value="" selected disabled>
+                                {msg}
+                              </option>
+                            )}
                           </FormattedMessage>
                           {state &&
                             state.map((s) => (
@@ -360,20 +381,28 @@ const FreelancerRegister = () => {
                           id="how"
                         />
                       </Form.Label>
-                      <Form.Control
-                        as="textarea"
-                        rows="3"
-                        className={style.formTextarea}
-                        type="text"
-                        name="heard"
-                        disabled={loading}
-                        onChange={(e) =>
-                          setInputs({
-                            ...inputs,
-                            [e.target.name]: e.target.value,
-                          })
-                        }
-                      />
+                      <FormattedMessage
+                        defaultMessage="Google, LinkedIn, Friends…"
+                        id="social"
+                      >
+                        {(msg) => (
+                          <Form.Control
+                            as="textarea"
+                            rows="3"
+                            className={style.formTextarea}
+                            placeholder={msg}
+                            type="text"
+                            name="heard"
+                            disabled={loading}
+                            onChange={(e) =>
+                              setInputs({
+                                ...inputs,
+                                [e.target.name]: e.target.value,
+                              })
+                            }
+                          />
+                        )}
+                      </FormattedMessage>
                     </Form.Group>
                   </Col>
                   <Button

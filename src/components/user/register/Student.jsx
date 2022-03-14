@@ -456,21 +456,28 @@ const StudentRegister = () => {
                           id="how"
                         />
                       </Form.Label>
-                      <Form.Control
-                        as="textarea"
-                        rows="3"
-                        placeholder="Google, LinkedIn, Friends…"
-                        className={style.formTextarea}
-                        type="text"
-                        name="heard"
-                        disabled={loading}
-                        onChange={(e) =>
-                          setInputs({
-                            ...inputs,
-                            [e.target.name]: e.target.value,
-                          })
-                        }
-                      />
+                      <FormattedMessage
+                        defaultMessage="Google, LinkedIn, Friends…"
+                        id="social"
+                      >
+                        {(msg) => (
+                          <Form.Control
+                            as="textarea"
+                            rows="3"
+                            placeholder={msg}
+                            className={style.formTextarea}
+                            type="text"
+                            name="heard"
+                            disabled={loading}
+                            onChange={(e) =>
+                              setInputs({
+                                ...inputs,
+                                [e.target.name]: e.target.value,
+                              })
+                            }
+                          />
+                        )}
+                      </FormattedMessage>
                     </Form.Group>
                   </Col>
                   <Button
