@@ -332,10 +332,10 @@ const FreelancerRegister = () => {
                         <Form.Label className={style.lableForm}>
                           <FormattedMessage defaultMessage="City" id="city" /> *
                         </Form.Label>
-                        <Form.Select
+                        <Form.Control
                           className={style.formInput}
-                          aria-label="Default select example"
                           name="city"
+                          type="text"
                           disabled={loading}
                           onChange={(e) =>
                             setInputs({
@@ -343,8 +343,8 @@ const FreelancerRegister = () => {
                               [e.target.name]: e.target.value,
                             })
                           }
-                        >
-                          <FormattedMessage
+                        />
+                        {/* <FormattedMessage
                             defaultMessage="the list is also in english"
                             id="state.plc"
                           >
@@ -360,11 +360,11 @@ const FreelancerRegister = () => {
                                 {s}
                               </option>
                             ))}
-                        </Form.Select>
-                        <Icon
+                        </Form.Select> */}
+                        {/* <Icon
                           className={style.arrowSelect}
                           icon="ep:arrow-down-bold"
-                        />
+                        /> */}
                       </Form.Group>
                     </Col>
                   </Row>
