@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useMemo, useState } from "react";
 import { Row, Col, Image, Form, Button } from "react-bootstrap";
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
@@ -155,6 +155,19 @@ const StudentRegister = () => {
       );
     }
   };
+  const countryLists = useMemo(() => {
+    if (allCountry) {
+      const options = [];
+      for (const key in allCountry) {
+        options.push(
+          <option value={key} key={`cs-${key}`}>
+            {allCountry[key]}
+          </option>
+        );
+      }
+      return options;
+    }
+  }, [allCountry]);
   return (
     <div>
       {!sendEmail ? (
@@ -162,7 +175,6 @@ const StudentRegister = () => {
           <Col xl="12">
             <div className={style.registerCard}>
               <div className={`${style.header}  text-center pt-4`}>
-                <div className={style.floatLeft}>1/2</div>
                 <Image src="/favicon.ico" />
                 <div className={`${style.headerTitle} my-3`}>
                   <FormattedMessage
@@ -386,15 +398,7 @@ const StudentRegister = () => {
                               </option>
                             )}
                           </FormattedMessage>
-                          {allCountry.map((country) => {
-                            if (country.name !== "NULL") {
-                              return (
-                                <option key={country.name} value={country.code}>
-                                  {country.name}
-                                </option>
-                              );
-                            }
-                          })}
+                          {countryLists}
                         </Form.Select>
                         <Icon
                           className={style.arrowSelect}

@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useContext, useMemo } from "react";
 import { Row, Col, Image, Form, Button } from "react-bootstrap";
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
@@ -9,8 +9,10 @@ import { useToasts } from "react-toast-notifications";
 import { checkEmail } from "../../../config/utils";
 import PulseLoader from "react-spinners/PulseLoader";
 import { FormattedMessage } from "react-intl";
+import { Context } from "../../../layout/Wrapper";
 const CompanyRegister = () => {
-  const allCountry = getCountry();
+  const context = useContext(Context);
+  const allCountry = getCountry(context.getCurrent());
   const [state, setState] = useState("");
   const [sendEmail, setSendEmail] = useState(false);
   const [inputs, setInputs] = useState({
@@ -145,7 +147,19 @@ const CompanyRegister = () => {
       );
     }
   };
-
+  const countryLists = useMemo(() => {
+    if (allCountry) {
+      const options = [];
+      for (const key in allCountry) {
+        options.push(
+          <option value={key} key={`cs-${key}`}>
+            {allCountry[key]}
+          </option>
+        );
+      }
+      return options;
+    }
+  }, [allCountry]);
   return (
     <div>
       {!sendEmail ? (
@@ -153,7 +167,6 @@ const CompanyRegister = () => {
           <Col xl="9">
             <div className={style.registerCard}>
               <div className={`${style.header}  text-center`}>
-                <div className={style.floatLeft}>1/2</div>
                 <Image src="/favicon.ico" />
                 <div className={`${style.headerTitle} my-3`}>
                   <FormattedMessage
@@ -341,23 +354,23 @@ const CompanyRegister = () => {
                             id="taxid"
                           />{" "}
                         </Form.Label>
-                        <FormattedMessage defaultMessage="Tax ID" id="taxid">
-                          {(msg) => (
-                            <Form.Control
-                              className={style.formInput}
-                              type="text"
-                              placeholder={msg}
-                              name="tax_id"
-                              disabled={loading}
-                              onChange={(e) =>
-                                setInputs({
-                                  ...inputs,
-                                  [e.target.name]: e.target.value,
-                                })
-                              }
-                            />
-                          )}
-                        </FormattedMessage>
+                        {/* <FormattedMessage defaultMessage="Tax ID" id="taxid"> */}
+                        {/* {(msg) => ( */}
+                        <Form.Control
+                          className={style.formInput}
+                          type="text"
+                          placeholder="089089089"
+                          name="tax_id"
+                          disabled={loading}
+                          onChange={(e) =>
+                            setInputs({
+                              ...inputs,
+                              [e.target.name]: e.target.value,
+                            })
+                          }
+                        />
+                        {/* )}
+                        </FormattedMessage> */}
                       </Form.Group>
                     </Col>
                     <Col xl="6">
@@ -368,23 +381,23 @@ const CompanyRegister = () => {
                             id="website"
                           />{" "}
                         </Form.Label>
-                        <FormattedMessage defaultMessage="Website" id="website">
-                          {(msg) => (
-                            <Form.Control
-                              className={style.formInput}
-                              type="text"
-                              placeholder={msg}
-                              name="website"
-                              disabled={loading}
-                              onChange={(e) =>
-                                setInputs({
-                                  ...inputs,
-                                  [e.target.name]: e.target.value,
-                                })
-                              }
-                            />
-                          )}
-                        </FormattedMessage>
+                        {/* <FormattedMessage defaultMessage="WWW" id="website">
+                          {(msg) => ( */}
+                        <Form.Control
+                          className={style.formInput}
+                          type="text"
+                          placeholder="WWW"
+                          name="website"
+                          disabled={loading}
+                          onChange={(e) =>
+                            setInputs({
+                              ...inputs,
+                              [e.target.name]: e.target.value,
+                            })
+                          }
+                        />
+                        {/* )}
+                        </FormattedMessage> */}
                       </Form.Group>
                     </Col>
                     {/* <Col xl="6">
@@ -441,24 +454,16 @@ const CompanyRegister = () => {
                           aria-label="Default select example"
                         >
                           <FormattedMessage
-                            defaultMessage="List in english"
-                            id="country.plc"
+                            defaultMessage="Select one"
+                            id="csize.plc"
                           >
-                            {(msg) => <option value="">{msg}</option>}
+                            {(msg) => (
+                              <option value="" disabled selected>
+                                {msg}
+                              </option>
+                            )}
                           </FormattedMessage>
-                          {allCountry &&
-                            allCountry.map((country) => {
-                              if (country.name !== "NULL") {
-                                return (
-                                  <option
-                                    key={country.name}
-                                    value={country.code}
-                                  >
-                                    {country.name}
-                                  </option>
-                                );
-                              }
-                            })}
+                          {countryLists}
                         </Form.Select>
                         <Icon
                           className={style.arrowSelect}
@@ -485,8 +490,8 @@ const CompanyRegister = () => {
                           }
                         >
                           <FormattedMessage
-                            defaultMessage="the list is also in english"
-                            id="state.plc"
+                            defaultMessage="Select one"
+                            id="csize.plc"
                           >
                             {(msg) => <option value="">{msg}</option>}
                           </FormattedMessage>
@@ -508,18 +513,26 @@ const CompanyRegister = () => {
                         <Form.Label className={style.lableForm}>
                           <FormattedMessage defaultMessage="City" id="city" /> *
                         </Form.Label>
-                        <Form.Control
-                          className={style.formInput}
-                          type="text"
-                          name="city"
-                          disabled={loading}
-                          onChange={(e) =>
-                            setInputs({
-                              ...inputs,
-                              [e.target.name]: e.target.value,
-                            })
-                          }
-                        />
+                        <FormattedMessage
+                          defaultMessage="Los Santos"
+                          id="city.plc"
+                        >
+                          {(msg) => (
+                            <Form.Control
+                              className={style.formInput}
+                              type="text"
+                              name="city"
+                              placeholder={msg}
+                              disabled={loading}
+                              onChange={(e) =>
+                                setInputs({
+                                  ...inputs,
+                                  [e.target.name]: e.target.value,
+                                })
+                              }
+                            />
+                          )}
+                        </FormattedMessage>
                       </Form.Group>
                     </Col>
 
@@ -533,7 +546,7 @@ const CompanyRegister = () => {
                           *
                         </Form.Label>
                         <FormattedMessage
-                          defaultMessage="Where can we find you?"
+                          defaultMessage="Grove Street."
                           id="street.plc"
                         >
                           {(msg) => (
