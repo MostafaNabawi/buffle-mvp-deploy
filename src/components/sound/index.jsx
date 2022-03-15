@@ -13,7 +13,6 @@ export default function Index() {
   const nextBreak = new Audio("/music/break.mp3");
 
   useEffect(() => {
-    console.log("😀", type, " ", play);
     if (play) {
       if (type === 1) {
         audio.play();

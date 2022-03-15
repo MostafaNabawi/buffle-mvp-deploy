@@ -26,7 +26,7 @@ function TimerCustome({ count, setCount }) {
       return;
     }
     if (notificTimer === "") {
-      console.log("😒");
+      // console.log("😒");
     }
     if (notificTimer === 1000) {
       dispatch(setNotificatiionTimer(notificDelay + 1000));

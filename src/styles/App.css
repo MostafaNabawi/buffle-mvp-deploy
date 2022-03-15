@@ -745,6 +745,10 @@ div.check-box > input {
   width: 30px !important;
   height: 30px !important;
 }
+.breakplan-img2 {
+  width: 20px !important;
+  height: 25px !important;
+}
 .break-user-name2 {
   margin-left: -25px !important;
   height: 16px;
