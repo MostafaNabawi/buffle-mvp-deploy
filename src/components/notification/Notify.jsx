@@ -113,12 +113,12 @@ function InviteNotify({ type, name, date, message, footer, icon }) {
           <div className="breakplan-icon navy-blue text-center">
             {icon && icon === "task" && (
               <Image
-                className="breakplan-img mb-2"
+                className="breakplan-img mt-1"
                 src="/icone/task manager 1.png"
               />
             )}
             {icon && icon === "water" && (
-              <Image className="breakplan-img mb-2" src="/icone/Vector.png" />
+              <Image className="breakplan-img2" src="/icone/Vector.png" />
             )}
             {icon != "water" && icon != "task" && <RenderImage code={icon} />}
           </div>

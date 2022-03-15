@@ -42,7 +42,6 @@ export default function Felling() {
             moment(payload.date).format("YYYY-MM-DD").trim() ===
             moment(new Date()).format("YYYY-MM-DD").trim()
           ) {
-            console.log("true");
             setData(payload);
             setIsToday(true);
           } else {
