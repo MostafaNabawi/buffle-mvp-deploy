@@ -965,7 +965,7 @@ const Dashboard = () => {
               icon={
                 <Image
                   className="tesk-manager-icon"
-                  src="/icone/task manager 1.svg"
+                  src="/icone/task manager 1.png"
                   alt="vector image"
                 />
               }
