@@ -391,8 +391,8 @@ const StudentRegister = () => {
                           aria-label="Default select example"
                         >
                           <FormattedMessage
-                            defaultMessage="List in english"
-                            id="country.plc"
+                            defaultMessage="Select one"
+                            id="csize.plc"
                           >
                             {(msg) => (
                               <option value="" selected disabled>
