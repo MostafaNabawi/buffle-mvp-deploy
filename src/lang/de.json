@@ -285,6 +285,7 @@
   "notify.newSuggest": " hat neue Vorschläge für({msg}",
   "notify.money": "hat Sie in Moneypoll({name} hinzugefügt",
   "type": "die Art",
+  "youPaid": "Du hast gezahIt",
   "social": "Google, LinkedIn…",
   "_comment2": "paimanEnd",
 
