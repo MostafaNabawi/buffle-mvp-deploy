@@ -60,7 +60,7 @@ const Header = () => {
   // const [lang, setLang] = useState("");
 
   const handleLogout = async () => {
-    const text = context.getCurrent() === 0 ? "Logout..." : "Auslogge";
+    const text = context.getCurrent() === 0 ? "Logout..." : "Ausloggen";
     Swal.fire({
       title: text,
       allowEscapeKey: false,
@@ -147,7 +147,7 @@ const Header = () => {
   };
   // accept Joni
   const handleAccept = async (id, from) => {
-    setNotificatiion(notification.filter(noti=>noti._id != id))
+    setNotificatiion(notification.filter((noti) => noti._id != id));
     const user = JSON.parse(localStorage.getItem("user"));
     await fetch(`${API_URL}/breakPlan/accept`, {
       method: "POST",
@@ -166,7 +166,7 @@ const Header = () => {
   };
   // Rejeact
   const handleReject = async (id) => {
-    setNotificatiion(notification.filter(noti=>noti._id != id))
+    setNotificatiion(notification.filter((noti) => noti._id != id));
     await fetch(`${API_URL}/breakPlan/reject`, {
       method: "DELETE",
       credentials: "include",
@@ -177,7 +177,7 @@ const Header = () => {
       body: JSON.stringify({
         notId: id,
       }),
-    })
+    });
   };
   //
   const handleAcceptTime = async (id, userId, newTime, breakId, breakName) => {
