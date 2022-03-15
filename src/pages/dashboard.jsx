@@ -49,6 +49,8 @@ import RenderImage from "../components/cutomeImage/RenderImage";
 import { setPassAlert, setRun } from "../store/taskSlice";
 import { Context } from "../layout/Wrapper";
 import { useDispatch } from "react-redux";
+import moment from "moment";
+
 const Dashboard = () => {
   const context = useContext(Context);
   const dispatch = useDispatch();
@@ -123,6 +125,7 @@ const Dashboard = () => {
   const [move, setMove] = useState("");
   const [checked, setChecked] = useState(false);
   const [updateTaskLoader, setUpdateTaskLoader] = useState(false);
+
   const RenderPlayerOrLogin = useMemo(() => {
     if (showPlayer) {
       const codeToken = localStorage.getItem("spotToken");
@@ -136,6 +139,7 @@ const Dashboard = () => {
     minutes: "25",
     seconds: "00",
   });
+  
   const [oldTaskInput, setOldTaskInput] = useState({
     hours: "",
     minutes: "",
@@ -623,10 +627,12 @@ const Dashboard = () => {
     if (req.length > 0) {
       const arrDelete = [];
       const data = [];
-      const d = new Date();
-      const format = d.getHours() + ":" + d.getMinutes();
+      const data_now = Date.now();
       req.map((item) => {
-        if (format > item.time) {
+        const d = new Date(
+          moment().format("YYYY-MM-DD") + " " + `${item.time}`
+        ).getTime();
+        if (data_now > d) {
           arrDelete.push(item._id);
         } else {
           data.push(item);
@@ -977,8 +983,9 @@ const Dashboard = () => {
               }
               subtitle={
                 <FormattedMessage
-                  defaultMessage={`${opan < 0 ? 0 : opan} open, ${start < 0 ? 0 : start
-                    } start.`}
+                  defaultMessage={`${opan < 0 ? 0 : opan} open, ${
+                    start < 0 ? 0 : start
+                  } start.`}
                   id="app.task.open"
                   values={{
                     num: opan < 0 ? 0 : opan,
@@ -1181,25 +1188,25 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                  id: data._id,
-                                  name: data.name,
-                                  time: data.time,
-                                })
+                                    id: data._id,
+                                    name: data.name,
+                                    time: data.time,
+                                  })
                                 : joinOrNewSuggestForm(
-                                  {
-                                    id: data.user[0]._id,
-                                    breackName: data.name,
-                                  },
-                                  {
-                                    fullName:
-                                      currentUser.first_name +
-                                      " " +
-                                      currentUser.last_name,
-                                    breakName: data.name,
-                                    breakOwnerId: data.user[0]._id,
-                                    breakId: data._id,
-                                  }
-                                );
+                                    {
+                                      id: data.user[0]._id,
+                                      breackName: data.name,
+                                    },
+                                    {
+                                      fullName:
+                                        currentUser.first_name +
+                                        " " +
+                                        currentUser.last_name,
+                                      breakName: data.name,
+                                      breakOwnerId: data.user[0]._id,
+                                      breakId: data._id,
+                                    }
+                                  );
                             }}
                             className="break-type"
                           >
@@ -1211,20 +1218,20 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                  id: data._id,
-                                  name: data.name,
-                                  time: data.time,
-                                })
+                                    id: data._id,
+                                    name: data.name,
+                                    time: data.time,
+                                  })
                                 : timeFormBreakplan({
-                                  time: "",
-                                  recevier: data.user[0]._id,
-                                  fullName:
-                                    currentUser.first_name +
-                                    "" +
-                                    currentUser.last_name,
-                                  breakName: data.name,
-                                  breakId: data._id,
-                                });
+                                    time: "",
+                                    recevier: data.user[0]._id,
+                                    fullName:
+                                      currentUser.first_name +
+                                      "" +
+                                      currentUser.last_name,
+                                    breakName: data.name,
+                                    breakId: data._id,
+                                  });
                             }}
                           >
                             {data.time}
@@ -1461,8 +1468,8 @@ const Dashboard = () => {
               <Button
                 disabled={
                   vacationNameInput === "" ||
-                    vacationDataInput === "" ||
-                    vacationLoader
+                  vacationDataInput === "" ||
+                  vacationLoader
                     ? true
                     : false
                 }
