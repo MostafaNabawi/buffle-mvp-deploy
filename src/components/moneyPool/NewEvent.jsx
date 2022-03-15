@@ -502,6 +502,12 @@ function NewEvent() {
                     <div className={style.comment}>
                       <div className={style.form_area}>
                         <Form.Group controlId="exampleForm.ControlTextarea1">
+                          <Form.Label>
+                            <FormattedMessage
+                              id="place.descOp"
+                              defaultMessage="Description(optional)"
+                            />
+                          </Form.Label>
                           <FormattedMessage
                             id="place.descOp"
                             defaultMessage="Description(optional)"
@@ -509,7 +515,7 @@ function NewEvent() {
                             {(msg) => (
                               <Form.Control
                                 as="textarea"
-                                rows={1}
+                                rows={2}
                                 onChange={(e) => {
                                   setDesc(e.target.value);
                                 }}
@@ -587,12 +593,6 @@ function NewEvent() {
                         defaultMessage="Event Name"
                       />
                     </th>
-                    <th>
-                      <FormattedMessage
-                        id="label.desc"
-                        defaultMessage="Description"
-                      />
-                    </th>
 
                     <th>
                       <FormattedMessage
@@ -630,9 +630,7 @@ function NewEvent() {
                         >
                           {list.event}
                         </td>
-                        <td id={`des${list._id}`}>
-                          {list.description || "N/A"}
-                        </td>
+
                         {/* <td>{list.currency}</td> */}
                         <td>
                           {moment(list.created_at).format("MMMM DD, YYYY")}
@@ -705,7 +703,7 @@ function NewEvent() {
               </Col>
 
               <Col>
-                <Form.Group controlId="exampleForm.ControlTextarea1">
+                <Form.Group>
                   <Form.Label>
                     <FormattedMessage
                       id="label.desc"
@@ -719,7 +717,8 @@ function NewEvent() {
                     {(msg) => (
                       <Form.Control
                         as="textarea"
-                        rows={1}
+                        rows={4}
+                        cols={4}
                         value={desc || ""}
                         onChange={(e) => {
                           setDesc(e.target.value);
