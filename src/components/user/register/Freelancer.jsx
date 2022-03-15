@@ -1,4 +1,4 @@
-import { React, useMemo, useState } from "react";
+import { React, useContext, useMemo, useState } from "react";
 import { Row, Col, Image, Form, Button } from "react-bootstrap";
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
@@ -9,9 +9,11 @@ import { useToasts } from "react-toast-notifications";
 import { checkEmail } from "../../../config/utils";
 import PulseLoader from "react-spinners/PulseLoader";
 import { FormattedMessage } from "react-intl";
+import { Context } from "../../../layout/Wrapper";
 
 const FreelancerRegister = () => {
-  const allCountry = getCountry();
+  const context = useContext(Context);
+  const allCountry = getCountry(context.getCurrent());
   const [state, setState] = useState("");
   const [sendEmail, setSendEmail] = useState(false);
   // inputs
@@ -313,8 +315,8 @@ const FreelancerRegister = () => {
                           aria-label="Default select example"
                         >
                           <FormattedMessage
-                            defaultMessage="List in english"
-                            id="country.plc"
+                            defaultMessage="Select one"
+                            id="csize.plc"
                           >
                             {(msg) => (
                               <option value="" selected disabled>
@@ -337,6 +339,7 @@ const FreelancerRegister = () => {
                         </Form.Label>
                         <Form.Control
                           className={style.formInput}
+                          placeholder="Los Santos"
                           name="city"
                           type="text"
                           disabled={loading}

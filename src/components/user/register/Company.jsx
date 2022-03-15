@@ -493,7 +493,11 @@ const CompanyRegister = () => {
                             defaultMessage="Select one"
                             id="csize.plc"
                           >
-                            {(msg) => <option value="">{msg}</option>}
+                            {(msg) => (
+                              <option value="" selected disabled>
+                                {msg}
+                              </option>
+                            )}
                           </FormattedMessage>
                           {state &&
                             state.map((s) => (
