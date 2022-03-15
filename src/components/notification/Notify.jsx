@@ -40,7 +40,7 @@ function InviteNotify({ type, name, date, message, footer, icon }) {
         />
       );
     }
-    if (message.includes("joined to break plan")) {
+    if (message.includes("joined to Lunchplan")) {
       return (
         <FormattedMessage
           defaultMessage={message}
@@ -52,7 +52,7 @@ function InviteNotify({ type, name, date, message, footer, icon }) {
       );
     }
 
-    if (message.includes("accept your time suggestion for break plan")) {
+    if (message.includes("accept your time suggestion for Lunchplan")) {
       return (
         <FormattedMessage
           defaultMessage={message}
@@ -91,7 +91,7 @@ function InviteNotify({ type, name, date, message, footer, icon }) {
       return <FormattedMessage defaultMessage={message} id="notify.invite" />;
     }
     if (type === "new-time") {
-      const splitMsg = message.split("break")[1].split("at");
+      const splitMsg = message.split("Lunchplan")[1].split("at");
       return (
         <FormattedMessage
           defaultMessage={message}
