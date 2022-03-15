@@ -10,14 +10,13 @@ import CardHeader from "./../card/CardHeader";
 import Modal from "./../modal/modal";
 import TimePicker2 from "../common/timePicker/TimePicker2";
 import WaterRepository from "./WaterRepository";
-import { getWaterHydration, createWaterHydration, logout } from "../../api";
+import { getWaterHydration, createWaterHydration } from "../../api";
 import { useToasts } from "react-toast-notifications";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setData,
   setMute,
-  setIsRun,
   setPrecent,
   setReminder,
   setNotificatiionDelay,
@@ -192,21 +191,26 @@ function HydrationReminderCard() {
           <FormattedMessage
             id="task.success"
             defaultMessage="Created successfully"
-          />, {
-          autoDismiss: true,
-          appearance: "success",
-        });
+          />,
+          {
+            autoDismiss: true,
+            appearance: "success",
+          }
+        );
         handleClose();
         dispatch(setIsChanged(true));
         setIsSubmit(!isSubmit);
       } else {
-        addToast(<FormattedMessage
-          defaultMessage="Error Please Try Again."
-          id="breakPlan.Error"
-        />, {
-          autoDismiss: false,
-          appearance: "error",
-        });
+        addToast(
+          <FormattedMessage
+            defaultMessage="Error Please Try Again."
+            id="breakPlan.Error"
+          />,
+          {
+            autoDismiss: false,
+            appearance: "error",
+          }
+        );
       }
     }
   };
@@ -252,10 +256,7 @@ function HydrationReminderCard() {
         show={show}
         handleClose={handleClose}
         title={
-          <FormattedMessage
-            defaultMessage="Waterday"
-            id="app.waterHydretion"
-          />
+          <FormattedMessage defaultMessage="Waterday" id="app.waterHydretion" />
         }
         body={
           <Row>
@@ -277,14 +278,28 @@ function HydrationReminderCard() {
             </Col>
             <Col md={12}>
               <TimePicker2
-                label={<FormattedMessage id="work.time" defaultMessage="How long do you work?" />}
+                label={
+                  <span style={{ textTransform: "none" }}>
+                    <FormattedMessage
+                      id="work.time"
+                      defaultMessage="How long do you work?"
+                    />
+                  </span>
+                }
                 value={howLongTime}
                 setValue={setHowLongTime}
               />
             </Col>
             <Col md={12}>
               <TimePicker2
-                label={<FormattedMessage id="work.setReminder" defaultMessage="Set reminder" />}
+                label={
+                  <span style={{ textTransform: "none" }}>
+                    <FormattedMessage
+                      id="work.setReminder"
+                      defaultMessage="Set reminder"
+                    />
+                  </span>
+                }
                 value={reminderTime}
                 setValue={setReminderTime}
               />
