@@ -8,7 +8,6 @@ export const notifySlice = createSlice({
   },
   reducers: {
     setToggle: (state, action) => {
-      console.log("inside redux =>", action);
       state.type = action.payload.type;
       state.play = action.payload.play;
     },
