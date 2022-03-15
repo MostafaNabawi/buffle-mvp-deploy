@@ -31,7 +31,8 @@ const SideBar = () => {
             <Link to="/dashboard">
               <Image
                 className="sidebar-icon"
-                src="/icone/countdown to break 3.svg"
+                src="/icone/countdown to break 3.png"
+                //  src="/icone/Dashboard.png"
               />
             </Link>
           </li>
@@ -51,7 +52,7 @@ const SideBar = () => {
             <Link to="">
               <Image
                 className="sidebar-icon"
-                src="/icone/countdown to break 1.svg"
+                src="/icone/countdown to break 1.png"
               />
             </Link>
           </li>
@@ -66,7 +67,7 @@ const SideBar = () => {
           >
             <li className="mt-3">
               <Link to="money-pool">
-                <Image className="sidebar-icon" src="/icone/kittysplit 1.svg" />
+                <Image className="sidebar-icon" src="/icone/kittysplit 1.png" />
               </Link>
             </li>
           </OverlayTrigger>
@@ -86,7 +87,7 @@ const SideBar = () => {
               <Link to="/dashboard/taskmanagement">
                 <Image
                   className="sidebar-icon"
-                  src="/icone/exclamation-mark.svg"
+                  src="/icone/exclamation-mark.png"
                 />
               </Link>
             </li>
@@ -94,19 +95,19 @@ const SideBar = () => {
 
           <li className="mt-3">
             <Link to="">
-              <Image className="sidebar-icon2" src="/icone/Vector.svg" />
+              <Image className="sidebar-icon2" src="/icone/Vector.png" />
             </Link>
           </li>
           <li className="mt-3">
             <Link to="">
-              <Image className="sidebar-icon" src="/icone/eye 1.svg" />
+              <Image className="sidebar-icon" src="/icone/eye 1.png" />
             </Link>
           </li>
           <li className="mt-3">
             <Link to="">
               <Image
                 className="sidebar-icon"
-                src="/icone/exclamation-mark 7.svg"
+                src="/icone/exclamation-mark 7.png"
               />
             </Link>
           </li>
@@ -114,7 +115,7 @@ const SideBar = () => {
             <Link to="">
               <Image
                 className="sidebar-icon"
-                src="/icone/exclamation-mark 3.svg"
+                src="/icone/exclamation-mark 3.png"
               />
             </Link>
           </li>
@@ -122,7 +123,7 @@ const SideBar = () => {
             <Link to="">
               <Image
                 className="sidebar-icon"
-                src="/icone/exclamation-mark 4.svg"
+                src="/icone/exclamation-mark 4.png"
               />
             </Link>
           </li>
@@ -130,7 +131,7 @@ const SideBar = () => {
             <Link to="">
               <Image
                 className="sidebar-icon"
-                src="/icone/exclamation-mark 5.svg"
+                src="/icone/exclamation-mark 5.png"
               />
             </Link>
           </li>
@@ -138,7 +139,7 @@ const SideBar = () => {
             <Link to="">
               <Image
                 className="sidebar-icon"
-                src="/icone/exclamation-mark 6.svg"
+                src="/icone/exclamation-mark 6.png"
               />
             </Link>
           </li>
@@ -168,7 +169,7 @@ const SideBar = () => {
         >
           <li className="mt-3">
             <Link to="/dashboard/setting">
-              <Image className="sidebar-icon" src="/icone/blue-book 1.svg" />
+              <Image className="sidebar-icon" src="/icone/blue-book 1.png" />
             </Link>
           </li>
         </OverlayTrigger>

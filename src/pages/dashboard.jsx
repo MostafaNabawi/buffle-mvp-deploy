@@ -965,7 +965,7 @@ const Dashboard = () => {
               icon={
                 <Image
                   className="tesk-manager-icon"
-                  src="/icone/task manager 1.svg"
+                  src="/icone/task manager 1.png"
                   alt="vector image"
                 />
               }
@@ -977,9 +977,8 @@ const Dashboard = () => {
               }
               subtitle={
                 <FormattedMessage
-                  defaultMessage={`${opan < 0 ? 0 : opan} open, ${
-                    start < 0 ? 0 : start
-                  } start.`}
+                  defaultMessage={`${opan < 0 ? 0 : opan} open, ${start < 0 ? 0 : start
+                    } start.`}
                   id="app.task.open"
                   values={{
                     num: opan < 0 ? 0 : opan,
@@ -1146,7 +1145,7 @@ const Dashboard = () => {
                   <span className="text-center join-suggest-select">
                     <FormattedMessage
                       id="app.noLunchway"
-                      defaultMessage="join, suggest or select a breakplan"
+                      defaultMessage="join, suggest or select a lunchplan"
                     />
                   </span>
                 ) : (
@@ -1182,25 +1181,25 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                    id: data._id,
-                                    name: data.name,
-                                    time: data.time,
-                                  })
+                                  id: data._id,
+                                  name: data.name,
+                                  time: data.time,
+                                })
                                 : joinOrNewSuggestForm(
-                                    {
-                                      id: data.user[0]._id,
-                                      breackName: data.name,
-                                    },
-                                    {
-                                      fullName:
-                                        currentUser.first_name +
-                                        " " +
-                                        currentUser.last_name,
-                                      breakName: data.name,
-                                      breakOwnerId: data.user[0]._id,
-                                      breakId: data._id,
-                                    }
-                                  );
+                                  {
+                                    id: data.user[0]._id,
+                                    breackName: data.name,
+                                  },
+                                  {
+                                    fullName:
+                                      currentUser.first_name +
+                                      " " +
+                                      currentUser.last_name,
+                                    breakName: data.name,
+                                    breakOwnerId: data.user[0]._id,
+                                    breakId: data._id,
+                                  }
+                                );
                             }}
                             className="break-type"
                           >
@@ -1212,20 +1211,20 @@ const Dashboard = () => {
                             onClick={() => {
                               currentUser._id === data.user[0]._id
                                 ? editBreakPlan({
-                                    id: data._id,
-                                    name: data.name,
-                                    time: data.time,
-                                  })
+                                  id: data._id,
+                                  name: data.name,
+                                  time: data.time,
+                                })
                                 : timeFormBreakplan({
-                                    time: "",
-                                    recevier: data.user[0]._id,
-                                    fullName:
-                                      currentUser.first_name +
-                                      "" +
-                                      currentUser.last_name,
-                                    breakName: data.name,
-                                    breakId: data._id,
-                                  });
+                                  time: "",
+                                  recevier: data.user[0]._id,
+                                  fullName:
+                                    currentUser.first_name +
+                                    "" +
+                                    currentUser.last_name,
+                                  breakName: data.name,
+                                  breakId: data._id,
+                                });
                             }}
                           >
                             {data.time}
@@ -1241,7 +1240,7 @@ const Dashboard = () => {
                   <div className="creat-breack-time">
                     <div className="what-is-breack">
                       <FormattedMessage
-                        defaultMessage="What’s your breakplan?"
+                        defaultMessage="What’s your lanchplan?"
                         id="app.breakPlan.qs"
                       />
                     </div>
@@ -1462,8 +1461,8 @@ const Dashboard = () => {
               <Button
                 disabled={
                   vacationNameInput === "" ||
-                  vacationDataInput === "" ||
-                  vacationLoader
+                    vacationDataInput === "" ||
+                    vacationLoader
                     ? true
                     : false
                 }
