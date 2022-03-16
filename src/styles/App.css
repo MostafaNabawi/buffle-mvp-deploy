@@ -460,7 +460,7 @@ ul.sidebar-list-scroll > li {
   list-style-type: none !important;
   margin-left: 8px !important;
   margin-right: 16px !important;
-  border-radius: 50%; 
+  border-radius: 50%;
   border-radius: 17px !important;
   width: 50px;
   height: 50px;
@@ -477,6 +477,7 @@ ul.sidebar-list-scroll > li:hover {
   margin-top: 2px !important;
   width: 45px !important;
   height: 43px !important;
+  object-fit: contain !important;
 }
 .sidebar-icon2 {
   margin-top: 5px !important;
@@ -1113,6 +1114,6 @@ div.check-box > input {
 .pro-icon {
   padding-top: 6px !important;
 }
-.margin-right{
+.margin-right {
   margin-right: 5px !important;
 }
