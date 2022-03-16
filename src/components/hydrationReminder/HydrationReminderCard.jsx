@@ -224,7 +224,6 @@ function HydrationReminderCard() {
   };
   //
   const handleDelete = async () => {
-
     const titleMsg =
       context.getCurrent() === 0 ? "Are you sure?" : "Bist du dir sicher?";
     MySwal.fire({
@@ -240,19 +239,18 @@ function HydrationReminderCard() {
       reverseButtons: false,
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log("delte....")
+        console.log("delte....");
         try {
-            fetch(`${API_URL}/water_hydration/delete`, {
+          fetch(`${API_URL}/water_hydration/delete`, {
             method: "DELETE",
             credentials: "include",
             headers: {
               "Content-Type": "application/json",
               "Access-Control-Allow-Credentials": true,
             },
-          }).then((res)=>{
-            console.log("res...",res);
+          }).then((res) => {
+            console.log("res...", res);
           });
-          
         } catch (error) {
           addToast(
             <FormattedMessage
