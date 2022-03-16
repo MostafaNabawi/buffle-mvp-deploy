@@ -78,16 +78,15 @@ function HydrationReminderCard() {
 
   //useEffect function
   useEffect(() => {
-    fetch();
+    fetchData();
 
     return () => {
       dispatch(setIsChanged(false));
     };
   }, [isSubmit]);
 
-  const fetch = async () => {
+  const fetchData = async () => {
     const req = await getWaterHydration();
-    console.log("req.data.....", req.data);
     if (req.data !== null) {
       clearTimeout(timeOutId);
       const milliseconds = moment(new Date()).diff(
@@ -122,6 +121,9 @@ function HydrationReminderCard() {
       ReminderNotifiction(req.data.reminder);
       calculteUsedPerPercent(req.data.daily_goal);
     } else {
+      setLiter(0)
+      dispatch(setPrecentByAmount(0));
+      dispatch(setRemindertByAmount(0));
       dispatch(setRender(false));
     }
   };
@@ -239,7 +241,6 @@ function HydrationReminderCard() {
       reverseButtons: false,
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log("delte....");
         try {
           fetch(`${API_URL}/water_hydration/delete`, {
             method: "DELETE",
@@ -248,8 +249,8 @@ function HydrationReminderCard() {
               "Content-Type": "application/json",
               "Access-Control-Allow-Credentials": true,
             },
-          }).then((res) => {
-            console.log("res...", res);
+          }).then((res)=>{
+            fetchData()
           });
         } catch (error) {
           addToast(

@@ -108,6 +108,7 @@ function ScreenFreeReminderCard() {
         setData(payload);
         setGetting(false);
       } else {
+        localStorage.setItem("screen", "off");
         setData([]);
         setGetting(false);
       }
@@ -294,7 +295,7 @@ function ScreenFreeReminderCard() {
   //
   const handleDelete = async () => {
 
-    if (data) {
+    if (data.length ===0) {
       return null;
     }
     const titleMsg =
