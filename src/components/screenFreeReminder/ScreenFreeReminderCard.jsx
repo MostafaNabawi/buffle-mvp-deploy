@@ -293,6 +293,10 @@ function ScreenFreeReminderCard() {
   };
   //
   const handleDelete = async () => {
+
+    if (data) {
+      return null;
+    }
     const titleMsg =
       context.getCurrent() === 0 ? "Are you sure?" : "Bist du dir sicher?";
     MySwal.fire({
@@ -317,7 +321,7 @@ function ScreenFreeReminderCard() {
               "Access-Control-Allow-Credentials": true,
             },
           }).then((res) => {
-            getData ()
+            getData();
           });
         } catch (error) {
           addToast(
