@@ -141,11 +141,11 @@ const TaskManagement = ({ handleGet, val, colChange, projectDroped }) => {
           if (deleteT.status === 200) {
             const msg = context.getCurrent() === 0 ? "Deleted" : "gelöscht";
 
-            const msg2 =
-              context.getCurrent() === 0
-                ? "Your file has been deleted."
-                : "Gelöscht,Ihre Datei wurde gelöscht.";
-            Swal.fire(msg, msg2, "success");
+
+            Swal.fire({
+              title: msg,
+              icon: "success",
+            });
             handleClose();
             const d = items.filter(i => i.tb_id !== id);
             setItems(d);
