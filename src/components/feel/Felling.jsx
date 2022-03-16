@@ -85,7 +85,7 @@ export default function Felling() {
           />
           <Image
             className={`feel-icon ${
-              data[0]?.feel === "said" ? style.selectFeel : ""
+              data[0]?.feel === "sad" ? style.selectFeel : ""
             }`}
             src="/icone/4.png"
             alt="vector image"
