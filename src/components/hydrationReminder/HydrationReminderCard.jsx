@@ -2,7 +2,7 @@
 
 import { Icon } from "@iconify/react";
 import { Image, Form, Row, Col, Button, NavDropdown } from "react-bootstrap";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import Card from "./../card/Card";
 import CardBody from "./../card/CardBody";
@@ -14,6 +14,10 @@ import { getWaterHydration, createWaterHydration } from "../../api";
 import { useToasts } from "react-toast-notifications";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import { Context } from "../../layout/Wrapper";
+import { API_URL } from "../../config/index";
 import {
   setData,
   setMute,
@@ -42,6 +46,8 @@ function HydrationReminderCard() {
   } = useSelector((state) => state.hydration);
 
   const dispatch = useDispatch();
+  const context = useContext(Context);
+  const MySwal = withReactContent(Swal);
   const { addToast } = useToasts();
   const [isSubmit, setIsSubmit] = useState(false);
   const [animat, setAnimat] = useState(false);
@@ -49,6 +55,7 @@ function HydrationReminderCard() {
   const [liter, setLiter] = useState(0);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
+
   const handleShow = async () => {
     setShow(true);
     dispatch(setIsChanged(false));
@@ -80,6 +87,7 @@ function HydrationReminderCard() {
 
   const fetch = async () => {
     const req = await getWaterHydration();
+    console.log("req.data.....", req.data);
     if (req.data !== null) {
       clearTimeout(timeOutId);
       const milliseconds = moment(new Date()).diff(
@@ -214,6 +222,53 @@ function HydrationReminderCard() {
       }
     }
   };
+  //
+  const handleDelete = async () => {
+
+    const titleMsg =
+      context.getCurrent() === 0 ? "Are you sure?" : "Bist du dir sicher?";
+    MySwal.fire({
+      title: titleMsg,
+      text:
+        context.getCurrent() === 0
+          ? "You won't be able to revert this."
+          : "Änderungen sind nicht mehr möglich.",
+      icon: "warning",
+      showCancelButton: true,
+      cancelButtonText: context.getCurrent() === 0 ? "Cancel" : "Abbrechen",
+      confirmButtonText: context.getCurrent() === 0 ? "Yes" : "Fortfahren",
+      reverseButtons: false,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log("delte....")
+        try {
+            fetch(`${API_URL}/water_hydration/delete`, {
+            method: "DELETE",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Credentials": true,
+            },
+          }).then((res)=>{
+            console.log("res...",res);
+          });
+          
+        } catch (error) {
+          addToast(
+            <FormattedMessage
+              id="task.error"
+              defaultMessage="Error: Please Try Again."
+            />,
+            {
+              appearance: "error",
+              autoDismiss: true,
+            }
+          );
+        }
+      }
+    });
+  };
+  //
 
   return (
     <>
@@ -236,12 +291,18 @@ function HydrationReminderCard() {
                 id="basic-nav-dropdown"
               >
                 <NavDropdown.Item className="reminderNavItem">
-                  {isMute ? "unMute" : "mute"}
-                  <i onClick={handleMute}>
+                  <i onClick={handleMute} className="margin-right">
                     <Icon
                       fontSize={25}
                       icon={isMute ? "gg:play-pause-o" : "fa-solid:stop-circle"}
                     />
+                  </i>
+                  {isMute ? "unMute" : "mute"}
+                </NavDropdown.Item>
+                <NavDropdown.Item className="reminderNavItem taskManagerNavItem">
+                  <i className="delete" onClick={handleDelete}>
+                    <Icon icon="fluent:delete-24-filled" />{" "}
+                    <FormattedMessage id="btn.delete" defaultMessage="Delete" />
                   </i>
                 </NavDropdown.Item>
               </NavDropdown>
