@@ -1,7 +1,18 @@
 import { Icon } from "@iconify/react";
-import { Row, Col, Button, Form, Image, Tabs, Tab } from "react-bootstrap";
-import React, { useState, useEffect } from "react";
+import {
+  Row,
+  Col,
+  Button,
+  Form,
+  Image,
+  Tabs,
+  Tab,
+  NavDropdown,
+} from "react-bootstrap";
+import React, { useState, useEffect, useContext } from "react";
 import TimePicker2 from "../common/timePicker/TimePicker2";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 import Card from "./../card/Card";
 import CardBody from "./../card/CardBody";
 import CardHeader from "./../card/CardHeader";
@@ -19,9 +30,12 @@ import {
   setUpdating,
 } from "../../store/screenReminderSclice";
 import { FormattedMessage } from "react-intl";
+import { Context } from "../../layout/Wrapper";
 
 function ScreenFreeReminderCard() {
+  const context = useContext(Context);
   const dispatch = useDispatch();
+  const MySwal = withReactContent(Swal);
   const { addToast } = useToasts();
   const [changeMute, setChangeMute] = useState(false);
   const [data, setData] = useState([]);
@@ -185,11 +199,15 @@ function ScreenFreeReminderCard() {
         setModalShow(false);
         getData();
         addToast(
-          <FormattedMessage id="event.addedSuc" defaultMessage="Added Successfuly." />
-          , {
+          <FormattedMessage
+            id="event.addedSuc"
+            defaultMessage="Added Successfuly."
+          />,
+          {
             autoDismiss: true,
             appearance: "success",
-          });
+          }
+        );
       } else {
         setLoading(false);
         setModalShow(false);
@@ -197,10 +215,12 @@ function ScreenFreeReminderCard() {
           <FormattedMessage
             defaultMessage="Error Please Try Again."
             id="breakPlan.Error"
-          />, {
-          autoDismiss: false,
-          appearance: "error",
-        });
+          />,
+          {
+            autoDismiss: false,
+            appearance: "error",
+          }
+        );
       }
     }
   };
@@ -229,7 +249,7 @@ function ScreenFreeReminderCard() {
             autoDismiss: false,
             appearance: "error",
           }
-        );;
+        );
         return false;
       } else {
         if (!isShow) {
@@ -272,6 +292,49 @@ function ScreenFreeReminderCard() {
     }
   };
   //
+  const handleDelete = async () => {
+    const titleMsg =
+      context.getCurrent() === 0 ? "Are you sure?" : "Bist du dir sicher?";
+    MySwal.fire({
+      title: titleMsg,
+      text:
+        context.getCurrent() === 0
+          ? "You won't be able to revert this."
+          : "Änderungen sind nicht mehr möglich.",
+      icon: "warning",
+      showCancelButton: true,
+      cancelButtonText: context.getCurrent() === 0 ? "Cancel" : "Abbrechen",
+      confirmButtonText: context.getCurrent() === 0 ? "Yes" : "Fortfahren",
+      reverseButtons: false,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await fetch(`${API_URL}/screen_reminder/delete`, {
+            method: "DELETE",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Credentials": true,
+            },
+          }).then((res) => {
+            getData ()
+          });
+        } catch (error) {
+          addToast(
+            <FormattedMessage
+              id="task.error"
+              defaultMessage="Error: Please Try Again."
+            />,
+            {
+              appearance: "error",
+              autoDismiss: true,
+            }
+          );
+        }
+      }
+    });
+  };
+  //
   useEffect(() => {
     getData();
     getUpdataData();
@@ -283,10 +346,7 @@ function ScreenFreeReminderCard() {
         <CardHeader
           icon={<Image src="/icone/eye 1.png" alt="eye icon" />}
           title={
-            <FormattedMessage
-              defaultMessage="Screenlife"
-              id="app.screen"
-            />
+            <FormattedMessage defaultMessage="Screenlife" id="app.screen" />
           }
           action={
             <>
@@ -300,15 +360,23 @@ function ScreenFreeReminderCard() {
               >
                 <Icon icon="vaadin:plus" />
               </i>
-              <i
-              // onClick={() => {
-              //   // getUpdataData ()
-              //   setModalShow(true);
-              //   setSizeModal("md");
-              // }}
+              {/* <i
+              
               >
                 <Icon icon="vaadin:ellipsis-dots-v" />
-              </i>
+              </i> */}
+              <NavDropdown
+                className="reminderNav"
+                title={<Icon color="black" icon="vaadin:ellipsis-dots-v" />}
+                id="basic-nav-dropdown"
+              >
+                <NavDropdown.Item className="reminderNavItem taskManagerNavItem">
+                  <i className="delete" onClick={handleDelete}>
+                    <Icon icon="fluent:delete-24-filled" />{" "}
+                    <FormattedMessage id="btn.delete" defaultMessage="Delete" />
+                  </i>
+                </NavDropdown.Item>
+              </NavDropdown>
             </>
           }
           className="border-bottom"
@@ -352,8 +420,7 @@ function ScreenFreeReminderCard() {
                   <FormattedMessage
                     defaultMessage=" last intermission"
                     id="screen.lastIntermission"
-                  />
-                  {" "}
+                  />{" "}
                   {localStorage.getItem("loackTime")
                     ? localStorage.getItem("loackTime")
                     : "00:00:00"}
