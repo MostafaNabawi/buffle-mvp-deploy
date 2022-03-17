@@ -347,14 +347,18 @@ function NewEvent() {
                             defaultMessage="Event name"
                           />{" "}
                         </Form.Label>
-                        <Form.Control
-                          onChange={(e) => {
-                            setEventName(e.target.value);
-                          }}
-                          value={eventName}
-                          type="text"
-                          placeholder="Birthday"
-                        />
+                        <FormattedMessage id="event.Birthday" defaultMessage="Birthday">
+                          {(msg) => (
+                            <Form.Control
+                              onChange={(e) => {
+                                setEventName(e.target.value);
+                              }}
+                              value={eventName}
+                              type="text"
+                              placeholder={msg}
+                            />
+                          )}
+                        </FormattedMessage>
                       </Form.Group>
                     </Col>
                     {/* <Col md={12} className={style.select_col}>

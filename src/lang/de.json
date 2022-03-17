@@ -179,6 +179,7 @@
   "event.list": "Event Liste",
   "event.update": "Event updaten",
   "event.name": "Event Name",
+  "event.Birthday": "Geburtstag",
   "event.name.req": "Event Name ist erforderlich.",
   "event.currency": "Währung",
   "event.participants": "Teilnehmer:innen",
