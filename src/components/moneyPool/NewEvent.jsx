@@ -347,7 +347,10 @@ function NewEvent() {
                             defaultMessage="Event name"
                           />{" "}
                         </Form.Label>
-                        <FormattedMessage id="event.Birthday" defaultMessage="Birthday">
+                        <FormattedMessage
+                          id="event.Birthday"
+                          defaultMessage="Birthday"
+                        >
                           {(msg) => (
                             <Form.Control
                               onChange={(e) => {

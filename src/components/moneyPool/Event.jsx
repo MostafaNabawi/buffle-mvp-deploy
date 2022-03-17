@@ -6,7 +6,7 @@ import Card from "./../card/Card";
 import CardHeader from "./../card/CardHeader";
 import CardBody from "./../card/CardBody";
 
-import { Button, Form, Overlay, Row, Tooltip } from "react-bootstrap";
+import { Button, Col, Form, Overlay, Row, Tooltip } from "react-bootstrap";
 
 import EventPerson from "./partials/EventPerson";
 import { Icon } from "@iconify/react";
@@ -48,6 +48,7 @@ function Event() {
   const [overView, setOverView] = useState("");
   const [copyValue, setCopyValue] = useState("");
   const [showTooltip, setShowTooltip] = useState(false);
+  const [desc, setDesc] = useState("");
   const target = useRef(null);
 
   const getData = () => {
@@ -61,7 +62,9 @@ function Event() {
         },
       }).then(async (res) => {
         if (res.status === 200) {
-          const { users, currency, owner, name, uuid } = await res.json();
+          const { users, currency, description, owner, name, uuid } =
+            await res.json();
+          setDesc(description);
           setEventName(name);
           setCopyValue(uuid);
           var data = [];
@@ -236,9 +239,17 @@ function Event() {
           </div>
           <div className={style.overview_body}>
             {/* <NoExpensesYet /> */}
+
             <OverView data={overView} />
           </div>
         </div>
+        <Row>
+          <Col lg={6}>
+            <h4>Description</h4>
+            <p>{desc}</p>
+          </Col>
+          <Col></Col>
+        </Row>
         <div className={style.seen}>
           <div className={style.header}>
             <h4>

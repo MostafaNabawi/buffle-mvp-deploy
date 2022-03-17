@@ -37,14 +37,14 @@ function OverView({ data }) {
     }
     // {data && data.lent.map((item) => <div key={item.msg + ""} >{item.msg}</div>)}
 
-    return (
-      <div>
-        <FormattedMessage
-          id="event.notOwed"
-          defaultMessage="Your not owed.😊"
-        />
-      </div>
-    );
+    // return (
+    //   <div>
+    //     <FormattedMessage
+    //       id="event.notOwed"
+    //       defaultMessage="Your not owed.😊"
+    //     />
+    //   </div>
+    // );
   };
   return (
     <>
