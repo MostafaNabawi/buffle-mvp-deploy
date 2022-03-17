@@ -173,7 +173,7 @@ const FreelancerRegister = () => {
                       <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label className={style.lableForm}>
                           <FormattedMessage
-                            defaultMessage="First Name"
+                            defaultMessage="First name"
                             id="fname"
                           />{" "}
                           *
@@ -204,7 +204,7 @@ const FreelancerRegister = () => {
                       <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label className={style.lableForm}>
                           <FormattedMessage
-                            defaultMessage="Last Name"
+                            defaultMessage="Last name"
                             id="lname"
                           />{" "}
                           *
