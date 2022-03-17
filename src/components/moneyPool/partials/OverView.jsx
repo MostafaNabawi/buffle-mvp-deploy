@@ -76,7 +76,7 @@ function OverView({ data }) {
               <tr>
                 <td>
                   <FormattedMessage
-                    id="event.youPaid"
+                    id="youPaid"
                     defaultMessage="You have paid"
                   />
                 </td>
