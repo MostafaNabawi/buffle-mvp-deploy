@@ -182,7 +182,7 @@ const CompanyRegister = () => {
                       <Form.Group className="mb-4" controlId="formBasicEmail">
                         <Form.Label className={style.lableForm}>
                           <FormattedMessage
-                            defaultMessage="First Name"
+                            defaultMessage="First name"
                             id="fname"
                           />{" "}
                           *
@@ -213,7 +213,7 @@ const CompanyRegister = () => {
                       <Form.Group className="mb-4" controlId="formBasicEmail">
                         <Form.Label className={style.lableForm}>
                           <FormattedMessage
-                            defaultMessage="Last Name"
+                            defaultMessage="Last name"
                             id="lname"
                           />{" "}
                           *
@@ -272,7 +272,7 @@ const CompanyRegister = () => {
                       <Form.Group className="mb-4" controlId="formBasicEmail">
                         <Form.Label className={style.lableForm}>
                           <FormattedMessage
-                            defaultMessage="Company Name"
+                            defaultMessage="Company name"
                             id="cname"
                           />{" "}
                           *
@@ -303,7 +303,7 @@ const CompanyRegister = () => {
                       <Form.Group className="mb-4">
                         <Form.Label className={style.lableForm}>
                           <FormattedMessage
-                            defaultMessage="Company Size"
+                            defaultMessage="Company size"
                             id="csize"
                           />{" "}
                           *
