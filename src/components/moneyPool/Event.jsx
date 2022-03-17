@@ -245,7 +245,9 @@ function Event() {
         </div>
         <Row>
           <Col lg={6}>
-            <h4>Description</h4>
+            <h4>
+              <FormattedMessage defaultMessage="Description" id="label.desc" />
+            </h4>
             <p>{desc}</p>
           </Col>
           <Col></Col>
