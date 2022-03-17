@@ -172,7 +172,8 @@
   "pro.proColor": "Farbe",
 
   "place.projectName": "Projekt benennen",
-  "place.descOp": "Max wird nächste Woche 30...",
+  "place.descOp": "Beschreibung (Optional)",
+  "place.descOpPlace": "Max wird nächste Woche 30...",
   "place.inviteCode": "Einladungscode",
 
   "event.create": "Event erstellen",

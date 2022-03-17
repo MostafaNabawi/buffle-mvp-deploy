@@ -516,7 +516,7 @@ function NewEvent() {
                             />
                           </Form.Label>
                           <FormattedMessage
-                            id="place.descOp"
+                            id="place.descOpPlace"
                             defaultMessage="Description (optional)"
                           >
                             {(msg) => (
