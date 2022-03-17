@@ -505,12 +505,12 @@ function NewEvent() {
                           <Form.Label>
                             <FormattedMessage
                               id="place.descOp"
-                              defaultMessage="Description(optional)"
+                              defaultMessage="Description (optional)"
                             />
                           </Form.Label>
                           <FormattedMessage
                             id="place.descOp"
-                            defaultMessage="Description(optional)"
+                            defaultMessage="Description (optional)"
                           >
                             {(msg) => (
                               <Form.Control
