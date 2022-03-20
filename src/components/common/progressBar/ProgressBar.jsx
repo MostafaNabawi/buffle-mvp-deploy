@@ -70,14 +70,14 @@ const PreogressBar = ({ range }) => {
   return (
     <>
       <Row>
-        <Col xl="1">
+        <Col xs={2} lg={1} xl="1">
           <Icon
             color={play && percentUI > 0 ? "" : `#4922ff`}
             className={style.iconWatch}
             icon="bi:clock-fill"
           />
         </Col>
-        <Col xl="10" className="pl-0">
+        <Col xs={8} lg={10} xl="10" className="pl-0">
           <ProgressBar
             label={
               play && (
@@ -122,7 +122,7 @@ const PreogressBar = ({ range }) => {
             className={style.progress}
           />
         </Col>
-        <Col className={style.iconPlay} xl="1">
+        <Col xs={2} lg={1} className={style.iconPlay} xl="1">
           <div
             onClick={handlePlay}
             className={`${style.iconProgress}  text-center`}
