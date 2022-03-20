@@ -1001,7 +1001,7 @@ const Dashboard = () => {
       {/* end */}
       {/* section tow */}
       <Row>
-        <Col xl={8}>
+        <Col lg={10} xl={8}>
           <Card title="">
             <CardHeader
               titleClass="taskmanagerHeader"
@@ -1083,9 +1083,9 @@ const Dashboard = () => {
                   taskData.map((t, n) => (
                     <div key={n}>
                       <Row className="task-manager-body pt-0 mt-1 mb-1">
-                        <Col xl="7">
+                        <Col lg={7} xl="7">
                           <Row className="pl-5">
-                            <Col xl="1">
+                            <Col lg={1} xl="1">
                               <Form.Group controlId="formBasicCheckbox">
                                 <Form.Check
                                   className="check-box"
@@ -1095,12 +1095,12 @@ const Dashboard = () => {
                                 />
                               </Form.Group>
                             </Col>
-                            <Col xl="11" className="task-manager-text">
+                            <Col lg={11} xl="11" className="task-manager-text">
                               {t.name}
                             </Col>
                           </Row>
                         </Col>
-                        <Col xl="5">
+                        <Col lg={5} xl="5">
                           <Timer
                             {...t}
                             handleCheckOpenClose={handleCheckOpenClose}

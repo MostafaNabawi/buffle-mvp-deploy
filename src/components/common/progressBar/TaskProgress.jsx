@@ -101,13 +101,13 @@ const Timer = (props) => {
           parseInt(hour) * 3600 +
           parseInt(minute) * 60 +
           parseInt(second))) /
-      parseInt(duration)
+        parseInt(duration)
     );
     setCurrentTime(
       parseInt(day) * 86400 +
-      parseInt(hour) * 3600 +
-      parseInt(minute) * 60 +
-      parseInt(second)
+        parseInt(hour) * 3600 +
+        parseInt(minute) * 60 +
+        parseInt(second)
     );
     if (currentTime === duration) {
       setPlay(!play);
@@ -161,7 +161,7 @@ const Timer = (props) => {
   return (
     <div className="container">
       <Row>
-        <Col xl="1">
+        <Col lg={1} xl="1">
           <i>
             <Icon
               color={!play && percent > 0 ? "" : `#4922ff`}
@@ -170,30 +170,37 @@ const Timer = (props) => {
             />
           </i>
         </Col>
-        <Col xl="10" className="pl-0 taskManaterProgress">
+        <Col lg={10} xl="10" className="pl-0 taskManaterProgress">
           <ProgressBar
             label={
               parseInt(second) === 0 &&
-                parseInt(minute) === 0 &&
-                parseInt(hour) === 0 ? (
+              parseInt(minute) === 0 &&
+              parseInt(hour) === 0 ? (
                 <>
-                  <span className={percent >= 40 ? "showTimeReverse" : "showTime"}>
+                  <span
+                    className={percent >= 40 ? "showTimeReverse" : "showTime"}
+                  >
                     {task_duration}
                   </span>
                 </>
               ) : (
                 <>
-                  <span className={percent >= 40 ? "showTimeReverse" : "showTime"}>
-                    {`${parseInt(hour) < 10
-                      ? "0" + parseInt(hour)
-                      : parseInt(hour)
-                      }:${parseInt(minute) < 10
+                  <span
+                    className={percent >= 40 ? "showTimeReverse" : "showTime"}
+                  >
+                    {`${
+                      parseInt(hour) < 10
+                        ? "0" + parseInt(hour)
+                        : parseInt(hour)
+                    }:${
+                      parseInt(minute) < 10
                         ? "0" + parseInt(minute)
                         : parseInt(minute)
-                      }:${parseInt(second) < 10
+                    }:${
+                      parseInt(second) < 10
                         ? "0" + parseInt(second)
                         : parseInt(second)
-                      }`}
+                    }`}
                   </span>
                 </>
               )
@@ -202,7 +209,7 @@ const Timer = (props) => {
             className={`${style.progress}`}
           />
         </Col>
-        <Col className={style.iconPlay} xl="1">
+        <Col lg={1} className={style.iconPlay} xl="1">
           <div
             onClick={handlePlay}
             className={`${style.iconProgress}  text-center`}
