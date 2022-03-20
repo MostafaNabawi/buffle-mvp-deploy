@@ -916,7 +916,7 @@ const Dashboard = () => {
                   <Countdown
                     date={vacationData.date}
                     renderer={(props) => (
-                      <>
+                      <div>
                         {props.days === 0 && props.hours === 0 ? (
                           <span className="vacation-until">
                             <FormattedMessage
@@ -956,11 +956,13 @@ const Dashboard = () => {
                                 defaultMessage={`until`}
                                 id="app.dashboard.vacation.until"
                               />{" "}
-                              {vacationData.name}
+                              <span className="text-inside-box">
+                                {vacationData?.name}
+                              </span>
                             </span>
                           </>
                         )}
-                      </>
+                      </div>
                     )}
                     onComplete={() => {
                       if (vacationData != "noVacation") {

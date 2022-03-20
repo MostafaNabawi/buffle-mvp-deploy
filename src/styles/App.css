@@ -1116,3 +1116,56 @@ div.check-box > input {
 .margin-right {
   margin-right: 5px !important;
 }
+
+@media (min-width: 320px) {
+  /* smartphones, iPhone, portrait 480x320 phones */
+  .text-inside-box {
+    width: 120px;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
+@media (min-width: 641px) {
+  /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+  .text-inside-box {
+    width: 280px;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
+@media (min-width: 1025px) {
+  /* hi-res laptops and desktops */
+  /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+  .text-inside-box {
+    width: 160x;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
+@media (min-width: 1100px) {
+  /* hi-res laptops and desktops */
+  /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+  .text-inside-box {
+    width: 70px;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
+@media (min-width: 1555px) {
+  /* hi-res laptops and desktops */
+  .text-inside-box {
+    width: 150px;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
