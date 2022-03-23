@@ -903,7 +903,7 @@ const Dashboard = () => {
                 </>
               }
             />
-            <div className="mt-3">
+            <div className="">
               <span className="vacation-day">
                 {vacationData === "noVacation" ? (
                   <span className="vacation-until">
