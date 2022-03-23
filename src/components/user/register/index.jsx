@@ -7,8 +7,8 @@ const IndexRegister = () => {
   return (
     <div>
       <Row className="p-0 m-0 row">
-        <Col xl="8" className={`text-center`}>
-          <Image src="/1.png" className="big-logo"/>
+        <Col xl="8" className={`text-center pb-3`}>
+          <Image src="/favicon.ico" />
         </Col>
         {/* <Col xl="8">
           <h3 className={`text-center pb-2`}>
@@ -26,7 +26,7 @@ const IndexRegister = () => {
             PageMaker including versions of Lorem Ipsum.
           </p>
         </Col> */}
-        <Col xl="8" className={`text-center`}>
+        <Col xl="8" className={`text-center pt-2`}>
           <strong>
             <FormattedMessage defaultMessage="Register as:" id="register.as" />
           </strong>

@@ -903,7 +903,7 @@ const Dashboard = () => {
                 </>
               }
             />
-            <div className="">
+            <div className="vacation-div">
               <span className="vacation-day">
                 {vacationData === "noVacation" ? (
                   <span className="vacation-until">
@@ -926,7 +926,7 @@ const Dashboard = () => {
                           </span>
                         ) : (
                           <>
-                            {" "}
+                         
                             <span>
                               {" "}
                               {props.days > 0 ? (
@@ -939,12 +939,12 @@ const Dashboard = () => {
                                 />
                               ) : (
                                 <FormattedMessage
-                                  values={{
-                                    houres: props.hours,
-                                  }}
-                                  defaultMessage={`${props.hours} Houres`}
-                                  id="app.dashboard.vacation.houres"
-                                />
+                                values={{
+                                  houres: props.hours,
+                                }}
+                                defaultMessage={`${props.hours} Houres`}
+                                id="app.dashboard.vacation.houres"
+                              />
                               )}
                             </span>
                             <span className="vacation-until">
