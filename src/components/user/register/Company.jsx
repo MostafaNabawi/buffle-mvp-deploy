@@ -167,7 +167,7 @@ const CompanyRegister = () => {
           <Col xl="9">
             <div className={style.registerCard}>
               <div className={`${style.header}  text-center`}>
-                <Image src="/favicon.ico" />
+                <Image src="/1.png" className="big-logo2" />
                 <div className={`${style.headerTitle} my-3`}>
                   <FormattedMessage
                     id="personalAndCompanyInfo"

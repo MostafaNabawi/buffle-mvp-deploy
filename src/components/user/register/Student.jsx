@@ -177,7 +177,7 @@ const StudentRegister = () => {
           <Col xl="12">
             <div className={style.registerCard}>
               <div className={`${style.header}  text-center pt-4`}>
-                <Image src="/favicon.ico" />
+                <Image src="/1.png" className="big-logo2"/>
                 <div className={`${style.headerTitle} my-3`}>
                   <FormattedMessage
                     id="personalAndCompanyInfo"
