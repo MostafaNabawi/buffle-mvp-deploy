@@ -108,6 +108,14 @@ h6 {
 .navy-blue {
   background-color: var(--navy-blue);
 }
+.big-logo{
+  width: 200px !important;
+  height: 200px !important;
+}
+.big-logo2{
+  width: 100px !important;
+  height: 100px !important;
+}
 .musicTitle {
   color: white !important;
 }

@@ -219,7 +219,7 @@ const StepTwoRegister = () => {
           <div className={style.registerCard}>
             <div className={`${style.header}  text-center pt-4`}>
               <div className={style.floatLeft}>2/2</div>
-              <Image src="/favicon.ico" />
+              <Image src="/1.png" className="big-logo2" />
               <div className={`${style.headerTitle} mt-3`}>
                 <FormattedMessage
                   defaultMessage="Set your Password"
